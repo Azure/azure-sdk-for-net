@@ -223,7 +223,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Index resource Definition
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAISearchIndex"/>, <see cref="ManagedAzureAISearchIndex"/>, and <see cref="CosmosDBIndex"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAISearchIndex"/>, <see cref="ManagedAzureAISearchIndex"/>, and <see cref="AIProjectCosmosDBIndex"/>.
         /// </summary>
         /// <param name="type"> Type of index. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
@@ -331,12 +331,12 @@ namespace Azure.AI.Projects
         /// <param name="containerName"> Name of CosmosDB Container. </param>
         /// <param name="embeddingConfiguration"> Embedding model configuration. </param>
         /// <param name="fieldMapping"> Field mapping configuration. </param>
-        /// <returns> A new <see cref="Projects.CosmosDBIndex"/> instance for mocking. </returns>
-        public static CosmosDBIndex CosmosDBIndex(string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default, string connectionName = default, string databaseName = default, string containerName = default, EmbeddingConfiguration embeddingConfiguration = default, AIProjectIndexFieldMapping fieldMapping = default)
+        /// <returns> A new <see cref="Projects.AIProjectCosmosDBIndex"/> instance for mocking. </returns>
+        public static AIProjectCosmosDBIndex AIProjectCosmosDBIndex(string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default, string connectionName = default, string databaseName = default, string containerName = default, EmbeddingConfiguration embeddingConfiguration = default, AIProjectIndexFieldMapping fieldMapping = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CosmosDBIndex(
+            return new AIProjectCosmosDBIndex(
                 IndexType.CosmosDB,
                 id,
                 name,
