@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            IReadOnlyList<AdvisorAssessmentResultData> value = default;
+            IReadOnlyList<AdvisorAssessmentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<AdvisorAssessmentResultData> array = new List<AdvisorAssessmentResultData>();
+                    List<AdvisorAssessmentData> array = new List<AdvisorAssessmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AdvisorAssessmentResultData.DeserializeAdvisorAssessmentResultData(item, options));
+                        array.Add(AdvisorAssessmentData.DeserializeAdvisorAssessmentData(item, options));
                     }
                     value = array;
                     continue;

@@ -8,19 +8,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager.Advisor.Models;
 
 namespace Azure.ResourceManager.Advisor.Mocking
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
     public partial class MockableAdvisorTenantResource : ArmResource
     {
-        private ClientDiagnostics _operationsClientDiagnostics;
-        private OperationsRestOperations _operationsRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="MockableAdvisorTenantResource"/> class for mocking. </summary>
         protected MockableAdvisorTenantResource()
         {
@@ -32,9 +26,6 @@ namespace Azure.ResourceManager.Advisor.Mocking
         internal MockableAdvisorTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics OperationsClientDiagnostics => _operationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationsRestOperations OperationsRestClient => _operationsRestClient ??= new OperationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -109,58 +100,6 @@ namespace Azure.ResourceManager.Advisor.Mocking
         public virtual Response<MetadataEntityResource> GetMetadataEntity(string name, CancellationToken cancellationToken = default)
         {
             return GetMetadataEntities().Get(name, cancellationToken);
-        }
-
-        /// <summary>
-        /// List the operations for the provider
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Advisor/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Operations_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AdvisorOperationEntity"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AdvisorOperationEntity> GetOperationsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OperationsRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationsRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AdvisorOperationEntity.DeserializeAdvisorOperationEntity(e), OperationsClientDiagnostics, Pipeline, "MockableAdvisorTenantResource.GetOperations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List the operations for the provider
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Advisor/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Operations_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AdvisorOperationEntity"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AdvisorOperationEntity> GetOperations(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OperationsRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationsRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AdvisorOperationEntity.DeserializeAdvisorOperationEntity(e), OperationsClientDiagnostics, Pipeline, "MockableAdvisorTenantResource.GetOperations", "value", "nextLink", cancellationToken);
         }
     }
 }

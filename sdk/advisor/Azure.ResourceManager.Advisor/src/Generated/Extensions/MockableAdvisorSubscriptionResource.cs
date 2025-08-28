@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.Advisor.Mocking
             return GetAdvisorScoreEntities().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AdvisorAssessmentResultResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of AdvisorAssessmentResultResources and their operations over a AdvisorAssessmentResultResource. </returns>
-        public virtual AdvisorAssessmentResultCollection GetAdvisorAssessmentResults()
+        /// <summary> Gets a collection of AdvisorAssessmentResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of AdvisorAssessmentResources and their operations over a AdvisorAssessmentResource. </returns>
+        public virtual AdvisorAssessmentCollection GetAdvisorAssessments()
         {
-            return GetCachedClient(client => new AdvisorAssessmentResultCollection(client, Id));
+            return GetCachedClient(client => new AdvisorAssessmentCollection(client, Id));
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AdvisorAssessmentResultResource"/></description>
+        /// <description><see cref="AdvisorAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AdvisorAssessmentResultResource>> GetAdvisorAssessmentResultAsync(string assessmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AdvisorAssessmentResource>> GetAdvisorAssessmentAsync(string assessmentName, CancellationToken cancellationToken = default)
         {
-            return await GetAdvisorAssessmentResults().GetAsync(assessmentName, cancellationToken).ConfigureAwait(false);
+            return await GetAdvisorAssessments().GetAsync(assessmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AdvisorAssessmentResultResource"/></description>
+        /// <description><see cref="AdvisorAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AdvisorAssessmentResultResource> GetAdvisorAssessmentResult(string assessmentName, CancellationToken cancellationToken = default)
+        public virtual Response<AdvisorAssessmentResource> GetAdvisorAssessment(string assessmentName, CancellationToken cancellationToken = default)
         {
-            return GetAdvisorAssessmentResults().Get(assessmentName, cancellationToken);
+            return GetAdvisorAssessments().Get(assessmentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AdvisorResiliencyReviewResources in the SubscriptionResource. </summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Advisor_Predict</description>
+        /// <description>Advisor_AdvisorPredict</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -289,15 +289,15 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<AdvisorPredictionResult>> PredictAdvisorClientAsync(PredictionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AdvisorPredictionResult>> AdvisorPredictAsync(AdvisorPredictionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = AdvisorClientClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.PredictAdvisorClient");
+            using var scope = AdvisorClientClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.AdvisorPredict");
             scope.Start();
             try
             {
-                var response = await AdvisorClientRestClient.PredictAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await AdvisorClientRestClient.AdvisorPredictAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Advisor_Predict</description>
+        /// <description>Advisor_AdvisorPredict</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -327,15 +327,15 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<AdvisorPredictionResult> PredictAdvisorClient(PredictionContent content, CancellationToken cancellationToken = default)
+        public virtual Response<AdvisorPredictionResult> AdvisorPredict(AdvisorPredictionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = AdvisorClientClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.PredictAdvisorClient");
+            using var scope = AdvisorClientClientDiagnostics.CreateScope("MockableAdvisorSubscriptionResource.AdvisorPredict");
             scope.Start();
             try
             {
-                var response = AdvisorClientRestClient.Predict(Id.SubscriptionId, content, cancellationToken);
+                var response = AdvisorClientRestClient.AdvisorPredict(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -363,12 +363,12 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfigData> GetConfigurationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AdvisorConfigData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AdvisorConfigData> GetConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateGetConfigurationsRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationsRestClient.CreateGetConfigurationsNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConfigData.DeserializeConfigData(e), ConfigurationsClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetConfigurations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AdvisorConfigData.DeserializeAdvisorConfigData(e), ConfigurationsClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -389,12 +389,12 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfigData> GetConfigurations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AdvisorConfigData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AdvisorConfigData> GetConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateGetConfigurationsRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationsRestClient.CreateGetConfigurationsNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConfigData.DeserializeConfigData(e), ConfigurationsClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetConfigurations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AdvisorConfigData.DeserializeAdvisorConfigData(e), ConfigurationsClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<ConfigData>> CreateConfigurationAsync(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AdvisorConfigData>> CreateConfigurationAsync(ConfigurationName configurationName, AdvisorConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<ConfigData> CreateConfiguration(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public virtual Response<AdvisorConfigData> CreateConfiguration(ConfigurationName configurationName, AdvisorConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AssessmentTypesOperationGroup_List</description>
+        /// <description>AssessmentTypesOperationGroup_GetAdvisorAssessmentTypes</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -687,12 +687,12 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AssessmentTypeResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AssessmentTypeResult> GetAssessmentTypesOperationGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AdvisorAssessmentType"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AdvisorAssessmentType> GetAdvisorAssessmentTypesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AssessmentTypesOperationGroupRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AssessmentTypesOperationGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AssessmentTypeResult.DeserializeAssessmentTypeResult(e), AssessmentTypesOperationGroupClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetAssessmentTypesOperationGroups", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AssessmentTypesOperationGroupRestClient.CreateGetAdvisorAssessmentTypesRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AssessmentTypesOperationGroupRestClient.CreateGetAdvisorAssessmentTypesNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AdvisorAssessmentType.DeserializeAdvisorAssessmentType(e), AssessmentTypesOperationGroupClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetAdvisorAssessmentTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AssessmentTypesOperationGroup_List</description>
+        /// <description>AssessmentTypesOperationGroup_GetAdvisorAssessmentTypes</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -713,12 +713,12 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AssessmentTypeResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AssessmentTypeResult> GetAssessmentTypesOperationGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AdvisorAssessmentType"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AdvisorAssessmentType> GetAdvisorAssessmentTypes(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AssessmentTypesOperationGroupRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AssessmentTypesOperationGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AssessmentTypeResult.DeserializeAssessmentTypeResult(e), AssessmentTypesOperationGroupClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetAssessmentTypesOperationGroups", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AssessmentTypesOperationGroupRestClient.CreateGetAdvisorAssessmentTypesRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AssessmentTypesOperationGroupRestClient.CreateGetAdvisorAssessmentTypesNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AdvisorAssessmentType.DeserializeAdvisorAssessmentType(e), AssessmentTypesOperationGroupClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetAdvisorAssessmentTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadsOperationGroup_List</description>
+        /// <description>WorkloadsOperationGroup_GetAdvisorWorkloads</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -739,12 +739,12 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AdvisorWorkloadResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AdvisorWorkloadResult> GetWorkloadsOperationGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AdvisorWorkload"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AdvisorWorkload> GetAdvisorWorkloadsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => WorkloadsOperationGroupRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkloadsOperationGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AdvisorWorkloadResult.DeserializeAdvisorWorkloadResult(e), WorkloadsOperationGroupClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetWorkloadsOperationGroups", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => WorkloadsOperationGroupRestClient.CreateGetAdvisorWorkloadsRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkloadsOperationGroupRestClient.CreateGetAdvisorWorkloadsNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AdvisorWorkload.DeserializeAdvisorWorkload(e), WorkloadsOperationGroupClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetAdvisorWorkloads", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadsOperationGroup_List</description>
+        /// <description>WorkloadsOperationGroup_GetAdvisorWorkloads</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -765,12 +765,12 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AdvisorWorkloadResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AdvisorWorkloadResult> GetWorkloadsOperationGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AdvisorWorkload"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AdvisorWorkload> GetAdvisorWorkloads(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => WorkloadsOperationGroupRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkloadsOperationGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AdvisorWorkloadResult.DeserializeAdvisorWorkloadResult(e), WorkloadsOperationGroupClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetWorkloadsOperationGroups", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => WorkloadsOperationGroupRestClient.CreateGetAdvisorWorkloadsRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkloadsOperationGroupRestClient.CreateGetAdvisorWorkloadsNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AdvisorWorkload.DeserializeAdvisorWorkload(e), WorkloadsOperationGroupClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetAdvisorWorkloads", "value", "nextLink", cancellationToken);
         }
     }
 }

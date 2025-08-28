@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    /// <summary> The operation supported by Advisor. </summary>
-    public partial class AdvisorOperationDisplayInfo
+    /// <summary> The Workload result data structure. </summary>
+    public partial class AdvisorWorkload
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,33 +45,33 @@ namespace Azure.ResourceManager.Advisor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AdvisorOperationDisplayInfo"/>. </summary>
-        internal AdvisorOperationDisplayInfo()
+        /// <summary> Initializes a new instance of <see cref="AdvisorWorkload"/>. </summary>
+        internal AdvisorWorkload()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AdvisorOperationDisplayInfo"/>. </summary>
-        /// <param name="description"> The description of the operation. </param>
-        /// <param name="operation"> The action that users can perform, based on their permission level. </param>
-        /// <param name="provider"> Service provider: Microsoft Advisor. </param>
-        /// <param name="resource"> Resource on which the operation is performed. </param>
+        /// <summary> Initializes a new instance of <see cref="AdvisorWorkload"/>. </summary>
+        /// <param name="id"> Workload Id. </param>
+        /// <param name="name"> Workload Name. </param>
+        /// <param name="subscriptionId"> Subscription Id. </param>
+        /// <param name="subscriptionName"> Subscription Name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AdvisorOperationDisplayInfo(string description, string operation, string provider, string resource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AdvisorWorkload(string id, string name, string subscriptionId, string subscriptionName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Description = description;
-            Operation = operation;
-            Provider = provider;
-            Resource = resource;
+            Id = id;
+            Name = name;
+            SubscriptionId = subscriptionId;
+            SubscriptionName = subscriptionName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The description of the operation. </summary>
-        public string Description { get; }
-        /// <summary> The action that users can perform, based on their permission level. </summary>
-        public string Operation { get; }
-        /// <summary> Service provider: Microsoft Advisor. </summary>
-        public string Provider { get; }
-        /// <summary> Resource on which the operation is performed. </summary>
-        public string Resource { get; }
+        /// <summary> Workload Id. </summary>
+        public string Id { get; }
+        /// <summary> Workload Name. </summary>
+        public string Name { get; }
+        /// <summary> Subscription Id. </summary>
+        public string SubscriptionId { get; }
+        /// <summary> Subscription Name. </summary>
+        public string SubscriptionName { get; }
     }
 }

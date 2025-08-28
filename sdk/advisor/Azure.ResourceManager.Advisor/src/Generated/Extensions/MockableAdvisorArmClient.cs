@@ -158,15 +158,15 @@ namespace Azure.ResourceManager.Advisor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AdvisorAssessmentResultResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AdvisorAssessmentResultResource.CreateResourceIdentifier" /> to create an <see cref="AdvisorAssessmentResultResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AdvisorAssessmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AdvisorAssessmentResource.CreateResourceIdentifier" /> to create an <see cref="AdvisorAssessmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AdvisorAssessmentResultResource"/> object. </returns>
-        public virtual AdvisorAssessmentResultResource GetAdvisorAssessmentResultResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AdvisorAssessmentResource"/> object. </returns>
+        public virtual AdvisorAssessmentResource GetAdvisorAssessmentResource(ResourceIdentifier id)
         {
-            AdvisorAssessmentResultResource.ValidateResourceId(id);
-            return new AdvisorAssessmentResultResource(Client, id);
+            AdvisorAssessmentResource.ValidateResourceId(id);
+            return new AdvisorAssessmentResource(Client, id);
         }
 
         /// <summary>

@@ -13,10 +13,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Advisor
 {
     /// <summary>
-    /// A class representing the AdvisorAssessmentResult data model.
+    /// A class representing the AdvisorAssessment data model.
     /// The Advisor assessment result data structure.
     /// </summary>
-    public partial class AdvisorAssessmentResultData : ResourceData
+    public partial class AdvisorAssessmentData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Advisor
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AdvisorAssessmentResultData"/>. </summary>
-        public AdvisorAssessmentResultData()
+        /// <summary> Initializes a new instance of <see cref="AdvisorAssessmentData"/>. </summary>
+        public AdvisorAssessmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AdvisorAssessmentResultData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvisorAssessmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="typeVersion"> Assessment Type Version. </param>
         /// <param name="locale"> Assessment Type Locale. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AdvisorAssessmentResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string workloadId, string workloadName, string assessmentId, string description, string typeId, int? score, string state, string typeVersion, string locale, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AdvisorAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string workloadId, string workloadName, string assessmentId, string description, string typeId, int? score, string state, string typeVersion, string locale, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             WorkloadId = workloadId;
             WorkloadName = workloadName;

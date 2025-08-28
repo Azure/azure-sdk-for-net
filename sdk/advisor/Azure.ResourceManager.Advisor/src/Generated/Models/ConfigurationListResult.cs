@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> Initializes a new instance of <see cref="ConfigurationListResult"/>. </summary>
         /// <param name="value"> The ConfigData items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ConfigurationListResult(IEnumerable<ConfigData> value)
+        internal ConfigurationListResult(IEnumerable<AdvisorConfigData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="value"> The ConfigData items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationListResult(IReadOnlyList<ConfigData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfigurationListResult(IReadOnlyList<AdvisorConfigData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Advisor.Models
         }
 
         /// <summary> The ConfigData items on this page. </summary>
-        public IReadOnlyList<ConfigData> Value { get; }
+        public IReadOnlyList<AdvisorConfigData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

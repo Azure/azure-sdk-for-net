@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Advisor.Samples
             string recommendationId = "22222222-1111-2222-3333-444444444444";
             RecommendationRejectBody recommendationRejectBody = new RecommendationRejectBody
             {
-                ReasonForRejection = ReasonForRejectionName.NotARisk,
+                ReasonForRejection = AdvisorReasonForRejectionName.NotARisk,
             };
             await advisorResiliencyReview.RejectTriageRecommendationTriageRecommendationAsync(recommendationId, recommendationRejectBody);
 

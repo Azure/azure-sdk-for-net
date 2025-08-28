@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> Initializes a new instance of <see cref="RecommendationRejectBody"/>. </summary>
         /// <param name="reasonForRejection"> Reason for rejecting recommendation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendationRejectBody(ReasonForRejectionName? reasonForRejection, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RecommendationRejectBody(AdvisorReasonForRejectionName? reasonForRejection, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReasonForRejection = reasonForRejection;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Reason for rejecting recommendation. </summary>
-        public ReasonForRejectionName? ReasonForRejection { get; set; }
+        public AdvisorReasonForRejectionName? ReasonForRejection { get; set; }
     }
 }

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    /// <summary> Paged collection of OperationEntity items. </summary>
-    internal partial class OperationEntityListResult
+    /// <summary> The data from different aggregation levels. </summary>
+    public partial class AdvisorTimeSeriesEntity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,26 @@ namespace Azure.ResourceManager.Advisor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OperationEntityListResult"/>. </summary>
-        /// <param name="value"> The OperationEntity items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal OperationEntityListResult(IEnumerable<AdvisorOperationEntity> value)
+        /// <summary> Initializes a new instance of <see cref="AdvisorTimeSeriesEntity"/>. </summary>
+        internal AdvisorTimeSeriesEntity()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            ScoreHistory = new ChangeTrackingList<AdvisorScoreEntityContent>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationEntityListResult"/>. </summary>
-        /// <param name="value"> The OperationEntity items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="AdvisorTimeSeriesEntity"/>. </summary>
+        /// <param name="aggregationLevel"> The aggregation level of the score. </param>
+        /// <param name="scoreHistory"> The past score data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationEntityListResult(IReadOnlyList<AdvisorOperationEntity> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AdvisorTimeSeriesEntity(ScoreAggregationLevel? aggregationLevel, IReadOnlyList<AdvisorScoreEntityContent> scoreHistory, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            AggregationLevel = aggregationLevel;
+            ScoreHistory = scoreHistory;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationEntityListResult"/> for deserialization. </summary>
-        internal OperationEntityListResult()
-        {
-        }
-
-        /// <summary> The OperationEntity items on this page. </summary>
-        public IReadOnlyList<AdvisorOperationEntity> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> The aggregation level of the score. </summary>
+        public ScoreAggregationLevel? AggregationLevel { get; }
+        /// <summary> The past score data. </summary>
+        public IReadOnlyList<AdvisorScoreEntityContent> ScoreHistory { get; }
     }
 }

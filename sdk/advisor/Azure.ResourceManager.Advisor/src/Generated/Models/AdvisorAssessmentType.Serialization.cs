@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    public partial class AssessmentTypeResult : IUtf8JsonSerializable, IJsonModel<AssessmentTypeResult>
+    public partial class AdvisorAssessmentType : IUtf8JsonSerializable, IJsonModel<AdvisorAssessmentType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssessmentTypeResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdvisorAssessmentType>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AssessmentTypeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AdvisorAssessmentType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssessmentTypeResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorAssessmentType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssessmentTypeResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvisorAssessmentType)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Id))
@@ -76,19 +76,19 @@ namespace Azure.ResourceManager.Advisor.Models
             }
         }
 
-        AssessmentTypeResult IJsonModel<AssessmentTypeResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AdvisorAssessmentType IJsonModel<AdvisorAssessmentType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssessmentTypeResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorAssessmentType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssessmentTypeResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvisorAssessmentType)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAssessmentTypeResult(document.RootElement, options);
+            return DeserializeAdvisorAssessmentType(document.RootElement, options);
         }
 
-        internal static AssessmentTypeResult DeserializeAssessmentTypeResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AdvisorAssessmentType DeserializeAdvisorAssessmentType(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AssessmentTypeResult(
+            return new AdvisorAssessmentType(
                 id,
                 title,
                 description,
@@ -145,35 +145,35 @@ namespace Azure.ResourceManager.Advisor.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AssessmentTypeResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AdvisorAssessmentType>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssessmentTypeResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorAssessmentType>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAdvisorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AssessmentTypeResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvisorAssessmentType)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AssessmentTypeResult IPersistableModel<AssessmentTypeResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AdvisorAssessmentType IPersistableModel<AdvisorAssessmentType>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssessmentTypeResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorAssessmentType>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAssessmentTypeResult(document.RootElement, options);
+                        return DeserializeAdvisorAssessmentType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssessmentTypeResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvisorAssessmentType)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AssessmentTypeResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AdvisorAssessmentType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    /// <summary> The data from different aggregation levels. </summary>
-    public partial class TimeSeriesEntity
+    /// <summary> The Advisor assessment type result data structure. </summary>
+    public partial class AdvisorAssessmentType
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,37 @@ namespace Azure.ResourceManager.Advisor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TimeSeriesEntity"/>. </summary>
-        internal TimeSeriesEntity()
+        /// <summary> Initializes a new instance of <see cref="AdvisorAssessmentType"/>. </summary>
+        internal AdvisorAssessmentType()
         {
-            ScoreHistory = new ChangeTrackingList<AdvisorScoreEntityContent>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TimeSeriesEntity"/>. </summary>
-        /// <param name="aggregationLevel"> The aggregation level of the score. </param>
-        /// <param name="scoreHistory"> The past score data. </param>
+        /// <summary> Initializes a new instance of <see cref="AdvisorAssessmentType"/>. </summary>
+        /// <param name="id"> Assessment Type Id. </param>
+        /// <param name="title"> Assessment Type Title. </param>
+        /// <param name="description"> Assessment Type Description. </param>
+        /// <param name="locale"> Assessment Type Locale. </param>
+        /// <param name="version"> Assessment Type Version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TimeSeriesEntity(ScoreAggregationLevel? aggregationLevel, IReadOnlyList<AdvisorScoreEntityContent> scoreHistory, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AdvisorAssessmentType(string id, string title, string description, string locale, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AggregationLevel = aggregationLevel;
-            ScoreHistory = scoreHistory;
+            Id = id;
+            Title = title;
+            Description = description;
+            Locale = locale;
+            Version = version;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The aggregation level of the score. </summary>
-        public ScoreAggregationLevel? AggregationLevel { get; }
-        /// <summary> The past score data. </summary>
-        public IReadOnlyList<AdvisorScoreEntityContent> ScoreHistory { get; }
+        /// <summary> Assessment Type Id. </summary>
+        public string Id { get; }
+        /// <summary> Assessment Type Title. </summary>
+        public string Title { get; }
+        /// <summary> Assessment Type Description. </summary>
+        public string Description { get; }
+        /// <summary> Assessment Type Locale. </summary>
+        public string Locale { get; }
+        /// <summary> Assessment Type Version. </summary>
+        public string Version { get; }
     }
 }

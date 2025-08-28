@@ -19,28 +19,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Advisor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AdvisorAssessmentResultResource"/> and their operations.
-    /// Each <see cref="AdvisorAssessmentResultResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get an <see cref="AdvisorAssessmentResultCollection"/> instance call the GetAdvisorAssessmentResults method from an instance of <see cref="SubscriptionResource"/>.
+    /// A class representing a collection of <see cref="AdvisorAssessmentResource"/> and their operations.
+    /// Each <see cref="AdvisorAssessmentResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get an <see cref="AdvisorAssessmentCollection"/> instance call the GetAdvisorAssessments method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class AdvisorAssessmentResultCollection : ArmCollection, IEnumerable<AdvisorAssessmentResultResource>, IAsyncEnumerable<AdvisorAssessmentResultResource>
+    public partial class AdvisorAssessmentCollection : ArmCollection, IEnumerable<AdvisorAssessmentResource>, IAsyncEnumerable<AdvisorAssessmentResource>
     {
-        private readonly ClientDiagnostics _advisorAssessmentResultAssessmentResultsClientDiagnostics;
-        private readonly AssessmentResultsRestOperations _advisorAssessmentResultAssessmentResultsRestClient;
+        private readonly ClientDiagnostics _advisorAssessmentAssessmentResultsClientDiagnostics;
+        private readonly AssessmentResultsRestOperations _advisorAssessmentAssessmentResultsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AdvisorAssessmentResultCollection"/> class for mocking. </summary>
-        protected AdvisorAssessmentResultCollection()
+        /// <summary> Initializes a new instance of the <see cref="AdvisorAssessmentCollection"/> class for mocking. </summary>
+        protected AdvisorAssessmentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AdvisorAssessmentResultCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AdvisorAssessmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal AdvisorAssessmentResultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AdvisorAssessmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _advisorAssessmentResultAssessmentResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorAssessmentResultResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AdvisorAssessmentResultResource.ResourceType, out string advisorAssessmentResultAssessmentResultsApiVersion);
-            _advisorAssessmentResultAssessmentResultsRestClient = new AssessmentResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, advisorAssessmentResultAssessmentResultsApiVersion);
+            _advisorAssessmentAssessmentResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorAssessmentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AdvisorAssessmentResource.ResourceType, out string advisorAssessmentAssessmentResultsApiVersion);
+            _advisorAssessmentAssessmentResultsRestClient = new AssessmentResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, advisorAssessmentAssessmentResultsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AdvisorAssessmentResultResource"/></description>
+        /// <description><see cref="AdvisorAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AdvisorAssessmentResultResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assessmentName, AdvisorAssessmentResultData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AdvisorAssessmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assessmentName, AdvisorAssessmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _advisorAssessmentResultAssessmentResultsClientDiagnostics.CreateScope("AdvisorAssessmentResultCollection.CreateOrUpdate");
+            using var scope = _advisorAssessmentAssessmentResultsClientDiagnostics.CreateScope("AdvisorAssessmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _advisorAssessmentResultAssessmentResultsRestClient.PutAsync(Id.SubscriptionId, assessmentName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _advisorAssessmentResultAssessmentResultsRestClient.CreatePutRequestUri(Id.SubscriptionId, assessmentName, data);
+                var response = await _advisorAssessmentAssessmentResultsRestClient.PutAsync(Id.SubscriptionId, assessmentName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _advisorAssessmentAssessmentResultsRestClient.CreatePutRequestUri(Id.SubscriptionId, assessmentName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AdvisorArmOperation<AdvisorAssessmentResultResource>(Response.FromValue(new AdvisorAssessmentResultResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new AdvisorArmOperation<AdvisorAssessmentResource>(Response.FromValue(new AdvisorAssessmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AdvisorAssessmentResultResource"/></description>
+        /// <description><see cref="AdvisorAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,19 +130,19 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AdvisorAssessmentResultResource> CreateOrUpdate(WaitUntil waitUntil, string assessmentName, AdvisorAssessmentResultData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AdvisorAssessmentResource> CreateOrUpdate(WaitUntil waitUntil, string assessmentName, AdvisorAssessmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _advisorAssessmentResultAssessmentResultsClientDiagnostics.CreateScope("AdvisorAssessmentResultCollection.CreateOrUpdate");
+            using var scope = _advisorAssessmentAssessmentResultsClientDiagnostics.CreateScope("AdvisorAssessmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _advisorAssessmentResultAssessmentResultsRestClient.Put(Id.SubscriptionId, assessmentName, data, cancellationToken);
-                var uri = _advisorAssessmentResultAssessmentResultsRestClient.CreatePutRequestUri(Id.SubscriptionId, assessmentName, data);
+                var response = _advisorAssessmentAssessmentResultsRestClient.Put(Id.SubscriptionId, assessmentName, data, cancellationToken);
+                var uri = _advisorAssessmentAssessmentResultsRestClient.CreatePutRequestUri(Id.SubscriptionId, assessmentName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AdvisorArmOperation<AdvisorAssessmentResultResource>(Response.FromValue(new AdvisorAssessmentResultResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new AdvisorArmOperation<AdvisorAssessmentResource>(Response.FromValue(new AdvisorAssessmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AdvisorAssessmentResultResource"/></description>
+        /// <description><see cref="AdvisorAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,18 +179,18 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        public virtual async Task<Response<AdvisorAssessmentResultResource>> GetAsync(string assessmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AdvisorAssessmentResource>> GetAsync(string assessmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
-            using var scope = _advisorAssessmentResultAssessmentResultsClientDiagnostics.CreateScope("AdvisorAssessmentResultCollection.Get");
+            using var scope = _advisorAssessmentAssessmentResultsClientDiagnostics.CreateScope("AdvisorAssessmentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _advisorAssessmentResultAssessmentResultsRestClient.GetAsync(Id.SubscriptionId, assessmentName, cancellationToken).ConfigureAwait(false);
+                var response = await _advisorAssessmentAssessmentResultsRestClient.GetAsync(Id.SubscriptionId, assessmentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AdvisorAssessmentResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AdvisorAssessmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AdvisorAssessmentResultResource"/></description>
+        /// <description><see cref="AdvisorAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,18 +224,18 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        public virtual Response<AdvisorAssessmentResultResource> Get(string assessmentName, CancellationToken cancellationToken = default)
+        public virtual Response<AdvisorAssessmentResource> Get(string assessmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
-            using var scope = _advisorAssessmentResultAssessmentResultsClientDiagnostics.CreateScope("AdvisorAssessmentResultCollection.Get");
+            using var scope = _advisorAssessmentAssessmentResultsClientDiagnostics.CreateScope("AdvisorAssessmentCollection.Get");
             scope.Start();
             try
             {
-                var response = _advisorAssessmentResultAssessmentResultsRestClient.Get(Id.SubscriptionId, assessmentName, cancellationToken);
+                var response = _advisorAssessmentAssessmentResultsRestClient.Get(Id.SubscriptionId, assessmentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AdvisorAssessmentResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AdvisorAssessmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -261,19 +261,19 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AdvisorAssessmentResultResource"/></description>
+        /// <description><see cref="AdvisorAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Limit the result to the specified number of rows. </param>
         /// <param name="skiptoken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AdvisorAssessmentResultResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AdvisorAssessmentResultResource> GetAllAsync(string top = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AdvisorAssessmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AdvisorAssessmentResource> GetAllAsync(string top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _advisorAssessmentResultAssessmentResultsRestClient.CreateListRequest(Id.SubscriptionId, top, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _advisorAssessmentResultAssessmentResultsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, skiptoken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AdvisorAssessmentResultResource(Client, AdvisorAssessmentResultData.DeserializeAdvisorAssessmentResultData(e)), _advisorAssessmentResultAssessmentResultsClientDiagnostics, Pipeline, "AdvisorAssessmentResultCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _advisorAssessmentAssessmentResultsRestClient.CreateListRequest(Id.SubscriptionId, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _advisorAssessmentAssessmentResultsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, skiptoken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AdvisorAssessmentResource(Client, AdvisorAssessmentData.DeserializeAdvisorAssessmentData(e)), _advisorAssessmentAssessmentResultsClientDiagnostics, Pipeline, "AdvisorAssessmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -293,19 +293,19 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AdvisorAssessmentResultResource"/></description>
+        /// <description><see cref="AdvisorAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Limit the result to the specified number of rows. </param>
         /// <param name="skiptoken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AdvisorAssessmentResultResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AdvisorAssessmentResultResource> GetAll(string top = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AdvisorAssessmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AdvisorAssessmentResource> GetAll(string top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _advisorAssessmentResultAssessmentResultsRestClient.CreateListRequest(Id.SubscriptionId, top, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _advisorAssessmentResultAssessmentResultsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, skiptoken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AdvisorAssessmentResultResource(Client, AdvisorAssessmentResultData.DeserializeAdvisorAssessmentResultData(e)), _advisorAssessmentResultAssessmentResultsClientDiagnostics, Pipeline, "AdvisorAssessmentResultCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _advisorAssessmentAssessmentResultsRestClient.CreateListRequest(Id.SubscriptionId, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _advisorAssessmentAssessmentResultsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, skiptoken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AdvisorAssessmentResource(Client, AdvisorAssessmentData.DeserializeAdvisorAssessmentData(e)), _advisorAssessmentAssessmentResultsClientDiagnostics, Pipeline, "AdvisorAssessmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AdvisorAssessmentResultResource"/></description>
+        /// <description><see cref="AdvisorAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,11 +337,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
-            using var scope = _advisorAssessmentResultAssessmentResultsClientDiagnostics.CreateScope("AdvisorAssessmentResultCollection.Exists");
+            using var scope = _advisorAssessmentAssessmentResultsClientDiagnostics.CreateScope("AdvisorAssessmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _advisorAssessmentResultAssessmentResultsRestClient.GetAsync(Id.SubscriptionId, assessmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _advisorAssessmentAssessmentResultsRestClient.GetAsync(Id.SubscriptionId, assessmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AdvisorAssessmentResultResource"/></description>
+        /// <description><see cref="AdvisorAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -380,11 +380,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
-            using var scope = _advisorAssessmentResultAssessmentResultsClientDiagnostics.CreateScope("AdvisorAssessmentResultCollection.Exists");
+            using var scope = _advisorAssessmentAssessmentResultsClientDiagnostics.CreateScope("AdvisorAssessmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _advisorAssessmentResultAssessmentResultsRestClient.Get(Id.SubscriptionId, assessmentName, cancellationToken: cancellationToken);
+                var response = _advisorAssessmentAssessmentResultsRestClient.Get(Id.SubscriptionId, assessmentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AdvisorAssessmentResultResource"/></description>
+        /// <description><see cref="AdvisorAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -419,18 +419,18 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        public virtual async Task<NullableResponse<AdvisorAssessmentResultResource>> GetIfExistsAsync(string assessmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<AdvisorAssessmentResource>> GetIfExistsAsync(string assessmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
-            using var scope = _advisorAssessmentResultAssessmentResultsClientDiagnostics.CreateScope("AdvisorAssessmentResultCollection.GetIfExists");
+            using var scope = _advisorAssessmentAssessmentResultsClientDiagnostics.CreateScope("AdvisorAssessmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _advisorAssessmentResultAssessmentResultsRestClient.GetAsync(Id.SubscriptionId, assessmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _advisorAssessmentAssessmentResultsRestClient.GetAsync(Id.SubscriptionId, assessmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<AdvisorAssessmentResultResource>(response.GetRawResponse());
-                return Response.FromValue(new AdvisorAssessmentResultResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<AdvisorAssessmentResource>(response.GetRawResponse());
+                return Response.FromValue(new AdvisorAssessmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AdvisorAssessmentResultResource"/></description>
+        /// <description><see cref="AdvisorAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -464,18 +464,18 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        public virtual NullableResponse<AdvisorAssessmentResultResource> GetIfExists(string assessmentName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<AdvisorAssessmentResource> GetIfExists(string assessmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
-            using var scope = _advisorAssessmentResultAssessmentResultsClientDiagnostics.CreateScope("AdvisorAssessmentResultCollection.GetIfExists");
+            using var scope = _advisorAssessmentAssessmentResultsClientDiagnostics.CreateScope("AdvisorAssessmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _advisorAssessmentResultAssessmentResultsRestClient.Get(Id.SubscriptionId, assessmentName, cancellationToken: cancellationToken);
+                var response = _advisorAssessmentAssessmentResultsRestClient.Get(Id.SubscriptionId, assessmentName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<AdvisorAssessmentResultResource>(response.GetRawResponse());
-                return Response.FromValue(new AdvisorAssessmentResultResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<AdvisorAssessmentResource>(response.GetRawResponse());
+                return Response.FromValue(new AdvisorAssessmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        IEnumerator<AdvisorAssessmentResultResource> IEnumerable<AdvisorAssessmentResultResource>.GetEnumerator()
+        IEnumerator<AdvisorAssessmentResource> IEnumerable<AdvisorAssessmentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Advisor
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AdvisorAssessmentResultResource> IAsyncEnumerable<AdvisorAssessmentResultResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AdvisorAssessmentResource> IAsyncEnumerable<AdvisorAssessmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

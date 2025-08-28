@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    public partial class AdvisorWorkloadResult : IUtf8JsonSerializable, IJsonModel<AdvisorWorkloadResult>
+    public partial class AdvisorWorkload : IUtf8JsonSerializable, IJsonModel<AdvisorWorkload>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdvisorWorkloadResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdvisorWorkload>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AdvisorWorkloadResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AdvisorWorkload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AdvisorWorkloadResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorWorkload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdvisorWorkloadResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvisorWorkload)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Id))
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.Advisor.Models
             }
         }
 
-        AdvisorWorkloadResult IJsonModel<AdvisorWorkloadResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AdvisorWorkload IJsonModel<AdvisorWorkload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AdvisorWorkloadResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorWorkload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdvisorWorkloadResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvisorWorkload)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAdvisorWorkloadResult(document.RootElement, options);
+            return DeserializeAdvisorWorkload(document.RootElement, options);
         }
 
-        internal static AdvisorWorkloadResult DeserializeAdvisorWorkloadResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AdvisorWorkload DeserializeAdvisorWorkload(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -125,38 +125,38 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AdvisorWorkloadResult(id, name, subscriptionId, subscriptionName, serializedAdditionalRawData);
+            return new AdvisorWorkload(id, name, subscriptionId, subscriptionName, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AdvisorWorkloadResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AdvisorWorkload>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AdvisorWorkloadResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorWorkload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAdvisorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AdvisorWorkloadResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvisorWorkload)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AdvisorWorkloadResult IPersistableModel<AdvisorWorkloadResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AdvisorWorkload IPersistableModel<AdvisorWorkload>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AdvisorWorkloadResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorWorkload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAdvisorWorkloadResult(document.RootElement, options);
+                        return DeserializeAdvisorWorkload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdvisorWorkloadResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvisorWorkload)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AdvisorWorkloadResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AdvisorWorkload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

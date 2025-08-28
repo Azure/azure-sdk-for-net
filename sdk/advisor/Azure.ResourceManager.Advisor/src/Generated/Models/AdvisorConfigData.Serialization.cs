@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    public partial class ConfigData : IUtf8JsonSerializable, IJsonModel<ConfigData>
+    public partial class AdvisorConfigData : IUtf8JsonSerializable, IJsonModel<AdvisorConfigData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdvisorConfigData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AdvisorConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorConfigData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvisorConfigData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.Advisor.Models
             writer.WriteEndObject();
         }
 
-        ConfigData IJsonModel<ConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AdvisorConfigData IJsonModel<AdvisorConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorConfigData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvisorConfigData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConfigData(document.RootElement, options);
+            return DeserializeAdvisorConfigData(document.RootElement, options);
         }
 
-        internal static ConfigData DeserializeConfigData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AdvisorConfigData DeserializeAdvisorConfigData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Advisor.Models
             SystemData systemData = default;
             bool? exclude = default;
             CpuThreshold? lowCpuThreshold = default;
-            MinimumDuration? duration = default;
+            AdvisorLowCpuEvaluationDuration? duration = default;
             IList<DigestConfig> digests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Advisor.Models
                             {
                                 continue;
                             }
-                            duration = new MinimumDuration(property0.Value.GetString());
+                            duration = new AdvisorLowCpuEvaluationDuration(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("digests"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConfigData(
+            return new AdvisorConfigData(
                 id,
                 name,
                 type,
@@ -194,35 +194,35 @@ namespace Azure.ResourceManager.Advisor.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConfigData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AdvisorConfigData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorConfigData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAdvisorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvisorConfigData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConfigData IPersistableModel<ConfigData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AdvisorConfigData IPersistableModel<AdvisorConfigData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorConfigData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConfigData(document.RootElement, options);
+                        return DeserializeAdvisorConfigData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvisorConfigData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AdvisorConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

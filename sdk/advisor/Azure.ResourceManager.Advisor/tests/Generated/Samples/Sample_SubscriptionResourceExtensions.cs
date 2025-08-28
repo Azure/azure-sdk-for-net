@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Advisor.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task PredictAdvisorClient_Predict()
+        public async Task AdvisorPredict_Predict()
         {
             // Generated from example definition: 2025-05-01-preview/Predict.json
-            // this example is just showing the usage of "Advisor_Predict" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Advisor_AdvisorPredict" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Advisor.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            PredictionContent content = new PredictionContent();
-            AdvisorPredictionResult result = await subscriptionResource.PredictAdvisorClientAsync(content);
+            AdvisorPredictionContent content = new AdvisorPredictionContent();
+            AdvisorPredictionResult result = await subscriptionResource.AdvisorPredictAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Advisor.Models
 {
     /// <summary> Parameters for predict recommendation. </summary>
-    public partial class PredictionContent
+    public partial class AdvisorPredictionContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Advisor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PredictionContent"/>. </summary>
-        public PredictionContent()
+        /// <summary> Initializes a new instance of <see cref="AdvisorPredictionContent"/>. </summary>
+        public AdvisorPredictionContent()
         {
             ExtendedProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PredictionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvisorPredictionContent"/>. </summary>
         /// <param name="predictionType"> Type of the prediction. </param>
         /// <param name="extendedProperties"> Extended properties are arguments specific for each prediction type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PredictionContent(PredictionType? predictionType, IDictionary<string, BinaryData> extendedProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AdvisorPredictionContent(AdvisorPredictionType? predictionType, IDictionary<string, BinaryData> extendedProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PredictionType = predictionType;
             ExtendedProperties = extendedProperties;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Advisor.Models
         }
 
         /// <summary> Type of the prediction. </summary>
-        public PredictionType? PredictionType { get; set; }
+        public AdvisorPredictionType? PredictionType { get; set; }
         /// <summary>
         /// Extended properties are arguments specific for each prediction type.
         /// <para>

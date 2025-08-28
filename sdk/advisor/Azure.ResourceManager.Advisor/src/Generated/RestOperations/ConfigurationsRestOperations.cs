@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        internal RequestUriBuilder CreateCreateConfigurationRequestUri(string subscriptionId, ConfigurationName configurationName, ConfigData data)
+        internal RequestUriBuilder CreateCreateConfigurationRequestUri(string subscriptionId, ConfigurationName configurationName, AdvisorConfigData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Advisor
             return uri;
         }
 
-        internal HttpMessage CreateCreateConfigurationRequest(string subscriptionId, ConfigurationName configurationName, ConfigData data)
+        internal HttpMessage CreateCreateConfigurationRequest(string subscriptionId, ConfigurationName configurationName, AdvisorConfigData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfigData>> CreateConfigurationAsync(string subscriptionId, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AdvisorConfigData>> CreateConfigurationAsync(string subscriptionId, ConfigurationName configurationName, AdvisorConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(data, nameof(data));
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        ConfigData value = default;
+                        AdvisorConfigData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConfigData.DeserializeConfigData(document.RootElement);
+                        value = AdvisorConfigData.DeserializeAdvisorConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfigData> CreateConfiguration(string subscriptionId, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public Response<AdvisorConfigData> CreateConfiguration(string subscriptionId, ConfigurationName configurationName, AdvisorConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(data, nameof(data));
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        ConfigData value = default;
+                        AdvisorConfigData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConfigData.DeserializeConfigData(document.RootElement);
+                        value = AdvisorConfigData.DeserializeAdvisorConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        internal RequestUriBuilder CreateCreateConfigurationRequestUri(string subscriptionId, ConfigurationName configurationName, string resourceGroup, ConfigData data)
+        internal RequestUriBuilder CreateCreateConfigurationRequestUri(string subscriptionId, ConfigurationName configurationName, string resourceGroup, AdvisorConfigData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Advisor
             return uri;
         }
 
-        internal HttpMessage CreateCreateConfigurationRequest(string subscriptionId, ConfigurationName configurationName, string resourceGroup, ConfigData data)
+        internal HttpMessage CreateCreateConfigurationRequest(string subscriptionId, ConfigurationName configurationName, string resourceGroup, AdvisorConfigData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfigData>> CreateConfigurationAsync(string subscriptionId, ConfigurationName configurationName, string resourceGroup, ConfigData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AdvisorConfigData>> CreateConfigurationAsync(string subscriptionId, ConfigurationName configurationName, string resourceGroup, AdvisorConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
@@ -348,9 +348,9 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        ConfigData value = default;
+                        AdvisorConfigData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConfigData.DeserializeConfigData(document.RootElement);
+                        value = AdvisorConfigData.DeserializeAdvisorConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfigData> CreateConfiguration(string subscriptionId, ConfigurationName configurationName, string resourceGroup, ConfigData data, CancellationToken cancellationToken = default)
+        public Response<AdvisorConfigData> CreateConfiguration(string subscriptionId, ConfigurationName configurationName, string resourceGroup, AdvisorConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
@@ -378,9 +378,9 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        ConfigData value = default;
+                        AdvisorConfigData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConfigData.DeserializeConfigData(document.RootElement);
+                        value = AdvisorConfigData.DeserializeAdvisorConfigData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

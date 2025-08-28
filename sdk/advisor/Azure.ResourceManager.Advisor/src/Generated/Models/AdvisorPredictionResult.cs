@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="lastUpdatedOn"> The most recent time that Advisor checked the validity of the recommendation. </param>
         /// <param name="shortDescription"> A summary of the recommendation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AdvisorPredictionResult(IReadOnlyDictionary<string, BinaryData> extendedProperties, PredictionType? predictionType, RecommendationCategory? category, RecommendationBusinessImpact? impact, string impactedField, DateTimeOffset? lastUpdatedOn, ShortDescription shortDescription, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AdvisorPredictionResult(IReadOnlyDictionary<string, BinaryData> extendedProperties, AdvisorPredictionType? predictionType, RecommendationCategory? category, RecommendationBusinessImpact? impact, string impactedField, DateTimeOffset? lastUpdatedOn, ShortDescription shortDescription, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExtendedProperties = extendedProperties;
             PredictionType = predictionType;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> ExtendedProperties { get; }
         /// <summary> Type of the prediction. </summary>
-        public PredictionType? PredictionType { get; }
+        public AdvisorPredictionType? PredictionType { get; }
         /// <summary> The category of the recommendation. </summary>
         public RecommendationCategory? Category { get; }
         /// <summary> The business impact of the recommendation. </summary>

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Advisor
         /// <summary> Initializes a new instance of <see cref="AdvisorScoreEntityData"/>. </summary>
         internal AdvisorScoreEntityData()
         {
-            TimeSeries = new ChangeTrackingList<TimeSeriesEntity>();
+            TimeSeries = new ChangeTrackingList<AdvisorTimeSeriesEntity>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AdvisorScoreEntityData"/>. </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="lastRefreshedScore"> The details of latest available score. </param>
         /// <param name="timeSeries"> The historic Advisor score data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AdvisorScoreEntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdvisorScoreEntityContent lastRefreshedScore, IReadOnlyList<TimeSeriesEntity> timeSeries, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AdvisorScoreEntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdvisorScoreEntityContent lastRefreshedScore, IReadOnlyList<AdvisorTimeSeriesEntity> timeSeries, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LastRefreshedScore = lastRefreshedScore;
             TimeSeries = timeSeries;
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.Advisor
         /// <summary> The details of latest available score. </summary>
         public AdvisorScoreEntityContent LastRefreshedScore { get; }
         /// <summary> The historic Advisor score data. </summary>
-        public IReadOnlyList<TimeSeriesEntity> TimeSeries { get; }
+        public IReadOnlyList<AdvisorTimeSeriesEntity> TimeSeries { get; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Advisor.Models
 {
     /// <summary> The Advisor configuration data structure. </summary>
-    public partial class ConfigData : ResourceData
+    public partial class AdvisorConfigData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.Advisor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConfigData"/>. </summary>
-        public ConfigData()
+        /// <summary> Initializes a new instance of <see cref="AdvisorConfigData"/>. </summary>
+        public AdvisorConfigData()
         {
             Digests = new ChangeTrackingList<DigestConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfigData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvisorConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="duration"> Minimum duration for Advisor low CPU utilization evaluation. Valid only for subscriptions. Valid values: 7 (default), 14, 21, 30, 60 or 90. </param>
         /// <param name="digests"> Advisor digest configuration. Valid only for subscriptions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? exclude, CpuThreshold? lowCpuThreshold, MinimumDuration? duration, IList<DigestConfig> digests, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AdvisorConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? exclude, CpuThreshold? lowCpuThreshold, AdvisorLowCpuEvaluationDuration? duration, IList<DigestConfig> digests, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Exclude = exclude;
             LowCpuThreshold = lowCpuThreshold;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> Minimum percentage threshold for Advisor low CPU utilization evaluation. Valid only for subscriptions. Valid values: 5 (default), 10, 15 or 20. </summary>
         public CpuThreshold? LowCpuThreshold { get; set; }
         /// <summary> Minimum duration for Advisor low CPU utilization evaluation. Valid only for subscriptions. Valid values: 7 (default), 14, 21, 30, 60 or 90. </summary>
-        public MinimumDuration? Duration { get; set; }
+        public AdvisorLowCpuEvaluationDuration? Duration { get; set; }
         /// <summary> Advisor digest configuration. Valid only for subscriptions. </summary>
         public IList<DigestConfig> Digests { get; }
     }

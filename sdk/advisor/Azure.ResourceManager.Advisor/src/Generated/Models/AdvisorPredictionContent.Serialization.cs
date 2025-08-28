@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    public partial class PredictionContent : IUtf8JsonSerializable, IJsonModel<PredictionContent>
+    public partial class AdvisorPredictionContent : IUtf8JsonSerializable, IJsonModel<AdvisorPredictionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdvisorPredictionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PredictionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AdvisorPredictionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PredictionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorPredictionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvisorPredictionContent)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("properties"u8);
@@ -82,19 +82,19 @@ namespace Azure.ResourceManager.Advisor.Models
             }
         }
 
-        PredictionContent IJsonModel<PredictionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AdvisorPredictionContent IJsonModel<AdvisorPredictionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PredictionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorPredictionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvisorPredictionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePredictionContent(document.RootElement, options);
+            return DeserializeAdvisorPredictionContent(document.RootElement, options);
         }
 
-        internal static PredictionContent DeserializePredictionContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AdvisorPredictionContent DeserializeAdvisorPredictionContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            PredictionType? predictionType = default;
+            AdvisorPredictionType? predictionType = default;
             IDictionary<string, BinaryData> extendedProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Advisor.Models
                             {
                                 continue;
                             }
-                            predictionType = new PredictionType(property0.Value.GetString());
+                            predictionType = new AdvisorPredictionType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("extendedProperties"u8))
@@ -156,38 +156,38 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PredictionContent(predictionType, extendedProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
+            return new AdvisorPredictionContent(predictionType, extendedProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PredictionContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AdvisorPredictionContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PredictionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorPredictionContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAdvisorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PredictionContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvisorPredictionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PredictionContent IPersistableModel<PredictionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AdvisorPredictionContent IPersistableModel<AdvisorPredictionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PredictionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorPredictionContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePredictionContent(document.RootElement, options);
+                        return DeserializeAdvisorPredictionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PredictionContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvisorPredictionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PredictionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AdvisorPredictionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

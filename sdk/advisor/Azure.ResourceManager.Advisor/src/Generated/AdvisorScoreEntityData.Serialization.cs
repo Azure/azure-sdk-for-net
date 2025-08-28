@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Advisor
             ResourceType type = default;
             SystemData systemData = default;
             AdvisorScoreEntityContent lastRefreshedScore = default;
-            IReadOnlyList<TimeSeriesEntity> timeSeries = default;
+            IReadOnlyList<AdvisorTimeSeriesEntity> timeSeries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Advisor
                             {
                                 continue;
                             }
-                            List<TimeSeriesEntity> array = new List<TimeSeriesEntity>();
+                            List<AdvisorTimeSeriesEntity> array = new List<AdvisorTimeSeriesEntity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TimeSeriesEntity.DeserializeTimeSeriesEntity(item, options));
+                                array.Add(AdvisorTimeSeriesEntity.DeserializeAdvisorTimeSeriesEntity(item, options));
                             }
                             timeSeries = array;
                             continue;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Advisor
                 type,
                 systemData,
                 lastRefreshedScore,
-                timeSeries ?? new ChangeTrackingList<TimeSeriesEntity>(),
+                timeSeries ?? new ChangeTrackingList<AdvisorTimeSeriesEntity>(),
                 serializedAdditionalRawData);
         }
 

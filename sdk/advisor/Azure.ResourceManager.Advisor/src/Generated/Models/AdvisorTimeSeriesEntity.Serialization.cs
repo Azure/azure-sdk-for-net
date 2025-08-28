@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    public partial class TimeSeriesEntity : IUtf8JsonSerializable, IJsonModel<TimeSeriesEntity>
+    public partial class AdvisorTimeSeriesEntity : IUtf8JsonSerializable, IJsonModel<AdvisorTimeSeriesEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TimeSeriesEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdvisorTimeSeriesEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TimeSeriesEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AdvisorTimeSeriesEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TimeSeriesEntity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorTimeSeriesEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TimeSeriesEntity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvisorTimeSeriesEntity)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(AggregationLevel))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.Advisor.Models
             }
         }
 
-        TimeSeriesEntity IJsonModel<TimeSeriesEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AdvisorTimeSeriesEntity IJsonModel<AdvisorTimeSeriesEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TimeSeriesEntity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorTimeSeriesEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TimeSeriesEntity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvisorTimeSeriesEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTimeSeriesEntity(document.RootElement, options);
+            return DeserializeAdvisorTimeSeriesEntity(document.RootElement, options);
         }
 
-        internal static TimeSeriesEntity DeserializeTimeSeriesEntity(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AdvisorTimeSeriesEntity DeserializeAdvisorTimeSeriesEntity(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -121,38 +121,38 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TimeSeriesEntity(aggregationLevel, scoreHistory ?? new ChangeTrackingList<AdvisorScoreEntityContent>(), serializedAdditionalRawData);
+            return new AdvisorTimeSeriesEntity(aggregationLevel, scoreHistory ?? new ChangeTrackingList<AdvisorScoreEntityContent>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<TimeSeriesEntity>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AdvisorTimeSeriesEntity>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TimeSeriesEntity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorTimeSeriesEntity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAdvisorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TimeSeriesEntity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvisorTimeSeriesEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TimeSeriesEntity IPersistableModel<TimeSeriesEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AdvisorTimeSeriesEntity IPersistableModel<AdvisorTimeSeriesEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TimeSeriesEntity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AdvisorTimeSeriesEntity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTimeSeriesEntity(document.RootElement, options);
+                        return DeserializeAdvisorTimeSeriesEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TimeSeriesEntity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvisorTimeSeriesEntity)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TimeSeriesEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AdvisorTimeSeriesEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

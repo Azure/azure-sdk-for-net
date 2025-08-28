@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 return null;
             }
             IReadOnlyDictionary<string, BinaryData> extendedProperties = default;
-            PredictionType? predictionType = default;
+            AdvisorPredictionType? predictionType = default;
             RecommendationCategory? category = default;
             RecommendationBusinessImpact? impact = default;
             string impactedField = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Advisor.Models
                             {
                                 continue;
                             }
-                            predictionType = new PredictionType(property0.Value.GetString());
+                            predictionType = new AdvisorPredictionType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("category"u8))
