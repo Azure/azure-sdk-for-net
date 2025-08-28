@@ -69,14 +69,24 @@ public readonly struct ClientConnection
     /// Initializes a new instance of the <see cref="ClientConnection"/> struct with the specified subclient ID.
     /// It is only for the JSON serializer.
     /// </summary>
-    /// <param name="metadata">The connection metadata.</param>
     /// <param name="id">The identifier for the connection.</param>
     /// <param name="locator">The endpoint or resource identifier.</param>
+    /// <param name="credential">The client credential.</param>
     /// <param name="credentialKind">The kind of connection used by the client</param>
-    internal ClientConnection(IReadOnlyDictionary<string, string> metadata, string id, string locator, CredentialKind credentialKind)
+    /// <param name="metadata">The connection metadata.</param>
+    public ClientConnection(string id, string locator, object credential, CredentialKind credentialKind, IReadOnlyDictionary<string, string> metadata)
     {
+        if (string.IsNullOrWhiteSpace(id))
+            throw new ArgumentException("Id cannot be null or empty.", nameof(id));
+        if (string.IsNullOrWhiteSpace(locator))
+            throw new ArgumentException("Locator cannot be null or empty.", nameof(locator));
+        if (credential is null)
+            throw new ArgumentNullException(nameof(credential), "Credential cannot be null.");
+        if (metadata is null)
+            throw new ArgumentNullException(nameof(metadata), "Metadata cannot be null");
         Id = id;
         Locator = locator;
+        Credential = credential;
         CredentialKind = credentialKind;
         Metadata = metadata;
     }
