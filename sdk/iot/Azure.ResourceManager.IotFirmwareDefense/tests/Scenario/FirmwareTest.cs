@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 {
     public class FirmwareTest : IotFirmwareDefenseManagementTestBase
     {
-        private static readonly string rgName = "testRg";
         private static ResourceGroupResource rg;
         private static IotFirmwareData testFirmware;
 

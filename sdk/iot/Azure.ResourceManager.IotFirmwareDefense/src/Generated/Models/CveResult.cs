@@ -111,6 +111,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public string Severity { get; set; }
         /// <summary> Name of the CVE. </summary>
         public string CveName { get; set; }
+        /// <summary> Legacy property for the effective CVE score. </summary>
+        public string CvssScore { get; set; }
+        /// <summary> Legacy property for the CVE CVSS version 2 score, if one existed. </summary>
+        public string CvssV2Score { get; set; }
+        /// <summary> Legacy property for the CVE CVSS version 3 score, if one existed. </summary>
+        public string CvssV3Score { get; set; }
+        /// <summary> Legacy property for the what CVSS version score was stored in the cvssScore property. </summary>
+        public string CvssVersion { get; set; }
         /// <summary> The most recent CVSS score of the CVE. </summary>
         public float? EffectiveCvssScore { get; set; }
         /// <summary> The version of the effectiveCvssScore property. </summary>

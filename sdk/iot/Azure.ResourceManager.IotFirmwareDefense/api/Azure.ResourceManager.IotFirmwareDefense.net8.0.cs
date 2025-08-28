@@ -648,14 +648,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public string ComponentVersion { get { throw null; } set { } }
         public string CveId { get { throw null; } set { } }
         public string CveName { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string CvssScore { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.IotFirmwareDefense.Models.CvssScore> CvssScores { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string CvssV2Score { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string CvssV3Score { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string CvssVersion { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public float? EffectiveCvssScore { get { throw null; } set { } }
