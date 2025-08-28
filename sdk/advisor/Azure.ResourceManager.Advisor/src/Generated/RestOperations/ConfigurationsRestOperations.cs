@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Advisor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetConfigurationsRequestUri(string subscriptionId)
+        internal RequestUriBuilder CreateGetAdvisorConfigurationsRequestUri(string subscriptionId)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Advisor
             return uri;
         }
 
-        internal HttpMessage CreateGetConfigurationsRequest(string subscriptionId)
+        internal HttpMessage CreateGetAdvisorConfigurationsRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfigurationListResult>> GetConfigurationsAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfigurationListResult>> GetAdvisorConfigurationsAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateGetConfigurationsRequest(subscriptionId);
+            using var message = CreateGetAdvisorConfigurationsRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfigurationListResult> GetConfigurations(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ConfigurationListResult> GetAdvisorConfigurations(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateGetConfigurationsRequest(subscriptionId);
+            using var message = CreateGetAdvisorConfigurationsRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        internal RequestUriBuilder CreateCreateConfigurationRequestUri(string subscriptionId, ConfigurationName configurationName, AdvisorConfigData data)
+        internal RequestUriBuilder CreateCreateAdvisorConfigurationRequestUri(string subscriptionId, ConfigurationName configurationName, AdvisorConfigData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Advisor
             return uri;
         }
 
-        internal HttpMessage CreateCreateConfigurationRequest(string subscriptionId, ConfigurationName configurationName, AdvisorConfigData data)
+        internal HttpMessage CreateCreateAdvisorConfigurationRequest(string subscriptionId, ConfigurationName configurationName, AdvisorConfigData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdvisorConfigData>> CreateConfigurationAsync(string subscriptionId, ConfigurationName configurationName, AdvisorConfigData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AdvisorConfigData>> CreateAdvisorConfigurationAsync(string subscriptionId, ConfigurationName configurationName, AdvisorConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateConfigurationRequest(subscriptionId, configurationName, data);
+            using var message = CreateCreateAdvisorConfigurationRequest(subscriptionId, configurationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdvisorConfigData> CreateConfiguration(string subscriptionId, ConfigurationName configurationName, AdvisorConfigData data, CancellationToken cancellationToken = default)
+        public Response<AdvisorConfigData> CreateAdvisorConfiguration(string subscriptionId, ConfigurationName configurationName, AdvisorConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateConfigurationRequest(subscriptionId, configurationName, data);
+            using var message = CreateCreateAdvisorConfigurationRequest(subscriptionId, configurationName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        internal RequestUriBuilder CreateGetConfigurationsRequestUri(string subscriptionId, string resourceGroup)
+        internal RequestUriBuilder CreateGetAdvisorConfigurationsRequestUri(string subscriptionId, string resourceGroup)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Advisor
             return uri;
         }
 
-        internal HttpMessage CreateGetConfigurationsRequest(string subscriptionId, string resourceGroup)
+        internal HttpMessage CreateGetAdvisorConfigurationsRequest(string subscriptionId, string resourceGroup)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -242,12 +242,12 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfigurationListResult>> GetConfigurationsAsync(string subscriptionId, string resourceGroup, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfigurationListResult>> GetAdvisorConfigurationsAsync(string subscriptionId, string resourceGroup, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
 
-            using var message = CreateGetConfigurationsRequest(subscriptionId, resourceGroup);
+            using var message = CreateGetAdvisorConfigurationsRequest(subscriptionId, resourceGroup);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -269,12 +269,12 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfigurationListResult> GetConfigurations(string subscriptionId, string resourceGroup, CancellationToken cancellationToken = default)
+        public Response<ConfigurationListResult> GetAdvisorConfigurations(string subscriptionId, string resourceGroup, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
 
-            using var message = CreateGetConfigurationsRequest(subscriptionId, resourceGroup);
+            using var message = CreateGetAdvisorConfigurationsRequest(subscriptionId, resourceGroup);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        internal RequestUriBuilder CreateCreateConfigurationRequestUri(string subscriptionId, ConfigurationName configurationName, string resourceGroup, AdvisorConfigData data)
+        internal RequestUriBuilder CreateCreateAdvisorConfigurationRequestUri(string subscriptionId, ConfigurationName configurationName, string resourceGroup, AdvisorConfigData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Advisor
             return uri;
         }
 
-        internal HttpMessage CreateCreateConfigurationRequest(string subscriptionId, ConfigurationName configurationName, string resourceGroup, AdvisorConfigData data)
+        internal HttpMessage CreateCreateAdvisorConfigurationRequest(string subscriptionId, ConfigurationName configurationName, string resourceGroup, AdvisorConfigData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -336,13 +336,13 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdvisorConfigData>> CreateConfigurationAsync(string subscriptionId, ConfigurationName configurationName, string resourceGroup, AdvisorConfigData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AdvisorConfigData>> CreateAdvisorConfigurationAsync(string subscriptionId, ConfigurationName configurationName, string resourceGroup, AdvisorConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateConfigurationRequest(subscriptionId, configurationName, resourceGroup, data);
+            using var message = CreateCreateAdvisorConfigurationRequest(subscriptionId, configurationName, resourceGroup, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -366,13 +366,13 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdvisorConfigData> CreateConfiguration(string subscriptionId, ConfigurationName configurationName, string resourceGroup, AdvisorConfigData data, CancellationToken cancellationToken = default)
+        public Response<AdvisorConfigData> CreateAdvisorConfiguration(string subscriptionId, ConfigurationName configurationName, string resourceGroup, AdvisorConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateConfigurationRequest(subscriptionId, configurationName, resourceGroup, data);
+            using var message = CreateCreateAdvisorConfigurationRequest(subscriptionId, configurationName, resourceGroup, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        internal RequestUriBuilder CreateGetConfigurationsNextPageRequestUri(string nextLink, string subscriptionId)
+        internal RequestUriBuilder CreateGetAdvisorConfigurationsNextPageRequestUri(string nextLink, string subscriptionId)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Advisor
             return uri;
         }
 
-        internal HttpMessage CreateGetConfigurationsNextPageRequest(string nextLink, string subscriptionId)
+        internal HttpMessage CreateGetAdvisorConfigurationsNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -416,12 +416,12 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfigurationListResult>> GetConfigurationsNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfigurationListResult>> GetAdvisorConfigurationsNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateGetConfigurationsNextPageRequest(nextLink, subscriptionId);
+            using var message = CreateGetAdvisorConfigurationsNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -443,12 +443,12 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfigurationListResult> GetConfigurationsNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ConfigurationListResult> GetAdvisorConfigurationsNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateGetConfigurationsNextPageRequest(nextLink, subscriptionId);
+            using var message = CreateGetAdvisorConfigurationsNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        internal RequestUriBuilder CreateGetConfigurationsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroup)
+        internal RequestUriBuilder CreateGetAdvisorConfigurationsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroup)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Advisor
             return uri;
         }
 
-        internal HttpMessage CreateGetConfigurationsNextPageRequest(string nextLink, string subscriptionId, string resourceGroup)
+        internal HttpMessage CreateGetAdvisorConfigurationsNextPageRequest(string nextLink, string subscriptionId, string resourceGroup)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -493,13 +493,13 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfigurationListResult>> GetConfigurationsNextPageAsync(string nextLink, string subscriptionId, string resourceGroup, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfigurationListResult>> GetAdvisorConfigurationsNextPageAsync(string nextLink, string subscriptionId, string resourceGroup, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
 
-            using var message = CreateGetConfigurationsNextPageRequest(nextLink, subscriptionId, resourceGroup);
+            using var message = CreateGetAdvisorConfigurationsNextPageRequest(nextLink, subscriptionId, resourceGroup);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -522,13 +522,13 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfigurationListResult> GetConfigurationsNextPage(string nextLink, string subscriptionId, string resourceGroup, CancellationToken cancellationToken = default)
+        public Response<ConfigurationListResult> GetAdvisorConfigurationsNextPage(string nextLink, string subscriptionId, string resourceGroup, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
 
-            using var message = CreateGetConfigurationsNextPageRequest(nextLink, subscriptionId, resourceGroup);
+            using var message = CreateGetAdvisorConfigurationsNextPageRequest(nextLink, subscriptionId, resourceGroup);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
