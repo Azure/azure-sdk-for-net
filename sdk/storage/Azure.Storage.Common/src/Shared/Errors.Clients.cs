@@ -35,6 +35,9 @@ namespace Azure.Storage
                 long value1)
             => new ArgumentOutOfRangeException(paramName, $"Value must be greater than {value0} or equal to {value1}");
 
+        public static ArgumentException InvalidDateTimeUtc(string dateTime) =>
+            new ArgumentException($"{dateTime} must be UTC");
+
         public static ArgumentException StreamMustBeReadable(string paramName)
             => new ArgumentException("Stream must be readable", paramName);
 
