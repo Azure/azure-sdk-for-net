@@ -1,4 +1,4 @@
-# Azure Code Transparency client library for .NET
+# Microsoft's Signing Transparency client library for .NET
 
 <!-- cspell:ignore cose merkle scitt -->
 
@@ -20,7 +20,7 @@ dotnet add package Azure.Security.CodeTransparency --prerelease
 
 ### Prerequisites
 
-- A running and accessible Code Transparency Service
+- A running and accessible Signing Transparency Service
 - Ability to create `COSE_Sign1` envelopes, [an example script][CTS_claim_generator_script]
 - Your signer details (CA cert) have to be configured in the running service, [about available configuration][CTS_configuration_doc]
 - You can get a valid Bearer token if the service authentication is configured to require one, [see example](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples/Sample3_UseYourCredentials.md)
