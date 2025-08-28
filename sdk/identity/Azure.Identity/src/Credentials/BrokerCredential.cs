@@ -16,7 +16,7 @@ namespace Azure.Identity.Credentials
         private readonly bool _isBrokerOptionsEnabled;
 
         public BrokerCredential(DevelopmentBrokerOptions options)
-            : base(CredentialOptionsMapper.GetBrokerOptionsWithCredentialOptions(options, out bool isBrokerEnabled) ?? CreateFallbackOptionsFromCredentialOptions(options))
+            : base(CredentialOptionsMapper.GetBrokerOptionsWithCredentialOptions(options, out bool isBrokerEnabled) ?? CredentialOptionsMapper.CreateFallbackOptionsFromCredentialOptions(options))
         {
             _isBrokerOptionsEnabled = isBrokerEnabled;
         }
@@ -51,22 +51,6 @@ namespace Azure.Identity.Credentials
             {
                 throw scope.FailWrapAndThrow(e, "BrokerCredential failed to silently authenticate via the broker", isCredentialUnavailable: true);
             }
-        }
-
-        private static InteractiveBrowserCredentialOptions CreateFallbackOptionsFromCredentialOptions(DevelopmentBrokerOptions credentialOptions)
-        {
-            var fallbackOptions = new InteractiveBrowserCredentialOptions();
-
-            if (credentialOptions != null)
-            {
-                fallbackOptions.TenantId = credentialOptions.TenantId;
-                fallbackOptions.AdditionallyAllowedTenants = credentialOptions.AdditionallyAllowedTenants;
-                fallbackOptions.AuthorityHost = credentialOptions.AuthorityHost;
-                fallbackOptions.IsUnsafeSupportLoggingEnabled = credentialOptions.IsUnsafeSupportLoggingEnabled;
-                fallbackOptions.IsChainedCredential = credentialOptions.IsChainedCredential;
-            }
-
-            return fallbackOptions;
         }
     }
 }
