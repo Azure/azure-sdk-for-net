@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Hci.Vm.Tests
 {
-    public class Hci.VmManagementTestBase : ManagementRecordedTestBase<Hci.VmManagementTestEnvironment>
+    public class HciVmManagementTestBase : ManagementRecordedTestBase<HciVmManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        protected Hci.VmManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected HciVmManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected Hci.VmManagementTestBase(bool isAsync)
+        protected HciVmManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }
