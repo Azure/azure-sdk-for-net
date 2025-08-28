@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="linkedServerName"> The name of the linked server that is being added to the Redis cache. </param>
+        /// <param name="linkedServerName"> The <see cref="string"/> to use. </param>
         /// <param name="content"> Parameters supplied to the Create Linked server operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="linkedServerName"> The name of the linked server that is being added to the Redis cache. </param>
+        /// <param name="linkedServerName"> The <see cref="string"/> to use. </param>
         /// <param name="content"> Parameters supplied to the Create Linked server operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkedServerName"> The name of the linked server. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkedServerName"> The name of the linked server. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkedServerName"> The name of the linked server. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkedServerName"> The name of the linked server. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkedServerName"> The name of the linked server. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkedServerName"> The name of the linked server. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>

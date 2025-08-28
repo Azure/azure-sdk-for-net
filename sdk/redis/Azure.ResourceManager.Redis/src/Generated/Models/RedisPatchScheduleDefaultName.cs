@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         private const string DefaultValue = "default";
 
-        /// <summary> default. </summary>
+        /// <summary> The name of e.g. the patch schedules resource, which is a singleton, must always be 'Default' *. </summary>
         public static RedisPatchScheduleDefaultName Default { get; } = new RedisPatchScheduleDefaultName(DefaultValue);
         /// <summary> Determines if two <see cref="RedisPatchScheduleDefaultName"/> values are the same. </summary>
         public static bool operator ==(RedisPatchScheduleDefaultName left, RedisPatchScheduleDefaultName right) => left.Equals(right);
