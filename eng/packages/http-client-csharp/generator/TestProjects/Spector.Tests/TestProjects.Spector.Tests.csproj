@@ -28,6 +28,8 @@
     <ProjectReference Include="..\Spector\http\azure\core\lro\rpc\src\_Specs_.Azure.Core.Lro.Rpc.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\basic\src\_Specs_.Azure.Core.Basic.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\page\src\_Specs_.Azure.Core.Page.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\core\scalar\src\_Specs_.Azure.Core.Scalar.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\core\traits\src\_Specs_.Azure.Core.Traits.csproj" />
     <ProjectReference Include="..\Spector\http\azure\encode\duration\src\_Specs_.Azure.Encode.Duration.csproj" />
     <ProjectReference Include="..\Spector\http\azure\example\basic\src\_Specs_.Azure.Example.Basic.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\model\src\_Specs_.Azure.Core.Model.csproj" />

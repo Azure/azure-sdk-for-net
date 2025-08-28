@@ -1,14 +1,12 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0 (2025-08-29)
 
-### Features Added
+This release marks the general availability of the `Azure.Developer.Playwright` package.
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Removed useCloudHostedBrowsers.
 
 ## 1.0.0-beta.2 (2025-08-06)
 
