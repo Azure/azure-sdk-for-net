@@ -109,6 +109,7 @@ known_content_issues:
   - ['sdk/search/README.md','Not a package: azure-sdk-tools/issues/42']
   - ['sdk/storage/README.md','Not a package: azure-sdk-tools/issues/42']
 
+  - ['sdk/confidentialledger/Azure.Security.CodeTransparency/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404 Title needs to start with Microsoft`s']
   - ['sdk/core/Azure.Core.Amqp/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/Azure.Core.Experimental/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/Azure.Core.TestFramework/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
