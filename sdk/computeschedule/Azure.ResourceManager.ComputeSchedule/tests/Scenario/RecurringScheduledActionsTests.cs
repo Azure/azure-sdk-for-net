@@ -4,26 +4,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ComputeSchedule.Models;
 using Azure.ResourceManager.ComputeSchedule.Tests.Helpers;
-using Azure.ResourceManager.Resources;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 {
     public class RecurringScheduledActionsTests : ComputeScheduleManagementTestBase
     {
-        private static readonly TimeSpan s_startScheduleTime = new(02, 0, 0);
-        private static readonly HashSet<ResourceIdentifier> s_resources =
-            [
-                new("/subscriptions/1d04e8f1-ee04-4056-b0b2-718f5bb45b04/resourceGroups/rg-nneka-computeschedule/providers/Microsoft.Compute/virtualMachines/crud-vm66690"),
-                new("/subscriptions/1d04e8f1-ee04-4056-b0b2-718f5bb45b04/resourceGroups/rg-nneka-computeschedule/providers/Microsoft.Compute/virtualMachines/crud-vm4060"),
-            ];
+        private static readonly TimeSpan s_startScheduleTime = new(19, 0, 0);
+
         public RecurringScheduledActionsTests(bool isAsync)
             : base(isAsync, RecordedTestMode.Playback)
         {
@@ -57,7 +50,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             ScheduledAction sa = await CreateAndValidateScheduledAction("crud-aa-", s_startScheduleTime);
             var scheduledActionName = sa.Name;
 
-            List<ResourceIdentifier> allResourceids = [.. s_resources];
+            List<ResourceIdentifier> allResourceids = [.. GetTestResourceIdentifiers(DefaultSubscription.Id.Name, DefaultResourceGroupResource.Data.Name)];
             Console.WriteLine($"Generated vmIds: {allResourceids.FormatCollection()} VMs");
 
             try
@@ -139,7 +132,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
         [RecordedTest]
         public async Task TestRecurringScheduledAction_CancelNextOccurrence()
         {
-            var resourceIds = s_resources.ToList();
+            var resourceIds = GetTestResourceIdentifiers(DefaultSubscription.Id.Name, DefaultResourceGroupResource.Data.Name).ToList();
             var scheduledAction = await CreateAndValidateScheduledAction("ca-nx-", s_startScheduleTime, isDisabled: false);
             var scheduledActionName = scheduledAction.Name;
 
@@ -199,7 +192,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
         [RecordedTest]
         public async Task TestRecurringScheduledAction_TriggerManualOccurrence()
         {
-            var resourceIds = s_resources.ToList();
+            var resourceIds = GetTestResourceIdentifiers(DefaultSubscription.Id.Name, DefaultResourceGroupResource.Data.Name).ToList();
             var scheduledAction = await CreateAndValidateScheduledAction("ca-tr-", s_startScheduleTime, isDisabled: false);
             var scheduledActionName = scheduledAction.Name;
 
@@ -249,7 +242,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
         [RecordedTest]
         public async Task TestRecurringScheduledAction_CancelOccurrence()
         {
-            List<ResourceIdentifier> allResourceids = [.. s_resources];
+            List<ResourceIdentifier> allResourceids = GetTestResourceIdentifiers(DefaultSubscription.Id.Name, DefaultResourceGroupResource.Data.Name).ToList();
             ScheduledAction sa = await CreateAndValidateScheduledAction("cat-aa-", s_startScheduleTime, isDisabled: false);
             var scheduledActionName = sa.Name;
 
@@ -300,7 +293,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
         [RecordedTest]
         public async Task TestRecurringScheduledAction_DelayOccurrence()
         {
-            List<ResourceIdentifier> allResourceids = s_resources.ToList();
+            List<ResourceIdentifier> allResourceids = GetTestResourceIdentifiers(DefaultSubscription.Id.Name, DefaultResourceGroupResource.Data.Name).ToList();
             ScheduledAction sa = await CreateAndValidateScheduledAction("del-sch-", s_startScheduleTime, isDisabled: false);
             var scheduledActionName = sa.Name;
             try
@@ -345,6 +338,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
         #endregion
 
         #region Private methods
+        private static HashSet<ResourceIdentifier> GetTestResourceIdentifiers(string subId, string resourceGroupName)
+        {
+            var vmNames = new[] { "crud-vm66690", "crud-vm4060" };
+            IEnumerable<ResourceIdentifier> resourceIds = vmNames.Select(vmName =>
+                new ResourceIdentifier($"/subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}")
+            );
+            return [.. resourceIds];
+        }
+
         private async Task CancelOccurrenceTask(OccurrenceResource occ, List<ResourceIdentifier> resources, string scheduledActionName, OccurrenceState occurrenceStateConfirm, string resourceStateConfirm)
         {
             await occ.CancelAsync(new(resourceIds: [resources[0]]));

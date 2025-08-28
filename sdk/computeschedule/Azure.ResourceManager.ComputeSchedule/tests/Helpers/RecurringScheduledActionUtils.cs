@@ -3,16 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Security.AccessControl;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.ResourceManager.ComputeSchedule.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
