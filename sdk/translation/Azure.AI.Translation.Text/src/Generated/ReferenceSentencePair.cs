@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Translation.Text
 {
-    /// <summary> Input text in the default script of the source language. </summary>
-    public partial class SourceText
+    /// <summary> Reference sentence pair. </summary>
+    public partial class ReferenceSentencePair
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +45,38 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SourceText"/>. </summary>
-        /// <param name="text"> Input text in the default script of the source language. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        internal SourceText(string text)
+        /// <summary> Initializes a new instance of <see cref="ReferenceSentencePair"/>. </summary>
+        /// <param name="source"> Source reference sentence. </param>
+        /// <param name="target"> Target reference sentence. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="target"/> is null. </exception>
+        public ReferenceSentencePair(string source, string target)
         {
-            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(target, nameof(target));
 
-            Text = text;
+            Source = source;
+            Target = target;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SourceText"/>. </summary>
-        /// <param name="text"> Input text in the default script of the source language. </param>
+        /// <summary> Initializes a new instance of <see cref="ReferenceSentencePair"/>. </summary>
+        /// <param name="source"> Source reference sentence. </param>
+        /// <param name="target"> Target reference sentence. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SourceText(string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReferenceSentencePair(string source, string target, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Text = text;
+            Source = source;
+            Target = target;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SourceText"/> for deserialization. </summary>
-        internal SourceText()
+        /// <summary> Initializes a new instance of <see cref="ReferenceSentencePair"/> for deserialization. </summary>
+        internal ReferenceSentencePair()
         {
         }
 
-        /// <summary> Input text in the default script of the source language. </summary>
-        public string Text { get; }
+        /// <summary> Source reference sentence. </summary>
+        public string Source { get; }
+        /// <summary> Target reference sentence. </summary>
+        public string Target { get; }
     }
 }
