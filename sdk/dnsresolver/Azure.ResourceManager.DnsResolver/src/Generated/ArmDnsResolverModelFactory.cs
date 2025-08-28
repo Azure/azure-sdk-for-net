@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> ETag of the DNS resolver. </param>
         /// <param name="virtualNetworkId"> The reference to the virtual network. This cannot be changed after creation. </param>
         /// <param name="dnsResolverState"> The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver resource. </param>
+        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <returns> A new <see cref="DnsResolver.DnsResolverData"/> instance for mocking. </returns>
-        public static DnsResolverData DnsResolverData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ResourceIdentifier virtualNetworkId = null, DnsResolverState? dnsResolverState = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
+        public static DnsResolverData DnsResolverData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceIdentifier virtualNetworkId = null, DnsResolverState? dnsResolverState = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 systemData,
                 tags,
                 location,
-                etag,
                 virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null,
                 dnsResolverState,
                 provisioningState,
                 resourceGuid,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> ETag of the inbound endpoint. </param>
         /// <param name="ipConfigurations"> IP configurations for the inbound endpoint. </param>
         /// <param name="provisioningState"> The current provisioning state of the inbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the inbound endpoint resource. </param>
+        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <returns> A new <see cref="DnsResolver.DnsResolverInboundEndpointData"/> instance for mocking. </returns>
-        public static DnsResolverInboundEndpointData DnsResolverInboundEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IEnumerable<InboundEndpointIPConfiguration> ipConfigurations = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
+        public static DnsResolverInboundEndpointData DnsResolverInboundEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<InboundEndpointIPConfiguration> ipConfigurations = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
             ipConfigurations ??= new List<InboundEndpointIPConfiguration>();
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 systemData,
                 tags,
                 location,
-                etag,
                 ipConfigurations?.ToList(),
                 provisioningState,
                 resourceGuid,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> ETag of the outbound endpoint. </param>
         /// <param name="subnetId"> The reference to the subnet used for the outbound endpoint. </param>
         /// <param name="provisioningState"> The current provisioning state of the outbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the outbound endpoint resource. </param>
+        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <returns> A new <see cref="DnsResolver.DnsResolverOutboundEndpointData"/> instance for mocking. </returns>
-        public static DnsResolverOutboundEndpointData DnsResolverOutboundEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ResourceIdentifier subnetId = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
+        public static DnsResolverOutboundEndpointData DnsResolverOutboundEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceIdentifier subnetId = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 systemData,
                 tags,
                 location,
-                etag,
                 subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null,
                 provisioningState,
                 resourceGuid,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> ETag of the DNS forwarding ruleset. </param>
         /// <param name="dnsResolverOutboundEndpoints"> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS forwarding ruleset. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid for the DNS forwarding ruleset. </param>
+        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <returns> A new <see cref="DnsResolver.DnsForwardingRulesetData"/> instance for mocking. </returns>
-        public static DnsForwardingRulesetData DnsForwardingRulesetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IEnumerable<WritableSubResource> dnsResolverOutboundEndpoints = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
+        public static DnsForwardingRulesetData DnsForwardingRulesetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<WritableSubResource> dnsResolverOutboundEndpoints = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
             dnsResolverOutboundEndpoints ??= new List<WritableSubResource>();
@@ -134,67 +134,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 systemData,
                 tags,
                 location,
-                etag,
                 dnsResolverOutboundEndpoints?.ToList(),
                 provisioningState,
                 resourceGuid,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DnsResolver.DnsForwardingRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> ETag of the forwarding rule. </param>
-        /// <param name="domainName"> The domain name for the forwarding rule. </param>
-        /// <param name="targetDnsServers"> DNS servers to forward the DNS query to. </param>
-        /// <param name="metadata"> Metadata attached to the forwarding rule. </param>
-        /// <param name="dnsForwardingRuleState"> The state of forwarding rule. </param>
-        /// <param name="provisioningState"> The current provisioning state of the forwarding rule. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <returns> A new <see cref="DnsResolver.DnsForwardingRuleData"/> instance for mocking. </returns>
-        public static DnsForwardingRuleData DnsForwardingRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string domainName = null, IEnumerable<TargetDnsServer> targetDnsServers = null, IDictionary<string, string> metadata = null, DnsForwardingRuleState? dnsForwardingRuleState = null, DnsResolverProvisioningState? provisioningState = null)
-        {
-            targetDnsServers ??= new List<TargetDnsServer>();
-            metadata ??= new Dictionary<string, string>();
-
-            return new DnsForwardingRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
                 etag,
-                domainName,
-                targetDnsServers?.ToList(),
-                metadata,
-                dnsForwardingRuleState,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> ETag of the virtual network link. </param>
-        /// <param name="virtualNetworkId"> The reference to the virtual network. This cannot be changed after creation. </param>
-        /// <param name="metadata"> Metadata attached to the virtual network link. </param>
-        /// <param name="provisioningState"> The current provisioning state of the virtual network link. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <returns> A new <see cref="DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData"/> instance for mocking. </returns>
-        public static DnsForwardingRulesetVirtualNetworkLinkData DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, ResourceIdentifier virtualNetworkId = null, IDictionary<string, string> metadata = null, DnsResolverProvisioningState? provisioningState = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-
-            return new DnsForwardingRulesetVirtualNetworkLinkData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                etag,
-                virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null,
-                metadata,
-                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
@@ -207,6 +150,63 @@ namespace Azure.ResourceManager.DnsResolver.Models
             return new VirtualNetworkDnsForwardingRuleset(id, virtualNetworkLinkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkLinkId) : null, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="DnsResolver.DnsForwardingRuleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="domainName"> The domain name for the forwarding rule. </param>
+        /// <param name="targetDnsServers"> DNS servers to forward the DNS query to. </param>
+        /// <param name="metadata"> Metadata attached to the forwarding rule. </param>
+        /// <param name="dnsForwardingRuleState"> The state of forwarding rule. </param>
+        /// <param name="provisioningState"> The current provisioning state of the forwarding rule. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <returns> A new <see cref="DnsResolver.DnsForwardingRuleData"/> instance for mocking. </returns>
+        public static DnsForwardingRuleData DnsForwardingRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string domainName = null, IEnumerable<TargetDnsServer> targetDnsServers = null, IDictionary<string, string> metadata = null, DnsForwardingRuleState? dnsForwardingRuleState = null, DnsResolverProvisioningState? provisioningState = null, ETag? etag = null)
+        {
+            targetDnsServers ??= new List<TargetDnsServer>();
+            metadata ??= new Dictionary<string, string>();
+
+            return new DnsForwardingRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                domainName,
+                targetDnsServers?.ToList(),
+                metadata,
+                dnsForwardingRuleState,
+                provisioningState,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="virtualNetworkId"> The reference to the virtual network. This cannot be changed after creation. </param>
+        /// <param name="metadata"> Metadata attached to the virtual network link. </param>
+        /// <param name="provisioningState"> The current provisioning state of the virtual network link. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <returns> A new <see cref="DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData"/> instance for mocking. </returns>
+        public static DnsForwardingRulesetVirtualNetworkLinkData DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier virtualNetworkId = null, IDictionary<string, string> metadata = null, DnsResolverProvisioningState? provisioningState = null, ETag? etag = null)
+        {
+            metadata ??= new Dictionary<string, string>();
+
+            return new DnsForwardingRulesetVirtualNetworkLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null,
+                metadata,
+                provisioningState,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="DnsResolver.DnsResolverPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> ETag of the DNS resolver policy. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS resolver policy. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver policy resource. </param>
+        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <returns> A new <see cref="DnsResolver.DnsResolverPolicyData"/> instance for mocking. </returns>
-        public static DnsResolverPolicyData DnsResolverPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
+        public static DnsResolverPolicyData DnsResolverPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -229,9 +229,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 systemData,
                 tags,
                 location,
-                etag,
                 provisioningState,
                 resourceGuid,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -242,14 +242,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> ETag of the DNS security rule. </param>
         /// <param name="priority"> The priority of the DNS security rule. </param>
         /// <param name="actionType"> The action to take on DNS requests that match the DNS security rule. </param>
         /// <param name="dnsResolverDomainLists"> DNS resolver policy domains lists that the DNS security rule applies to. </param>
         /// <param name="dnsSecurityRuleState"> The state of DNS security rule. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS security rule. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <returns> A new <see cref="DnsResolver.DnsSecurityRuleData"/> instance for mocking. </returns>
-        public static DnsSecurityRuleData DnsSecurityRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, int priority = default, DnsSecurityRuleActionType? actionType = null, IEnumerable<WritableSubResource> dnsResolverDomainLists = null, DnsSecurityRuleState? dnsSecurityRuleState = null, DnsResolverProvisioningState? provisioningState = null)
+        public static DnsSecurityRuleData DnsSecurityRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, int priority = default, DnsSecurityRuleActionType? actionType = null, IEnumerable<WritableSubResource> dnsResolverDomainLists = null, DnsSecurityRuleState? dnsSecurityRuleState = null, DnsResolverProvisioningState? provisioningState = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
             dnsResolverDomainLists ??= new List<WritableSubResource>();
@@ -261,12 +261,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 systemData,
                 tags,
                 location,
-                etag,
                 priority,
                 actionType != null ? new DnsSecurityRuleAction(actionType, serializedAdditionalRawData: null) : null,
                 dnsResolverDomainLists?.ToList(),
                 dnsSecurityRuleState,
                 provisioningState,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -277,11 +277,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> ETag of the DNS resolver policy virtual network link. </param>
         /// <param name="virtualNetworkId"> The reference to the virtual network. This cannot be changed after creation. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS resolver policy virtual network link. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <returns> A new <see cref="DnsResolver.DnsResolverPolicyVirtualNetworkLinkData"/> instance for mocking. </returns>
-        public static DnsResolverPolicyVirtualNetworkLinkData DnsResolverPolicyVirtualNetworkLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ResourceIdentifier virtualNetworkId = null, DnsResolverProvisioningState? provisioningState = null)
+        public static DnsResolverPolicyVirtualNetworkLinkData DnsResolverPolicyVirtualNetworkLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceIdentifier virtualNetworkId = null, DnsResolverProvisioningState? provisioningState = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 systemData,
                 tags,
                 location,
-                etag,
                 virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null,
                 provisioningState,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -305,13 +305,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> ETag of the DNS resolver domain list. </param>
         /// <param name="domains"> The domains in the domain list. Will be null if user is using large domain list. </param>
         /// <param name="domainsUri"> The URL for bulk upload or download for domain lists containing larger set of domains. This will be populated if domains is empty or null. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS resolver domain list. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver domain list resource. </param>
+        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <returns> A new <see cref="DnsResolver.DnsResolverDomainListData"/> instance for mocking. </returns>
-        public static DnsResolverDomainListData DnsResolverDomainListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IEnumerable<string> domains = null, Uri domainsUri = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
+        public static DnsResolverDomainListData DnsResolverDomainListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<string> domains = null, Uri domainsUri = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
             domains ??= new List<string>();
@@ -323,11 +323,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 systemData,
                 tags,
                 location,
-                etag,
                 domains?.ToList(),
                 domainsUri,
                 provisioningState,
                 resourceGuid,
+                etag,
                 serializedAdditionalRawData: null);
         }
     }

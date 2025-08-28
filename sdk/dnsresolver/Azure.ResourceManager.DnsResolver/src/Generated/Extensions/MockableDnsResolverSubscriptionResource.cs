@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolvers_List</description>
+        /// <description>DnsResolver_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolvers_List</description>
+        /// <description>DnsResolver_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsForwardingRulesets_List</description>
+        /// <description>DnsForwardingRuleset_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsForwardingRulesets_List</description>
+        /// <description>DnsForwardingRuleset_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_List</description>
+        /// <description>DnsResolverPolicy_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_List</description>
+        /// <description>DnsResolverPolicy_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_List</description>
+        /// <description>DnsResolverDomainList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_List</description>
+        /// <description>DnsResolverDomainList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
