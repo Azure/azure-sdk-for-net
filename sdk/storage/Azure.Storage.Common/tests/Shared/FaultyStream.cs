@@ -15,7 +15,6 @@ namespace Azure.Storage.Test.Shared
         private readonly Exception _exceptionToRaise;
         private int _remainingExceptions;
         private Action _onFault;
-        private long _position = 0;
 
         public FaultyStream(
             Stream innerStream,
@@ -41,7 +40,7 @@ namespace Azure.Storage.Test.Shared
 
         public override long Position
         {
-            get => CanSeek ? _innerStream.Position : _position;
+            get => _innerStream.Position;
             set => _innerStream.Position = value;
         }
 
@@ -54,9 +53,7 @@ namespace Azure.Storage.Test.Shared
         {
             if (_remainingExceptions == 0 || Position + count <= _raiseExceptionAt || _raiseExceptionAt >= _innerStream.Length)
             {
-                int read = _innerStream.Read(buffer, offset, count);
-                _position += read;
-                return read;
+                return _innerStream.Read(buffer, offset, count);
             }
             else
             {
@@ -64,13 +61,11 @@ namespace Azure.Storage.Test.Shared
             }
         }
 
-        public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+        public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
             if (_remainingExceptions == 0 || Position + count <= _raiseExceptionAt || _raiseExceptionAt >= _innerStream.Length)
             {
-                int read = await _innerStream.ReadAsync(buffer, offset, count, cancellationToken);
-                _position += read;
-                return read;
+                return _innerStream.ReadAsync(buffer, offset, count, cancellationToken);
             }
             else
             {
