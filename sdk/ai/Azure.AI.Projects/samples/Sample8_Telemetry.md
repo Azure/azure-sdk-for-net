@@ -12,7 +12,7 @@ This sample demonstrates how to use the synchronous and asynchronous `Telemetry`
 
 ```C# Snippet:AI_Projects_TelemetryExampleSync
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("Get the Application Insights connection string.");
 var connectionString = projectClient.Telemetry.GetApplicationInsightsConnectionString();
@@ -22,7 +22,7 @@ Console.WriteLine($"Connection string: {connectionString}");
 ## Asynchronous Sample
 ```C# Snippet:AI_Projects_TelemetryExampleAsync
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("Get the Application Insights connection string.");
 var connectionString = await projectClient.Telemetry.GetApplicationInsightsConnectionStringAsync();

@@ -46,7 +46,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SearchIndex JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AIProjectIndex JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ManagedAzureAISearchIndex>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -164,7 +164,7 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SearchIndex PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AIProjectIndex PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ManagedAzureAISearchIndex>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

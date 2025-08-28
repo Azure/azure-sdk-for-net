@@ -26,44 +26,30 @@ namespace Azure.AI.Projects
             }
         };
         private readonly string _apiVersion;
-        private ConnectionsOperations _cachedConnectionsOperations;
-        private Evaluations _cachedEvaluations;
-        private DatasetsOperations _cachedDatasetsOperations;
-        private IndexesOperations _cachedIndexesOperations;
-        private DeploymentsOperations _cachedDeploymentsOperations;
-        private RedTeams _cachedRedTeams;
+        private AIProjectConnectionsOperations _cachedAIProjectConnectionsOperations;
+        private AIProjectDatasetsOperations _cachedAIProjectDatasetsOperations;
+        private AIProjectIndexesOperations _cachedAIProjectIndexesOperations;
+        private AIProjectDeploymentsOperations _cachedAIProjectDeploymentsOperations;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
-        /// <summary> Initializes a new instance of ConnectionsOperations. </summary>
-        public virtual ConnectionsOperations GetConnectionsOperationsClient()
+        /// <summary> Initializes a new instance of AIProjectConnectionsOperations. </summary>
+        public virtual AIProjectConnectionsOperations GetAIProjectConnectionsOperationsClient()
         {
-            return Volatile.Read(ref _cachedConnectionsOperations) ?? Interlocked.CompareExchange(ref _cachedConnectionsOperations, new ConnectionsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedConnectionsOperations;
+            return Volatile.Read(ref _cachedAIProjectConnectionsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectConnectionsOperations, new AIProjectConnectionsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectConnectionsOperations;
         }
 
-        /// <summary> Initializes a new instance of Evaluations. </summary>
-        public virtual Evaluations GetEvaluationsClient()
+        /// <summary> Initializes a new instance of AIProjectIndexesOperations. </summary>
+        public virtual AIProjectIndexesOperations GetAIProjectIndexesOperationsClient()
         {
-            return Volatile.Read(ref _cachedEvaluations) ?? Interlocked.CompareExchange(ref _cachedEvaluations, new Evaluations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluations;
+            return Volatile.Read(ref _cachedAIProjectIndexesOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectIndexesOperations, new AIProjectIndexesOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectIndexesOperations;
         }
 
-        /// <summary> Initializes a new instance of IndexesOperations. </summary>
-        public virtual IndexesOperations GetIndexesOperationsClient()
+        /// <summary> Initializes a new instance of AIProjectDeploymentsOperations. </summary>
+        public virtual AIProjectDeploymentsOperations GetAIProjectDeploymentsOperationsClient()
         {
-            return Volatile.Read(ref _cachedIndexesOperations) ?? Interlocked.CompareExchange(ref _cachedIndexesOperations, new IndexesOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedIndexesOperations;
-        }
-
-        /// <summary> Initializes a new instance of DeploymentsOperations. </summary>
-        public virtual DeploymentsOperations GetDeploymentsOperationsClient()
-        {
-            return Volatile.Read(ref _cachedDeploymentsOperations) ?? Interlocked.CompareExchange(ref _cachedDeploymentsOperations, new DeploymentsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedDeploymentsOperations;
-        }
-
-        /// <summary> Initializes a new instance of RedTeams. </summary>
-        public virtual RedTeams GetRedTeamsClient()
-        {
-            return Volatile.Read(ref _cachedRedTeams) ?? Interlocked.CompareExchange(ref _cachedRedTeams, new RedTeams(Pipeline, _endpoint, _apiVersion), null) ?? _cachedRedTeams;
+            return Volatile.Read(ref _cachedAIProjectDeploymentsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectDeploymentsOperations, new AIProjectDeploymentsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectDeploymentsOperations;
         }
     }
 }
