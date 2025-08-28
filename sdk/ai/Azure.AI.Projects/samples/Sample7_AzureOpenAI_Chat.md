@@ -17,7 +17,7 @@ var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI chat client");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
 ChatClient chatClient = azureOpenAIClient.GetChatClient(deploymentName: modelDeploymentName);
 
@@ -32,7 +32,7 @@ var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI chat client");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
 ChatClient chatClient = azureOpenAIClient.GetChatClient(deploymentName: modelDeploymentName);
 

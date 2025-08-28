@@ -94,7 +94,7 @@ PersistentAgent agent = agentsClient.Administration.CreateAgent(
     instructions: "You are a personal math tutor. Write and run code to answer math questions."
 );
 
-//// Step 2: Create a thread
+// Step 2: Create a thread
 PersistentAgentThread thread = agentsClient.Threads.CreateThread();
 
 // Step 3: Add a message to a thread
@@ -164,7 +164,7 @@ var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI chat client");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
 ChatClient chatClient = azureOpenAIClient.GetChatClient(deploymentName: modelDeploymentName);
 
@@ -217,13 +217,13 @@ var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER"
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("List all deployments:");
-foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments())
+foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeployments())
 {
     Console.WriteLine(deployment);
 }
 
 Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
+foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
 {
     Console.WriteLine(deployment);
 }
@@ -240,35 +240,35 @@ The code below shows some Connection operations, which allow you to enumerate th
 ```C# Snippet:AI_Projects_ConnectionsExampleSync
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("List the properties of all connections:");
-foreach (ConnectionProperties connection in projectClient.Connections.GetConnections())
+foreach (AIProjectConnection connection in projectClient.Connections.GetConnections())
 {
     Console.WriteLine(connection);
     Console.WriteLine(connection.Name);
 }
 
 Console.WriteLine("List the properties of all connections of a particular type (e.g., Azure OpenAI connections):");
-foreach (ConnectionProperties connection in projectClient.Connections.GetConnections(connectionType: ConnectionType.AzureOpenAI))
+foreach (AIProjectConnection connection in projectClient.Connections.GetConnections(connectionType: ConnectionType.AzureOpenAI))
 {
     Console.WriteLine(connection);
 }
 
 Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
-ConnectionProperties specificConnection = projectClient.Connections.GetConnection(connectionName, includeCredentials: false);
+AIProjectConnection specificConnection = projectClient.Connections.GetConnection(connectionName, includeCredentials: false);
 Console.WriteLine(specificConnection);
 
 Console.WriteLine("Get the properties of a connection with credentials:");
-ConnectionProperties specificConnectionCredentials = projectClient.Connections.GetConnection(connectionName, includeCredentials: true);
+AIProjectConnection specificConnectionCredentials = projectClient.Connections.GetConnection(connectionName, includeCredentials: true);
 Console.WriteLine(specificConnectionCredentials);
 
 Console.WriteLine($"Get the properties of the default connection:");
-ConnectionProperties defaultConnection = projectClient.Connections.GetDefaultConnection(includeCredentials: false);
+AIProjectConnection defaultConnection = projectClient.Connections.GetDefaultConnection(includeCredentials: false);
 Console.WriteLine(defaultConnection);
 
 Console.WriteLine($"Get the properties of the default connection with credentials:");
-ConnectionProperties defaultConnectionCredentials = projectClient.Connections.GetDefaultConnection(includeCredentials: true);
+AIProjectConnection defaultConnectionCredentials = projectClient.Connections.GetDefaultConnection(includeCredentials: true);
 Console.WriteLine(defaultConnectionCredentials);
 ```
 
@@ -344,37 +344,33 @@ var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
 var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
 var aiSearchIndexName = Environment.GetEnvironmentVariable("AI_SEARCH_INDEX_NAME") ?? "my-ai-search-index-name";
 
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-
-BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+Console.WriteLine("Create a local Index with configurable data, referencing an existing AI Search resource");
+AzureAISearchIndex searchIndex = new AzureAISearchIndex(aiSearchConnectionName, aiSearchIndexName)
 {
-    connectionName = aiSearchConnectionName,
-    indexName = aiSearchIndexName,
-    type = "AzureSearch",
-    description = "Sample Index for testing",
-    displayName = "Sample Index"
-}));
+    Description = "Sample Index for testing"
+};
 
-Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-SearchIndex index = (SearchIndex)projectClient.Indexes.CreateOrUpdate(
+Console.WriteLine($"Create the Project Index named `{indexName}` using the previously created local object:");
+searchIndex = (AzureAISearchIndex)projectClient.Indexes.CreateOrUpdate(
     name: indexName,
     version: indexVersion,
-    content: content
+    index: searchIndex
 );
-Console.WriteLine(index);
+Console.WriteLine(searchIndex);
 
 Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-SearchIndex retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
+AIProjectIndex retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
 Console.WriteLine(retrievedIndex);
 
 Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
-foreach (SearchIndex version in projectClient.Indexes.GetIndexVersions(name: indexName))
+foreach (AIProjectIndex version in projectClient.Indexes.GetIndexVersions(name: indexName))
 {
     Console.WriteLine(version);
 }
 
 Console.WriteLine($"Listing all Indices:");
-foreach (SearchIndex version in projectClient.Indexes.GetIndexes())
+foreach (AIProjectIndex version in projectClient.Indexes.GetIndexes())
 {
     Console.WriteLine(version);
 }
