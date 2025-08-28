@@ -70,8 +70,5 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Enables loopback audio functionality for the call. </summary>
         public bool? EnableLoopbackAudio { get; set; }
-
-        /// <summary> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </summary>
-        public DtmfConfigurationOptions DtmfOptions { get; set; }
     }
 }

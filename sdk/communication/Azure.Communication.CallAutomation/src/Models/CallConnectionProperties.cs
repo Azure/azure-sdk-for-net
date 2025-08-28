@@ -21,8 +21,7 @@ namespace Azure.Communication.CallAutomation
             string sourceDisplayName,
             string dataSubscriptionId,
             CommunicationUserIdentifier answeredBy,
-            MediaStreamingSubscription mediaStreamingSubscription,
-            DtmfConfigurationOptions dtmfConfigurationOptions
+            MediaStreamingSubscription mediaStreamingSubscription
             )
         {
             CallConnectionId = callConnectionId;
@@ -36,7 +35,6 @@ namespace Azure.Communication.CallAutomation
             DataSubscriptionId = dataSubscriptionId;
             AnsweredBy = answeredBy;
             MediaStreamingSubscription = mediaStreamingSubscription;
-            DtmfConfigurationOptions = dtmfConfigurationOptions;
         }
 
         internal CallConnectionProperties(CallConnectionPropertiesInternal callConnectionPropertiesDtoInternal)
@@ -71,12 +69,6 @@ namespace Azure.Communication.CallAutomation
                   callConnectionPropertiesDtoInternal.MediaStreamingSubscription.State,
                   callConnectionPropertiesDtoInternal.MediaStreamingSubscription.SubscribedContentTypes)
               : null;
-            DtmfConfigurationOptions = callConnectionPropertiesDtoInternal.DtmfConfigurationOptions == null
-                ? null
-                : new DtmfConfigurationOptions()
-                {
-                    EnableDtmfBroadcastInGroupCalls = callConnectionPropertiesDtoInternal.DtmfConfigurationOptions.EnableDtmfBroadcastInGroupCalls
-                };
         }
 
         /// <summary> The call connection id. </summary>
@@ -118,8 +110,5 @@ namespace Azure.Communication.CallAutomation
         /// Media streaming subscription details.
         /// </summary>
         public MediaStreamingSubscription MediaStreamingSubscription { get; }
-
-        /// <summary> The state of DTMF configuration for the call. </summary>
-        public DtmfConfigurationOptions DtmfConfigurationOptions { get; }
     }
 }
