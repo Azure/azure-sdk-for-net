@@ -194,7 +194,7 @@ namespace Azure.Provisioning.Tests.Primitives
                         computeType: 'Virtual'
                         cpuCores: 4
                         memoryGB: 16
-                        primaryStorageId: {
+                        primaryStorage: {
                           name: 'primary-storage'
                           location: 'eastus'
                           properties: {
@@ -204,7 +204,7 @@ namespace Azure.Provisioning.Tests.Primitives
                             maxConnections: 200
                           }
                         }
-                        additionalStorageIds: [
+                        additionalStorages: [
                           {
                             name: 'additional-storage'
                             location: 'eastus'
@@ -219,7 +219,7 @@ namespace Azure.Provisioning.Tests.Primitives
                         computeSettings: {
                           enableAutoShutdown: true
                           maxIdleMinutes: 30
-                          backupStorageId: {
+                          backupStorage: {
                             name: 'backup-storage'
                             location: 'eastus'
                             properties: {
@@ -450,8 +450,8 @@ namespace Azure.Provisioning.Tests.Primitives
                 _computeType = DefineProperty<ComputeType>("ComputeType", ["properties", "computeType"]);
                 _cpuCores = DefineProperty<int>("CpuCores", ["properties", "cpuCores"]);
                 _memoryGB = DefineProperty<int>("MemoryGB", ["properties", "memoryGB"]);
-                _primaryStorage = DefineModelProperty<StorageAccount>("PrimaryStorage", ["properties", "primaryStorageId"], new StorageAccount("storageAccount"));
-                _additionalStorages = DefineListProperty<StorageAccount>("AdditionalStorages", ["properties", "additionalStorageIds"]);
+                _primaryStorage = DefineModelProperty<StorageAccount>("PrimaryStorage", ["properties", "primaryStorage"], new StorageAccount("storageAccount"));
+                _additionalStorages = DefineListProperty<StorageAccount>("AdditionalStorages", ["properties", "additionalStorages"]);
                 _computeSettings = DefineModelProperty<ComputeSettings>("ComputeSettings", ["properties", "computeSettings"]);
 
                 // Output-only properties
@@ -556,7 +556,7 @@ namespace Azure.Provisioning.Tests.Primitives
 
                 _enableAutoShutdown = DefineProperty<bool>("EnableAutoShutdown", ["enableAutoShutdown"]);
                 _maxIdleMinutes = DefineProperty<int>("MaxIdleMinutes", ["maxIdleMinutes"]);
-                _backupStorage = DefineModelProperty<StorageAccount>("BackupStorage", ["backupStorageId"], new StorageAccount("storageAccount"));
+                _backupStorage = DefineModelProperty<StorageAccount>("BackupStorage", ["backupStorage"], new StorageAccount("storageAccount"));
             }
         }
 

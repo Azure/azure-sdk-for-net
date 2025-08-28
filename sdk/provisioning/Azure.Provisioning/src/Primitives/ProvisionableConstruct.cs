@@ -181,7 +181,7 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
 
     /// <inheritdoc />
     BicepValueReference? IBicepValue.Self { get => _self; set => _self = value; }
-    private BicepValueReference? _self;
+    private protected BicepValueReference? _self;
 
     /// <inheritdoc />
     BicepValueReference? IBicepValue.Source => _source;
