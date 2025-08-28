@@ -78,12 +78,12 @@ VirtualNetwork vnet = new(nameof(vnet), VirtualNetwork.ResourceVersions.V2021_08
     },
     Subnets =
     [
-        new Subnet()
+        new Subnet("subnet1")
         {
             Name = subnet1Name,
             AddressPrefix = subnet1Prefix
         },
-        new Subnet()
+        new Subnet("subnet2")
         {
             Name = subnet2Name,
             AddressPrefix = subnet2Prefix
@@ -184,7 +184,7 @@ VirtualNetwork vnet = new(nameof(vnet), VirtualNetwork.ResourceVersions.V2020_06
     },
     Subnets =
     [
-        new Subnet()
+        new Subnet("subnet")
         {
             Name = subnetName,
             AddressPrefix = vnetSubnetPrefix,
@@ -251,7 +251,7 @@ NetworkSecurityGroup networkSecurityGroup = new(nameof(networkSecurityGroup), Ne
     Location = location,
     SecurityRules =
     [
-        new SecurityRule()
+        new SecurityRule("sr")
         {
             Name = "first_rule",
             Description = "This is the first rule",
@@ -281,11 +281,11 @@ VirtualNetwork virtualNetwork = new(nameof(virtualNetwork), VirtualNetwork.Resou
     },
     Subnets =
     [
-        new Subnet()
+        new Subnet("subnet")
         {
             Name = subnetName,
             AddressPrefix = subnetPrefix,
-            NetworkSecurityGroup = new()
+            NetworkSecurityGroup = new("nsg")
             {
                 Id = networkSecurityGroup.Id
             }
