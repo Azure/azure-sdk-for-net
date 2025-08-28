@@ -356,10 +356,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             Assert.NotNull(cancelledOcc);
             Assert.True(cancelledOcc.Data.Properties.ProvisioningState == occurrenceStateConfirm);
 
-            List<Models.OccurrenceResourceModel> occResources = [];
+            List<OccurrenceResourceModel> occResources = [];
 
             // get the resources from the cancelled occurrence
-            await foreach (Models.OccurrenceResourceModel item in cancelledOcc.GetResourcesAsync())
+            await foreach (OccurrenceResourceModel item in cancelledOcc.GetResourcesAsync())
             {
                 occResources.Add(item);
             }
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             DateTimeOffset minTime = occResources.Select(item => item.ScheduledOn).Min();
             Assert.AreEqual(cancelledOcc.Data.Properties.ScheduledOn, minTime);
 
-            foreach (Models.OccurrenceResourceModel item in occResources)
+            foreach (OccurrenceResourceModel item in occResources)
             {
                 if (item.ResourceId == resources[0])
                 {
@@ -388,15 +388,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             Assert.NotNull(allCancelled);
             Assert.True(allCancelled.Data.Properties.ProvisioningState == OccurrenceState.Canceled);
 
-            List<Models.OccurrenceResourceModel> allCancelledResources = [];
+            List<OccurrenceResourceModel> allCancelledResources = [];
 
             // get the resources from the allCancelled occurrence
-            await foreach (Models.OccurrenceResourceModel item in allCancelled.GetResourcesAsync())
+            await foreach (OccurrenceResourceModel item in allCancelled.GetResourcesAsync())
             {
                 allCancelledResources.Add(item);
             }
 
-            foreach (Models.OccurrenceResourceModel item in allCancelledResources)
+            foreach (OccurrenceResourceModel item in allCancelledResources)
             {
                 Assert.AreEqual(item.ProvisioningState.ToString(), "RsCanceled");
             }
@@ -417,9 +417,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
             Assert.NotNull(delayedOcc);
             Assert.True(delayedOcc.Data.Properties.ProvisioningState == occurrenceStateConfirm);
-            List<Models.OccurrenceResourceModel> occResources = [];
+            List<OccurrenceResourceModel> occResources = [];
 
-            await foreach (Models.OccurrenceResourceModel item in delayedOcc.GetResourcesAsync())
+            await foreach (OccurrenceResourceModel item in delayedOcc.GetResourcesAsync())
             {
                 occResources.Add(item);
             }
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             DateTimeOffset minTime = occResources.Select(item => item.ScheduledOn).Min();
             Assert.AreEqual(delayedOcc.Data.Properties.ScheduledOn, minTime);
 
-            foreach (Models.OccurrenceResourceModel item in occResources)
+            foreach (OccurrenceResourceModel item in occResources)
             {
                 Assert.AreEqual(item.ProvisioningState.ToString(), resourceStateConfirm);
 
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             Assert.True(delayedAllOcc.Data.Properties.ProvisioningState == occurrenceStateConfirm);
             Assert.AreEqual(delayAllTime, delayedAllOcc.Data.Properties.ScheduledOn);
 
-            await foreach (Models.OccurrenceResourceModel item in delayedOcc.GetResourcesAsync())
+            await foreach (OccurrenceResourceModel item in delayedOcc.GetResourcesAsync())
             {
                 Assert.AreEqual(delayAllTime, item.ScheduledOn);
                 Assert.AreEqual(item.ProvisioningState.ToString(), resourceStateConfirm);
@@ -469,17 +469,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             DateTimeOffset startsOn = Recording.Now.AddMonths(-1);
             DateTimeOffset endsOn = Recording.Now.AddMonths(1);
             UserRequestRetryPolicy retryPolicy = new() { RetryCount = 3, RetryWindowInMinutes = 30 };
-            //ScheduledAction resource = RecurringScheduledActionUtils.GenerateScheduledActionResource(
-            //    "Eastus2euap",
-            //    retryPolicy,
-            //    deadlineType,
-            //    startsOn,
-            //    endsOn,
-            //    actiontype,
-            //    scheduleTime,
-            //    "UTC",
-            //    isDisabled: isDisabled
-            //    );
             ScheduledAction resource = RecurringScheduledActionUtils.GenerateScheduledActionResourceOther(
                 scheduledActionName,
                 "Eastus2euap",
