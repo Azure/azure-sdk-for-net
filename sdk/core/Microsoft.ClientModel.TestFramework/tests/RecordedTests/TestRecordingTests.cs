@@ -398,13 +398,13 @@ public class TestRecordingTests
         Assert.That(sanitizerRequests, Is.Not.Empty);
         Assert.That(sanitizerRequests.Count, Is.EqualTo(1), "Should have exactly one call to Admin/AddSanitizers containing all sanitizers");
 
-        // Verify that the sanitizer request was made to the correct endpoint  
+        // Verify that the sanitizer request was made to the correct endpoint
         var sanitizerRequest = sanitizerRequests.First();
-        Assert.That(sanitizerRequest.Uri.LocalPath, Does.Contain("Admin/AddSanitizers"), 
+        Assert.That(sanitizerRequest.Uri.LocalPath, Does.Contain("Admin/AddSanitizers"),
                    "Request should be made to Admin/AddSanitizers endpoint");
-        
+
         // Verify that content was provided (sanitizers were included in the request)
-        Assert.That(sanitizerRequest.Content, Is.Not.Null, 
+        Assert.That(sanitizerRequest.Content, Is.Not.Null,
                    "Request should contain content with sanitizer information");
     }
 
@@ -437,11 +437,11 @@ public class TestRecordingTests
 
         // Verify that the sanitizer request was made to the correct endpoint
         var sanitizerRequest = sanitizerRequests.First();
-        Assert.That(sanitizerRequest.Uri.LocalPath, Does.Contain("Admin/AddSanitizers"), 
+        Assert.That(sanitizerRequest.Uri.LocalPath, Does.Contain("Admin/AddSanitizers"),
                    "Request should be made to Admin/AddSanitizers endpoint");
-        
+
         // Verify that content was provided (sanitizers were included in the request)
-        Assert.That(sanitizerRequest.Content, Is.Not.Null, 
+        Assert.That(sanitizerRequest.Content, Is.Not.Null,
                    "Request should contain content with sanitizer information");
     }
 
@@ -477,11 +477,11 @@ public class TestRecordingTests
 
         // Verify that the sanitizer request was made to the correct endpoint
         var sanitizerRequest = sanitizerRequests.First();
-        Assert.That(sanitizerRequest.Uri.LocalPath, Does.Contain("Admin/AddSanitizers"), 
+        Assert.That(sanitizerRequest.Uri.LocalPath, Does.Contain("Admin/AddSanitizers"),
                    "Request should be made to Admin/AddSanitizers endpoint");
-        
+
         // Verify that content was provided (sanitizers were included in the request)
-        Assert.That(sanitizerRequest.Content, Is.Not.Null, 
+        Assert.That(sanitizerRequest.Content, Is.Not.Null,
                    "Request should contain content with sanitizer information");
     }
 
@@ -509,14 +509,14 @@ public class TestRecordingTests
 
         // Verify that the request body contains JSON path sanitizers
         Assert.That(sanitizerRequests.Count, Is.EqualTo(1), "Should have exactly one call to Admin/AddSanitizers");
-        
+
         // Verify that the sanitizer request was made to the correct endpoint
         var sanitizerRequest = sanitizerRequests.First();
-        Assert.That(sanitizerRequest.Uri.LocalPath, Does.Contain("Admin/AddSanitizers"), 
+        Assert.That(sanitizerRequest.Uri.LocalPath, Does.Contain("Admin/AddSanitizers"),
                    "Request should be made to Admin/AddSanitizers endpoint");
-        
+
         // Verify that content was provided (sanitizers were included in the request)
-        Assert.That(sanitizerRequest.Content, Is.Not.Null, 
+        Assert.That(sanitizerRequest.Content, Is.Not.Null,
                    "Request should contain content with sanitizer information");
     }
 
@@ -549,11 +549,11 @@ public class TestRecordingTests
 
         // Verify that the sanitizer request was made to the correct endpoint
         var sanitizerRequest = sanitizerRequests.First();
-        Assert.That(sanitizerRequest.Uri.LocalPath, Does.Contain("Admin/AddSanitizers"), 
+        Assert.That(sanitizerRequest.Uri.LocalPath, Does.Contain("Admin/AddSanitizers"),
                    "Request should be made to Admin/AddSanitizers endpoint");
-        
+
         // Verify that content was provided (sanitizers were included in the request)
-        Assert.That(sanitizerRequest.Content, Is.Not.Null, 
+        Assert.That(sanitizerRequest.Content, Is.Not.Null,
                    "Request should contain content with sanitizer information");
     }
 
@@ -586,11 +586,11 @@ public class TestRecordingTests
 
         // Verify that the sanitizer request was made to the correct endpoint
         var sanitizerRequest = sanitizerRequests.First();
-        Assert.That(sanitizerRequest.Uri.LocalPath, Does.Contain("Admin/AddSanitizers"), 
+        Assert.That(sanitizerRequest.Uri.LocalPath, Does.Contain("Admin/AddSanitizers"),
                    "Request should be made to Admin/AddSanitizers endpoint");
-        
+
         // Verify that content was provided (sanitizers were included in the request)
-        Assert.That(sanitizerRequest.Content, Is.Not.Null, 
+        Assert.That(sanitizerRequest.Content, Is.Not.Null,
                    "Request should contain content with sanitizer information");
     }
 

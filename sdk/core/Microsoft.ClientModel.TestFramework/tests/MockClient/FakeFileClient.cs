@@ -40,20 +40,20 @@ public class FakeFileClient
     /// which is the source of the recording/playback mismatch issue.
     /// </summary>
     public virtual async Task<TestFile> UploadFileAsync(
-        Stream fileStream, 
-        string fileName, 
+        Stream fileStream,
+        string fileName,
         FileUploadOptions options = null)
     {
         options ??= new FileUploadOptions();
 
         using var multipartContent = new MultiPartFormDataBinaryContent();
-        
+
         // Add the file
         multipartContent.Add(fileStream, "file", fileName, "text/plain");
-        
+
         // Add purpose
         multipartContent.Add(options.Purpose, "purpose");
-        
+
         // Add metadata
         foreach (var kvp in options.Metadata)
         {
@@ -61,7 +61,7 @@ public class FakeFileClient
         }
 
         PipelineMessage message = await SendMultipartRequestAsync(multipartContent);
-        
+
         if (message.Response.IsError)
         {
             throw new Exception($"Upload failed with status {message.Response.Status}");
@@ -80,23 +80,23 @@ public class FakeFileClient
     /// Upload multiple files in a batch operation.
     /// Each call creates a new MultiPartFormDataBinaryContent with a dynamically generated boundary.
     /// </summary>
-    public virtual async Task<UploadResult> UploadBatchAsync(IEnumerable<(Stream stream, string fileName)> files)
+    public virtual async Task<UploadResult> UploadBatchAsync(IEnumerable<(Stream Stream, string FileName)> files)
     {
         using var multipartContent = new MultiPartFormDataBinaryContent();
-        
+
         int fileCount = 0;
         foreach (var (stream, fileName) in files)
         {
             multipartContent.Add(stream, "files", fileName, "application/json");
             fileCount++;
         }
-        
+
         // Add batch metadata
         multipartContent.Add("batch", "operation");
         multipartContent.Add(fileCount.ToString(), "count");
 
         PipelineMessage message = await SendMultipartRequestAsync(multipartContent);
-        
+
         if (message.Response.IsError)
         {
             throw new Exception($"Batch upload failed with status {message.Response.Status}");
@@ -116,14 +116,14 @@ public class FakeFileClient
         PipelineMessage message = _pipeline.CreateMessage();
         message.Request.Method = "POST";
         message.Request.Uri = _endpoint;
-        
+
         // Set the BinaryContent directly
         message.Request.Content = content;
-        
+
         // Set the Content-Type header with boundary - this is where the dynamic boundary
         // gets set, and it's different every time MultiPartFormDataBinaryContent() is created
         message.Request.Headers.Add("Content-Type", content.ContentType);
-        
+
         await _pipeline.SendAsync(message);
         return message;
     }

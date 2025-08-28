@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IsTestProject>true</IsTestProject>
-    <!-- We don't care about XML doc comments on test types and members -->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
@@ -15,6 +13,7 @@
     <PackageReference Include="NUnit3TestAdapter" VersionOverride="5.1.0" />
     <PackageReference Include="NUnit" VersionOverride="4.4.0" />
     <PackageReference Include="Moq" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" VersionOverride="17.13.0" />
   </ItemGroup>
 
   <ItemGroup>

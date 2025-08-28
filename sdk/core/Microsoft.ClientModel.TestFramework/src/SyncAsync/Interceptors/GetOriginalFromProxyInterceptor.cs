@@ -6,8 +6,8 @@ using Castle.DynamicProxy;
 namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
-/// Implements the <see cref="IProxiedClient"/> or <see cref="IProxiedOperationResult"/>. Returns the
-/// original value when <see cref="IProxiedClient.Original"/> or <see cref="IProxiedOperationResult.Original"/> is called.
+/// Implements the <see cref="IProxiedClient"/>. Returns the
+/// original value when <see cref="IProxiedClient.Original"/> is called.
 /// </summary>
 internal class GetOriginalInterceptor : IInterceptor
 {
