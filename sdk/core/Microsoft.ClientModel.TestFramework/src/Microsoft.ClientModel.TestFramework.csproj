@@ -10,6 +10,7 @@
     <NoWarn>AZC0015;AZC0007</NoWarn>
 		<IsTestProject>false</IsTestProject>
     <IncludeAutorestDependency>false</IncludeAutorestDependency>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
