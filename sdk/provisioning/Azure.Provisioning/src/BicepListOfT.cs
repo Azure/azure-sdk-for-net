@@ -52,9 +52,18 @@ public class BicepList<T> :
     public void Assign(BicepList<T> source) => Assign((BicepValue)source);
     internal override void Assign(IBicepValue source)
     {
+        // assign the inner list value
         if (source is BicepList<T> typed)
         {
             _values = typed._values;
+            // in the meantime, we should assign _self to the elements so that the references are tracked properly
+            foreach (IBicepValue item in _values)
+            {
+                if (item is { Kind: BicepValueKind.Literal, LiteralValue: ProvisionableConstruct construct })
+                {
+                    item.Self = _self;
+                }
+            }
         }
 
         // Everything else is handled by the base Assign
@@ -107,6 +116,8 @@ public class BicepList<T> :
     public void Insert(int index, BicepValue<T> item) => _values.Insert(index, item);
     public void Add(BicepValue<T> item)
     {
+        // TODO -- this self might be incorrect because this self does not have the indice information
+        ((IBicepValue)item).Self = _self;
         _values.Add(item);
     }
 
