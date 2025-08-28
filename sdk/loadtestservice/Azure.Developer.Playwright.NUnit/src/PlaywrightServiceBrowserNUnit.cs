@@ -87,7 +87,8 @@ public class PlaywrightServiceBrowserNUnit : PlaywrightServiceBrowserClient
     [OneTimeTearDown]
     public override async Task DisposeAsync()
     {
-        await base.DisposeAsync().ConfigureAwait(false);
+        // no-op - cleanup is handled by IDisposable pattern
+        await Task.CompletedTask.ConfigureAwait(false);
     }
 
     private static PlaywrightServiceBrowserClientOptions InjectNUnitLogger(PlaywrightServiceBrowserClientOptions options)
