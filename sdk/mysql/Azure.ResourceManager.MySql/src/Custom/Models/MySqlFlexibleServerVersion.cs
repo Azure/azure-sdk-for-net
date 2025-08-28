@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public readonly partial struct MySqlFlexibleServerVersion : IEquatable<MySqlFlexibleServerVersion>
     {
         /// <summary> 5.7. </summary>
-        [CodeGenMember("FivePointSeven")]
+        [CodeGenMember("Five7")]
         public static MySqlFlexibleServerVersion Ver5_7 { get; } = new MySqlFlexibleServerVersion(Ver5_7Value);
         /// <summary> 8.0.21. </summary>
         [CodeGenMember("Eight021")]
