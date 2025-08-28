@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Models.MccCacheNodeBgpCidrDetails"/> instance for mocking. </returns>
-        public static MccCacheNodeBgpCidrDetails MccCacheNodeBgpCidrDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> mccCacheNodeBgpCidrs = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
+        public static MccCacheNodeBgpCidrDetails MccCacheNodeBgpCidrDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> mccCacheNodeBgpCidrs = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation location = default)
         {
             mccCacheNodeBgpCidrs ??= new List<string>();
             tags ??= new Dictionary<string, string>();
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Models.MccCacheNodeInstallDetails"/> instance for mocking. </returns>
-        public static MccCacheNodeInstallDetails MccCacheNodeInstallDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MccCacheNodeInstallProperties properties = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
+        public static MccCacheNodeInstallDetails MccCacheNodeInstallDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MccCacheNodeInstallProperties properties = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation location = default)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Models.MccCacheNodeAutoUpdateHistoryData"/> instance for mocking. </returns>
-        public static MccCacheNodeAutoUpdateHistoryData MccCacheNodeAutoUpdateHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MccCacheNodeAutoUpdateHistoryProperties properties = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
+        public static MccCacheNodeAutoUpdateHistoryData MccCacheNodeAutoUpdateHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MccCacheNodeAutoUpdateHistoryProperties properties = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation location = default)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Models.MccCacheNodeIssueHistoryData"/> instance for mocking. </returns>
-        public static MccCacheNodeIssueHistoryData MccCacheNodeIssueHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MccCacheNodeIssueHistoryProperties properties = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
+        public static MccCacheNodeIssueHistoryData MccCacheNodeIssueHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MccCacheNodeIssueHistoryProperties properties = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation location = default)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Models.MccCacheNodeTlsCertificateHistoryData"/> instance for mocking. </returns>
-        public static MccCacheNodeTlsCertificateHistoryData MccCacheNodeTlsCertificateHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MccCacheNodeTlsCertificateProperties properties = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
+        public static MccCacheNodeTlsCertificateHistoryData MccCacheNodeTlsCertificateHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MccCacheNodeTlsCertificateProperties properties = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation location = default)
         {
             tags ??= new Dictionary<string, string>();
 
