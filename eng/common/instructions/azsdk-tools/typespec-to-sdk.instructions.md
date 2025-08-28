@@ -60,7 +60,7 @@ Wait for the user to respond with a confirmation before proceeding to Step 1. Us
     - Option A: "Generate SDK locally". This is currently supported only for Python. Do not recommend this for other languages.
     - Option B: "Use SDK generation pipeline"
 2. Based on selection:
-    - If Option A: Refer to #file:create-sdk-locally.instructions.md and then proceed to Step 6
+    - If Option A: Refer to #file:local-sdk-workflow.instructions.md and then proceed to Step 6
     - If Option B: Continue to Step 6
 **Success Criteria**: SDK generation method selected
 
