@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -46,31 +47,36 @@ namespace Azure.ResourceManager.SignalR.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SignalRResourceList"/>. </summary>
-        internal SignalRResourceList()
+        /// <param name="value"> The SignalRResource items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SignalRResourceList(IEnumerable<SignalRData> value)
         {
-            Value = new ChangeTrackingList<SignalRData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SignalRResourceList"/>. </summary>
-        /// <param name="value"> List of the resources. </param>
-        /// <param name="nextLink">
-        /// The URL the client should use to fetch the next page (per server side paging).
-        /// It's null for now, added for future use.
-        /// </param>
+        /// <param name="value"> The SignalRResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRResourceList(IReadOnlyList<SignalRData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SignalRResourceList(IReadOnlyList<SignalRData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of the resources. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRResourceList"/> for deserialization. </summary>
+        internal SignalRResourceList()
+        {
+        }
+
+        /// <summary> The SignalRResource items on this page. </summary>
+        [WirePath("value")]
         public IReadOnlyList<SignalRData> Value { get; }
-        /// <summary>
-        /// The URL the client should use to fetch the next page (per server side paging).
-        /// It's null for now, added for future use.
-        /// </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
+        public Uri NextLink { get; }
     }
 }

@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.SignalR
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _signalRCustomCertificateClientDiagnostics;
-        private readonly SignalRCustomCertificatesRestOperations _signalRCustomCertificateRestClient;
+        private readonly ClientDiagnostics _signalRCustomCertificateCustomCertificatesClientDiagnostics;
+        private readonly CustomCertificatesRestOperations _signalRCustomCertificateCustomCertificatesRestClient;
         private readonly SignalRCustomCertificateData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SignalRCustomCertificateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _signalRCustomCertificateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string signalRCustomCertificateApiVersion);
-            _signalRCustomCertificateRestClient = new SignalRCustomCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, signalRCustomCertificateApiVersion);
+            _signalRCustomCertificateCustomCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string signalRCustomCertificateCustomCertificatesApiVersion);
+            _signalRCustomCertificateCustomCertificatesRestClient = new CustomCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, signalRCustomCertificateCustomCertificatesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomCertificates_Get</description>
+        /// <description>CustomCertificate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SignalRCustomCertificateResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateResource.Get");
+            using var scope = _signalRCustomCertificateCustomCertificatesClientDiagnostics.CreateScope("SignalRCustomCertificateResource.Get");
             scope.Start();
             try
             {
-                var response = await _signalRCustomCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _signalRCustomCertificateCustomCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SignalRCustomCertificateResource(Client, response.Value), response.GetRawResponse());
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomCertificates_Get</description>
+        /// <description>CustomCertificate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SignalRCustomCertificateResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateResource.Get");
+            using var scope = _signalRCustomCertificateCustomCertificatesClientDiagnostics.CreateScope("SignalRCustomCertificateResource.Get");
             scope.Start();
             try
             {
-                var response = _signalRCustomCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _signalRCustomCertificateCustomCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SignalRCustomCertificateResource(Client, response.Value), response.GetRawResponse());
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomCertificates_Delete</description>
+        /// <description>CustomCertificate_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateResource.Delete");
+            using var scope = _signalRCustomCertificateCustomCertificatesClientDiagnostics.CreateScope("SignalRCustomCertificateResource.Delete");
             scope.Start();
             try
             {
-                var response = await _signalRCustomCertificateRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _signalRCustomCertificateRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _signalRCustomCertificateCustomCertificatesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _signalRCustomCertificateCustomCertificatesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new SignalRArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -221,11 +221,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomCertificates_Delete</description>
+        /// <description>CustomCertificate_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateResource.Delete");
+            using var scope = _signalRCustomCertificateCustomCertificatesClientDiagnostics.CreateScope("SignalRCustomCertificateResource.Delete");
             scope.Start();
             try
             {
-                var response = _signalRCustomCertificateRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _signalRCustomCertificateRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _signalRCustomCertificateCustomCertificatesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _signalRCustomCertificateCustomCertificatesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new SignalRArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -265,11 +265,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomCertificates_CreateOrUpdate</description>
+        /// <description>CustomCertificate_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -285,12 +285,12 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateResource.Update");
+            using var scope = _signalRCustomCertificateCustomCertificatesClientDiagnostics.CreateScope("SignalRCustomCertificateResource.Update");
             scope.Start();
             try
             {
-                var response = await _signalRCustomCertificateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SignalRArmOperation<SignalRCustomCertificateResource>(new SignalRCustomCertificateOperationSource(Client), _signalRCustomCertificateClientDiagnostics, Pipeline, _signalRCustomCertificateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _signalRCustomCertificateCustomCertificatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SignalRArmOperation<SignalRCustomCertificateResource>(new SignalRCustomCertificateOperationSource(Client), _signalRCustomCertificateCustomCertificatesClientDiagnostics, Pipeline, _signalRCustomCertificateCustomCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -311,11 +311,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomCertificates_CreateOrUpdate</description>
+        /// <description>CustomCertificate_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -331,12 +331,12 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateResource.Update");
+            using var scope = _signalRCustomCertificateCustomCertificatesClientDiagnostics.CreateScope("SignalRCustomCertificateResource.Update");
             scope.Start();
             try
             {
-                var response = _signalRCustomCertificateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SignalRArmOperation<SignalRCustomCertificateResource>(new SignalRCustomCertificateOperationSource(Client), _signalRCustomCertificateClientDiagnostics, Pipeline, _signalRCustomCertificateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _signalRCustomCertificateCustomCertificatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new SignalRArmOperation<SignalRCustomCertificateResource>(new SignalRCustomCertificateOperationSource(Client), _signalRCustomCertificateCustomCertificatesClientDiagnostics, Pipeline, _signalRCustomCertificateCustomCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
