@@ -81,15 +81,6 @@ public class PlaywrightServiceBrowserNUnit : PlaywrightServiceBrowserClient
         await base.InitializeAsync().ConfigureAwait(false);
     }
 
-    /// <summary>
-    /// Tear down resources utilized by Playwright Browser client.
-    /// </summary>
-    [OneTimeTearDown]
-    public override async Task DisposeAsync()
-    {
-        await base.DisposeAsync().ConfigureAwait(false);
-    }
-
     private static PlaywrightServiceBrowserClientOptions InjectNUnitLogger(PlaywrightServiceBrowserClientOptions options)
     {
         options.Logger ??= nunitLogger;
