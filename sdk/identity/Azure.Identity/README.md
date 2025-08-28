@@ -256,7 +256,7 @@ The Azure Identity library offers both in-memory and persistent disk caching. Fo
 
 ## Brokered authentication
 
-An authentication broker is an app that runs on a user's machine and manages the authentication handshakes and token maintenance for connected accounts. Currently, only Windows is supported via Web Account Manager (WAM). To enable support, use the [Azure.Identity.Broker](https://www.nuget.org/packages/Azure.Identity.Broker) package.
+An authentication broker is an app that runs on a user's machine and manages the authentication handshakes and token maintenance for connected accounts. To enable support, use the [Azure.Identity.Broker](https://www.nuget.org/packages/Azure.Identity.Broker) package.
 
 ## Troubleshooting
 
