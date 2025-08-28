@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 namespace Azure.Developer.Playwright;
 
 /// <summary>
-/// Sets up and manages the Playwright service browser client.
+/// Sets up and manages the Playwright Workspaces browser client.
 /// </summary>
 public class PlaywrightServiceBrowserClient : IDisposable
 {
@@ -107,7 +107,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
     }
 
     /// <summary>
-    /// Gets the connect options for connecting to Playwright Service's cloud hosted browsers.
+    /// Gets the connect options for connecting to Playwright Workspaces's cloud hosted browsers.
     /// </summary>
     /// <typeparam name="T">The type of the connect options.</typeparam>
     /// <param name="os">The operating system.</param>
@@ -153,7 +153,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
     }
 
     /// <summary>
-    /// Gets the connect options for connecting to Playwright Service's cloud hosted browsers.
+    /// Gets the connect options for connecting to Playwright Workspaces's cloud hosted browsers.
     /// </summary>
     /// <typeparam name="T">The type of the connect options.</typeparam>
     /// <param name="os">The operating system.</param>
@@ -277,7 +277,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
     public virtual void Dispose()
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
-        _logger?.LogInformation("Cleaning up Playwright service resources.");
+        _logger?.LogInformation("Cleaning up Playwright Workspaces resources.");
         RotationTimer?.Dispose();
         GC.SuppressFinalize(this);
     }
@@ -353,7 +353,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         }
         catch (RequestFailedException ex)
         {
-            _logger?.LogError($"Failed to create the test run in the Playwright service: {ex.Message}. Please refer to https://aka.ms/pww/docs/troubleshooting for more information.");
+            _logger?.LogError($"Failed to create the test run in the Playwright Workspaces: {ex.Message}. Please refer to https://aka.ms/pww/docs/troubleshooting for more information.");
             throw new Exception(Constants.s_playwright_service_create_test_run_error, ex);
         }
     }
@@ -402,7 +402,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         }
         catch (RequestFailedException ex)
         {
-            _logger?.LogError($"Failed to create the test run in the Playwright service: {ex.Message}");
+            _logger?.LogError($"Failed to create the test run in the Playwright Workspaces: {ex.Message}");
             throw new Exception(Constants.s_playwright_service_create_test_run_error, ex);
         }
     }
