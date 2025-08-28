@@ -9,7 +9,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Index resource Definition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAISearchIndex"/>, <see cref="ManagedAzureAISearchIndex"/>, and <see cref="CosmosDBIndex"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAISearchIndex"/>, <see cref="ManagedAzureAISearchIndex"/>, and <see cref="AIProjectCosmosDBIndex"/>.
     /// </summary>
     public abstract partial class AIProjectIndex
     {

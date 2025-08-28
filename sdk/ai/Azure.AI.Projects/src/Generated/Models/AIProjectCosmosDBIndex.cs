@@ -8,16 +8,16 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> CosmosDB Vector Store Index Definition. </summary>
-    public partial class CosmosDBIndex : AIProjectIndex
+    public partial class AIProjectCosmosDBIndex : AIProjectIndex
     {
-        /// <summary> Initializes a new instance of <see cref="CosmosDBIndex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AIProjectCosmosDBIndex"/>. </summary>
         /// <param name="connectionName"> Name of connection to CosmosDB. </param>
         /// <param name="databaseName"> Name of the CosmosDB Database. </param>
         /// <param name="containerName"> Name of CosmosDB Container. </param>
         /// <param name="embeddingConfiguration"> Embedding model configuration. </param>
         /// <param name="fieldMapping"> Field mapping configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="embeddingConfiguration"/> or <paramref name="fieldMapping"/> is null. </exception>
-        public CosmosDBIndex(string connectionName, string databaseName, string containerName, EmbeddingConfiguration embeddingConfiguration, AIProjectIndexFieldMapping fieldMapping) : base(IndexType.CosmosDB)
+        public AIProjectCosmosDBIndex(string connectionName, string databaseName, string containerName, EmbeddingConfiguration embeddingConfiguration, AIProjectIndexFieldMapping fieldMapping) : base(IndexType.CosmosDB)
         {
             Argument.AssertNotNull(connectionName, nameof(connectionName));
             Argument.AssertNotNull(databaseName, nameof(databaseName));
@@ -32,7 +32,7 @@ namespace Azure.AI.Projects
             FieldMapping = fieldMapping;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDBIndex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AIProjectCosmosDBIndex"/>. </summary>
         /// <param name="type"> Type of index. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -45,7 +45,7 @@ namespace Azure.AI.Projects
         /// <param name="containerName"> Name of CosmosDB Container. </param>
         /// <param name="embeddingConfiguration"> Embedding model configuration. </param>
         /// <param name="fieldMapping"> Field mapping configuration. </param>
-        internal CosmosDBIndex(IndexType @type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string connectionName, string databaseName, string containerName, EmbeddingConfiguration embeddingConfiguration, AIProjectIndexFieldMapping fieldMapping) : base(@type, id, name, version, description, tags, additionalBinaryDataProperties)
+        internal AIProjectCosmosDBIndex(IndexType @type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string connectionName, string databaseName, string containerName, EmbeddingConfiguration embeddingConfiguration, AIProjectIndexFieldMapping fieldMapping) : base(@type, id, name, version, description, tags, additionalBinaryDataProperties)
         {
             ConnectionName = connectionName;
             DatabaseName = databaseName;

@@ -11,7 +11,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Index resource Definition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAISearchIndex"/>, <see cref="ManagedAzureAISearchIndex"/>, and <see cref="CosmosDBIndex"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAISearchIndex"/>, <see cref="ManagedAzureAISearchIndex"/>, and <see cref="AIProjectCosmosDBIndex"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAIProjectIndex))]
     public abstract partial class AIProjectIndex : IJsonModel<AIProjectIndex>
@@ -128,7 +128,7 @@ namespace Azure.AI.Projects
                     case "ManagedAzureSearch":
                         return ManagedAzureAISearchIndex.DeserializeManagedAzureAISearchIndex(element, options);
                     case "CosmosDBNoSqlVectorStore":
-                        return CosmosDBIndex.DeserializeCosmosDBIndex(element, options);
+                        return AIProjectCosmosDBIndex.DeserializeAIProjectCosmosDBIndex(element, options);
                 }
             }
             return UnknownAIProjectIndex.DeserializeUnknownAIProjectIndex(element, options);
