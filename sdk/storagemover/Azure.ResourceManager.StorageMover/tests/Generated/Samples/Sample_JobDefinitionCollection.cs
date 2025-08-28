@@ -20,7 +20,44 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_JobDefinitionsCreateOrUpdate()
         {
-            // Generated from example definition: 2024-07-01/JobDefinitions_CreateOrUpdate.json
+            // Generated from example definition: 2025-07-01/JobDefinitions_CreateOrUpdate.json
+            // this example is just showing the usage of "JobDefinition_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StorageMoverProjectResource created on azure
+            // for more information of creating StorageMoverProjectResource, please refer to the document of StorageMoverProjectResource
+            string subscriptionId = "60bcfc77-6589-4da2-b7fd-f9ec9322cf95";
+            string resourceGroupName = "examples-rg";
+            string storageMoverName = "examples-storageMoverName";
+            string projectName = "examples-projectName";
+            ResourceIdentifier storageMoverProjectResourceId = StorageMoverProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageMoverName, projectName);
+            StorageMoverProjectResource storageMoverProject = client.GetStorageMoverProjectResource(storageMoverProjectResourceId);
+
+            // get the collection of this JobDefinitionResource
+            JobDefinitionCollection collection = storageMoverProject.GetJobDefinitions();
+
+            // invoke the operation
+            string jobDefinitionName = "examples-jobDefinitionName";
+            JobDefinitionData data = new JobDefinitionData(default, null, null);
+            ArmOperation<JobDefinitionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, jobDefinitionName, data);
+            JobDefinitionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            JobDefinitionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_JobDefinitionsCreateOrUpdateCloudToCloud()
+        {
+            // Generated from example definition: 2025-07-01/JobDefinitions_CreateOrUpdate_CloudToCloud.json
             // this example is just showing the usage of "JobDefinition_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,7 +94,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_JobDefinitionsGet()
         {
-            // Generated from example definition: 2024-07-01/JobDefinitions_Get.json
+            // Generated from example definition: 2025-07-01/JobDefinitions_Get.json
             // this example is just showing the usage of "JobDefinition_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +129,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_JobDefinitionsList()
         {
-            // Generated from example definition: 2024-07-01/JobDefinitions_List.json
+            // Generated from example definition: 2025-07-01/JobDefinitions_List.json
             // this example is just showing the usage of "JobDefinition_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +166,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_JobDefinitionsGet()
         {
-            // Generated from example definition: 2024-07-01/JobDefinitions_Get.json
+            // Generated from example definition: 2025-07-01/JobDefinitions_Get.json
             // this example is just showing the usage of "JobDefinition_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,7 +197,7 @@ namespace Azure.ResourceManager.StorageMover.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_JobDefinitionsGet()
         {
-            // Generated from example definition: 2024-07-01/JobDefinitions_Get.json
+            // Generated from example definition: 2025-07-01/JobDefinitions_Get.json
             // this example is just showing the usage of "JobDefinition_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
