@@ -20,7 +20,7 @@ Your goal is to help guide the user to generate SDK and build SDK locally for Ty
 - Prompt the user to provide the path to their cloned azure-sdk-for-{language} repository.
 - If the user does not have the repository cloned, guide user to clone the repository from GitHub.
 
-### Step 4 Validate repository path
+### Step 4: Validate repository path
 - Check if the provided path is valid. If not, prompt the user to provide a valid path.
 
 ### Step 5: Prepare other inputs and validate
