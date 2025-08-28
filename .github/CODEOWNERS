@@ -547,7 +547,7 @@
 # ServiceOwners:                                                   @Azure/azure-iot-cli-triage
 
 # PRLabel: %KeyVault
-/sdk/keyvault/                                                     @cheathamb36 @chen-karen
+/sdk/keyvault/                                                     @cheathamb36 @chen-karen @ReilleyMilne
 
 # ServiceLabel: %KeyVault
 # ServiceOwners:                                                   @cheathamb36 @chen-karen
