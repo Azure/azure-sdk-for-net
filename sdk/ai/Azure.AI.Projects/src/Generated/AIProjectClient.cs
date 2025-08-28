@@ -26,30 +26,30 @@ namespace Azure.AI.Projects
             }
         };
         private readonly string _apiVersion;
-        private ConnectionsOperations _cachedConnectionsOperations;
-        private DatasetsOperations _cachedDatasetsOperations;
-        private IndexesOperations _cachedIndexesOperations;
-        private DeploymentsOperations _cachedDeploymentsOperations;
+        private AIProjectConnectionsOperations _cachedAIProjectConnectionsOperations;
+        private AIProjectDatasetsOperations _cachedAIProjectDatasetsOperations;
+        private AIProjectIndexesOperations _cachedAIProjectIndexesOperations;
+        private AIProjectDeploymentsOperations _cachedAIProjectDeploymentsOperations;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
-        /// <summary> Initializes a new instance of ConnectionsOperations. </summary>
-        public virtual ConnectionsOperations GetConnectionsOperationsClient()
+        /// <summary> Initializes a new instance of AIProjectConnectionsOperations. </summary>
+        public virtual AIProjectConnectionsOperations GetAIProjectConnectionsOperationsClient()
         {
-            return Volatile.Read(ref _cachedConnectionsOperations) ?? Interlocked.CompareExchange(ref _cachedConnectionsOperations, new ConnectionsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedConnectionsOperations;
+            return Volatile.Read(ref _cachedAIProjectConnectionsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectConnectionsOperations, new AIProjectConnectionsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectConnectionsOperations;
         }
 
-        /// <summary> Initializes a new instance of IndexesOperations. </summary>
-        public virtual IndexesOperations GetIndexesOperationsClient()
+        /// <summary> Initializes a new instance of AIProjectIndexesOperations. </summary>
+        public virtual AIProjectIndexesOperations GetAIProjectIndexesOperationsClient()
         {
-            return Volatile.Read(ref _cachedIndexesOperations) ?? Interlocked.CompareExchange(ref _cachedIndexesOperations, new IndexesOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedIndexesOperations;
+            return Volatile.Read(ref _cachedAIProjectIndexesOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectIndexesOperations, new AIProjectIndexesOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectIndexesOperations;
         }
 
-        /// <summary> Initializes a new instance of DeploymentsOperations. </summary>
-        public virtual DeploymentsOperations GetDeploymentsOperationsClient()
+        /// <summary> Initializes a new instance of AIProjectDeploymentsOperations. </summary>
+        public virtual AIProjectDeploymentsOperations GetAIProjectDeploymentsOperationsClient()
         {
-            return Volatile.Read(ref _cachedDeploymentsOperations) ?? Interlocked.CompareExchange(ref _cachedDeploymentsOperations, new DeploymentsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedDeploymentsOperations;
+            return Volatile.Read(ref _cachedAIProjectDeploymentsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectDeploymentsOperations, new AIProjectDeploymentsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectDeploymentsOperations;
         }
     }
 }

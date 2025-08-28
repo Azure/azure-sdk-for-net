@@ -87,17 +87,17 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(searchIndex);
 
             Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-            SearchIndex retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
+            AIProjectIndex retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
             Console.WriteLine(retrievedIndex);
 
             Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
-            foreach (SearchIndex version in projectClient.Indexes.GetIndexVersions(name: indexName))
+            foreach (AIProjectIndex version in projectClient.Indexes.GetIndexVersions(name: indexName))
             {
                 Console.WriteLine(version);
             }
 
             Console.WriteLine($"Listing all Indices:");
-            foreach (SearchIndex version in projectClient.Indexes.GetIndexes())
+            foreach (AIProjectIndex version in projectClient.Indexes.GetIndexes())
             {
                 Console.WriteLine(version);
             }
@@ -144,17 +144,17 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(searchIndex);
 
             Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-            SearchIndex retrievedIndex = await projectClient.Indexes.GetIndexAsync(name: indexName, version: indexVersion);
+            AIProjectIndex retrievedIndex = await projectClient.Indexes.GetIndexAsync(name: indexName, version: indexVersion);
             Console.WriteLine(retrievedIndex);
 
             Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
-            await foreach (SearchIndex version in projectClient.Indexes.GetIndexVersionsAsync(name: indexName))
+            await foreach (AIProjectIndex version in projectClient.Indexes.GetIndexVersionsAsync(name: indexName))
             {
                 Console.WriteLine(version);
             }
 
             Console.WriteLine($"Listing all Indices:");
-            await foreach (SearchIndex version in projectClient.Indexes.GetIndexesAsync())
+            await foreach (AIProjectIndex version in projectClient.Indexes.GetIndexesAsync())
             {
                 Console.WriteLine(version);
             }

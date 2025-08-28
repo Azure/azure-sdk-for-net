@@ -80,7 +80,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AssetDeployment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AIProjectDeployment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ModelDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -99,7 +99,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            DeploymentType @type = default;
+            AIProjectDeploymentType @type = default;
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string modelName = default;
@@ -112,7 +112,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new DeploymentType(prop.Value.GetString());
+                    @type = new AIProjectDeploymentType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -201,7 +201,7 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AssetDeployment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AIProjectDeployment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ModelDeployment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
