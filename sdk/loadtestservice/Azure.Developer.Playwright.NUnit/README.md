@@ -18,7 +18,7 @@ Ready to get started? Jump into our [quickstart guide](https://github.com/Azure/
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Developer.Playwright.NUnit --prerelease
+dotnet add package Azure.Developer.Playwright.NUnit
 ```
 
 ### Prerequisites
