@@ -11,7 +11,6 @@ namespace Azure.Identity.Credentials
 {
     internal class BrokerCredential : InteractiveBrowserCredential
     {
-        private const string CredentialsSection = "Broker";
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/brokercredential/troubleshoot";
 
         private readonly bool _isBrokerOptionsEnabled;
@@ -34,7 +33,7 @@ namespace Azure.Identity.Credentials
         {
             if (!_isBrokerOptionsEnabled)
             {
-                throw new CredentialUnavailableException($"The {nameof(BrokerCredential)} requires the Azure.Identity.Broker package to be referenced. {CredentialsSection} {Troubleshooting}");
+                throw new CredentialUnavailableException($"The {nameof(BrokerCredential)} requires the Azure.Identity.Broker package to be referenced. {Troubleshooting}");
             }
 
             using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope($"{nameof(BrokerCredential)}.{nameof(GetToken)}", requestContext);
