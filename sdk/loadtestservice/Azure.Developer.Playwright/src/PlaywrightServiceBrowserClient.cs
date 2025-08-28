@@ -92,7 +92,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         _playwrightVersion = playwrightVersion ?? new PlaywrightVersion();
         _clientUtility = clientUtility ?? new ClientUtilities(_environment, playwrightVersion: _playwrightVersion);
         _ciProvider = ciProvider ?? new CIProvider(_environment);
-        _options = options ?? new PlaywrightServiceBrowserClientOptions(PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview, environment: _environment, clientUtility: _clientUtility);
+        _options = options ?? new PlaywrightServiceBrowserClientOptions(PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01, environment: _environment, clientUtility: _clientUtility);
         _logger = logger ?? _options.Logger;
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
         _entraLifecycle = entraLifecycle ?? new EntraLifecycle(jsonWebTokenHandler: _jsonWebTokenHandler, logger: _logger, environment: _environment, tokenCredential: tokenCredential);
