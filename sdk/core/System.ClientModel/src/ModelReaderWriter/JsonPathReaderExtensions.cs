@@ -259,51 +259,145 @@ internal static class JsonPathReaderExtensions
         }
     }
 
-    public static byte[] InsertAt(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> arrayPath, int index, ReadOnlyMemory<byte> jsonToInsert)
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static bool IsArrayWrapped(this ReadOnlyMemory<byte> json)
     {
         ReadOnlySpan<byte> jsonSpan = json.Span;
-        Utf8JsonReader jsonReader = new(jsonSpan);
-        bool isArrayIndex = arrayPath.IsArrayIndex();
-        ReadOnlySpan<byte> arrayPathCopy = arrayPath;
-        if (isArrayIndex)
+        return jsonSpan.Length >= 2 && jsonSpan[0] == (byte)'[' && jsonSpan[jsonSpan.Length - 1] == (byte)']';
+    }
+
+    private static ReadOnlyMemory<byte> FillAt(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> arrayPath)
+    {
+        int parentIndex = 0;
+        Utf8Parser.TryParse(arrayPath.GetIndexSpan(), out int index, out _);
+        ReadOnlySpan<byte> arrayParent = arrayPath.GetParent();
+        bool needsWrap = false;
+        if (arrayParent.IsArrayIndex())
         {
-            arrayPathCopy = arrayPathCopy.GetParent();
+            needsWrap = true;
+            Utf8Parser.TryParse(arrayParent.GetIndexSpan(), out parentIndex, out _);
+            json = FillAt(json, arrayParent);
         }
-        JsonPathReader pathReader = new(arrayPathCopy);
-        ReadOnlyMemory<byte> insert = jsonReader.Advance(ref pathReader)
+        ReadOnlySpan<byte> jsonSpan = json.Span;
+        Utf8JsonReader jsonReader = new(jsonSpan);
+        JsonPathReader pathReader = new(arrayParent);
+
+        if (!jsonReader.Advance(ref pathReader))
+            return json;
+
+        if (jsonReader.TokenType == JsonTokenType.PropertyName)
+            jsonReader.Read(); // Move to the value after the property name
+
+        int nextIndex = 0;
+
+        Utf8JsonReader jsonReaderCopy = jsonReader;
+        if (jsonReaderCopy.SkipToIndex(index, out nextIndex))
+            return json;
+
+        int gap = index - nextIndex;
+        byte[] rented = ArrayPool<byte>.Shared.Rent(gap * 5 + 6);
+        var rentedSpan = rented.AsSpan();
+        int length = 0;
+
+        if (needsWrap)
+        {
+            rentedSpan[0] = (byte)'[';
+            rentedSpan = rentedSpan.Slice(1);
+            length++;
+        }
+
+        for (int i = 0; i < gap; i++)
+        {
+            "null,"u8.CopyTo(rentedSpan);
+            rentedSpan = rentedSpan.Slice(5);
+            length += 5;
+        }
+        "null"u8.CopyTo(rentedSpan);
+        length += 4;
+
+        if (needsWrap)
+        {
+            rentedSpan = rentedSpan.Slice(4);
+            rentedSpan[0] = (byte)']';
+            length++;
+        }
+
+        ReadOnlyMemory<byte> result;
+        if (needsWrap)
+        {
+            result = jsonReader.SetCurrentValue(true, ReadOnlySpan<byte>.Empty, json, new(rented, 0, length));
+        }
+        else
+        {
+            result = jsonReaderCopy.Insert(json, ReadOnlySpan<byte>.Empty, new(rented, 0, length), index > 0);
+        }
+
+        ArrayPool<byte>.Shared.Return(rented);
+        return result;
+    }
+
+    public static byte[] InsertAt(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> arrayPath, ReadOnlyMemory<byte> jsonToInsert)
+    {
+        int parentIndex = 0;
+        Utf8Parser.TryParse(arrayPath.GetIndexSpan(), out int index, out _);
+        ReadOnlySpan<byte> arrayParent = arrayPath.GetParent();
+        if (arrayParent.IsArrayIndex())
+        {
+            Utf8Parser.TryParse(arrayParent.GetIndexSpan(), out parentIndex, out _);
+            json = FillAt(json, arrayParent);
+        }
+        ReadOnlySpan<byte> jsonSpan = json.Span;
+        Utf8JsonReader jsonReader = new(jsonSpan);
+        JsonPathReader pathReader = new(arrayParent);
+
+        ReadOnlyMemory<byte> insert = jsonReader.Advance(ref pathReader) && jsonToInsert.IsArrayWrapped()
             ? jsonToInsert.Slice(1, jsonToInsert.Length - 2)
             : jsonToInsert;
 
         if (jsonReader.TokenType == JsonTokenType.PropertyName)
             jsonReader.Read(); // Move to the value after the property name
 
-        if (isArrayIndex)
+        if (jsonReader.TokenType != JsonTokenType.StartArray && jsonReader.TokenType != JsonTokenType.Null)
+            throw new FormatException($"{Encoding.UTF8.GetString(arrayParent.ToArray())} is not an array.");
+
+        bool needsWrap = jsonReader.TokenType == JsonTokenType.Null;
+
+        int nextIndex = 0;
+
+        if (!needsWrap)
         {
-            insert = jsonReader.SkipToIndex(index, out int nextIndex) && jsonReader.TokenType != JsonTokenType.Null
+            insert = jsonReader.SkipToIndex(index, out nextIndex) && jsonReader.TokenType != JsonTokenType.Null && jsonToInsert.IsArrayWrapped()
                 ? jsonToInsert.Slice(1, jsonToInsert.Length - 2)
                 : jsonToInsert;
-
-            if (index > nextIndex)
-            {
-                int gap = index - nextIndex;
-                byte[] rented = ArrayPool<byte>.Shared.Rent(gap * 5);
-                var rentedSpan = rented.AsSpan();
-                for (int i = 0; i < gap; i++)
-                {
-                    "null,"u8.CopyTo(rentedSpan);
-                    rentedSpan = rentedSpan.Slice(5);
-                }
-                insert = new([.. rented.AsSpan(0, 5 * gap), .. insert.Span]);
-                ArrayPool<byte>.Shared.Return(rented);
-            }
         }
+
+        if (index > nextIndex)
+        {
+            int gap = index - nextIndex;
+            byte[] rented = ArrayPool<byte>.Shared.Rent(gap * 5);
+            var rentedSpan = rented.AsSpan();
+            for (int i = 0; i < gap; i++)
+            {
+                "null,"u8.CopyTo(rentedSpan);
+                rentedSpan = rentedSpan.Slice(5);
+            }
+            insert = needsWrap
+                ? new([(byte)'[', .. rented.AsSpan(0, 5 * gap), .. insert.Span, (byte)']'])
+                : new([.. rented.AsSpan(0, 5 * gap), .. insert.Span]);
+            ArrayPool<byte>.Shared.Return(rented);
+        }
+        else if (needsWrap)
+        {
+            insert = new([(byte)'[', .. insert.Span, (byte)']']);
+        }
+
         if (jsonReader.TokenType == JsonTokenType.Null)
         {
             return jsonReader.SetCurrentValue(true, ReadOnlySpan<byte>.Empty, json, insert);
         }
         else
         {
-            return jsonReader.Insert(json, ReadOnlySpan<byte>.Empty, insert, true);
+            return jsonReader.Insert(json, ReadOnlySpan<byte>.Empty, insert, needsWrap ? parentIndex > 0 : nextIndex > 0);
         }
     }
 
@@ -337,9 +431,9 @@ internal static class JsonPathReaderExtensions
             }
         }
 
+        endLeft = jsonReader.TokenStartIndex;
         if (jsonReader.TokenType == JsonTokenType.EndArray)
         {
-            endLeft = jsonReader.TokenStartIndex;
             if (!hasPreviousItems)
             {
                 return
@@ -361,18 +455,92 @@ internal static class JsonPathReaderExtensions
             }
         }
 
+        if (jsonReader.TokenType == JsonTokenType.StartObject)
+        {
+            //skip to the end of the object
+            while (jsonReader.Read() && jsonReader.TokenType != JsonTokenType.EndObject)
+            {
+                hasPreviousItems = true;
+                jsonReader.Skip();
+            }
+        }
+        else if (jsonReader.TokenType == JsonTokenType.EndObject)
+        {
+            hasPreviousItems = !IsEmptyObject(json, jsonReader.TokenStartIndex);
+        }
+
         endLeft = jsonReader.TokenStartIndex;
-        return
-        [
-            .. json.Slice(0, (int)endLeft).Span,
-            (byte)',',
-            (byte)'"',
-            .. propertyName,
-            (byte)'"',
-            (byte)':',
-            .. jsonToInsert.Span,
-            .. json.Slice((int)endLeft).Span
-        ];
+        var buffer = ArrayPool<byte>.Shared.Rent(json.Length + propertyName.Length + jsonToInsert.Length + 5);
+        var shared = buffer.AsSpan();
+        var left = json.Slice(0, (int)endLeft);
+        left.Span.CopyTo(shared);
+        shared = shared.Slice(left.Length);
+        int length = left.Length;
+
+        if (hasPreviousItems && !propertyName.IsEmpty)
+        {
+            shared[0] = (byte)',';
+            shared = shared.Slice(1);
+            length++;
+        }
+        if (!propertyName.IsEmpty)
+        {
+            shared[0] = (byte)'"';
+            propertyName.CopyTo(shared.Slice(1));
+            shared = shared.Slice(1 + propertyName.Length);
+            "\":"u8.CopyTo(shared);
+            shared = shared.Slice(2);
+            length += propertyName.Length + 3;
+        }
+
+        jsonToInsert.Span.CopyTo(shared);
+        shared = shared.Slice(jsonToInsert.Length);
+        length += jsonToInsert.Length;
+
+        // if I inserted into an array I need a trailing comma if there are more items to come after this one
+        if (propertyName.IsEmpty &&
+            jsonReader.TokenType != JsonTokenType.EndArray)
+        {
+            shared[0] = (byte)',';
+            shared = shared.Slice(1);
+            length++;
+        }
+
+        var right = json.Slice((int)endLeft);
+        right.Span.CopyTo(shared);
+        shared = shared.Slice(right.Length);
+        length += right.Length;
+
+        var result = buffer.AsSpan(0, length).ToArray();
+        ArrayPool<byte>.Shared.Return(buffer);
+        return result;
+    }
+
+    private static bool IsAtFirstIndex(ReadOnlyMemory<byte> json, long tokenStartIndex)
+    {
+        for (int i = (int)tokenStartIndex - 1; i >= 0; i--)
+        {
+            byte c = json.Span[i];
+            if (c == (byte)'[')
+                return true;
+            if (c != (byte)' ' && c != (byte)'\r' && c != (byte)'\n' && c != (byte)'\t')
+                return false;
+        }
+        return false;
+    }
+
+    private static bool IsEmptyObject(ReadOnlyMemory<byte> json, long tokenStartIndex)
+    {
+        for (int i = (int)tokenStartIndex - 1; i >= 0; i--)
+        {
+            byte c = json.Span[i];
+            if (c == (byte)'{')
+                return true;
+
+            if (c != (byte)' ' && c != (byte)'\r' && c != (byte)'\n' && c != (byte)'\t')
+                return false;
+        }
+        return false;
     }
 
     public static bool TryGetJson(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> jsonPath, out ReadOnlyMemory<byte> target)

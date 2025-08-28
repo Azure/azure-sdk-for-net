@@ -206,5 +206,181 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             Assert.IsFalse(reader.SkipToIndex(index, out maxIndex));
             Assert.AreEqual(expectedMaxIndex, maxIndex);
         }
+
+        [TestCase("$.a.b.c", "$.a")]
+        [TestCase("$.foo.bar.baz", "$.foo")]
+        [TestCase("$['prop'].x.y", "$['prop']")]
+        [TestCase("$[\"prop\"].x.y", "$[\"prop\"]")]
+        [TestCase("$", "$")]
+        public void GetFirstProperty(string jsonPathStr, string expected)
+        {
+            ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
+            var first = jsonPath.GetFirstProperty();
+            Assert.AreEqual(expected, Encoding.UTF8.GetString(first.ToArray()));
+        }
+
+        [TestCase("{\"a\":1,\"b\":2}", "$.c", "3", false, "{\"a\":1,\"b\":2,\"c\":3}")]
+        [TestCase("{\"a\":1}", "$.a", "2", true, "{\"a\":2}")]
+        [TestCase("{\"arr\":[1,2]}", "$.arr[1]", "10", true, "{\"arr\":[1,10]}")]
+        [TestCase("{}", "$.new", "42", false, "{\"new\":42}")]
+        public void SetCurrentValue(string jsonStr, string jsonPathStr, string newValue, bool shouldBeFound, string expected)
+        {
+            ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
+            ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
+            ReadOnlyMemory<byte> value = Encoding.UTF8.GetBytes(newValue);
+
+            var reader = new Utf8JsonReader(json.Span);
+            Assert.AreEqual(shouldBeFound, reader.Advance(jsonPath));
+
+            var result = reader.SetCurrentValue(shouldBeFound, jsonPath.GetPropertyName(), json, value);
+            Assert.AreEqual(expected, Encoding.UTF8.GetString(result));
+        }
+
+        [TestCase("{\"arr\":[1,2,3]}", "$.arr[1]", "10", "{\"arr\":[1,10,2,3]}")]
+        [TestCase("{\"arr\":[1,2,3]}", "$.arr[0]", "10", "{\"arr\":[10,1,2,3]}")]
+        [TestCase("{\"arr\":[1,2,3]}", "$.arr[3]", "4", "{\"arr\":[1,2,3,4]}")]
+        [TestCase("{\"arr\":[1,2,3]}", "$.arr[4]", "4", "{\"arr\":[1,2,3,null,4]}")]
+        [TestCase("{\"arr\":[1,2,3]}", "$.arr[5]", "6", "{\"arr\":[1,2,3,null,null,6]}")]
+        [TestCase("{\"arr\":null}", "$.arr[0]", "1", "{\"arr\":[1]}")]
+        [TestCase("{\"arr\":[[1,2],[3,4]]}", "$.arr[0][1]", "6", "{\"arr\":[[1,6,2],[3,4]]}")]
+        [TestCase("{\"arr\":[[1,2],[3,4]]}", "$.arr[3][1]", "6", "{\"arr\":[[1,2],[3,4],null,[null,6]]}")]
+        [TestCase("{\"arr\":[[[1],[]],[[3,4]]]}", "$.arr[0][1][1]", "6", "{\"arr\":[[[1],[null,6]],[[3,4]]]}")]
+        [TestCase("{\"arr\":[[[1],[]],[[3,4]]]}", "$.arr[3][3][0]", "6", "{\"arr\":[[[1],[]],[[3,4]],null,[null,null,null,[6]]]}")]
+        [TestCase("{\"arr\":[[[[1],[]],[[3,4]]]]}", "$.arr[0][0][1][1]", "6", "{\"arr\":[[[[1],[null,6]],[[3,4]]]]}")]
+        [TestCase("{\"arr\":[[[[1],[]],[[3,4]]]]}", "$.arr[3][3][3][1]", "6", "{\"arr\":[[[[1],[]],[[3,4]]],null,null,[null,null,null,[null,null,null,[null,6]]]]}")]
+        public void InsertAt(string jsonStr, string arrayPathStr, string newValue, string expected)
+        {
+            ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
+            ReadOnlySpan<byte> arrayPath = Encoding.UTF8.GetBytes(arrayPathStr);
+            ReadOnlyMemory<byte> value = Encoding.UTF8.GetBytes(newValue);
+
+            var result = json.InsertAt(arrayPath, value);
+            Assert.AreEqual(expected, Encoding.UTF8.GetString(result));
+        }
+
+        [TestCase("{\"arr\":1}", "$.arr[1]")]
+        [TestCase("{\"arr\":{}}", "$.arr[1]")]
+        [TestCase("{\"arr\":\"x\"}", "$.arr[1]")]
+        public void InsertAt_InvalidPath_Throws(string jsonStr, string arrayPathStr)
+        {
+            ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
+            var ex = Assert.Throws<FormatException>(() => json.InsertAt(Encoding.UTF8.GetBytes(arrayPathStr), Encoding.UTF8.GetBytes("1")));
+            Assert.AreEqual($"$.arr is not an array.", ex!.Message);
+        }
+
+        [TestCase("{\"a\":1,\"b\":2}", "$.a", true)]
+        [TestCase("{\"a\":1,\"b\":2}", "$.c", false)]
+        [TestCase("{\"arr\":[1,2,3]}", "$.arr[1]", true)]
+        [TestCase("{\"arr\":[1,2,3]}", "$.arr[5]", false)]
+        [TestCase("{}", "$", true)]
+        public void Advance_JsonPath(string jsonStr, string jsonPathStr, bool expected)
+        {
+            ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
+            ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
+
+            var reader = new Utf8JsonReader(json.Span);
+            bool result = reader.Advance(jsonPath);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestCase("{\"a\":1,\"b\":2}", "$.a", true)]
+        [TestCase("{\"a\":1,\"b\":2}", "$.c", false)]
+        [TestCase("{\"arr\":[1,2,3]}", "$.arr[1]", true)]
+        [TestCase("{\"arr\":[1,2,3]}", "$.arr[5]", false)]
+        [TestCase("{}", "$", true)]
+        public void Advance_PathReader(string jsonStr, string jsonPathStr, bool expected)
+        {
+            ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
+            ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
+
+            var reader = new Utf8JsonReader(json.Span);
+            var pathReader = new JsonPathReader(jsonPath);
+            bool result = reader.Advance(ref pathReader);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestCase("{\"arr\":[1]}", "$.arr", "", "2", "{\"arr\":[1,2]}")]
+        [TestCase("{\"arr\":[]}", "$.arr", "", "1", "{\"arr\":[1]}")]
+        [TestCase("{\"obj\":{}}", "$.obj", "prop", "value", "{\"obj\":{\"prop\":value}}")]
+        [TestCase("{\"arr\":[1,2]}", "$.arr", "", "3", "{\"arr\":[1,2,3]}")]
+        public void Insert(string jsonStr, string jsonPathStr, string propertyNameStr, string newValue, string expected)
+        {
+            ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
+            ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
+            ReadOnlyMemory<byte> value = Encoding.UTF8.GetBytes(newValue);
+            ReadOnlySpan<byte> propertyName = string.IsNullOrEmpty(propertyNameStr) ? ReadOnlySpan<byte>.Empty : Encoding.UTF8.GetBytes(propertyNameStr);
+
+            var reader = new Utf8JsonReader(json.Span);
+            reader.Advance(jsonPath);
+
+            var result = reader.Insert(json, propertyName, value);
+            Assert.AreEqual(expected, Encoding.UTF8.GetString(result));
+        }
+
+        [TestCase("invalid")]
+        [TestCase("")]
+        public void GetPropertyName_InvalidPath_Throws(string jsonPathStr)
+        {
+            var ex = Assert.Throws<ArgumentException>(() => Encoding.UTF8.GetBytes(jsonPathStr).GetPropertyName());
+            Assert.AreEqual("JsonPath must start with '$' (Parameter 'jsonPath')", ex!.Message.Split('\n')[0]);
+        }
+
+        [TestCase("invalid")]
+        [TestCase("")]
+        public void GetParent_InvalidPath_Throws(string jsonPathStr)
+        {
+            var ex = Assert.Throws<ArgumentException>(() => Encoding.UTF8.GetBytes(jsonPathStr).GetParent());
+            Assert.AreEqual("JsonPath must start with '$' (Parameter 'jsonPath')", ex!.Message.Split('\n')[0]);
+        }
+
+        [TestCase("invalid")]
+        [TestCase("")]
+        public void GetIndexSpan_InvalidPath_Throws(string jsonPathStr)
+        {
+            var ex = Assert.Throws<ArgumentException>(() => Encoding.UTF8.GetBytes(jsonPathStr).GetIndexSpan());
+            Assert.AreEqual("JsonPath must start with '$' (Parameter 'jsonPath')", ex!.Message.Split('\n')[0]);
+        }
+
+        [TestCase("invalid")]
+        [TestCase("")]
+        public void Advance_InvalidPath_Throws(string jsonPathStr)
+        {
+            var json = Encoding.UTF8.GetBytes("{}");
+            ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
+
+            var reader = new Utf8JsonReader(json);
+            bool exceptionThrown = false;
+            try
+            {
+                reader.Advance(jsonPath);
+            }
+            catch (ArgumentException ex)
+            {
+                Assert.AreEqual("JsonPath must start with '$' (Parameter 'jsonPath')", ex!.Message);
+                exceptionThrown = true;
+            }
+            Assert.IsTrue(exceptionThrown);
+        }
+
+        [TestCase("{\"arr\":[1,2,3],\"notArray\":1}", "$.notArray", "$.notArray is not an array.")]
+        [TestCase("{\"obj\":{}}", "$.missing", "$.missing was not found in the JSON structure.")]
+        public void GetArrayLength_InvalidCases_Throws(string jsonStr, string jsonPathStr, string expectedMessage)
+        {
+            ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
+            ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
+
+            var reader = new Utf8JsonReader(json.Span);
+            bool exceptionThrown = false;
+            try
+            {
+                reader.GetArrayLength(jsonPath);
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual(expectedMessage, ex!.Message);
+                exceptionThrown = true;
+            }
+            Assert.IsTrue(exceptionThrown);
+        }
     }
 }

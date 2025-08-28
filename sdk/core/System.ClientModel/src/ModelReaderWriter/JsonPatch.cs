@@ -1447,8 +1447,7 @@ public partial struct JsonPatch
                 {
                     if (kvp.Key.IsArrayIndex())
                     {
-                        Utf8Parser.TryParse(kvp.Key.GetIndexSpan(), out int index, out _);
-                        newJson = newJson.InsertAt(kvp.Key, index, kvp.Value.Value);
+                        newJson = newJson.InsertAt(kvp.Key, kvp.Value.Value);
                     }
                     else
                     {

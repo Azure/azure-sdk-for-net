@@ -582,8 +582,7 @@ public partial struct JsonPatch
                     ReadOnlySpan<byte> childJsonPath = childPath.AsSpan(0, childPathLength);
                     if (childJsonPath.IsArrayIndex())
                     {
-                        Utf8Parser.TryParse(kvp.Key.GetIndexSpan(), out int index, out _);
-                        existingArray = existingArray.InsertAt(childJsonPath, index, kvp.Value.Value);
+                        existingArray = existingArray.InsertAt(childJsonPath, kvp.Value.Value);
                     }
                     else
                     {
