@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Advisor.Tests
         public async Task ConfigureSubscriptionTest()
         {
             string configName = "default";
-            var configData = new ConfigData
+            var configData = new AdvisorConfigData
             {
                 Exclude = false,
                 LowCpuThreshold = TestThreshold
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Advisor.Tests
         public async Task ConfigureResourceGroupTest()
         {
             string configName = "default";
-            var configData = new ConfigData { Exclude = true };
+            var configData = new AdvisorConfigData { Exclude = true };
 
             var resourceGroup = await CreateResourceGroupAsync();
             await resourceGroup.CreateConfigurationAsync(configName, configData);
