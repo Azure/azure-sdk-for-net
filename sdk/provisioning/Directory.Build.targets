@@ -7,6 +7,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Azure.Provisioning/tests/ProvisioningTestBase.cs" LinkBase="ProvisioningShared" />
     <Compile Include="$(MSBuildThisFileDirectory)Azure.Provisioning/tests/ProvisioningTestEnvironment.cs" LinkBase="ProvisioningShared" />
     <Compile Include="$(MSBuildThisFileDirectory)Azure.Provisioning/tests/Trycep.cs" LinkBase="ProvisioningShared" />
+    <Compile Include="$(MSBuildThisFileDirectory)Azure.Provisioning/tests/StringHelpers.cs" LinkBase="ProvisioningShared" />
   </ItemGroup>
 
 </Project>
