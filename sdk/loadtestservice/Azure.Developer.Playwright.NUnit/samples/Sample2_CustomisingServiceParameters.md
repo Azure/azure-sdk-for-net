@@ -1,6 +1,6 @@
 ## Learn about different available service parameters and how to use them
 
-Follow the steps listed in this [README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.Playwright.NUnit/README.md) to integrate your existing Playwright test suite with Azure Playwright service.
+Follow the steps listed in this [README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.Playwright.NUnit/README.md) to integrate your existing Playwright test suite with Playwright Workspaces.
 This guide explains the different options available to you in the Azure.Developer.Playwright.NUnit package and how to use them.
 
 ### Customising remote browser parameters
@@ -25,8 +25,7 @@ public class PlaywrightServiceNUnitSetup : PlaywrightServiceBrowserNUnit
         {
             OS = OSPlatform.Linux,
             ExposeNetwork = "<loopback>",
-            RunId = Guid.NewGuid().ToString(),
-            RunName = "Playwright Service Test Run",
+            RunName = "Playwright Workspaces Test Run",
         }
     )
     {

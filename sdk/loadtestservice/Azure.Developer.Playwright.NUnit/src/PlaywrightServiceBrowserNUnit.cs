@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Developer.Playwright.NUnit;
 
 /// <summary>
-/// NUnit setup fixture to initialize Playwright Service.
+/// NUnit setup fixture to initialize Playwright Workspaces.
 /// </summary>
 [SetUpFixture]
 public class PlaywrightServiceBrowserNUnit : PlaywrightServiceBrowserClient
@@ -76,7 +76,7 @@ public class PlaywrightServiceBrowserNUnit : PlaywrightServiceBrowserClient
     [OneTimeSetUp]
     public async Task InitializeAsync()
     {
-        nunitLogger.LogInformation("\nRunning tests using Azure Playwright service.\n");
+        nunitLogger.LogInformation("\nRunning tests using Playwright Workspaces.\n");
 
         await base.InitializeAsync().ConfigureAwait(false);
     }
