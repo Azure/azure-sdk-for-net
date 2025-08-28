@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// A voicelive server event.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerEventError"/>, <see cref="ServerEventSessionCreated"/>, <see cref="ServerEventSessionUpdated"/>, <see cref="ServerEventSessionAvatarConnecting"/>, <see cref="ServerEventInputAudioBufferCommitted"/>, <see cref="ServerEventInputAudioBufferCleared"/>, <see cref="ServerEventInputAudioBufferSpeechStarted"/>, <see cref="ServerEventInputAudioBufferSpeechStopped"/>, <see cref="ServerEventConversationItemCreated"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionCompleted"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionFailed"/>, <see cref="ServerEventConversationItemTruncated"/>, <see cref="ServerEventConversationItemDeleted"/>, <see cref="ServerEventResponseCreated"/>, <see cref="ServerEventResponseDone"/>, <see cref="ServerEventResponseOutputItemAdded"/>, <see cref="ServerEventResponseOutputItemDone"/>, <see cref="ServerEventResponseContentPartAdded"/>, <see cref="ServerEventResponseContentPartDone"/>, <see cref="ServerEventResponseTextDelta"/>, <see cref="ServerEventResponseTextDone"/>, <see cref="ServerEventResponseAudioTranscriptDelta"/>, <see cref="ServerEventResponseAudioTranscriptDone"/>, <see cref="ServerEventResponseAudioDelta"/>, <see cref="ServerEventResponseAudioDone"/>, <see cref="ServerEventResponseAnimationBlendshapeDelta"/>, <see cref="ServerEventResponseAnimationBlendshapeDone"/>, <see cref="ServerEventResponseEmotionHypothesis"/>, <see cref="ServerEventResponseAudioTimestampDelta"/>, <see cref="ServerEventResponseAudioTimestampDone"/>, <see cref="ServerEventResponseAnimationVisemeDelta"/>, <see cref="ServerEventResponseAnimationVisemeDone"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionDelta"/>, <see cref="ServerEventConversationItemRetrieved"/>, <see cref="ServerEventResponseFunctionCallArgumentsDelta"/>, and <see cref="ServerEventResponseFunctionCallArgumentsDone"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerEventSessionAvatarConnecting"/>, <see cref="ServerEventSessionCreated"/>, <see cref="ServerEventSessionUpdated"/>, <see cref="ServerEventError"/>, <see cref="ServerEventResponseTextDelta"/>, <see cref="ServerEventResponseAudioDelta"/>, <see cref="ServerEventConversationItemCreated"/>, <see cref="ServerEventConversationItemDeleted"/>, <see cref="ServerEventConversationItemRetrieved"/>, <see cref="ServerEventConversationItemTruncated"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionCompleted"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionDelta"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionFailed"/>, <see cref="ServerEventInputAudioBufferCommitted"/>, <see cref="ServerEventInputAudioBufferCleared"/>, <see cref="ServerEventInputAudioBufferSpeechStarted"/>, <see cref="ServerEventInputAudioBufferSpeechStopped"/>, <see cref="ServerEventResponseCreated"/>, <see cref="ServerEventResponseDone"/>, <see cref="ServerEventResponseOutputItemAdded"/>, <see cref="ServerEventResponseOutputItemDone"/>, <see cref="ServerEventResponseContentPartAdded"/>, <see cref="ServerEventResponseContentPartDone"/>, <see cref="ServerEventResponseTextDone"/>, <see cref="ServerEventResponseAudioTranscriptDelta"/>, <see cref="ServerEventResponseAudioTranscriptDone"/>, <see cref="ServerEventResponseAudioDone"/>, <see cref="ServerEventResponseFunctionCallArgumentsDelta"/>, <see cref="ServerEventResponseFunctionCallArgumentsDone"/>, <see cref="ServerEventResponseAnimationBlendshapeDelta"/>, <see cref="ServerEventResponseAnimationBlendshapeDone"/>, <see cref="ServerEventResponseEmotionHypothesis"/>, <see cref="ServerEventResponseAudioTimestampDelta"/>, <see cref="ServerEventResponseAudioTimestampDone"/>, <see cref="ServerEventResponseAnimationVisemeDelta"/>, and <see cref="ServerEventResponseAnimationVisemeDone"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownServerEventBase))]
     public abstract partial class ServerEventBase : IJsonModel<ServerEventBase>
@@ -94,14 +94,32 @@ namespace Azure.AI.VoiceLive
             {
                 switch (discriminator.GetString())
                 {
-                    case "error":
-                        return ServerEventError.DeserializeServerEventError(element, options);
+                    case "session.avatar.connecting":
+                        return ServerEventSessionAvatarConnecting.DeserializeServerEventSessionAvatarConnecting(element, options);
                     case "session.created":
                         return ServerEventSessionCreated.DeserializeServerEventSessionCreated(element, options);
                     case "session.updated":
                         return ServerEventSessionUpdated.DeserializeServerEventSessionUpdated(element, options);
-                    case "session.avatar.connecting":
-                        return ServerEventSessionAvatarConnecting.DeserializeServerEventSessionAvatarConnecting(element, options);
+                    case "error":
+                        return ServerEventError.DeserializeServerEventError(element, options);
+                    case "response.text.delta":
+                        return ServerEventResponseTextDelta.DeserializeServerEventResponseTextDelta(element, options);
+                    case "response.audio.delta":
+                        return ServerEventResponseAudioDelta.DeserializeServerEventResponseAudioDelta(element, options);
+                    case "conversation.item.created":
+                        return ServerEventConversationItemCreated.DeserializeServerEventConversationItemCreated(element, options);
+                    case "conversation.item.deleted":
+                        return ServerEventConversationItemDeleted.DeserializeServerEventConversationItemDeleted(element, options);
+                    case "conversation.item.retrieved":
+                        return ServerEventConversationItemRetrieved.DeserializeServerEventConversationItemRetrieved(element, options);
+                    case "conversation.item.truncated":
+                        return ServerEventConversationItemTruncated.DeserializeServerEventConversationItemTruncated(element, options);
+                    case "conversation.item.input_audio_transcription.completed":
+                        return ServerEventConversationItemInputAudioTranscriptionCompleted.DeserializeServerEventConversationItemInputAudioTranscriptionCompleted(element, options);
+                    case "conversation.item.input_audio_transcription.delta":
+                        return ServerEventConversationItemInputAudioTranscriptionDelta.DeserializeServerEventConversationItemInputAudioTranscriptionDelta(element, options);
+                    case "conversation.item.input_audio_transcription.failed":
+                        return ServerEventConversationItemInputAudioTranscriptionFailed.DeserializeServerEventConversationItemInputAudioTranscriptionFailed(element, options);
                     case "input_audio_buffer.committed":
                         return ServerEventInputAudioBufferCommitted.DeserializeServerEventInputAudioBufferCommitted(element, options);
                     case "input_audio_buffer.cleared":
@@ -110,16 +128,6 @@ namespace Azure.AI.VoiceLive
                         return ServerEventInputAudioBufferSpeechStarted.DeserializeServerEventInputAudioBufferSpeechStarted(element, options);
                     case "input_audio_buffer.speech_stopped":
                         return ServerEventInputAudioBufferSpeechStopped.DeserializeServerEventInputAudioBufferSpeechStopped(element, options);
-                    case "conversation.item.created":
-                        return ServerEventConversationItemCreated.DeserializeServerEventConversationItemCreated(element, options);
-                    case "conversation.item.input_audio_transcription.completed":
-                        return ServerEventConversationItemInputAudioTranscriptionCompleted.DeserializeServerEventConversationItemInputAudioTranscriptionCompleted(element, options);
-                    case "conversation.item.input_audio_transcription.failed":
-                        return ServerEventConversationItemInputAudioTranscriptionFailed.DeserializeServerEventConversationItemInputAudioTranscriptionFailed(element, options);
-                    case "conversation.item.truncated":
-                        return ServerEventConversationItemTruncated.DeserializeServerEventConversationItemTruncated(element, options);
-                    case "conversation.item.deleted":
-                        return ServerEventConversationItemDeleted.DeserializeServerEventConversationItemDeleted(element, options);
                     case "response.created":
                         return ServerEventResponseCreated.DeserializeServerEventResponseCreated(element, options);
                     case "response.done":
@@ -132,18 +140,18 @@ namespace Azure.AI.VoiceLive
                         return ServerEventResponseContentPartAdded.DeserializeServerEventResponseContentPartAdded(element, options);
                     case "response.content_part.done":
                         return ServerEventResponseContentPartDone.DeserializeServerEventResponseContentPartDone(element, options);
-                    case "response.text.delta":
-                        return ServerEventResponseTextDelta.DeserializeServerEventResponseTextDelta(element, options);
                     case "response.text.done":
                         return ServerEventResponseTextDone.DeserializeServerEventResponseTextDone(element, options);
                     case "response.audio_transcript.delta":
                         return ServerEventResponseAudioTranscriptDelta.DeserializeServerEventResponseAudioTranscriptDelta(element, options);
                     case "response.audio_transcript.done":
                         return ServerEventResponseAudioTranscriptDone.DeserializeServerEventResponseAudioTranscriptDone(element, options);
-                    case "response.audio.delta":
-                        return ServerEventResponseAudioDelta.DeserializeServerEventResponseAudioDelta(element, options);
                     case "response.audio.done":
                         return ServerEventResponseAudioDone.DeserializeServerEventResponseAudioDone(element, options);
+                    case "response.function_call_arguments.delta":
+                        return ServerEventResponseFunctionCallArgumentsDelta.DeserializeServerEventResponseFunctionCallArgumentsDelta(element, options);
+                    case "response.function_call_arguments.done":
+                        return ServerEventResponseFunctionCallArgumentsDone.DeserializeServerEventResponseFunctionCallArgumentsDone(element, options);
                     case "response.animation_blendshapes.delta":
                         return ServerEventResponseAnimationBlendshapeDelta.DeserializeServerEventResponseAnimationBlendshapeDelta(element, options);
                     case "response.animation_blendshapes.done":
@@ -158,14 +166,6 @@ namespace Azure.AI.VoiceLive
                         return ServerEventResponseAnimationVisemeDelta.DeserializeServerEventResponseAnimationVisemeDelta(element, options);
                     case "response.animation_viseme.done":
                         return ServerEventResponseAnimationVisemeDone.DeserializeServerEventResponseAnimationVisemeDone(element, options);
-                    case "conversation.item.input_audio_transcription.delta":
-                        return ServerEventConversationItemInputAudioTranscriptionDelta.DeserializeServerEventConversationItemInputAudioTranscriptionDelta(element, options);
-                    case "conversation.item.retrieved":
-                        return ServerEventConversationItemRetrieved.DeserializeServerEventConversationItemRetrieved(element, options);
-                    case "response.function_call_arguments.delta":
-                        return ServerEventResponseFunctionCallArgumentsDelta.DeserializeServerEventResponseFunctionCallArgumentsDelta(element, options);
-                    case "response.function_call_arguments.done":
-                        return ServerEventResponseFunctionCallArgumentsDone.DeserializeServerEventResponseFunctionCallArgumentsDone(element, options);
                 }
             }
             return UnknownServerEventBase.DeserializeUnknownServerEventBase(element, options);
