@@ -20,27 +20,27 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisCommonConfiguration"/>. </summary>
-        /// <param name="isRdbBackupEnabled"> Specifies whether the rdb backup is enabled. </param>
+        /// <param name="isRdbBackupEnabled"> Specifies whether the RDB backup is enabled. </param>
         /// <param name="rdbBackupFrequency"> Specifies the frequency for creating rdb backup in minutes. Valid values: (15, 30, 60, 360, 720, 1440). </param>
         /// <param name="rdbBackupMaxSnapshotCount"> Specifies the maximum number of snapshots for rdb backup. </param>
         /// <param name="rdbStorageConnectionString"> The storage account connection string for storing rdb file. </param>
         /// <param name="isAofBackupEnabled"> Specifies whether the aof backup is enabled. </param>
         /// <param name="aofStorageConnectionString0"> First storage account connection string. </param>
         /// <param name="aofStorageConnectionString1"> Second storage account connection string. </param>
-        /// <param name="maxFragmentationMemoryReserved"> Value in megabytes reserved for fragmentation per shard. </param>
-        /// <param name="maxMemoryPolicy"> The eviction strategy used when your data won't fit within its memory limit. </param>
-        /// <param name="maxMemoryReserved"> Value in megabytes reserved for non-cache usage per shard e.g. failover. </param>
-        /// <param name="maxMemoryDelta"> Value in megabytes reserved for non-cache usage per shard e.g. failover. </param>
-        /// <param name="maxClients"> The max clients config. </param>
+        /// <param name="maxfragmentationmemoryReserved"> Value in megabytes reserved for fragmentation per shard. </param>
+        /// <param name="maxmemoryPolicy"> The eviction strategy used when your data won't fit within its memory limit. </param>
+        /// <param name="maxmemoryReserved"> Value in megabytes reserved for non-cache usage per shard e.g. failover. </param>
+        /// <param name="maxmemoryDelta"> Value in megabytes reserved for non-cache usage per shard e.g. failover. </param>
+        /// <param name="maxclients"> The max clients config. </param>
         /// <param name="notifyKeyspaceEvents"> The keyspace events which should be monitored. </param>
         /// <param name="preferredDataArchiveAuthMethod"> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </param>
         /// <param name="preferredDataPersistenceAuthMethod"> Preferred auth method to communicate to storage account used for data persistence, specify SAS or ManagedIdentity, default value is SAS. </param>
         /// <param name="zonalConfiguration"> Zonal Configuration. </param>
-        /// <param name="authNotRequired"> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view. </param>
+        /// <param name="authnotrequired"> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view; you should never disable authentication using this property!. </param>
         /// <param name="storageSubscriptionId"> SubscriptionId of the storage account for persistence (aof/rdb) using ManagedIdentity. </param>
         /// <param name="isAadEnabled"> Specifies whether AAD based authentication has been enabled or disabled for the cache. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal RedisCommonConfiguration(bool? isRdbBackupEnabled, string rdbBackupFrequency, int? rdbBackupMaxSnapshotCount, string rdbStorageConnectionString, bool? isAofBackupEnabled, string aofStorageConnectionString0, string aofStorageConnectionString1, string maxFragmentationMemoryReserved, string maxMemoryPolicy, string maxMemoryReserved, string maxMemoryDelta, string maxClients, string notifyKeyspaceEvents, string preferredDataArchiveAuthMethod, string preferredDataPersistenceAuthMethod, string zonalConfiguration, string authNotRequired, string storageSubscriptionId, string isAadEnabled, IDictionary<string, BinaryData> additionalProperties)
+        internal RedisCommonConfiguration(bool? isRdbBackupEnabled, string rdbBackupFrequency, int? rdbBackupMaxSnapshotCount, string rdbStorageConnectionString, bool? isAofBackupEnabled, string aofStorageConnectionString0, string aofStorageConnectionString1, string maxfragmentationmemoryReserved, string maxmemoryPolicy, string maxmemoryReserved, string maxmemoryDelta, string maxclients, string notifyKeyspaceEvents, string preferredDataArchiveAuthMethod, string preferredDataPersistenceAuthMethod, string zonalConfiguration, string authnotrequired, string storageSubscriptionId, string isAadEnabled, IDictionary<string, BinaryData> additionalProperties)
         {
             IsRdbBackupEnabled = isRdbBackupEnabled;
             RdbBackupFrequency = rdbBackupFrequency;
@@ -49,22 +49,22 @@ namespace Azure.ResourceManager.Redis.Models
             IsAofBackupEnabled = isAofBackupEnabled;
             AofStorageConnectionString0 = aofStorageConnectionString0;
             AofStorageConnectionString1 = aofStorageConnectionString1;
-            MaxFragmentationMemoryReserved = maxFragmentationMemoryReserved;
-            MaxMemoryPolicy = maxMemoryPolicy;
-            MaxMemoryReserved = maxMemoryReserved;
-            MaxMemoryDelta = maxMemoryDelta;
-            MaxClients = maxClients;
+            MaxfragmentationmemoryReserved = maxfragmentationmemoryReserved;
+            MaxmemoryPolicy = maxmemoryPolicy;
+            MaxmemoryReserved = maxmemoryReserved;
+            MaxmemoryDelta = maxmemoryDelta;
+            Maxclients = maxclients;
             NotifyKeyspaceEvents = notifyKeyspaceEvents;
             PreferredDataArchiveAuthMethod = preferredDataArchiveAuthMethod;
             PreferredDataPersistenceAuthMethod = preferredDataPersistenceAuthMethod;
             ZonalConfiguration = zonalConfiguration;
-            AuthNotRequired = authNotRequired;
+            Authnotrequired = authnotrequired;
             StorageSubscriptionId = storageSubscriptionId;
             IsAadEnabled = isAadEnabled;
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Specifies whether the rdb backup is enabled. </summary>
+        /// <summary> Specifies whether the RDB backup is enabled. </summary>
         [WirePath("rdb-backup-enabled")]
         public bool? IsRdbBackupEnabled { get; set; }
         /// <summary> Specifies the frequency for creating rdb backup in minutes. Valid values: (15, 30, 60, 360, 720, 1440). </summary>
@@ -87,19 +87,19 @@ namespace Azure.ResourceManager.Redis.Models
         public string AofStorageConnectionString1 { get; set; }
         /// <summary> Value in megabytes reserved for fragmentation per shard. </summary>
         [WirePath("maxfragmentationmemory-reserved")]
-        public string MaxFragmentationMemoryReserved { get; set; }
+        public string MaxfragmentationmemoryReserved { get; set; }
         /// <summary> The eviction strategy used when your data won't fit within its memory limit. </summary>
         [WirePath("maxmemory-policy")]
-        public string MaxMemoryPolicy { get; set; }
+        public string MaxmemoryPolicy { get; set; }
         /// <summary> Value in megabytes reserved for non-cache usage per shard e.g. failover. </summary>
         [WirePath("maxmemory-reserved")]
-        public string MaxMemoryReserved { get; set; }
+        public string MaxmemoryReserved { get; set; }
         /// <summary> Value in megabytes reserved for non-cache usage per shard e.g. failover. </summary>
         [WirePath("maxmemory-delta")]
-        public string MaxMemoryDelta { get; set; }
+        public string MaxmemoryDelta { get; set; }
         /// <summary> The max clients config. </summary>
         [WirePath("maxclients")]
-        public string MaxClients { get; }
+        public string Maxclients { get; }
         /// <summary> The keyspace events which should be monitored. </summary>
         [WirePath("notify-keyspace-events")]
         public string NotifyKeyspaceEvents { get; set; }
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Zonal Configuration. </summary>
         [WirePath("zonal-configuration")]
         public string ZonalConfiguration { get; }
-        /// <summary> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view. </summary>
+        /// <summary> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view; you should never disable authentication using this property!. </summary>
         [WirePath("authnotrequired")]
-        public string AuthNotRequired { get; set; }
+        public string Authnotrequired { get; set; }
         /// <summary> SubscriptionId of the storage account for persistence (aof/rdb) using ManagedIdentity. </summary>
         [WirePath("storage-subscription-id")]
         public string StorageSubscriptionId { get; set; }

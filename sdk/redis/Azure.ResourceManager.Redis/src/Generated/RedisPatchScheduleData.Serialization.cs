@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Redis
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                writer.WriteStringValue(Location);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Redis
             {
                 return null;
             }
-            AzureLocation? location = default;
+            string location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -88,11 +88,7 @@ namespace Azure.ResourceManager.Redis
             {
                 if (property.NameEquals("location"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -152,8 +148,8 @@ namespace Azure.ResourceManager.Redis
                 name,
                 type,
                 systemData,
-                location,
                 scheduleEntries,
+                location,
                 serializedAdditionalRawData);
         }
 
@@ -202,7 +198,15 @@ namespace Azure.ResourceManager.Redis
                 if (Optional.IsDefined(Location))
                 {
                     builder.Append("  location: ");
-                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                    if (Location.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Location}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Location}'");
+                    }
                 }
             }
 

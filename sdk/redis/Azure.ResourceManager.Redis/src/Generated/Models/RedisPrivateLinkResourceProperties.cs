@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    /// <summary> List of access policies assignments (with properties) of a Redis cache. </summary>
-    internal partial class RedisCacheAccessPolicyAssignmentList
+    /// <summary> Properties of a private link resource. </summary>
+    public partial class RedisPrivateLinkResourceProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,37 +45,34 @@ namespace Azure.ResourceManager.Redis.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyAssignmentList"/>. </summary>
-        /// <param name="value"> The RedisCacheAccessPolicyAssignment items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RedisCacheAccessPolicyAssignmentList(IEnumerable<RedisCacheAccessPolicyAssignmentData> value)
+        /// <summary> Initializes a new instance of <see cref="RedisPrivateLinkResourceProperties"/>. </summary>
+        internal RedisPrivateLinkResourceProperties()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyAssignmentList"/>. </summary>
-        /// <param name="value"> The RedisCacheAccessPolicyAssignment items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="RedisPrivateLinkResourceProperties"/>. </summary>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisCacheAccessPolicyAssignmentList(IReadOnlyList<RedisCacheAccessPolicyAssignmentData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            GroupId = groupId;
+            RequiredMembers = requiredMembers;
+            RequiredZoneNames = requiredZoneNames;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyAssignmentList"/> for deserialization. </summary>
-        internal RedisCacheAccessPolicyAssignmentList()
-        {
-        }
-
-        /// <summary> The RedisCacheAccessPolicyAssignment items on this page. </summary>
-        [WirePath("value")]
-        public IReadOnlyList<RedisCacheAccessPolicyAssignmentData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        [WirePath("nextLink")]
-        public Uri NextLink { get; }
+        /// <summary> The private link resource group id. </summary>
+        [WirePath("groupId")]
+        public string GroupId { get; }
+        /// <summary> The private link resource required member names. </summary>
+        [WirePath("requiredMembers")]
+        public IReadOnlyList<string> RequiredMembers { get; }
+        /// <summary> The private link resource private link DNS zone name. </summary>
+        [WirePath("requiredZoneNames")]
+        public IReadOnlyList<string> RequiredZoneNames { get; }
     }
 }

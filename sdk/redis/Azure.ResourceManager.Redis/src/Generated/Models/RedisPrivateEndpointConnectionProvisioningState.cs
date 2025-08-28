@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Redis.Models
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Connection has been provisioned. </summary>
         public static RedisPrivateEndpointConnectionProvisioningState Succeeded { get; } = new RedisPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary> Creating. </summary>
+        /// <summary> Connection is being created. </summary>
         public static RedisPrivateEndpointConnectionProvisioningState Creating { get; } = new RedisPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary> Connection is being deleted. </summary>
         public static RedisPrivateEndpointConnectionProvisioningState Deleting { get; } = new RedisPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Connection provisioning has failed. </summary>
         public static RedisPrivateEndpointConnectionProvisioningState Failed { get; } = new RedisPrivateEndpointConnectionProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="RedisPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(RedisPrivateEndpointConnectionProvisioningState left, RedisPrivateEndpointConnectionProvisioningState right) => left.Equals(right);

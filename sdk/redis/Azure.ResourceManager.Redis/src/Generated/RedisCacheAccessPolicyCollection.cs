@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Redis
     /// </summary>
     public partial class RedisCacheAccessPolicyCollection : ArmCollection, IEnumerable<RedisCacheAccessPolicyResource>, IAsyncEnumerable<RedisCacheAccessPolicyResource>
     {
-        private readonly ClientDiagnostics _redisCacheAccessPolicyAccessPolicyClientDiagnostics;
-        private readonly AccessPolicyRestOperations _redisCacheAccessPolicyAccessPolicyRestClient;
+        private readonly ClientDiagnostics _redisCacheAccessPolicyClientDiagnostics;
+        private readonly RedisCacheAccessPoliciesRestOperations _redisCacheAccessPolicyRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="RedisCacheAccessPolicyCollection"/> class for mocking. </summary>
         protected RedisCacheAccessPolicyCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Redis
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal RedisCacheAccessPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _redisCacheAccessPolicyAccessPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", RedisCacheAccessPolicyResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(RedisCacheAccessPolicyResource.ResourceType, out string redisCacheAccessPolicyAccessPolicyApiVersion);
-            _redisCacheAccessPolicyAccessPolicyRestClient = new AccessPolicyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, redisCacheAccessPolicyAccessPolicyApiVersion);
+            _redisCacheAccessPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", RedisCacheAccessPolicyResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(RedisCacheAccessPolicyResource.ResourceType, out string redisCacheAccessPolicyApiVersion);
+            _redisCacheAccessPolicyRestClient = new RedisCacheAccessPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, redisCacheAccessPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessPolicy_CreateUpdate</description>
+        /// <description>RedisCacheAccessPolicy_CreateUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.Redis
             Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.CreateOrUpdate");
+            using var scope = _redisCacheAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _redisCacheAccessPolicyAccessPolicyRestClient.CreateUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisArmOperation<RedisCacheAccessPolicyResource>(new RedisCacheAccessPolicyOperationSource(Client), _redisCacheAccessPolicyAccessPolicyClientDiagnostics, Pipeline, _redisCacheAccessPolicyAccessPolicyRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _redisCacheAccessPolicyRestClient.CreateUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new RedisArmOperation<RedisCacheAccessPolicyResource>(new RedisCacheAccessPolicyOperationSource(Client), _redisCacheAccessPolicyClientDiagnostics, Pipeline, _redisCacheAccessPolicyRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessPolicy_CreateUpdate</description>
+        /// <description>RedisCacheAccessPolicy_CreateUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.Redis
             Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.CreateOrUpdate");
+            using var scope = _redisCacheAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _redisCacheAccessPolicyAccessPolicyRestClient.CreateUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, data, cancellationToken);
-                var operation = new RedisArmOperation<RedisCacheAccessPolicyResource>(new RedisCacheAccessPolicyOperationSource(Client), _redisCacheAccessPolicyAccessPolicyClientDiagnostics, Pipeline, _redisCacheAccessPolicyAccessPolicyRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _redisCacheAccessPolicyRestClient.CreateUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, data, cancellationToken);
+                var operation = new RedisArmOperation<RedisCacheAccessPolicyResource>(new RedisCacheAccessPolicyOperationSource(Client), _redisCacheAccessPolicyClientDiagnostics, Pipeline, _redisCacheAccessPolicyRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessPolicy_Get</description>
+        /// <description>RedisCacheAccessPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
 
-            using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.Get");
+            using var scope = _redisCacheAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _redisCacheAccessPolicyAccessPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, cancellationToken).ConfigureAwait(false);
+                var response = await _redisCacheAccessPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RedisCacheAccessPolicyResource(Client, response.Value), response.GetRawResponse());
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessPolicy_Get</description>
+        /// <description>RedisCacheAccessPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
 
-            using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.Get");
+            using var scope = _redisCacheAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = _redisCacheAccessPolicyAccessPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, cancellationToken);
+                var response = _redisCacheAccessPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RedisCacheAccessPolicyResource(Client, response.Value), response.GetRawResponse());
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessPolicy_List</description>
+        /// <description>RedisCacheAccessPolicy_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An async collection of <see cref="RedisCacheAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisCacheAccessPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisCacheAccessPolicyAccessPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisCacheAccessPolicyAccessPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisCacheAccessPolicyResource(Client, RedisCacheAccessPolicyData.DeserializeRedisCacheAccessPolicyData(e)), _redisCacheAccessPolicyAccessPolicyClientDiagnostics, Pipeline, "RedisCacheAccessPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisCacheAccessPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisCacheAccessPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisCacheAccessPolicyResource(Client, RedisCacheAccessPolicyData.DeserializeRedisCacheAccessPolicyData(e)), _redisCacheAccessPolicyClientDiagnostics, Pipeline, "RedisCacheAccessPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessPolicy_List</description>
+        /// <description>RedisCacheAccessPolicy_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.Redis
         /// <returns> A collection of <see cref="RedisCacheAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisCacheAccessPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisCacheAccessPolicyAccessPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisCacheAccessPolicyAccessPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisCacheAccessPolicyResource(Client, RedisCacheAccessPolicyData.DeserializeRedisCacheAccessPolicyData(e)), _redisCacheAccessPolicyAccessPolicyClientDiagnostics, Pipeline, "RedisCacheAccessPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisCacheAccessPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisCacheAccessPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisCacheAccessPolicyResource(Client, RedisCacheAccessPolicyData.DeserializeRedisCacheAccessPolicyData(e)), _redisCacheAccessPolicyClientDiagnostics, Pipeline, "RedisCacheAccessPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessPolicy_Get</description>
+        /// <description>RedisCacheAccessPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
 
-            using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.Exists");
+            using var scope = _redisCacheAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _redisCacheAccessPolicyAccessPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _redisCacheAccessPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessPolicy_Get</description>
+        /// <description>RedisCacheAccessPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
 
-            using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.Exists");
+            using var scope = _redisCacheAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = _redisCacheAccessPolicyAccessPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, cancellationToken: cancellationToken);
+                var response = _redisCacheAccessPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessPolicy_Get</description>
+        /// <description>RedisCacheAccessPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
 
-            using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.GetIfExists");
+            using var scope = _redisCacheAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _redisCacheAccessPolicyAccessPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _redisCacheAccessPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<RedisCacheAccessPolicyResource>(response.GetRawResponse());
                 return Response.FromValue(new RedisCacheAccessPolicyResource(Client, response.Value), response.GetRawResponse());
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessPolicy_Get</description>
+        /// <description>RedisCacheAccessPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -459,11 +459,11 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
 
-            using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.GetIfExists");
+            using var scope = _redisCacheAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _redisCacheAccessPolicyAccessPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, cancellationToken: cancellationToken);
+                var response = _redisCacheAccessPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessPolicyName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<RedisCacheAccessPolicyResource>(response.GetRawResponse());
                 return Response.FromValue(new RedisCacheAccessPolicyResource(Client, response.Value), response.GetRawResponse());

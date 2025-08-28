@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Redis.Models
         private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
 
-        /// <summary> Updating. </summary>
+        /// <summary> An operation is in progress. *. </summary>
         public static AccessPolicyProvisioningState Updating { get; } = new AccessPolicyProvisioningState(UpdatingValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> The operation succeeded. *. </summary>
         public static AccessPolicyProvisioningState Succeeded { get; } = new AccessPolicyProvisioningState(SucceededValue);
-        /// <summary> Deleting. </summary>
+        /// <summary> A delete operation is in progress. *. </summary>
         public static AccessPolicyProvisioningState Deleting { get; } = new AccessPolicyProvisioningState(DeletingValue);
-        /// <summary> Deleted. </summary>
+        /// <summary> The access policy is considered deleted, if it still exists. *. </summary>
         public static AccessPolicyProvisioningState Deleted { get; } = new AccessPolicyProvisioningState(DeletedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> The operation was canceled. Access policies may be in a partially updated state. Update them again to have a well-defined state. *. </summary>
         public static AccessPolicyProvisioningState Canceled { get; } = new AccessPolicyProvisioningState(CanceledValue);
-        /// <summary> Failed. </summary>
+        /// <summary> The operation failed. Access policies may be in a partially updated state. Update them again to have a well-defined state. *. </summary>
         public static AccessPolicyProvisioningState Failed { get; } = new AccessPolicyProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="AccessPolicyProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AccessPolicyProvisioningState left, AccessPolicyProvisioningState right) => left.Equals(right);

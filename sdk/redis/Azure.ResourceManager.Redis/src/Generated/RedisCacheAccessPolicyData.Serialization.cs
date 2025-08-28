@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TypePropertiesType))
+            if (options.Format != "W" && Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(TypePropertiesType.Value.ToString());
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (Optional.IsDefined(Permissions))
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Redis
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TypePropertiesType), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Type), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    type: ");
@@ -254,10 +254,10 @@ namespace Azure.ResourceManager.Redis
             }
             else
             {
-                if (Optional.IsDefined(TypePropertiesType))
+                if (Optional.IsDefined(Type))
                 {
                     builder.Append("    type: ");
-                    builder.AppendLine($"'{TypePropertiesType.Value.ToString()}'");
+                    builder.AppendLine($"'{Type.Value.ToString()}'");
                 }
             }
 

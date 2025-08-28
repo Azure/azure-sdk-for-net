@@ -15,20 +15,20 @@ using Azure.ResourceManager.Redis.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    internal partial class PatchSchedulesRestOperations
+    internal partial class RedisFirewallRulesRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of PatchSchedulesRestOperations. </summary>
+        /// <summary> Initializes a new instance of RedisFirewallRulesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public PatchSchedulesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public RedisFirewallRulesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Redis
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListByRedisResourceRequestUri(string subscriptionId, string resourceGroupName, string cacheName)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string cacheName, string ruleName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -46,12 +46,13 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
             uri.AppendPath(cacheName, true);
-            uri.AppendPath("/patchSchedules", false);
+            uri.AppendPath("/firewallRules/", false);
+            uri.AppendPath(ruleName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListByRedisResourceRequest(string subscriptionId, string resourceGroupName, string cacheName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string cacheName, string ruleName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,7 +65,8 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
             uri.AppendPath(cacheName, true);
-            uri.AppendPath("/patchSchedules", false);
+            uri.AppendPath("/firewallRules/", false);
+            uri.AppendPath(ruleName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -72,65 +74,73 @@ namespace Azure.ResourceManager.Redis
             return message;
         }
 
-        /// <summary> Gets all patch schedules in the specified redis cache (there is only one). </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Gets a single firewall rule in a specified redis cache. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cacheName"> The name of the Redis cache. </param>
+        /// <param name="ruleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RedisPatchScheduleListResult>> ListByRedisResourceAsync(string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<RedisFirewallRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string cacheName, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var message = CreateListByRedisResourceRequest(subscriptionId, resourceGroupName, cacheName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, cacheName, ruleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RedisPatchScheduleListResult value = default;
+                        RedisFirewallRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RedisPatchScheduleListResult.DeserializeRedisPatchScheduleListResult(document.RootElement);
+                        value = RedisFirewallRuleData.DeserializeRedisFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((RedisFirewallRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets all patch schedules in the specified redis cache (there is only one). </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Gets a single firewall rule in a specified redis cache. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cacheName"> The name of the Redis cache. </param>
+        /// <param name="ruleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RedisPatchScheduleListResult> ListByRedisResource(string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<RedisFirewallRuleData> Get(string subscriptionId, string resourceGroupName, string cacheName, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var message = CreateListByRedisResourceRequest(subscriptionId, resourceGroupName, cacheName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, cacheName, ruleName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RedisPatchScheduleListResult value = default;
+                        RedisFirewallRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RedisPatchScheduleListResult.DeserializeRedisPatchScheduleListResult(document.RootElement);
+                        value = RedisFirewallRuleData.DeserializeRedisFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((RedisFirewallRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName, RedisPatchScheduleData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string cacheName, string ruleName, RedisFirewallRuleData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -139,14 +149,14 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/patchSchedules/", false);
-            uri.AppendPath(defaultName.ToString(), true);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/firewallRules/", false);
+            uri.AppendPath(ruleName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName, RedisPatchScheduleData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string cacheName, string ruleName, RedisFirewallRuleData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -158,9 +168,9 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/patchSchedules/", false);
-            uri.AppendPath(defaultName.ToString(), true);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/firewallRules/", false);
+            uri.AppendPath(ruleName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -172,32 +182,33 @@ namespace Azure.ResourceManager.Redis
             return message;
         }
 
-        /// <summary> Create or replace the patching schedule for Redis cache. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Create or update a redis cache firewall rule. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> The name of the Redis cache. </param>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
-        /// <param name="data"> Parameters to set the patching schedule for Redis cache. </param>
+        /// <param name="cacheName"> The name of the Redis cache. </param>
+        /// <param name="ruleName"> The name of the firewall rule. </param>
+        /// <param name="data"> Parameters supplied to the create or update redis firewall rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RedisPatchScheduleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/>, <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<RedisFirewallRuleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string cacheName, string ruleName, RedisFirewallRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, name, defaultName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, cacheName, ruleName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        RedisPatchScheduleData value = default;
+                        RedisFirewallRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RedisPatchScheduleData.DeserializeRedisPatchScheduleData(document.RootElement);
+                        value = RedisFirewallRuleData.DeserializeRedisFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -205,32 +216,33 @@ namespace Azure.ResourceManager.Redis
             }
         }
 
-        /// <summary> Create or replace the patching schedule for Redis cache. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Create or update a redis cache firewall rule. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> The name of the Redis cache. </param>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
-        /// <param name="data"> Parameters to set the patching schedule for Redis cache. </param>
+        /// <param name="cacheName"> The name of the Redis cache. </param>
+        /// <param name="ruleName"> The name of the firewall rule. </param>
+        /// <param name="data"> Parameters supplied to the create or update redis firewall rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RedisPatchScheduleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/>, <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<RedisFirewallRuleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string cacheName, string ruleName, RedisFirewallRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, name, defaultName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, cacheName, ruleName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        RedisPatchScheduleData value = default;
+                        RedisFirewallRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RedisPatchScheduleData.DeserializeRedisPatchScheduleData(document.RootElement);
+                        value = RedisFirewallRuleData.DeserializeRedisFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -238,7 +250,7 @@ namespace Azure.ResourceManager.Redis
             }
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string cacheName, string ruleName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -247,14 +259,14 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/patchSchedules/", false);
-            uri.AppendPath(defaultName.ToString(), true);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/firewallRules/", false);
+            uri.AppendPath(ruleName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string cacheName, string ruleName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -266,31 +278,31 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/patchSchedules/", false);
-            uri.AppendPath(defaultName.ToString(), true);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/firewallRules/", false);
+            uri.AppendPath(ruleName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Deletes the patching schedule of a redis cache. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Deletes a single firewall rule in a specified redis cache. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> The name of the redis cache. </param>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="cacheName"> The name of the Redis cache. </param>
+        /// <param name="ruleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string cacheName, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name, defaultName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cacheName, ruleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -302,21 +314,22 @@ namespace Azure.ResourceManager.Redis
             }
         }
 
-        /// <summary> Deletes the patching schedule of a redis cache. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Deletes a single firewall rule in a specified redis cache. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> The name of the redis cache. </param>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="cacheName"> The name of the Redis cache. </param>
+        /// <param name="ruleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string cacheName, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name, defaultName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cacheName, ruleName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -328,7 +341,7 @@ namespace Azure.ResourceManager.Redis
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName)
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string cacheName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -337,14 +350,13 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/patchSchedules/", false);
-            uri.AppendPath(defaultName.ToString(), true);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/firewallRules", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string cacheName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -356,9 +368,8 @@ namespace Azure.ResourceManager.Redis
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/patchSchedules/", false);
-            uri.AppendPath(defaultName.ToString(), true);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/firewallRules", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -366,71 +377,65 @@ namespace Azure.ResourceManager.Redis
             return message;
         }
 
-        /// <summary> Gets the patching schedule of a redis cache. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Gets all firewall rules in the specified redis cache. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> The name of the redis cache. </param>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="cacheName"> The name of the Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RedisPatchScheduleData>> GetAsync(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<RedisFirewallRuleListResult>> ListAsync(string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, name, defaultName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, cacheName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RedisPatchScheduleData value = default;
+                        RedisFirewallRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RedisPatchScheduleData.DeserializeRedisPatchScheduleData(document.RootElement);
+                        value = RedisFirewallRuleListResult.DeserializeRedisFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((RedisPatchScheduleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets the patching schedule of a redis cache. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Gets all firewall rules in the specified redis cache. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> The name of the redis cache. </param>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="cacheName"> The name of the Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RedisPatchScheduleData> Get(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<RedisFirewallRuleListResult> List(string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, name, defaultName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, cacheName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RedisPatchScheduleData value = default;
+                        RedisFirewallRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RedisPatchScheduleData.DeserializeRedisPatchScheduleData(document.RootElement);
+                        value = RedisFirewallRuleListResult.DeserializeRedisFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((RedisPatchScheduleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateListByRedisResourceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string cacheName)
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string cacheName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -438,7 +443,7 @@ namespace Azure.ResourceManager.Redis
             return uri;
         }
 
-        internal HttpMessage CreateListByRedisResourceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string cacheName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string cacheName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -452,30 +457,30 @@ namespace Azure.ResourceManager.Redis
             return message;
         }
 
-        /// <summary> Gets all patch schedules in the specified redis cache (there is only one). </summary>
+        /// <summary> Gets all firewall rules in the specified redis cache. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cacheName"> The name of the Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RedisPatchScheduleListResult>> ListByRedisResourceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
+        public async Task<Response<RedisFirewallRuleListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
-            using var message = CreateListByRedisResourceNextPageRequest(nextLink, subscriptionId, resourceGroupName, cacheName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, cacheName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RedisPatchScheduleListResult value = default;
+                        RedisFirewallRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RedisPatchScheduleListResult.DeserializeRedisPatchScheduleListResult(document.RootElement);
+                        value = RedisFirewallRuleListResult.DeserializeRedisFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -483,30 +488,30 @@ namespace Azure.ResourceManager.Redis
             }
         }
 
-        /// <summary> Gets all patch schedules in the specified redis cache (there is only one). </summary>
+        /// <summary> Gets all firewall rules in the specified redis cache. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cacheName"> The name of the Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RedisPatchScheduleListResult> ListByRedisResourceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
+        public Response<RedisFirewallRuleListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
-            using var message = CreateListByRedisResourceNextPageRequest(nextLink, subscriptionId, resourceGroupName, cacheName);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, cacheName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RedisPatchScheduleListResult value = default;
+                        RedisFirewallRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RedisPatchScheduleListResult.DeserializeRedisPatchScheduleListResult(document.RootElement);
+                        value = RedisFirewallRuleListResult.DeserializeRedisFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

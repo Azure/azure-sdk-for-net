@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    /// <summary> The RedisPatchScheduleDefaultName. </summary>
+    /// <summary> The name of the resource that is the target of a particular operation. For singleton resources, it must be 'Default'. </summary>
     public readonly partial struct RedisPatchScheduleDefaultName : IEquatable<RedisPatchScheduleDefaultName>
     {
         private readonly string _value;
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         private const string DefaultValue = "default";
 
-        /// <summary> default. </summary>
+        /// <summary> The name of e.g. the patch schedules resource, which is a singleton, must always be 'Default' *. </summary>
         public static RedisPatchScheduleDefaultName Default { get; } = new RedisPatchScheduleDefaultName(DefaultValue);
         /// <summary> Determines if two <see cref="RedisPatchScheduleDefaultName"/> values are the same. </summary>
         public static bool operator ==(RedisPatchScheduleDefaultName left, RedisPatchScheduleDefaultName right) => left.Equals(right);

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpoint"> The resource of private end point. </param>
+        /// <param name="privateEndpoint"> The private endpoint resource. </param>
         /// <param name="redisPrivateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="redisProvisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Redis
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource of private end point. </summary>
+        /// <summary> The private endpoint resource. </summary>
         internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>
         [WirePath("properties.privateEndpoint.id")]

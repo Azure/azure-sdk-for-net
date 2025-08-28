@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Redis
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics;
-        private readonly AccessPolicyAssignmentRestOperations _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient;
+        private readonly ClientDiagnostics _redisCacheAccessPolicyAssignmentClientDiagnostics;
+        private readonly RedisCacheAccessPolicyAssignmentsRestOperations _redisCacheAccessPolicyAssignmentRestClient;
         private readonly RedisCacheAccessPolicyAssignmentData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.Redis
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RedisCacheAccessPolicyAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string redisCacheAccessPolicyAssignmentAccessPolicyAssignmentApiVersion);
-            _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient = new AccessPolicyAssignmentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, redisCacheAccessPolicyAssignmentAccessPolicyAssignmentApiVersion);
+            _redisCacheAccessPolicyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string redisCacheAccessPolicyAssignmentApiVersion);
+            _redisCacheAccessPolicyAssignmentRestClient = new RedisCacheAccessPolicyAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, redisCacheAccessPolicyAssignmentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_Get</description>
+        /// <description>RedisCacheAccessPolicyAssignment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RedisCacheAccessPolicyAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Get");
+            using var scope = _redisCacheAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = await _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _redisCacheAccessPolicyAssignmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RedisCacheAccessPolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_Get</description>
+        /// <description>RedisCacheAccessPolicyAssignment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RedisCacheAccessPolicyAssignmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Get");
+            using var scope = _redisCacheAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _redisCacheAccessPolicyAssignmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RedisCacheAccessPolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_Delete</description>
+        /// <description>RedisCacheAccessPolicyAssignment_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Delete");
+            using var scope = _redisCacheAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisArmOperation(_redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics, Pipeline, _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _redisCacheAccessPolicyAssignmentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new RedisArmOperation(_redisCacheAccessPolicyAssignmentClientDiagnostics, Pipeline, _redisCacheAccessPolicyAssignmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_Delete</description>
+        /// <description>RedisCacheAccessPolicyAssignment_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Delete");
+            using var scope = _redisCacheAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RedisArmOperation(_redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics, Pipeline, _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _redisCacheAccessPolicyAssignmentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new RedisArmOperation(_redisCacheAccessPolicyAssignmentClientDiagnostics, Pipeline, _redisCacheAccessPolicyAssignmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_CreateUpdate</description>
+        /// <description>RedisCacheAccessPolicyAssignment_CreateUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -281,12 +281,12 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Update");
+            using var scope = _redisCacheAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = await _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.CreateUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisArmOperation<RedisCacheAccessPolicyAssignmentResource>(new RedisCacheAccessPolicyAssignmentOperationSource(Client), _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics, Pipeline, _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _redisCacheAccessPolicyAssignmentRestClient.CreateUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new RedisArmOperation<RedisCacheAccessPolicyAssignmentResource>(new RedisCacheAccessPolicyAssignmentOperationSource(Client), _redisCacheAccessPolicyAssignmentClientDiagnostics, Pipeline, _redisCacheAccessPolicyAssignmentRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_CreateUpdate</description>
+        /// <description>RedisCacheAccessPolicyAssignment_CreateUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -327,12 +327,12 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Update");
+            using var scope = _redisCacheAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.CreateUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new RedisArmOperation<RedisCacheAccessPolicyAssignmentResource>(new RedisCacheAccessPolicyAssignmentOperationSource(Client), _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics, Pipeline, _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _redisCacheAccessPolicyAssignmentRestClient.CreateUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new RedisArmOperation<RedisCacheAccessPolicyAssignmentResource>(new RedisCacheAccessPolicyAssignmentOperationSource(Client), _redisCacheAccessPolicyAssignmentClientDiagnostics, Pipeline, _redisCacheAccessPolicyAssignmentRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

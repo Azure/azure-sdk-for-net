@@ -70,30 +70,30 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("aof-storage-connection-string-1"u8);
                 writer.WriteStringValue(AofStorageConnectionString1);
             }
-            if (Optional.IsDefined(MaxFragmentationMemoryReserved))
+            if (Optional.IsDefined(MaxfragmentationmemoryReserved))
             {
                 writer.WritePropertyName("maxfragmentationmemory-reserved"u8);
-                writer.WriteStringValue(MaxFragmentationMemoryReserved);
+                writer.WriteStringValue(MaxfragmentationmemoryReserved);
             }
-            if (Optional.IsDefined(MaxMemoryPolicy))
+            if (Optional.IsDefined(MaxmemoryPolicy))
             {
                 writer.WritePropertyName("maxmemory-policy"u8);
-                writer.WriteStringValue(MaxMemoryPolicy);
+                writer.WriteStringValue(MaxmemoryPolicy);
             }
-            if (Optional.IsDefined(MaxMemoryReserved))
+            if (Optional.IsDefined(MaxmemoryReserved))
             {
                 writer.WritePropertyName("maxmemory-reserved"u8);
-                writer.WriteStringValue(MaxMemoryReserved);
+                writer.WriteStringValue(MaxmemoryReserved);
             }
-            if (Optional.IsDefined(MaxMemoryDelta))
+            if (Optional.IsDefined(MaxmemoryDelta))
             {
                 writer.WritePropertyName("maxmemory-delta"u8);
-                writer.WriteStringValue(MaxMemoryDelta);
+                writer.WriteStringValue(MaxmemoryDelta);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxClients))
+            if (options.Format != "W" && Optional.IsDefined(Maxclients))
             {
                 writer.WritePropertyName("maxclients"u8);
-                writer.WriteStringValue(MaxClients);
+                writer.WriteStringValue(Maxclients);
             }
             if (Optional.IsDefined(NotifyKeyspaceEvents))
             {
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("zonal-configuration"u8);
                 writer.WriteStringValue(ZonalConfiguration);
             }
-            if (Optional.IsDefined(AuthNotRequired))
+            if (Optional.IsDefined(Authnotrequired))
             {
                 writer.WritePropertyName("authnotrequired"u8);
-                writer.WriteStringValue(AuthNotRequired);
+                writer.WriteStringValue(Authnotrequired);
             }
             if (Optional.IsDefined(StorageSubscriptionId))
             {
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxFragmentationMemoryReserved), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxfragmentationmemoryReserved), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  maxfragmentationmemory-reserved: ");
@@ -466,22 +466,22 @@ namespace Azure.ResourceManager.Redis.Models
             }
             else
             {
-                if (Optional.IsDefined(MaxFragmentationMemoryReserved))
+                if (Optional.IsDefined(MaxfragmentationmemoryReserved))
                 {
                     builder.Append("  maxfragmentationmemory-reserved: ");
-                    if (MaxFragmentationMemoryReserved.Contains(Environment.NewLine))
+                    if (MaxfragmentationmemoryReserved.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{MaxFragmentationMemoryReserved}'''");
+                        builder.AppendLine($"{MaxfragmentationmemoryReserved}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{MaxFragmentationMemoryReserved}'");
+                        builder.AppendLine($"'{MaxfragmentationmemoryReserved}'");
                     }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxMemoryPolicy), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxmemoryPolicy), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  maxmemory-policy: ");
@@ -489,22 +489,22 @@ namespace Azure.ResourceManager.Redis.Models
             }
             else
             {
-                if (Optional.IsDefined(MaxMemoryPolicy))
+                if (Optional.IsDefined(MaxmemoryPolicy))
                 {
                     builder.Append("  maxmemory-policy: ");
-                    if (MaxMemoryPolicy.Contains(Environment.NewLine))
+                    if (MaxmemoryPolicy.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{MaxMemoryPolicy}'''");
+                        builder.AppendLine($"{MaxmemoryPolicy}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{MaxMemoryPolicy}'");
+                        builder.AppendLine($"'{MaxmemoryPolicy}'");
                     }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxMemoryReserved), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxmemoryReserved), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  maxmemory-reserved: ");
@@ -512,22 +512,22 @@ namespace Azure.ResourceManager.Redis.Models
             }
             else
             {
-                if (Optional.IsDefined(MaxMemoryReserved))
+                if (Optional.IsDefined(MaxmemoryReserved))
                 {
                     builder.Append("  maxmemory-reserved: ");
-                    if (MaxMemoryReserved.Contains(Environment.NewLine))
+                    if (MaxmemoryReserved.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{MaxMemoryReserved}'''");
+                        builder.AppendLine($"{MaxmemoryReserved}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{MaxMemoryReserved}'");
+                        builder.AppendLine($"'{MaxmemoryReserved}'");
                     }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxMemoryDelta), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxmemoryDelta), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  maxmemory-delta: ");
@@ -535,22 +535,22 @@ namespace Azure.ResourceManager.Redis.Models
             }
             else
             {
-                if (Optional.IsDefined(MaxMemoryDelta))
+                if (Optional.IsDefined(MaxmemoryDelta))
                 {
                     builder.Append("  maxmemory-delta: ");
-                    if (MaxMemoryDelta.Contains(Environment.NewLine))
+                    if (MaxmemoryDelta.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{MaxMemoryDelta}'''");
+                        builder.AppendLine($"{MaxmemoryDelta}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{MaxMemoryDelta}'");
+                        builder.AppendLine($"'{MaxmemoryDelta}'");
                     }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxClients), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Maxclients), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  maxclients: ");
@@ -558,17 +558,17 @@ namespace Azure.ResourceManager.Redis.Models
             }
             else
             {
-                if (Optional.IsDefined(MaxClients))
+                if (Optional.IsDefined(Maxclients))
                 {
                     builder.Append("  maxclients: ");
-                    if (MaxClients.Contains(Environment.NewLine))
+                    if (Maxclients.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{MaxClients}'''");
+                        builder.AppendLine($"{Maxclients}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{MaxClients}'");
+                        builder.AppendLine($"'{Maxclients}'");
                     }
                 }
             }
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthNotRequired), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Authnotrequired), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  authnotrequired: ");
@@ -673,17 +673,17 @@ namespace Azure.ResourceManager.Redis.Models
             }
             else
             {
-                if (Optional.IsDefined(AuthNotRequired))
+                if (Optional.IsDefined(Authnotrequired))
                 {
                     builder.Append("  authnotrequired: ");
-                    if (AuthNotRequired.Contains(Environment.NewLine))
+                    if (Authnotrequired.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{AuthNotRequired}'''");
+                        builder.AppendLine($"{Authnotrequired}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{AuthNotRequired}'");
+                        builder.AppendLine($"'{Authnotrequired}'");
                     }
                 }
             }

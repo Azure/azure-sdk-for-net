@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -41,9 +40,9 @@ namespace Azure.ResourceManager.Redis
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("startIP"u8);
-            writer.WriteStringValue(StartIP.ToString());
+            writer.WriteStringValue(StartIP);
             writer.WritePropertyName("endIP"u8);
-            writer.WriteStringValue(EndIP.ToString());
+            writer.WriteStringValue(EndIP);
             writer.WriteEndObject();
         }
 
@@ -71,8 +70,8 @@ namespace Azure.ResourceManager.Redis
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IPAddress startIP = default;
-            IPAddress endIP = default;
+            string startIP = default;
+            string endIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,12 +111,12 @@ namespace Azure.ResourceManager.Redis
                     {
                         if (property0.NameEquals("startIP"u8))
                         {
-                            startIP = IPAddress.Parse(property0.Value.GetString());
+                            startIP = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("endIP"u8))
                         {
-                            endIP = IPAddress.Parse(property0.Value.GetString());
+                            endIP = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -216,7 +215,15 @@ namespace Azure.ResourceManager.Redis
                 if (Optional.IsDefined(StartIP))
                 {
                     builder.Append("    startIP: ");
-                    builder.AppendLine($"'{StartIP.ToString()}'");
+                    if (StartIP.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StartIP}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StartIP}'");
+                    }
                 }
             }
 
@@ -231,7 +238,15 @@ namespace Azure.ResourceManager.Redis
                 if (Optional.IsDefined(EndIP))
                 {
                     builder.Append("    endIP: ");
-                    builder.AppendLine($"'{EndIP.ToString()}'");
+                    if (EndIP.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EndIP}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EndIP}'");
+                    }
                 }
             }
 

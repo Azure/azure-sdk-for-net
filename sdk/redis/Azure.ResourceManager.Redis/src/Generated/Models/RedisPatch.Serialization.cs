@@ -50,76 +50,10 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RedisConfiguration))
-            {
-                writer.WritePropertyName("redisConfiguration"u8);
-                writer.WriteObjectValue(RedisConfiguration, options);
-            }
-            if (Optional.IsDefined(RedisVersion))
-            {
-                writer.WritePropertyName("redisVersion"u8);
-                writer.WriteStringValue(RedisVersion);
-            }
-            if (Optional.IsDefined(EnableNonSslPort))
-            {
-                writer.WritePropertyName("enableNonSslPort"u8);
-                writer.WriteBooleanValue(EnableNonSslPort.Value);
-            }
-            if (Optional.IsDefined(ReplicasPerMaster))
-            {
-                writer.WritePropertyName("replicasPerMaster"u8);
-                writer.WriteNumberValue(ReplicasPerMaster.Value);
-            }
-            if (Optional.IsDefined(ReplicasPerPrimary))
-            {
-                writer.WritePropertyName("replicasPerPrimary"u8);
-                writer.WriteNumberValue(ReplicasPerPrimary.Value);
-            }
-            if (Optional.IsCollectionDefined(TenantSettings))
-            {
-                writer.WritePropertyName("tenantSettings"u8);
-                writer.WriteStartObject();
-                foreach (var item in TenantSettings)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(ShardCount))
-            {
-                writer.WritePropertyName("shardCount"u8);
-                writer.WriteNumberValue(ShardCount.Value);
-            }
-            if (Optional.IsDefined(MinimumTlsVersion))
-            {
-                writer.WritePropertyName("minimumTlsVersion"u8);
-                writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
-            }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
-            }
-            if (Optional.IsDefined(UpdateChannel))
-            {
-                writer.WritePropertyName("updateChannel"u8);
-                writer.WriteStringValue(UpdateChannel.Value.ToString());
-            }
-            if (Optional.IsDefined(IsAccessKeyAuthenticationDisabled))
-            {
-                writer.WritePropertyName("disableAccessKeyAuthentication"u8);
-                writer.WriteBooleanValue(IsAccessKeyAuthenticationDisabled.Value);
-            }
-            if (Optional.IsDefined(ZonalAllocationPolicy))
-            {
-                writer.WritePropertyName("zonalAllocationPolicy"u8);
-                writer.WriteStringValue(ZonalAllocationPolicy.Value.ToString());
-            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -165,18 +99,6 @@ namespace Azure.ResourceManager.Redis.Models
             }
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
-            RedisCommonConfiguration redisConfiguration = default;
-            string redisVersion = default;
-            bool? enableNonSslPort = default;
-            int? replicasPerMaster = default;
-            int? replicasPerPrimary = default;
-            IDictionary<string, string> tenantSettings = default;
-            int? shardCount = default;
-            RedisTlsVersion? minimumTlsVersion = default;
-            RedisPublicNetworkAccess? publicNetworkAccess = default;
-            UpdateChannel? updateChannel = default;
-            bool? disableAccessKeyAuthentication = default;
-            ZonalAllocationPolicy? zonalAllocationPolicy = default;
             RedisSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -202,7 +124,7 @@ namespace Azure.ResourceManager.Redis.Models
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerRedisContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerRedisContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -214,115 +136,6 @@ namespace Azure.ResourceManager.Redis.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("redisConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            redisConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("redisVersion"u8))
-                        {
-                            redisVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableNonSslPort"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableNonSslPort = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("replicasPerMaster"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            replicasPerMaster = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("replicasPerPrimary"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            replicasPerPrimary = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("tenantSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            tenantSettings = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("shardCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            shardCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("minimumTlsVersion"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            minimumTlsVersion = new RedisTlsVersion(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("publicNetworkAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            publicNetworkAccess = new RedisPublicNetworkAccess(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("updateChannel"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            updateChannel = new UpdateChannel(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("disableAccessKeyAuthentication"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            disableAccessKeyAuthentication = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("zonalAllocationPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            zonalAllocationPolicy = new ZonalAllocationPolicy(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("sku"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -341,23 +154,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RedisPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                identity,
-                redisConfiguration,
-                redisVersion,
-                enableNonSslPort,
-                replicasPerMaster,
-                replicasPerPrimary,
-                tenantSettings ?? new ChangeTrackingDictionary<string, string>(),
-                shardCount,
-                minimumTlsVersion,
-                publicNetworkAccess,
-                updateChannel,
-                disableAccessKeyAuthentication,
-                zonalAllocationPolicy,
-                sku,
-                serializedAdditionalRawData);
+            return new RedisPatch(sku, tags ?? new ChangeTrackingDictionary<string, string>(), identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisPatch>.Write(ModelReaderWriterOptions options)

@@ -1,0 +1,14 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.ResourceManager.Redis",
+  "library-name": "Azure.ResourceManager.Redis",
+  "flavor": "azure",
+  "use-model-reader-writer": true,
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "model-namespace": true,
+  "enable-bicep-serialization": true,
+  "azure-arm": true
+}

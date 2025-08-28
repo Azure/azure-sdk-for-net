@@ -12,7 +12,6 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Redis.Models;
 
 namespace Azure.ResourceManager.Redis
 {
@@ -40,31 +39,6 @@ namespace Azure.ResourceManager.Redis
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedRedisCacheId))
-            {
-                writer.WritePropertyName("linkedRedisCacheId"u8);
-                writer.WriteStringValue(LinkedRedisCacheId);
-            }
-            if (Optional.IsDefined(LinkedRedisCacheLocation))
-            {
-                writer.WritePropertyName("linkedRedisCacheLocation"u8);
-                writer.WriteStringValue(LinkedRedisCacheLocation.Value);
-            }
-            if (Optional.IsDefined(ServerRole))
-            {
-                writer.WritePropertyName("serverRole"u8);
-                writer.WriteStringValue(ServerRole.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(GeoReplicatedPrimaryHostName))
-            {
-                writer.WritePropertyName("geoReplicatedPrimaryHostName"u8);
-                writer.WriteStringValue(GeoReplicatedPrimaryHostName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryHostName))
-            {
-                writer.WritePropertyName("primaryHostName"u8);
-                writer.WriteStringValue(PrimaryHostName);
-            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -97,11 +71,6 @@ namespace Azure.ResourceManager.Redis
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ResourceIdentifier linkedRedisCacheId = default;
-            AzureLocation? linkedRedisCacheLocation = default;
-            RedisLinkedServerRole? serverRole = default;
-            string geoReplicatedPrimaryHostName = default;
-            string primaryHostName = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -140,43 +109,6 @@ namespace Azure.ResourceManager.Redis
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("linkedRedisCacheId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            linkedRedisCacheId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("linkedRedisCacheLocation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            linkedRedisCacheLocation = new AzureLocation(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("serverRole"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            serverRole = property0.Value.GetString().ToRedisLinkedServerRole();
-                            continue;
-                        }
-                        if (property0.NameEquals("geoReplicatedPrimaryHostName"u8))
-                        {
-                            geoReplicatedPrimaryHostName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("primaryHostName"u8))
-                        {
-                            primaryHostName = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
@@ -196,11 +128,6 @@ namespace Azure.ResourceManager.Redis
                 name,
                 type,
                 systemData,
-                linkedRedisCacheId,
-                linkedRedisCacheLocation,
-                serverRole,
-                geoReplicatedPrimaryHostName,
-                primaryHostName,
                 provisioningState,
                 serializedAdditionalRawData);
         }
@@ -271,97 +198,6 @@ namespace Azure.ResourceManager.Redis
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedRedisCacheId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    linkedRedisCacheId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LinkedRedisCacheId))
-                {
-                    builder.Append("    linkedRedisCacheId: ");
-                    builder.AppendLine($"'{LinkedRedisCacheId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedRedisCacheLocation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    linkedRedisCacheLocation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LinkedRedisCacheLocation))
-                {
-                    builder.Append("    linkedRedisCacheLocation: ");
-                    builder.AppendLine($"'{LinkedRedisCacheLocation.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerRole), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    serverRole: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServerRole))
-                {
-                    builder.Append("    serverRole: ");
-                    builder.AppendLine($"'{ServerRole.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoReplicatedPrimaryHostName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    geoReplicatedPrimaryHostName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(GeoReplicatedPrimaryHostName))
-                {
-                    builder.Append("    geoReplicatedPrimaryHostName: ");
-                    if (GeoReplicatedPrimaryHostName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{GeoReplicatedPrimaryHostName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{GeoReplicatedPrimaryHostName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryHostName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    primaryHostName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrimaryHostName))
-                {
-                    builder.Append("    primaryHostName: ");
-                    if (PrimaryHostName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrimaryHostName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrimaryHostName}'");
-                    }
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
             if (hasPropertyOverride)
             {
