@@ -20,7 +20,7 @@ namespace Azure.Developer.Playwright.Tests
             {
                 Assert.That(options.OS, Is.EqualTo(OSPlatform.Linux));
                 Assert.That(options.ServiceAuth, Is.EqualTo(ServiceAuthType.EntraId));
-                Assert.That(options.VersionString, Is.EqualTo("2025-07-01-preview"));
+                Assert.That(options.VersionString, Is.EqualTo("2025-09-01"));
             });
         }
 
@@ -31,7 +31,7 @@ namespace Azure.Developer.Playwright.Tests
             environment.SetEnvironmentVariable(Constants.s_playwright_service_os_environment_variable, "windows");
             var options = new PlaywrightServiceBrowserClientOptions(
                 environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
+                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01);
 
             Assert.That(options.OS, Is.EqualTo(OSPlatform.Windows));
         }
@@ -54,7 +54,7 @@ namespace Azure.Developer.Playwright.Tests
 
             var options = new PlaywrightServiceBrowserClientOptions(
                 environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
+                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01);
 
             Assert.That(options.RunId, Is.EqualTo(expectedRunId));
         }
@@ -65,7 +65,7 @@ namespace Azure.Developer.Playwright.Tests
             var environment = new TestEnvironment();
             var options = new PlaywrightServiceBrowserClientOptions(
                 environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
+                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01);
 
             var expectedRunId = "f3a0f9c8-1b4b-4f44-9a77-062d8d4188e4";
             options.RunId = expectedRunId;
@@ -90,7 +90,7 @@ namespace Azure.Developer.Playwright.Tests
             var environment = new TestEnvironment();
             var options = new PlaywrightServiceBrowserClientOptions(
                 environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
+                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01);
 
             var expectedEndpoint = "https://playwright.test.endpoint";
             options.ServiceEndpoint = expectedEndpoint;
@@ -104,7 +104,7 @@ namespace Azure.Developer.Playwright.Tests
             var environment = new TestEnvironment();
             var options = new PlaywrightServiceBrowserClientOptions(
                 environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
+                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01);
 
             Assert.That(options.ExposeNetwork, Is.EqualTo(Constants.s_default_expose_network));
         }
@@ -131,7 +131,7 @@ namespace Azure.Developer.Playwright.Tests
 
             var options = new PlaywrightServiceBrowserClientOptions(
                 environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
+                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01);
 
             Assert.That(options.AuthToken, Is.EqualTo(expectedToken));
         }
@@ -145,7 +145,7 @@ namespace Azure.Developer.Playwright.Tests
 
             var options = new PlaywrightServiceBrowserClientOptions(
                 environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
+                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01);
 
             Assert.That(options.ExposeNetwork, Is.EqualTo(expectedNetwork));
         }
@@ -158,7 +158,7 @@ namespace Azure.Developer.Playwright.Tests
 
             var options = new PlaywrightServiceBrowserClientOptions(
                 environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
+                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01);
 
             var expectedNetwork = "updated-network";
             options.ExposeNetwork = expectedNetwork;
@@ -175,7 +175,7 @@ namespace Azure.Developer.Playwright.Tests
 
             var options = new PlaywrightServiceBrowserClientOptions(
                 environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
+                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01);
 
             Assert.That(options.ServiceAuth, Is.EqualTo(ServiceAuthType.AccessToken));
         }
@@ -188,7 +188,7 @@ namespace Azure.Developer.Playwright.Tests
 
             _ = new PlaywrightServiceBrowserClientOptions(
                 environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
+                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01)
             {
                 ServiceAuth = ServiceAuthType.AccessToken
             };
@@ -206,7 +206,7 @@ namespace Azure.Developer.Playwright.Tests
             var options = new PlaywrightServiceBrowserClientOptions(
                 environment: environment,
                 clientUtility: clientUtilities,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
+                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01);
 
             Assert.That(Guid.TryParse(options.RunId, out _), Is.True);
         }
@@ -217,7 +217,7 @@ namespace Azure.Developer.Playwright.Tests
             var environment = new TestEnvironment();
             var options = new PlaywrightServiceBrowserClientOptions(
                 environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
+                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01);
 
             Assert.That(options.OS, Is.EqualTo(OSPlatform.Linux));
         }
@@ -231,7 +231,7 @@ namespace Azure.Developer.Playwright.Tests
 
             _ = new PlaywrightServiceBrowserClientOptions(
                 environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
+                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01)
             {
                 RunId = "f3a0f9c8-1b4b-4f44-9a77-062d8d418878"
             };
@@ -247,7 +247,7 @@ namespace Azure.Developer.Playwright.Tests
 
             _ = new PlaywrightServiceBrowserClientOptions(
                 environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
+                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01)
             {
                 ExposeNetwork = "test-network"
             };
@@ -263,7 +263,7 @@ namespace Azure.Developer.Playwright.Tests
 
             _ = new PlaywrightServiceBrowserClientOptions(
                 environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
+                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01)
             {
                 ServiceAuth = ServiceAuthType.AccessToken
             };

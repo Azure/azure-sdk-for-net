@@ -206,5 +206,5 @@ internal class ServiceClientConstants
 
 internal class ApiVersionConstants
 {
-    internal static readonly string s_latestApiVersion = "2025-07-01-preview";
+    internal static readonly string s_latestApiVersion = "2025-09-01";
 }
