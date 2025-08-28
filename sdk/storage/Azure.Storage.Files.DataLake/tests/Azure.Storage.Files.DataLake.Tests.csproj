@@ -6,6 +6,9 @@
     <AssemblyTitle>Microsoft Azure.Storage.Files.DataLake client library tests</AssemblyTitle>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+  <PropertyGroup>
+    <DefineConstants>DataLakeSDK</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Files.DataLake.csproj" />
   </ItemGroup>

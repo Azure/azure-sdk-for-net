@@ -25,6 +25,14 @@ namespace Azure.Storage.Blobs.Models
         public Stream Content { get; internal set; }
 
         /// <summary>
+        /// Indicates some contents of <see cref="Details"/> are mixed into the response stream.
+        /// They will not be set until <see cref="Content"/> has been fully consumed. These details
+        /// will be extracted from the content stream by the library before the calling code can
+        /// encounter them.
+        /// </summary>
+        public bool ExpectTrailingDetails { get; internal set; }
+
+        /// <summary>
         /// Disposes the <see cref="BlobDownloadStreamingResult"/> by calling Dispose on the underlying <see cref="Content"/> stream.
         /// </summary>
         public void Dispose()
