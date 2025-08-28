@@ -8,10 +8,10 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Model Deployment Definition. </summary>
-    public partial class ModelDeployment : AssetDeployment
+    public partial class ModelDeployment : AIProjectDeployment
     {
         /// <summary> Initializes a new instance of <see cref="ModelDeployment"/>. </summary>
-        internal ModelDeployment() : base(DeploymentType.ModelDeployment)
+        internal ModelDeployment() : base(AIProjectDeploymentType.ModelDeployment)
         {
             Capabilities = new ChangeTrackingDictionary<string, string>();
         }
@@ -26,7 +26,7 @@ namespace Azure.AI.Projects
         /// <param name="capabilities"> Capabilities of deployed model. </param>
         /// <param name="sku"> Sku of the model deployment. </param>
         /// <param name="connectionName"> Name of the connection the deployment comes from. </param>
-        internal ModelDeployment(DeploymentType @type, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, string modelName, string modelVersion, string modelPublisher, IReadOnlyDictionary<string, string> capabilities, ModelDeploymentSku sku, string connectionName) : base(@type, name, additionalBinaryDataProperties)
+        internal ModelDeployment(AIProjectDeploymentType @type, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, string modelName, string modelVersion, string modelPublisher, IReadOnlyDictionary<string, string> capabilities, ModelDeploymentSku sku, string connectionName) : base(@type, name, additionalBinaryDataProperties)
         {
             ModelName = modelName;
             ModelVersion = modelVersion;

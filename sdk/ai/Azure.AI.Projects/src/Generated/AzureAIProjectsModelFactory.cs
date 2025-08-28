@@ -21,12 +21,12 @@ namespace Azure.AI.Projects
         /// <param name="isDefault"> Whether the connection is tagged as the default connection of its type. </param>
         /// <param name="credentials"> The credentials used by the connection. </param>
         /// <param name="metadata"> Metadata of the connection. </param>
-        /// <returns> A new <see cref="Projects.ConnectionProperties"/> instance for mocking. </returns>
-        public static ConnectionProperties ConnectionProperties(string name = default, string id = default, ConnectionType @type = default, string target = default, bool isDefault = default, BaseCredentials credentials = default, IReadOnlyDictionary<string, string> metadata = default)
+        /// <returns> A new <see cref="Projects.AIProjectConnection"/> instance for mocking. </returns>
+        public static AIProjectConnection AIProjectConnection(string name = default, string id = default, ConnectionType @type = default, string target = default, bool isDefault = default, AIProjectConnectionBaseCredential credentials = default, IReadOnlyDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ConnectionProperties(
+            return new AIProjectConnection(
                 name,
                 id,
                 @type,
@@ -39,46 +39,46 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// A base class for connection credentials
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ApiKeyCredentials"/>, <see cref="EntraIDCredentials"/>, <see cref="CustomCredential"/>, <see cref="SasCredential"/>, and <see cref="NoAuthenticationCredentials"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AIProjectConnectionApiKeyCredential"/>, <see cref="AIProjectConnectionEntraIDCredential"/>, <see cref="AIProjectConnectionCustomCredential"/>, <see cref="AIProjectConnectionSasCredential"/>, and <see cref="NoAuthenticationCredentials"/>.
         /// </summary>
         /// <param name="type"> The type of credential used by the connection. </param>
-        /// <returns> A new <see cref="Projects.BaseCredentials"/> instance for mocking. </returns>
-        public static BaseCredentials BaseCredentials(string @type = default)
+        /// <returns> A new <see cref="Projects.AIProjectConnectionBaseCredential"/> instance for mocking. </returns>
+        public static AIProjectConnectionBaseCredential AIProjectConnectionBaseCredential(string @type = default)
         {
-            return new UnknownBaseCredentials(new CredentialType(@type), additionalBinaryDataProperties: null);
+            return new UnknownAIProjectConnectionBaseCredential(new CredentialType(@type), additionalBinaryDataProperties: null);
         }
 
         /// <summary> API Key Credential definition. </summary>
         /// <param name="apiKey"> API Key. </param>
-        /// <returns> A new <see cref="Projects.ApiKeyCredentials"/> instance for mocking. </returns>
-        public static ApiKeyCredentials ApiKeyCredentials(string apiKey = default)
+        /// <returns> A new <see cref="Projects.AIProjectConnectionApiKeyCredential"/> instance for mocking. </returns>
+        public static AIProjectConnectionApiKeyCredential AIProjectConnectionApiKeyCredential(string apiKey = default)
         {
-            return new ApiKeyCredentials(CredentialType.ApiKey, additionalBinaryDataProperties: null, apiKey);
+            return new AIProjectConnectionApiKeyCredential(CredentialType.ApiKey, additionalBinaryDataProperties: null, apiKey);
         }
 
         /// <summary> Entra ID credential definition. </summary>
-        /// <returns> A new <see cref="Projects.EntraIDCredentials"/> instance for mocking. </returns>
-        public static EntraIDCredentials EntraIDCredentials()
+        /// <returns> A new <see cref="Projects.AIProjectConnectionEntraIDCredential"/> instance for mocking. </returns>
+        public static AIProjectConnectionEntraIDCredential AIProjectConnectionEntraIDCredential()
         {
-            return new EntraIDCredentials(CredentialType.EntraId, additionalBinaryDataProperties: null);
+            return new AIProjectConnectionEntraIDCredential(CredentialType.EntraId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Custom credential definition. </summary>
         /// <param name="keys"> The credential type. </param>
-        /// <returns> A new <see cref="Projects.CustomCredential"/> instance for mocking. </returns>
-        public static CustomCredential CustomCredential(IReadOnlyDictionary<string, string> keys = default)
+        /// <returns> A new <see cref="Projects.AIProjectConnectionCustomCredential"/> instance for mocking. </returns>
+        public static AIProjectConnectionCustomCredential AIProjectConnectionCustomCredential(IReadOnlyDictionary<string, string> keys = default)
         {
             keys ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CustomCredential(CredentialType.Custom, additionalBinaryDataProperties: null, keys);
+            return new AIProjectConnectionCustomCredential(CredentialType.Custom, additionalBinaryDataProperties: null, keys);
         }
 
         /// <summary> Shared Access Signature (SAS) credential definition. </summary>
         /// <param name="sasToken"> SAS token. </param>
-        /// <returns> A new <see cref="Projects.SasCredential"/> instance for mocking. </returns>
-        public static SasCredential SasCredential(string sasToken = default)
+        /// <returns> A new <see cref="Projects.AIProjectConnectionSasCredential"/> instance for mocking. </returns>
+        public static AIProjectConnectionSasCredential AIProjectConnectionSasCredential(string sasToken = default)
         {
-            return new SasCredential(CredentialType.SAS, additionalBinaryDataProperties: null, sasToken);
+            return new AIProjectConnectionSasCredential(CredentialType.SAS, additionalBinaryDataProperties: null, sasToken);
         }
 
         /// <summary> Credentials that do not require authentication. </summary>
@@ -189,7 +189,7 @@ namespace Azure.AI.Projects
         /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
         /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
         /// <returns> A new <see cref="Projects.PendingUploadResult"/> instance for mocking. </returns>
-        public static PendingUploadResult PendingUploadResult(BlobReference blobReference = default, string pendingUploadId = default, string version = default, PendingUploadType pendingUploadType = default)
+        public static PendingUploadResult PendingUploadResult(AIProjectBlobReference blobReference = default, string pendingUploadId = default, string version = default, PendingUploadType pendingUploadType = default)
         {
             return new PendingUploadResult(blobReference, pendingUploadId, version, pendingUploadType, additionalBinaryDataProperties: null);
         }
@@ -198,10 +198,10 @@ namespace Azure.AI.Projects
         /// <param name="blobUri"></param>
         /// <param name="storageAccountArmId"> ARM ID of the storage account to use. </param>
         /// <param name="credential"> Credential info to access the storage account. </param>
-        /// <returns> A new <see cref="Projects.BlobReference"/> instance for mocking. </returns>
-        public static BlobReference BlobReference(Uri blobUri = default, string storageAccountArmId = default, BlobReferenceSasCredential credential = default)
+        /// <returns> A new <see cref="Projects.AIProjectBlobReference"/> instance for mocking. </returns>
+        public static AIProjectBlobReference AIProjectBlobReference(Uri blobUri = default, string storageAccountArmId = default, BlobReferenceSasCredential credential = default)
         {
-            return new BlobReference(blobUri, storageAccountArmId, credential, additionalBinaryDataProperties: null);
+            return new AIProjectBlobReference(blobUri, storageAccountArmId, credential, additionalBinaryDataProperties: null);
         }
 
         /// <summary> SAS Credential definition. </summary>
@@ -216,7 +216,7 @@ namespace Azure.AI.Projects
         /// <summary> Represents a reference to a blob for consumption. </summary>
         /// <param name="blobReference"> Credential info to access the storage account. </param>
         /// <returns> A new <see cref="Projects.DatasetCredential"/> instance for mocking. </returns>
-        public static DatasetCredential DatasetCredential(BlobReference blobReference = default)
+        public static DatasetCredential DatasetCredential(AIProjectBlobReference blobReference = default)
         {
             return new DatasetCredential(blobReference, additionalBinaryDataProperties: null);
         }
@@ -231,12 +231,12 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <returns> A new <see cref="Projects.SearchIndex"/> instance for mocking. </returns>
-        public static SearchIndex SearchIndex(string @type = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Projects.AIProjectIndex"/> instance for mocking. </returns>
+        public static AIProjectIndex AIProjectIndex(string @type = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new UnknownSearchIndex(
+            return new UnknownAIProjectIndex(
                 new IndexType(@type),
                 id,
                 name,
@@ -256,7 +256,7 @@ namespace Azure.AI.Projects
         /// <param name="indexName"> Name of index in Azure AI Search resource to attach. </param>
         /// <param name="fieldMapping"> Field mapping configuration. </param>
         /// <returns> A new <see cref="Projects.AzureAISearchIndex"/> instance for mocking. </returns>
-        public static AzureAISearchIndex AzureAISearchIndex(string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default, string connectionName = default, string indexName = default, FieldMapping fieldMapping = default)
+        public static AzureAISearchIndex AzureAISearchIndex(string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default, string connectionName = default, string indexName = default, AIProjectIndexFieldMapping fieldMapping = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -280,14 +280,14 @@ namespace Azure.AI.Projects
         /// <param name="urlField"> Field containing the url of the document. </param>
         /// <param name="vectorFields"> List of fields with vector content. </param>
         /// <param name="metadataFields"> List of fields with metadata content. </param>
-        /// <returns> A new <see cref="Projects.FieldMapping"/> instance for mocking. </returns>
-        public static FieldMapping FieldMapping(IEnumerable<string> contentFields = default, string filepathField = default, string titleField = default, string urlField = default, IEnumerable<string> vectorFields = default, IEnumerable<string> metadataFields = default)
+        /// <returns> A new <see cref="Projects.AIProjectIndexFieldMapping"/> instance for mocking. </returns>
+        public static AIProjectIndexFieldMapping AIProjectIndexFieldMapping(IEnumerable<string> contentFields = default, string filepathField = default, string titleField = default, string urlField = default, IEnumerable<string> vectorFields = default, IEnumerable<string> metadataFields = default)
         {
             contentFields ??= new ChangeTrackingList<string>();
             vectorFields ??= new ChangeTrackingList<string>();
             metadataFields ??= new ChangeTrackingList<string>();
 
-            return new FieldMapping(
+            return new AIProjectIndexFieldMapping(
                 contentFields.ToList(),
                 filepathField,
                 titleField,
@@ -332,7 +332,7 @@ namespace Azure.AI.Projects
         /// <param name="embeddingConfiguration"> Embedding model configuration. </param>
         /// <param name="fieldMapping"> Field mapping configuration. </param>
         /// <returns> A new <see cref="Projects.CosmosDBIndex"/> instance for mocking. </returns>
-        public static CosmosDBIndex CosmosDBIndex(string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default, string connectionName = default, string databaseName = default, string containerName = default, EmbeddingConfiguration embeddingConfiguration = default, FieldMapping fieldMapping = default)
+        public static CosmosDBIndex CosmosDBIndex(string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default, string connectionName = default, string databaseName = default, string containerName = default, EmbeddingConfiguration embeddingConfiguration = default, AIProjectIndexFieldMapping fieldMapping = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -366,10 +366,10 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="type"> The type of the deployment. </param>
         /// <param name="name"> Name of the deployment. </param>
-        /// <returns> A new <see cref="Projects.AssetDeployment"/> instance for mocking. </returns>
-        public static AssetDeployment AssetDeployment(string @type = default, string name = default)
+        /// <returns> A new <see cref="Projects.AIProjectDeployment"/> instance for mocking. </returns>
+        public static AIProjectDeployment AIProjectDeployment(string @type = default, string name = default)
         {
-            return new UnknownAssetDeployment(new DeploymentType(@type), name, additionalBinaryDataProperties: null);
+            return new UnknownAIProjectDeployment(new AIProjectDeploymentType(@type), name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Model Deployment Definition. </summary>
@@ -386,7 +386,7 @@ namespace Azure.AI.Projects
             capabilities ??= new ChangeTrackingDictionary<string, string>();
 
             return new ModelDeployment(
-                DeploymentType.ModelDeployment,
+                AIProjectDeploymentType.ModelDeployment,
                 name,
                 additionalBinaryDataProperties: null,
                 modelName,

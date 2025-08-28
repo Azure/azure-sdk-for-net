@@ -40,7 +40,7 @@ namespace Azure.AI.Projects
         {
             if (!string.IsNullOrEmpty(connectionName))
             {
-                ConnectionProperties selectedConnection = Connections.GetConnection(connectionName, includeCredentials: true);
+                AIProjectConnection selectedConnection = Connections.GetConnection(connectionName, includeCredentials: true);
                 if (selectedConnection.Type != ConnectionType.AzureOpenAI)
                 {
                     throw new InvalidOperationException($"Connection '{connectionName}' is not of type AzureOpenAI.");
@@ -49,7 +49,7 @@ namespace Azure.AI.Projects
                     ? selectedConnection.Target.Substring(0, selectedConnection.Target.Length - 1)
                     : selectedConnection.Target;
 
-                if (selectedConnection.Credentials is ApiKeyCredentials apiKeyCreds)
+                if (selectedConnection.Credentials is AIProjectConnectionApiKeyCredential apiKeyCreds)
                 {
                     if (string.IsNullOrEmpty(apiKeyCreds.ApiKey))
                     {
@@ -58,7 +58,7 @@ namespace Azure.AI.Projects
                     string apiKey = apiKeyCreds.ApiKey;
                     return new AzureOpenAIClient(new Uri(endpoint), new ApiKeyCredential(apiKey));
                 }
-                else if (selectedConnection.Credentials is EntraIDCredentials)
+                else if (selectedConnection.Credentials is AIProjectConnectionEntraIDCredential)
                 {
                     return new AzureOpenAIClient(new Uri(endpoint), this._tokenCredential);
                 }

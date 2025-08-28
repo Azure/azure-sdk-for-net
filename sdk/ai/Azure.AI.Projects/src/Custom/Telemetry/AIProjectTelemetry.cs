@@ -35,12 +35,12 @@ namespace Azure.AI.Projects
         {
             if (_connectionString == null)
             {
-                ConnectionProperties connection = _outerInstance.Connections.GetDefaultConnection(ConnectionType.ApplicationInsights, includeCredentials: true);
+                AIProjectConnection connection = _outerInstance.Connections.GetDefaultConnection(ConnectionType.ApplicationInsights, includeCredentials: true);
                 if (connection == null)
                 {
                     throw new RequestFailedException("No Application Insights connection found.");
                 }
-                if (connection.Credentials is ApiKeyCredentials apiKeyCreds)
+                if (connection.Credentials is AIProjectConnectionApiKeyCredential apiKeyCreds)
                 {
                     if (string.IsNullOrEmpty(apiKeyCreds.ApiKey))
                     {
@@ -66,12 +66,12 @@ namespace Azure.AI.Projects
         {
             if (_connectionString == null)
             {
-                ConnectionProperties connection = await _outerInstance.Connections.GetDefaultConnectionAsync(ConnectionType.ApplicationInsights, includeCredentials: true).ConfigureAwait(false);
+                AIProjectConnection connection = await _outerInstance.Connections.GetDefaultConnectionAsync(ConnectionType.ApplicationInsights, includeCredentials: true).ConfigureAwait(false);
                 if (connection == null)
                 {
                     throw new RequestFailedException("No Application Insights connection found.");
                 }
-                if (connection.Credentials is ApiKeyCredentials apiKeyCreds)
+                if (connection.Credentials is AIProjectConnectionApiKeyCredential apiKeyCreds)
                 {
                     if (string.IsNullOrEmpty(apiKeyCreds.ApiKey))
                     {

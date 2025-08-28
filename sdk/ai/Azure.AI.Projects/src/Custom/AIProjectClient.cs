@@ -99,21 +99,21 @@ namespace Azure.AI.Projects
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override IEnumerable<ClientConnection> GetAllConnections() => _cacheManager.GetAllConnections();
 
-        /// <summary> Initializes a new instance of DatasetsOperations. </summary>
-        public virtual DatasetsOperations GetDatasetsOperationsClient()
+        /// <summary> Initializes a new instance of AIProjectDatasetsOperations. </summary>
+        public virtual AIProjectDatasetsOperations GetAIProjectDatasetsOperationsClient()
         {
             // Custom method to allow for passing of credential used when SAS is not provided.
-            return Volatile.Read(ref _cachedDatasetsOperations) ?? Interlocked.CompareExchange(ref _cachedDatasetsOperations, new DatasetsOperations(Pipeline, _endpoint, _apiVersion, _tokenProvider), null) ?? _cachedDatasetsOperations;
+            return Volatile.Read(ref _cachedAIProjectDatasetsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectDatasetsOperations, new AIProjectDatasetsOperations(Pipeline, _endpoint, _apiVersion, _tokenProvider), null) ?? _cachedAIProjectDatasetsOperations;
         }
 
         /// <summary> Gets the client for managing connections. </summary>
-        public virtual ConnectionsOperations Connections { get => GetConnectionsOperationsClient(); }
+        public virtual AIProjectConnectionsOperations Connections { get => GetAIProjectConnectionsOperationsClient(); }
         /// <summary> Gets the client for managing datasets. </summary>
-        public virtual DatasetsOperations Datasets { get => GetDatasetsOperationsClient(); }
+        public virtual AIProjectDatasetsOperations Datasets { get => GetAIProjectDatasetsOperationsClient(); }
         /// <summary> Gets the client for managing deployments. </summary>
-        public virtual DeploymentsOperations Deployments { get => GetDeploymentsOperationsClient(); }
+        public virtual AIProjectDeploymentsOperations Deployments { get => GetAIProjectDeploymentsOperationsClient(); }
         /// <summary> Gets the client for managing indexes. </summary>
-        public virtual IndexesOperations Indexes { get => GetIndexesOperationsClient(); }
+        public virtual AIProjectIndexesOperations Indexes { get => GetAIProjectIndexesOperationsClient(); }
         /// <summary> Gets the client for telemetry operations. </summary>
         public virtual AIProjectTelemetry Telemetry { get => new AIProjectTelemetry(this); }
 
