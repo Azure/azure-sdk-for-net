@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -914,7 +914,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -978,7 +978,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1007,7 +1007,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1045,7 +1045,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1083,7 +1083,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1114,7 +1114,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1171,7 +1171,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1197,7 +1197,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1228,7 +1228,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1259,7 +1259,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1292,7 +1292,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1325,7 +1325,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1354,7 +1354,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1382,7 +1382,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1410,7 +1410,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1439,7 +1439,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1485,7 +1485,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1531,7 +1531,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1574,7 +1574,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1617,7 +1617,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1660,7 +1660,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1703,7 +1703,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1734,7 +1734,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1765,7 +1765,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1774,7 +1774,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
-        /// <param name="commandId"> The command id. </param>
+        /// <param name="commandId"> Specifies a commandId of predefined built-in script. Command IDs available for Linux are listed at https://aka.ms/RunCommandManagedLinux#available-commands, Windows at https://aka.ms/RunCommandManagedWindows#available-commands. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="commandId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
@@ -1809,7 +1809,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1818,7 +1818,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
-        /// <param name="commandId"> The command id. </param>
+        /// <param name="commandId"> Specifies a commandId of predefined built-in script. Command IDs available for Linux are listed at https://aka.ms/RunCommandManagedLinux#available-commands, Windows at https://aka.ms/RunCommandManagedWindows#available-commands. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="commandId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
@@ -1853,7 +1853,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1880,7 +1880,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1907,7 +1907,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1938,7 +1938,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1969,7 +1969,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1999,7 +1999,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2029,7 +2029,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2060,7 +2060,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2091,7 +2091,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2124,7 +2124,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2157,7 +2157,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2184,7 +2184,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2211,7 +2211,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2241,7 +2241,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2271,7 +2271,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2301,7 +2301,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2331,7 +2331,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2361,7 +2361,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

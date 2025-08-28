@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CopyARestorePointToADifferentRegion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/restorePointExamples/RestorePoint_Copy_BetweenRegions.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/restorePointExamples/RestorePoint_Copy_BetweenRegions.json
             // this example is just showing the usage of "RestorePoints_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateARestorePoint()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/restorePointExamples/RestorePoint_Create.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/restorePointExamples/RestorePoint_Create.json
             // this example is just showing the usage of "RestorePoints_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,7 +101,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetARestorePoint()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/restorePointExamples/RestorePoint_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/restorePointExamples/RestorePoint_Get.json
             // this example is just showing the usage of "RestorePoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -135,7 +135,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRestorePointWithInstanceView()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/restorePointExamples/RestorePoint_Get_WithInstanceView.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/restorePointExamples/RestorePoint_Get_WithInstanceView.json
             // this example is just showing the usage of "RestorePoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -169,7 +169,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetARestorePoint()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/restorePointExamples/RestorePoint_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/restorePointExamples/RestorePoint_Get.json
             // this example is just showing the usage of "RestorePoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -199,7 +199,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetRestorePointWithInstanceView()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/restorePointExamples/RestorePoint_Get_WithInstanceView.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/restorePointExamples/RestorePoint_Get_WithInstanceView.json
             // this example is just showing the usage of "RestorePoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -229,7 +229,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetARestorePoint()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/restorePointExamples/RestorePoint_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/restorePointExamples/RestorePoint_Get.json
             // this example is just showing the usage of "RestorePoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -271,7 +271,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetRestorePointWithInstanceView()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/restorePointExamples/RestorePoint_Get_WithInstanceView.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/restorePointExamples/RestorePoint_Get_WithInstanceView.json
             // this example is just showing the usage of "RestorePoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
