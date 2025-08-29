@@ -47,6 +47,30 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="WebPubSubCustomCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebPubSubCustomCertificateResource.CreateResourceIdentifier" /> to create a <see cref="WebPubSubCustomCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WebPubSubCustomCertificateResource"/> object. </returns>
+        public virtual WebPubSubCustomCertificateResource GetWebPubSubCustomCertificateResource(ResourceIdentifier id)
+        {
+            WebPubSubCustomCertificateResource.ValidateResourceId(id);
+            return new WebPubSubCustomCertificateResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WebPubSubCustomDomainResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebPubSubCustomDomainResource.CreateResourceIdentifier" /> to create a <see cref="WebPubSubCustomDomainResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WebPubSubCustomDomainResource"/> object. </returns>
+        public virtual WebPubSubCustomDomainResource GetWebPubSubCustomDomainResource(ResourceIdentifier id)
+        {
+            WebPubSubCustomDomainResource.ValidateResourceId(id);
+            return new WebPubSubCustomDomainResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="WebPubSubHubResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WebPubSubHubResource.CreateResourceIdentifier" /> to create a <see cref="WebPubSubHubResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -68,6 +92,30 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         {
             WebPubSubPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new WebPubSubPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WebPubSubReplicaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebPubSubReplicaResource.CreateResourceIdentifier" /> to create a <see cref="WebPubSubReplicaResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WebPubSubReplicaResource"/> object. </returns>
+        public virtual WebPubSubReplicaResource GetWebPubSubReplicaResource(ResourceIdentifier id)
+        {
+            WebPubSubReplicaResource.ValidateResourceId(id);
+            return new WebPubSubReplicaResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WebPubSubReplicaSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebPubSubReplicaSharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="WebPubSubReplicaSharedPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WebPubSubReplicaSharedPrivateLinkResource"/> object. </returns>
+        public virtual WebPubSubReplicaSharedPrivateLinkResource GetWebPubSubReplicaSharedPrivateLinkResource(ResourceIdentifier id)
+        {
+            WebPubSubReplicaSharedPrivateLinkResource.ValidateResourceId(id);
+            return new WebPubSubReplicaSharedPrivateLinkResource(Client, id);
         }
 
         /// <summary>
