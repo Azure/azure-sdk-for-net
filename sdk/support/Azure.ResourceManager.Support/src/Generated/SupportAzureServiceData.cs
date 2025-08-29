@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Support
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SupportAzureServiceData"/>. </summary>
-        internal SupportAzureServiceData()
+        public SupportAzureServiceData()
         {
             ResourceTypes = new ChangeTrackingList<string>();
         }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Localized name of the Azure service. </summary>
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
         /// <summary> ARM Resource types. </summary>
         public IReadOnlyList<string> ResourceTypes { get; }
     }

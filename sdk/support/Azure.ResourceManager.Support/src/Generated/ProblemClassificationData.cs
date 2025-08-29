@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Support
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProblemClassificationData"/>. </summary>
-        internal ProblemClassificationData()
+        public ProblemClassificationData()
         {
             SecondaryConsentEnabled = new ChangeTrackingList<SecondaryConsentEnabled>();
         }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Localized name of problem classification. </summary>
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
         /// <summary> This property indicates whether secondary consent is present for problem classification. </summary>
         public IReadOnlyList<SecondaryConsentEnabled> SecondaryConsentEnabled { get; }
     }

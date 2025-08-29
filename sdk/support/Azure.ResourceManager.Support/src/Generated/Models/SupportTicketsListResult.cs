@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    /// <summary> Object that represents a collection of SupportTicket resources. </summary>
+    /// <summary> [Placeholder] Description for page model. </summary>
     internal partial class SupportTicketsListResult
     {
         /// <summary>
@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.Support.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SupportTicketsListResult"/>. </summary>
-        /// <param name="value"> List of SupportTicket resources. </param>
-        /// <param name="nextLink"> The URI to fetch the next page of SupportTicket resources. </param>
+        /// <param name="nextLink"> [Placeholder] Description for nextLink property. </param>
+        /// <param name="value"> [Placeholder] Description for value property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SupportTicketsListResult(IReadOnlyList<SupportTicketData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SupportTicketsListResult(string nextLink, IReadOnlyList<SupportTicketData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
             NextLink = nextLink;
+            Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of SupportTicket resources. </summary>
-        public IReadOnlyList<SupportTicketData> Value { get; }
-        /// <summary> The URI to fetch the next page of SupportTicket resources. </summary>
+        /// <summary> [Placeholder] Description for nextLink property. </summary>
         public string NextLink { get; }
+        /// <summary> [Placeholder] Description for value property. </summary>
+        public IReadOnlyList<SupportTicketData> Value { get; }
     }
 }
