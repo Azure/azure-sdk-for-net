@@ -13,75 +13,52 @@ using Azure.Provisioning.Primitives;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.Tests;
-
-[AsyncOnly]
-[LiveOnly]
-public class ProvisioningTestBase : ManagementRecordedTestBase<ProvisioningTestEnvironment>
+public class NewTrycep : IAsyncDisposable
 {
-    public bool SkipTools { get; set; }
-    public bool SkipLiveCalls { get; set; }
+    public bool SkipTools { get; private set; } = true;
+    public bool SkipLiveCalls { get; private set; } = true;
+    public ProvisioningTestBase? Test { get; private set; }
+    public ProvisioningBuildOptions BuildOptions { get; init; } = new();
+    public ProvisioningDeploymentOptions DeploymentOptions { get; init; } = new();
+    public Infrastructure? Infra { get; private set; }
+    public ProvisioningPlan? Plan { get; private set; }
+    public IDictionary<string, string>? BicepModules { get; private set; }
+    public string? Bicep => BicepModules?.TryGetValue("main.bicep", out string? b) == true ? b : null;
+    public string? TempDir { get; private set; }
+    public IList<string>? SavedBicepModules { get; private set; }
+    public string? ArmTemplate { get; private set; }
+    public AzureLocation ResourceLocation { get; init; } = AzureLocation.WestUS2;
+    public SubscriptionResource? ArmSubscription { get; private set; }
+    public ResourceGroupResource? ArmResourceGroup { get; private set; }
+    public ProvisioningDeployment? Deployment { get; private set; }
+    public CancellationToken Cancellation { get; private set; }
 
-    // TODO -- maybe remove this?
-    public Trycep CreateBicepTest() => new(this);
-
-    public ProvisioningTestBase(bool async, bool skipTools = true, bool skipLiveCalls = true)
-        : base(async, RecordedTestMode.Live)
+    /// <summary>
+    /// Setup how the bicep tests in this class would interact with Azure.
+    /// </summary>
+    /// <param name="test"></param>
+    /// <returns></returns>
+    public NewTrycep SetUpLiveCalls(ProvisioningTestBase test)
     {
-        // Ignore the version of the AZ CLI used to generate the ARM template as this will differ based on the environment
-        JsonPathSanitizers.Add("$.._generator.version");
-        JsonPathSanitizers.Add("$.._generator.templateHash");
-
-        // Dial how long we spend waiting during iterative development since
-        // we're not saving any of the recordings by default (yet)
-        SkipTools = skipTools && skipLiveCalls; // We can't skip tools during live calls
-        SkipLiveCalls = skipLiveCalls;
-    }
-
-    public override void GlobalTimeoutTearDown()
-    {
-        // Turn off global timeout errors because these tests can be much slower
-        // base.GlobalTimeoutTearDown();
-    }
-}
-
-public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
-{
-    public AzureLocation ResourceLocation { get; set; } = AzureLocation.WestUS2;
-    public ProvisioningTestBase Test { get; set; } = test;
-    public ProvisioningBuildOptions BuildOptions { get; set; } =
-        new()
-        {
-            // TODO: Add back when we reenable test recording
-            Random = test.Recording.Random
-        };
-    public ProvisioningDeploymentOptions DeploymentOptions { get; set; } =
-        new()
-        {
-            ArmClient = test.InstrumentClient(
+        Test = test;
+        SkipTools = test.SkipTools;
+        SkipLiveCalls = test.SkipLiveCalls;
+        BuildOptions.Random = test.Recording.Random;
+        DeploymentOptions.ArmClient = test.InstrumentClient(
                 new ArmClient(
                     test.TestEnvironment.Credential,
                     test.TestEnvironment.SubscriptionId,
-                    test.InstrumentClientOptions(new ArmClientOptions()))),
-            DefaultCredential = test.TestEnvironment.Credential,
-            DefaultSubscriptionId = test.TestEnvironment.SubscriptionId
-        };
-    public Infrastructure? Infra { get; set; }
-    public ProvisioningPlan? Plan { get; set; }
-    public IDictionary<string, string>? BicepModules { get; set; }
-    public string? Bicep => BicepModules?.TryGetValue("main.bicep", out string? b) == true ? b : null;
-    public string? TempDir { get; set; }
-    public IList<string>? SavedBicepModules { get; set; }
-    public string? ArmTemplate { get; set; }
-    public SubscriptionResource? ArmSubscription { get; set; }
-    public ResourceGroupResource? ArmResourceGroup { get; set; }
-    public ProvisioningDeployment? Deployment { get; set; }
-    public CancellationToken Cancellation { get; set; }
+                    test.InstrumentClientOptions(new ArmClientOptions())));
+        DeploymentOptions.DefaultCredential = test.TestEnvironment.Credential;
+        DeploymentOptions.DefaultSubscriptionId = test.TestEnvironment.SubscriptionId;
 
-    public Trycep Define(ProvisionableConstruct resource)
+        return this;
+    }
+
+    public NewTrycep Define(ProvisionableConstruct resource)
     {
         Infra = new Infrastructure();
         Infra.Add(resource);
@@ -89,14 +66,14 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
         return this;
     }
 
-    public Trycep Define(Func<Trycep, Infrastructure> action)
+    public NewTrycep Define(Func<NewTrycep, Infrastructure> action)
     {
         Infra = action(this);
         Plan = Infra.Build(BuildOptions);
         return this;
     }
 
-    public Trycep Define(Func<Trycep, ProvisioningBuildOptions, Infrastructure> action)
+    public NewTrycep Define(Func<NewTrycep, ProvisioningBuildOptions, Infrastructure> action)
     {
         Infra = action(this, BuildOptions);
         Plan = Infra.Build(BuildOptions);
@@ -111,7 +88,7 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
     // file (or writes it if not found).
 
     // TODO: How much work would it be to get a [StringSyntax] working with Bicep?
-    public Trycep Compare(string expectedBicep)
+    public NewTrycep Compare(string expectedBicep)
     {
         BicepModules = GetPlan().Compile();
         Assert.AreEqual(1, BicepModules.Count, $"Expected exactly one bicep module, not <{string.Join(", ", BicepModules.Keys)}>");
@@ -125,7 +102,7 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
         return this;
     }
 
-    public Trycep Compare(IDictionary<string, string> expectedBicepModules)
+    public NewTrycep Compare(IDictionary<string, string> expectedBicepModules)
     {
         BicepModules = GetPlan().Compile();
         Assert.AreEqual(
@@ -234,7 +211,7 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
 
     private string GetArmTemplate()
     {
-        if (Test.SkipTools)
+        if (SkipTools)
         { return ""; }
         if (ArmTemplate is null)
         {
@@ -244,9 +221,9 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
         return ArmTemplate;
     }
 
-    public Trycep CompareArm(string expectedArm)
+    public NewTrycep CompareArm(string expectedArm)
     {
-        if (Test.SkipTools)
+        if (SkipTools)
         { return this; }
         string arm = GetArmTemplate();
         if (arm != expectedArm)
@@ -259,10 +236,12 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
         return this;
     }
 
-    public Trycep Lint(Action<IReadOnlyList<BicepErrorMessage>>? check = default, IList<string>? ignore = default)
+    public NewTrycep Lint(Action<IReadOnlyList<BicepErrorMessage>>? check = default, IList<string>? ignore = default)
     {
-        if (Test.SkipTools)
-        { return this; }
+        if (SkipTools)
+        {
+            return this;
+        }
         SaveBicep();
         string mainPath = SavedBicepModules![0];
         IReadOnlyList<BicepErrorMessage> messages = GetPlan().Lint(mainPath);
@@ -286,10 +265,14 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
 
     private async Task CreateResourceGroupAsync(string? name = default)
     {
-        if (Test.SkipLiveCalls)
-        { return; }
+        if (SkipLiveCalls)
+        {
+            return;
+        }
         if (ArmResourceGroup is not null)
-        { return; }
+        {
+            return;
+        }
 
         string? subId = DeploymentOptions.DefaultSubscriptionId;
         ArmClient client = DeploymentOptions.ArmClient;
@@ -316,8 +299,10 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
 
     public async Task ValidateAsync(Action<ArmDeploymentValidateResult>? validate = default)
     {
-        if (Test.SkipLiveCalls)
-        { return; }
+        if (SkipLiveCalls)
+        {
+            return;
+        }
         ProvisioningPlan plan = GetPlan();
         await CreateResourceGroupAsync().ConfigureAwait(false);
         ArmDeploymentValidateResult result =
@@ -338,8 +323,10 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
 
     public async Task DeployAsync(Action<ProvisioningDeployment>? validate = default)
     {
-        if (Test.SkipLiveCalls)
-        { return; }
+        if (SkipLiveCalls)
+        {
+            return;
+        }
         ProvisioningPlan plan = GetPlan();
         await CreateResourceGroupAsync().ConfigureAwait(false);
         Deployment =
@@ -360,8 +347,10 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
 
     public async Task VerifyLiveResource(Func<ProvisioningDeployment, Task> validate)
     {
-        if (Test.SkipLiveCalls)
-        { return; }
+        if (SkipLiveCalls)
+        {
+            return;
+        }
         if (Deployment is null)
         {
             await DeployAsync().ConfigureAwait(false);

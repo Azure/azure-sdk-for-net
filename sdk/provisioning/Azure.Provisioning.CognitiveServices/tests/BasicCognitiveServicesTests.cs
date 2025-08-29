@@ -67,6 +67,6 @@ public class BasicCognitiveServicesTests(bool async)
               }
             }
             """)
-        .Lint()
+        .Lint();
     }
 }

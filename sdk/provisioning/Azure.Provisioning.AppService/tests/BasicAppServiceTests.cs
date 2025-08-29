@@ -209,6 +209,6 @@ public class BasicAppServiceTests(bool async)
               kind: 'functionapp'
             }
             """)
-        .Lint()
+        .Lint();
     }
 }
