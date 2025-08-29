@@ -3,6 +3,8 @@
 
 using System.ClientModel.Internal;
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
+using System.Text.Json;
 
 namespace System.ClientModel.Primitives;
 
@@ -38,5 +40,28 @@ public static class JsonPatchExtensions
         var writer = new ModelWriter<T>(value, ModelReaderWriterOptions.Json);
         using var reader = writer.ExtractReader();
         jsonPatch.Append(jsonPath, reader.ToBinaryData());
+    }
+
+    /// <summary>
+    /// Serializes the JsonPatch to a JSON string representation in the specified format.
+    /// Valid formats include:
+    /// "J" for application/json
+    /// "JP" for application/json-patch+json
+    /// "JMP" for application/json-merge-patch+json
+    /// </summary>
+    /// <param name="patch">The patch to serialize.</param>
+    /// <param name="format">The format to serialize into.</param>
+    /// <returns></returns>
+    public static string Serialize(this JsonPatch patch, string format = "J")
+    {
+        using UnsafeBufferSequence buffer = new();
+        using Utf8JsonWriter writer = new(buffer);
+        patch.WriteTo(writer);
+        writer.Flush();
+#if NET6_0_OR_GREATER
+        return Encoding.UTF8.GetString(buffer.ExtractReader().ToBinaryData().ToMemory().Span);
+#else
+        return Encoding.UTF8.GetString(buffer.ExtractReader().ToBinaryData().ToArray());
+#endif
     }
 }

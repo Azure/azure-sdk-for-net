@@ -50,7 +50,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                 writer.WriteNumberValue(Capacity.Value);
             }
 
-            Patch.Write(writer);
+            Patch.WriteTo(writer);
 
             writer.WriteEndObject();
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.

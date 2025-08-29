@@ -115,7 +115,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 }
             }
 
-            patch.Write(writer, prefix);
+            patch.WriteTo(writer, prefix);
             writer.WriteEndObject();
         }
     }

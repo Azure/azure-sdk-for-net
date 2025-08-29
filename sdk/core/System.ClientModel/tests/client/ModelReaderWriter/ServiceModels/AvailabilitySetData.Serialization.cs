@@ -77,7 +77,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                     }
                 }
 
-                Patch.Write(writer, "$.tags"u8);
+                Patch.WriteTo(writer, "$.tags"u8);
                 writer.WriteEndObject();
             }
             if (!Patch.Contains("$.location"u8))
@@ -115,7 +115,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
                         ((IJsonModel<WritableSubResource>)VirtualMachines[i]).Write(writer, options);
                     }
-                    Patch.WriteArray(writer, "$.properties.virtualMachines"u8);
+                    Patch.WriteArrayTo(writer, "$.properties.virtualMachines"u8);
                     writer.WriteEndArray();
                 }
                 if (OptionalProperty.IsDefined(ProximityPlacementGroup) && !Patch.Contains("$.properties.proximityPlacementGroup"u8))
@@ -124,12 +124,12 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                     ((IJsonModel<WritableSubResource>)ProximityPlacementGroup).Write(writer, options);
                 }
 
-                Patch.Write(writer, "$.properties"u8);
+                Patch.WriteTo(writer, "$.properties"u8);
 
                 writer.WriteEndObject();
             }
 
-            Patch.Write(writer);
+            Patch.WriteTo(writer);
 
             writer.WriteEndObject();
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.

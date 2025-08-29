@@ -49,8 +49,8 @@ public partial struct JsonPatch
         {
             return value.Value;
         }
-        ThrowPropertyNotFoundException(jsonPath);
-        return ReadOnlyMemory<byte>.Empty;
+
+        return ThrowPropertyNotFoundException(jsonPath);
     }
 
     private bool TryDecodeValue(EncodedValue encodedValue, out bool value)
@@ -1244,61 +1244,5 @@ public partial struct JsonPatch
                     throw new Exception($"Unexpected token type: {pathReader.Current.TokenType}");
             }
         }
-    }
-
-    private static void WriteEncodedValueAsJson(Utf8JsonWriter writer, ReadOnlySpan<byte> propertyName, EncodedValue encodedValue)
-    {
-        if (encodedValue.Value.Length == 0)
-            throw new ArgumentException("Empty encoded value");
-
-        ValueKind kind = encodedValue.Kind & ~ValueKind.ArrayItemAppend;
-        ReadOnlySpan<byte> valueBytes = encodedValue.Value.Span;
-
-        if (!propertyName.IsEmpty)
-            writer.WritePropertyName(propertyName);
-
-        switch (kind)
-        {
-            case ValueKind.Number:
-                // valueBytes contains JSON number representation
-                writer.WriteRawValue(valueBytes);
-                break;
-
-            case ValueKind.BooleanTrue:
-            case ValueKind.BooleanFalse:
-                // valueBytes contains JSON boolean representation
-                writer.WriteBooleanValue(kind == ValueKind.BooleanTrue);
-                break;
-
-            case ValueKind.Json:
-                // Write raw JSON value
-                writer.WriteRawValue(valueBytes, skipInputValidation: true);
-                break;
-
-            case ValueKind.Null:
-                writer.WriteNullValue();
-                break;
-
-            case ValueKind.Removed:
-                // Skip removed properties during serialization
-                break;
-
-            case ValueKind.Utf8String:
-            case ValueKind.TimeSpan:
-            case ValueKind.Guid:
-            case ValueKind.DateTime:
-                writer.WriteStringValue(valueBytes);
-                break;
-
-            default:
-                throw new NotSupportedException($"Unsupported value kind: {kind}");
-        }
-    }
-
-    [MethodImpl(MethodImplOptions.NoInlining)]
-    [DoesNotReturn]
-    private void ThrowPropertyNotFoundException(ReadOnlySpan<byte> jsonPath)
-    {
-        throw new KeyNotFoundException(Encoding.UTF8.GetString(jsonPath.ToArray()));
     }
 }

@@ -70,11 +70,11 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 {
                     ((IJsonModel<AvailabilitySetData>)item).Write(writer, options);
                 }
-                Patch.WriteArray(writer, "$"u8);
+                Patch.WriteArrayTo(writer, "$"u8);
                 writer.WriteEndArray();
             }
 
-            Patch.Write(writer);
+            Patch.WriteTo(writer);
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 

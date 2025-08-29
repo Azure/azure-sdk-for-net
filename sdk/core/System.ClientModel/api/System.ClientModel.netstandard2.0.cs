@@ -358,11 +358,11 @@ namespace System.ClientModel.Primitives
         public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out uint value) { throw null; }
         public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out ulong value) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public void Write(System.Text.Json.Utf8JsonWriter writer) { }
+        public void WriteArrayTo(System.Text.Json.Utf8JsonWriter writer, System.ReadOnlySpan<byte> arrayPath) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public void Write(System.Text.Json.Utf8JsonWriter writer, System.ReadOnlySpan<byte> prefix) { }
+        public void WriteTo(System.Text.Json.Utf8JsonWriter writer) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public void WriteArray(System.Text.Json.Utf8JsonWriter writer, System.ReadOnlySpan<byte> array) { }
+        public void WriteTo(System.Text.Json.Utf8JsonWriter writer, System.ReadOnlySpan<byte> jsonPath) { }
         [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct EncodedValue
         {
@@ -379,6 +379,7 @@ namespace System.ClientModel.Primitives
     public static partial class JsonPatchExtensions
     {
         public static void Append<T>(this ref System.ClientModel.Primitives.JsonPatch jsonPatch, System.ReadOnlySpan<byte> jsonPath, T value) where T : System.ClientModel.Primitives.IJsonModel<T> { }
+        public static string Serialize(this System.ClientModel.Primitives.JsonPatch patch, string format = "J") { throw null; }
         public static void Set<T>(this ref System.ClientModel.Primitives.JsonPatch jsonPatch, System.ReadOnlySpan<byte> jsonPath, T value) where T : System.ClientModel.Primitives.IJsonModel<T> { }
     }
     public partial class MessageLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy

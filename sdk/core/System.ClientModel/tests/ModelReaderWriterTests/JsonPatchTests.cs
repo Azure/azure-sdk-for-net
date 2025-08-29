@@ -147,7 +147,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             // this stops it from escaping things like + int \u002B to make the expected strings nice to read.
             options.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             Utf8JsonWriter writer = new Utf8JsonWriter(stream, options);
-            patch.Write(writer);
+            patch.WriteTo(writer);
             writer.Flush();
             return Encoding.UTF8.GetString(stream.GetBuffer().AsSpan().Slice(0, (int)stream.Position).ToArray());
         }
