@@ -21,10 +21,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="ExpressionV2"/>. </summary>
         /// <param name="type"> Type of expressions supported by the system. Type: string. </param>
-        /// <param name="value"> Value for Constant/Field Type: string. </param>
+        /// <param name="value"> Value for Constant/Field Type: object. </param>
         /// <param name="operators"> Expression operator value Type: list of strings. </param>
         /// <param name="operands"> List of nested expressions. </param>
-        internal ExpressionV2(ExpressionV2Type? type, string value, IList<string> operators, IList<ExpressionV2> operands)
+        internal ExpressionV2(ExpressionV2Type? type, object value, IList<string> operators, IList<ExpressionV2> operands)
         {
             Type = type;
             Value = value;
@@ -34,8 +34,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Type of expressions supported by the system. Type: string. </summary>
         public ExpressionV2Type? Type { get; set; }
-        /// <summary> Value for Constant/Field Type: string. </summary>
-        public string Value { get; set; }
+        /// <summary> Value for Constant/Field Type: object. </summary>
+        public object Value { get; set; }
         /// <summary> Expression operator value Type: list of strings. </summary>
         public IList<string> Operators { get; }
         /// <summary> List of nested expressions. </summary>
