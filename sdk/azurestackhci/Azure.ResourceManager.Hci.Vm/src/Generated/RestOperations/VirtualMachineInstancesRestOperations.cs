@@ -291,7 +291,6 @@ namespace Azure.ResourceManager.Hci.Vm
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -435,7 +434,6 @@ namespace Azure.ResourceManager.Hci.Vm
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/start", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -501,7 +499,6 @@ namespace Azure.ResourceManager.Hci.Vm
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/stop", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -567,7 +564,6 @@ namespace Azure.ResourceManager.Hci.Vm
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/restart", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -633,7 +629,6 @@ namespace Azure.ResourceManager.Hci.Vm
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/pause", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -699,7 +694,6 @@ namespace Azure.ResourceManager.Hci.Vm
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/save", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }

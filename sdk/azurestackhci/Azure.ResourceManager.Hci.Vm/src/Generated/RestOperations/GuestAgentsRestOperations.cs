@@ -215,7 +215,6 @@ namespace Azure.ResourceManager.Hci.Vm
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/guestAgents/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
