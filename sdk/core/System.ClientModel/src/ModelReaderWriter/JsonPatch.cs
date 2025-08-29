@@ -1323,4 +1323,28 @@ public partial struct JsonPatch
 
         return false;
     }
+
+    /// <inheritdoc />
+    public override string ToString()
+        => ToString("JP");
+
+    /// <summary>
+    /// Returns a string representation of the object using the specified format.
+    /// </summary>
+    /// <param name="format">The format to return 'J' for application/json or 'JP' for application/json-patch+json.</param>
+    /// <returns>A string that represents the object, formatted according to the specified format.</returns>
+    public  string ToString(string format)
+    {
+        ThrowIfNull(format, nameof(format));
+
+        switch (format)
+        {
+            case "J":
+                return SerializeToJson();
+            case "JP":
+                return SerializeToJsonPatch();
+            default:
+                return ThrowFormatNotSupportedException(format);
+        }
+    }
 }

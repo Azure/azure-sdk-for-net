@@ -235,4 +235,86 @@ public partial struct JsonPatch
                 throw new NotSupportedException($"Unsupported value kind: {kind}");
         }
     }
+
+    private void WriteAsJsonPatchTo(Utf8JsonWriter writer)
+    {
+        writer.WriteStartArray();
+
+        if (_properties is null)
+        {
+            writer.WriteEndObject();
+            return;
+        }
+
+        bool isSeeded = !_rawJson.Value.IsEmpty;
+        ReadOnlyMemory<byte> rawJson = _rawJson.Value;
+        // need to add extra space for append characters and escape characters.
+        Span<byte> jsonPointerBuffer = stackalloc byte[_properties.MaxKeyLength << 1];
+        // TODO: need to get all patches that were propagated
+        foreach (var kvp in _properties)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("op"u8);
+            bool isArrayItemAppend = kvp.Value.Kind.HasFlag(ValueKind.ArrayItemAppend);
+            if (kvp.Value.Kind == ValueKind.Removed)
+            {
+                writer.WriteStringValue("remove");
+            }
+            else
+            {
+                if (isArrayItemAppend || !isSeeded || !rawJson.TryGetJson(kvp.Key, out _))
+                {
+                    writer.WriteStringValue("add");
+                }
+                else
+                {
+                    writer.WriteStringValue("replace");
+                }
+            }
+            writer.WritePropertyName("path"u8);
+            int bytesWritten = kvp.Key.ConvertToJsonPointer(jsonPointerBuffer, isArrayItemAppend);
+            writer.WriteStringValue(jsonPointerBuffer.Slice(0, bytesWritten));
+            if (kvp.Value.Kind != ValueKind.Removed)
+            {
+                writer.WritePropertyName("value"u8);
+                ReadOnlyMemory<byte> valueRom = kvp.Value.Value;
+                ValueKind kind = kvp.Value.Kind;
+                if (isArrayItemAppend && valueRom.IsArrayWrapped())
+                {
+                    kind = ValueKind.Json;
+                    valueRom = valueRom.Slice(1, valueRom.Length - 2);
+                }
+                WriteEncodedValueAsJson(writer, ReadOnlySpan<byte>.Empty, new(kind, valueRom));
+            }
+            writer.WriteEndObject();
+        }
+
+        writer.WriteEndArray();
+    }
+
+    private string SerializeToJson()
+    {
+        using UnsafeBufferSequence buffer = new();
+        using Utf8JsonWriter writer = new(buffer);
+        WriteTo(writer);
+        writer.Flush();
+#if NET6_0_OR_GREATER
+        return Encoding.UTF8.GetString(buffer.ExtractReader().ToBinaryData().ToMemory().Span);
+#else
+        return Encoding.UTF8.GetString(buffer.ExtractReader().ToBinaryData().ToArray());
+#endif
+    }
+
+    private string SerializeToJsonPatch()
+    {
+        using UnsafeBufferSequence buffer = new();
+        using Utf8JsonWriter writer = new(buffer);
+        WriteAsJsonPatchTo(writer);
+        writer.Flush();
+#if NET6_0_OR_GREATER
+        return Encoding.UTF8.GetString(buffer.ExtractReader().ToBinaryData().ToMemory().Span);
+#else
+        return Encoding.UTF8.GetString(buffer.ExtractReader().ToBinaryData().ToArray());
+#endif
+    }
 }

@@ -11,6 +11,71 @@ namespace System.ClientModel.Primitives;
 
 internal static class JsonPathReaderExtensions
 {
+    public static int ConvertToJsonPointer(this byte[] jsonPath, Span<byte> buffer, bool isArrayAppend = false)
+    {
+        //Converts JSON path RFC 9535 to JSON Pointer RFC 6901 format.
+        //TODO: escape ~ to ~0 and / to ~1 in property names
+        ReadOnlySpan<byte> jsonPathSpan = jsonPath.AsSpan();
+        if (jsonPathSpan.SequenceEqual("$"u8))
+        {
+            if (isArrayAppend)
+            {
+                buffer[0] = (byte)'/';
+                buffer[1] = (byte)'-';
+                return 2;
+            }
+            else
+            {
+                buffer[0] = (byte)'/';
+                return 1;
+            }
+        }
+
+        JsonPathReader reader = new JsonPathReader(jsonPathSpan);
+        int bytesWritten = 0;
+
+        while (reader.Read())
+        {
+            switch (reader.Current.TokenType)
+            {
+                case JsonPathTokenType.Root:
+                    if (reader.Peek().TokenType == JsonPathTokenType.End)
+                    {
+                        buffer[bytesWritten++] = (byte)'/';
+                    }
+                    break;
+                case JsonPathTokenType.Property:
+                    buffer[bytesWritten++] = (byte)'/';
+                    int propertyLength = reader.Current.ValueSpan.Length;
+                    if (propertyLength > 0)
+                    {
+                        reader.Current.ValueSpan.CopyTo(buffer.Slice(bytesWritten));
+                        bytesWritten += propertyLength;
+                    }
+                    break;
+                case JsonPathTokenType.ArrayIndex:
+                    buffer[bytesWritten++] = (byte)'/';
+                    int indexLength = reader.Current.ValueSpan.Length;
+                    if (indexLength > 0)
+                    {
+                        reader.Current.ValueSpan.CopyTo(buffer.Slice(bytesWritten));
+                        bytesWritten += indexLength;
+                    }
+                    break;
+                case JsonPathTokenType.End:
+                    break;
+            }
+        }
+
+        if (isArrayAppend)
+        {
+            buffer[bytesWritten++] = (byte)'/';
+            buffer[bytesWritten++] = (byte)'-';
+        }
+
+        return bytesWritten;
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ReadOnlySpan<byte> GetPropertyName(this byte[] jsonPath)
          => GetPropertyName(jsonPath.AsSpan());
@@ -260,7 +325,7 @@ internal static class JsonPathReaderExtensions
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static bool IsArrayWrapped(this ReadOnlyMemory<byte> json)
+    internal static bool IsArrayWrapped(this ReadOnlyMemory<byte> json)
     {
         ReadOnlySpan<byte> jsonSpan = json.Span;
         return jsonSpan.Length >= 2 && jsonSpan[0] == (byte)'[' && jsonSpan[jsonSpan.Length - 1] == (byte)']';

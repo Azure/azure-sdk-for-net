@@ -338,6 +338,8 @@ namespace System.ClientModel.Primitives
         public void SetNull(System.ReadOnlySpan<byte> jsonPath) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void SetPropagators(System.ClientModel.Primitives.JsonPatch.PropagatorSetter setter, System.ClientModel.Primitives.JsonPatch.PropagatorGetter getter, System.ClientModel.Primitives.JsonPatch.PropagatorIsFlattened isFlattened) { }
+        public override string ToString() { throw null; }
+        public string ToString(string format) { throw null; }
         public bool TryGetJson(System.ReadOnlySpan<byte> jsonPath, out System.ReadOnlyMemory<byte> value) { throw null; }
         public bool TryGetNullableValue<T>(System.ReadOnlySpan<byte> jsonPath, out T? value) where T : struct { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

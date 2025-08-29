@@ -382,5 +382,33 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             }
             Assert.IsTrue(exceptionThrown);
         }
+
+        [TestCase("$", "/")]
+        [TestCase("$[0]", "/0")]
+        [TestCase("$.x", "/x")]
+        [TestCase("$['x']", "/x")]
+        [TestCase("$[\"x\"]", "/x")]
+        [TestCase("$x.['y'][4].[\"z\"][12].a", "/x/y/4/z/12/a")]
+        public void ConvertToJsonPointer(string jsonPathStr, string expectedJsonPointer)
+        {
+            byte[] jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
+            Span<byte> jsonPointerSpan = stackalloc byte[jsonPath.Length << 1];
+            int bytesWritten = jsonPath.ConvertToJsonPointer(jsonPointerSpan);
+            Assert.AreEqual(expectedJsonPointer, Encoding.UTF8.GetString(jsonPointerSpan.Slice(0, bytesWritten).ToArray()));
+        }
+
+        [TestCase("$", "/-")]
+        [TestCase("$[0]", "/0/-")]
+        [TestCase("$.x", "/x/-")]
+        [TestCase("$['x']", "/x/-")]
+        [TestCase("$[\"x\"]", "/x/-")]
+        [TestCase("$x.['y'][4].[\"z\"][12].a", "/x/y/4/z/12/a/-")]
+        public void ConvertToJsonPointerAppend(string jsonPathStr, string expectedJsonPointer)
+        {
+            byte[] jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
+            Span<byte> jsonPointerSpan = stackalloc byte[jsonPath.Length << 1];
+            int bytesWritten = jsonPath.ConvertToJsonPointer(jsonPointerSpan, true);
+            Assert.AreEqual(expectedJsonPointer, Encoding.UTF8.GetString(jsonPointerSpan.Slice(0, bytesWritten).ToArray()));
+        }
     }
 }

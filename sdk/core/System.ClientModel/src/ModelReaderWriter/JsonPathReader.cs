@@ -29,6 +29,10 @@ internal readonly ref struct JsonPathToken
     }
 }
 
+/// <summary>
+/// Reads a JsonPath expression and breaks it into tokens for processing.
+/// Follows RFC 9535 minus the filter expressions and wildcards, which are not supported in this implementation.
+/// </summary>
 internal ref struct JsonPathReader
 {
     private ref struct PeekedJsonPathToken
