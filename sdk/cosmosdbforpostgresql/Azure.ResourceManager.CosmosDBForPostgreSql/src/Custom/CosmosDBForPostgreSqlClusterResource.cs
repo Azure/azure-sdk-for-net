@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation PromoteReadReplica(WaitUntil waitUntil, CancellationToken cancellationToken)
         {
-            return PromoteReadReplica(waitUntil,null, cancellationToken);
+            return PromoteReadReplica(waitUntil, null, cancellationToken);
         }
     }
 }
