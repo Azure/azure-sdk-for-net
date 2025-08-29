@@ -81,6 +81,7 @@ namespace Azure.Security.ConfidentialLedger
                 new ConfidentialLedgerResponseClassifier());
             _ledgerEndpoint = ledgerEndpoint;
             _apiVersion = actualOptions.Version;
+            _failoverService = new ConfidentialLedgerFailoverService(_pipeline, ClientDiagnostics);
         }
 
         internal class ConfidentialLedgerResponseClassifier : ResponseClassifier
