@@ -3,18 +3,23 @@
 
 using NUnit.Framework;
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 
 namespace Azure.Data.AppConfiguration.Tests
 {
     public class FeatureManagementTests
     {
-        private static readonly FeatureFlag s_testFlag = new FeatureFlag("testFlag")
-        {
-            Description = "This is a test feature flag.",
-        };
+        private static readonly FeatureFlag s_testFlag = ConfigurationModelFactory.FeatureFlag(
+            name: "testFlag",
+            description: "This is a test feature flag."
+        );
 
+        //
+        //
+        // Equality and clone tests
         [Test]
         public void FeatureFlagEquals()
         {
@@ -47,8 +52,10 @@ namespace Azure.Data.AppConfiguration.Tests
         public void FeatureFlagSerialization()
         {
             var comparer = FeatureFlagEqualityComparer.Instance;
-            var serialized = JsonSerializer.Serialize(s_testFlag);
-            var deserialized = JsonSerializer.Deserialize<FeatureFlag>(serialized);
+            var options = ModelReaderWriterOptions.Json;
+            var serialized = ((IPersistableModel<FeatureFlag>)s_testFlag).Write(options);
+            var deserialized = ((IPersistableModel<FeatureFlag>)s_testFlag).Create(serialized, options);
+
             Assert.IsTrue(comparer.Equals(s_testFlag, deserialized));
         }
 
@@ -62,18 +69,47 @@ namespace Azure.Data.AppConfiguration.Tests
                 { "null_key", null }
             };
 
-            var serialized = JsonSerializer.Serialize(dict);
-            var deserialized = JsonSerializer.Deserialize<IDictionary<string, FeatureFlag>>(serialized);
-            CollectionAssert.IsNotEmpty(deserialized);
+            var options = ModelReaderWriterOptions.Json;
+            var serializedDict = new Dictionary<string, BinaryData>();
+            foreach (var kvp in dict)
+            {
+                if (kvp.Value != null)
+                {
+                    serializedDict[kvp.Key] = ((IPersistableModel<FeatureFlag>)kvp.Value).Write(options);
+                }
+                else
+                {
+                    serializedDict[kvp.Key] = null;
+                }
+            }
 
-            Assert.IsTrue(comparer.Equals(s_testFlag, deserialized[s_testFlag.Name]));
-            Assert.IsNull(deserialized["null_key"]);
+            var deserializedDict = new Dictionary<string, FeatureFlag>();
+            foreach (var kvp in serializedDict)
+            {
+                if (kvp.Value != null)
+                {
+                    deserializedDict[kvp.Key] = ((IPersistableModel<FeatureFlag>)s_testFlag).Create(kvp.Value, options);
+                }
+                else
+                {
+                    deserializedDict[kvp.Key] = null;
+                }
+            }
+
+            CollectionAssert.IsNotEmpty(deserializedDict);
+            Assert.IsTrue(comparer.Equals(s_testFlag, deserializedDict[s_testFlag.Name]));
+            Assert.IsNull(deserializedDict["null_key"]);
         }
 
         [Test]
         public void FeatureFlagEtagConstructor()
         {
-            var featureFlag = new FeatureFlag("name", true, "label", new ETag("etag"));
+            var featureFlag = ConfigurationModelFactory.FeatureFlag(
+                name: "name",
+                enabled: true,
+                label: "label",
+                eTag: new ETag("etag")
+            );
             Assert.AreEqual("name", featureFlag.Name);
             Assert.AreEqual(true, featureFlag.Enabled);
             Assert.AreEqual("label", featureFlag.Label);

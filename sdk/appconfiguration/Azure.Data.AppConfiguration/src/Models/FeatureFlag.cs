@@ -6,19 +6,23 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
     /// <summary>
-    /// A setting, defined by a unique combination of a key and label.
+    /// A Feature Flag, defined by a unique combination of a name and label.
     /// </summary>
-    [CodeGenType("FeatureFlag")]
     [CodeGenSerialization(nameof(ETag), SerializationValueHook = nameof(SerializationEtag), DeserializationValueHook = nameof(DeserializeEtag))]
     public partial class FeatureFlag
     {
+        private IList<FeatureFlagVariant> _variants;
         private IDictionary<string, string> _tags;
+
+        /// <summary> Initializes a new instance of <see cref="FeatureFlag"/>. </summary>
+        public FeatureFlag()
+        {
+        }
 
         /// <summary>
         /// Creates a feature flag and sets it's enabled status and label.
@@ -27,7 +31,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="enabled">The enabled status of the flag.</param>
         /// <param name="label">A label used to group this feature flag with others.</param>
         /// <param name="etag">The ETag value for the feature flag.</param>
-        public FeatureFlag(string name, bool enabled = false, string label = null, ETag etag = default) : this(name, null, label, null, enabled, null, null, null, null, null, false, null, etag, null)
+        public FeatureFlag(string name, bool? enabled = default, string label = null, ETag etag = default) : this(name, null, label, null, enabled, null, null, null, null, null, false, null, etag, null)
         {
         }
 
@@ -57,6 +61,15 @@ namespace Azure.Data.AppConfiguration
         public bool? IsReadOnly { get; internal set; }
 
         /// <summary>
+        /// A list of variant definitions for the feature flag.
+        /// </summary>
+        public IList<FeatureFlagVariant> Variants
+        {
+            get => _variants ?? (_variants = new ChangeTrackingList<FeatureFlagVariant>());
+            internal set => _variants = value;
+        }
+
+        /// <summary>
         /// A dictionary of tags used to assign additional properties to a feature flag.
         /// These can be used to indicate how a feature flag may be applied.
         /// </summary>
@@ -80,7 +93,7 @@ namespace Azure.Data.AppConfiguration
         public override int GetHashCode() => base.GetHashCode();
 
         private void SerializationEtag(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => writer.WriteString("etag", ETag.ToString());
+            => writer.WriteStringValue(ETag.ToString());
 
         private static void DeserializeEtag(JsonProperty property, ref ETag val)
             => val = new ETag(property.Value.GetString());

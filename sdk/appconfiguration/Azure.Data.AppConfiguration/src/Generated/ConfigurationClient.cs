@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -557,12 +556,6 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Initializes a new instance of FeatureManagement. </summary>
-        public virtual FeatureManagement GetFeatureManagementClient()
-        {
-            return Volatile.Read(ref _cachedFeatureManagement) ?? Interlocked.CompareExchange(ref _cachedFeatureManagement, new FeatureManagement(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedFeatureManagement;
         }
     }
 }

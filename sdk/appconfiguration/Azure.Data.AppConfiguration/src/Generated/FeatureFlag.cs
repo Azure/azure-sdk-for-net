@@ -18,20 +18,13 @@ namespace Azure.Data.AppConfiguration
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FeatureFlag"/>. </summary>
-        public FeatureFlag()
-        {
-            Variants = new ChangeTrackingList<FeatureFlagVariant>();
-            Tags = new ChangeTrackingDictionary<string, string>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FeatureFlag"/>. </summary>
         /// <param name="name"> The name of the feature flag. </param>
         /// <param name="alias"> The alias of the feature flag. </param>
         /// <param name="label"> The label the feature flag belongs to. </param>
         /// <param name="description"> The description of the feature flag. </param>
         /// <param name="enabled"> The enabled state of the feature flag. </param>
         /// <param name="conditions"> The conditions of the feature flag. </param>
-        /// <param name="variants"> The variants of the feature flag. </param>
+        /// <param name="variants"> A list of variant definitions for the feature flag. </param>
         /// <param name="allocation"> The allocation of the feature flag. </param>
         /// <param name="telemetry"> The telemetry settings of the feature flag. </param>
         /// <param name="tags">
@@ -80,9 +73,6 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> The conditions of the feature flag. </summary>
         public FeatureFlagConditions Conditions { get; set; }
-
-        /// <summary> The variants of the feature flag. </summary>
-        public IList<FeatureFlagVariant> Variants { get; }
 
         /// <summary> The allocation of the feature flag. </summary>
         public FeatureFlagAllocation Allocation { get; set; }

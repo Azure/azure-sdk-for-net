@@ -92,7 +92,7 @@ namespace Azure.Data.AppConfiguration.Tests {
             return true;
         }
 
-        private bool ConditionsEquals(Conditions x, Conditions y)
+        private bool ConditionsEquals(FeatureFlagConditions x, FeatureFlagConditions y)
         {
             if (x == null && y == null)
                 return true;
@@ -103,7 +103,7 @@ namespace Azure.Data.AppConfiguration.Tests {
             return SerializeAndCompare(x, y);
         }
 
-        private bool VariantsEquals(IList<Variant> x, IList<Variant> y)
+        private bool VariantsEquals(IList<FeatureFlagVariant> x, IList<FeatureFlagVariant> y)
         {
             if (x == null && y == null)
                 return true;
@@ -116,7 +116,7 @@ namespace Azure.Data.AppConfiguration.Tests {
             return SerializeAndCompare(x, y);
         }
 
-        private bool AllocationEquals(Allocation x, Allocation y)
+        private bool AllocationEquals(FeatureFlagAllocation x, FeatureFlagAllocation y)
         {
             if (x == null && y == null)
                 return true;
@@ -127,7 +127,7 @@ namespace Azure.Data.AppConfiguration.Tests {
             return SerializeAndCompare(x, y);
         }
 
-        private bool TelemetryEquals(Telemetry x, Telemetry y)
+        private bool TelemetryEquals(FeatureFlagTelemetry x, FeatureFlagTelemetry y)
         {
             if (x == null && y == null)
                 return true;

@@ -12,8 +12,7 @@ using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
-    /// <summary></summary>
-    public partial class FeatureManagement
+    internal partial class FeatureManagement
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier200204;

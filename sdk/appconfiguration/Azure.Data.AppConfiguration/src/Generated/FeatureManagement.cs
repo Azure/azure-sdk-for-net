@@ -15,8 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
-    /// <summary> The FeatureManagement sub-client. </summary>
-    public partial class FeatureManagement
+    internal partial class FeatureManagement
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;

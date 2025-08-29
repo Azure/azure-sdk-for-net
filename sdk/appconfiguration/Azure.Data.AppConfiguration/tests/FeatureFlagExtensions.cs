@@ -16,18 +16,20 @@ namespace Azure.Data.AppConfiguration.Tests
                 tags.Add(key, featureFlag.Tags[key]);
             }
 
-            var cloned = new FeatureFlag(featureFlag.Name, featureFlag.Enabled ?? false, featureFlag.Label)
-            {
-                Alias = featureFlag.Alias,
-                Description = featureFlag.Description,
-                Conditions = featureFlag.Conditions,
-                Allocation = featureFlag.Allocation,
-                Telemetry = featureFlag.Telemetry,
-                Tags = tags,
-                ETag = featureFlag.ETag,
-                LastModified = featureFlag.LastModified,
-                IsReadOnly = featureFlag.IsReadOnly
-            };
+            var cloned = ConfigurationModelFactory.FeatureFlag(
+                featureFlag.Name,
+                alias: featureFlag.Alias,
+                label: featureFlag.Label,
+                description: featureFlag.Description,
+                enabled: featureFlag.Enabled,
+                conditions: featureFlag.Conditions,
+                allocation: featureFlag.Allocation,
+                telemetry: featureFlag.Telemetry,
+                tags: tags,
+                eTag: featureFlag.ETag,
+                lastModified: featureFlag.LastModified,
+                isReadOnly: featureFlag.IsReadOnly
+            );
 
             // Copy variants
             if (featureFlag.Variants != null)
