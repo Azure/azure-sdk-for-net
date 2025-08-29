@@ -54,7 +54,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeNetworkProtocolName,
 
             // Others
-            SemanticConventions.AttributeEnduserId
+            SemanticConventions.AttributeEnduserId,
+            "microsoft.client.ip"
         };
 
         internal static readonly HashSet<string> s_semanticsSet = new(s_semantics);

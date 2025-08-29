@@ -17,7 +17,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Initializes a new instance of <see cref="PhoneNumberSearchResult"/>. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="phoneNumbers"> The phone numbers that are available. Can be fewer than the desired search quantity. </param>
-        /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, or tollFree. </param>
+        /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, tollFree, mobile. </param>
         /// <param name="assignmentType"> Phone number's assignment type. </param>
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
@@ -42,7 +42,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Initializes a new instance of <see cref="PhoneNumberSearchResult"/>. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="phoneNumbers"> The phone numbers that are available. Can be fewer than the desired search quantity. </param>
-        /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, or tollFree. </param>
+        /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, tollFree, mobile. </param>
         /// <param name="assignmentType"> Phone number's assignment type. </param>
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
@@ -68,7 +68,7 @@ namespace Azure.Communication.PhoneNumbers
         public string SearchId { get; }
         /// <summary> The phone numbers that are available. Can be fewer than the desired search quantity. </summary>
         public IReadOnlyList<string> PhoneNumbers { get; }
-        /// <summary> The phone number's type, e.g. geographic, or tollFree. </summary>
+        /// <summary> The phone number's type, e.g. geographic, tollFree, mobile. </summary>
         public PhoneNumberType PhoneNumberType { get; }
         /// <summary> Phone number's assignment type. </summary>
         public PhoneNumberAssignmentType AssignmentType { get; }

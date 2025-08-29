@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Linq;
+using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.PostgreSql.Tests
@@ -35,7 +36,7 @@ namespace Azure.Provisioning.PostgreSql.Tests
                     }
                   }
                 }
-                """, bicep);
+                """.NormalizeLineEndings(), bicep.NormalizeLineEndings());
         }
     }
 }
