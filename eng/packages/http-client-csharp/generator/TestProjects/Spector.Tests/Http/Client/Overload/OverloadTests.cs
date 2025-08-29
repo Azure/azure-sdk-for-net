@@ -13,7 +13,7 @@ namespace TestProjects.Spector.Tests.Http.Client.Overload
         public Task Client_Overload_list() => Test(async (host) =>
         {
             var response = await new OverloadClient(host, null).GetAllAsync();
-            Assert.AreEqual(204, response.GetRawResponse().Status);
+            Assert.AreEqual(200, response.GetRawResponse().Status);
 
             var results = response.Value;
             Assert.AreEqual(2, results.Count);
@@ -27,7 +27,7 @@ namespace TestProjects.Spector.Tests.Http.Client.Overload
         public Task Client_Overload_listByScope() => Test(async (host) =>
         {
             var response = await new OverloadClient(host, null).GetAllAsync(scope: "car");
-            Assert.AreEqual(204, response.GetRawResponse().Status);
+            Assert.AreEqual(200, response.GetRawResponse().Status);
 
             var results = response.Value;
             Assert.AreEqual(1, results.Count);
