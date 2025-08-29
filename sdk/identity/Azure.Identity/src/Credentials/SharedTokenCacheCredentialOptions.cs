@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Identity.Credentials;
 using System;
 using System.ComponentModel;
 
@@ -12,7 +13,7 @@ namespace Azure.Identity
     /// </summary>
     [Obsolete("SharedTokenCacheCredential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public class SharedTokenCacheCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery
+    public class SharedTokenCacheCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsTenantId
     {
         private string _tenantId;
         private TokenCachePersistenceOptions _tokenCachePersistenceOptions;
