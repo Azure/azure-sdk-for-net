@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> Service Account Token for BrokerAuthentication. </summary>
-    internal partial class DataflowEndpointAuthenticationServiceAccountToken
+    public partial class DataflowEndpointAuthenticationServiceAccountToken
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

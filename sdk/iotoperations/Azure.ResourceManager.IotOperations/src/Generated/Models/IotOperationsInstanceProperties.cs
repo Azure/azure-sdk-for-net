@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             Argument.AssertNotNull(schemaRegistryRef, nameof(schemaRegistryRef));
 
             SchemaRegistryRef = schemaRegistryRef;
+            Features = new ChangeTrackingDictionary<string, IotOperationsInstanceFeature>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IotOperationsInstanceProperties"/>. </summary>
@@ -61,13 +62,19 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="version"> The Azure IoT Operations version. </param>
         /// <param name="schemaRegistryRef"> The reference to the Schema Registry for this AIO Instance. </param>
+        /// <param name="defaultSecretProviderClassRef"> The reference to the AIO Secret provider class. </param>
+        /// <param name="features"> The features of the AIO Instance. </param>
+        /// <param name="adrNamespaceRef"> The Azure Device Registry Namespace used by Assets, Discovered Assets and devices. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotOperationsInstanceProperties(string description, IotOperationsProvisioningState? provisioningState, string version, SchemaRegistryRef schemaRegistryRef, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IotOperationsInstanceProperties(string description, IotOperationsProvisioningState? provisioningState, string version, SchemaRegistryRef schemaRegistryRef, SecretProviderClassRef defaultSecretProviderClassRef, IDictionary<string, IotOperationsInstanceFeature> features, AzureDeviceRegistryNamespaceRef adrNamespaceRef, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             ProvisioningState = provisioningState;
             Version = version;
             SchemaRegistryRef = schemaRegistryRef;
+            DefaultSecretProviderClassRef = defaultSecretProviderClassRef;
+            Features = features;
+            AdrNamespaceRef = adrNamespaceRef;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -89,6 +96,26 @@ namespace Azure.ResourceManager.IotOperations.Models
         {
             get => SchemaRegistryRef is null ? default : SchemaRegistryRef.ResourceId;
             set => SchemaRegistryRef = new SchemaRegistryRef(value);
+        }
+
+        /// <summary> The reference to the AIO Secret provider class. </summary>
+        internal SecretProviderClassRef DefaultSecretProviderClassRef { get; set; }
+        /// <summary> The resource ID of the AIO Secret provider class. </summary>
+        public ResourceIdentifier DefaultSecretProviderClassRefResourceId
+        {
+            get => DefaultSecretProviderClassRef is null ? default : DefaultSecretProviderClassRef.ResourceId;
+            set => DefaultSecretProviderClassRef = new SecretProviderClassRef(value);
+        }
+
+        /// <summary> The features of the AIO Instance. </summary>
+        public IDictionary<string, IotOperationsInstanceFeature> Features { get; }
+        /// <summary> The Azure Device Registry Namespace used by Assets, Discovered Assets and devices. </summary>
+        internal AzureDeviceRegistryNamespaceRef AdrNamespaceRef { get; set; }
+        /// <summary> The resource ID of the Azure Device Registry Namespace. </summary>
+        public ResourceIdentifier AdrNamespaceRefResourceId
+        {
+            get => AdrNamespaceRef is null ? default : AdrNamespaceRef.ResourceId;
+            set => AdrNamespaceRef = new AzureDeviceRegistryNamespaceRef(value);
         }
     }
 }
