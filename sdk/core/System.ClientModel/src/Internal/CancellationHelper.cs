@@ -68,7 +68,7 @@ internal static class CancellationHelper
                 innerException,
                 timeoutToken,
                 $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. " +
-                    $"The default network timeout can be adjusted in the client options type via {nameof(ClientPipelineOptions)}.{nameof(ClientPipelineOptions.NetworkTimeout)}.");
+                    $"The default timeout can be adjusted by passing a custom {nameof(ClientPipelineOptions)}.{nameof(ClientPipelineOptions.NetworkTimeout)} value to the client's constructor. See https://aka.ms/net/scm/configure/networktimeout for more information.");
         }
     }
 }
