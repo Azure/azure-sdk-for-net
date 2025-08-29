@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
-    /// Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified.
+    /// Describes if the managed rule is in enabled or disabled state.
     /// Serialized Name: ManagedRuleEnabledState
     /// </summary>
     public readonly partial struct ManagedRuleSetupState : IEquatable<ManagedRuleSetupState>

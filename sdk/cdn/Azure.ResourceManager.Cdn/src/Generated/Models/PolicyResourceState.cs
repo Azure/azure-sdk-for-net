@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
-    /// Resource status of the policy.
+    /// The PolicyResourceState.
     /// Serialized Name: PolicyResourceState
     /// </summary>
     public readonly partial struct PolicyResourceState : IEquatable<PolicyResourceState>

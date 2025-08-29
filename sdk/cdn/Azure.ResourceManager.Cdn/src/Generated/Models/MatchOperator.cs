@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
-    /// Describes operator to be matched
+    /// Comparison type to use for matching with the variable value.
     /// Serialized Name: Operator
     /// </summary>
     public readonly partial struct MatchOperator : IEquatable<MatchOperator>

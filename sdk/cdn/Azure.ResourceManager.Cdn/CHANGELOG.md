@@ -3,12 +3,7 @@
 ## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for deployment version compare, this function will be preview only.
 
 ## 1.5.0 (2025-08-08)
 

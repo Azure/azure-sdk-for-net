@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string RequestIPAddressValue = "RequestIPAddress";
         private const string RequestUriValue = "RequestUri";
         private const string QueryStringArgNamesValue = "QueryStringArgNames";
+        private const string RequestHeaderNamesValue = "RequestHeaderNames";
+        private const string RequestCookieNamesValue = "RequestCookieNames";
+        private const string RequestBodyPostArgNamesValue = "RequestBodyPostArgNames";
+        private const string RequestBodyJsonArgNamesValue = "RequestBodyJsonArgNames";
 
         /// <summary>
         /// RequestIPAddress
@@ -44,6 +48,26 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Serialized Name: ScrubbingRuleEntryMatchVariable.QueryStringArgNames
         /// </summary>
         public static ScrubbingRuleEntryMatchVariable QueryStringArgNames { get; } = new ScrubbingRuleEntryMatchVariable(QueryStringArgNamesValue);
+        /// <summary>
+        /// RequestHeaderNames
+        /// Serialized Name: ScrubbingRuleEntryMatchVariable.RequestHeaderNames
+        /// </summary>
+        public static ScrubbingRuleEntryMatchVariable RequestHeaderNames { get; } = new ScrubbingRuleEntryMatchVariable(RequestHeaderNamesValue);
+        /// <summary>
+        /// RequestCookieNames
+        /// Serialized Name: ScrubbingRuleEntryMatchVariable.RequestCookieNames
+        /// </summary>
+        public static ScrubbingRuleEntryMatchVariable RequestCookieNames { get; } = new ScrubbingRuleEntryMatchVariable(RequestCookieNamesValue);
+        /// <summary>
+        /// RequestBodyPostArgNames
+        /// Serialized Name: ScrubbingRuleEntryMatchVariable.RequestBodyPostArgNames
+        /// </summary>
+        public static ScrubbingRuleEntryMatchVariable RequestBodyPostArgNames { get; } = new ScrubbingRuleEntryMatchVariable(RequestBodyPostArgNamesValue);
+        /// <summary>
+        /// RequestBodyJsonArgNames
+        /// Serialized Name: ScrubbingRuleEntryMatchVariable.RequestBodyJsonArgNames
+        /// </summary>
+        public static ScrubbingRuleEntryMatchVariable RequestBodyJsonArgNames { get; } = new ScrubbingRuleEntryMatchVariable(RequestBodyJsonArgNamesValue);
         /// <summary> Determines if two <see cref="ScrubbingRuleEntryMatchVariable"/> values are the same. </summary>
         public static bool operator ==(ScrubbingRuleEntryMatchVariable left, ScrubbingRuleEntryMatchVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScrubbingRuleEntryMatchVariable"/> values are not the same. </summary>

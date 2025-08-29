@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string BlockValue = "Block";
         private const string LogValue = "Log";
         private const string RedirectValue = "Redirect";
+        private const string AnomalyScoringValue = "AnomalyScoring";
+        private const string JSChallengeValue = "JSChallenge";
+        private const string CaptchaValue = "CAPTCHA";
 
         /// <summary>
         /// Allow
@@ -50,6 +53,21 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Serialized Name: ActionType.Redirect
         /// </summary>
         public static OverrideActionType Redirect { get; } = new OverrideActionType(RedirectValue);
+        /// <summary>
+        /// AnomalyScoring
+        /// Serialized Name: ActionType.AnomalyScoring
+        /// </summary>
+        public static OverrideActionType AnomalyScoring { get; } = new OverrideActionType(AnomalyScoringValue);
+        /// <summary>
+        /// JSChallenge
+        /// Serialized Name: ActionType.JSChallenge
+        /// </summary>
+        public static OverrideActionType JSChallenge { get; } = new OverrideActionType(JSChallengeValue);
+        /// <summary>
+        /// CAPTCHA
+        /// Serialized Name: ActionType.CAPTCHA
+        /// </summary>
+        public static OverrideActionType Captcha { get; } = new OverrideActionType(CaptchaValue);
         /// <summary> Determines if two <see cref="OverrideActionType"/> values are the same. </summary>
         public static bool operator ==(OverrideActionType left, OverrideActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OverrideActionType"/> values are not the same. </summary>

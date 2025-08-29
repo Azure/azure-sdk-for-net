@@ -74,19 +74,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'
         /// Serialized Name: AFDOriginGroupUpdateParameters.properties.sessionAffinityState
         /// </param>
-        /// <param name="authentication">
-        /// Authentication settings for origin in origin group.
-        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.authentication
-        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorOriginGroupPatch(string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState, OriginAuthenticationProperties authentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FrontDoorOriginGroupPatch(string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProfileName = profileName;
             LoadBalancingSettings = loadBalancingSettings;
             HealthProbeSettings = healthProbeSettings;
             TrafficRestorationTimeInMinutes = trafficRestorationTimeInMinutes;
             SessionAffinityState = sessionAffinityState;
-            Authentication = authentication;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -115,10 +110,5 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Serialized Name: AFDOriginGroupUpdateParameters.properties.sessionAffinityState
         /// </summary>
         public EnabledState? SessionAffinityState { get; set; }
-        /// <summary>
-        /// Authentication settings for origin in origin group.
-        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.authentication
-        /// </summary>
-        public OriginAuthenticationProperties Authentication { get; set; }
     }
 }
