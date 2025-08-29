@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterDataEncryption"/>. </summary>
         /// <param name="primaryKeyUri"> URI for the key in keyvault for data encryption of the primary server. </param>
         /// <param name="primaryUserAssignedIdentityId"> Resource Id for the User assigned identity to be used for data encryption of the primary server. </param>
-        /// <param name="dataEncryptionType"></param>
+        /// <param name="encryptionType"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlClusterDataEncryption(Uri primaryKeyUri, string primaryUserAssignedIdentityId, DataEncryptionType? dataEncryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBForPostgreSqlClusterDataEncryption(Uri primaryKeyUri, string primaryUserAssignedIdentityId, CosmosDBForPostgreSqlClusterDataEncryptionType? encryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryKeyUri = primaryKeyUri;
             PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
-            DataEncryptionType = dataEncryptionType;
+            EncryptionType = encryptionType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         public Uri PrimaryKeyUri { get; set; }
         /// <summary> Resource Id for the User assigned identity to be used for data encryption of the primary server. </summary>
         public string PrimaryUserAssignedIdentityId { get; set; }
-        /// <summary> Gets or sets the data encryption type. </summary>
-        public DataEncryptionType? DataEncryptionType { get; set; }
+        /// <summary> Gets or sets the encryption type. </summary>
+        public CosmosDBForPostgreSqlClusterDataEncryptionType? EncryptionType { get; set; }
     }
 }

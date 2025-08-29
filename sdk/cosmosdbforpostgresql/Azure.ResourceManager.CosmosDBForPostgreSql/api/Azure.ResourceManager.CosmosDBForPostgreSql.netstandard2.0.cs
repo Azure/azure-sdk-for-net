@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public string DatabaseName { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterDataEncryption DataEncryption { get { throw null; } set { } }
         public System.DateTimeOffset? EarliestRestoreOn { get { throw null; } }
-        public bool? EnableGeoBackup { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDBForPostgreSql.Models.IsAadEnabledForCosmosDBForPostgreSqlCluster? IsAadEnabled { get { throw null; } }
         public bool? IsCoordinatorPublicIPAccessEnabled { get { throw null; } set { } }
+        public bool? IsGeoBackupEnabled { get { throw null; } set { } }
         public bool? IsHAEnabled { get { throw null; } set { } }
         public bool? IsNodePublicIPAccessEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDBForPostgreSql.Models.IsPasswordEnabledForCosmosDBForPostgreSqlCluster? IsPasswordEnabled { get { throw null; } }
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public virtual Azure.Response<Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlRoleResource> GetCosmosDBForPostgreSqlRole(string roleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlRoleResource>> GetCosmosDBForPostgreSqlRoleAsync(string roleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlRoleCollection GetCosmosDBForPostgreSqlRoles() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation PromoteReadReplica(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDBForPostgreSql.Models.PromoteContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation PromoteReadReplica(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDBForPostgreSql.Models.GeoRedundantReplicaPromoteContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation PromoteReadReplica(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PromoteReadReplicaAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDBForPostgreSql.Models.PromoteContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PromoteReadReplicaAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CosmosDBForPostgreSql.Models.GeoRedundantReplicaPromoteContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PromoteReadReplicaAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -471,9 +471,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public CosmosDBForPostgreSqlRoleData(string password) { }
         public Azure.Core.ResourceIdentifier ObjectId { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
-        public Azure.ResourceManager.CosmosDBForPostgreSql.Models.PrincipalType? PrincipalType { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRolePrincipalType? PrincipalType { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.CosmosDBForPostgreSql.Models.RoleType? RoleType { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRoleType? RoleType { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlRoleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlRoleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -553,27 +553,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
 }
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ActiveDirectoryAuth : System.IEquatable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.ActiveDirectoryAuth>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ActiveDirectoryAuth(string value) { throw null; }
-        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.ActiveDirectoryAuth Disabled { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.ActiveDirectoryAuth Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.ActiveDirectoryAuth other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.ActiveDirectoryAuth left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.ActiveDirectoryAuth right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.ActiveDirectoryAuth (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CosmosDBForPostgreSql.Models.ActiveDirectoryAuth left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.ActiveDirectoryAuth right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public static partial class ArmCosmosDBForPostgreSqlModelFactory
     {
-        public static Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterData CosmosDBForPostgreSqlClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentity identity = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.IsAadEnabledForCosmosDBForPostgreSqlCluster? isAadEnabled = default(Azure.ResourceManager.CosmosDBForPostgreSql.Models.IsAadEnabledForCosmosDBForPostgreSqlCluster?), string administratorLogin = null, string administratorLoginPassword = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterDataEncryption dataEncryption = null, string provisioningState = null, string state = null, string postgresqlVersion = null, string citusVersion = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow = null, string preferredPrimaryZone = null, bool? isShardsOnCoordinatorEnabled = default(bool?), bool? isHAEnabled = default(bool?), string coordinatorServerEdition = null, int? coordinatorStorageQuotaInMb = default(int?), int? coordinatorVCores = default(int?), bool? isCoordinatorPublicIPAccessEnabled = default(bool?), string nodeServerEdition = null, int? nodeCount = default(int?), int? nodeStorageQuotaInMb = default(int?), int? nodeVCores = default(int?), bool? isNodePublicIPAccessEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlServerNameItem> serverNames = null, Azure.Core.ResourceIdentifier sourceResourceId = null, Azure.Core.AzureLocation? sourceLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.CosmosDBForPostgreSql.Models.IsPasswordEnabledForCosmosDBForPostgreSqlCluster? isPasswordEnabled = default(Azure.ResourceManager.CosmosDBForPostgreSql.Models.IsPasswordEnabledForCosmosDBForPostgreSqlCluster?), System.DateTimeOffset? pointInTimeUTC = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> readReplicas = null, System.DateTimeOffset? earliestRestoreOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections = null, string databaseName = null, bool? enableGeoBackup = default(bool?), Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterAuthConfig authConfig = null) { throw null; }
+        public static Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterData CosmosDBForPostgreSqlClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentity identity = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.IsAadEnabledForCosmosDBForPostgreSqlCluster? isAadEnabled = default(Azure.ResourceManager.CosmosDBForPostgreSql.Models.IsAadEnabledForCosmosDBForPostgreSqlCluster?), string administratorLogin = null, string administratorLoginPassword = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterDataEncryption dataEncryption = null, string provisioningState = null, string state = null, string postgresqlVersion = null, string citusVersion = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow = null, string preferredPrimaryZone = null, bool? isShardsOnCoordinatorEnabled = default(bool?), bool? isHAEnabled = default(bool?), string coordinatorServerEdition = null, int? coordinatorStorageQuotaInMb = default(int?), int? coordinatorVCores = default(int?), bool? isCoordinatorPublicIPAccessEnabled = default(bool?), string nodeServerEdition = null, int? nodeCount = default(int?), int? nodeStorageQuotaInMb = default(int?), int? nodeVCores = default(int?), bool? isNodePublicIPAccessEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlServerNameItem> serverNames = null, Azure.Core.ResourceIdentifier sourceResourceId = null, Azure.Core.AzureLocation? sourceLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.CosmosDBForPostgreSql.Models.IsPasswordEnabledForCosmosDBForPostgreSqlCluster? isPasswordEnabled = default(Azure.ResourceManager.CosmosDBForPostgreSql.Models.IsPasswordEnabledForCosmosDBForPostgreSqlCluster?), System.DateTimeOffset? pointInTimeUTC = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> readReplicas = null, System.DateTimeOffset? earliestRestoreOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections = null, string databaseName = null, bool? isGeoBackupEnabled = default(bool?), Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterAuthConfig authConfig = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterData CosmosDBForPostgreSqlClusterData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string administratorLogin, string administratorLoginPassword, string provisioningState, string state, string postgresqlVersion, string citusVersion, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, string preferredPrimaryZone, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlServerNameItem> serverNames, Azure.Core.ResourceIdentifier sourceResourceId, Azure.Core.AzureLocation? sourceLocation, System.DateTimeOffset? pointInTimeUTC, System.Collections.Generic.IEnumerable<string> readReplicas, System.DateTimeOffset? earliestRestoreOn, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections) { throw null; }
         public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterNameAvailabilityContent CosmosDBForPostgreSqlClusterNameAvailabilityContent(string name = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlNameAvailabilityResourceType resourceType = default(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlNameAvailabilityResourceType)) { throw null; }
@@ -584,7 +566,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         public static Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlFirewallRuleData CosmosDBForPostgreSqlFirewallRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Net.IPAddress startIPAddress = null, System.Net.IPAddress endIPAddress = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlProvisioningState? provisioningState = default(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlPrivateEndpointConnectionData CosmosDBForPostgreSqlPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlPrivateLinkResourceData CosmosDBForPostgreSqlPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
-        public static Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlRoleData CosmosDBForPostgreSqlRoleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.RoleType? roleType = default(Azure.ResourceManager.CosmosDBForPostgreSql.Models.RoleType?), string password = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlProvisioningState? provisioningState = default(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlProvisioningState?), Azure.Core.ResourceIdentifier objectId = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.PrincipalType? principalType = default(Azure.ResourceManager.CosmosDBForPostgreSql.Models.PrincipalType?), System.Guid? tenantId = default(System.Guid?)) { throw null; }
+        public static Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlRoleData CosmosDBForPostgreSqlRoleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRoleType? roleType = default(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRoleType?), string password = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlProvisioningState? provisioningState = default(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlProvisioningState?), Azure.Core.ResourceIdentifier objectId = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRolePrincipalType? principalType = default(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRolePrincipalType?), System.Guid? tenantId = default(System.Guid?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlRoleData CosmosDBForPostgreSqlRoleData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string password, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlServerConfigurationData CosmosDBForPostgreSqlServerConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string value = null, string source = null, string description = null, string defaultValue = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlConfigurationDataType? dataType = default(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlConfigurationDataType?), string allowedValues = null, bool? isRestartRequired = default(bool?), Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlProvisioningState? provisioningState = default(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlProvisioningState?)) { throw null; }
@@ -592,11 +574,29 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlServerRoleGroupConfiguration CosmosDBForPostgreSqlServerRoleGroupConfiguration(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlServerRole role = default(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlServerRole), string value = null, string defaultValue = null, string source = null) { throw null; }
         public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlSimplePrivateEndpointConnection CosmosDBForPostgreSqlSimplePrivateEndpointConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CosmosDBForPostgreSqlClusterActiveDirectoryAuth : System.IEquatable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterActiveDirectoryAuth>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CosmosDBForPostgreSqlClusterActiveDirectoryAuth(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterActiveDirectoryAuth Disabled { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterActiveDirectoryAuth Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterActiveDirectoryAuth other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterActiveDirectoryAuth left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterActiveDirectoryAuth right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterActiveDirectoryAuth (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterActiveDirectoryAuth left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterActiveDirectoryAuth right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class CosmosDBForPostgreSqlClusterAuthConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterAuthConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterAuthConfig>
     {
         public CosmosDBForPostgreSqlClusterAuthConfig() { }
-        public Azure.ResourceManager.CosmosDBForPostgreSql.Models.ActiveDirectoryAuth? ActiveDirectoryAuth { get { throw null; } set { } }
-        public Azure.ResourceManager.CosmosDBForPostgreSql.Models.PasswordAuth? PasswordAuth { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterActiveDirectoryAuth? ActiveDirectoryAuth { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterPasswordAuth? PasswordAuth { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterAuthConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterAuthConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterAuthConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     public partial class CosmosDBForPostgreSqlClusterDataEncryption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterDataEncryption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterDataEncryption>
     {
         public CosmosDBForPostgreSqlClusterDataEncryption() { }
-        public Azure.ResourceManager.CosmosDBForPostgreSql.Models.DataEncryptionType? DataEncryptionType { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterDataEncryptionType? EncryptionType { get { throw null; } set { } }
         public System.Uri PrimaryKeyUri { get { throw null; } set { } }
         public string PrimaryUserAssignedIdentityId { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -617,10 +617,28 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterDataEncryption>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterDataEncryption>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CosmosDBForPostgreSqlClusterDataEncryptionType : System.IEquatable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterDataEncryptionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CosmosDBForPostgreSqlClusterDataEncryptionType(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterDataEncryptionType AzureKeyVault { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterDataEncryptionType SystemAssigned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterDataEncryptionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterDataEncryptionType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterDataEncryptionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterDataEncryptionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterDataEncryptionType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterDataEncryptionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class CosmosDBForPostgreSqlClusterIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentity>
     {
         public CosmosDBForPostgreSqlClusterIdentity() { }
-        public Azure.ResourceManager.CosmosDBForPostgreSql.Models.IdentityType? IdentityType { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentityType? IdentityType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -628,6 +646,24 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CosmosDBForPostgreSqlClusterIdentityType : System.IEquatable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CosmosDBForPostgreSqlClusterIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentityType SystemAssigned { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentityType UserAssigned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentityType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentityType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CosmosDBForPostgreSqlClusterNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterNameAvailabilityContent>
     {
@@ -654,6 +690,24 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CosmosDBForPostgreSqlClusterPasswordAuth : System.IEquatable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterPasswordAuth>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CosmosDBForPostgreSqlClusterPasswordAuth(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterPasswordAuth Disabled { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterPasswordAuth Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterPasswordAuth other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterPasswordAuth left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterPasswordAuth right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterPasswordAuth (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterPasswordAuth left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterPasswordAuth right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CosmosDBForPostgreSqlClusterPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterPatch>
     {
@@ -682,6 +736,43 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CosmosDBForPostgreSqlClusterRolePrincipalType : System.IEquatable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRolePrincipalType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CosmosDBForPostgreSqlClusterRolePrincipalType(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRolePrincipalType Group { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRolePrincipalType ServicePrincipal { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRolePrincipalType User { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRolePrincipalType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRolePrincipalType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRolePrincipalType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRolePrincipalType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRolePrincipalType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRolePrincipalType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CosmosDBForPostgreSqlClusterRoleType : System.IEquatable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRoleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CosmosDBForPostgreSqlClusterRoleType(string value) { throw null; }
+        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRoleType Admin { get { throw null; } }
+        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRoleType User { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRoleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRoleType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRoleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRoleType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRoleType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterRoleType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CosmosDBForPostgreSqlConfigurationDataType : System.IEquatable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlConfigurationDataType>
@@ -863,41 +954,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlSimplePrivateEndpointConnection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlSimplePrivateEndpointConnection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DataEncryptionType : System.IEquatable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.DataEncryptionType>
+    public partial class GeoRedundantReplicaPromoteContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.GeoRedundantReplicaPromoteContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.GeoRedundantReplicaPromoteContent>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DataEncryptionType(string value) { throw null; }
-        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.DataEncryptionType AzureKeyVault { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.DataEncryptionType SystemAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.DataEncryptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.DataEncryptionType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.DataEncryptionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.DataEncryptionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CosmosDBForPostgreSql.Models.DataEncryptionType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.DataEncryptionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IdentityType : System.IEquatable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.IdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.IdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.IdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.IdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.IdentityType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.IdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.IdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CosmosDBForPostgreSql.Models.IdentityType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.IdentityType right) { throw null; }
-        public override string ToString() { throw null; }
+        public GeoRedundantReplicaPromoteContent() { }
+        public bool? IsGeoBackupEnabled { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDBForPostgreSql.Models.GeoRedundantReplicaPromoteContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.GeoRedundantReplicaPromoteContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.GeoRedundantReplicaPromoteContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CosmosDBForPostgreSql.Models.GeoRedundantReplicaPromoteContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.GeoRedundantReplicaPromoteContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.GeoRedundantReplicaPromoteContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.GeoRedundantReplicaPromoteContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IsAadEnabledForCosmosDBForPostgreSqlCluster : System.IEquatable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.IsAadEnabledForCosmosDBForPostgreSqlCluster>
@@ -933,72 +999,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.IsPasswordEnabledForCosmosDBForPostgreSqlCluster left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.IsPasswordEnabledForCosmosDBForPostgreSqlCluster right) { throw null; }
         public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.IsPasswordEnabledForCosmosDBForPostgreSqlCluster (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CosmosDBForPostgreSql.Models.IsPasswordEnabledForCosmosDBForPostgreSqlCluster left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.IsPasswordEnabledForCosmosDBForPostgreSqlCluster right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PasswordAuth : System.IEquatable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.PasswordAuth>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PasswordAuth(string value) { throw null; }
-        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.PasswordAuth Disabled { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.PasswordAuth Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.PasswordAuth other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.PasswordAuth left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.PasswordAuth right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.PasswordAuth (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CosmosDBForPostgreSql.Models.PasswordAuth left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.PasswordAuth right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PrincipalType : System.IEquatable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.PrincipalType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PrincipalType(string value) { throw null; }
-        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.PrincipalType Group { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.PrincipalType ServicePrincipal { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.PrincipalType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.PrincipalType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.PrincipalType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.PrincipalType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.PrincipalType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CosmosDBForPostgreSql.Models.PrincipalType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.PrincipalType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class PromoteContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.PromoteContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.PromoteContent>
-    {
-        public PromoteContent() { }
-        public bool? EnableGeoBackup { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CosmosDBForPostgreSql.Models.PromoteContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.PromoteContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.PromoteContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CosmosDBForPostgreSql.Models.PromoteContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.PromoteContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.PromoteContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.Models.PromoteContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RoleType : System.IEquatable<Azure.ResourceManager.CosmosDBForPostgreSql.Models.RoleType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RoleType(string value) { throw null; }
-        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.RoleType Admin { get { throw null; } }
-        public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.RoleType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.RoleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.RoleType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.RoleType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.RoleType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CosmosDBForPostgreSql.Models.RoleType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.RoleType right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

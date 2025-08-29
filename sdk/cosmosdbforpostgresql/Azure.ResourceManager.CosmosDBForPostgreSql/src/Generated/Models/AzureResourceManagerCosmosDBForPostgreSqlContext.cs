@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlServerNameItem))]
     [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlServerRoleGroupConfiguration))]
     [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlSimplePrivateEndpointConnection))]
-    [ModelReaderWriterBuildable(typeof(PromoteContent))]
+    [ModelReaderWriterBuildable(typeof(GeoRedundantReplicaPromoteContent))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

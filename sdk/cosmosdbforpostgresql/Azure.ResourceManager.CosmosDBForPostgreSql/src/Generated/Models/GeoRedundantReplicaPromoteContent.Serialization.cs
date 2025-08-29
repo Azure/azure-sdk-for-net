@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    public partial class PromoteContent : IUtf8JsonSerializable, IJsonModel<PromoteContent>
+    public partial class GeoRedundantReplicaPromoteContent : IUtf8JsonSerializable, IJsonModel<GeoRedundantReplicaPromoteContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PromoteContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GeoRedundantReplicaPromoteContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PromoteContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GeoRedundantReplicaPromoteContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PromoteContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GeoRedundantReplicaPromoteContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PromoteContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GeoRedundantReplicaPromoteContent)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(EnableGeoBackup))
+            if (Optional.IsDefined(IsGeoBackupEnabled))
             {
                 writer.WritePropertyName("enableGeoBackup"u8);
-                writer.WriteBooleanValue(EnableGeoBackup.Value);
+                writer.WriteBooleanValue(IsGeoBackupEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
         }
 
-        PromoteContent IJsonModel<PromoteContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        GeoRedundantReplicaPromoteContent IJsonModel<GeoRedundantReplicaPromoteContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PromoteContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GeoRedundantReplicaPromoteContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PromoteContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GeoRedundantReplicaPromoteContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePromoteContent(document.RootElement, options);
+            return DeserializeGeoRedundantReplicaPromoteContent(document.RootElement, options);
         }
 
-        internal static PromoteContent DeserializePromoteContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static GeoRedundantReplicaPromoteContent DeserializeGeoRedundantReplicaPromoteContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,38 +96,38 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PromoteContent(enableGeoBackup, serializedAdditionalRawData);
+            return new GeoRedundantReplicaPromoteContent(enableGeoBackup, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PromoteContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<GeoRedundantReplicaPromoteContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PromoteContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GeoRedundantReplicaPromoteContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PromoteContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GeoRedundantReplicaPromoteContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PromoteContent IPersistableModel<PromoteContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        GeoRedundantReplicaPromoteContent IPersistableModel<GeoRedundantReplicaPromoteContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PromoteContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GeoRedundantReplicaPromoteContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePromoteContent(document.RootElement, options);
+                        return DeserializeGeoRedundantReplicaPromoteContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PromoteContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GeoRedundantReplicaPromoteContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PromoteContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GeoRedundantReplicaPromoteContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

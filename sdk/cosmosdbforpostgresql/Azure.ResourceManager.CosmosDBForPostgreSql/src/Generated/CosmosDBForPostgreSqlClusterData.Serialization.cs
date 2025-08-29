@@ -210,10 +210,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsDefined(EnableGeoBackup))
+            if (Optional.IsDefined(IsGeoBackupEnabled))
             {
                 writer.WritePropertyName("enableGeoBackup"u8);
-                writer.WriteBooleanValue(EnableGeoBackup.Value);
+                writer.WriteBooleanValue(IsGeoBackupEnabled.Value);
             }
             if (Optional.IsDefined(AuthConfig))
             {

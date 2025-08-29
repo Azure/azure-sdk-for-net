@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="principalType"></param>
         /// <param name="tenantId"> A type definition that refers the id to an Azure Resource Manager resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleType? roleType, string password, CosmosDBForPostgreSqlProvisioningState? provisioningState, ResourceIdentifier objectId, PrincipalType? principalType, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CosmosDBForPostgreSqlRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CosmosDBForPostgreSqlClusterRoleType? roleType, string password, CosmosDBForPostgreSqlProvisioningState? provisioningState, ResourceIdentifier objectId, CosmosDBForPostgreSqlClusterRolePrincipalType? principalType, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RoleType = roleType;
             Password = password;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         }
 
         /// <summary> Gets or sets the role type. </summary>
-        public RoleType? RoleType { get; set; }
+        public CosmosDBForPostgreSqlClusterRoleType? RoleType { get; set; }
         /// <summary> The password of the cluster role. If an identity is used, password will not be required. </summary>
         public string Password { get; set; }
         /// <summary> Provisioning state of the role. </summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> A type definition that refers the id to an Azure Resource Manager resource. </summary>
         public ResourceIdentifier ObjectId { get; set; }
         /// <summary> Gets or sets the principal type. </summary>
-        public PrincipalType? PrincipalType { get; set; }
+        public CosmosDBForPostgreSqlClusterRolePrincipalType? PrincipalType { get; set; }
         /// <summary> A type definition that refers the id to an Azure Resource Manager resource. </summary>
         public Guid? TenantId { get; set; }
     }

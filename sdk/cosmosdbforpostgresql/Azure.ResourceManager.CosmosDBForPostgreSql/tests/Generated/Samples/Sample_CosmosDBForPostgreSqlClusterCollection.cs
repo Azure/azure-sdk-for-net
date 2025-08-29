@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             {
                 Identity = new CosmosDBForPostgreSqlClusterIdentity
                 {
-                    IdentityType = IdentityType.UserAssigned,
+                    IdentityType = CosmosDBForPostgreSqlClusterIdentityType.UserAssigned,
                     UserAssignedIdentities =
 {
 ["/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-usermanagedidentity"] = new UserAssignedIdentity()
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
                 {
                     PrimaryKeyUri = new Uri("https://test-kv.vault.azure.net/keys/test-key1/fffffffffffffffffffffffffffffff"),
                     PrimaryUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-usermanagedidentity",
-                    DataEncryptionType = DataEncryptionType.AzureKeyVault,
+                    EncryptionType = CosmosDBForPostgreSqlClusterDataEncryptionType.AzureKeyVault,
                 },
                 PostgresqlVersion = "15",
                 CitusVersion = "12.1",
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             {
                 Identity = new CosmosDBForPostgreSqlClusterIdentity
                 {
-                    IdentityType = IdentityType.UserAssigned,
+                    IdentityType = CosmosDBForPostgreSqlClusterIdentityType.UserAssigned,
                     UserAssignedIdentities =
 {
 ["/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-usermanagedidentity"] = new UserAssignedIdentity()
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
                 {
                     PrimaryKeyUri = new Uri("https://test-kv.vault.azure.net/keys/test-key1/fffffffffffffffffffffffffffffff"),
                     PrimaryUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-usermanagedidentity",
-                    DataEncryptionType = DataEncryptionType.AzureKeyVault,
+                    EncryptionType = CosmosDBForPostgreSqlClusterDataEncryptionType.AzureKeyVault,
                 },
                 PostgresqlVersion = "15",
                 CitusVersion = "12.1",

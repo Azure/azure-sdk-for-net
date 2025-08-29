@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="activeDirectoryAuth"></param>
         /// <param name="passwordAuth"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlClusterAuthConfig(ActiveDirectoryAuth? activeDirectoryAuth, PasswordAuth? passwordAuth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBForPostgreSqlClusterAuthConfig(CosmosDBForPostgreSqlClusterActiveDirectoryAuth? activeDirectoryAuth, CosmosDBForPostgreSqlClusterPasswordAuth? passwordAuth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActiveDirectoryAuth = activeDirectoryAuth;
             PasswordAuth = passwordAuth;
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         }
 
         /// <summary> Gets or sets the active directory auth. </summary>
-        public ActiveDirectoryAuth? ActiveDirectoryAuth { get; set; }
+        public CosmosDBForPostgreSqlClusterActiveDirectoryAuth? ActiveDirectoryAuth { get; set; }
         /// <summary> Gets or sets the password auth. </summary>
-        public PasswordAuth? PasswordAuth { get; set; }
+        public CosmosDBForPostgreSqlClusterPasswordAuth? PasswordAuth { get; set; }
     }
 }

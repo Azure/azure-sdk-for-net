@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     /// <summary> Request from client to promote geo-redundant replica. </summary>
-    public partial class PromoteContent
+    public partial class GeoRedundantReplicaPromoteContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PromoteContent"/>. </summary>
-        public PromoteContent()
+        /// <summary> Initializes a new instance of <see cref="GeoRedundantReplicaPromoteContent"/>. </summary>
+        public GeoRedundantReplicaPromoteContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PromoteContent"/>. </summary>
-        /// <param name="enableGeoBackup"> Boolean property to enable geo-redundant replica promotion. </param>
+        /// <summary> Initializes a new instance of <see cref="GeoRedundantReplicaPromoteContent"/>. </summary>
+        /// <param name="isGeoBackupEnabled"> Boolean property to enable geo-redundant replica promotion. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PromoteContent(bool? enableGeoBackup, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GeoRedundantReplicaPromoteContent(bool? isGeoBackupEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            EnableGeoBackup = enableGeoBackup;
+            IsGeoBackupEnabled = isGeoBackupEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Boolean property to enable geo-redundant replica promotion. </summary>
-        public bool? EnableGeoBackup { get; set; }
+        public bool? IsGeoBackupEnabled { get; set; }
     }
 }

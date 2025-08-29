@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            RoleType? roleType = default;
+            CosmosDBForPostgreSqlClusterRoleType? roleType = default;
             string password = default;
             CosmosDBForPostgreSqlProvisioningState? provisioningState = default;
             ResourceIdentifier objectId = default;
-            PrincipalType? principalType = default;
+            CosmosDBForPostgreSqlClusterRolePrincipalType? principalType = default;
             Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             {
                                 continue;
                             }
-                            roleType = new RoleType(property0.Value.GetString());
+                            roleType = new CosmosDBForPostgreSqlClusterRoleType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                                     {
                                         continue;
                                     }
-                                    principalType = new PrincipalType(property1.Value.GetString());
+                                    principalType = new CosmosDBForPostgreSqlClusterRolePrincipalType(property1.Value.GetString());
                                     continue;
                                 }
                                 if (property1.NameEquals("tenantId"u8))

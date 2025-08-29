@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            IdentityType? type = default;
+            CosmosDBForPostgreSqlClusterIdentityType? type = default;
             IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     {
                         continue;
                     }
-                    type = new IdentityType(property.Value.GetString());
+                    type = new CosmosDBForPostgreSqlClusterIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"u8))

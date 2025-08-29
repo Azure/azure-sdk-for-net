@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             }
         }
 
-        internal RequestUriBuilder CreatePromoteReadReplicaRequestUri(string subscriptionId, string resourceGroupName, string clusterName, PromoteContent content)
+        internal RequestUriBuilder CreatePromoteReadReplicaRequestUri(string subscriptionId, string resourceGroupName, string clusterName, GeoRedundantReplicaPromoteContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             return uri;
         }
 
-        internal HttpMessage CreatePromoteReadReplicaRequest(string subscriptionId, string resourceGroupName, string clusterName, PromoteContent content)
+        internal HttpMessage CreatePromoteReadReplicaRequest(string subscriptionId, string resourceGroupName, string clusterName, GeoRedundantReplicaPromoteContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PromoteReadReplicaAsync(string subscriptionId, string resourceGroupName, string clusterName, PromoteContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response> PromoteReadReplicaAsync(string subscriptionId, string resourceGroupName, string clusterName, GeoRedundantReplicaPromoteContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response PromoteReadReplica(string subscriptionId, string resourceGroupName, string clusterName, PromoteContent content = null, CancellationToken cancellationToken = default)
+        public Response PromoteReadReplica(string subscriptionId, string resourceGroupName, string clusterName, GeoRedundantReplicaPromoteContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

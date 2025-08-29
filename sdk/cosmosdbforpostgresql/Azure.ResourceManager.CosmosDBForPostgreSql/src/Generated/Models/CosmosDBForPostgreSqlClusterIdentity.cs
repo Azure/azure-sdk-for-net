@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="identityType"></param>
         /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlClusterIdentity(IdentityType? identityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBForPostgreSqlClusterIdentity(CosmosDBForPostgreSqlClusterIdentityType? identityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdentityType = identityType;
             UserAssignedIdentities = userAssignedIdentities;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         }
 
         /// <summary> Gets or sets the identity type. </summary>
-        public IdentityType? IdentityType { get; set; }
+        public CosmosDBForPostgreSqlClusterIdentityType? IdentityType { get; set; }
         /// <summary> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </summary>
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }

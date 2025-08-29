@@ -62,6 +62,7 @@ rename-mapping:
   Cluster.properties.coordinatorEnablePublicIpAccess: IsCoordinatorPublicIPAccessEnabled
   Cluster.properties.nodeEnablePublicIpAccess: IsNodePublicIPAccessEnabled
   Cluster.properties.aadAuthEnabled: IsAadEnabled
+  Cluster.properties.enableGeoBackup: IsGeoBackupEnabled
   AadEnabledEnum: IsAadEnabledForCosmosDBForPostgreSqlCluster
   Cluster.properties.passwordEnabled: IsPasswordEnabled
   PasswordEnabledEnum: IsPasswordEnabledForCosmosDBForPostgreSqlCluster
@@ -81,6 +82,14 @@ rename-mapping:
   NameAvailability.type: -|resource-type
   NameAvailabilityRequest: CosmosDBForPostgreSqlClusterNameAvailabilityContent
   ServerConfiguration.properties.requiresRestart: IsRestartRequired
+  PrincipalType: CosmosDBForPostgreSqlClusterRolePrincipalType
+  RoleType: CosmosDBForPostgreSqlClusterRoleType
+  ActiveDirectoryAuth: CosmosDBForPostgreSqlClusterActiveDirectoryAuth
+  PasswordAuth: CosmosDBForPostgreSqlClusterPasswordAuth
+  DataEncryptionType: CosmosDBForPostgreSqlClusterDataEncryptionType
+  IdentityType: CosmosDBForPostgreSqlClusterIdentityType
+  PromoteRequest.enableGeoBackup: IsGeoBackupEnabled
+  PromoteRequest: GeoRedundantReplicaPromoteContent
 
 prepend-rp-prefix:
 - Cluster
