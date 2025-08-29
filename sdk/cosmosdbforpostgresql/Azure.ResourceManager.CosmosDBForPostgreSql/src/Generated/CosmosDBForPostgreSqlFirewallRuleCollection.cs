@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -265,7 +265,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public virtual AsyncPageable<CosmosDBForPostgreSqlFirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBForPostgreSqlFirewallRuleResource(Client, CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(e)), _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CosmosDBForPostgreSqlFirewallRuleResource(Client, CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(e)), _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -281,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -294,7 +295,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public virtual Pageable<CosmosDBForPostgreSqlFirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBForPostgreSqlFirewallRuleResource(Client, CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(e)), _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CosmosDBForPostgreSqlFirewallRuleResource(Client, CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(e)), _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -310,7 +312,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -353,7 +355,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -396,7 +398,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -441,7 +443,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

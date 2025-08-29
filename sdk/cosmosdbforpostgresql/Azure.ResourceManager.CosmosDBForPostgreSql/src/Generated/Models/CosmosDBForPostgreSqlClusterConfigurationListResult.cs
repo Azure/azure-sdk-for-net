@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    /// <summary> A list of cluster configurations. </summary>
+    /// <summary> Pagination result of configurations. </summary>
     internal partial class CosmosDBForPostgreSqlClusterConfigurationListResult
     {
         /// <summary>
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterConfigurationListResult"/>. </summary>
-        /// <param name="value"> The list of cluster configurations. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        /// <param name="value"> The list of configurations. </param>
+        /// <param name="nextLink"> The link to the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CosmosDBForPostgreSqlClusterConfigurationListResult(IReadOnlyList<CosmosDBForPostgreSqlConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of cluster configurations. </summary>
+        /// <summary> The list of configurations. </summary>
         public IReadOnlyList<CosmosDBForPostgreSqlConfigurationData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary> The link to the next page of results. </summary>
         public string NextLink { get; }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    /// <summary> Resource type used for verification. </summary>
+    /// <summary> Resource type used for name availability verification. </summary>
     public readonly partial struct CosmosDBForPostgreSqlNameAvailabilityResourceType : IEquatable<CosmosDBForPostgreSqlNameAvailabilityResourceType>
     {
         private readonly string _value;
