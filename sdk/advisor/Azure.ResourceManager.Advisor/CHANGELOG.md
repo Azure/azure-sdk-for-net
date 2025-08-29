@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Updated api version to `2025-05-01-preview`.
+
 ## 1.0.0-beta.5 (2025-03-11)
 
 ### Features Added

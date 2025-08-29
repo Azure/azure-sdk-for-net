@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Advisor
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _metadataEntityRecommendationMetadataClientDiagnostics;
-        private readonly RecommendationMetadataRestOperations _metadataEntityRecommendationMetadataRestClient;
+        private readonly ClientDiagnostics _metadataEntityClientDiagnostics;
+        private readonly MetadataEntitiesRestOperations _metadataEntityRestClient;
         private readonly MetadataEntityData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -57,9 +57,9 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MetadataEntityResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _metadataEntityRecommendationMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string metadataEntityRecommendationMetadataApiVersion);
-            _metadataEntityRecommendationMetadataRestClient = new RecommendationMetadataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, metadataEntityRecommendationMetadataApiVersion);
+            _metadataEntityClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string metadataEntityApiVersion);
+            _metadataEntityRestClient = new MetadataEntitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, metadataEntityApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RecommendationMetadata_Get</description>
+        /// <description>MetadataEntity_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MetadataEntityResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _metadataEntityRecommendationMetadataClientDiagnostics.CreateScope("MetadataEntityResource.Get");
+            using var scope = _metadataEntityClientDiagnostics.CreateScope("MetadataEntityResource.Get");
             scope.Start();
             try
             {
-                var response = await _metadataEntityRecommendationMetadataRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _metadataEntityRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MetadataEntityResource(Client, response.Value), response.GetRawResponse());
@@ -135,11 +135,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RecommendationMetadata_Get</description>
+        /// <description>MetadataEntity_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MetadataEntityResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _metadataEntityRecommendationMetadataClientDiagnostics.CreateScope("MetadataEntityResource.Get");
+            using var scope = _metadataEntityClientDiagnostics.CreateScope("MetadataEntityResource.Get");
             scope.Start();
             try
             {
-                var response = _metadataEntityRecommendationMetadataRestClient.Get(Id.Name, cancellationToken);
+                var response = _metadataEntityRestClient.Get(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MetadataEntityResource(Client, response.Value), response.GetRawResponse());

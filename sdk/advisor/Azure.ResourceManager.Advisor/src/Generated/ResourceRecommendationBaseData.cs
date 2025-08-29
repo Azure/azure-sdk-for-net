@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="category"> The category of the recommendation. </param>
+        /// <param name="control"> The control type for the recommendation. </param>
         /// <param name="impact"> The business impact of the recommendation. </param>
         /// <param name="impactedField"> The resource type identified by Advisor. </param>
         /// <param name="impactedValue"> The resource identified by Advisor. </param>
@@ -86,10 +87,17 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="actions"> The list of recommended actions to implement recommendation. </param>
         /// <param name="remediation"> The automated way to apply recommendation. </param>
         /// <param name="exposedMetadataProperties"> The recommendation metadata properties exposed to customer to provide additional information. </param>
+        /// <param name="isTracked"> If the Recommendation has Tracking enabled. </param>
+        /// <param name="trackedProperties"> The properties of a tracked recommendation. </param>
+        /// <param name="review"> The Review that this Recommendation belongs to. </param>
+        /// <param name="resourceWorkload"> The Workload that this Resource belongs to. </param>
+        /// <param name="sourceSystem"> The Source System that this Recommendation originated from. </param>
+        /// <param name="notes"> Additional notes for the Recommendation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceRecommendationBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Category? category, Impact? impact, string impactedField, string impactedValue, DateTimeOffset? lastUpdated, IDictionary<string, BinaryData> metadata, string recommendationTypeId, Risk? risk, ShortDescription shortDescription, IList<Guid> suppressionIds, IDictionary<string, string> extendedProperties, ResourceMetadata resourceMetadata, string description, string label, string learnMoreLink, string potentialBenefits, IList<IDictionary<string, BinaryData>> actions, IDictionary<string, BinaryData> remediation, IDictionary<string, BinaryData> exposedMetadataProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ResourceRecommendationBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RecommendationCategory? category, RecommendationControlType? control, RecommendationBusinessImpact? impact, string impactedField, string impactedValue, DateTimeOffset? lastUpdated, IDictionary<string, BinaryData> metadata, string recommendationTypeId, Risk? risk, ShortDescription shortDescription, IList<Guid> suppressionIds, IDictionary<string, string> extendedProperties, ResourceMetadata resourceMetadata, string description, string label, string learnMoreLink, string potentialBenefits, IList<IDictionary<string, BinaryData>> actions, IDictionary<string, BinaryData> remediation, IDictionary<string, BinaryData> exposedMetadataProperties, bool? isTracked, TrackedRecommendationProperties trackedProperties, RecommendationReview review, RecommendationResourceWorkload resourceWorkload, string sourceSystem, string notes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Category = category;
+            Control = control;
             Impact = impact;
             ImpactedField = impactedField;
             ImpactedValue = impactedValue;
@@ -108,13 +116,21 @@ namespace Azure.ResourceManager.Advisor
             Actions = actions;
             Remediation = remediation;
             ExposedMetadataProperties = exposedMetadataProperties;
+            IsTracked = isTracked;
+            TrackedProperties = trackedProperties;
+            Review = review;
+            ResourceWorkload = resourceWorkload;
+            SourceSystem = sourceSystem;
+            Notes = notes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The category of the recommendation. </summary>
-        public Category? Category { get; set; }
+        public RecommendationCategory? Category { get; set; }
+        /// <summary> The control type for the recommendation. </summary>
+        public RecommendationControlType? Control { get; set; }
         /// <summary> The business impact of the recommendation. </summary>
-        public Impact? Impact { get; set; }
+        public RecommendationBusinessImpact? Impact { get; set; }
         /// <summary> The resource type identified by Advisor. </summary>
         public string ImpactedField { get; set; }
         /// <summary> The resource identified by Advisor. </summary>
@@ -265,5 +281,17 @@ namespace Azure.ResourceManager.Advisor
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> ExposedMetadataProperties { get; }
+        /// <summary> If the Recommendation has Tracking enabled. </summary>
+        public bool? IsTracked { get; set; }
+        /// <summary> The properties of a tracked recommendation. </summary>
+        public TrackedRecommendationProperties TrackedProperties { get; set; }
+        /// <summary> The Review that this Recommendation belongs to. </summary>
+        public RecommendationReview Review { get; set; }
+        /// <summary> The Workload that this Resource belongs to. </summary>
+        public RecommendationResourceWorkload ResourceWorkload { get; set; }
+        /// <summary> The Source System that this Recommendation originated from. </summary>
+        public string SourceSystem { get; set; }
+        /// <summary> Additional notes for the Recommendation. </summary>
+        public string Notes { get; set; }
     }
 }
