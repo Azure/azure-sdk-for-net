@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="systemData"> The systemData. </param>
         /// <param name="roleType"></param>
         /// <param name="password"> The password of the cluster role. If an identity is used, password will not be required. </param>
+        /// <param name="provisioningState"> Provisioning state of the role. </param>
         /// <param name="objectId"> A type definition that refers the id to an Azure Resource Manager resource. </param>
         /// <param name="principalType"></param>
         /// <param name="tenantId"> A type definition that refers the id to an Azure Resource Manager resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the role. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleType? roleType, string password, ResourceIdentifier objectId, PrincipalType? principalType, ResourceIdentifier tenantId, CosmosDBForPostgreSqlProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CosmosDBForPostgreSqlRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleType? roleType, string password, CosmosDBForPostgreSqlProvisioningState? provisioningState, ResourceIdentifier objectId, PrincipalType? principalType, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RoleType = roleType;
             Password = password;
+            ProvisioningState = provisioningState;
             ObjectId = objectId;
             PrincipalType = principalType;
             TenantId = tenantId;
-            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public RoleType? RoleType { get; set; }
         /// <summary> The password of the cluster role. If an identity is used, password will not be required. </summary>
         public string Password { get; set; }
+        /// <summary> Provisioning state of the role. </summary>
+        public CosmosDBForPostgreSqlProvisioningState? ProvisioningState { get; }
         /// <summary> A type definition that refers the id to an Azure Resource Manager resource. </summary>
         public ResourceIdentifier ObjectId { get; set; }
         /// <summary> Gets or sets the principal type. </summary>
         public PrincipalType? PrincipalType { get; set; }
         /// <summary> A type definition that refers the id to an Azure Resource Manager resource. </summary>
-        public ResourceIdentifier TenantId { get; set; }
-        /// <summary> Provisioning state of the role. </summary>
-        public CosmosDBForPostgreSqlProvisioningState? ProvisioningState { get; }
+        public Guid? TenantId { get; set; }
     }
 }

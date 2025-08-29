@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             CosmosDBForPostgreSqlProvisioningState? provisioningState = default;
             ResourceIdentifier objectId = default;
             PrincipalType? principalType = default;
-            ResourceIdentifier tenantId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                                     {
                                         continue;
                                     }
-                                    tenantId = new ResourceIdentifier(property1.Value.GetString());
+                                    tenantId = property1.Value.GetGuid();
                                     continue;
                                 }
                             }
@@ -221,10 +221,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 systemData,
                 roleType,
                 password,
+                provisioningState,
                 objectId,
                 principalType,
                 tenantId,
-                provisioningState,
                 serializedAdditionalRawData);
         }
 

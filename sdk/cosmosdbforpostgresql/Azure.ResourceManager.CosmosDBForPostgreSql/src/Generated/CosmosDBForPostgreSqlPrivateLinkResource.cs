@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
     /// <summary>
-    /// A Class representing a CosmosDBForPostgreSqlPrivateLinkResourceData along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBForPostgreSqlPrivateLinkResourceDataResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBForPostgreSqlPrivateLinkResourceDataResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBForPostgreSqlClusterResource"/> using the GetCosmosDBForPostgreSqlPrivateLinkResourceData method.
+    /// A Class representing a CosmosDBForPostgreSqlPrivateLinkResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBForPostgreSqlPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBForPostgreSqlPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBForPostgreSqlClusterResource"/> using the GetCosmosDBForPostgreSqlPrivateLinkResource method.
     /// </summary>
-    public partial class CosmosDBForPostgreSqlPrivateLinkResourceDataResource : ArmResource
+    public partial class CosmosDBForPostgreSqlPrivateLinkResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="CosmosDBForPostgreSqlPrivateLinkResourceDataResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="CosmosDBForPostgreSqlPrivateLinkResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="clusterName"> The clusterName. </param>
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _cosmosDBForPostgreSqlPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _cosmosDBForPostgreSqlPrivateLinkResourceDataPrivateLinkResourcesRestClient;
-        private readonly CosmosDBForPostgreSqlPrivateLinkResourceDataData _data;
+        private readonly ClientDiagnostics _cosmosDBForPostgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResourcesRestOperations _cosmosDBForPostgreSqlPrivateLinkResourcePrivateLinkResourcesRestClient;
+        private readonly CosmosDBForPostgreSqlPrivateLinkResourceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/serverGroupsv2/privateLinkResources";
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlPrivateLinkResourceDataResource"/> class for mocking. </summary>
-        protected CosmosDBForPostgreSqlPrivateLinkResourceDataResource()
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlPrivateLinkResource"/> class for mocking. </summary>
+        protected CosmosDBForPostgreSqlPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlPrivateLinkResourceDataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CosmosDBForPostgreSqlPrivateLinkResourceDataResource(ArmClient client, CosmosDBForPostgreSqlPrivateLinkResourceDataData data) : this(client, data.Id)
+        internal CosmosDBForPostgreSqlPrivateLinkResource(ArmClient client, CosmosDBForPostgreSqlPrivateLinkResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlPrivateLinkResourceDataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CosmosDBForPostgreSqlPrivateLinkResourceDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CosmosDBForPostgreSqlPrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cosmosDBForPostgreSqlPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string cosmosDBForPostgreSqlPrivateLinkResourceDataPrivateLinkResourcesApiVersion);
-            _cosmosDBForPostgreSqlPrivateLinkResourceDataPrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBForPostgreSqlPrivateLinkResourceDataPrivateLinkResourcesApiVersion);
+            _cosmosDBForPostgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string cosmosDBForPostgreSqlPrivateLinkResourcePrivateLinkResourcesApiVersion);
+            _cosmosDBForPostgreSqlPrivateLinkResourcePrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBForPostgreSqlPrivateLinkResourcePrivateLinkResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual CosmosDBForPostgreSqlPrivateLinkResourceDataData Data
+        public virtual CosmosDBForPostgreSqlPrivateLinkResourceData Data
         {
             get
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResource_Get</description>
+        /// <description>PrivateLinkResources_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -105,21 +105,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlPrivateLinkResourceDataResource"/></description>
+        /// <description><see cref="CosmosDBForPostgreSqlPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CosmosDBForPostgreSqlPrivateLinkResourceDataResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBForPostgreSqlPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBForPostgreSqlPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlPrivateLinkResourceDataResource.Get");
+            using var scope = _cosmosDBForPostgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlPrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = await _cosmosDBForPostgreSqlPrivateLinkResourceDataPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cosmosDBForPostgreSqlPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosDBForPostgreSqlPrivateLinkResourceDataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBForPostgreSqlPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResource_Get</description>
+        /// <description>PrivateLinkResources_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -145,21 +145,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlPrivateLinkResourceDataResource"/></description>
+        /// <description><see cref="CosmosDBForPostgreSqlPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CosmosDBForPostgreSqlPrivateLinkResourceDataResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBForPostgreSqlPrivateLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBForPostgreSqlPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlPrivateLinkResourceDataResource.Get");
+            using var scope = _cosmosDBForPostgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlPrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = _cosmosDBForPostgreSqlPrivateLinkResourceDataPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _cosmosDBForPostgreSqlPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosDBForPostgreSqlPrivateLinkResourceDataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBForPostgreSqlPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

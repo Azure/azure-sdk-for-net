@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
     /// <summary>
-    /// A Class representing a ServerGroupsv2NodeConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServerGroupsv2NodeConfigurationResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetServerGroupsv2NodeConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBForPostgreSqlClusterResource"/> using the GetServerGroupsv2NodeConfiguration method.
+    /// A Class representing a CosmosDBForPostgreSqlNodeConfiguration along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBForPostgreSqlNodeConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBForPostgreSqlClusterResource"/> using the GetCosmosDBForPostgreSqlNodeConfiguration method.
     /// </summary>
-    public partial class ServerGroupsv2NodeConfigurationResource : ArmResource
+    public partial class CosmosDBForPostgreSqlNodeConfigurationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ServerGroupsv2NodeConfigurationResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="clusterName"> The clusterName. </param>
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _serverGroupsv2NodeConfigurationNodeConfigurationsClientDiagnostics;
-        private readonly NodeConfigurationsRestOperations _serverGroupsv2NodeConfigurationNodeConfigurationsRestClient;
+        private readonly ClientDiagnostics _cosmosDBForPostgreSqlNodeConfigurationConfigurationsClientDiagnostics;
+        private readonly ConfigurationsRestOperations _cosmosDBForPostgreSqlNodeConfigurationConfigurationsRestClient;
         private readonly CosmosDBForPostgreSqlServerConfigurationData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/serverGroupsv2/nodeConfigurations";
 
-        /// <summary> Initializes a new instance of the <see cref="ServerGroupsv2NodeConfigurationResource"/> class for mocking. </summary>
-        protected ServerGroupsv2NodeConfigurationResource()
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/> class for mocking. </summary>
+        protected CosmosDBForPostgreSqlNodeConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServerGroupsv2NodeConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServerGroupsv2NodeConfigurationResource(ArmClient client, CosmosDBForPostgreSqlServerConfigurationData data) : this(client, data.Id)
+        internal CosmosDBForPostgreSqlNodeConfigurationResource(ArmClient client, CosmosDBForPostgreSqlServerConfigurationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServerGroupsv2NodeConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServerGroupsv2NodeConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CosmosDBForPostgreSqlNodeConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverGroupsv2NodeConfigurationNodeConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string serverGroupsv2NodeConfigurationNodeConfigurationsApiVersion);
-            _serverGroupsv2NodeConfigurationNodeConfigurationsRestClient = new NodeConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverGroupsv2NodeConfigurationNodeConfigurationsApiVersion);
+            _cosmosDBForPostgreSqlNodeConfigurationConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string cosmosDBForPostgreSqlNodeConfigurationConfigurationsApiVersion);
+            _cosmosDBForPostgreSqlNodeConfigurationConfigurationsRestClient = new ConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBForPostgreSqlNodeConfigurationConfigurationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerConfiguration_GetNode</description>
+        /// <description>Configurations_GetNode</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -105,21 +105,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerGroupsv2NodeConfigurationResource"/></description>
+        /// <description><see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServerGroupsv2NodeConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBForPostgreSqlNodeConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serverGroupsv2NodeConfigurationNodeConfigurationsClientDiagnostics.CreateScope("ServerGroupsv2NodeConfigurationResource.Get");
+            using var scope = _cosmosDBForPostgreSqlNodeConfigurationConfigurationsClientDiagnostics.CreateScope("CosmosDBForPostgreSqlNodeConfigurationResource.Get");
             scope.Start();
             try
             {
-                var response = await _serverGroupsv2NodeConfigurationNodeConfigurationsRestClient.GetNodeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cosmosDBForPostgreSqlNodeConfigurationConfigurationsRestClient.GetNodeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerGroupsv2NodeConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBForPostgreSqlNodeConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerConfiguration_GetNode</description>
+        /// <description>Configurations_GetNode</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -145,21 +145,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerGroupsv2NodeConfigurationResource"/></description>
+        /// <description><see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServerGroupsv2NodeConfigurationResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBForPostgreSqlNodeConfigurationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _serverGroupsv2NodeConfigurationNodeConfigurationsClientDiagnostics.CreateScope("ServerGroupsv2NodeConfigurationResource.Get");
+            using var scope = _cosmosDBForPostgreSqlNodeConfigurationConfigurationsClientDiagnostics.CreateScope("CosmosDBForPostgreSqlNodeConfigurationResource.Get");
             scope.Start();
             try
             {
-                var response = _serverGroupsv2NodeConfigurationNodeConfigurationsRestClient.GetNode(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _cosmosDBForPostgreSqlNodeConfigurationConfigurationsRestClient.GetNode(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerGroupsv2NodeConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBForPostgreSqlNodeConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerConfiguration_UpdateOnNode</description>
+        /// <description>Configurations_UpdateOnNode</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerGroupsv2NodeConfigurationResource"/></description>
+        /// <description><see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,16 +193,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="data"> The required parameters for updating a cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServerGroupsv2NodeConfigurationResource>> UpdateAsync(WaitUntil waitUntil, CosmosDBForPostgreSqlServerConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource>> UpdateAsync(WaitUntil waitUntil, CosmosDBForPostgreSqlServerConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serverGroupsv2NodeConfigurationNodeConfigurationsClientDiagnostics.CreateScope("ServerGroupsv2NodeConfigurationResource.Update");
+            using var scope = _cosmosDBForPostgreSqlNodeConfigurationConfigurationsClientDiagnostics.CreateScope("CosmosDBForPostgreSqlNodeConfigurationResource.Update");
             scope.Start();
             try
             {
-                var response = await _serverGroupsv2NodeConfigurationNodeConfigurationsRestClient.UpdateOnNodeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBForPostgreSqlArmOperation<ServerGroupsv2NodeConfigurationResource>(new ServerGroupsv2NodeConfigurationOperationSource(Client), _serverGroupsv2NodeConfigurationNodeConfigurationsClientDiagnostics, Pipeline, _serverGroupsv2NodeConfigurationNodeConfigurationsRestClient.CreateUpdateOnNodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _cosmosDBForPostgreSqlNodeConfigurationConfigurationsRestClient.UpdateOnNodeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource>(new CosmosDBForPostgreSqlNodeConfigurationOperationSource(Client), _cosmosDBForPostgreSqlNodeConfigurationConfigurationsClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlNodeConfigurationConfigurationsRestClient.CreateUpdateOnNodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerConfiguration_UpdateOnNode</description>
+        /// <description>Configurations_UpdateOnNode</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerGroupsv2NodeConfigurationResource"/></description>
+        /// <description><see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,16 +239,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="data"> The required parameters for updating a cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServerGroupsv2NodeConfigurationResource> Update(WaitUntil waitUntil, CosmosDBForPostgreSqlServerConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource> Update(WaitUntil waitUntil, CosmosDBForPostgreSqlServerConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serverGroupsv2NodeConfigurationNodeConfigurationsClientDiagnostics.CreateScope("ServerGroupsv2NodeConfigurationResource.Update");
+            using var scope = _cosmosDBForPostgreSqlNodeConfigurationConfigurationsClientDiagnostics.CreateScope("CosmosDBForPostgreSqlNodeConfigurationResource.Update");
             scope.Start();
             try
             {
-                var response = _serverGroupsv2NodeConfigurationNodeConfigurationsRestClient.UpdateOnNode(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new CosmosDBForPostgreSqlArmOperation<ServerGroupsv2NodeConfigurationResource>(new ServerGroupsv2NodeConfigurationOperationSource(Client), _serverGroupsv2NodeConfigurationNodeConfigurationsClientDiagnostics, Pipeline, _serverGroupsv2NodeConfigurationNodeConfigurationsRestClient.CreateUpdateOnNodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _cosmosDBForPostgreSqlNodeConfigurationConfigurationsRestClient.UpdateOnNode(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource>(new CosmosDBForPostgreSqlNodeConfigurationOperationSource(Client), _cosmosDBForPostgreSqlNodeConfigurationConfigurationsClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlNodeConfigurationConfigurationsRestClient.CreateUpdateOnNodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

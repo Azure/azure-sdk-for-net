@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    internal partial class ClusterListResult : IUtf8JsonSerializable, IJsonModel<ClusterListResult>
+    internal partial class CosmosDBForPostgreSqlClusterServerListResult : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlClusterServerListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlClusterServerListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ClusterListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CosmosDBForPostgreSqlClusterServerListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterServerListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterServerListResult)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("value"u8);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
         }
 
-        ClusterListResult IJsonModel<ClusterListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CosmosDBForPostgreSqlClusterServerListResult IJsonModel<CosmosDBForPostgreSqlClusterServerListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterServerListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterServerListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClusterListResult(document.RootElement, options);
+            return DeserializeCosmosDBForPostgreSqlClusterServerListResult(document.RootElement, options);
         }
 
-        internal static ClusterListResult DeserializeClusterListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CosmosDBForPostgreSqlClusterServerListResult DeserializeCosmosDBForPostgreSqlClusterServerListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            IReadOnlyList<CosmosDBForPostgreSqlClusterData> value = default;
+            IReadOnlyList<CosmosDBForPostgreSqlClusterServerData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<CosmosDBForPostgreSqlClusterData> array = new List<CosmosDBForPostgreSqlClusterData>();
+                    List<CosmosDBForPostgreSqlClusterServerData> array = new List<CosmosDBForPostgreSqlClusterServerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBForPostgreSqlClusterData.DeserializeCosmosDBForPostgreSqlClusterData(item, options));
+                        array.Add(CosmosDBForPostgreSqlClusterServerData.DeserializeCosmosDBForPostgreSqlClusterServerData(item, options));
                     }
                     value = array;
                     continue;
@@ -114,38 +114,38 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ClusterListResult(value, nextLink, serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlClusterServerListResult(value, nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ClusterListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CosmosDBForPostgreSqlClusterServerListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterServerListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterServerListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ClusterListResult IPersistableModel<ClusterListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CosmosDBForPostgreSqlClusterServerListResult IPersistableModel<CosmosDBForPostgreSqlClusterServerListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterServerListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeClusterListResult(document.RootElement, options);
+                        return DeserializeCosmosDBForPostgreSqlClusterServerListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterServerListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ClusterListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CosmosDBForPostgreSqlClusterServerListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

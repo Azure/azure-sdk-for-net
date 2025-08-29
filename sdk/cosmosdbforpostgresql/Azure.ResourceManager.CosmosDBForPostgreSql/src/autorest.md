@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: CosmosDBForPostgreSql
 namespace: Azure.ResourceManager.CosmosDBForPostgreSql
-require: https://github.com/Azure/azure-rest-api-specs/blob/765b345bc5f1acecc0b122cf8052feca8ebf8de2/specification/postgresqlhsc/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/631aaabb176ff44f032559c1b8a87606794893b1/specification/postgresqlhsc/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:

@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 
         private readonly ClientDiagnostics _cosmosDBForPostgreSqlClusterServerServersClientDiagnostics;
         private readonly ServersRestOperations _cosmosDBForPostgreSqlClusterServerServersRestClient;
-        private readonly ClientDiagnostics _cosmosDBForPostgreSqlConfigurationConfigurationsClientDiagnostics;
-        private readonly ConfigurationsRestOperations _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient;
+        private readonly ClientDiagnostics _configurationsClientDiagnostics;
+        private readonly ConfigurationsRestOperations _configurationsRestClient;
         private readonly CosmosDBForPostgreSqlClusterServerData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -65,9 +65,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             _cosmosDBForPostgreSqlClusterServerServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string cosmosDBForPostgreSqlClusterServerServersApiVersion);
             _cosmosDBForPostgreSqlClusterServerServersRestClient = new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBForPostgreSqlClusterServerServersApiVersion);
-            _cosmosDBForPostgreSqlConfigurationConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", CosmosDBForPostgreSqlConfigurationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CosmosDBForPostgreSqlConfigurationResource.ResourceType, out string cosmosDBForPostgreSqlConfigurationConfigurationsApiVersion);
-            _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient = new ConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBForPostgreSqlConfigurationConfigurationsApiVersion);
+            _configurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _configurationsRestClient = new ConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ClusterServer_Get</description>
+        /// <description>Servers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -143,7 +142,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ClusterServer_Get</description>
+        /// <description>Servers_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -189,19 +188,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Default Api Version</term>
         /// <description>2023-03-02-preview</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlConfigurationResource"/></description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CosmosDBForPostgreSqlServerConfigurationData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBForPostgreSqlServerConfigurationData> GetConfigurationsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CosmosDBForPostgreSqlServerConfigurationData.DeserializeCosmosDBForPostgreSqlServerConfigurationData(e), _cosmosDBForPostgreSqlConfigurationConfigurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CosmosDBForPostgreSqlServerConfigurationData.DeserializeCosmosDBForPostgreSqlServerConfigurationData(e), _configurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -219,19 +214,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Default Api Version</term>
         /// <description>2023-03-02-preview</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlConfigurationResource"/></description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CosmosDBForPostgreSqlServerConfigurationData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBForPostgreSqlServerConfigurationData> GetConfigurations(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cosmosDBForPostgreSqlConfigurationConfigurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CosmosDBForPostgreSqlServerConfigurationData.DeserializeCosmosDBForPostgreSqlServerConfigurationData(e), _cosmosDBForPostgreSqlConfigurationConfigurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _configurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CosmosDBForPostgreSqlServerConfigurationData.DeserializeCosmosDBForPostgreSqlServerConfigurationData(e), _configurationsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlClusterServerResource.GetConfigurations", "value", "nextLink", cancellationToken);
         }
     }
 }

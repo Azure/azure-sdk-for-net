@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> The PrivateLinkResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal CosmosDBForPostgreSqlPrivateLinkResourceListResult(IEnumerable<CosmosDBForPostgreSqlPrivateLinkResourceDataData> value)
+        internal CosmosDBForPostgreSqlPrivateLinkResourceListResult(IEnumerable<CosmosDBForPostgreSqlPrivateLinkResourceData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="value"> The PrivateLinkResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlPrivateLinkResourceListResult(IReadOnlyList<CosmosDBForPostgreSqlPrivateLinkResourceDataData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBForPostgreSqlPrivateLinkResourceListResult(IReadOnlyList<CosmosDBForPostgreSqlPrivateLinkResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         }
 
         /// <summary> The PrivateLinkResource items on this page. </summary>
-        public IReadOnlyList<CosmosDBForPostgreSqlPrivateLinkResourceDataData> Value { get; }
+        public IReadOnlyList<CosmosDBForPostgreSqlPrivateLinkResourceData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

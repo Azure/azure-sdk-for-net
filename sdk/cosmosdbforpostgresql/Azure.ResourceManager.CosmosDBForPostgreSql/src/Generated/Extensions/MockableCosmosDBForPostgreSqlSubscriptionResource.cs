@@ -20,8 +20,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
     {
         private ClientDiagnostics _cosmosDBForPostgreSqlClusterClustersClientDiagnostics;
         private ClustersRestOperations _cosmosDBForPostgreSqlClusterClustersRestClient;
-        private ClientDiagnostics _clustersOperationGroupClientDiagnostics;
-        private ClustersOperationGroupRestOperations _clustersOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableCosmosDBForPostgreSqlSubscriptionResource"/> class for mocking. </summary>
         protected MockableCosmosDBForPostgreSqlSubscriptionResource()
@@ -37,13 +35,95 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
 
         private ClientDiagnostics CosmosDBForPostgreSqlClusterClustersClientDiagnostics => _cosmosDBForPostgreSqlClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", CosmosDBForPostgreSqlClusterResource.ResourceType.Namespace, Diagnostics);
         private ClustersRestOperations CosmosDBForPostgreSqlClusterClustersRestClient => _cosmosDBForPostgreSqlClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CosmosDBForPostgreSqlClusterResource.ResourceType));
-        private ClientDiagnostics ClustersOperationGroupClientDiagnostics => _clustersOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ClustersOperationGroupRestOperations ClustersOperationGroupRestClient => _clustersOperationGroupRestClient ??= new ClustersOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary>
+        /// Checks availability of a cluster name. Cluster names should be globally unique; at least 3 characters and at most 40 characters long; they must only contain lowercase letters, numbers, and hyphens; and must not start or end with a hyphen.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult>> CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = CosmosDBForPostgreSqlClusterClustersClientDiagnostics.CreateScope("MockableCosmosDBForPostgreSqlSubscriptionResource.CheckCosmosDBForPostgreSqlClusterNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = await CosmosDBForPostgreSqlClusterClustersRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks availability of a cluster name. Cluster names should be globally unique; at least 3 characters and at most 40 characters long; they must only contain lowercase letters, numbers, and hyphens; and must not start or end with a hyphen.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult> CheckCosmosDBForPostgreSqlClusterNameAvailability(CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = CosmosDBForPostgreSqlClusterClustersClientDiagnostics.CreateScope("MockableCosmosDBForPostgreSqlSubscriptionResource.CheckCosmosDBForPostgreSqlClusterNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = CosmosDBForPostgreSqlClusterClustersRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -55,7 +135,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Cluster_List</description>
+        /// <description>Clusters_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -85,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Cluster_List</description>
+        /// <description>Clusters_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -104,82 +184,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBForPostgreSqlClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CosmosDBForPostgreSqlClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CosmosDBForPostgreSqlClusterResource(Client, CosmosDBForPostgreSqlClusterData.DeserializeCosmosDBForPostgreSqlClusterData(e)), CosmosDBForPostgreSqlClusterClustersClientDiagnostics, Pipeline, "MockableCosmosDBForPostgreSqlSubscriptionResource.GetCosmosDBForPostgreSqlClusters", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks availability of a cluster name. Cluster names should be globally unique; at least 3 characters and at most 40 characters long; they must only contain lowercase letters, numbers, and hyphens; and must not start or end with a hyphen.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ClustersOperationGroup_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-02-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult>> CheckNameAvailabilityClustersOperationGroupAsync(CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClustersOperationGroupClientDiagnostics.CreateScope("MockableCosmosDBForPostgreSqlSubscriptionResource.CheckNameAvailabilityClustersOperationGroup");
-            scope.Start();
-            try
-            {
-                var response = await ClustersOperationGroupRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks availability of a cluster name. Cluster names should be globally unique; at least 3 characters and at most 40 characters long; they must only contain lowercase letters, numbers, and hyphens; and must not start or end with a hyphen.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ClustersOperationGroup_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-02-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult> CheckNameAvailabilityClustersOperationGroup(CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClustersOperationGroupClientDiagnostics.CreateScope("MockableCosmosDBForPostgreSqlSubscriptionResource.CheckNameAvailabilityClustersOperationGroup");
-            scope.Start();
-            try
-            {
-                var response = ClustersOperationGroupRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

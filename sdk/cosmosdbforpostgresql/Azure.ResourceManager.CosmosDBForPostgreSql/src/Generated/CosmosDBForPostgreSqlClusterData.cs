@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="identity"> Describes the identity of the cluster. </param>
         /// <param name="aadAuthEnabled"> Indicates whether the cluster was created using AAD authentication. </param>
         /// <param name="administratorLogin"> The administrator's login name of the servers in the cluster. </param>
         /// <param name="administratorLoginPassword"> The password of the administrator login. Required for creation. </param>
@@ -99,10 +100,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="databaseName"> The database name of the cluster. Only one database per cluster is supported. </param>
         /// <param name="enableGeoBackup"> If cluster backup is stored in another Azure region in addition to the copy of the backup stored in the cluster's region. Enabled only at the time of cluster creation. </param>
         /// <param name="authConfig"> Authentication configuration of a cluster. </param>
-        /// <param name="identity"> Describes the identity of the cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AadEnabledEnum? aadAuthEnabled, string administratorLogin, string administratorLoginPassword, DataEncryption dataEncryption, string provisioningState, string state, string postgresqlVersion, string citusVersion, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, string preferredPrimaryZone, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, IReadOnlyList<CosmosDBForPostgreSqlServerNameItem> serverNames, string sourceResourceId, string sourceLocation, PasswordEnabledEnum? passwordEnabled, DateTimeOffset? pointInTimeUTC, IReadOnlyList<string> readReplicas, DateTimeOffset? earliestRestoreOn, IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections, string databaseName, bool? enableGeoBackup, AuthConfig authConfig, IdentityProperties identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IdentityProperties identity, AadEnabledEnum? aadAuthEnabled, string administratorLogin, string administratorLoginPassword, DataEncryption dataEncryption, string provisioningState, string state, string postgresqlVersion, string citusVersion, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, string preferredPrimaryZone, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, IReadOnlyList<CosmosDBForPostgreSqlServerNameItem> serverNames, ResourceIdentifier sourceResourceId, AzureLocation? sourceLocation, PasswordEnabledEnum? passwordEnabled, DateTimeOffset? pointInTimeUTC, IReadOnlyList<string> readReplicas, DateTimeOffset? earliestRestoreOn, IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections, string databaseName, bool? enableGeoBackup, AuthConfig authConfig, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Identity = identity;
             AadAuthEnabled = aadAuthEnabled;
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -135,7 +136,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             DatabaseName = databaseName;
             EnableGeoBackup = enableGeoBackup;
             AuthConfig = authConfig;
-            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -144,6 +144,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
         }
 
+        /// <summary> Describes the identity of the cluster. </summary>
+        public IdentityProperties Identity { get; set; }
         /// <summary> Indicates whether the cluster was created using AAD authentication. </summary>
         public AadEnabledEnum? AadAuthEnabled { get; }
         /// <summary> The administrator's login name of the servers in the cluster. </summary>
@@ -189,9 +191,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> The list of server names in the cluster. </summary>
         public IReadOnlyList<CosmosDBForPostgreSqlServerNameItem> ServerNames { get; }
         /// <summary> The resource id of source cluster for read replica clusters. </summary>
-        public string SourceResourceId { get; set; }
+        public ResourceIdentifier SourceResourceId { get; set; }
         /// <summary> The Azure region of source cluster for read replica clusters. </summary>
-        public string SourceLocation { get; set; }
+        public AzureLocation? SourceLocation { get; set; }
         /// <summary> Indicates whether the cluster was created with a password or using AAD authentication. </summary>
         public PasswordEnabledEnum? PasswordEnabled { get; }
         /// <summary> Date and time in UTC (ISO8601 format) for cluster restore. </summary>
@@ -208,7 +210,5 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public bool? EnableGeoBackup { get; set; }
         /// <summary> Authentication configuration of a cluster. </summary>
         public AuthConfig AuthConfig { get; set; }
-        /// <summary> Describes the identity of the cluster. </summary>
-        public IdentityProperties Identity { get; set; }
     }
 }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlSimplePrivateEndpointConnection"/>. </summary>
-        internal CosmosDBForPostgreSqlSimplePrivateEndpointConnection()
+        public CosmosDBForPostgreSqlSimplePrivateEndpointConnection()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="groupIds"> Group ids of the private endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlSimplePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, IReadOnlyList<string> groupIds, CosmosDBForPostgreSqlPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CosmosDBForPostgreSqlSimplePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, IList<string> groupIds, CosmosDBForPostgreSqlPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             GroupIds = groupIds;
@@ -72,16 +72,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         }
 
         /// <summary> Private endpoint which the connection belongs to. </summary>
-        internal SubResource PrivateEndpoint { get; }
-        /// <summary> Gets Id. </summary>
+        internal WritableSubResource PrivateEndpoint { get; set; }
+        /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier PrivateEndpointId
         {
-            get => PrivateEndpoint?.Id;
+            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            set
+            {
+                if (PrivateEndpoint is null)
+                    PrivateEndpoint = new WritableSubResource();
+                PrivateEndpoint.Id = value;
+            }
         }
 
         /// <summary> Group ids of the private endpoint connection. </summary>
-        public IReadOnlyList<string> GroupIds { get; }
+        public IList<string> GroupIds { get; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public CosmosDBForPostgreSqlPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
+        public CosmosDBForPostgreSqlPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
     }
 }

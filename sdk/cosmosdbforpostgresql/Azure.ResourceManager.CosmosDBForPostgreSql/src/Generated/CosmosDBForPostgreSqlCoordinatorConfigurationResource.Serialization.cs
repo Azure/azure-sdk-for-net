@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    public partial class ServerGroupsv2NodeConfigurationResource : IJsonModel<CosmosDBForPostgreSqlServerConfigurationData>
+    public partial class CosmosDBForPostgreSqlCoordinatorConfigurationResource : IJsonModel<CosmosDBForPostgreSqlServerConfigurationData>
     {
         private static CosmosDBForPostgreSqlServerConfigurationData s_dataDeserializationInstance;
         private static CosmosDBForPostgreSqlServerConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();

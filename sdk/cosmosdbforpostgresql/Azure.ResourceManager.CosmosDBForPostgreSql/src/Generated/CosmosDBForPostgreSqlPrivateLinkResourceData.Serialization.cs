@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    public partial class CosmosDBForPostgreSqlPrivateLinkResourceDataData : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlPrivateLinkResourceDataData>
+    public partial class CosmosDBForPostgreSqlPrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlPrivateLinkResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlPrivateLinkResourceDataData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlPrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CosmosDBForPostgreSqlPrivateLinkResourceDataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CosmosDBForPostgreSqlPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceDataData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkResourceDataData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkResourceData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             writer.WriteEndObject();
         }
 
-        CosmosDBForPostgreSqlPrivateLinkResourceDataData IJsonModel<CosmosDBForPostgreSqlPrivateLinkResourceDataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CosmosDBForPostgreSqlPrivateLinkResourceData IJsonModel<CosmosDBForPostgreSqlPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceDataData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkResourceDataData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCosmosDBForPostgreSqlPrivateLinkResourceDataData(document.RootElement, options);
+            return DeserializeCosmosDBForPostgreSqlPrivateLinkResourceData(document.RootElement, options);
         }
 
-        internal static CosmosDBForPostgreSqlPrivateLinkResourceDataData DeserializeCosmosDBForPostgreSqlPrivateLinkResourceDataData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CosmosDBForPostgreSqlPrivateLinkResourceData DeserializeCosmosDBForPostgreSqlPrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             SystemData systemData = default;
             string groupId = default;
             IReadOnlyList<string> requiredMembers = default;
-            IReadOnlyList<string> requiredZoneNames = default;
+            IList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CosmosDBForPostgreSqlPrivateLinkResourceDataData(
+            return new CosmosDBForPostgreSqlPrivateLinkResourceData(
                 id,
                 name,
                 type,
@@ -184,35 +184,35 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceDataData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceDataData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkResourceDataData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CosmosDBForPostgreSqlPrivateLinkResourceDataData IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceDataData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CosmosDBForPostgreSqlPrivateLinkResourceData IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceDataData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCosmosDBForPostgreSqlPrivateLinkResourceDataData(document.RootElement, options);
+                        return DeserializeCosmosDBForPostgreSqlPrivateLinkResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkResourceDataData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceDataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

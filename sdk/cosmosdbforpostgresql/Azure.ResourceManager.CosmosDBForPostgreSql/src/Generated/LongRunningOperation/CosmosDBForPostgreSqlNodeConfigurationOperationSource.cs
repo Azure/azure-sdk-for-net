@@ -12,25 +12,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    internal class ServerGroupsv2NodeConfigurationOperationSource : IOperationSource<ServerGroupsv2NodeConfigurationResource>
+    internal class CosmosDBForPostgreSqlNodeConfigurationOperationSource : IOperationSource<CosmosDBForPostgreSqlNodeConfigurationResource>
     {
         private readonly ArmClient _client;
 
-        internal ServerGroupsv2NodeConfigurationOperationSource(ArmClient client)
+        internal CosmosDBForPostgreSqlNodeConfigurationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        ServerGroupsv2NodeConfigurationResource IOperationSource<ServerGroupsv2NodeConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CosmosDBForPostgreSqlNodeConfigurationResource IOperationSource<CosmosDBForPostgreSqlNodeConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             var data = ModelReaderWriter.Read<CosmosDBForPostgreSqlServerConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
-            return new ServerGroupsv2NodeConfigurationResource(_client, data);
+            return new CosmosDBForPostgreSqlNodeConfigurationResource(_client, data);
         }
 
-        async ValueTask<ServerGroupsv2NodeConfigurationResource> IOperationSource<ServerGroupsv2NodeConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CosmosDBForPostgreSqlNodeConfigurationResource> IOperationSource<CosmosDBForPostgreSqlNodeConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             var data = ModelReaderWriter.Read<CosmosDBForPostgreSqlServerConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
-            return await Task.FromResult(new ServerGroupsv2NodeConfigurationResource(_client, data)).ConfigureAwait(false);
+            return await Task.FromResult(new CosmosDBForPostgreSqlNodeConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             if (Optional.IsDefined(SourceLocation))
             {
                 writer.WritePropertyName("sourceLocation"u8);
-                writer.WriteStringValue(SourceLocation);
+                writer.WriteStringValue(SourceLocation.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(PasswordEnabled))
             {
@@ -272,8 +272,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             int? nodeVCores = default;
             bool? nodeEnablePublicIPAccess = default;
             IReadOnlyList<CosmosDBForPostgreSqlServerNameItem> serverNames = default;
-            string sourceResourceId = default;
-            string sourceLocation = default;
+            ResourceIdentifier sourceResourceId = default;
+            AzureLocation? sourceLocation = default;
             PasswordEnabledEnum? passwordEnabled = default;
             DateTimeOffset? pointInTimeUTC = default;
             IReadOnlyList<string> readReplicas = default;
@@ -516,12 +516,20 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                         }
                         if (property0.NameEquals("sourceResourceId"u8))
                         {
-                            sourceResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sourceResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sourceLocation"u8))
                         {
-                            sourceLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sourceLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("passwordEnabled"u8))
@@ -618,6 +626,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                identity,
                 aadAuthEnabled,
                 administratorLogin,
                 administratorLoginPassword,
@@ -650,7 +659,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 databaseName,
                 enableGeoBackup,
                 authConfig,
-                identity,
                 serializedAdditionalRawData);
         }
 

@@ -13,14 +13,14 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 {
-    public partial class Sample_CosmosDBForPostgreSqlConfigurationCollection
+    public partial class Sample_CosmosDBForPostgreSqlCoordinatorConfigurationCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetConfigurationDetails()
+        public async Task CreateOrUpdate_UpdateSingleConfigurationOfCoordinator()
         {
-            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ConfigurationGet.json
-            // this example is just showing the usage of "Configurations_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ConfigurationUpdateCoordinator.json
+            // this example is just showing the usage of "Configurations_UpdateOnCoordinator" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -35,26 +35,31 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
             CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
-            // get the collection of this CosmosDBForPostgreSqlConfigurationResource
-            CosmosDBForPostgreSqlConfigurationCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlConfigurations();
+            // get the collection of this CosmosDBForPostgreSqlCoordinatorConfigurationResource
+            CosmosDBForPostgreSqlCoordinatorConfigurationCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlCoordinatorConfigurations();
 
             // invoke the operation
-            string configurationName = "client_encoding";
-            CosmosDBForPostgreSqlConfigurationResource result = await collection.GetAsync(configurationName);
+            string configurationName = "array_nulls";
+            CosmosDBForPostgreSqlServerConfigurationData data = new CosmosDBForPostgreSqlServerConfigurationData
+            {
+                Value = "on",
+            };
+            ArmOperation<CosmosDBForPostgreSqlCoordinatorConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
+            CosmosDBForPostgreSqlCoordinatorConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CosmosDBForPostgreSqlConfigurationData resourceData = result.Data;
+            CosmosDBForPostgreSqlServerConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListConfigurationsOfTheCluster()
+        public async Task Get_GetConfigurationDetailsForCoordinator()
         {
-            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ConfigurationListByCluster.json
-            // this example is just showing the usage of "Configurations_ListByCluster" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ConfigurationGetCoordinator.json
+            // this example is just showing the usage of "Configurations_GetCoordinator" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -69,28 +74,26 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
             CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
-            // get the collection of this CosmosDBForPostgreSqlConfigurationResource
-            CosmosDBForPostgreSqlConfigurationCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlConfigurations();
+            // get the collection of this CosmosDBForPostgreSqlCoordinatorConfigurationResource
+            CosmosDBForPostgreSqlCoordinatorConfigurationCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlCoordinatorConfigurations();
 
-            // invoke the operation and iterate over the result
-            await foreach (CosmosDBForPostgreSqlConfigurationResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CosmosDBForPostgreSqlConfigurationData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+            // invoke the operation
+            string configurationName = "array_nulls";
+            CosmosDBForPostgreSqlCoordinatorConfigurationResource result = await collection.GetAsync(configurationName);
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CosmosDBForPostgreSqlServerConfigurationData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetConfigurationDetails()
+        public async Task Exists_GetConfigurationDetailsForCoordinator()
         {
-            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ConfigurationGet.json
-            // this example is just showing the usage of "Configurations_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ConfigurationGetCoordinator.json
+            // this example is just showing the usage of "Configurations_GetCoordinator" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -105,11 +108,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
             CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
-            // get the collection of this CosmosDBForPostgreSqlConfigurationResource
-            CosmosDBForPostgreSqlConfigurationCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlConfigurations();
+            // get the collection of this CosmosDBForPostgreSqlCoordinatorConfigurationResource
+            CosmosDBForPostgreSqlCoordinatorConfigurationCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlCoordinatorConfigurations();
 
             // invoke the operation
-            string configurationName = "client_encoding";
+            string configurationName = "array_nulls";
             bool result = await collection.ExistsAsync(configurationName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -117,10 +120,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetConfigurationDetails()
+        public async Task GetIfExists_GetConfigurationDetailsForCoordinator()
         {
-            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ConfigurationGet.json
-            // this example is just showing the usage of "Configurations_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ConfigurationGetCoordinator.json
+            // this example is just showing the usage of "Configurations_GetCoordinator" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -135,13 +138,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
             CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
-            // get the collection of this CosmosDBForPostgreSqlConfigurationResource
-            CosmosDBForPostgreSqlConfigurationCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlConfigurations();
+            // get the collection of this CosmosDBForPostgreSqlCoordinatorConfigurationResource
+            CosmosDBForPostgreSqlCoordinatorConfigurationCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlCoordinatorConfigurations();
 
             // invoke the operation
-            string configurationName = "client_encoding";
-            NullableResponse<CosmosDBForPostgreSqlConfigurationResource> response = await collection.GetIfExistsAsync(configurationName);
-            CosmosDBForPostgreSqlConfigurationResource result = response.HasValue ? response.Value : null;
+            string configurationName = "array_nulls";
+            NullableResponse<CosmosDBForPostgreSqlCoordinatorConfigurationResource> response = await collection.GetIfExistsAsync(configurationName);
+            CosmosDBForPostgreSqlCoordinatorConfigurationResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -151,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CosmosDBForPostgreSqlConfigurationData resourceData = result.Data;
+                CosmosDBForPostgreSqlServerConfigurationData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

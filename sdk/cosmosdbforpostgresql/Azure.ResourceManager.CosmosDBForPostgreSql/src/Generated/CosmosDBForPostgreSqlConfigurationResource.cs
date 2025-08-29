@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configuration_Get</description>
+        /// <description>Configurations_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configuration_Get</description>
+        /// <description>Configurations_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

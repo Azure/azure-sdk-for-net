@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlConfigurationData"/>. </summary>
-        internal CosmosDBForPostgreSqlConfigurationData()
+        public CosmosDBForPostgreSqlConfigurationData()
         {
             ServerRoleGroupConfigurations = new ChangeTrackingList<CosmosDBForPostgreSqlServerRoleGroupConfiguration>();
         }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="serverRoleGroupConfigurations"> The list of server role group configuration values. </param>
         /// <param name="provisioningState"> Provisioning state of the configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, CosmosDBForPostgreSqlConfigurationDataType? dataType, string allowedValues, bool? isRestartRequired, IReadOnlyList<CosmosDBForPostgreSqlServerRoleGroupConfiguration> serverRoleGroupConfigurations, CosmosDBForPostgreSqlProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CosmosDBForPostgreSqlConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, CosmosDBForPostgreSqlConfigurationDataType? dataType, string allowedValues, bool? isRestartRequired, IList<CosmosDBForPostgreSqlServerRoleGroupConfiguration> serverRoleGroupConfigurations, CosmosDBForPostgreSqlProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             DataType = dataType;
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> Allowed values of the configuration. </summary>
         public string AllowedValues { get; }
         /// <summary> If configuration change requires restart. </summary>
-        public bool? IsRestartRequired { get; }
+        public bool? IsRestartRequired { get; set; }
         /// <summary> The list of server role group configuration values. </summary>
-        public IReadOnlyList<CosmosDBForPostgreSqlServerRoleGroupConfiguration> ServerRoleGroupConfigurations { get; }
+        public IList<CosmosDBForPostgreSqlServerRoleGroupConfiguration> ServerRoleGroupConfigurations { get; }
         /// <summary> Provisioning state of the configuration. </summary>
         public CosmosDBForPostgreSqlProvisioningState? ProvisioningState { get; }
     }

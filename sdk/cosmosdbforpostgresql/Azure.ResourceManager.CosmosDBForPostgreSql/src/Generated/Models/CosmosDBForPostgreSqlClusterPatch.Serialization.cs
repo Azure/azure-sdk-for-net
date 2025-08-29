@@ -354,6 +354,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new CosmosDBForPostgreSqlClusterPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 administratorLoginPassword,
                 postgresqlVersion,
                 citusVersion,
@@ -370,8 +372,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 nodeVCores,
                 nodeEnablePublicIPAccess,
                 maintenanceWindow,
-                identity,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

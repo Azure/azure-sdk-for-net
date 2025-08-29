@@ -13,10 +13,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
     /// <summary>
-    /// A class representing the CosmosDBForPostgreSqlPrivateLinkResourceData data model.
+    /// A class representing the CosmosDBForPostgreSqlPrivateLinkResource data model.
     /// A private link resource.
     /// </summary>
-    public partial class CosmosDBForPostgreSqlPrivateLinkResourceDataData : ResourceData
+    public partial class CosmosDBForPostgreSqlPrivateLinkResourceData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateLinkResourceDataData"/>. </summary>
-        internal CosmosDBForPostgreSqlPrivateLinkResourceDataData()
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateLinkResourceData"/>. </summary>
+        public CosmosDBForPostgreSqlPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateLinkResourceDataData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlPrivateLinkResourceDataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CosmosDBForPostgreSqlPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
@@ -79,6 +79,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> The private link resource required member names. </summary>
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> The private link resource private link DNS zone name. </summary>
-        public IReadOnlyList<string> RequiredZoneNames { get; }
+        public IList<string> RequiredZoneNames { get; }
     }
 }

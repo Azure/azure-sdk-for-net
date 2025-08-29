@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    internal partial class FirewallRuleListResult : IUtf8JsonSerializable, IJsonModel<FirewallRuleListResult>
+    internal partial class CosmosDBForPostgreSqlServerConfigurationListResult : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlServerConfigurationListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallRuleListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlServerConfigurationListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FirewallRuleListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CosmosDBForPostgreSqlServerConfigurationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlServerConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallRuleListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlServerConfigurationListResult)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("value"u8);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
         }
 
-        FirewallRuleListResult IJsonModel<FirewallRuleListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CosmosDBForPostgreSqlServerConfigurationListResult IJsonModel<CosmosDBForPostgreSqlServerConfigurationListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlServerConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallRuleListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlServerConfigurationListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFirewallRuleListResult(document.RootElement, options);
+            return DeserializeCosmosDBForPostgreSqlServerConfigurationListResult(document.RootElement, options);
         }
 
-        internal static FirewallRuleListResult DeserializeFirewallRuleListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CosmosDBForPostgreSqlServerConfigurationListResult DeserializeCosmosDBForPostgreSqlServerConfigurationListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            IReadOnlyList<CosmosDBForPostgreSqlFirewallRuleData> value = default;
+            IReadOnlyList<CosmosDBForPostgreSqlServerConfigurationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<CosmosDBForPostgreSqlFirewallRuleData> array = new List<CosmosDBForPostgreSqlFirewallRuleData>();
+                    List<CosmosDBForPostgreSqlServerConfigurationData> array = new List<CosmosDBForPostgreSqlServerConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(item, options));
+                        array.Add(CosmosDBForPostgreSqlServerConfigurationData.DeserializeCosmosDBForPostgreSqlServerConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -114,38 +114,38 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FirewallRuleListResult(value, nextLink, serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlServerConfigurationListResult(value, nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FirewallRuleListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CosmosDBForPostgreSqlServerConfigurationListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlServerConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallRuleListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlServerConfigurationListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FirewallRuleListResult IPersistableModel<FirewallRuleListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CosmosDBForPostgreSqlServerConfigurationListResult IPersistableModel<CosmosDBForPostgreSqlServerConfigurationListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlServerConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFirewallRuleListResult(document.RootElement, options);
+                        return DeserializeCosmosDBForPostgreSqlServerConfigurationListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallRuleListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlServerConfigurationListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FirewallRuleListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CosmosDBForPostgreSqlServerConfigurationListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

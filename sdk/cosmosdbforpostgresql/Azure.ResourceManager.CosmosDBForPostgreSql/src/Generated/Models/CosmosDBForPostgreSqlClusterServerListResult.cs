@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    /// <summary> The response of a FirewallRule list operation. </summary>
-    internal partial class FirewallRuleListResult
+    /// <summary> The response of a ClusterServer list operation. </summary>
+    internal partial class CosmosDBForPostgreSqlClusterServerListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,34 +46,34 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FirewallRuleListResult"/>. </summary>
-        /// <param name="value"> The FirewallRule items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterServerListResult"/>. </summary>
+        /// <param name="value"> The ClusterServer items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal FirewallRuleListResult(IEnumerable<CosmosDBForPostgreSqlFirewallRuleData> value)
+        internal CosmosDBForPostgreSqlClusterServerListResult(IEnumerable<CosmosDBForPostgreSqlClusterServerData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FirewallRuleListResult"/>. </summary>
-        /// <param name="value"> The FirewallRule items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterServerListResult"/>. </summary>
+        /// <param name="value"> The ClusterServer items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallRuleListResult(IReadOnlyList<CosmosDBForPostgreSqlFirewallRuleData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBForPostgreSqlClusterServerListResult(IReadOnlyList<CosmosDBForPostgreSqlClusterServerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FirewallRuleListResult"/> for deserialization. </summary>
-        internal FirewallRuleListResult()
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterServerListResult"/> for deserialization. </summary>
+        internal CosmosDBForPostgreSqlClusterServerListResult()
         {
         }
 
-        /// <summary> The FirewallRule items on this page. </summary>
-        public IReadOnlyList<CosmosDBForPostgreSqlFirewallRuleData> Value { get; }
+        /// <summary> The ClusterServer items on this page. </summary>
+        public IReadOnlyList<CosmosDBForPostgreSqlClusterServerData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

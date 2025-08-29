@@ -52,6 +52,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterPatch"/>. </summary>
+        /// <param name="identity"> Describes the identity of the cluster. </param>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
         /// <param name="administratorLoginPassword"> The password of the administrator login. Each cluster is created with pre-defined administrative role called ‘citus’. </param>
         /// <param name="postgresqlVersion"> The major PostgreSQL version on all cluster servers. </param>
         /// <param name="citusVersion"> The Citus extension version on all cluster servers. </param>
@@ -68,11 +70,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="nodeVCores"> The compute in vCores on each worker node (max: 104). </param>
         /// <param name="isNodePublicIPAccessEnabled"> If public access is enabled on worker nodes. </param>
         /// <param name="maintenanceWindow"> Maintenance window of a cluster. </param>
-        /// <param name="identity"> Describes the identity of the cluster. </param>
-        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlClusterPatch(string administratorLoginPassword, string postgresqlVersion, string citusVersion, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string preferredPrimaryZone, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, IdentityProperties identity, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBForPostgreSqlClusterPatch(IdentityProperties identity, IDictionary<string, string> tags, string administratorLoginPassword, string postgresqlVersion, string citusVersion, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string preferredPrimaryZone, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Identity = identity;
+            Tags = tags;
             AdministratorLoginPassword = administratorLoginPassword;
             PostgresqlVersion = postgresqlVersion;
             CitusVersion = citusVersion;
@@ -89,11 +91,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             NodeVCores = nodeVCores;
             IsNodePublicIPAccessEnabled = isNodePublicIPAccessEnabled;
             MaintenanceWindow = maintenanceWindow;
-            Identity = identity;
-            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Describes the identity of the cluster. </summary>
+        public IdentityProperties Identity { get; set; }
+        /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The password of the administrator login. Each cluster is created with pre-defined administrative role called ‘citus’. </summary>
         public string AdministratorLoginPassword { get; set; }
         /// <summary> The major PostgreSQL version on all cluster servers. </summary>
@@ -126,9 +130,5 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         public bool? IsNodePublicIPAccessEnabled { get; }
         /// <summary> Maintenance window of a cluster. </summary>
         public CosmosDBForPostgreSqlMaintenanceWindow MaintenanceWindow { get; set; }
-        /// <summary> Describes the identity of the cluster. </summary>
-        public IdentityProperties Identity { get; set; }
-        /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
-        public IDictionary<string, string> Tags { get; }
     }
 }

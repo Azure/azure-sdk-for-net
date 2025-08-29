@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 throw new FormatException($"The model {nameof(IdentityProperties)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(IdentityType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {

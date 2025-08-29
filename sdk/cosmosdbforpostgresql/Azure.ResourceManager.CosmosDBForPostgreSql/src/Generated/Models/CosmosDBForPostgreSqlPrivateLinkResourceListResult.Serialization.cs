@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            IReadOnlyList<CosmosDBForPostgreSqlPrivateLinkResourceDataData> value = default;
+            IReadOnlyList<CosmosDBForPostgreSqlPrivateLinkResourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<CosmosDBForPostgreSqlPrivateLinkResourceDataData> array = new List<CosmosDBForPostgreSqlPrivateLinkResourceDataData>();
+                    List<CosmosDBForPostgreSqlPrivateLinkResourceData> array = new List<CosmosDBForPostgreSqlPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBForPostgreSqlPrivateLinkResourceDataData.DeserializeCosmosDBForPostgreSqlPrivateLinkResourceDataData(item, options));
+                        array.Add(CosmosDBForPostgreSqlPrivateLinkResourceData.DeserializeCosmosDBForPostgreSqlPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

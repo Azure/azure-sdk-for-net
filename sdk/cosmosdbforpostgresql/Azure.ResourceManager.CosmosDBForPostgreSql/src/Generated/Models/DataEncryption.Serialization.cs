@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             if (Optional.IsDefined(PrimaryKeyUri))
             {
                 writer.WritePropertyName("primaryKeyUri"u8);
-                writer.WriteStringValue(PrimaryKeyUri);
+                writer.WriteStringValue(PrimaryKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
                 writer.WritePropertyName("primaryUserAssignedIdentityId"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentityId);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(EncryptionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(EncryptionType.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            string primaryKeyUri = default;
+            Uri primaryKeyUri = default;
             string primaryUserAssignedIdentityId = default;
             DataEncryptionType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -95,7 +95,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 if (property.NameEquals("primaryKeyUri"u8))
                 {
-                    primaryKeyUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryKeyUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("primaryUserAssignedIdentityId"u8))

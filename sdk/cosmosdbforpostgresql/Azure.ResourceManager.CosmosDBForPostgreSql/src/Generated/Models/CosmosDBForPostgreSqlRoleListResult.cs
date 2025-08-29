@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    /// <summary> The response of a Cluster list operation. </summary>
-    internal partial class ClusterListResult
+    /// <summary> The response of a Role list operation. </summary>
+    internal partial class CosmosDBForPostgreSqlRoleListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,34 +46,34 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterListResult"/>. </summary>
-        /// <param name="value"> The Cluster items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlRoleListResult"/>. </summary>
+        /// <param name="value"> The Role items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ClusterListResult(IEnumerable<CosmosDBForPostgreSqlClusterData> value)
+        internal CosmosDBForPostgreSqlRoleListResult(IEnumerable<CosmosDBForPostgreSqlRoleData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterListResult"/>. </summary>
-        /// <param name="value"> The Cluster items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlRoleListResult"/>. </summary>
+        /// <param name="value"> The Role items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterListResult(IReadOnlyList<CosmosDBForPostgreSqlClusterData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBForPostgreSqlRoleListResult(IReadOnlyList<CosmosDBForPostgreSqlRoleData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterListResult"/> for deserialization. </summary>
-        internal ClusterListResult()
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlRoleListResult"/> for deserialization. </summary>
+        internal CosmosDBForPostgreSqlRoleListResult()
         {
         }
 
-        /// <summary> The Cluster items on this page. </summary>
-        public IReadOnlyList<CosmosDBForPostgreSqlClusterData> Value { get; }
+        /// <summary> The Role items on this page. </summary>
+        public IReadOnlyList<CosmosDBForPostgreSqlRoleData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

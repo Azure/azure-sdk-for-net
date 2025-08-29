@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheCluster()
         {
-            // Generated from example definition: 2023-03-02-preview/ClusterGet.json
-            // this example is just showing the usage of "Cluster_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ClusterGet.json
+            // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteTheCluster()
         {
-            // Generated from example definition: 2023-03-02-preview/ClusterDelete.json
-            // this example is just showing the usage of "Cluster_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ClusterDelete.json
+            // this example is just showing the usage of "Clusters_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_ScaleOutAddNewWorkerNodes()
+        public async Task Update_ScaleComputeUpOrDown()
         {
-            // Generated from example definition: 2023-03-02-preview/ClusterAddNode.json
-            // this example is just showing the usage of "Cluster_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ClusterScaleCompute.json
+            // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -93,18 +93,26 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
             // invoke the operation
-            CosmosDBForPostgreSqlClusterPatch patch = new CosmosDBForPostgreSqlClusterPatch();
-            await cosmosDBForPostgreSqlCluster.UpdateAsync(WaitUntil.Completed, patch);
+            CosmosDBForPostgreSqlClusterPatch patch = new CosmosDBForPostgreSqlClusterPatch
+            {
+                NodeVCores = 16,
+            };
+            ArmOperation<CosmosDBForPostgreSqlClusterResource> lro = await cosmosDBForPostgreSqlCluster.UpdateAsync(WaitUntil.Completed, patch);
+            CosmosDBForPostgreSqlClusterResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CosmosDBForPostgreSqlClusterData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_ScaleComputeUpOrDown()
+        public async Task Update_ScaleOutAddNewWorkerNodes()
         {
-            // Generated from example definition: 2023-03-02-preview/ClusterScaleCompute.json
-            // this example is just showing the usage of "Cluster_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ClusterAddNode.json
+            // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -120,18 +128,26 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
             // invoke the operation
-            CosmosDBForPostgreSqlClusterPatch patch = new CosmosDBForPostgreSqlClusterPatch();
-            await cosmosDBForPostgreSqlCluster.UpdateAsync(WaitUntil.Completed, patch);
+            CosmosDBForPostgreSqlClusterPatch patch = new CosmosDBForPostgreSqlClusterPatch
+            {
+                NodeCount = 2,
+            };
+            ArmOperation<CosmosDBForPostgreSqlClusterResource> lro = await cosmosDBForPostgreSqlCluster.UpdateAsync(WaitUntil.Completed, patch);
+            CosmosDBForPostgreSqlClusterResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CosmosDBForPostgreSqlClusterData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ScaleUpStorage()
         {
-            // Generated from example definition: 2023-03-02-preview/ClusterScaleStorage.json
-            // this example is just showing the usage of "Cluster_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ClusterScaleStorage.json
+            // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -147,18 +163,26 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
             // invoke the operation
-            CosmosDBForPostgreSqlClusterPatch patch = new CosmosDBForPostgreSqlClusterPatch();
-            await cosmosDBForPostgreSqlCluster.UpdateAsync(WaitUntil.Completed, patch);
+            CosmosDBForPostgreSqlClusterPatch patch = new CosmosDBForPostgreSqlClusterPatch
+            {
+                NodeStorageQuotaInMb = 2097152,
+            };
+            ArmOperation<CosmosDBForPostgreSqlClusterResource> lro = await cosmosDBForPostgreSqlCluster.UpdateAsync(WaitUntil.Completed, patch);
+            CosmosDBForPostgreSqlClusterResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CosmosDBForPostgreSqlClusterData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateMultipleConfigurationSettingsOfTheCluster()
         {
-            // Generated from example definition: 2023-03-02-preview/ClusterUpdate.json
-            // this example is just showing the usage of "Cluster_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ClusterUpdate.json
+            // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -174,18 +198,29 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
             // invoke the operation
-            CosmosDBForPostgreSqlClusterPatch patch = new CosmosDBForPostgreSqlClusterPatch();
-            await cosmosDBForPostgreSqlCluster.UpdateAsync(WaitUntil.Completed, patch);
+            CosmosDBForPostgreSqlClusterPatch patch = new CosmosDBForPostgreSqlClusterPatch
+            {
+                AdministratorLoginPassword = "newpassword",
+                CoordinatorVCores = 16,
+                NodeCount = 4,
+                NodeVCores = 16,
+            };
+            ArmOperation<CosmosDBForPostgreSqlClusterResource> lro = await cosmosDBForPostgreSqlCluster.UpdateAsync(WaitUntil.Completed, patch);
+            CosmosDBForPostgreSqlClusterResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CosmosDBForPostgreSqlClusterData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateOrDefineMaintenanceWindow()
         {
-            // Generated from example definition: 2023-03-02-preview/ClusterUpdateMaintenanceWindow.json
-            // this example is just showing the usage of "Cluster_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ClusterUpdateMaintenanceWindow.json
+            // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -201,17 +236,31 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
             // invoke the operation
-            CosmosDBForPostgreSqlClusterPatch patch = new CosmosDBForPostgreSqlClusterPatch();
-            await cosmosDBForPostgreSqlCluster.UpdateAsync(WaitUntil.Completed, patch);
+            CosmosDBForPostgreSqlClusterPatch patch = new CosmosDBForPostgreSqlClusterPatch
+            {
+                MaintenanceWindow = new CosmosDBForPostgreSqlMaintenanceWindow
+                {
+                    CustomWindow = "Enabled",
+                    StartHour = 8,
+                    StartMinute = 0,
+                    DayOfWeek = 0,
+                },
+            };
+            ArmOperation<CosmosDBForPostgreSqlClusterResource> lro = await cosmosDBForPostgreSqlCluster.UpdateAsync(WaitUntil.Completed, patch);
+            CosmosDBForPostgreSqlClusterResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CosmosDBForPostgreSqlClusterData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task PromoteReadReplica_PromoteReadReplicaClusterToAnIndependentReadWriteCluster()
         {
-            // Generated from example definition: 2023-03-02-preview/ClusterPromoteReadReplica.json
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ClusterPromoteReadReplica.json
             // this example is just showing the usage of "Clusters_PromoteReadReplica" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -237,7 +286,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Restart_RestartAllServersInTheCluster()
         {
-            // Generated from example definition: 2023-03-02-preview/ClusterRestart.json
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ClusterRestart.json
             // this example is just showing the usage of "Clusters_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -263,7 +312,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Start_StartAllServersInTheCluster()
         {
-            // Generated from example definition: 2023-03-02-preview/ClusterStart.json
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ClusterStart.json
             // this example is just showing the usage of "Clusters_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -289,7 +338,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Stop_StopAllServersInTheCluster()
         {
-            // Generated from example definition: 2023-03-02-preview/ClusterStop.json
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ClusterStop.json
             // this example is just showing the usage of "Clusters_Stop" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

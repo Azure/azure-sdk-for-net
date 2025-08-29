@@ -53,21 +53,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <summary> Initializes a new instance of <see cref="DataEncryption"/>. </summary>
         /// <param name="primaryKeyUri"> URI for the key in keyvault for data encryption of the primary server. </param>
         /// <param name="primaryUserAssignedIdentityId"> Resource Id for the User assigned identity to be used for data encryption of the primary server. </param>
-        /// <param name="type"></param>
+        /// <param name="encryptionType"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataEncryption(string primaryKeyUri, string primaryUserAssignedIdentityId, DataEncryptionType? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataEncryption(Uri primaryKeyUri, string primaryUserAssignedIdentityId, DataEncryptionType? encryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryKeyUri = primaryKeyUri;
             PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
-            Type = type;
+            EncryptionType = encryptionType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> URI for the key in keyvault for data encryption of the primary server. </summary>
-        public string PrimaryKeyUri { get; set; }
+        public Uri PrimaryKeyUri { get; set; }
         /// <summary> Resource Id for the User assigned identity to be used for data encryption of the primary server. </summary>
         public string PrimaryUserAssignedIdentityId { get; set; }
-        /// <summary> Gets or sets the type. </summary>
-        public DataEncryptionType? Type { get; set; }
+        /// <summary> Gets or sets the encryption type. </summary>
+        public DataEncryptionType? EncryptionType { get; set; }
     }
 }

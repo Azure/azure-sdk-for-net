@@ -5,12 +5,44 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     /// <summary> Resource type used for name availability verification. </summary>
-    public enum CosmosDBForPostgreSqlNameAvailabilityResourceType
+    public readonly partial struct CosmosDBForPostgreSqlNameAvailabilityResourceType : IEquatable<CosmosDBForPostgreSqlNameAvailabilityResourceType>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlNameAvailabilityResourceType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CosmosDBForPostgreSqlNameAvailabilityResourceType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string ServerGroupsV2Value = "Microsoft.DBforPostgreSQL/serverGroupsv2";
+
         /// <summary> Microsoft.DBforPostgreSQL/serverGroupsv2. </summary>
-        ServerGroupsV2
+        public static CosmosDBForPostgreSqlNameAvailabilityResourceType ServerGroupsV2 { get; } = new CosmosDBForPostgreSqlNameAvailabilityResourceType(ServerGroupsV2Value);
+        /// <summary> Determines if two <see cref="CosmosDBForPostgreSqlNameAvailabilityResourceType"/> values are the same. </summary>
+        public static bool operator ==(CosmosDBForPostgreSqlNameAvailabilityResourceType left, CosmosDBForPostgreSqlNameAvailabilityResourceType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="CosmosDBForPostgreSqlNameAvailabilityResourceType"/> values are not the same. </summary>
+        public static bool operator !=(CosmosDBForPostgreSqlNameAvailabilityResourceType left, CosmosDBForPostgreSqlNameAvailabilityResourceType right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBForPostgreSqlNameAvailabilityResourceType"/>. </summary>
+        public static implicit operator CosmosDBForPostgreSqlNameAvailabilityResourceType(string value) => new CosmosDBForPostgreSqlNameAvailabilityResourceType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is CosmosDBForPostgreSqlNameAvailabilityResourceType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(CosmosDBForPostgreSqlNameAvailabilityResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

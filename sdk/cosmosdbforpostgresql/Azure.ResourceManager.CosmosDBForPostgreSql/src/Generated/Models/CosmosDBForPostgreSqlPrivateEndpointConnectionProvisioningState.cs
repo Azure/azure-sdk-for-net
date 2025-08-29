@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
 
-        /// <summary> Connection has been provisioned. </summary>
+        /// <summary> Succeeded. </summary>
         public static CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState Succeeded { get; } = new CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary> Connection is being created. </summary>
+        /// <summary> Creating. </summary>
         public static CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState Creating { get; } = new CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary> Connection is being deleted. </summary>
+        /// <summary> Deleting. </summary>
         public static CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState Deleting { get; } = new CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary> Connection provisioning has failed. </summary>
+        /// <summary> Failed. </summary>
         public static CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState Failed { get; } = new CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState left, CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState right) => left.Equals(right);

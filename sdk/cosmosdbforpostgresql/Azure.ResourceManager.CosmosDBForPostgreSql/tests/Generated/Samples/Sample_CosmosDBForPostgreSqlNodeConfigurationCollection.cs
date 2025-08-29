@@ -13,48 +13,14 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 {
-    public partial class Sample_CosmosDBForPostgreSqlPrivateLinkResourceDataCollection
+    public partial class Sample_CosmosDBForPostgreSqlNodeConfigurationCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetsAPrivateLinkResourceForCluster()
+        public async Task CreateOrUpdate_UpdateSingleConfigurationOfNodes()
         {
-            // Generated from example definition: 2023-03-02-preview/PrivateLinkResourcesGet.json
-            // this example is just showing the usage of "PrivateLinkResource_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
-            // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            string clusterName = "testcluster";
-            ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
-
-            // get the collection of this CosmosDBForPostgreSqlPrivateLinkResourceDataResource
-            CosmosDBForPostgreSqlPrivateLinkResourceDataCollection collection = cosmosDBForPostgreSqlCluster.GetAllCosmosDBForPostgreSqlPrivateLinkResourceData();
-
-            // invoke the operation
-            string privateLinkResourceName = "plr";
-            CosmosDBForPostgreSqlPrivateLinkResourceDataResource result = await collection.GetAsync(privateLinkResourceName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CosmosDBForPostgreSqlPrivateLinkResourceDataData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_GetsThePrivateLinkResourcesForCluster()
-        {
-            // Generated from example definition: 2023-03-02-preview/PrivateLinkResourceListByCluster.json
-            // this example is just showing the usage of "PrivateLinkResource_ListByCluster" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ConfigurationUpdateNode.json
+            // this example is just showing the usage of "Configurations_UpdateOnNode" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -69,28 +35,31 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
             CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
-            // get the collection of this CosmosDBForPostgreSqlPrivateLinkResourceDataResource
-            CosmosDBForPostgreSqlPrivateLinkResourceDataCollection collection = cosmosDBForPostgreSqlCluster.GetAllCosmosDBForPostgreSqlPrivateLinkResourceData();
+            // get the collection of this CosmosDBForPostgreSqlNodeConfigurationResource
+            CosmosDBForPostgreSqlNodeConfigurationCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlNodeConfigurations();
 
-            // invoke the operation and iterate over the result
-            await foreach (CosmosDBForPostgreSqlPrivateLinkResourceDataResource item in collection.GetAllAsync())
+            // invoke the operation
+            string configurationName = "array_nulls";
+            CosmosDBForPostgreSqlServerConfigurationData data = new CosmosDBForPostgreSqlServerConfigurationData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CosmosDBForPostgreSqlPrivateLinkResourceDataData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Value = "off",
+            };
+            ArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
+            CosmosDBForPostgreSqlNodeConfigurationResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CosmosDBForPostgreSqlServerConfigurationData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetsAPrivateLinkResourceForCluster()
+        public async Task Get_GetConfigurationDetailsForNode()
         {
-            // Generated from example definition: 2023-03-02-preview/PrivateLinkResourcesGet.json
-            // this example is just showing the usage of "PrivateLinkResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ConfigurationGetNode.json
+            // this example is just showing the usage of "Configurations_GetNode" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -100,27 +69,61 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
             // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
+            string resourceGroupName = "TestResourceGroup";
             string clusterName = "testcluster";
             ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
             CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
-            // get the collection of this CosmosDBForPostgreSqlPrivateLinkResourceDataResource
-            CosmosDBForPostgreSqlPrivateLinkResourceDataCollection collection = cosmosDBForPostgreSqlCluster.GetAllCosmosDBForPostgreSqlPrivateLinkResourceData();
+            // get the collection of this CosmosDBForPostgreSqlNodeConfigurationResource
+            CosmosDBForPostgreSqlNodeConfigurationCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlNodeConfigurations();
 
             // invoke the operation
-            string privateLinkResourceName = "plr";
-            bool result = await collection.ExistsAsync(privateLinkResourceName);
+            string configurationName = "array_nulls";
+            CosmosDBForPostgreSqlNodeConfigurationResource result = await collection.GetAsync(configurationName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CosmosDBForPostgreSqlServerConfigurationData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetConfigurationDetailsForNode()
+        {
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ConfigurationGetNode.json
+            // this example is just showing the usage of "Configurations_GetNode" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
+            // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "TestResourceGroup";
+            string clusterName = "testcluster";
+            ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
+
+            // get the collection of this CosmosDBForPostgreSqlNodeConfigurationResource
+            CosmosDBForPostgreSqlNodeConfigurationCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlNodeConfigurations();
+
+            // invoke the operation
+            string configurationName = "array_nulls";
+            bool result = await collection.ExistsAsync(configurationName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetsAPrivateLinkResourceForCluster()
+        public async Task GetIfExists_GetConfigurationDetailsForNode()
         {
-            // Generated from example definition: 2023-03-02-preview/PrivateLinkResourcesGet.json
-            // this example is just showing the usage of "PrivateLinkResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ConfigurationGetNode.json
+            // this example is just showing the usage of "Configurations_GetNode" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -130,18 +133,18 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
             // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
+            string resourceGroupName = "TestResourceGroup";
             string clusterName = "testcluster";
             ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
             CosmosDBForPostgreSqlClusterResource cosmosDBForPostgreSqlCluster = client.GetCosmosDBForPostgreSqlClusterResource(cosmosDBForPostgreSqlClusterResourceId);
 
-            // get the collection of this CosmosDBForPostgreSqlPrivateLinkResourceDataResource
-            CosmosDBForPostgreSqlPrivateLinkResourceDataCollection collection = cosmosDBForPostgreSqlCluster.GetAllCosmosDBForPostgreSqlPrivateLinkResourceData();
+            // get the collection of this CosmosDBForPostgreSqlNodeConfigurationResource
+            CosmosDBForPostgreSqlNodeConfigurationCollection collection = cosmosDBForPostgreSqlCluster.GetCosmosDBForPostgreSqlNodeConfigurations();
 
             // invoke the operation
-            string privateLinkResourceName = "plr";
-            NullableResponse<CosmosDBForPostgreSqlPrivateLinkResourceDataResource> response = await collection.GetIfExistsAsync(privateLinkResourceName);
-            CosmosDBForPostgreSqlPrivateLinkResourceDataResource result = response.HasValue ? response.Value : null;
+            string configurationName = "array_nulls";
+            NullableResponse<CosmosDBForPostgreSqlNodeConfigurationResource> response = await collection.GetIfExistsAsync(configurationName);
+            CosmosDBForPostgreSqlNodeConfigurationResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -151,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CosmosDBForPostgreSqlPrivateLinkResourceDataData resourceData = result.Data;
+                CosmosDBForPostgreSqlServerConfigurationData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

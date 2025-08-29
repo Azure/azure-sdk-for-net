@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    /// <summary> The response of a ServerConfiguration list operation. </summary>
-    internal partial class ServerConfigurationListResult
+    /// <summary> The response of a Cluster list operation. </summary>
+    internal partial class CosmosDBForPostgreSqlClusterListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,34 +46,34 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ServerConfigurationListResult"/>. </summary>
-        /// <param name="value"> The ServerConfiguration items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterListResult"/>. </summary>
+        /// <param name="value"> The Cluster items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ServerConfigurationListResult(IEnumerable<CosmosDBForPostgreSqlServerConfigurationData> value)
+        internal CosmosDBForPostgreSqlClusterListResult(IEnumerable<CosmosDBForPostgreSqlClusterData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerConfigurationListResult"/>. </summary>
-        /// <param name="value"> The ServerConfiguration items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterListResult"/>. </summary>
+        /// <param name="value"> The Cluster items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerConfigurationListResult(IReadOnlyList<CosmosDBForPostgreSqlServerConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBForPostgreSqlClusterListResult(IReadOnlyList<CosmosDBForPostgreSqlClusterData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerConfigurationListResult"/> for deserialization. </summary>
-        internal ServerConfigurationListResult()
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterListResult"/> for deserialization. </summary>
+        internal CosmosDBForPostgreSqlClusterListResult()
         {
         }
 
-        /// <summary> The ServerConfiguration items on this page. </summary>
-        public IReadOnlyList<CosmosDBForPostgreSqlServerConfigurationData> Value { get; }
+        /// <summary> The Cluster items on this page. </summary>
+        public IReadOnlyList<CosmosDBForPostgreSqlClusterData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
