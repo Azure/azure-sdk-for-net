@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAttestationAtIndividualResourceScope()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2022-09-01/examples/Attestations_GetResourceScope.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/Attestations_GetResourceScope.json
             // this example is just showing the usage of "Attestations_GetAtResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAttestationAtIndividualResourceScope()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2022-09-01/examples/Attestations_DeleteResourceScope.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/Attestations_DeleteResourceScope.json
             // this example is just showing the usage of "Attestations_DeleteAtResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAttestationAtIndividualResourceScope()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2022-09-01/examples/Attestations_CreateResourceScope.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/Attestations_CreateResourceScope.json
             // this example is just showing the usage of "Attestations_CreateOrUpdateAtResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

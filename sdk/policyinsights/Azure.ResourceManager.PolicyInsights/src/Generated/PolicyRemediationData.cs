@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="policyAssignmentId"> The resource ID of the policy assignment that should be remediated. </param>
         /// <param name="policyDefinitionReferenceId"> The policy definition reference ID of the individual definition that should be remediated. Required when the policy assignment being remediated assigns a policy set definition. </param>
         /// <param name="resourceDiscoveryMode"> The way resources to remediate are discovered. Defaults to ExistingNonCompliant if not specified. </param>
-        /// <param name="provisioningState"> The status of the remediation. </param>
+        /// <param name="provisioningState"> The status of the remediation. This refers to the entire remediation task, not individual deployments. Allowed values are Evaluating, Canceled, Cancelling, Failed, Complete, or Succeeded. </param>
         /// <param name="createdOn"> The time at which the remediation was created. </param>
         /// <param name="lastUpdatedOn"> The time at which the remediation was last updated. </param>
         /// <param name="filter"> The filters that will be applied to determine which resources to remediate. </param>
@@ -99,25 +99,14 @@ namespace Azure.ResourceManager.PolicyInsights
         public string PolicyDefinitionReferenceId { get; set; }
         /// <summary> The way resources to remediate are discovered. Defaults to ExistingNonCompliant if not specified. </summary>
         public ResourceDiscoveryMode? ResourceDiscoveryMode { get; set; }
-        /// <summary> The status of the remediation. </summary>
+        /// <summary> The status of the remediation. This refers to the entire remediation task, not individual deployments. Allowed values are Evaluating, Canceled, Cancelling, Failed, Complete, or Succeeded. </summary>
         public string ProvisioningState { get; }
         /// <summary> The time at which the remediation was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The time at which the remediation was last updated. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> The filters that will be applied to determine which resources to remediate. </summary>
-        internal RemediationFilters Filter { get; set; }
-        /// <summary> The resource locations that will be remediated. </summary>
-        public IList<AzureLocation> FilterLocations
-        {
-            get
-            {
-                if (Filter is null)
-                    Filter = new RemediationFilters();
-                return Filter.Locations;
-            }
-        }
-
+        public RemediationFilters Filter { get; set; }
         /// <summary> The deployment status summary for all deployments created by the remediation. </summary>
         public RemediationDeploymentSummary DeploymentStatus { get; }
         /// <summary> The remediation status message. Provides additional details regarding the state of the remediation. </summary>
