@@ -21,7 +21,7 @@ Your goal is to help guide the user to generate SDK and build SDK locally for Ty
 - If the user does not have the repository cloned, guide user to clone the repository from GitHub.
 
 ### Step 4: Validate repository path
-- Check if the provided path is valid. If not, prompt the user to provide a valid path.
+- Check if the provided repository path is valid. If not, prompt the user to provide a valid path for the repository's location.
 
 ### Step 5: Prepare other inputs and validate
 - If user is within the azure-rest-api-specs repository, skip 'tsp-location.yaml' input and use the path to 'tspconfig.yaml' file.
