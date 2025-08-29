@@ -202,11 +202,6 @@ namespace Azure.Identity
                 CreateAzureDeveloperCliCredential(),
                 CreateBrokerCredential()
             ];
-
-            if (TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
-            {
-                chain.Add(CreateBrokerCredential(brokerOptions));
-            }
             return chain.ToArray();
         }
 
