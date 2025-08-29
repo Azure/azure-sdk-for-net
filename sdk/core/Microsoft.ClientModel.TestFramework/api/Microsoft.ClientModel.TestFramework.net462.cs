@@ -18,8 +18,6 @@ namespace Microsoft.ClientModel.TestFramework
         protected internal virtual object CreateProxyFromClient(System.Type clientType, object client, System.Collections.Generic.IEnumerable<Castle.DynamicProxy.IInterceptor>? preInterceptors) { throw null; }
         public TClient CreateProxyFromClient<TClient>(TClient client) where TClient : class { throw null; }
         protected TClient CreateProxyFromClient<TClient>(TClient client, System.Collections.Generic.IEnumerable<Castle.DynamicProxy.IInterceptor> preInterceptors) where TClient : class { throw null; }
-        protected internal virtual object CreateProxyFromOperationResult(System.Type operationType, object operation) { throw null; }
-        protected internal T CreateProxyFromOperationResult<T>(T operation) where T : System.ClientModel.Primitives.OperationResult { throw null; }
         protected T GetOriginal<T>(T proxied) { throw null; }
         [NUnit.Framework.TearDownAttribute]
         public virtual void GlobalTimeoutTearDown() { }
@@ -55,10 +53,6 @@ namespace Microsoft.ClientModel.TestFramework
     {
         object Original { get; }
     }
-    public partial interface IProxiedOperationResult
-    {
-        object Original { get; }
-    }
     [System.AttributeUsageAttribute(System.AttributeTargets.Assembly | System.AttributeTargets.Class | System.AttributeTargets.Method, AllowMultiple=false, Inherited=true)]
     public partial class LiveOnlyAttribute : NUnit.Framework.NUnitAttribute, NUnit.Framework.Interfaces.IApplyToTest
     {
@@ -87,18 +81,40 @@ namespace Microsoft.ClientModel.TestFramework
     }
     public static partial class MicrosoftClientModelTestFrameworkModelFactory
     {
-        public static Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer BodyKeySanitizer(string jsonPath = null, string value = null, string regex = null, string groupForReplace = null) { throw null; }
-        public static Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer BodyRegexSanitizer(string regex = null, string value = null, string groupForReplace = null, Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition condition = null) { throw null; }
-        public static Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition HeaderCondition(string key = null, string valueRegex = null) { throw null; }
-        public static Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer HeaderRegexSanitizer(string key = null, string value = null, string regex = null, string groupForReplace = null) { throw null; }
-        public static Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform HeaderTransform(string key = null, string value = null, Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition condition = null) { throw null; }
-        public static Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions ProxyOptions(Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransport transport = null) { throw null; }
-        public static Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransport ProxyOptionsTransport(bool allowAutoRedirect = false, string tlsValidationCert = null, System.Collections.Generic.IEnumerable<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransportCertificationsItem> certificates = null) { throw null; }
-        public static Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransportCertificationsItem ProxyOptionsTransportCertificationsItem(string pemValue = null, string pemKey = null) { throw null; }
-        public static Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition SanitizerCondition(string uriRegex = null, Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition responseHeader = null) { throw null; }
-        public static Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove SanitizersToRemove(System.Collections.Generic.IEnumerable<string> sanitizers = null) { throw null; }
-        public static Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation TestProxyStartInformation(string xRecordingFile = null, string xRecordingAssetsFiles = null) { throw null; }
-        public static Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer UriRegexSanitizer(string regex = null, string value = null, string groupForReplace = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition ApplyCondition(string uriRegex = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizer BodyKeySanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizerBody body = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizerBody BodyKeySanitizerBody(string jsonPath = null, string value = null, string regex = null, string groupForReplace = null, Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition condition = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizer BodyRegexSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizerBody body = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizerBody BodyRegexSanitizerBody(string value = null, string regex = null, string groupForReplace = null, Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition condition = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizer BodyStringSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody body = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody BodyStringSanitizerBody(string target = null, string value = null, Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition condition = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher CustomDefaultMatcher(bool? compareBodies = default(bool?), string excludedHeaders = null, string ignoredHeaders = null, bool? ignoreQueryOrdering = default(bool?), string ignoredQueryParameters = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizer GeneralRegexSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizerBody body = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizerBody GeneralRegexSanitizerBody(string value = null, string regex = null, string groupForReplace = null, Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition condition = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizer GeneralStringSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizerBody body = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizerBody GeneralStringSanitizerBody(string target = null, string value = null, Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition condition = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizer HeaderRegexSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizerBody body = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizerBody HeaderRegexSanitizerBody(string key = null, string value = null, string regex = null, string groupForReplace = null, Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition condition = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizer HeaderStringSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizerBody body = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizerBody HeaderStringSanitizerBody(string key = null, string target = null, string value = null, Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition condition = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.OAuthResponseSanitizer OAuthResponseSanitizer() { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.RecordingOptions RecordingOptions(bool? handleRedirects = default(bool?), string contextDirectory = null, Microsoft.ClientModel.TestFramework.TestProxy.Admin.StoreType? assetsStore = default(Microsoft.ClientModel.TestFramework.TestProxy.Admin.StoreType?), Microsoft.ClientModel.TestFramework.TestProxy.Admin.TransportCustomizations transport = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizer RegexEntrySanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizerBody body = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizerBody RegexEntrySanitizerBody(Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntryValues target = Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntryValues.Body, string regex = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemovedSanitizers RemovedSanitizers(System.Collections.Generic.IEnumerable<string> removed = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizer RemoveHeaderSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizerBody body = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizerBody RemoveHeaderSanitizerBody(string headersForRemoval = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition SanitizerAddition(string name = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerList SanitizerList(System.Collections.Generic.IEnumerable<string> sanitizers = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.TestProxyCertificate TestProxyCertificate(string pemValue = null, string pemKey = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation TestProxyStartInformation(string xRecordingFile = null, string xRecordingAssetsFile = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.TransportCustomizations TransportCustomizations(bool? allowAutoRedirect = default(bool?), string tlsValidationCert = null, string tlsValidationCertHost = null, System.Collections.Generic.IEnumerable<Microsoft.ClientModel.TestFramework.TestProxy.Admin.TestProxyCertificate> certificates = null, int? playbackResponseTime = default(int?)) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizer UriRegexSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizerBody body = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizerBody UriRegexSanitizerBody(string value = null, string regex = null, string groupForReplace = null, Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition condition = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizer UriStringSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizerBody body = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizerBody UriStringSanitizerBody(string target = null, string value = null, Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition condition = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizer UriSubscriptionIdSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizerBody body = null) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizerBody UriSubscriptionIdSanitizerBody(string value = null, Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition condition = null) { throw null; }
     }
     public partial class MockCredential : System.ClientModel.AuthenticationTokenProvider
     {
@@ -135,16 +151,15 @@ namespace Microsoft.ClientModel.TestFramework
     public abstract partial class RecordedTestBase : Microsoft.ClientModel.TestFramework.ClientTestBase
     {
         public const string AssetsJson = "assets.json";
-        public System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform> HeaderTransforms;
         public System.Collections.Generic.HashSet<string> IgnoredHeaders;
         public System.Collections.Generic.HashSet<string> IgnoredQueryParameters;
         public const string SanitizeValue = "Sanitized";
         protected RecordedTestBase(bool isAsync, Microsoft.ClientModel.TestFramework.RecordedTestMode? mode = default(Microsoft.ClientModel.TestFramework.RecordedTestMode?)) : base (default(bool)) { }
         public virtual string? AssetsJsonPath { get { throw null; } }
-        public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer> BodyKeySanitizers { get { throw null; } }
-        public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer> BodyRegexSanitizers { get { throw null; } }
+        public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizer> BodyKeySanitizers { get { throw null; } }
+        public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizer> BodyRegexSanitizers { get { throw null; } }
         public bool CompareBodies { get { throw null; } set { } }
-        public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer> HeaderRegexSanitizers { get { throw null; } }
+        public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizer> HeaderRegexSanitizers { get { throw null; } }
         public virtual System.Collections.Generic.List<string> JsonPathSanitizers { get { throw null; } }
         public Microsoft.ClientModel.TestFramework.RecordedTestMode Mode { get { throw null; } set { } }
         public virtual Microsoft.ClientModel.TestFramework.TestRecording? Recording { get { throw null; } }
@@ -155,11 +170,10 @@ namespace Microsoft.ClientModel.TestFramework
         public bool SaveDebugRecordingsOnFailure { get { throw null; } set { } }
         protected Microsoft.ClientModel.TestFramework.TestRetryHelper TestRetryHelper { get { throw null; } }
         protected override System.DateTime TestStartTime { get { throw null; } }
-        public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer> UriRegexSanitizers { get { throw null; } }
+        public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizer> UriRegexSanitizers { get { throw null; } }
         protected bool UseLocalDebugProxy { get { throw null; } set { } }
         protected bool ValidateClientInstrumentation { get { throw null; } set { } }
         protected internal override object CreateProxyFromClient(System.Type clientType, object client, System.Collections.Generic.IEnumerable<Castle.DynamicProxy.IInterceptor>? preInterceptors) { throw null; }
-        protected internal override object CreateProxyFromOperationResult(System.Type operationType, object operation) { throw null; }
         protected System.Threading.Tasks.Task<Microsoft.ClientModel.TestFramework.TestRecording> CreateTestRecordingAsync(Microsoft.ClientModel.TestFramework.RecordedTestMode mode, string sessionFile) { throw null; }
         public static System.Threading.Tasks.Task Delay(Microsoft.ClientModel.TestFramework.RecordedTestMode mode, int milliseconds = 1000, int? playbackDelayMilliseconds = default(int?)) { throw null; }
         public System.Threading.Tasks.Task Delay(int milliseconds = 1000, int? playbackDelayMilliseconds = default(int?)) { throw null; }
@@ -168,7 +182,7 @@ namespace Microsoft.ClientModel.TestFramework
         [NUnit.Framework.OneTimeSetUpAttribute]
         public void InitializeRecordedTestClass() { }
         public T InstrumentClientOptions<T>(T clientOptions, Microsoft.ClientModel.TestFramework.TestRecording? recording = null) where T : System.ClientModel.Primitives.ClientPipelineOptions { throw null; }
-        protected System.Threading.Tasks.Task SetProxyOptionsAsync(Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions options) { throw null; }
+        protected System.Threading.Tasks.Task SetProxyOptionsAsync(Microsoft.ClientModel.TestFramework.TestProxy.Admin.RecordingOptions options) { throw null; }
         [NUnit.Framework.SetUpAttribute]
         public virtual System.Threading.Tasks.Task StartTestRecordingAsync() { throw null; }
         [NUnit.Framework.TearDownAttribute]
@@ -384,18 +398,6 @@ namespace Microsoft.ClientModel.TestFramework
         public TestEnvVar(System.Collections.Generic.Dictionary<string, string> values) : base (default(string), default(string), default(System.Threading.SemaphoreSlim)) { }
         public TestEnvVar(string name, string value) : base (default(string), default(string), default(System.Threading.SemaphoreSlim)) { }
     }
-    public partial class TestFrameworkClient
-    {
-        protected TestFrameworkClient() { }
-        public TestFrameworkClient(System.Uri endpoint) { }
-        public TestFrameworkClient(System.Uri endpoint, Microsoft.ClientModel.TestFramework.TestFrameworkClientOptions options) { }
-        public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        public virtual Microsoft.ClientModel.TestFramework.TestProxy.TestProxyClient GetTestProxyClient() { throw null; }
-    }
-    public partial class TestFrameworkClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
-    {
-        public TestFrameworkClientOptions() { }
-    }
     public partial class TestProxyProcess
     {
         internal TestProxyProcess() { }
@@ -492,6 +494,7 @@ namespace Microsoft.ClientModel.TestFramework.Mocks
         protected void Dispose(bool disposing) { }
         public void SetIsError(bool value) { }
         public Microsoft.ClientModel.TestFramework.Mocks.MockPipelineResponse WithContent(byte[] content) { throw null; }
+        public Microsoft.ClientModel.TestFramework.Mocks.MockPipelineResponse WithContent(System.ClientModel.BinaryContent content) { throw null; }
         public Microsoft.ClientModel.TestFramework.Mocks.MockPipelineResponse WithContent(string content) { throw null; }
         public Microsoft.ClientModel.TestFramework.Mocks.MockPipelineResponse WithHeader(string name, string value) { throw null; }
     }
@@ -510,189 +513,16 @@ namespace Microsoft.ClientModel.TestFramework.Mocks
 }
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    public partial class BodyKeySanitizer : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer>
-    {
-        public BodyKeySanitizer(string jsonPath) { }
-        public string GroupForReplace { get { throw null; } set { } }
-        public string JsonPath { get { throw null; } }
-        public string Regex { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator System.ClientModel.BinaryContent (Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer bodyKeySanitizer) { throw null; }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class BodyRegexSanitizer : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer>
-    {
-        public BodyRegexSanitizer(string regex) { }
-        public Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition Condition { get { throw null; } set { } }
-        public string GroupForReplace { get { throw null; } set { } }
-        public string Regex { get { throw null; } }
-        public string Value { get { throw null; } set { } }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator System.ClientModel.BinaryContent (Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer bodyRegexSanitizer) { throw null; }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class HeaderCondition : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition>
-    {
-        public HeaderCondition(string key, string valueRegex) { }
-        public string Key { get { throw null; } }
-        public string ValueRegex { get { throw null; } }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class HeaderRegexSanitizer : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer>
-    {
-        public HeaderRegexSanitizer(string key) { }
-        public string GroupForReplace { get { throw null; } set { } }
-        public string Key { get { throw null; } }
-        public string Regex { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-        public static Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer CreateWithQueryParameter(string headerKey, string queryParameter, string sanitizedValue) { throw null; }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator System.ClientModel.BinaryContent (Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer headerRegexSanitizer) { throw null; }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class HeaderTransform : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform>
-    {
-        public HeaderTransform(string key, string value) { }
-        public Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition Condition { get { throw null; } set { } }
-        public string Key { get { throw null; } }
-        public string Value { get { throw null; } }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator System.ClientModel.BinaryContent (Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform headerTransform) { throw null; }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ProxyOptions : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions>
-    {
-        public ProxyOptions(Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransport transport) { }
-        public Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransport Transport { get { throw null; } }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator System.ClientModel.BinaryContent (Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions proxyOptions) { throw null; }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ProxyOptionsTransport : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransport>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransport>
-    {
-        public ProxyOptionsTransport(bool allowAutoRedirect, string tlsValidationCert, System.Collections.Generic.IEnumerable<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransportCertificationsItem> certificates) { }
-        public bool AllowAutoRedirect { get { throw null; } }
-        public System.Collections.Generic.IList<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransportCertificationsItem> Certificates { get { throw null; } }
-        public string TlsValidationCert { get { throw null; } }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransport JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransport PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransport System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransport>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransport>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransport System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransport>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransport>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransport>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ProxyOptionsTransportCertificationsItem : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransportCertificationsItem>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransportCertificationsItem>
-    {
-        public ProxyOptionsTransportCertificationsItem(string pemValue, string pemKey) { }
-        public string PemKey { get { throw null; } }
-        public string PemValue { get { throw null; } }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransportCertificationsItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransportCertificationsItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransportCertificationsItem System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransportCertificationsItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransportCertificationsItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransportCertificationsItem System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransportCertificationsItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransportCertificationsItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransportCertificationsItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SanitizerCondition : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition>
-    {
-        public SanitizerCondition() { }
-        public Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition ResponseHeader { get { throw null; } set { } }
-        public string UriRegex { get { throw null; } set { } }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SanitizersToRemove : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove>
-    {
-        public SanitizersToRemove(System.Collections.Generic.IEnumerable<string> sanitizers) { }
-        public System.Collections.Generic.IList<string> Sanitizers { get { throw null; } }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator System.ClientModel.BinaryContent (Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove sanitizersToRemove) { throw null; }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class TestProxyClient
     {
-        protected TestProxyClient() { }
+        public TestProxyClient() { }
+        public TestProxyClient(System.Uri endpoint, Microsoft.ClientModel.TestFramework.TestProxy.TestProxyClientOptions options) { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        public virtual System.ClientModel.ClientResult AddTransform(string transformType, System.BinaryData transform, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult AddTransform(string transformType, System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddTransformAsync(string transformType, System.BinaryData transform, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddTransformAsync(string transformType, System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult RemoveSanitizers(string recordingId, Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove sanitizers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult RemoveSanitizers(string recordingId, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> RemoveSanitizersAsync(string recordingId, Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove sanitizers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> RemoveSanitizersAsync(string recordingId, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult SetRecordingTransportOptions(string recordingId, Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions proxyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult SetRecordingTransportOptions(string recordingId, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> SetRecordingTransportOptionsAsync(string recordingId, Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions proxyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> SetRecordingTransportOptionsAsync(string recordingId, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult<System.Collections.Generic.IReadOnlyDictionary<string, string>> StartPlayback(Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult StartPlayback(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<System.Collections.Generic.IReadOnlyDictionary<string, string>>> StartPlaybackAsync(Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> StartPlaybackAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.TestProxyAdminClient GetTestProxyAdminClient() { throw null; }
+        public virtual System.ClientModel.ClientResult<System.Collections.Generic.IReadOnlyDictionary<string, string>> StartPlayback(Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation body, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult StartPlayback(System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<System.Collections.Generic.IReadOnlyDictionary<string, string>>> StartPlaybackAsync(Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation body, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> StartPlaybackAsync(System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult StartRecord(Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult StartRecord(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> StartRecordAsync(Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -713,7 +543,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
     public partial class TestProxyStartInformation : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation>
     {
         public TestProxyStartInformation(string xRecordingFile) { }
-        public string XRecordingAssetsFiles { get { throw null; } set { } }
+        public string XRecordingAssetsFile { get { throw null; } set { } }
         public string XRecordingFile { get { throw null; } }
         protected virtual Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -726,22 +556,550 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class UriRegexSanitizer : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer>
+}
+namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
+{
+    public partial class ApplyCondition : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition>
     {
-        public UriRegexSanitizer(string regex) { }
-        public string GroupForReplace { get { throw null; } set { } }
-        public string Regex { get { throw null; } }
-        public string Value { get { throw null; } set { } }
-        public static Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer CreateWithQueryParameter(string queryParameter, string sanitizedValue) { throw null; }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public ApplyCondition(string uriRegex) { }
+        public string UriRegex { get { throw null; } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator System.ClientModel.BinaryContent (Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer uriRegexSanitizer) { throw null; }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BodyKeySanitizer : Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition, System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizer>
+    {
+        public BodyKeySanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizerBody body) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizerBody Body { get { throw null; } }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BodyKeySanitizerBody : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizerBody>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizerBody>
+    {
+        public BodyKeySanitizerBody(string jsonPath) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition Condition { get { throw null; } set { } }
+        public string GroupForReplace { get { throw null; } set { } }
+        public string JsonPath { get { throw null; } }
+        public string Regex { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizerBody JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizerBody PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizerBody System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizerBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizerBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizerBody System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizerBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizerBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyKeySanitizerBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BodyRegexSanitizer : Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition, System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizer>
+    {
+        public BodyRegexSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizerBody body) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizerBody Body { get { throw null; } }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BodyRegexSanitizerBody : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizerBody>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizerBody>
+    {
+        public BodyRegexSanitizerBody() { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition Condition { get { throw null; } set { } }
+        public string GroupForReplace { get { throw null; } set { } }
+        public string Regex { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizerBody JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizerBody PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizerBody System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizerBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizerBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizerBody System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizerBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizerBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyRegexSanitizerBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BodyStringSanitizer : Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition, System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizer>
+    {
+        public BodyStringSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody body) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody Body { get { throw null; } }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BodyStringSanitizerBody : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody>
+    {
+        public BodyStringSanitizerBody(string target) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition Condition { get { throw null; } set { } }
+        public string Target { get { throw null; } }
+        public string Value { get { throw null; } set { } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.BodyStringSanitizerBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CustomDefaultMatcher : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher>
+    {
+        public CustomDefaultMatcher() { }
+        public bool? CompareBodies { get { throw null; } set { } }
+        public string ExcludedHeaders { get { throw null; } set { } }
+        public string IgnoredHeaders { get { throw null; } set { } }
+        public string IgnoredQueryParameters { get { throw null; } set { } }
+        public bool? IgnoreQueryOrdering { get { throw null; } set { } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator System.ClientModel.BinaryContent (Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher customDefaultMatcher) { throw null; }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class GeneralRegexSanitizer : Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition, System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizer>
+    {
+        public GeneralRegexSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizerBody body) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizerBody Body { get { throw null; } }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class GeneralRegexSanitizerBody : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizerBody>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizerBody>
+    {
+        public GeneralRegexSanitizerBody() { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition Condition { get { throw null; } set { } }
+        public string GroupForReplace { get { throw null; } set { } }
+        public string Regex { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizerBody JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizerBody PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizerBody System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizerBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizerBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizerBody System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizerBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizerBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralRegexSanitizerBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class GeneralStringSanitizer : Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition, System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizer>
+    {
+        public GeneralStringSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizerBody body) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizerBody Body { get { throw null; } }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class GeneralStringSanitizerBody : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizerBody>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizerBody>
+    {
+        public GeneralStringSanitizerBody(string target) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition Condition { get { throw null; } set { } }
+        public string Target { get { throw null; } }
+        public string Value { get { throw null; } set { } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizerBody JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizerBody PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizerBody System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizerBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizerBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizerBody System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizerBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizerBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.GeneralStringSanitizerBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HeaderRegexSanitizer : Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition, System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizer>
+    {
+        public HeaderRegexSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizerBody body) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizerBody Body { get { throw null; } }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizer CreateWithQueryParameter(string headerKey, string queryParameter, string sanitizedValue) { throw null; }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HeaderRegexSanitizerBody : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizerBody>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizerBody>
+    {
+        public HeaderRegexSanitizerBody(string key) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition Condition { get { throw null; } set { } }
+        public string GroupForReplace { get { throw null; } set { } }
+        public string Key { get { throw null; } }
+        public string Regex { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizerBody JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizerBody PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizerBody System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizerBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizerBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizerBody System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizerBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizerBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizerBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HeaderStringSanitizer : Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition, System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizer>
+    {
+        public HeaderStringSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizerBody body) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizerBody Body { get { throw null; } }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HeaderStringSanitizerBody : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizerBody>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizerBody>
+    {
+        public HeaderStringSanitizerBody(string key, string target) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition Condition { get { throw null; } set { } }
+        public string Key { get { throw null; } }
+        public string Target { get { throw null; } }
+        public string Value { get { throw null; } set { } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizerBody JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizerBody PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizerBody System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizerBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizerBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizerBody System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizerBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizerBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderStringSanitizerBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum MatcherType
+    {
+        BodilessMatcher = 0,
+        CustomDefaultMatcher = 1,
+        HeaderlessMatcher = 2,
+    }
+    public partial class OAuthResponseSanitizer : Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition, System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.OAuthResponseSanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.OAuthResponseSanitizer>
+    {
+        public OAuthResponseSanitizer() { }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.OAuthResponseSanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.OAuthResponseSanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.OAuthResponseSanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.OAuthResponseSanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.OAuthResponseSanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.OAuthResponseSanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.OAuthResponseSanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RecordingOptions : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RecordingOptions>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RecordingOptions>
+    {
+        public RecordingOptions() { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.StoreType? AssetsStore { get { throw null; } set { } }
+        public string ContextDirectory { get { throw null; } set { } }
+        public bool? HandleRedirects { get { throw null; } set { } }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.TransportCustomizations Transport { get { throw null; } set { } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.RecordingOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator System.ClientModel.BinaryContent (Microsoft.ClientModel.TestFramework.TestProxy.Admin.RecordingOptions recordingOptions) { throw null; }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.RecordingOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.RecordingOptions System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RecordingOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RecordingOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.RecordingOptions System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RecordingOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RecordingOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RecordingOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RegexEntrySanitizer : Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition, System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizer>
+    {
+        public RegexEntrySanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizerBody body) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizerBody Body { get { throw null; } }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RegexEntrySanitizerBody : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizerBody>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizerBody>
+    {
+        public RegexEntrySanitizerBody(Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntryValues target, string regex) { }
+        public string Regex { get { throw null; } }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntryValues Target { get { throw null; } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizerBody JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizerBody PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizerBody System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizerBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizerBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizerBody System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizerBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizerBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RegexEntrySanitizerBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum RegexEntryValues
+    {
+        Body = 0,
+        Header = 1,
+        Uri = 2,
+    }
+    public partial class RemovedSanitizers : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemovedSanitizers>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemovedSanitizers>
+    {
+        internal RemovedSanitizers() { }
+        public System.Collections.Generic.IList<string> Removed { get { throw null; } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemovedSanitizers JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemovedSanitizers (System.ClientModel.ClientResult result) { throw null; }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemovedSanitizers PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemovedSanitizers System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemovedSanitizers>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemovedSanitizers>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemovedSanitizers System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemovedSanitizers>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemovedSanitizers>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemovedSanitizers>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RemoveHeaderSanitizer : Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition, System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizer>
+    {
+        public RemoveHeaderSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizerBody body) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizerBody Body { get { throw null; } }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RemoveHeaderSanitizerBody : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizerBody>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizerBody>
+    {
+        public RemoveHeaderSanitizerBody(string headersForRemoval) { }
+        public string HeadersForRemoval { get { throw null; } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizerBody JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizerBody PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizerBody System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizerBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizerBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizerBody System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizerBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizerBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemoveHeaderSanitizerBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class SanitizerAddition : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition>
+    {
+        internal SanitizerAddition() { }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SanitizerList : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerList>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerList>
+    {
+        public SanitizerList(System.Collections.Generic.IEnumerable<string> sanitizers) { }
+        public System.Collections.Generic.IList<string> Sanitizers { get { throw null; } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerList JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator System.ClientModel.BinaryContent (Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerList sanitizerList) { throw null; }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerList PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerList System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerList System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerList>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerList>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum StoreType
+    {
+        GitStore = 0,
+    }
+    public partial class TestProxyAdminClient
+    {
+        protected TestProxyAdminClient() { }
+        public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
+        public virtual System.ClientModel.ClientResult AddSanitizers(System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.ClientResult AddSanitizers(System.Collections.Generic.IEnumerable<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition> sanitizers, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddSanitizersAsync(System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddSanitizersAsync(System.Collections.Generic.IEnumerable<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition> sanitizers, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemovedSanitizers> RemoveSanitizers(Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerList sanitizers, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult RemoveSanitizers(System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Microsoft.ClientModel.TestFramework.TestProxy.Admin.RemovedSanitizers>> RemoveSanitizersAsync(Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerList sanitizers, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> RemoveSanitizersAsync(System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.ClientResult SetMatcher(Microsoft.ClientModel.TestFramework.TestProxy.Admin.MatcherType matcherType, Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher matcher = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult SetMatcher(string matcherType, System.ClientModel.BinaryContent content = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> SetMatcherAsync(Microsoft.ClientModel.TestFramework.TestProxy.Admin.MatcherType matcherType, Microsoft.ClientModel.TestFramework.TestProxy.Admin.CustomDefaultMatcher matcher = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> SetMatcherAsync(string matcherType, System.ClientModel.BinaryContent content = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.ClientResult SetRecordingOptions(Microsoft.ClientModel.TestFramework.TestProxy.Admin.RecordingOptions body, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult SetRecordingOptions(System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> SetRecordingOptionsAsync(Microsoft.ClientModel.TestFramework.TestProxy.Admin.RecordingOptions body, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> SetRecordingOptionsAsync(System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+    }
+    public partial class TestProxyCertificate : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.TestProxyCertificate>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.TestProxyCertificate>
+    {
+        public TestProxyCertificate(string pemValue, string pemKey) { }
+        public string PemKey { get { throw null; } }
+        public string PemValue { get { throw null; } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.TestProxyCertificate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.TestProxyCertificate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.TestProxyCertificate System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.TestProxyCertificate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.TestProxyCertificate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.TestProxyCertificate System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.TestProxyCertificate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.TestProxyCertificate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.TestProxyCertificate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TransportCustomizations : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.TransportCustomizations>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.TransportCustomizations>
+    {
+        public TransportCustomizations() { }
+        public bool? AllowAutoRedirect { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Microsoft.ClientModel.TestFramework.TestProxy.Admin.TestProxyCertificate> Certificates { get { throw null; } }
+        public int? PlaybackResponseTime { get { throw null; } set { } }
+        public string TLSValidationCert { get { throw null; } set { } }
+        public string TLSValidationCertHost { get { throw null; } set { } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.TransportCustomizations JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.TransportCustomizations PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.TransportCustomizations System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.TransportCustomizations>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.TransportCustomizations>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.TransportCustomizations System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.TransportCustomizations>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.TransportCustomizations>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.TransportCustomizations>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class UriRegexSanitizer : Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition, System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizer>
+    {
+        public UriRegexSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizerBody body) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizerBody Body { get { throw null; } }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizer CreateWithQueryParameter(string queryParameter, string sanitizedValue) { throw null; }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class UriRegexSanitizerBody : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizerBody>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizerBody>
+    {
+        public UriRegexSanitizerBody() { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition Condition { get { throw null; } set { } }
+        public string GroupForReplace { get { throw null; } set { } }
+        public string Regex { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizerBody JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizerBody PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizerBody System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizerBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizerBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizerBody System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizerBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizerBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizerBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class UriStringSanitizer : Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition, System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizer>
+    {
+        public UriStringSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizerBody body) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizerBody Body { get { throw null; } }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class UriStringSanitizerBody : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizerBody>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizerBody>
+    {
+        public UriStringSanitizerBody(string target) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition Condition { get { throw null; } set { } }
+        public string Target { get { throw null; } }
+        public string Value { get { throw null; } set { } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizerBody JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizerBody PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizerBody System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizerBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizerBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizerBody System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizerBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizerBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriStringSanitizerBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class UriSubscriptionIdSanitizer : Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition, System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizer>
+    {
+        public UriSubscriptionIdSanitizer(Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizerBody body) { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizerBody Body { get { throw null; } }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizer System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizer System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class UriSubscriptionIdSanitizerBody : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizerBody>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizerBody>
+    {
+        public UriSubscriptionIdSanitizerBody() { }
+        public Microsoft.ClientModel.TestFramework.TestProxy.Admin.ApplyCondition Condition { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizerBody JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizerBody PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizerBody System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizerBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizerBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizerBody System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizerBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizerBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriSubscriptionIdSanitizerBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
