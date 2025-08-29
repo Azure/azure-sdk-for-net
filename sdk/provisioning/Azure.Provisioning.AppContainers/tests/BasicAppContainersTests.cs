@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.OperationalInsights;
 using Azure.Provisioning.Tests;
@@ -10,15 +9,11 @@ using NUnit.Framework;
 
 namespace Azure.Provisioning.AppContainers.Tests;
 
-public class BasicAppContainersTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicAppContainersTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.app/container-app-create/main.bicep")]
-    public async Task CreateContainerApp()
+    internal static Trycep CreateContainerAppTest()
     {
-        await using Trycep test = CreateBicepTest();
-        test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:AppContainerBasic
@@ -103,8 +98,15 @@ public class BasicAppContainersTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.app/container-app-create/main.bicep")]
+    public async Task CreateContainerApp()
+    {
+        await using Trycep test = CreateContainerAppTest();
+        test.Compare(
             """
             @description('Specifies the docker container image to deploy.')
             param containerImage string = 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
@@ -174,6 +176,6 @@ public class BasicAppContainersTests(bool async)
               }
             }
             """)
-        .Lint();
+            .Lint();
     }
 }

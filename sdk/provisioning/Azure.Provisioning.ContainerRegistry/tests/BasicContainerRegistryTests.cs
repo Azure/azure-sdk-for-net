@@ -8,14 +8,11 @@ using NUnit.Framework;
 namespace Azure.Provisioning.ContainerRegistry.Tests;
 
 public class BasicContainerRegistryTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true */)
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.containerregistry/container-registry/main.bicep")]
-    public async Task CreateContainerRegistry()
+    internal static Trycep CreateContainerRegistryTest()
     {
-        await using Trycep test = CreateBicepTest();
-        test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:ContainerRegistryBasic
@@ -35,8 +32,15 @@ public class BasicContainerRegistryTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.containerregistry/container-registry/main.bicep")]
+    public async Task CreateContainerRegistry()
+    {
+        await using Trycep test = CreateContainerRegistryTest();
+        test.Compare(
             """
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
@@ -58,6 +62,6 @@ public class BasicContainerRegistryTests(bool async)
 
             output registryLoginServer string = registry.properties.loginServer
             """)
-        .Lint();
+            .Lint();
     }
 }

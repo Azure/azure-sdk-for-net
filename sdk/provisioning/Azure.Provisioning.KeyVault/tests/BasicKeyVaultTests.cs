@@ -2,22 +2,17 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.KeyVault.Tests;
 
-public class BasicKeyVaultTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicKeyVaultTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.keyvault/key-vault-create/main.bicep")]
-    public async Task CreateKeyVaultAndSecret()
+    internal static Trycep CreateKeyVaultAndSecretTest()
     {
-        await using Trycep test = CreateBicepTest();
-        test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:KeyVaultBasic
@@ -102,8 +97,15 @@ public class BasicKeyVaultTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.keyvault/key-vault-create/main.bicep")]
+    public async Task CreateKeyVaultAndSecret()
+    {
+        await using Trycep test = CreateKeyVaultAndSecretTest();
+        test.Compare(
             """
             @description('Vault type')
             param skuName string = 'standard'
@@ -166,6 +168,6 @@ public class BasicKeyVaultTests(bool async)
 
             output vaultUri string = kv.properties.vaultUri
             """)
-        .Lint();
+            .Lint();
     }
 }

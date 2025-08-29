@@ -16,7 +16,8 @@ using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.Tests;
-public class NewTrycep : IAsyncDisposable
+
+public class Trycep : IAsyncDisposable
 {
     public bool SkipTools { get; private set; } = true;
     public bool SkipLiveCalls { get; private set; } = true;
@@ -41,7 +42,7 @@ public class NewTrycep : IAsyncDisposable
     /// </summary>
     /// <param name="test"></param>
     /// <returns></returns>
-    public NewTrycep SetUpLiveCalls(ProvisioningTestBase test)
+    public Trycep SetupLiveCalls(ProvisioningTestBase test)
     {
         Test = test;
         SkipTools = test.SkipTools;
@@ -58,7 +59,7 @@ public class NewTrycep : IAsyncDisposable
         return this;
     }
 
-    public NewTrycep Define(ProvisionableConstruct resource)
+    public Trycep Define(ProvisionableConstruct resource)
     {
         Infra = new Infrastructure();
         Infra.Add(resource);
@@ -66,14 +67,14 @@ public class NewTrycep : IAsyncDisposable
         return this;
     }
 
-    public NewTrycep Define(Func<NewTrycep, Infrastructure> action)
+    public Trycep Define(Func<Trycep, Infrastructure> action)
     {
         Infra = action(this);
         Plan = Infra.Build(BuildOptions);
         return this;
     }
 
-    public NewTrycep Define(Func<NewTrycep, ProvisioningBuildOptions, Infrastructure> action)
+    public Trycep Define(Func<Trycep, ProvisioningBuildOptions, Infrastructure> action)
     {
         Infra = action(this, BuildOptions);
         Plan = Infra.Build(BuildOptions);
@@ -88,7 +89,7 @@ public class NewTrycep : IAsyncDisposable
     // file (or writes it if not found).
 
     // TODO: How much work would it be to get a [StringSyntax] working with Bicep?
-    public NewTrycep Compare(string expectedBicep)
+    public Trycep Compare(string expectedBicep)
     {
         BicepModules = GetPlan().Compile();
         Assert.AreEqual(1, BicepModules.Count, $"Expected exactly one bicep module, not <{string.Join(", ", BicepModules.Keys)}>");
@@ -102,7 +103,7 @@ public class NewTrycep : IAsyncDisposable
         return this;
     }
 
-    public NewTrycep Compare(IDictionary<string, string> expectedBicepModules)
+    public Trycep Compare(IDictionary<string, string> expectedBicepModules)
     {
         BicepModules = GetPlan().Compile();
         Assert.AreEqual(
@@ -221,7 +222,7 @@ public class NewTrycep : IAsyncDisposable
         return ArmTemplate;
     }
 
-    public NewTrycep CompareArm(string expectedArm)
+    public Trycep CompareArm(string expectedArm)
     {
         if (SkipTools)
         { return this; }
@@ -236,7 +237,7 @@ public class NewTrycep : IAsyncDisposable
         return this;
     }
 
-    public NewTrycep Lint(Action<IReadOnlyList<BicepErrorMessage>>? check = default, IList<string>? ignore = default)
+    public Trycep Lint(Action<IReadOnlyList<BicepErrorMessage>>? check = default, IList<string>? ignore = default)
     {
         if (SkipTools)
         {

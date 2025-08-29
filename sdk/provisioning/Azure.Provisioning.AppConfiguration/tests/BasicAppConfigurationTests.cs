@@ -1,23 +1,18 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.AppConfiguration.Tests;
 
-public class BasicAppConfigurationTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicAppConfigurationTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.appconfiguration/app-configuration-store-ff/main.bicep")]
-    public async Task CreateAppConfigAndFeatureFlag()
+    internal static Trycep CreateAppConfigAndFeatureFlagTest()
     {
-        await using Trycep test = CreateBicepTest();
-        test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:AppConfigurationStoreFF
@@ -44,9 +39,9 @@ public class BasicAppConfigurationTests(bool async)
                         Value =
                             new BicepDictionary<object>
                             {
-                                { "id", featureFlagKey },
-                                { "description", "A simple feature flag." },
-                                { "enabled", true }
+                            { "id", featureFlagKey },
+                            { "description", "A simple feature flag." },
+                            { "enabled", true }
                             }
                     };
                 infra.Add(flag);
@@ -63,8 +58,15 @@ public class BasicAppConfigurationTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.appconfiguration/app-configuration-store-ff/main.bicep")]
+    public async Task CreateAppConfigAndFeatureFlag()
+    {
+        await using Trycep test = CreateAppConfigAndFeatureFlagTest();
+        test.Compare(
             """
             @description('Specifies the key of the feature flag.')
             param featureFlagKey string = 'FeatureFlagSample'
@@ -95,6 +97,6 @@ public class BasicAppConfigurationTests(bool async)
               parent: configStore
             }
             """)
-        .Lint();
+            .Lint();
     }
 }

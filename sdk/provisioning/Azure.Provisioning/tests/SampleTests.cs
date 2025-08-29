@@ -18,9 +18,9 @@ namespace Azure.Provisioning.Tests;
 
 internal class SampleTests
 {
-    internal static NewTrycep CreateSimpleDeployTest()
+    internal static Trycep CreateSimpleDeployTest()
     {
-        return new NewTrycep()
+        return new Trycep()
             .Define(
                 ctx =>
                 {
@@ -52,7 +52,7 @@ internal class SampleTests
     [Test]
     public async Task SimpleDeploy()
     {
-        await using NewTrycep test = CreateSimpleDeployTest();
+        await using Trycep test = CreateSimpleDeployTest();
         test.Compare(
             """
             @description('The location for the resource(s) to be deployed.')
@@ -81,9 +81,9 @@ internal class SampleTests
         .Lint();
     }
 
-    internal static NewTrycep CreateSimpleContainerAppTest()
+    internal static Trycep CreateSimpleContainerAppTest()
     {
-        return new NewTrycep()
+        return new Trycep()
             .Define(
                 ctx =>
                 {
@@ -194,7 +194,7 @@ internal class SampleTests
     [Test]
     public async Task SimpleContainerApp()
     {
-        await using NewTrycep test = CreateSimpleContainerAppTest();
+        await using Trycep test = CreateSimpleContainerAppTest();
         test.Compare(
             """
             param principalId string = ''
@@ -308,9 +308,9 @@ internal class SampleTests
         .Lint(ignore: ["no-unused-params", "BCP029"]);
     }
 
-    internal static NewTrycep CreateSimpleResourceGroupTest()
+    internal static Trycep CreateSimpleResourceGroupTest()
     {
-        return new NewTrycep()
+        return new Trycep()
             .Define(
                 ctx =>
                 {
@@ -328,7 +328,7 @@ internal class SampleTests
     [Test]
     public async Task SimpleResourceGroup()
     {
-        await using NewTrycep test = CreateSimpleResourceGroupTest();
+        await using Trycep test = CreateSimpleResourceGroupTest();
         test.Compare(
             """
             targetScope = 'subscription'

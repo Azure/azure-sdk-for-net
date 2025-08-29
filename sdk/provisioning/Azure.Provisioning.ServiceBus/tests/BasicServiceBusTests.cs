@@ -8,15 +8,11 @@ using NUnit.Framework;
 
 namespace Azure.Provisioning.ServiceBus.Tests;
 
-public class BasicServiceBusTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicServiceBusTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.servicebus/servicebus-create-queue/main.bicep")]
-    public async Task CreateServiceBusQueue()
+    internal static Trycep CreateServiceBusQueueTest()
     {
-        await using Trycep test = CreateBicepTest();
-        test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:ServiceBusBasic
@@ -58,8 +54,15 @@ public class BasicServiceBusTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.servicebus/servicebus-create-queue/main.bicep")]
+    public async Task CreateServiceBusQueue()
+    {
+        await using Trycep test = CreateServiceBusQueueTest();
+        test.Compare(
             """
             @description('The name of the SB queue.')
             param queueName string = 'orders'
@@ -93,6 +96,6 @@ public class BasicServiceBusTests(bool async)
               parent: sb
             }
             """)
-        .Lint();
+            .Lint();
     }
 }

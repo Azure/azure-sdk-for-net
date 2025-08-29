@@ -9,15 +9,11 @@ using NUnit.Framework;
 
 namespace Azure.Provisioning.EventGrid.Tests;
 
-public class BasicEventGridTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicEventGridTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.eventgrid/event-grid-subscription-and-storage/main.bicep")]
-    public async Task CreateEventGridForBlobs()
+    internal static Trycep CreateEventGridForBlobsTest()
     {
-        await using Trycep test = CreateBicepTest();
-        test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:EventGridBasic
@@ -64,8 +60,15 @@ public class BasicEventGridTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.eventgrid/event-grid-subscription-and-storage/main.bicep")]
+    public async Task CreateEventGridForBlobs()
+    {
+        await using Trycep test = CreateEventGridForBlobsTest();
+        test.Compare(
             """
             param webhookUri string
 
@@ -117,6 +120,6 @@ public class BasicEventGridTests(bool async)
               parent: topic
             }
             """)
-        .Lint();
+            .Lint();
     }
 }

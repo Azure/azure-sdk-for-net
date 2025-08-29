@@ -8,15 +8,11 @@ using NUnit.Framework;
 
 namespace Azure.Provisioning.CosmosDB.Tests;
 
-public class BasicCosmosDBTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicCosmosDBTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.documentdb/cosmosdb-free/main.bicep")]
-    public async Task CreateCosmosSqlDB()
+    internal static Trycep CreateCosmosSqlDBTest()
     {
-        await using Trycep test = CreateBicepTest();
-        test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:CosmosDBBasic
@@ -80,8 +76,14 @@ public class BasicCosmosDBTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.documentdb/cosmosdb-free/main.bicep")]
+    public async Task CreateCosmosSqlDB()
+    {
+        await using Trycep test = CreateCosmosSqlDBTest();
+        test.Compare(
             """
             param dbName string = 'orders'
 
@@ -140,6 +142,6 @@ public class BasicCosmosDBTests(bool async)
 
             output containerId string = container.id
             """)
-        .Lint();
+            .Lint();
     }
 }

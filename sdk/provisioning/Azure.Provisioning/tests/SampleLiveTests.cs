@@ -12,21 +12,24 @@ public class SampleLiveTests(bool async)
     [Test]
     public async Task SimpleLiveDeploy()
     {
-        await using NewTrycep test = SampleTests.CreateSimpleDeployTest();
-        await test.ValidateAsync();
+        await using Trycep test = SampleTests.CreateSimpleDeployTest();
+        await test.SetupLiveCalls(this)
+            .ValidateAsync();
     }
 
     [Test]
     public async Task SimpleLiveContainerAppDeploy()
     {
-        await using NewTrycep test = SampleTests.CreateSimpleContainerAppTest();
-        await test.ValidateAsync();
+        await using Trycep test = SampleTests.CreateSimpleContainerAppTest();
+        await test.SetupLiveCalls(this)
+            .ValidateAsync();
     }
 
     [Test]
     public async Task SimpleLiveResourceGroupDeploy()
     {
-        await using NewTrycep test = SampleTests.CreateSimpleResourceGroupTest();
-        await test.ValidateAsync();
+        await using Trycep test = SampleTests.CreateSimpleResourceGroupTest();
+        await test.SetupLiveCalls(this)
+            .ValidateAsync();
     }
 }

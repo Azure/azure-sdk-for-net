@@ -8,15 +8,11 @@ using NUnit.Framework;
 
 namespace Azure.Provisioning.ContainerService.Tests;
 
-public class BasicContainerServiceTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicContainerServiceTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.kubernetes/aks/main.bicep")]
-    public async Task CreateAksCluster()
+    internal static Trycep CreateAksClusterTest()
     {
-        await using Trycep test = CreateBicepTest();
-        test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:ContainerServiceBasic
@@ -62,8 +58,15 @@ public class BasicContainerServiceTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.kubernetes/aks/main.bicep")]
+    public async Task CreateAksCluster()
+    {
+        await using Trycep test = CreateAksClusterTest();
+        test.Compare(
             """
             param dnsPrefix string
 
@@ -105,6 +108,6 @@ public class BasicContainerServiceTests(bool async)
               }
             }
             """)
-        .Lint();
+            .Lint();
     }
 }

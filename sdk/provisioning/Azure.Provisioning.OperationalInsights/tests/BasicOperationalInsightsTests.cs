@@ -13,11 +13,9 @@ namespace Azure.Provisioning.OperationalInsights.Tests;
 public class BasicOperationalInsightsTests(bool async)
     : ProvisioningTestBase(async/*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [Test]
-    public async Task CreateWorkspace()
+    internal static Trycep CreateWorkspaceTest()
     {
-        await using Trycep test = CreateBicepTest();
-        test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:OperationalInsightsWorkspaceBasic
@@ -36,8 +34,14 @@ public class BasicOperationalInsightsTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    public async Task CreateWorkspace()
+    {
+        await using Trycep test = CreateWorkspaceTest();
+        test.Compare(
             """
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
@@ -55,6 +59,6 @@ public class BasicOperationalInsightsTests(bool async)
               }
             }
             """)
-        .Lint();
+            .Lint();
     }
 }

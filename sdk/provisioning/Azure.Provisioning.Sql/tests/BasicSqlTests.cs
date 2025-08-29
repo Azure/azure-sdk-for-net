@@ -7,15 +7,11 @@ using NUnit.Framework;
 
 namespace Azure.Provisioning.Sql.Tests;
 
-public class BasicSqlTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicSqlTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.sql/sql-database/main.bicep")]
-    public async Task CreateSimpleSqlServerAndDatabase()
+    internal static Trycep CreateSimpleSqlServerAndDatabaseTest()
     {
-        await using Trycep test = CreateBicepTest();
-        test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:SqlServerBasic
@@ -63,8 +59,15 @@ public class BasicSqlTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.sql/sql-database/main.bicep")]
+    public async Task CreateSimpleSqlServerAndDatabase()
+    {
+        await using Trycep test = CreateSimpleSqlServerAndDatabaseTest();
+        test.Compare(
             """
             @description('The name of the SQL Database.')
             param dbName string = 'SampleDB'
@@ -98,6 +101,6 @@ public class BasicSqlTests(bool async)
               parent: sql
             }
             """)
-        .Lint();
+            .Lint();
     }
 }
