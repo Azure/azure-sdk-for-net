@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    public partial class DataEncryption : IUtf8JsonSerializable, IJsonModel<DataEncryption>
+    public partial class CosmosDBForPostgreSqlClusterDataEncryption : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlClusterDataEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataEncryption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlClusterDataEncryption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DataEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CosmosDBForPostgreSqlClusterDataEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataEncryption)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterDataEncryption)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(PrimaryKeyUri))
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 writer.WritePropertyName("primaryUserAssignedIdentityId"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentityId);
             }
-            if (Optional.IsDefined(EncryptionType))
+            if (Optional.IsDefined(DataEncryptionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(EncryptionType.Value.ToString());
+                writer.WriteStringValue(DataEncryptionType.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
         }
 
-        DataEncryption IJsonModel<DataEncryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CosmosDBForPostgreSqlClusterDataEncryption IJsonModel<CosmosDBForPostgreSqlClusterDataEncryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataEncryption)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterDataEncryption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataEncryption(document.RootElement, options);
+            return DeserializeCosmosDBForPostgreSqlClusterDataEncryption(document.RootElement, options);
         }
 
-        internal static DataEncryption DeserializeDataEncryption(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CosmosDBForPostgreSqlClusterDataEncryption DeserializeCosmosDBForPostgreSqlClusterDataEncryption(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -122,38 +122,38 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataEncryption(primaryKeyUri, primaryUserAssignedIdentityId, type, serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlClusterDataEncryption(primaryKeyUri, primaryUserAssignedIdentityId, type, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DataEncryption>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CosmosDBForPostgreSqlClusterDataEncryption>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DataEncryption)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterDataEncryption)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DataEncryption IPersistableModel<DataEncryption>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CosmosDBForPostgreSqlClusterDataEncryption IPersistableModel<CosmosDBForPostgreSqlClusterDataEncryption>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataEncryption(document.RootElement, options);
+                        return DeserializeCosmosDBForPostgreSqlClusterDataEncryption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataEncryption)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterDataEncryption)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DataEncryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CosmosDBForPostgreSqlClusterDataEncryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

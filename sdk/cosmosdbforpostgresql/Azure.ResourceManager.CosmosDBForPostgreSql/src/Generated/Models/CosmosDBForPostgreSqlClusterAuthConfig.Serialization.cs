@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    public partial class AuthConfig : IUtf8JsonSerializable, IJsonModel<AuthConfig>
+    public partial class CosmosDBForPostgreSqlClusterAuthConfig : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlClusterAuthConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlClusterAuthConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AuthConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CosmosDBForPostgreSqlClusterAuthConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterAuthConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterAuthConfig)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(ActiveDirectoryAuth))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
         }
 
-        AuthConfig IJsonModel<AuthConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CosmosDBForPostgreSqlClusterAuthConfig IJsonModel<CosmosDBForPostgreSqlClusterAuthConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterAuthConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterAuthConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAuthConfig(document.RootElement, options);
+            return DeserializeCosmosDBForPostgreSqlClusterAuthConfig(document.RootElement, options);
         }
 
-        internal static AuthConfig DeserializeAuthConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CosmosDBForPostgreSqlClusterAuthConfig DeserializeCosmosDBForPostgreSqlClusterAuthConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AuthConfig(activeDirectoryAuth, passwordAuth, serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlClusterAuthConfig(activeDirectoryAuth, passwordAuth, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AuthConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CosmosDBForPostgreSqlClusterAuthConfig>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterAuthConfig>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AuthConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterAuthConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AuthConfig IPersistableModel<AuthConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CosmosDBForPostgreSqlClusterAuthConfig IPersistableModel<CosmosDBForPostgreSqlClusterAuthConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterAuthConfig>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAuthConfig(document.RootElement, options);
+                        return DeserializeCosmosDBForPostgreSqlClusterAuthConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterAuthConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AuthConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CosmosDBForPostgreSqlClusterAuthConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

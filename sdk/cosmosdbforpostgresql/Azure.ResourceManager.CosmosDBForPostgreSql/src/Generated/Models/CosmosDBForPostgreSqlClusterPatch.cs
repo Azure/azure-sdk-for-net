@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="isNodePublicIPAccessEnabled"> If public access is enabled on worker nodes. </param>
         /// <param name="maintenanceWindow"> Maintenance window of a cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlClusterPatch(IdentityProperties identity, IDictionary<string, string> tags, string administratorLoginPassword, string postgresqlVersion, string citusVersion, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string preferredPrimaryZone, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBForPostgreSqlClusterPatch(CosmosDBForPostgreSqlClusterIdentity identity, IDictionary<string, string> tags, string administratorLoginPassword, string postgresqlVersion, string citusVersion, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string preferredPrimaryZone, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             Tags = tags;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         }
 
         /// <summary> Describes the identity of the cluster. </summary>
-        public IdentityProperties Identity { get; set; }
+        public CosmosDBForPostgreSqlClusterIdentity Identity { get; set; }
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The password of the administrator login. Each cluster is created with pre-defined administrative role called ‘citus’. </summary>

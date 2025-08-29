@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            IdentityProperties identity = default;
+            CosmosDBForPostgreSqlClusterIdentity identity = default;
             IDictionary<string, string> tags = default;
             string administratorLoginPassword = default;
             string postgresqlVersion = default;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     {
                         continue;
                     }
-                    identity = IdentityProperties.DeserializeIdentityProperties(property.Value, options);
+                    identity = CosmosDBForPostgreSqlClusterIdentity.DeserializeCosmosDBForPostgreSqlClusterIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

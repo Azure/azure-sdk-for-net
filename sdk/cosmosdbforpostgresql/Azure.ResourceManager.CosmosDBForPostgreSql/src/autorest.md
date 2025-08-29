@@ -61,6 +61,13 @@ rename-mapping:
   Cluster.properties.enableHa: IsHAEnabled
   Cluster.properties.coordinatorEnablePublicIpAccess: IsCoordinatorPublicIPAccessEnabled
   Cluster.properties.nodeEnablePublicIpAccess: IsNodePublicIPAccessEnabled
+  Cluster.properties.aadAuthEnabled: IsAadEnabled
+  AadEnabledEnum: IsAadEnabledForCosmosDBForPostgreSqlCluster
+  Cluster.properties.passwordEnabled: IsPasswordEnabled
+  PasswordEnabledEnum: IsPasswordEnabledForCosmosDBForPostgreSqlCluster
+  AuthConfig: CosmosDBForPostgreSqlClusterAuthConfig
+  DataEncryption: CosmosDBForPostgreSqlClusterDataEncryption
+  IdentityProperties: CosmosDBForPostgreSqlClusterIdentity
   ClusterForUpdate.properties.enableShardsOnCoordinator: IsShardsOnCoordinatorEnabled
   ClusterForUpdate.properties.enableHa: IsHAEnabled
   ClusterForUpdate.properties.coordinatorEnablePublicIpAccess: IsCoordinatorPublicIPAccessEnabled

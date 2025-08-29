@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> Describes the identity of the cluster. </param>
-        /// <param name="aadAuthEnabled"> Indicates whether the cluster was created using AAD authentication. </param>
+        /// <param name="isAadEnabled"> Indicates whether the cluster was created using AAD authentication. </param>
         /// <param name="administratorLogin"> The administrator's login name of the servers in the cluster. </param>
         /// <param name="administratorLoginPassword"> The password of the administrator login. Required for creation. </param>
         /// <param name="dataEncryption"> The data encryption properties of a cluster. </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="serverNames"> The list of server names in the cluster. </param>
         /// <param name="sourceResourceId"> The resource id of source cluster for read replica clusters. </param>
         /// <param name="sourceLocation"> The Azure region of source cluster for read replica clusters. </param>
-        /// <param name="passwordEnabled"> Indicates whether the cluster was created with a password or using AAD authentication. </param>
+        /// <param name="isPasswordEnabled"> Indicates whether the cluster was created with a password or using AAD authentication. </param>
         /// <param name="pointInTimeUTC"> Date and time in UTC (ISO8601 format) for cluster restore. </param>
         /// <param name="readReplicas"> The array of read replica clusters. </param>
         /// <param name="earliestRestoreOn"> The earliest restore point time (ISO8601 format) for the cluster. </param>
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="enableGeoBackup"> If cluster backup is stored in another Azure region in addition to the copy of the backup stored in the cluster's region. Enabled only at the time of cluster creation. </param>
         /// <param name="authConfig"> Authentication configuration of a cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IdentityProperties identity, AadEnabledEnum? aadAuthEnabled, string administratorLogin, string administratorLoginPassword, DataEncryption dataEncryption, string provisioningState, string state, string postgresqlVersion, string citusVersion, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, string preferredPrimaryZone, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, IReadOnlyList<CosmosDBForPostgreSqlServerNameItem> serverNames, ResourceIdentifier sourceResourceId, AzureLocation? sourceLocation, PasswordEnabledEnum? passwordEnabled, DateTimeOffset? pointInTimeUTC, IReadOnlyList<string> readReplicas, DateTimeOffset? earliestRestoreOn, IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections, string databaseName, bool? enableGeoBackup, AuthConfig authConfig, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBForPostgreSqlClusterIdentity identity, IsAadEnabledForCosmosDBForPostgreSqlCluster? isAadEnabled, string administratorLogin, string administratorLoginPassword, CosmosDBForPostgreSqlClusterDataEncryption dataEncryption, string provisioningState, string state, string postgresqlVersion, string citusVersion, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, string preferredPrimaryZone, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, IReadOnlyList<CosmosDBForPostgreSqlServerNameItem> serverNames, ResourceIdentifier sourceResourceId, AzureLocation? sourceLocation, IsPasswordEnabledForCosmosDBForPostgreSqlCluster? isPasswordEnabled, DateTimeOffset? pointInTimeUTC, IReadOnlyList<string> readReplicas, DateTimeOffset? earliestRestoreOn, IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections, string databaseName, bool? enableGeoBackup, CosmosDBForPostgreSqlClusterAuthConfig authConfig, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
-            AadAuthEnabled = aadAuthEnabled;
+            IsAadEnabled = isAadEnabled;
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
             DataEncryption = dataEncryption;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             ServerNames = serverNames;
             SourceResourceId = sourceResourceId;
             SourceLocation = sourceLocation;
-            PasswordEnabled = passwordEnabled;
+            IsPasswordEnabled = isPasswordEnabled;
             PointInTimeUTC = pointInTimeUTC;
             ReadReplicas = readReplicas;
             EarliestRestoreOn = earliestRestoreOn;
@@ -145,15 +145,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         }
 
         /// <summary> Describes the identity of the cluster. </summary>
-        public IdentityProperties Identity { get; set; }
+        public CosmosDBForPostgreSqlClusterIdentity Identity { get; set; }
         /// <summary> Indicates whether the cluster was created using AAD authentication. </summary>
-        public AadEnabledEnum? AadAuthEnabled { get; }
+        public IsAadEnabledForCosmosDBForPostgreSqlCluster? IsAadEnabled { get; }
         /// <summary> The administrator's login name of the servers in the cluster. </summary>
         public string AdministratorLogin { get; }
         /// <summary> The password of the administrator login. Required for creation. </summary>
         public string AdministratorLoginPassword { get; set; }
         /// <summary> The data encryption properties of a cluster. </summary>
-        public DataEncryption DataEncryption { get; set; }
+        public CosmosDBForPostgreSqlClusterDataEncryption DataEncryption { get; set; }
         /// <summary> Provisioning state of the cluster. </summary>
         public string ProvisioningState { get; }
         /// <summary> A state of a cluster/server that is visible to user. </summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> The Azure region of source cluster for read replica clusters. </summary>
         public AzureLocation? SourceLocation { get; set; }
         /// <summary> Indicates whether the cluster was created with a password or using AAD authentication. </summary>
-        public PasswordEnabledEnum? PasswordEnabled { get; }
+        public IsPasswordEnabledForCosmosDBForPostgreSqlCluster? IsPasswordEnabled { get; }
         /// <summary> Date and time in UTC (ISO8601 format) for cluster restore. </summary>
         public DateTimeOffset? PointInTimeUTC { get; set; }
         /// <summary> The array of read replica clusters. </summary>
@@ -209,6 +209,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> If cluster backup is stored in another Azure region in addition to the copy of the backup stored in the cluster's region. Enabled only at the time of cluster creation. </summary>
         public bool? EnableGeoBackup { get; set; }
         /// <summary> Authentication configuration of a cluster. </summary>
-        public AuthConfig AuthConfig { get; set; }
+        public CosmosDBForPostgreSqlClusterAuthConfig AuthConfig { get; set; }
     }
 }

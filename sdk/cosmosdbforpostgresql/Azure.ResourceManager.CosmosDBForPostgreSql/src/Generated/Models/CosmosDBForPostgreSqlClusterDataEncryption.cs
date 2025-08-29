@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     /// <summary> The data encryption properties of a cluster. </summary>
-    public partial class DataEncryption
+    public partial class CosmosDBForPostgreSqlClusterDataEncryption
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataEncryption"/>. </summary>
-        public DataEncryption()
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterDataEncryption"/>. </summary>
+        public CosmosDBForPostgreSqlClusterDataEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataEncryption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterDataEncryption"/>. </summary>
         /// <param name="primaryKeyUri"> URI for the key in keyvault for data encryption of the primary server. </param>
         /// <param name="primaryUserAssignedIdentityId"> Resource Id for the User assigned identity to be used for data encryption of the primary server. </param>
-        /// <param name="encryptionType"></param>
+        /// <param name="dataEncryptionType"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataEncryption(Uri primaryKeyUri, string primaryUserAssignedIdentityId, DataEncryptionType? encryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBForPostgreSqlClusterDataEncryption(Uri primaryKeyUri, string primaryUserAssignedIdentityId, DataEncryptionType? dataEncryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryKeyUri = primaryKeyUri;
             PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
-            EncryptionType = encryptionType;
+            DataEncryptionType = dataEncryptionType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         public Uri PrimaryKeyUri { get; set; }
         /// <summary> Resource Id for the User assigned identity to be used for data encryption of the primary server. </summary>
         public string PrimaryUserAssignedIdentityId { get; set; }
-        /// <summary> Gets or sets the encryption type. </summary>
-        public DataEncryptionType? EncryptionType { get; set; }
+        /// <summary> Gets or sets the data encryption type. </summary>
+        public DataEncryptionType? DataEncryptionType { get; set; }
     }
 }

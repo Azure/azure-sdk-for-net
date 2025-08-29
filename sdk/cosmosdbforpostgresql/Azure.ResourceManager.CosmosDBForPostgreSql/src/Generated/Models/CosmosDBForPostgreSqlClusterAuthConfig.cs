@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    /// <summary> Describes the identity of the cluster. </summary>
-    public partial class IdentityProperties
+    /// <summary> Authentication configuration of a cluster. </summary>
+    public partial class CosmosDBForPostgreSqlClusterAuthConfig
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,26 +45,25 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IdentityProperties"/>. </summary>
-        public IdentityProperties()
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterAuthConfig"/>. </summary>
+        public CosmosDBForPostgreSqlClusterAuthConfig()
         {
-            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IdentityProperties"/>. </summary>
-        /// <param name="identityType"></param>
-        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterAuthConfig"/>. </summary>
+        /// <param name="activeDirectoryAuth"></param>
+        /// <param name="passwordAuth"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IdentityProperties(IdentityType? identityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBForPostgreSqlClusterAuthConfig(ActiveDirectoryAuth? activeDirectoryAuth, PasswordAuth? passwordAuth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            IdentityType = identityType;
-            UserAssignedIdentities = userAssignedIdentities;
+            ActiveDirectoryAuth = activeDirectoryAuth;
+            PasswordAuth = passwordAuth;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the identity type. </summary>
-        public IdentityType? IdentityType { get; set; }
-        /// <summary> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </summary>
-        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
+        /// <summary> Gets or sets the active directory auth. </summary>
+        public ActiveDirectoryAuth? ActiveDirectoryAuth { get; set; }
+        /// <summary> Gets or sets the password auth. </summary>
+        public PasswordAuth? PasswordAuth { get; set; }
     }
 }

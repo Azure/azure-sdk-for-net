@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> Describes the identity of the cluster. </param>
-        /// <param name="aadAuthEnabled"> Indicates whether the cluster was created using AAD authentication. </param>
+        /// <param name="isAadEnabled"> Indicates whether the cluster was created using AAD authentication. </param>
         /// <param name="administratorLogin"> The administrator's login name of the servers in the cluster. </param>
         /// <param name="administratorLoginPassword"> The password of the administrator login. Required for creation. </param>
         /// <param name="dataEncryption"> The data encryption properties of a cluster. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="serverNames"> The list of server names in the cluster. </param>
         /// <param name="sourceResourceId"> The resource id of source cluster for read replica clusters. </param>
         /// <param name="sourceLocation"> The Azure region of source cluster for read replica clusters. </param>
-        /// <param name="passwordEnabled"> Indicates whether the cluster was created with a password or using AAD authentication. </param>
+        /// <param name="isPasswordEnabled"> Indicates whether the cluster was created with a password or using AAD authentication. </param>
         /// <param name="pointInTimeUTC"> Date and time in UTC (ISO8601 format) for cluster restore. </param>
         /// <param name="readReplicas"> The array of read replica clusters. </param>
         /// <param name="earliestRestoreOn"> The earliest restore point time (ISO8601 format) for the cluster. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="enableGeoBackup"> If cluster backup is stored in another Azure region in addition to the copy of the backup stored in the cluster's region. Enabled only at the time of cluster creation. </param>
         /// <param name="authConfig"> Authentication configuration of a cluster. </param>
         /// <returns> A new <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterData"/> instance for mocking. </returns>
-        public static CosmosDBForPostgreSqlClusterData CosmosDBForPostgreSqlClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IdentityProperties identity = null, AadEnabledEnum? aadAuthEnabled = null, string administratorLogin = null, string administratorLoginPassword = null, DataEncryption dataEncryption = null, string provisioningState = null, string state = null, string postgresqlVersion = null, string citusVersion = null, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow = null, string preferredPrimaryZone = null, bool? isShardsOnCoordinatorEnabled = null, bool? isHAEnabled = null, string coordinatorServerEdition = null, int? coordinatorStorageQuotaInMb = null, int? coordinatorVCores = null, bool? isCoordinatorPublicIPAccessEnabled = null, string nodeServerEdition = null, int? nodeCount = null, int? nodeStorageQuotaInMb = null, int? nodeVCores = null, bool? isNodePublicIPAccessEnabled = null, IEnumerable<CosmosDBForPostgreSqlServerNameItem> serverNames = null, ResourceIdentifier sourceResourceId = null, AzureLocation? sourceLocation = null, PasswordEnabledEnum? passwordEnabled = null, DateTimeOffset? pointInTimeUTC = null, IEnumerable<string> readReplicas = null, DateTimeOffset? earliestRestoreOn = null, IEnumerable<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections = null, string databaseName = null, bool? enableGeoBackup = null, AuthConfig authConfig = null)
+        public static CosmosDBForPostgreSqlClusterData CosmosDBForPostgreSqlClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBForPostgreSqlClusterIdentity identity = null, IsAadEnabledForCosmosDBForPostgreSqlCluster? isAadEnabled = null, string administratorLogin = null, string administratorLoginPassword = null, CosmosDBForPostgreSqlClusterDataEncryption dataEncryption = null, string provisioningState = null, string state = null, string postgresqlVersion = null, string citusVersion = null, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow = null, string preferredPrimaryZone = null, bool? isShardsOnCoordinatorEnabled = null, bool? isHAEnabled = null, string coordinatorServerEdition = null, int? coordinatorStorageQuotaInMb = null, int? coordinatorVCores = null, bool? isCoordinatorPublicIPAccessEnabled = null, string nodeServerEdition = null, int? nodeCount = null, int? nodeStorageQuotaInMb = null, int? nodeVCores = null, bool? isNodePublicIPAccessEnabled = null, IEnumerable<CosmosDBForPostgreSqlServerNameItem> serverNames = null, ResourceIdentifier sourceResourceId = null, AzureLocation? sourceLocation = null, IsPasswordEnabledForCosmosDBForPostgreSqlCluster? isPasswordEnabled = null, DateTimeOffset? pointInTimeUTC = null, IEnumerable<string> readReplicas = null, DateTimeOffset? earliestRestoreOn = null, IEnumerable<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections = null, string databaseName = null, bool? enableGeoBackup = null, CosmosDBForPostgreSqlClusterAuthConfig authConfig = null)
         {
             tags ??= new Dictionary<string, string>();
             serverNames ??= new List<CosmosDBForPostgreSqlServerNameItem>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 tags,
                 location,
                 identity,
-                aadAuthEnabled,
+                isAadEnabled,
                 administratorLogin,
                 administratorLoginPassword,
                 dataEncryption,
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 serverNames?.ToList(),
                 sourceResourceId,
                 sourceLocation,
-                passwordEnabled,
+                isPasswordEnabled,
                 pointInTimeUTC,
                 readReplicas?.ToList(),
                 earliestRestoreOn,
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="isNodePublicIPAccessEnabled"> If public access is enabled on worker nodes. </param>
         /// <param name="maintenanceWindow"> Maintenance window of a cluster. </param>
         /// <returns> A new <see cref="Models.CosmosDBForPostgreSqlClusterPatch"/> instance for mocking. </returns>
-        public static CosmosDBForPostgreSqlClusterPatch CosmosDBForPostgreSqlClusterPatch(IdentityProperties identity = null, IDictionary<string, string> tags = null, string administratorLoginPassword = null, string postgresqlVersion = null, string citusVersion = null, bool? isShardsOnCoordinatorEnabled = null, bool? isHAEnabled = null, string preferredPrimaryZone = null, string coordinatorServerEdition = null, int? coordinatorStorageQuotaInMb = null, int? coordinatorVCores = null, bool? isCoordinatorPublicIPAccessEnabled = null, string nodeServerEdition = null, int? nodeCount = null, int? nodeStorageQuotaInMb = null, int? nodeVCores = null, bool? isNodePublicIPAccessEnabled = null, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow = null)
+        public static CosmosDBForPostgreSqlClusterPatch CosmosDBForPostgreSqlClusterPatch(CosmosDBForPostgreSqlClusterIdentity identity = null, IDictionary<string, string> tags = null, string administratorLoginPassword = null, string postgresqlVersion = null, string citusVersion = null, bool? isShardsOnCoordinatorEnabled = null, bool? isHAEnabled = null, string preferredPrimaryZone = null, string coordinatorServerEdition = null, int? coordinatorStorageQuotaInMb = null, int? coordinatorVCores = null, bool? isCoordinatorPublicIPAccessEnabled = null, string nodeServerEdition = null, int? nodeCount = null, int? nodeStorageQuotaInMb = null, int? nodeVCores = null, bool? isNodePublicIPAccessEnabled = null, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CosmosDBForPostgreSqlClusterData CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string administratorLogin, string administratorLoginPassword, string provisioningState, string state, string postgresqlVersion, string citusVersion, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, string preferredPrimaryZone, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, IEnumerable<CosmosDBForPostgreSqlServerNameItem> serverNames, ResourceIdentifier sourceResourceId, AzureLocation? sourceLocation, DateTimeOffset? pointInTimeUTC, IEnumerable<string> readReplicas, DateTimeOffset? earliestRestoreOn, IEnumerable<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections)
         {
-            return CosmosDBForPostgreSqlClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: default, aadAuthEnabled: default, administratorLogin: administratorLogin, administratorLoginPassword: administratorLoginPassword, dataEncryption: default, provisioningState: provisioningState, state: state, postgresqlVersion: postgresqlVersion, citusVersion: citusVersion, maintenanceWindow: maintenanceWindow, preferredPrimaryZone: preferredPrimaryZone, isShardsOnCoordinatorEnabled: isShardsOnCoordinatorEnabled, isHAEnabled: isHAEnabled, coordinatorServerEdition: coordinatorServerEdition, coordinatorStorageQuotaInMb: coordinatorStorageQuotaInMb, coordinatorVCores: coordinatorVCores, isCoordinatorPublicIPAccessEnabled: isCoordinatorPublicIPAccessEnabled, nodeServerEdition: nodeServerEdition, nodeCount: nodeCount, nodeStorageQuotaInMb: nodeStorageQuotaInMb, nodeVCores: nodeVCores, isNodePublicIPAccessEnabled: isNodePublicIPAccessEnabled, serverNames: serverNames, sourceResourceId: sourceResourceId, sourceLocation: sourceLocation, passwordEnabled: default, pointInTimeUTC: pointInTimeUTC, readReplicas: readReplicas, earliestRestoreOn: earliestRestoreOn, privateEndpointConnections: privateEndpointConnections, databaseName: default, enableGeoBackup: default, authConfig: default);
+            return CosmosDBForPostgreSqlClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: default, isAadEnabled: default, administratorLogin: administratorLogin, administratorLoginPassword: administratorLoginPassword, dataEncryption: default, provisioningState: provisioningState, state: state, postgresqlVersion: postgresqlVersion, citusVersion: citusVersion, maintenanceWindow: maintenanceWindow, preferredPrimaryZone: preferredPrimaryZone, isShardsOnCoordinatorEnabled: isShardsOnCoordinatorEnabled, isHAEnabled: isHAEnabled, coordinatorServerEdition: coordinatorServerEdition, coordinatorStorageQuotaInMb: coordinatorStorageQuotaInMb, coordinatorVCores: coordinatorVCores, isCoordinatorPublicIPAccessEnabled: isCoordinatorPublicIPAccessEnabled, nodeServerEdition: nodeServerEdition, nodeCount: nodeCount, nodeStorageQuotaInMb: nodeStorageQuotaInMb, nodeVCores: nodeVCores, isNodePublicIPAccessEnabled: isNodePublicIPAccessEnabled, serverNames: serverNames, sourceResourceId: sourceResourceId, sourceLocation: sourceLocation, isPasswordEnabled: default, pointInTimeUTC: pointInTimeUTC, readReplicas: readReplicas, earliestRestoreOn: earliestRestoreOn, privateEndpointConnections: privateEndpointConnections, databaseName: default, enableGeoBackup: default, authConfig: default);
         }
 
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlRoleData. </summary>

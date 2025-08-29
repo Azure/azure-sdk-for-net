@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AadAuthEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsAadEnabled))
             {
                 writer.WritePropertyName("aadAuthEnabled"u8);
-                writer.WriteStringValue(AadAuthEnabled.Value.ToString());
+                writer.WriteStringValue(IsAadEnabled.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(AdministratorLogin))
             {
@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WritePropertyName("sourceLocation"u8);
                 writer.WriteStringValue(SourceLocation.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PasswordEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsPasswordEnabled))
             {
                 writer.WritePropertyName("passwordEnabled"u8);
-                writer.WriteStringValue(PasswordEnabled.Value.ToString());
+                writer.WriteStringValue(IsPasswordEnabled.Value.ToString());
             }
             if (Optional.IsDefined(PointInTimeUTC))
             {
@@ -243,17 +243,17 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 return null;
             }
-            IdentityProperties identity = default;
+            CosmosDBForPostgreSqlClusterIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            AadEnabledEnum? aadAuthEnabled = default;
+            IsAadEnabledForCosmosDBForPostgreSqlCluster? aadAuthEnabled = default;
             string administratorLogin = default;
             string administratorLoginPassword = default;
-            DataEncryption dataEncryption = default;
+            CosmosDBForPostgreSqlClusterDataEncryption dataEncryption = default;
             string provisioningState = default;
             string state = default;
             string postgresqlVersion = default;
@@ -274,14 +274,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             IReadOnlyList<CosmosDBForPostgreSqlServerNameItem> serverNames = default;
             ResourceIdentifier sourceResourceId = default;
             AzureLocation? sourceLocation = default;
-            PasswordEnabledEnum? passwordEnabled = default;
+            IsPasswordEnabledForCosmosDBForPostgreSqlCluster? passwordEnabled = default;
             DateTimeOffset? pointInTimeUTC = default;
             IReadOnlyList<string> readReplicas = default;
             DateTimeOffset? earliestRestoreTime = default;
             IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections = default;
             string databaseName = default;
             bool? enableGeoBackup = default;
-            AuthConfig authConfig = default;
+            CosmosDBForPostgreSqlClusterAuthConfig authConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     {
                         continue;
                     }
-                    identity = IdentityProperties.DeserializeIdentityProperties(property.Value, options);
+                    identity = CosmosDBForPostgreSqlClusterIdentity.DeserializeCosmosDBForPostgreSqlClusterIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             {
                                 continue;
                             }
-                            aadAuthEnabled = new AadEnabledEnum(property0.Value.GetString());
+                            aadAuthEnabled = new IsAadEnabledForCosmosDBForPostgreSqlCluster(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("administratorLogin"u8))
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             {
                                 continue;
                             }
-                            dataEncryption = DataEncryption.DeserializeDataEncryption(property0.Value, options);
+                            dataEncryption = CosmosDBForPostgreSqlClusterDataEncryption.DeserializeCosmosDBForPostgreSqlClusterDataEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             {
                                 continue;
                             }
-                            passwordEnabled = new PasswordEnabledEnum(property0.Value.GetString());
+                            passwordEnabled = new IsPasswordEnabledForCosmosDBForPostgreSqlCluster(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("pointInTimeUTC"u8))
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             {
                                 continue;
                             }
-                            authConfig = AuthConfig.DeserializeAuthConfig(property0.Value, options);
+                            authConfig = CosmosDBForPostgreSqlClusterAuthConfig.DeserializeCosmosDBForPostgreSqlClusterAuthConfig(property0.Value, options);
                             continue;
                         }
                     }
