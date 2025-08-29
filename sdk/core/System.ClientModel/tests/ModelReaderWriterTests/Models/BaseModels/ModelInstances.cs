@@ -136,14 +136,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
         private static void SetRawData(object obj, Dictionary<string, BinaryData> rawData)
         {
             obj.GetType().BaseType!
-                .GetField("_rawData", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .GetField("_serializedAdditionalRawData", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(obj, rawData);
         }
 
         private static Dictionary<string, BinaryData> GetRawData(object obj)
         {
             return (Dictionary<string, BinaryData>)obj.GetType().BaseType!
-                .GetField("_rawData", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .GetField("_serializedAdditionalRawData", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .GetValue(obj)!;
         }
     }

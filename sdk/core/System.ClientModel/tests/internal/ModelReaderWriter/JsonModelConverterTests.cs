@@ -205,7 +205,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             {
                 modelType = modelType.BaseType!;
             }
-            var propertyInfo = modelType.GetField("_rawData", BindingFlags.Instance | BindingFlags.NonPublic);
+            var propertyInfo = modelType.GetField("_serializedAdditionalRawData", BindingFlags.Instance | BindingFlags.NonPublic);
             Assert.IsNotNull(propertyInfo);
             return (Dictionary<string, BinaryData>)propertyInfo!.GetValue(model)!;
         }
