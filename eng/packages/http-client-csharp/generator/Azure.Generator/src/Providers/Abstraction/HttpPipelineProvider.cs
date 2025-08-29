@@ -45,7 +45,7 @@ namespace Azure.Generator.Providers.Abstraction
             => Static(typeof(HttpPipelineBuilder)).Invoke(nameof(HttpPipelineBuilder.Build), [options, perRetryPolicies]);
 
         /// <inheritdoc/>
-        public override ValueExpression CreateMessage(HttpRequestOptionsApi requestOptions, ValueExpression responseClassifier)
+        public override ValueExpression CreateMessage(HttpRequestOptionsApi requestOptions, ValueExpression uri, ValueExpression method, ValueExpression responseClassifier)
             => Original.Invoke(nameof(HttpPipeline.CreateMessage), requestOptions, responseClassifier).As<HttpMessage>();
 
         /// <inheritdoc/>
