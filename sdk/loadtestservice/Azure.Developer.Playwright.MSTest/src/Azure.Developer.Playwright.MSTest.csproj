@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageTags>Azure, Cloud, Playwright, Playwright Service, Playwright Testing</PackageTags>
+    <PackageTags>Azure, Cloud, Playwright, Playwright Workspaces, Playwright Testing</PackageTags>
     <Description>
       Package to integrate your Playwright test suite with Azure Playwright.
     </Description>

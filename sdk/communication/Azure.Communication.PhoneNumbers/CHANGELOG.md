@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0 (Unreleased)
+## 1.5.0 (2025-08-28)
 
 ### Features Added
 - GA release of mobile number types
