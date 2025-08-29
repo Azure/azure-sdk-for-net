@@ -68,6 +68,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
+            if (Optional.IsDefined(NumberPrecision))
+            {
+                writer.WritePropertyName("numberPrecision"u8);
+                JsonSerializer.Serialize(writer, NumberPrecision);
+            }
+            if (Optional.IsDefined(NumberScale))
+            {
+                writer.WritePropertyName("numberScale"u8);
+                JsonSerializer.Serialize(writer, NumberScale);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -107,6 +117,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> partitionOption = default;
             OraclePartitionSettings partitionSettings = default;
             BinaryData additionalColumns = default;
+            DataFactoryElement<int> numberPrecision = default;
+            DataFactoryElement<int> numberScale = default;
             string type = default;
             DataFactoryElement<int> sourceRetryCount = default;
             DataFactoryElement<string> sourceRetryWait = default;
@@ -159,6 +171,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     additionalColumns = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("numberPrecision"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    numberPrecision = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("numberScale"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    numberScale = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -216,7 +246,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 queryTimeout,
                 partitionOption,
                 partitionSettings,
-                additionalColumns);
+                additionalColumns,
+                numberPrecision,
+                numberScale);
         }
 
         BinaryData IPersistableModel<OracleSource>.Write(ModelReaderWriterOptions options)

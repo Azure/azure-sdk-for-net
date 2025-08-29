@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("clusterUri"u8);
             JsonSerializer.Serialize(writer, ClusterUri);
+            if (Optional.IsDefined(ClusterAuthType))
+            {
+                writer.WritePropertyName("clusterAuthType"u8);
+                writer.WriteStringValue(ClusterAuthType.Value.ToString());
+            }
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
@@ -74,6 +79,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("fileSystem"u8);
                 JsonSerializer.Serialize(writer, FileSystem);
+            }
+            if (Optional.IsDefined(Credential))
+            {
+                writer.WritePropertyName("credential"u8);
+                writer.WriteObjectValue(Credential, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -117,6 +127,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> clusterUri = default;
+            HDInsightClusterAuthenticationType? clusterAuthType = default;
             DataFactoryElement<string> userName = default;
             DataFactorySecret password = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
@@ -124,6 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string encryptedCredential = default;
             DataFactoryElement<bool> isEspEnabled = default;
             DataFactoryElement<string> fileSystem = default;
+            DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,6 +213,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                             clusterUri = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("clusterAuthType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            clusterAuthType = new HDInsightClusterAuthenticationType(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("userName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -260,6 +281,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                             fileSystem = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("credential"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -275,13 +305,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
                 clusterUri,
+                clusterAuthType,
                 userName,
                 password,
                 linkedServiceName,
                 hcatalogLinkedServiceName,
                 encryptedCredential,
                 isEspEnabled,
-                fileSystem);
+                fileSystem,
+                credential);
         }
 
         BinaryData IPersistableModel<HDInsightLinkedService>.Write(ModelReaderWriterOptions options)
