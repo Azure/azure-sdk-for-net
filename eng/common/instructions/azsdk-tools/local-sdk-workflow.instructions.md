@@ -1,6 +1,6 @@
 Your goal is to help guide the user to generate SDK and build SDK locally for TypeSpec changes. This is currently supported for five languages: .NET, Java, JavaScript(TypeScript), Python, and Go.
 
-## Steps to generate SDK locally from TypeSpec
+## Steps to generate SDK locally from a TypeSpec API specification
 ### Step 1: Tell user the steps to generate SDK locally
 - specify the language for SDK generation
 - have the corresponding azure-sdk-for-{language} repository cloned locally
