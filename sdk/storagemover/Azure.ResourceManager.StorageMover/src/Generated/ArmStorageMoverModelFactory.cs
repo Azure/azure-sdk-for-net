@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -106,10 +105,11 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="properties">
         /// The resource specific properties for the Storage Mover resource.
         /// Please note <see cref="Models.EndpointBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AzureStorageBlobContainerEndpointProperties"/>, <see cref="Models.AzureStorageSmbFileShareEndpointProperties"/>, <see cref="Models.NfsMountEndpointProperties"/> and <see cref="Models.SmbMountEndpointProperties"/>.
+        /// The available derived classes include <see cref="Models.AzureMultiCloudConnectorEndpointProperties"/>, <see cref="Models.AzureStorageBlobContainerEndpointProperties"/>, <see cref="Models.AzureStorageNfsFileShareEndpointProperties"/>, <see cref="Models.AzureStorageSmbFileShareEndpointProperties"/>, <see cref="Models.NfsMountEndpointProperties"/> and <see cref="Models.SmbMountEndpointProperties"/>.
         /// </param>
+        /// <param name="identity"> The managed service identity of the resource. This property is only available on the latest version. </param>
         /// <returns> A new <see cref="StorageMover.StorageMoverEndpointData"/> instance for mocking. </returns>
-        public static StorageMoverEndpointData StorageMoverEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EndpointBaseProperties properties = null)
+        public static StorageMoverEndpointData StorageMoverEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EndpointBaseProperties properties = null, ManagedServiceIdentity identity = null)
         {
             return new StorageMoverEndpointData(
                 id,
@@ -117,6 +117,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 resourceType,
                 systemData,
                 properties,
+                identity,
                 serializedAdditionalRawData: null);
         }
 
@@ -202,6 +203,40 @@ namespace Azure.ResourceManager.StorageMover.Models
                 credentials);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.AzureStorageNfsFileShareEndpointProperties"/>. </summary>
+        /// <param name="description"> A description for the Endpoint. </param>
+        /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account. </param>
+        /// <param name="fileShareName"> The name of the Azure Storage NFS file share. </param>
+        /// <returns> A new <see cref="Models.AzureStorageNfsFileShareEndpointProperties"/> instance for mocking. </returns>
+        public static AzureStorageNfsFileShareEndpointProperties AzureStorageNfsFileShareEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, ResourceIdentifier storageAccountResourceId = null, string fileShareName = null)
+        {
+            return new AzureStorageNfsFileShareEndpointProperties(
+                EndpointType.AzureStorageNfsFileShare,
+                description,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                storageAccountResourceId,
+                fileShareName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AzureMultiCloudConnectorEndpointProperties"/>. </summary>
+        /// <param name="description"> A description for the Endpoint. </param>
+        /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <param name="multiCloudConnectorId"> The Azure Resource ID of the MultiCloud Connector resource. </param>
+        /// <param name="awsS3BucketId"> The AWS S3 bucket ARM resource Id. </param>
+        /// <returns> A new <see cref="Models.AzureMultiCloudConnectorEndpointProperties"/> instance for mocking. </returns>
+        public static AzureMultiCloudConnectorEndpointProperties AzureMultiCloudConnectorEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, ResourceIdentifier multiCloudConnectorId = null, ResourceIdentifier awsS3BucketId = null)
+        {
+            return new AzureMultiCloudConnectorEndpointProperties(
+                EndpointType.AzureMultiCloudConnector,
+                description,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                multiCloudConnectorId,
+                awsS3BucketId);
+        }
+
         /// <summary> Initializes a new instance of <see cref="StorageMover.StorageMoverProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -227,7 +262,8 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> A description for the Job Definition. </param>
+        /// <param name="description"> A description for the Job Definition. OnPremToCloud is for migrating data from on-premises to cloud. CloudToCloud is for migrating data between cloud to cloud. </param>
+        /// <param name="jobType"> The type of the Job. </param>
         /// <param name="copyMode"> Strategy to use for copy. </param>
         /// <param name="sourceName"> The name of the source Endpoint. </param>
         /// <param name="sourceResourceId"> Fully qualified resource ID of the source Endpoint. </param>
@@ -240,16 +276,20 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="latestJobRunStatus"> The current status of the Job Run in a non-terminal state, if exists. </param>
         /// <param name="agentName"> Name of the Agent to assign for new Job Runs of this Job Definition. </param>
         /// <param name="agentResourceId"> Fully qualified resource id of the Agent to assign for new Job Runs of this Job Definition. </param>
+        /// <param name="sourceTargetMapValue"> The list of cloud endpoints to migrate. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <returns> A new <see cref="StorageMover.JobDefinitionData"/> instance for mocking. </returns>
-        public static JobDefinitionData JobDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, StorageMoverCopyMode copyMode = default, string sourceName = null, ResourceIdentifier sourceResourceId = null, string sourceSubpath = null, string targetName = null, ResourceIdentifier targetResourceId = null, string targetSubpath = null, string latestJobRunName = null, ResourceIdentifier latestJobRunResourceId = null, JobRunStatus? latestJobRunStatus = null, string agentName = null, ResourceIdentifier agentResourceId = null, StorageMoverProvisioningState? provisioningState = null)
+        public static JobDefinitionData JobDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, JobType? jobType = null, StorageMoverCopyMode copyMode = default, string sourceName = null, ResourceIdentifier sourceResourceId = null, string sourceSubpath = null, string targetName = null, ResourceIdentifier targetResourceId = null, string targetSubpath = null, string latestJobRunName = null, ResourceIdentifier latestJobRunResourceId = null, JobRunStatus? latestJobRunStatus = null, string agentName = null, ResourceIdentifier agentResourceId = null, IEnumerable<SourceTargetMap> sourceTargetMapValue = null, StorageMoverProvisioningState? provisioningState = null)
         {
+            sourceTargetMapValue ??= new List<SourceTargetMap>();
+
             return new JobDefinitionData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 description,
+                jobType,
                 copyMode,
                 sourceName,
                 sourceResourceId,
@@ -262,8 +302,39 @@ namespace Azure.ResourceManager.StorageMover.Models
                 latestJobRunStatus,
                 agentName,
                 agentResourceId,
+                sourceTargetMapValue != null ? new JobDefinitionPropertiesSourceTargetMap(sourceTargetMapValue?.ToList(), serializedAdditionalRawData: null) : null,
                 provisioningState,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SourceTargetMap"/>. </summary>
+        /// <param name="sourceEndpointProperties"></param>
+        /// <param name="targetEndpointProperties"></param>
+        /// <returns> A new <see cref="Models.SourceTargetMap"/> instance for mocking. </returns>
+        public static SourceTargetMap SourceTargetMap(SourceEndpointProperties sourceEndpointProperties = null, TargetEndpointProperties targetEndpointProperties = null)
+        {
+            return new SourceTargetMap(sourceEndpointProperties != null ? new SourceEndpoint(sourceEndpointProperties, serializedAdditionalRawData: null) : null, targetEndpointProperties != null ? new TargetEndpoint(targetEndpointProperties, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SourceEndpointProperties"/>. </summary>
+        /// <param name="name"> The name of the cloud source endpoint to migrate. </param>
+        /// <param name="sourceEndpointResourceId"> The fully qualified ARM resource ID of the cloud source endpoint to migrate. </param>
+        /// <param name="awsS3BucketId"> The fully qualified ARM resource ID of the AWS S3 bucket to migrate. </param>
+        /// <returns> A new <see cref="Models.SourceEndpointProperties"/> instance for mocking. </returns>
+        public static SourceEndpointProperties SourceEndpointProperties(string name = null, ResourceIdentifier sourceEndpointResourceId = null, ResourceIdentifier awsS3BucketId = null)
+        {
+            return new SourceEndpointProperties(name, sourceEndpointResourceId, awsS3BucketId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TargetEndpointProperties"/>. </summary>
+        /// <param name="name"> The name of the cloud target endpoint to migrate. </param>
+        /// <param name="targetEndpointResourceId"> The fully qualified ARM resource ID of the cloud target endpoint to migrate. </param>
+        /// <param name="azureStorageAccountResourceId"> The fully qualified ARM resource ID of the Azure Storage account. </param>
+        /// <param name="azureStorageBlobContainerName"> The name of the Azure Storage blob container. </param>
+        /// <returns> A new <see cref="Models.TargetEndpointProperties"/> instance for mocking. </returns>
+        public static TargetEndpointProperties TargetEndpointProperties(string name = null, ResourceIdentifier targetEndpointResourceId = null, ResourceIdentifier azureStorageAccountResourceId = null, string azureStorageBlobContainerName = null)
+        {
+            return new TargetEndpointProperties(name, targetEndpointResourceId, azureStorageAccountResourceId, azureStorageBlobContainerName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.JobRunResourceId"/>. </summary>
@@ -354,30 +425,6 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static JobRunError JobRunError(string code = null, string message = null, string target = null)
         {
             return new JobRunError(code, message, target, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.StorageMover.StorageMoverAgentData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> A description for the Agent. </param>
-        /// <param name="agentVersion"> The Agent version. </param>
-        /// <param name="arcResourceId"> The fully qualified resource ID of the Hybrid Compute resource for the Agent. </param>
-        /// <param name="arcVmUuid"> The VM UUID of the Hybrid Compute resource for the Agent. </param>
-        /// <param name="agentStatus"> The Agent status. </param>
-        /// <param name="lastStatusUpdate"> The last updated time of the Agent status. </param>
-        /// <param name="localIPAddress"> Local IP address reported by the Agent. </param>
-        /// <param name="memoryInMB"> Available memory reported by the Agent, in MB. </param>
-        /// <param name="numberOfCores"> Available compute cores reported by the Agent. </param>
-        /// <param name="uptimeInSeconds"> Uptime of the Agent in seconds. </param>
-        /// <param name="errorDetails"></param>
-        /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.StorageMover.StorageMoverAgentData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageMoverAgentData StorageMoverAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string agentVersion, string arcResourceId, string arcVmUuid, StorageMoverAgentStatus? agentStatus, DateTimeOffset? lastStatusUpdate, string localIPAddress, long? memoryInMB, long? numberOfCores, long? uptimeInSeconds, StorageMoverAgentPropertiesErrorDetails errorDetails, StorageMoverProvisioningState? provisioningState)
-        {
-            return StorageMoverAgentData(id: id, name: name, resourceType: resourceType, systemData: systemData, description: description, agentVersion: agentVersion, arcResourceId: arcResourceId, arcVmUuid: arcVmUuid, agentStatus: agentStatus, lastStatusUpdate: lastStatusUpdate, localIPAddress: localIPAddress, memoryInMB: memoryInMB, numberOfCores: numberOfCores, uptimeInSeconds: uptimeInSeconds, timeZone: default, uploadLimitScheduleWeeklyRecurrences: default, errorDetails: errorDetails, provisioningState: provisioningState);
         }
     }
 }
