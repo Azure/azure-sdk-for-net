@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
     {
         private static ResourceGroupResource rg;
         private static IotFirmwareData testFirmware;
-        private string firmwareName;
+        private string firmwareName = "93abdfa3-7ab9-43f2-a0a1-ee6c72bd8c6a";
 
         public FirmwareTest(bool isAsync)
             : base(isAsync)
@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         [SetUp]
         public void setup()
         {
-            firmwareName = Guid.NewGuid().ToString();
             testFirmware = new IotFirmwareData
             {
                 FileName = "testFileName",
