@@ -90,75 +90,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of CosmosDBForPostgreSqlClusterServerResources in the CosmosDBForPostgreSqlCluster. </summary>
-        /// <returns> An object representing collection of CosmosDBForPostgreSqlClusterServerResources and their operations over a CosmosDBForPostgreSqlClusterServerResource. </returns>
-        public virtual CosmosDBForPostgreSqlClusterServerCollection GetCosmosDBForPostgreSqlClusterServers()
-        {
-            return GetCachedClient(client => new CosmosDBForPostgreSqlClusterServerCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets information about a server in cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/servers/{serverName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Servers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlClusterServerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CosmosDBForPostgreSqlClusterServerResource>> GetCosmosDBForPostgreSqlClusterServerAsync(string serverName, CancellationToken cancellationToken = default)
-        {
-            return await GetCosmosDBForPostgreSqlClusterServers().GetAsync(serverName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about a server in cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/servers/{serverName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Servers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlClusterServerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CosmosDBForPostgreSqlClusterServerResource> GetCosmosDBForPostgreSqlClusterServer(string serverName, CancellationToken cancellationToken = default)
-        {
-            return GetCosmosDBForPostgreSqlClusterServers().Get(serverName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of CosmosDBForPostgreSqlConfigurationResources in the CosmosDBForPostgreSqlCluster. </summary>
         /// <returns> An object representing collection of CosmosDBForPostgreSqlConfigurationResources and their operations over a CosmosDBForPostgreSqlConfigurationResource. </returns>
         public virtual CosmosDBForPostgreSqlConfigurationCollection GetCosmosDBForPostgreSqlConfigurations()
@@ -175,11 +106,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <description>Configuration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -206,11 +137,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <description>Configuration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -228,80 +159,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             return GetCosmosDBForPostgreSqlConfigurations().Get(configurationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CosmosDBForPostgreSqlCoordinatorConfigurationResources in the CosmosDBForPostgreSqlCluster. </summary>
-        /// <returns> An object representing collection of CosmosDBForPostgreSqlCoordinatorConfigurationResources and their operations over a CosmosDBForPostgreSqlCoordinatorConfigurationResource. </returns>
-        public virtual CosmosDBForPostgreSqlCoordinatorConfigurationCollection GetCosmosDBForPostgreSqlCoordinatorConfigurations()
+        /// <summary> Gets a collection of ServerGroupsv2NodeConfigurationResources in the CosmosDBForPostgreSqlCluster. </summary>
+        /// <returns> An object representing collection of ServerGroupsv2NodeConfigurationResources and their operations over a ServerGroupsv2NodeConfigurationResource. </returns>
+        public virtual ServerGroupsv2NodeConfigurationCollection GetServerGroupsv2NodeConfigurations()
         {
-            return GetCachedClient(client => new CosmosDBForPostgreSqlCoordinatorConfigurationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets information of a configuration for coordinator.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/coordinatorConfigurations/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_GetCoordinator</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationName"> The name of the cluster configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CosmosDBForPostgreSqlCoordinatorConfigurationResource>> GetCosmosDBForPostgreSqlCoordinatorConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
-        {
-            return await GetCosmosDBForPostgreSqlCoordinatorConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information of a configuration for coordinator.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/coordinatorConfigurations/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_GetCoordinator</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationName"> The name of the cluster configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CosmosDBForPostgreSqlCoordinatorConfigurationResource> GetCosmosDBForPostgreSqlCoordinatorConfiguration(string configurationName, CancellationToken cancellationToken = default)
-        {
-            return GetCosmosDBForPostgreSqlCoordinatorConfigurations().Get(configurationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CosmosDBForPostgreSqlNodeConfigurationResources in the CosmosDBForPostgreSqlCluster. </summary>
-        /// <returns> An object representing collection of CosmosDBForPostgreSqlNodeConfigurationResources and their operations over a CosmosDBForPostgreSqlNodeConfigurationResource. </returns>
-        public virtual CosmosDBForPostgreSqlNodeConfigurationCollection GetCosmosDBForPostgreSqlNodeConfigurations()
-        {
-            return GetCachedClient(client => new CosmosDBForPostgreSqlNodeConfigurationCollection(client, Id));
+            return GetCachedClient(client => new ServerGroupsv2NodeConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -313,15 +175,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_GetNode</description>
+        /// <description>ServerConfiguration_GetNode</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/></description>
+        /// <description><see cref="ServerGroupsv2NodeConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,9 +192,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CosmosDBForPostgreSqlNodeConfigurationResource>> GetCosmosDBForPostgreSqlNodeConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerGroupsv2NodeConfigurationResource>> GetServerGroupsv2NodeConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            return await GetCosmosDBForPostgreSqlNodeConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+            return await GetServerGroupsv2NodeConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -344,15 +206,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_GetNode</description>
+        /// <description>ServerConfiguration_GetNode</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/></description>
+        /// <description><see cref="ServerGroupsv2NodeConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,9 +223,78 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CosmosDBForPostgreSqlNodeConfigurationResource> GetCosmosDBForPostgreSqlNodeConfiguration(string configurationName, CancellationToken cancellationToken = default)
+        public virtual Response<ServerGroupsv2NodeConfigurationResource> GetServerGroupsv2NodeConfiguration(string configurationName, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBForPostgreSqlNodeConfigurations().Get(configurationName, cancellationToken);
+            return GetServerGroupsv2NodeConfigurations().Get(configurationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServerGroupsv2CoordinatorConfigurationResources in the CosmosDBForPostgreSqlCluster. </summary>
+        /// <returns> An object representing collection of ServerGroupsv2CoordinatorConfigurationResources and their operations over a ServerGroupsv2CoordinatorConfigurationResource. </returns>
+        public virtual ServerGroupsv2CoordinatorConfigurationCollection GetServerGroupsv2CoordinatorConfigurations()
+        {
+            return GetCachedClient(client => new ServerGroupsv2CoordinatorConfigurationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets information of a configuration for coordinator.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/coordinatorConfigurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerConfiguration_GetCoordinator</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServerGroupsv2CoordinatorConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationName"> The name of the cluster configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServerGroupsv2CoordinatorConfigurationResource>> GetServerGroupsv2CoordinatorConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
+        {
+            return await GetServerGroupsv2CoordinatorConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information of a configuration for coordinator.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/coordinatorConfigurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerConfiguration_GetCoordinator</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServerGroupsv2CoordinatorConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationName"> The name of the cluster configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServerGroupsv2CoordinatorConfigurationResource> GetServerGroupsv2CoordinatorConfiguration(string configurationName, CancellationToken cancellationToken = default)
+        {
+            return GetServerGroupsv2CoordinatorConfigurations().Get(configurationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CosmosDBForPostgreSqlFirewallRuleResources in the CosmosDBForPostgreSqlCluster. </summary>
@@ -382,11 +313,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FirewallRules_Get</description>
+        /// <description>FirewallRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -413,11 +344,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FirewallRules_Get</description>
+        /// <description>FirewallRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -433,6 +364,144 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public virtual Response<CosmosDBForPostgreSqlFirewallRuleResource> GetCosmosDBForPostgreSqlFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             return GetCosmosDBForPostgreSqlFirewallRules().Get(firewallRuleName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CosmosDBForPostgreSqlPrivateEndpointConnectionResources in the CosmosDBForPostgreSqlCluster. </summary>
+        /// <returns> An object representing collection of CosmosDBForPostgreSqlPrivateEndpointConnectionResources and their operations over a CosmosDBForPostgreSqlPrivateEndpointConnectionResource. </returns>
+        public virtual CosmosDBForPostgreSqlPrivateEndpointConnectionCollection GetCosmosDBForPostgreSqlPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new CosmosDBForPostgreSqlPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets private endpoint connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CosmosDBForPostgreSqlPrivateEndpointConnectionResource>> GetCosmosDBForPostgreSqlPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetCosmosDBForPostgreSqlPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets private endpoint connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CosmosDBForPostgreSqlPrivateEndpointConnectionResource> GetCosmosDBForPostgreSqlPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetCosmosDBForPostgreSqlPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CosmosDBForPostgreSqlPrivateLinkResourceDataResources in the CosmosDBForPostgreSqlCluster. </summary>
+        /// <returns> An object representing collection of CosmosDBForPostgreSqlPrivateLinkResourceDataResources and their operations over a CosmosDBForPostgreSqlPrivateLinkResourceDataResource. </returns>
+        public virtual CosmosDBForPostgreSqlPrivateLinkResourceDataCollection GetAllCosmosDBForPostgreSqlPrivateLinkResourceData()
+        {
+            return GetCachedClient(client => new CosmosDBForPostgreSqlPrivateLinkResourceDataCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a private link resource for cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlPrivateLinkResourceDataResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CosmosDBForPostgreSqlPrivateLinkResourceDataResource>> GetCosmosDBForPostgreSqlPrivateLinkResourceDataAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            return await GetAllCosmosDBForPostgreSqlPrivateLinkResourceData().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a private link resource for cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlPrivateLinkResourceDataResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CosmosDBForPostgreSqlPrivateLinkResourceDataResource> GetCosmosDBForPostgreSqlPrivateLinkResourceData(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            return GetAllCosmosDBForPostgreSqlPrivateLinkResourceData().Get(privateLinkResourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CosmosDBForPostgreSqlRoleResources in the CosmosDBForPostgreSqlCluster. </summary>
@@ -451,11 +520,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Roles_Get</description>
+        /// <description>Role_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -482,11 +551,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Roles_Get</description>
+        /// <description>Role_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -504,142 +573,73 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             return GetCosmosDBForPostgreSqlRoles().Get(roleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CosmosDBForPostgreSqlPrivateEndpointConnectionResources in the CosmosDBForPostgreSqlCluster. </summary>
-        /// <returns> An object representing collection of CosmosDBForPostgreSqlPrivateEndpointConnectionResources and their operations over a CosmosDBForPostgreSqlPrivateEndpointConnectionResource. </returns>
-        public virtual CosmosDBForPostgreSqlPrivateEndpointConnectionCollection GetCosmosDBForPostgreSqlPrivateEndpointConnections()
+        /// <summary> Gets a collection of CosmosDBForPostgreSqlClusterServerResources in the CosmosDBForPostgreSqlCluster. </summary>
+        /// <returns> An object representing collection of CosmosDBForPostgreSqlClusterServerResources and their operations over a CosmosDBForPostgreSqlClusterServerResource. </returns>
+        public virtual CosmosDBForPostgreSqlClusterServerCollection GetCosmosDBForPostgreSqlClusterServers()
         {
-            return GetCachedClient(client => new CosmosDBForPostgreSqlPrivateEndpointConnectionCollection(client, Id));
+            return GetCachedClient(client => new CosmosDBForPostgreSqlClusterServerCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets private endpoint connection.
+        /// Gets information about a server in cluster.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/servers/{serverName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>ClusterServer_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the cluster. </param>
+        /// <param name="serverName"> The name of the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CosmosDBForPostgreSqlPrivateEndpointConnectionResource>> GetCosmosDBForPostgreSqlPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBForPostgreSqlClusterServerResource>> GetCosmosDBForPostgreSqlClusterServerAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            return await GetCosmosDBForPostgreSqlPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBForPostgreSqlClusterServers().GetAsync(serverName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets private endpoint connection.
+        /// Gets information about a server in cluster.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/servers/{serverName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>ClusterServer_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the cluster. </param>
+        /// <param name="serverName"> The name of the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CosmosDBForPostgreSqlPrivateEndpointConnectionResource> GetCosmosDBForPostgreSqlPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBForPostgreSqlClusterServerResource> GetCosmosDBForPostgreSqlClusterServer(string serverName, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBForPostgreSqlPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CosmosDBForPostgreSqlPrivateLinkResources in the CosmosDBForPostgreSqlCluster. </summary>
-        /// <returns> An object representing collection of CosmosDBForPostgreSqlPrivateLinkResources and their operations over a CosmosDBForPostgreSqlPrivateLinkResource. </returns>
-        public virtual CosmosDBForPostgreSqlPrivateLinkResourceCollection GetCosmosDBForPostgreSqlPrivateLinkResources()
-        {
-            return GetCachedClient(client => new CosmosDBForPostgreSqlPrivateLinkResourceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a private link resource for cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlPrivateLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CosmosDBForPostgreSqlPrivateLinkResource>> GetCosmosDBForPostgreSqlPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
-        {
-            return await GetCosmosDBForPostgreSqlPrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a private link resource for cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlPrivateLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CosmosDBForPostgreSqlPrivateLinkResource> GetCosmosDBForPostgreSqlPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
-        {
-            return GetCosmosDBForPostgreSqlPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
+            return GetCosmosDBForPostgreSqlClusterServers().Get(serverName, cancellationToken);
         }
 
         /// <summary>
@@ -651,11 +651,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -691,11 +691,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -731,11 +731,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Delete</description>
+        /// <description>Cluster_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -773,11 +773,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Delete</description>
+        /// <description>Cluster_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -815,11 +815,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Update</description>
+        /// <description>Cluster_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="patch"> The parameters for updating a cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<CosmosDBForPostgreSqlClusterResource>> UpdateAsync(WaitUntil waitUntil, CosmosDBForPostgreSqlClusterPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, CosmosDBForPostgreSqlClusterPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -840,9 +840,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             try
             {
                 var response = await _cosmosDBForPostgreSqlClusterClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlClusterResource>(new CosmosDBForPostgreSqlClusterOperationSource(Client), _cosmosDBForPostgreSqlClusterClustersClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBForPostgreSqlArmOperation(_cosmosDBForPostgreSqlClusterClustersClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -861,11 +861,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Update</description>
+        /// <description>Cluster_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -877,7 +877,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="patch"> The parameters for updating a cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<CosmosDBForPostgreSqlClusterResource> Update(WaitUntil waitUntil, CosmosDBForPostgreSqlClusterPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Update(WaitUntil waitUntil, CosmosDBForPostgreSqlClusterPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -886,9 +886,95 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             try
             {
                 var response = _cosmosDBForPostgreSqlClusterClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlClusterResource>(new CosmosDBForPostgreSqlClusterOperationSource(Client), _cosmosDBForPostgreSqlClusterClustersClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBForPostgreSqlArmOperation(_cosmosDBForPostgreSqlClusterClustersClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Promotes read replica cluster to an independent read-write cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/promote</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_PromoteReadReplica</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The parameter for enabling geo-redundant backup while promoting read replica. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> PromoteReadReplicaAsync(WaitUntil waitUntil, PromoteContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _cosmosDBForPostgreSqlClusterClustersClientDiagnostics.CreateScope("CosmosDBForPostgreSqlClusterResource.PromoteReadReplica");
+            scope.Start();
+            try
+            {
+                var response = await _cosmosDBForPostgreSqlClusterClustersRestClient.PromoteReadReplicaAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBForPostgreSqlArmOperation(_cosmosDBForPostgreSqlClusterClustersClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlClusterClustersRestClient.CreatePromoteReadReplicaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Promotes read replica cluster to an independent read-write cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/promote</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_PromoteReadReplica</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The parameter for enabling geo-redundant backup while promoting read replica. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation PromoteReadReplica(WaitUntil waitUntil, PromoteContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _cosmosDBForPostgreSqlClusterClustersClientDiagnostics.CreateScope("CosmosDBForPostgreSqlClusterResource.PromoteReadReplica");
+            scope.Start();
+            try
+            {
+                var response = _cosmosDBForPostgreSqlClusterClustersRestClient.PromoteReadReplica(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new CosmosDBForPostgreSqlArmOperation(_cosmosDBForPostgreSqlClusterClustersClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlClusterClustersRestClient.CreatePromoteReadReplicaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -911,7 +997,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -953,7 +1039,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -995,7 +1081,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1037,7 +1123,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1079,7 +1165,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1121,7 +1207,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1151,90 +1237,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         }
 
         /// <summary>
-        /// Promotes read replica cluster to an independent read-write cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/promote</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_PromoteReadReplica</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> PromoteReadReplicaAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _cosmosDBForPostgreSqlClusterClustersClientDiagnostics.CreateScope("CosmosDBForPostgreSqlClusterResource.PromoteReadReplica");
-            scope.Start();
-            try
-            {
-                var response = await _cosmosDBForPostgreSqlClusterClustersRestClient.PromoteReadReplicaAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBForPostgreSqlArmOperation(_cosmosDBForPostgreSqlClusterClustersClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlClusterClustersRestClient.CreatePromoteReadReplicaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Promotes read replica cluster to an independent read-write cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/promote</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_PromoteReadReplica</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation PromoteReadReplica(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _cosmosDBForPostgreSqlClusterClustersClientDiagnostics.CreateScope("CosmosDBForPostgreSqlClusterResource.PromoteReadReplica");
-            scope.Start();
-            try
-            {
-                var response = _cosmosDBForPostgreSqlClusterClustersRestClient.PromoteReadReplica(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CosmosDBForPostgreSqlArmOperation(_cosmosDBForPostgreSqlClusterClustersClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlClusterClustersRestClient.CreatePromoteReadReplicaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -1243,11 +1245,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1286,7 +1288,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     }
                     patch.Tags[key] = value;
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -1305,11 +1307,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1348,7 +1350,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     }
                     patch.Tags[key] = value;
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Get(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception e)
@@ -1367,11 +1369,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1405,7 +1407,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     var patch = new CosmosDBForPostgreSqlClusterPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -1424,11 +1426,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1462,7 +1464,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     var patch = new CosmosDBForPostgreSqlClusterPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Get(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception e)
@@ -1481,11 +1483,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1522,7 +1524,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     }
                     patch.Tags.Remove(key);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -1541,11 +1543,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1582,7 +1584,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     }
                     patch.Tags.Remove(key);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Get(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception e)

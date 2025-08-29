@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterPatch)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -165,6 +170,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
+            IdentityProperties identity = default;
             IDictionary<string, string> tags = default;
             string administratorLoginPassword = default;
             string postgresqlVersion = default;
@@ -186,6 +192,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = IdentityProperties.DeserializeIdentityProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -339,7 +354,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new CosmosDBForPostgreSqlClusterPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 administratorLoginPassword,
                 postgresqlVersion,
                 citusVersion,
@@ -356,6 +370,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 nodeVCores,
                 nodeEnablePublicIPAccess,
                 maintenanceWindow,
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

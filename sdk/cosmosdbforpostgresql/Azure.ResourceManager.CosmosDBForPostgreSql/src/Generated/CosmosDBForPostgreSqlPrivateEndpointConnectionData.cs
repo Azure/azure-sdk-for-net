@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
     /// <summary>
     /// A class representing the CosmosDBForPostgreSqlPrivateEndpointConnection data model.
-    /// The private endpoint connection resource.
+    /// A private endpoint connection resource
     /// </summary>
     public partial class CosmosDBForPostgreSqlPrivateEndpointConnectionData : ResourceData
     {
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="systemData"> The systemData. </param>
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
         /// <param name="privateEndpoint"> The private endpoint resource. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> groupIds, SubResource privateEndpoint, CosmosDBForPostgreSqlPrivateLinkServiceConnectionState connectionState, CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CosmosDBForPostgreSqlPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> groupIds, SubResource privateEndpoint, CosmosDBForPostgreSqlPrivateLinkServiceConnectionState privateLinkServiceConnectionState, CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupIds = groupIds;
             PrivateEndpoint = privateEndpoint;
-            ConnectionState = connectionState;
+            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public CosmosDBForPostgreSqlPrivateLinkServiceConnectionState ConnectionState { get; set; }
+        public CosmosDBForPostgreSqlPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         public CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }

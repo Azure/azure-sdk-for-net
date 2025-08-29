@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             CosmosDBForPostgreSqlConfigurationDataType? dataType = default;
             string allowedValues = default;
             bool? requiresRestart = default;
-            IList<CosmosDBForPostgreSqlServerRoleGroupConfiguration> serverRoleGroupConfigurations = default;
+            IReadOnlyList<CosmosDBForPostgreSqlServerRoleGroupConfiguration> serverRoleGroupConfigurations = default;
             CosmosDBForPostgreSqlProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();

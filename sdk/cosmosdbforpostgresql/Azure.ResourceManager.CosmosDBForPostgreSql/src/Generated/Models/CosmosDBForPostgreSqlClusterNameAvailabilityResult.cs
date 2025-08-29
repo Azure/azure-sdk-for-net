@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="message"> Error message. </param>
         /// <param name="isNameAvailable"> Indicates whether the cluster name is available. </param>
         /// <param name="name"> Name of the cluster. </param>
-        /// <param name="resourceType"> Type of the cluster. </param>
+        /// <param name="type"> Type of the cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlClusterNameAvailabilityResult(string message, bool? isNameAvailable, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBForPostgreSqlClusterNameAvailabilityResult(string message, bool? isNameAvailable, string name, ResourceType? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             IsNameAvailable = isNameAvailable;
             Name = name;
-            ResourceType = resourceType;
+            Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <summary> Name of the cluster. </summary>
         public string Name { get; }
         /// <summary> Type of the cluster. </summary>
-        public ResourceType? ResourceType { get; }
+        public ResourceType? Type { get; }
     }
 }

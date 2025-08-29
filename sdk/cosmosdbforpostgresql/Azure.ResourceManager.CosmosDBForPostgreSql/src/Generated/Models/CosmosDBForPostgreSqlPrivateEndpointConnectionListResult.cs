@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    /// <summary> List of private endpoint connections associated with the specified resource. </summary>
+    /// <summary> The response of a PrivateEndpointConnection list operation. </summary>
     internal partial class CosmosDBForPostgreSqlPrivateEndpointConnectionListResult
     {
         /// <summary>
@@ -46,21 +47,34 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionListResult"/>. </summary>
-        internal CosmosDBForPostgreSqlPrivateEndpointConnectionListResult()
+        /// <param name="value"> The PrivateEndpointConnection items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal CosmosDBForPostgreSqlPrivateEndpointConnectionListResult(IEnumerable<CosmosDBForPostgreSqlPrivateEndpointConnectionData> value)
         {
-            Value = new ChangeTrackingList<CosmosDBForPostgreSqlPrivateEndpointConnectionData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionListResult"/>. </summary>
-        /// <param name="value"> Array of private endpoint connections. </param>
+        /// <param name="value"> The PrivateEndpointConnection items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlPrivateEndpointConnectionListResult(IReadOnlyList<CosmosDBForPostgreSqlPrivateEndpointConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBForPostgreSqlPrivateEndpointConnectionListResult(IReadOnlyList<CosmosDBForPostgreSqlPrivateEndpointConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of private endpoint connections. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionListResult"/> for deserialization. </summary>
+        internal CosmosDBForPostgreSqlPrivateEndpointConnectionListResult()
+        {
+        }
+
+        /// <summary> The PrivateEndpointConnection items on this page. </summary>
         public IReadOnlyList<CosmosDBForPostgreSqlPrivateEndpointConnectionData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

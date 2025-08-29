@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RoleCreate()
         {
-            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/stable/2022-11-08/examples/RoleCreate.json
-            // this example is just showing the usage of "Roles_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-03-02-preview/RoleCreate.json
+            // this example is just showing the usage of "Role_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
             // invoke the operation
             string roleName = "role1";
-            CosmosDBForPostgreSqlRoleData data = new CosmosDBForPostgreSqlRoleData("password");
+            CosmosDBForPostgreSqlRoleData data = new CosmosDBForPostgreSqlRoleData();
             ArmOperation<CosmosDBForPostgreSqlRoleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, roleName, data);
             CosmosDBForPostgreSqlRoleResource result = lro.Value;
 
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheRoleOfTheCluster()
         {
-            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/stable/2022-11-08/examples/RoleGet.json
-            // this example is just showing the usage of "Roles_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-03-02-preview/RoleGet.json
+            // this example is just showing the usage of "Role_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_RoleList()
         {
-            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/stable/2022-11-08/examples/RoleListByCluster.json
-            // this example is just showing the usage of "Roles_ListByCluster" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-03-02-preview/RoleListByCluster.json
+            // this example is just showing the usage of "Role_ListByCluster" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetTheRoleOfTheCluster()
         {
-            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/stable/2022-11-08/examples/RoleGet.json
-            // this example is just showing the usage of "Roles_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-03-02-preview/RoleGet.json
+            // this example is just showing the usage of "Role_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetTheRoleOfTheCluster()
         {
-            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/stable/2022-11-08/examples/RoleGet.json
-            // this example is just showing the usage of "Roles_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-03-02-preview/RoleGet.json
+            // this example is just showing the usage of "Role_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

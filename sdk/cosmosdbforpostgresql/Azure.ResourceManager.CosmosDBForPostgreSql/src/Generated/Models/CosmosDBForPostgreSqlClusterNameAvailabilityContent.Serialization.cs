@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ResourceType.ToString());
+            writer.WriteStringValue(Type.ToSerialString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new CosmosDBForPostgreSqlNameAvailabilityResourceType(property.Value.GetString());
+                    type = property.Value.GetString().ToCosmosDBForPostgreSqlNameAvailabilityResourceType();
                     continue;
                 }
                 if (options.Format != "W")

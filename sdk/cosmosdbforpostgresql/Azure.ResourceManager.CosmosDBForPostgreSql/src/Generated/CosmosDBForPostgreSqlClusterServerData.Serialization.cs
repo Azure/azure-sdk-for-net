@@ -40,41 +40,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerEdition))
-            {
-                writer.WritePropertyName("serverEdition"u8);
-                writer.WriteStringValue(ServerEdition);
-            }
-            if (Optional.IsDefined(StorageQuotaInMb))
-            {
-                writer.WritePropertyName("storageQuotaInMb"u8);
-                writer.WriteNumberValue(StorageQuotaInMb.Value);
-            }
-            if (Optional.IsDefined(VCores))
-            {
-                writer.WritePropertyName("vCores"u8);
-                writer.WriteNumberValue(VCores.Value);
-            }
-            if (Optional.IsDefined(IsHAEnabled))
-            {
-                writer.WritePropertyName("enableHa"u8);
-                writer.WriteBooleanValue(IsHAEnabled.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsPublicIPAccessEnabled))
-            {
-                writer.WritePropertyName("enablePublicIpAccess"u8);
-                writer.WriteBooleanValue(IsPublicIPAccessEnabled.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsReadOnly))
-            {
-                writer.WritePropertyName("isReadOnly"u8);
-                writer.WriteBooleanValue(IsReadOnly.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AdministratorLogin))
-            {
-                writer.WritePropertyName("administratorLogin"u8);
-                writer.WriteStringValue(AdministratorLogin);
-            }
             if (options.Format != "W" && Optional.IsDefined(FullyQualifiedDomainName))
             {
                 writer.WritePropertyName("fullyQualifiedDomainName"u8);
@@ -137,13 +102,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string serverEdition = default;
-            int? storageQuotaInMb = default;
-            int? vCores = default;
-            bool? enableHa = default;
-            bool? enablePublicIPAccess = default;
-            bool? isReadOnly = default;
-            string administratorLogin = default;
             string fullyQualifiedDomainName = default;
             CosmosDBForPostgreSqlServerRole? role = default;
             string state = default;
@@ -188,61 +146,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("serverEdition"u8))
-                        {
-                            serverEdition = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageQuotaInMb"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageQuotaInMb = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("vCores"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            vCores = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableHa"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableHa = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("enablePublicIpAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enablePublicIPAccess = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isReadOnly"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isReadOnly = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("administratorLogin"u8))
-                        {
-                            administratorLogin = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("fullyQualifiedDomainName"u8))
                         {
                             fullyQualifiedDomainName = property0.Value.GetString();
@@ -296,13 +199,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 name,
                 type,
                 systemData,
-                serverEdition,
-                storageQuotaInMb,
-                vCores,
-                enableHa,
-                enablePublicIPAccess,
-                isReadOnly,
-                administratorLogin,
                 fullyQualifiedDomainName,
                 role,
                 state,

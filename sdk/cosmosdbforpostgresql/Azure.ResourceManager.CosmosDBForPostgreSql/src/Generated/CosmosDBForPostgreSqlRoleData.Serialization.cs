@@ -40,13 +40,39 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("password"u8);
-            writer.WriteStringValue(Password);
+            if (Optional.IsDefined(RoleType))
+            {
+                writer.WritePropertyName("roleType"u8);
+                writer.WriteStringValue(RoleType.Value.ToString());
+            }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteStringValue(Password);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            writer.WritePropertyName("externalIdentity"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ObjectId))
+            {
+                writer.WritePropertyName("objectId"u8);
+                writer.WriteStringValue(ObjectId);
+            }
+            if (Optional.IsDefined(PrincipalType))
+            {
+                writer.WritePropertyName("principalType"u8);
+                writer.WriteStringValue(PrincipalType.Value.ToString());
+            }
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId);
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
@@ -74,8 +100,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            RoleType? roleType = default;
             string password = default;
             CosmosDBForPostgreSqlProvisioningState? provisioningState = default;
+            ResourceIdentifier objectId = default;
+            PrincipalType? principalType = default;
+            ResourceIdentifier tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,6 +143,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("roleType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            roleType = new RoleType(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("password"u8))
                         {
                             password = property0.Value.GetString();
@@ -125,6 +164,45 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                                 continue;
                             }
                             provisioningState = new CosmosDBForPostgreSqlProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("externalIdentity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.NameEquals("objectId"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    objectId = new ResourceIdentifier(property1.Value.GetString());
+                                    continue;
+                                }
+                                if (property1.NameEquals("principalType"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    principalType = new PrincipalType(property1.Value.GetString());
+                                    continue;
+                                }
+                                if (property1.NameEquals("tenantId"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    tenantId = new ResourceIdentifier(property1.Value.GetString());
+                                    continue;
+                                }
+                            }
                             continue;
                         }
                     }
@@ -141,7 +219,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 name,
                 type,
                 systemData,
+                roleType,
                 password,
+                objectId,
+                principalType,
+                tenantId,
                 provisioningState,
                 serializedAdditionalRawData);
         }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="role"> The role of servers in the server role group. </param>
         /// <param name="value"> Value of the configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CosmosDBForPostgreSqlServerRoleGroupConfiguration(CosmosDBForPostgreSqlServerRole role, string value)
+        internal CosmosDBForPostgreSqlServerRoleGroupConfiguration(CosmosDBForPostgreSqlServerRole role, string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         }
 
         /// <summary> The role of servers in the server role group. </summary>
-        public CosmosDBForPostgreSqlServerRole Role { get; set; }
+        public CosmosDBForPostgreSqlServerRole Role { get; }
         /// <summary> Value of the configuration. </summary>
-        public string Value { get; set; }
+        public string Value { get; }
         /// <summary> Default value of the configuration. </summary>
         public string DefaultValue { get; }
         /// <summary> Source of the configuration. </summary>

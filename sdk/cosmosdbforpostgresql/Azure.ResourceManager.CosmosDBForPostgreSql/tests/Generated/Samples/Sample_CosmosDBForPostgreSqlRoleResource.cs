@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheRoleOfTheCluster()
         {
-            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/stable/2022-11-08/examples/RoleGet.json
-            // this example is just showing the usage of "Roles_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-03-02-preview/RoleGet.json
+            // this example is just showing the usage of "Role_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_RoleDelete()
         {
-            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/stable/2022-11-08/examples/RoleDelete.json
-            // this example is just showing the usage of "Roles_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-03-02-preview/RoleDelete.json
+            // this example is just showing the usage of "Role_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -68,17 +68,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             CosmosDBForPostgreSqlRoleResource cosmosDBForPostgreSqlRole = client.GetCosmosDBForPostgreSqlRoleResource(cosmosDBForPostgreSqlRoleResourceId);
 
             // invoke the operation
-            await cosmosDBForPostgreSqlRole.DeleteAsync(WaitUntil.Completed);
+            ArmOperation<CosmosDBForPostgreSqlRoleResource> lro = await cosmosDBForPostgreSqlRole.DeleteAsync(WaitUntil.Completed);
+            CosmosDBForPostgreSqlRoleResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CosmosDBForPostgreSqlRoleData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Update_RoleCreate()
         {
-            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/stable/2022-11-08/examples/RoleCreate.json
-            // this example is just showing the usage of "Roles_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-03-02-preview/RoleCreate.json
+            // this example is just showing the usage of "Role_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -95,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             CosmosDBForPostgreSqlRoleResource cosmosDBForPostgreSqlRole = client.GetCosmosDBForPostgreSqlRoleResource(cosmosDBForPostgreSqlRoleResourceId);
 
             // invoke the operation
-            CosmosDBForPostgreSqlRoleData data = new CosmosDBForPostgreSqlRoleData("password");
+            CosmosDBForPostgreSqlRoleData data = new CosmosDBForPostgreSqlRoleData();
             ArmOperation<CosmosDBForPostgreSqlRoleResource> lro = await cosmosDBForPostgreSqlRole.UpdateAsync(WaitUntil.Completed, data);
             CosmosDBForPostgreSqlRoleResource result = lro.Value;
 

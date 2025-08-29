@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Pending. </summary>
+        /// <summary> Connection waiting for approval or rejection. </summary>
         public static CosmosDBForPostgreSqlPrivateEndpointServiceConnectionStatus Pending { get; } = new CosmosDBForPostgreSqlPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+        /// <summary> Connection approved. </summary>
         public static CosmosDBForPostgreSqlPrivateEndpointServiceConnectionStatus Approved { get; } = new CosmosDBForPostgreSqlPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+        /// <summary> Connection Rejected. </summary>
         public static CosmosDBForPostgreSqlPrivateEndpointServiceConnectionStatus Rejected { get; } = new CosmosDBForPostgreSqlPrivateEndpointServiceConnectionStatus(RejectedValue);
         /// <summary> Determines if two <see cref="CosmosDBForPostgreSqlPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(CosmosDBForPostgreSqlPrivateEndpointServiceConnectionStatus left, CosmosDBForPostgreSqlPrivateEndpointServiceConnectionStatus right) => left.Equals(right);

@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    /// <summary> A list of private link resources. </summary>
+    /// <summary> The response of a PrivateLinkResource list operation. </summary>
     internal partial class CosmosDBForPostgreSqlPrivateLinkResourceListResult
     {
         /// <summary>
@@ -46,21 +47,34 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateLinkResourceListResult"/>. </summary>
-        internal CosmosDBForPostgreSqlPrivateLinkResourceListResult()
+        /// <param name="value"> The PrivateLinkResource items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal CosmosDBForPostgreSqlPrivateLinkResourceListResult(IEnumerable<CosmosDBForPostgreSqlPrivateLinkResourceDataData> value)
         {
-            Value = new ChangeTrackingList<CosmosDBForPostgreSqlPrivateLinkResourceData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateLinkResourceListResult"/>. </summary>
-        /// <param name="value"> Array of private link resources. </param>
+        /// <param name="value"> The PrivateLinkResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlPrivateLinkResourceListResult(IReadOnlyList<CosmosDBForPostgreSqlPrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBForPostgreSqlPrivateLinkResourceListResult(IReadOnlyList<CosmosDBForPostgreSqlPrivateLinkResourceDataData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of private link resources. </summary>
-        public IReadOnlyList<CosmosDBForPostgreSqlPrivateLinkResourceData> Value { get; }
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateLinkResourceListResult"/> for deserialization. </summary>
+        internal CosmosDBForPostgreSqlPrivateLinkResourceListResult()
+        {
+        }
+
+        /// <summary> The PrivateLinkResource items on this page. </summary>
+        public IReadOnlyList<CosmosDBForPostgreSqlPrivateLinkResourceDataData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
