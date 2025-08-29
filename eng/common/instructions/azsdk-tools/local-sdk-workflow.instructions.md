@@ -3,7 +3,7 @@ Your goal is to help guide the user to generate SDK and build SDK locally for Ty
 ## Steps to generate SDK locally from a TypeSpec API specification
 ### Step 1: Tell user the steps to generate SDK locally
 - Identify the language for SDK generation
-- have the corresponding azure-sdk-for-{language} repository cloned locally
+- Validate the corresponding azure-sdk-for-{language} repository is present in local environment
 - specify the path to the cloned azure-sdk-for-{language} repository
 - specify the path to the 'tspconfig.yaml' file or the path to 'tsp-location.yaml' file.
 - use tools provided by 'azure-sdk-mcp' MCP server to generate SDK locally
