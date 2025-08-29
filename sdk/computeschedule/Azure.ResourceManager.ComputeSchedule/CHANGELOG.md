@@ -21,12 +21,14 @@
 - Changed the errorDetails in OperationErrorDetails from dateTime to string.
 - Added AzureOperationName in results returned when calling `GetOperationErrors` endpoint.
 
-## 1.0.0-beta.2 (2025-08-27)
+## 1.1.0-beta.1 (2025-08-29)
 
 ### Features Added
 
 New endpoints were added for the recurring scheduledactions feature which will allow customers create recurring scheduledactions to perform actions on their virtual machines. These actions include:
-- Scheduling recurring starts, deallocates and hibernates
+- Creating and deleting of recurring starts, deallocates and hibernates on virtual machines
+- Attaching and detaching virtual machines from recurring scheduledactions
+- Cancelling and delaying scheduled/unscheduled occurrences of start/deallocate/hibernates on attached virtual machines attached to recurring scheduledactions
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
