@@ -36,7 +36,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.array[2]"u8, out bool? nullableBoolValue2));
             Assert.AreEqual(null, nullableBoolValue2);
 
-            Assert.AreEqual("{\"array\":[true,false,null]}", JsonPatchTests.GetJsonString(jp));
+            Assert.AreEqual("{\"array\":[true,false,null]}", jp.Serialize());
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.array[2]"u8, out byte? nullableByteValue2));
             Assert.AreEqual(null, nullableByteValue2);
 
-            Assert.AreEqual("{\"array\":[42,255,null]}", JsonPatchTests.GetJsonString(jp));
+            Assert.AreEqual("{\"array\":[42,255,null]}", jp.Serialize());
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.array[2]"u8, out DateTime? nullableDateTimeValue2));
             Assert.AreEqual(null, nullableDateTimeValue2);
 
-            Assert.AreEqual("{\"array\":[\"01/01/2024 12:00:00\",\"12/31/2024 23:59:59\",null]}", JsonPatchTests.GetJsonString(jp));
+            Assert.AreEqual("{\"array\":[\"01/01/2024 12:00:00\",\"12/31/2024 23:59:59\",null]}", jp.Serialize());
         }
 
         [Test]
@@ -135,7 +135,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.array[2]"u8, out DateTimeOffset? nullableDateTimeOffsetValue2));
             Assert.AreEqual(null, nullableDateTimeOffsetValue2);
 
-            Assert.AreEqual("{\"array\":[\"01/01/2024 12:00:00 +01:00\",\"12/31/2024 23:59:59 +02:00\",null]}", JsonPatchTests.GetJsonString(jp));
+            Assert.AreEqual("{\"array\":[\"01/01/2024 12:00:00 +01:00\",\"12/31/2024 23:59:59 +02:00\",null]}", jp.Serialize());
         }
 
         [Test]
@@ -166,7 +166,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.array[2]"u8, out decimal? nullableDecimalValue2));
             Assert.AreEqual(null, nullableDecimalValue2);
 
-            Assert.AreEqual("{\"array\":[123.45,67890.12,null]}", JsonPatchTests.GetJsonString(jp));
+            Assert.AreEqual("{\"array\":[123.45,67890.12,null]}", jp.Serialize());
         }
 
         [Test]
@@ -197,7 +197,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.array[2]"u8, out double? nullableDoubleValue2));
             Assert.AreEqual(null, nullableDoubleValue2);
 
-            Assert.AreEqual("{\"array\":[123.45,67890.12,null]}", JsonPatchTests.GetJsonString(jp));
+            Assert.AreEqual("{\"array\":[123.45,67890.12,null]}", jp.Serialize());
         }
 
         [Test]
@@ -228,7 +228,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.array[2]"u8, out float? nullableFloatValue2));
             Assert.AreEqual(null, nullableFloatValue2);
 
-            Assert.AreEqual("{\"array\":[123.5,67890.5,null]}", JsonPatchTests.GetJsonString(jp));
+            Assert.AreEqual("{\"array\":[123.5,67890.5,null]}", jp.Serialize());
         }
 
         public void Append_Guid()
@@ -261,7 +261,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.array[2]"u8, out Guid? nullableGuidValue2));
             Assert.AreEqual(null, nullableGuidValue2);
 
-            Assert.AreEqual($"{{\"array\":[\"{guid1}\",\"{guid2}\",null]}}", JsonPatchTests.GetJsonString(jp));
+            Assert.AreEqual($"{{\"array\":[\"{guid1}\",\"{guid2}\",null]}}", jp.Serialize());
         }
 
         public void Append_Int32()
@@ -291,7 +291,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.array[2]"u8, out int? nullableIntValue2));
             Assert.AreEqual(null, nullableIntValue2);
 
-            Assert.AreEqual("{\"array\":[42,255,null]}", JsonPatchTests.GetJsonString(jp));
+            Assert.AreEqual("{\"array\":[42,255,null]}", jp.Serialize());
         }
 
         [Test]
@@ -322,7 +322,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.array[2]"u8, out long? nullableLongValue2));
             Assert.AreEqual(null, nullableLongValue2);
 
-            Assert.AreEqual("{\"array\":[42000000000,25500000000,null]}", JsonPatchTests.GetJsonString(jp));
+            Assert.AreEqual("{\"array\":[42000000000,25500000000,null]}", jp.Serialize());
         }
 
         [Test]
@@ -353,7 +353,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.array[2]"u8, out sbyte? nullableSbyteValue2));
             Assert.AreEqual(null, nullableSbyteValue2);
 
-            Assert.AreEqual("{\"array\":[42,-100,null]}", JsonPatchTests.GetJsonString(jp));
+            Assert.AreEqual("{\"array\":[42,-100,null]}", jp.Serialize());
         }
 
         [Test]
@@ -384,7 +384,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.array[2]"u8, out short? nullableShortValue2));
             Assert.AreEqual(null, nullableShortValue2);
 
-            Assert.AreEqual("{\"array\":[32000,-16000,null]}", JsonPatchTests.GetJsonString(jp));
+            Assert.AreEqual("{\"array\":[32000,-16000,null]}", jp.Serialize());
         }
 
         [Test]
@@ -418,7 +418,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.array[2]"u8, out TimeSpan? nullableTimeSpanValue2));
             Assert.AreEqual(null, nullableTimeSpanValue2);
 
-            Assert.AreEqual("{\"array\":[\"01:30:00\",\"2.00:00:00\",null]}", JsonPatchTests.GetJsonString(jp));
+            Assert.AreEqual("{\"array\":[\"01:30:00\",\"2.00:00:00\",null]}", jp.Serialize());
         }
 
         [Test]
@@ -449,7 +449,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.array[2]"u8, out uint? nullableUintValue2));
             Assert.AreEqual(null, nullableUintValue2);
 
-            Assert.AreEqual("{\"array\":[42,255,null]}", JsonPatchTests.GetJsonString(jp));
+            Assert.AreEqual("{\"array\":[42,255,null]}", jp.Serialize());
         }
 
         [Test]
@@ -480,7 +480,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.array[2]"u8, out ulong? nullableUlongValue2));
             Assert.AreEqual(null, nullableUlongValue2);
 
-            Assert.AreEqual("{\"array\":[42000000000,25500000000,null]}", JsonPatchTests.GetJsonString(jp));
+            Assert.AreEqual("{\"array\":[42000000000,25500000000,null]}", jp.Serialize());
         }
 
         [Test]
@@ -511,7 +511,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.array[2]"u8, out ushort? nullableUshortValue2));
             Assert.AreEqual(null, nullableUshortValue2);
 
-            Assert.AreEqual("{\"array\":[32000,16000,null]}", JsonPatchTests.GetJsonString(jp));
+            Assert.AreEqual("{\"array\":[32000,16000,null]}", jp.Serialize());
         }
 
         [Test]
@@ -534,7 +534,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetValue("$.array[2]"u8, out string? stringValue2));
             Assert.AreEqual(null, stringValue2);
 
-            Assert.AreEqual("{\"array\":[\"Hello\",\"World\",null]}", JsonPatchTests.GetJsonString(jp));
+            Assert.AreEqual("{\"array\":[\"Hello\",\"World\",null]}", jp.Serialize());
         }
     }
 }
