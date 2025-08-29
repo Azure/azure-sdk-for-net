@@ -2,40 +2,40 @@
 mode: 'agent'
 tools: ['azsdk_check_service_label', 'azsdk_engsys_validate_codeowners_entry_for_service', 'azsdk_engsys_codeowner_update']
 ---
- 
+
 ## Goal:
 Validate service label and ensure at least 2 valid code owners exist for SDK repositories.
- 
+
 ## Step 1: Validate Service Label
 Use `azsdk_check_service_label` to verify the service label exists:
 - **DoesNotExist/NotAServiceLabel**: Direct user to create valid service label first. Stop validation process until service label is created.
 - **Exists/InReview**: Proceed to Step 2
- 
-## Step 2: Validate Code Owners  
+
+## Step 2: Validate Code Owners
 Ask user to specify SDK repository they want to validate codeowners for or detect from context.
- 
+
 Repository name mapping:
 - .NET/dotnet: use "azure-sdk-for-net"
 - Python: use "azure-sdk-for-python"
 - Java: use "azure-sdk-for-java"
 - JavaScript: use "azure-sdk-for-js"
 - Go: use "azure-sdk-for-go"
- 
+
 Use `azsdk_engsys_validate_codeowners_entry_for_service` with either `serviceLabel` OR `repoPath` or both, but at least one must be used. If one isn't provided, leave the parameter field empty.
- 
+
 **If entry exists**: Go to Step 3
 **If no entry exists**: Go to Step 4
- 
+
 ## Step 3: Check Existing Code Owners
 Valid code owners must be:
-- PUBLIC members of Microsoft and Azure GitHub organizations  
+- PUBLIC members of Microsoft and Azure GitHub organizations
 - Have write access to the SDK repository
- 
+
 **If at least 2 valid owners**: Success - optionally add or delete additional owners
 **If less than 2 valid owners**: CRITICAL - must fix before proceeding:
- 
+
 After any changes, re-validate with `azsdk_engsys_validate_codeowners_entry_for_service`.
- 
+
 ## Step 4: Create New Code Owner Entry
 When no CODEOWNERS entry exists yet:
 1. Ensure you have the following information
@@ -58,7 +58,7 @@ When no CODEOWNERS entry exists yet:
 2. Collect service owners and source owners (GitHub usernames)
 3. Use `azsdk_engsys_codeowner_update` with required parameters
 4. Must have at least 2 valid owners from the start
- 
+
 ### Fix Options:
 1. **Fix invalid owners** - If there are invalid owners after modifing the CODEOWNERS file ALWAYS provide guidance.
    Follow instructions [here](https://aka.ms/azsdk/access) for:
@@ -67,7 +67,7 @@ When no CODEOWNERS entry exists yet:
    - Requesting write access
 2. **Add new owners** using `azsdk_engsys_codeowner_update` with `isAdding: true`
 3. **Remove invalid + add valid** owners using `azsdk_engsys_codeowner_update`
- 
+
 ## Requirements
 - **MINIMUM**: At least 2 valid code owners at all times
 - **NO EXCEPTIONS**: Cannot proceed with insufficient owners
