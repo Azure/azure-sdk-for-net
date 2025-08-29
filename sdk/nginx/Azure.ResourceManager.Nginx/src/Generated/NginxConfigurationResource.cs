@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Nginx
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _nginxConfigurationConfigurationsClientDiagnostics;
-        private readonly ConfigurationsRestOperations _nginxConfigurationConfigurationsRestClient;
+        private readonly ClientDiagnostics _nginxConfigurationNginxConfigurationResponsesClientDiagnostics;
+        private readonly NginxConfigurationResponsesRestOperations _nginxConfigurationNginxConfigurationResponsesRestClient;
         private readonly NginxConfigurationData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NginxConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _nginxConfigurationConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string nginxConfigurationConfigurationsApiVersion);
-            _nginxConfigurationConfigurationsRestClient = new ConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, nginxConfigurationConfigurationsApiVersion);
+            _nginxConfigurationNginxConfigurationResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string nginxConfigurationNginxConfigurationResponsesApiVersion);
+            _nginxConfigurationNginxConfigurationResponsesRestClient = new NginxConfigurationResponsesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, nginxConfigurationNginxConfigurationResponsesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <description>NginxConfigurationResponse_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NginxConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationResource.Get");
+            using var scope = _nginxConfigurationNginxConfigurationResponsesClientDiagnostics.CreateScope("NginxConfigurationResource.Get");
             scope.Start();
             try
             {
-                var response = await _nginxConfigurationConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _nginxConfigurationNginxConfigurationResponsesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NginxConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <description>NginxConfigurationResponse_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NginxConfigurationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationResource.Get");
+            using var scope = _nginxConfigurationNginxConfigurationResponsesClientDiagnostics.CreateScope("NginxConfigurationResource.Get");
             scope.Start();
             try
             {
-                var response = _nginxConfigurationConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _nginxConfigurationNginxConfigurationResponsesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NginxConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_Delete</description>
+        /// <description>NginxConfigurationResponse_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationResource.Delete");
+            using var scope = _nginxConfigurationNginxConfigurationResponsesClientDiagnostics.CreateScope("NginxConfigurationResource.Delete");
             scope.Start();
             try
             {
-                var response = await _nginxConfigurationConfigurationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NginxArmOperation(_nginxConfigurationConfigurationsClientDiagnostics, Pipeline, _nginxConfigurationConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _nginxConfigurationNginxConfigurationResponsesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NginxArmOperation(_nginxConfigurationNginxConfigurationResponsesClientDiagnostics, Pipeline, _nginxConfigurationNginxConfigurationResponsesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -220,11 +220,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_Delete</description>
+        /// <description>NginxConfigurationResponse_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -236,12 +236,12 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationResource.Delete");
+            using var scope = _nginxConfigurationNginxConfigurationResponsesClientDiagnostics.CreateScope("NginxConfigurationResource.Delete");
             scope.Start();
             try
             {
-                var response = _nginxConfigurationConfigurationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NginxArmOperation(_nginxConfigurationConfigurationsClientDiagnostics, Pipeline, _nginxConfigurationConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _nginxConfigurationNginxConfigurationResponsesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new NginxArmOperation(_nginxConfigurationNginxConfigurationResponsesClientDiagnostics, Pipeline, _nginxConfigurationNginxConfigurationResponsesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -262,11 +262,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_CreateOrUpdate</description>
+        /// <description>NginxConfigurationResponse_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -282,12 +282,12 @@ namespace Azure.ResourceManager.Nginx
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationResource.Update");
+            using var scope = _nginxConfigurationNginxConfigurationResponsesClientDiagnostics.CreateScope("NginxConfigurationResource.Update");
             scope.Start();
             try
             {
-                var response = await _nginxConfigurationConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NginxArmOperation<NginxConfigurationResource>(new NginxConfigurationOperationSource(Client), _nginxConfigurationConfigurationsClientDiagnostics, Pipeline, _nginxConfigurationConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _nginxConfigurationNginxConfigurationResponsesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NginxArmOperation<NginxConfigurationResource>(new NginxConfigurationOperationSource(Client), _nginxConfigurationNginxConfigurationResponsesClientDiagnostics, Pipeline, _nginxConfigurationNginxConfigurationResponsesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -308,11 +308,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_CreateOrUpdate</description>
+        /// <description>NginxConfigurationResponse_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,12 +328,12 @@ namespace Azure.ResourceManager.Nginx
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationResource.Update");
+            using var scope = _nginxConfigurationNginxConfigurationResponsesClientDiagnostics.CreateScope("NginxConfigurationResource.Update");
             scope.Start();
             try
             {
-                var response = _nginxConfigurationConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new NginxArmOperation<NginxConfigurationResource>(new NginxConfigurationOperationSource(Client), _nginxConfigurationConfigurationsClientDiagnostics, Pipeline, _nginxConfigurationConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _nginxConfigurationNginxConfigurationResponsesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new NginxArmOperation<NginxConfigurationResource>(new NginxConfigurationOperationSource(Client), _nginxConfigurationNginxConfigurationResponsesClientDiagnostics, Pipeline, _nginxConfigurationNginxConfigurationResponsesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -354,11 +354,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_Analysis</description>
+        /// <description>NginxConfigurationResponses_Analysis</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -370,11 +370,11 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NginxAnalysisResult>> AnalysisAsync(NginxAnalysisContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationResource.Analysis");
+            using var scope = _nginxConfigurationNginxConfigurationResponsesClientDiagnostics.CreateScope("NginxConfigurationResource.Analysis");
             scope.Start();
             try
             {
-                var response = await _nginxConfigurationConfigurationsRestClient.AnalysisAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _nginxConfigurationNginxConfigurationResponsesRestClient.AnalysisAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -393,11 +393,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_Analysis</description>
+        /// <description>NginxConfigurationResponses_Analysis</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -409,11 +409,11 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NginxAnalysisResult> Analysis(NginxAnalysisContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationResource.Analysis");
+            using var scope = _nginxConfigurationNginxConfigurationResponsesClientDiagnostics.CreateScope("NginxConfigurationResource.Analysis");
             scope.Start();
             try
             {
-                var response = _nginxConfigurationConfigurationsRestClient.Analysis(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var response = _nginxConfigurationNginxConfigurationResponsesRestClient.Analysis(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

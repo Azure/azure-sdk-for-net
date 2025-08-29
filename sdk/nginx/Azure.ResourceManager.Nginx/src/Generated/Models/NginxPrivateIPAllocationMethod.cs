@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxPrivateIPAllocationMethod. </summary>
+    /// <summary> Nginx Private IP Allocation Method. </summary>
     public readonly partial struct NginxPrivateIPAllocationMethod : IEquatable<NginxPrivateIPAllocationMethod>
     {
         private readonly string _value;

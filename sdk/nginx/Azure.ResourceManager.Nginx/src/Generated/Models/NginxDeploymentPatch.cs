@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxDeploymentPatch. </summary>
+    /// <summary> Nginx Deployment Update Parameters. </summary>
     public partial class NginxDeploymentPatch
     {
         /// <summary>
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentPatch"/>. </summary>
-        /// <param name="identity"> Gets or sets the identity. </param>
+        /// <param name="identity"> Identity Properties. </param>
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="sku"></param>
-        /// <param name="location"></param>
-        /// <param name="properties"></param>
+        /// <param name="sku"> Resource Sku. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Nginx Deployment Update Properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NginxDeploymentPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, NginxResourceSku sku, AzureLocation? location, NginxDeploymentUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Nginx.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the identity. </summary>
+        /// <summary> Identity Properties. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Gets or sets the sku. </summary>
+        /// <summary> Resource Sku. </summary>
         internal NginxResourceSku Sku { get; set; }
         /// <summary> Name of the SKU. </summary>
         public string SkuName
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.Nginx.Models
             set => Sku = new NginxResourceSku(value);
         }
 
-        /// <summary> Gets or sets the location. </summary>
+        /// <summary> The geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary> Gets or sets the properties. </summary>
+        /// <summary> Nginx Deployment Update Properties. </summary>
         public NginxDeploymentUpdateProperties Properties { get; set; }
     }
 }

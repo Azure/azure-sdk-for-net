@@ -13,7 +13,10 @@ using Azure.ResourceManager.Nginx.Models;
 
 namespace Azure.ResourceManager.Nginx
 {
-    /// <summary> A class representing the NginxDeploymentApiKey data model. </summary>
+    /// <summary>
+    /// A class representing the NginxDeploymentApiKey data model.
+    /// Nginx Deployment Api Key Response
+    /// </summary>
     public partial class NginxDeploymentApiKeyData : ResourceData
     {
         /// <summary>
@@ -58,7 +61,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Nginx Deployment Api Key Response Properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NginxDeploymentApiKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NginxDeploymentApiKeyProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -66,7 +69,7 @@ namespace Azure.ResourceManager.Nginx
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the properties. </summary>
+        /// <summary> Nginx Deployment Api Key Response Properties. </summary>
         public NginxDeploymentApiKeyProperties Properties { get; }
     }
 }

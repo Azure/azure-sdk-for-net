@@ -13,7 +13,10 @@ using Azure.ResourceManager.Nginx.Models;
 
 namespace Azure.ResourceManager.Nginx
 {
-    /// <summary> A class representing the NginxDeployment data model. </summary>
+    /// <summary>
+    /// A class representing the NginxDeployment data model.
+    /// Nginx Deployment
+    /// </summary>
     public partial class NginxDeploymentData : TrackedResourceData
     {
         /// <summary>
@@ -61,14 +64,14 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Gets or sets the identity. </param>
-        /// <param name="properties"></param>
-        /// <param name="sku"></param>
+        /// <param name="properties"> Nginx Deployment Properties. </param>
+        /// <param name="identity"> Identity Properties. </param>
+        /// <param name="sku"> Resource Sku. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NginxDeploymentProperties properties, NginxResourceSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NginxDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NginxDeploymentProperties properties, ManagedServiceIdentity identity, NginxResourceSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Identity = identity;
             Properties = properties;
+            Identity = identity;
             Sku = sku;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -78,11 +81,11 @@ namespace Azure.ResourceManager.Nginx
         {
         }
 
-        /// <summary> Gets or sets the identity. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Gets or sets the properties. </summary>
+        /// <summary> Nginx Deployment Properties. </summary>
         public NginxDeploymentProperties Properties { get; set; }
-        /// <summary> Gets or sets the sku. </summary>
+        /// <summary> Identity Properties. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Resource Sku. </summary>
         internal NginxResourceSku Sku { get; set; }
         /// <summary> Name of the SKU. </summary>
         public string SkuName
