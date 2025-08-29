@@ -15,48 +15,16 @@ public readonly struct ClientConnection
     /// <param name="locator">The endpoint or resource identifier.</param>
     /// <param name="credential">The client credential.</param>
     /// <param name="credentialKind">The kind of connection used by the client.</param>
-    public ClientConnection(string id, string locator, object credential, CredentialKind credentialKind)
-    {
-        if (string.IsNullOrWhiteSpace(id))
-        {
-            throw new ArgumentException("Id cannot be null or empty.", nameof(id));
-        }
-        if (string.IsNullOrWhiteSpace(locator))
-        {
-            throw new ArgumentException("Locator cannot be null or empty.", nameof(locator));
-        }
-        if (credential is null && credentialKind != CredentialKind.None)
-        {
-            throw new ArgumentNullException(nameof(credential), "Credential cannot be null.");
-        }
-
-        Id = id;
-        Locator = locator;
-        Credential = credential;
-        CredentialKind = credentialKind;
-        Metadata = new Dictionary<string, string>();
-    }
+    public ClientConnection(string id, string locator, object credential, CredentialKind credentialKind): this(id: id, locator: locator, credentialKind: credentialKind, credential: credential, metadata: null)
+    {}
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ClientConnection"/> struct with a with no authentication.
     /// </summary>
     /// <param name="id">The identifier for the connection.</param>
     /// <param name="locator">The endpoint or resource identifier.</param>
-    public ClientConnection(string id, string locator)
-    {
-        if (string.IsNullOrWhiteSpace(id))
-        {
-            throw new ArgumentException("Id cannot be null or empty.", nameof(id));
-        }
-        if (string.IsNullOrWhiteSpace(locator))
-        {
-            throw new ArgumentException("Locator cannot be null or empty.", nameof(locator));
-        }
-        Id = id;
-        Locator = locator;
-        CredentialKind = CredentialKind.None;
-        Metadata = new Dictionary<string, string>();
-    }
+    public ClientConnection(string id, string locator) : this(id: id, locator: locator, credentialKind: CredentialKind.None, credential: null, metadata: null)
+    {}
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ClientConnection"/> struct with the specified subclient ID.
@@ -82,7 +50,7 @@ public readonly struct ClientConnection
     /// <param name="credential">The client credential.</param>
     /// <param name="credentialKind">The kind of connection used by the client</param>
     /// <param name="metadata">The connection metadata.</param>
-    public ClientConnection(string id, string locator, object credential, CredentialKind credentialKind, IReadOnlyDictionary<string, string>? metadata)
+    public ClientConnection(string id, string locator, object? credential, CredentialKind credentialKind, IReadOnlyDictionary<string, string>? metadata)
     {
         if (string.IsNullOrWhiteSpace(id))
         {
