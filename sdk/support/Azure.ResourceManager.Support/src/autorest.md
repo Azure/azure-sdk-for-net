@@ -118,6 +118,8 @@ directive:
     transform: >
       $.ProblemClassificationProperties['properties']['secondaryConsentEnabled']['readOnly'] = true;
       $.ServiceProperties['properties']['resourceTypes']['readOnly'] = true;
+      # It was found during the Swagger comparison that the contentType is missing the 'x-ms-enum' object content,
+      # so it is supplemented here.
       $.MessageProperties['properties']['contentType']['x-ms-enum'] = {
           name: 'TranscriptContentType',
           modelAsString: true
