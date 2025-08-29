@@ -31,6 +31,7 @@
     <ProjectReference Include="..\Spector\http\azure\encode\duration\src\_Specs_.Azure.Encode.Duration.csproj" />
     <ProjectReference Include="..\Spector\http\azure\example\basic\src\_Specs_.Azure.Example.Basic.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\model\src\_Specs_.Azure.Core.Model.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\payload\pageable\src\_Specs_.Azure.Payload.Pageable.csproj" />
     <ProjectReference Include="..\Spector\http\type\array\src\Type.Array.csproj" />
     <ProjectReference Include="..\Spector\http\type\enum\extensible\src\Type.Enum.Extensible.csproj" />
     <ProjectReference Include="..\Spector\http\type\enum\fixed\src\Type.Enum.Fixed.csproj" />
@@ -38,8 +39,10 @@
     <ProjectReference Include="..\Spector\http\authentication\http\custom\src\Authentication.Http.Custom.csproj" />
     <ProjectReference Include="..\Spector\http\authentication\oauth2\src\Authentication.OAuth2.csproj" />
     <ProjectReference Include="..\Spector\http\authentication\union\src\Authentication.Union.csproj" />
+    <ProjectReference Include="..\Spector\http\client\namespace\src\Client.ClientNamespace.csproj" />
     <ProjectReference Include="..\Spector\http\client\naming\src\Client.Naming.csproj" />
     <ProjectReference Include="..\Spector\http\client\naming\enum-conflict\src\Client.Naming.EnumConflict.csproj" />
+    <ProjectReference Include="..\Spector\http\client\overload\src\Client.Overload.csproj" />
     <ProjectReference Include="..\Spector\http\client\structure\client-operation-group\src\Client.Structure.Service.csproj" Aliases="ClientStructureClientOperationGroup" />
     <ProjectReference Include="..\Spector\http\client\structure\default\src\Client.Structure.Service.Default.csproj" Aliases="ClientStructureDefault" />
     <ProjectReference Include="..\Spector\http\client\structure\multi-client\src\Client.Structure.Service.Multi.Client.csproj" Aliases="ClientStructureMultiClient" />
