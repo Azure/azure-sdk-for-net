@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         public async Task CreateCommonClient()
         {
             Client = GetArmClient();
+            var subscription = Client.GetSubscriptionResource(SubscriptionResource.CreateResourceIdentifier(subscriptionId));
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 

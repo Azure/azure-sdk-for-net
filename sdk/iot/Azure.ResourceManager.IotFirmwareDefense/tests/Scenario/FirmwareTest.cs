@@ -102,9 +102,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 
         private async Task<FirmwareAnalysisWorkspaceResource> getWorkspace()
         {
-            var subResource = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            var subscription = Client.GetSubscriptionResource(subResource);
-            rg = await CreateResourceGroup(subscription, rgName, AzureLocation.EastUS);
+            rg = await CreateResourceGroup(DefaultSubscription, rgName, AzureLocation.EastUS);
             var _ = await rg.GetFirmwareAnalysisWorkspaces().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 firmwareName,
