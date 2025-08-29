@@ -69,5 +69,17 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
             MongoClusterPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new MongoClusterPrivateEndpointConnectionResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="UserResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="UserResource.CreateResourceIdentifier" /> to create an <see cref="UserResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="UserResource"/> object. </returns>
+        public virtual UserResource GetUserResource(ResourceIdentifier id)
+        {
+            UserResource.ValidateResourceId(id);
+            return new UserResource(Client, id);
+        }
     }
 }
