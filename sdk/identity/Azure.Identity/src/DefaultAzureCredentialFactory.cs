@@ -199,7 +199,8 @@ namespace Azure.Identity
                 CreateVisualStudioCodeCredential(),
                 CreateAzureCliCredential(),
                 CreateAzurePowerShellCredential(),
-                CreateAzureDeveloperCliCredential()
+                CreateAzureDeveloperCliCredential(),
+                CreateBrokerCredential()
             ];
 
             if (TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
@@ -244,10 +245,7 @@ namespace Azure.Identity
                 Constants.WorkloadIdentityCredential => [CreateWorkloadIdentityCredential()],
                 Constants.ManagedIdentityCredential => [CreateManagedIdentityCredential()],
                 Constants.InteractiveBrowserCredential => [CreateInteractiveBrowserCredential()],
-                Constants.BrokerCredential =>
-                    TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions)
-                        ? [CreateBrokerCredential(brokerOptions)]
-                        : throw new CredentialUnavailableException("BrokerCredential is not available without a reference to Azure.Identity.Broker."),
+                Constants.BrokerCredential => [CreateBrokerCredential()],
                 _ => throw new InvalidOperationException($"Invalid value for environment variable {environmentVariableName}: {credentialSelection}. Valid values are {validCredentials}.{_troubleshootingMessage}")
             };
         }
