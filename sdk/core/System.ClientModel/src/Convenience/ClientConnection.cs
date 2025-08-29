@@ -22,7 +22,7 @@ public readonly struct ClientConnection
             throw new ArgumentException("Id cannot be null or empty.", nameof(id));
         if (string.IsNullOrWhiteSpace(locator))
             throw new ArgumentException("Locator cannot be null or empty.", nameof(locator));
-        if (credential is null)
+        if (credential is null && credentialKind != CredentialKind.None)
             throw new ArgumentNullException(nameof(credential), "Credential cannot be null.");
 
         Id = id;
@@ -74,21 +74,22 @@ public readonly struct ClientConnection
     /// <param name="credential">The client credential.</param>
     /// <param name="credentialKind">The kind of connection used by the client</param>
     /// <param name="metadata">The connection metadata.</param>
-    public ClientConnection(string id, string locator, object credential, CredentialKind credentialKind, IReadOnlyDictionary<string, string> metadata)
+    public ClientConnection(string id, string locator, object credential, CredentialKind credentialKind, IReadOnlyDictionary<string, string>? metadata)
     {
         if (string.IsNullOrWhiteSpace(id))
             throw new ArgumentException("Id cannot be null or empty.", nameof(id));
         if (string.IsNullOrWhiteSpace(locator))
             throw new ArgumentException("Locator cannot be null or empty.", nameof(locator));
-        if (credential is null)
+        if (credential is null && credentialKind != CredentialKind.None)
             throw new ArgumentNullException(nameof(credential), "Credential cannot be null.");
         if (metadata is null)
-            throw new ArgumentNullException(nameof(metadata), "Metadata cannot be null");
+            Metadata = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
+        else
+            Metadata = metadata;
         Id = id;
         Locator = locator;
         Credential = credential;
         CredentialKind = credentialKind;
-        Metadata = metadata;
     }
 
     /// <summary>

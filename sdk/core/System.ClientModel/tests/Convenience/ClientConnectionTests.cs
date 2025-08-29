@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System.Collections.Generic;
+using System.Net;
+using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using NUnit.Framework;
 
 namespace System.ClientModel.Primitives.Tests;
@@ -23,8 +25,8 @@ public class ClientConnectionTests
         }
         else
         {
-            object credential = new { foo="bar" };
-            if (hasMetadata)
+            object credential = new { foo = "bar" };
+            if (!hasMetadata)
             {
                 conn = new(id: "123", locator: "www.microsoft.com", credential: credential, credentialKind: credentialKind.Value);
                 Assert.AreEqual(conn.Metadata.Count, 0);
@@ -76,6 +78,16 @@ public class ClientConnectionTests
     }
 
     [Test]
+    public void TestConstructorWithCredentialsNone()
+    {
+        ClientConnection conn = new(id: "123", locator: "www.microsoft.com", credential: null, credentialKind: CredentialKind.None);
+        Assert.AreEqual("123", conn.Id);
+        Assert.AreEqual("www.microsoft.com", conn.Locator);
+        Assert.AreEqual(CredentialKind.None, conn.CredentialKind);
+        Assert.AreEqual(0, conn.Metadata.Count);
+    }
+
+    [Test]
     [TestCase(null, null, null, "Id cannot be null or empty.")]
     [TestCase("123", null, null, "Locator cannot be null or empty.")]
     [TestCase("", "", null, "Id cannot be null or empty.")]
@@ -87,12 +99,31 @@ public class ClientConnectionTests
     }
 
     [Test]
-    [TestCase("123", "www.microsoft.com", null, "Credential cannot be null.")]
-    [TestCase("123", "www.microsoft.com", "test", "Metadata cannot be null")]
-    public void TestConstructorWithMetadataThrowsArgumentNull(string id, string locator, object credential, string expected)
+    public void TestConstructorWithMetadataThrowsArgumentNull()
     {
-        ArgumentException exception = Assert.Throws<ArgumentNullException>(() => new ClientConnection(id: id, locator: locator, credentialKind: CredentialKind.TokenCredential, credential: credential, metadata: null));
-        Assert.That(exception.Message.StartsWith(expected), $"Expected: {expected}, got: {exception.Message}");
+        ArgumentException exception = Assert.Throws<ArgumentNullException>(() => new ClientConnection(id: "123", locator: "www.microsoft.com", credentialKind: CredentialKind.TokenCredential, credential: null, metadata: null));
+        Assert.That(exception.Message.StartsWith("Credential cannot be null."), $"Expected: \"Credential cannot be null.\", got: {exception.Message}");
+    }
+
+    [Test]
+    [TestCase(0)]
+    [TestCase(2)]
+    public void TestConstructorMetadataWithNull(int dictionarySize)
+    {
+        Dictionary<string, string> metadata = null;
+        if (dictionarySize > 0)
+        {
+            metadata = [];
+            for (int i = 0; i < dictionarySize; i++)
+            {
+                metadata[$"key{i}"] = $"value{i}";
+            }
+        }
+        ClientConnection conn = new(id: "123", locator: "www.microsoft.com", credential: null, credentialKind: CredentialKind.None, metadata: metadata);
+        Assert.AreEqual("123", conn.Id);
+        Assert.AreEqual("www.microsoft.com", conn.Locator);
+        Assert.AreEqual(CredentialKind.None, conn.CredentialKind);
+        Assert.AreEqual(dictionarySize, conn.Metadata.Count);
     }
 #nullable enable
 }
