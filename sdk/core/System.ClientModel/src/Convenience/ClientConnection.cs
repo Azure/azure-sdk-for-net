@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System.Collections.ObjectModel;
 
 namespace System.ClientModel.Primitives;
 
@@ -19,11 +18,17 @@ public readonly struct ClientConnection
     public ClientConnection(string id, string locator, object credential, CredentialKind credentialKind)
     {
         if (string.IsNullOrWhiteSpace(id))
+        {
             throw new ArgumentException("Id cannot be null or empty.", nameof(id));
+        }
         if (string.IsNullOrWhiteSpace(locator))
+        {
             throw new ArgumentException("Locator cannot be null or empty.", nameof(locator));
+        }
         if (credential is null && credentialKind != CredentialKind.None)
+        {
             throw new ArgumentNullException(nameof(credential), "Credential cannot be null.");
+        }
 
         Id = id;
         Locator = locator;
@@ -40,14 +45,17 @@ public readonly struct ClientConnection
     public ClientConnection(string id, string locator)
     {
         if (string.IsNullOrWhiteSpace(id))
+        {
             throw new ArgumentException("Id cannot be null or empty.", nameof(id));
+        }
         if (string.IsNullOrWhiteSpace(locator))
+        {
             throw new ArgumentException("Locator cannot be null or empty.", nameof(locator));
-
+        }
         Id = id;
         Locator = locator;
         CredentialKind = CredentialKind.None;
-        Metadata = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
+        Metadata = new Dictionary<string, string>();
     }
 
     /// <summary>
@@ -62,7 +70,7 @@ public readonly struct ClientConnection
         Id = id;
         Locator = locator;
         CredentialKind = credentialKind;
-        Metadata = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
+        Metadata = new Dictionary<string, string>();
     }
 
     /// <summary>
@@ -77,13 +85,21 @@ public readonly struct ClientConnection
     public ClientConnection(string id, string locator, object credential, CredentialKind credentialKind, IReadOnlyDictionary<string, string>? metadata)
     {
         if (string.IsNullOrWhiteSpace(id))
+        {
             throw new ArgumentException("Id cannot be null or empty.", nameof(id));
+        }
         if (string.IsNullOrWhiteSpace(locator))
+        {
             throw new ArgumentException("Locator cannot be null or empty.", nameof(locator));
+        }
         if (credential is null && credentialKind != CredentialKind.None)
+        {
             throw new ArgumentNullException(nameof(credential), "Credential cannot be null.");
+        }
         if (metadata is null)
-            Metadata = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
+        {
+            Metadata = new Dictionary<string, string>();
+        }
         else
             Metadata = metadata;
         Id = id;

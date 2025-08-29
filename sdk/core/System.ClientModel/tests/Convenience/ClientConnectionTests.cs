@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System.Collections.Generic;
-using System.Net;
-using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using NUnit.Framework;
 
 namespace System.ClientModel.Primitives.Tests;
