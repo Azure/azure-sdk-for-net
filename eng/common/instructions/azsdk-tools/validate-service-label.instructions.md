@@ -10,7 +10,7 @@ Validate service label exists or create new one for SDK release process.
  
 Provide the following information about the importance of service labels:
  
-"Before your SDK is released, your service must have a valid service label. Service labels enable automatic owner assignment and notifications across the Azure SDK ecosystem.
+"Before your SDK is released, your service must have a valid service label in the Azure SDK repositories. Service labels enable automatic owner assignment and notifications across the Azure SDK ecosystem.
  
 When properly configured, service labels automatically:
  
@@ -43,7 +43,7 @@ If no valid service label exists, guide the user through creating a new one.
  
 1. **Check existing labels**: Search for related service labels, offer alternatives
 2. **Generate recommendation**: Suggest label name following guidelines:
-   - Should match the service's official product name (e.g., "Event Hubs", "Kusto", "Cosmos", etc.)
+   - Should match the service's official product name as described on Service Tree (e.g., "Event Hubs", "Kusto", "Cosmos", etc.)
    - No "Microsoft/Azure" in name
    - Title Case (except short prepositions)
    - Avoid Service Groups: Use "Communication Rooms" instead of "Communication - Rooms"
