@@ -121,7 +121,8 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
     /// <inheritdoc />
     protected internal override IEnumerable<BicepStatement> Compile()
     {
-        if (((IBicepValue)this).Kind == BicepValueKind.Expression)
+        if (((IBicepValue)this).Kind == BicepValueKind.Expression || // this means this resource is constructed by an expression
+            _self is not null) // this means this resource is constructed inside another resource/construct
         {
             yield return new ExpressionStatement(CompileProperties());
             yield break;

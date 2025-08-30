@@ -77,3 +77,11 @@ public interface IBicepValue
     /// </summary>
     public void SetReadOnly();
 }
+
+public interface IBicepValue<T> : IBicepValue
+{
+    /// <summary>
+    /// Gets the literal value of this expression if it's literal.
+    /// </summary>
+    public T? Value { get; }
+}

@@ -120,7 +120,7 @@ internal static class BicepTypeMapping
             IBicepValue v when (v.Kind == BicepValueKind.Expression) => v.Expression!,
             IBicepValue v when (v.Source is not null) => v.Source.GetReference(),
             IBicepValue v when (v.Kind == BicepValueKind.Literal) => ToBicep(v.LiteralValue, format),
-            IBicepValue v when (v.Self is not null) => v.Self.GetReference(),
+            IBicepValue v when (v.Self is not null) => v.Self.GetReference(), // TODO -- we need to do something when this self is pulling out from a list/dict
             IBicepValue v when (v.Kind == BicepValueKind.Unset) => BicepSyntax.Null(),
             _ => throw new InvalidOperationException($"Cannot convert {value} to a Bicep expression.")
         };
