@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.BotService
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _botConnectionSettingBotConnectionClientDiagnostics;
-        private readonly BotConnectionRestOperations _botConnectionSettingBotConnectionRestClient;
+        private readonly ClientDiagnostics _botConnectionSettingConnectionSettingsClientDiagnostics;
+        private readonly ConnectionSettingsRestOperations _botConnectionSettingConnectionSettingsRestClient;
         private readonly BotConnectionSettingData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.BotService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BotConnectionSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _botConnectionSettingBotConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string botConnectionSettingBotConnectionApiVersion);
-            _botConnectionSettingBotConnectionRestClient = new BotConnectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, botConnectionSettingBotConnectionApiVersion);
+            _botConnectionSettingConnectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string botConnectionSettingConnectionSettingsApiVersion);
+            _botConnectionSettingConnectionSettingsRestClient = new ConnectionSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, botConnectionSettingConnectionSettingsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <description>ConnectionSetting_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.BotService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BotConnectionSettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingResource.Get");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingResource.Get");
             scope.Start();
             try
             {
-                var response = await _botConnectionSettingBotConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _botConnectionSettingConnectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BotConnectionSettingResource(Client, response.Value), response.GetRawResponse());
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <description>ConnectionSetting_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.BotService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BotConnectionSettingResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingResource.Get");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingResource.Get");
             scope.Start();
             try
             {
-                var response = _botConnectionSettingBotConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _botConnectionSettingConnectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BotConnectionSettingResource(Client, response.Value), response.GetRawResponse());
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Delete</description>
+        /// <description>ConnectionSetting_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.BotService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingResource.Delete");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingResource.Delete");
             scope.Start();
             try
             {
-                var response = await _botConnectionSettingBotConnectionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _botConnectionSettingBotConnectionRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _botConnectionSettingConnectionSettingsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _botConnectionSettingConnectionSettingsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new BotServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -222,11 +222,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Delete</description>
+        /// <description>ConnectionSetting_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -238,12 +238,12 @@ namespace Azure.ResourceManager.BotService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingResource.Delete");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingResource.Delete");
             scope.Start();
             try
             {
-                var response = _botConnectionSettingBotConnectionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _botConnectionSettingBotConnectionRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _botConnectionSettingConnectionSettingsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _botConnectionSettingConnectionSettingsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new BotServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -266,11 +266,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Update</description>
+        /// <description>ConnectionSetting_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -285,11 +285,11 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingResource.Update");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingResource.Update");
             scope.Start();
             try
             {
-                var response = await _botConnectionSettingBotConnectionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _botConnectionSettingConnectionSettingsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new BotConnectionSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -308,11 +308,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Update</description>
+        /// <description>ConnectionSetting_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -327,11 +327,11 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingResource.Update");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingResource.Update");
             scope.Start();
             try
             {
-                var response = _botConnectionSettingBotConnectionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var response = _botConnectionSettingConnectionSettingsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new BotConnectionSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,11 +350,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_ListWithSecrets</description>
+        /// <description>ConnectionSettings_ListWithSecrets</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -365,11 +365,11 @@ namespace Azure.ResourceManager.BotService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BotConnectionSettingResource>> GetWithSecretsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingResource.GetWithSecrets");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingResource.GetWithSecrets");
             scope.Start();
             try
             {
-                var response = await _botConnectionSettingBotConnectionRestClient.ListWithSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _botConnectionSettingConnectionSettingsRestClient.ListWithSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new BotConnectionSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -388,11 +388,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_ListWithSecrets</description>
+        /// <description>ConnectionSettings_ListWithSecrets</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -403,11 +403,11 @@ namespace Azure.ResourceManager.BotService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BotConnectionSettingResource> GetWithSecrets(CancellationToken cancellationToken = default)
         {
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingResource.GetWithSecrets");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingResource.GetWithSecrets");
             scope.Start();
             try
             {
-                var response = _botConnectionSettingBotConnectionRestClient.ListWithSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _botConnectionSettingConnectionSettingsRestClient.ListWithSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new BotConnectionSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -426,11 +426,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <description>ConnectionSetting_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.BotService
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingResource.AddTag");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingResource.AddTag");
             scope.Start();
             try
             {
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.BotService
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _botConnectionSettingBotConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _botConnectionSettingConnectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new BotConnectionSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -488,11 +488,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <description>ConnectionSetting_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.BotService
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingResource.AddTag");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingResource.AddTag");
             scope.Start();
             try
             {
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.BotService
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _botConnectionSettingBotConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _botConnectionSettingConnectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new BotConnectionSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -550,11 +550,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <description>ConnectionSetting_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingResource.SetTags");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingResource.SetTags");
             scope.Start();
             try
             {
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.BotService
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _botConnectionSettingBotConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _botConnectionSettingConnectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new BotConnectionSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -607,11 +607,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <description>ConnectionSetting_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingResource.SetTags");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingResource.SetTags");
             scope.Start();
             try
             {
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.BotService
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _botConnectionSettingBotConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _botConnectionSettingConnectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new BotConnectionSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -664,11 +664,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <description>ConnectionSetting_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingResource.RemoveTag");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingResource.RemoveTag");
             scope.Start();
             try
             {
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.BotService
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _botConnectionSettingBotConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _botConnectionSettingConnectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new BotConnectionSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -724,11 +724,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <description>ConnectionSetting_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingResource.RemoveTag");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingResource.RemoveTag");
             scope.Start();
             try
             {
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.BotService
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _botConnectionSettingBotConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _botConnectionSettingConnectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new BotConnectionSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
