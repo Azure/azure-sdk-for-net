@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0 (2025-06-30)
+
+### Features Added
+- Initial stable release of `Azure.ResourceManager.DataMigration`.
+- Added support for API version `2025-06-30`.
+- Introduced 3 new operations:
+  - Retry API for Database Migration.
+  - Delete API for SQL Database Migration
+  - Delete API for SQL VM Migration
+
 ## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
