@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
@@ -13,12 +11,9 @@ namespace Azure.Provisioning.SignalR.Tests;
 public class BasicSignalRTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.signalrservice/signalr/main.bicep")]
-    public async Task CreateSignalRService()
+    internal static Trycep CreateSignalRServiceTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:SignalRBasic
@@ -90,8 +85,15 @@ public class BasicSignalRTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.signalrservice/signalr/main.bicep")]
+    public async Task CreateSignalRService()
+    {
+        await using Trycep test = CreateSignalRServiceTest();
+        test.Compare(
             """
             param endpointName string = 'mySignalRService.55e432ab-7428-3695-b637-de57b20d40e5'
 
@@ -161,7 +163,6 @@ public class BasicSignalRTests(bool async)
               }
             }
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+            .Lint();
     }
 }

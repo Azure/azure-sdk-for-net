@@ -40,14 +40,14 @@ ProvisioningParameter containerImage =
 infra.Add(containerImage);
 
 OperationalInsightsWorkspace logAnalytics =
-    new(nameof(logAnalytics))
+    new(nameof(logAnalytics), OperationalInsightsWorkspace.ResourceVersions.V2023_09_01)
     {
         Sku = new OperationalInsightsWorkspaceSku { Name = OperationalInsightsWorkspaceSkuName.PerGB2018 }
     };
 infra.Add(logAnalytics);
 
 ContainerAppManagedEnvironment env =
-    new(nameof(env))
+    new(nameof(env), ContainerAppManagedEnvironment.ResourceVersions.V2024_03_01)
     {
         AppLogsConfiguration =
             new ContainerAppLogsConfiguration
@@ -63,7 +63,7 @@ ContainerAppManagedEnvironment env =
 infra.Add(env);
 
 ContainerApp app =
-    new(nameof(app))
+    new(nameof(app), ContainerApp.ResourceVersions.V2024_03_01)
     {
         ManagedEnvironmentId = env.Id,
         Configuration =

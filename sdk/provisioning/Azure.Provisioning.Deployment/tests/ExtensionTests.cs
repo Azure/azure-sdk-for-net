@@ -6,7 +6,6 @@ using System.Text.Json;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.Tests;
-using Microsoft.Identity.Client.Extensions.Msal;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.Deployment.Tests;

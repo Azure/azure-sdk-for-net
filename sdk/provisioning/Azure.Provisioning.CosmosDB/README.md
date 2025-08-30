@@ -38,7 +38,7 @@ ProvisioningParameter containerName = new(nameof(containerName), typeof(string))
 infra.Add(containerName);
 
 CosmosDBAccount cosmos =
-    new(nameof(cosmos))
+    new(nameof(cosmos), CosmosDBAccount.ResourceVersions.V2024_08_15)
     {
         DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard,
         ConsistencyPolicy = new ConsistencyPolicy
