@@ -107,7 +107,7 @@ MapsClientOptions options = new();
 // In a library's client class constructor:
 var userAgentPolicy = new UserAgentPolicy(Assembly.GetExecutingAssembly());
 ClientPipeline pipeline = ClientPipeline.Create(
-    options, 
+    options,
     perCallPolicies: new[] { userAgentPolicy },
     perTryPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
     beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
@@ -116,7 +116,7 @@ ClientPipeline pipeline = ClientPipeline.Create(
 var customUserAgent = new UserAgentPolicy(Assembly.GetExecutingAssembly(), "MyApp/1.0");
 ClientPipeline pipeline2 = ClientPipeline.Create(
     options,
-    perCallPolicies: new[] { customUserAgent }, 
+    perCallPolicies: new[] { customUserAgent },
     perTryPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
     beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
 ```

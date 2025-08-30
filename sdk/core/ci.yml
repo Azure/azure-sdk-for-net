@@ -66,6 +66,9 @@ extends:
       safeName: AzureCoreAmqp
     - name: System.ClientModel
       safeName: SystemClientModel
+    - name: Microsoft.ClientModel.TestFramework
+      safeName: MicrosoftClientModelTestFramework
+      skipReleaseStage: true
     CheckAOTCompat: true
     AOTTestInputs:
     - ArtifactName: Azure.Core
