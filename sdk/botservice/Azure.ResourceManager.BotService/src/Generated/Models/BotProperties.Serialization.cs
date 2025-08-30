@@ -44,17 +44,10 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("iconUrl"u8);
-                writer.WriteStringValue(IconUri.AbsoluteUri);
+                writer.WriteStringValue(IconUri);
             }
-            if (Endpoint != null)
-            {
-                writer.WritePropertyName("endpoint"u8);
-                writer.WriteStringValue(Endpoint.AbsoluteUri);
-            }
-            else
-            {
-                writer.WriteNull("endpoint");
-            }
+            writer.WritePropertyName("endpoint"u8);
+            writer.WriteStringValue(Endpoint.AbsoluteUri);
             if (options.Format != "W" && Optional.IsDefined(EndpointVersion))
             {
                 writer.WritePropertyName("endpointVersion"u8);
@@ -85,7 +78,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(ManifestUri))
             {
                 writer.WritePropertyName("manifestUrl"u8);
-                writer.WriteStringValue(ManifestUri.AbsoluteUri);
+                writer.WriteStringValue(ManifestUri);
             }
             if (Optional.IsDefined(MsaAppType))
             {
@@ -162,7 +155,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(CmekKeyVaultUri))
             {
                 writer.WritePropertyName("cmekKeyVaultUrl"u8);
-                writer.WriteStringValue(CmekKeyVaultUri.AbsoluteUri);
+                writer.WriteStringValue(CmekKeyVaultUri);
             }
             if (options.Format != "W" && Optional.IsDefined(CmekEncryptionStatus))
             {
@@ -172,7 +165,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
+                writer.WriteStringValue(TenantId);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -221,6 +214,16 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkSecurityPerimeterConfigurations))
+            {
+                writer.WritePropertyName("networkSecurityPerimeterConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in NetworkSecurityPerimeterConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -285,12 +288,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
             string displayName = default;
             string description = default;
-            Uri iconUrl = default;
+            string iconUrl = default;
             Uri endpoint = default;
             string endpointVersion = default;
             IDictionary<string, string> allSettings = default;
             IDictionary<string, string> parameters = default;
-            Uri manifestUrl = default;
+            string manifestUrl = default;
             BotMsaAppType? msaAppType = default;
             string msaAppId = default;
             string msaAppTenantId = default;
@@ -303,9 +306,9 @@ namespace Azure.ResourceManager.BotService.Models
             IList<string> luisAppIds = default;
             string luisKey = default;
             bool? isCmekEnabled = default;
-            Uri cmekKeyVaultUrl = default;
+            string cmekKeyVaultUrl = default;
             string cmekEncryptionStatus = default;
-            Guid? tenantId = default;
+            string tenantId = default;
             BotServicePublicNetworkAccess? publicNetworkAccess = default;
             bool? isStreamingSupported = default;
             bool? isDeveloperAppInsightsApiKeySet = default;
@@ -314,6 +317,7 @@ namespace Azure.ResourceManager.BotService.Models
             string schemaTransformationVersion = default;
             ResourceIdentifier storageResourceId = default;
             IReadOnlyList<BotServicePrivateEndpointConnectionData> privateEndpointConnections = default;
+            IReadOnlyList<NetworkSecurityPerimeterConfigurationData> networkSecurityPerimeterConfigurations = default;
             string openWithHint = default;
             string appPasswordHint = default;
             string provisioningState = default;
@@ -334,20 +338,11 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("iconUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    iconUrl = new Uri(property.Value.GetString());
+                    iconUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("endpoint"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        endpoint = null;
-                        continue;
-                    }
                     endpoint = new Uri(property.Value.GetString());
                     continue;
                 }
@@ -386,11 +381,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("manifestUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    manifestUrl = new Uri(property.Value.GetString());
+                    manifestUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("msaAppType"u8))
@@ -494,11 +485,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("cmekKeyVaultUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    cmekKeyVaultUrl = new Uri(property.Value.GetString());
+                    cmekKeyVaultUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("cmekEncryptionStatus"u8))
@@ -508,11 +495,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("tenantId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tenantId = property.Value.GetGuid();
+                    tenantId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("publicNetworkAccess"u8))
@@ -589,6 +572,20 @@ namespace Azure.ResourceManager.BotService.Models
                     privateEndpointConnections = array;
                     continue;
                 }
+                if (property.NameEquals("networkSecurityPerimeterConfigurations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<NetworkSecurityPerimeterConfigurationData> array = new List<NetworkSecurityPerimeterConfigurationData>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(item, options));
+                    }
+                    networkSecurityPerimeterConfigurations = array;
+                    continue;
+                }
                 if (property.NameEquals("openWithHint"u8))
                 {
                     openWithHint = property.Value.GetString();
@@ -647,6 +644,7 @@ namespace Azure.ResourceManager.BotService.Models
                 schemaTransformationVersion,
                 storageResourceId,
                 privateEndpointConnections ?? new ChangeTrackingList<BotServicePrivateEndpointConnectionData>(),
+                networkSecurityPerimeterConfigurations ?? new ChangeTrackingList<NetworkSecurityPerimeterConfigurationData>(),
                 openWithHint,
                 appPasswordHint,
                 provisioningState,

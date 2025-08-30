@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="signingSecret"> The Slack signing secret. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SlackChannelProperties(string clientId, string clientSecret, string verificationToken, string scopes, Uri landingPageUri, string redirectAction, string lastSubmissionId, bool? registerBeforeOAuthFlow, bool? isValidated, string signingSecret, bool isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SlackChannelProperties(string clientId, string clientSecret, string verificationToken, string scopes, string landingPageUri, string redirectAction, string lastSubmissionId, bool? registerBeforeOAuthFlow, bool? isValidated, string signingSecret, bool isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> The Slack permission scopes. </summary>
         public string Scopes { get; set; }
         /// <summary> The Slack landing page Url. </summary>
-        public Uri LandingPageUri { get; set; }
+        public string LandingPageUri { get; set; }
         /// <summary> The Slack redirect action. </summary>
         public string RedirectAction { get; }
         /// <summary> The Sms auth token. </summary>
