@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.ServerSentEvents;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Agents.Persistent.Telemetry;
@@ -99,7 +100,10 @@ internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingU
                         }
                         catch (Exception ex)
                         {
-                            string errorJson = JsonSerializer.Serialize(new { error = ex.GetBaseException().Message });
+                            string errorJson = JsonSerializer.Serialize(
+                                new SerializableError(ex.GetBaseException().Message),
+                                SourceGenerationContext.Default.SerializableError
+                            );
                             toolOutput = new ToolOutput(newActionUpdate.ToolCallId, errorJson);
                             hasError = true;
                         }

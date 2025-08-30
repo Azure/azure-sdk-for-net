@@ -41,7 +41,11 @@ namespace Azure.AI.Agents.Persistent.Tests.Utilities
         public bool CheckSpanEvents(Activity span, List<(string Name, Dictionary<string, object> Attributes)> expectedEvents)
         {
             var spanEvents = span.Events.ToList();
+            return CheckSpanEvents(spanEvents, expectedEvents);
+        }
 
+        public bool CheckSpanEvents(List<ActivityEvent> spanEvents, List<(string Name, Dictionary<string, object> Attributes)> expectedEvents)
+        {
             foreach (var expectedEvent in expectedEvents)
             {
                 var matchingEvent = spanEvents.FirstOrDefault(e => e.Name == expectedEvent.Name);
