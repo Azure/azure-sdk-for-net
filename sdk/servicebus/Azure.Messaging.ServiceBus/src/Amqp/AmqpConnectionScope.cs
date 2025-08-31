@@ -965,10 +965,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     if (link is ReceivingAmqpLink)
                     {
                         // Track the send-via receiver in order to handle reconnecting in the proper order (sender first).
-                        if (_sendViaReceiverEntityPath == null)
-                        {
-                            _sendViaReceiverEntityPath = entityPath;
-                        }
+                        _sendViaReceiverEntityPath ??= entityPath;
                     }
                 }
             }

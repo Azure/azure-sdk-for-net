@@ -180,10 +180,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                         break;
                     default:
                         // For unknown properties, keep them as-is for forward proof.
-                        if (properties.UnknownProperties == null)
-                        {
-                            properties.UnknownProperties = new List<XElement>();
-                        }
+                        properties.UnknownProperties ??= [];
 
                         properties.UnknownProperties.Add(element);
                         break;
