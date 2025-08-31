@@ -132,7 +132,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             {
                 scope = Constants.DefaultScope;
             }
-            AccessToken token = await _tokenCredential.GetTokenAsync(new TokenRequestContext(new[] { scope }), CancellationToken.None).ConfigureAwait(false);
+            AccessToken token = await _tokenCredential.GetTokenAsync(new TokenRequestContext([scope]), CancellationToken.None).ConfigureAwait(false);
             return token.Token;
         }
 

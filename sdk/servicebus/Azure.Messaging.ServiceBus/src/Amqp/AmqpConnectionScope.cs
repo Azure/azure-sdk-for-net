@@ -562,7 +562,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Perform the initial authorization for the link.
 
-                string[] claims = { ServiceBusClaim.Manage, ServiceBusClaim.Listen, ServiceBusClaim.Send };
+                string[] claims = [ServiceBusClaim.Manage, ServiceBusClaim.Listen, ServiceBusClaim.Send];
                 var endpoint = new Uri(ServiceEndpoint, entityPath);
                 var audience = new[] { endpoint.AbsoluteUri };
                 DateTime authExpirationUtc = await RequestAuthorizationUsingCbsAsync(
@@ -661,7 +661,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 // Perform the initial authorization for the link.
 
-                string[] authClaims = new string[] { ServiceBusClaim.Send };
+                string[] authClaims = [ServiceBusClaim.Send];
                 var audience = new[] { endpoint.AbsoluteUri };
                 DateTime authExpirationUtc = await RequestAuthorizationUsingCbsAsync(
                     connection: connection,
@@ -831,7 +831,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 Uri destinationEndpoint = null;
 
                 destinationEndpoint = new Uri(ServiceEndpoint, entityPath);
-                audience = new string[] { destinationEndpoint.AbsoluteUri };
+                audience = [destinationEndpoint.AbsoluteUri];
 
                 // Perform the initial authorization for the link.
 

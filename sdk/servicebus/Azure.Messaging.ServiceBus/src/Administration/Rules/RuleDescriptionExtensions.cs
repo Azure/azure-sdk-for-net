@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Administration
 #pragma warning restore CA2208 // Instantiate argument exceptions correctly
             }
 
-            string[] uriSchemeKeys = { "@", "?", "#" };
+            string[] uriSchemeKeys = ["@", "?", "#"];
             foreach (var uriSchemeKey in uriSchemeKeys)
             {
                 if (description.Name.Contains(uriSchemeKey))
