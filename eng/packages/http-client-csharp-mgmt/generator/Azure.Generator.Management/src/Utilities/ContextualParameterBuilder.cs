@@ -4,8 +4,11 @@
 using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Snippets;
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics;
 
 namespace Azure.Generator.Management.Utilities
@@ -19,18 +22,19 @@ namespace Azure.Generator.Management.Utilities
         /// provided by this contextual request path pattern.
         /// </summary>
         /// <param name="requestPathPattern">The contextual request path pattern.</param>
+        /// <param name="buildingScope"></param>
         /// <returns></returns>
-        public static IReadOnlyList<ContextualParameter> BuildContextualParameters(RequestPathPattern requestPathPattern)
+        public static IReadOnlyList<ContextualParameter> BuildContextualParameters(RequestPathPattern requestPathPattern, ContextParameterBuildingScope? buildingScope = null)
         {
             // we use a stack here because we are building the contextual parameters in reverse order.
             var result = new Stack<ContextualParameter>();
 
-            BuildContextualParameterHierarchy(requestPathPattern, result, 0);
+            BuildContextualParameterHierarchy(requestPathPattern, result, 0, buildingScope);
 
             return [.. result];
         }
 
-        private static void BuildContextualParameterHierarchy(RequestPathPattern current, Stack<ContextualParameter> parameterStack, int parentLayerCount)
+        private static void BuildContextualParameterHierarchy(RequestPathPattern current, Stack<ContextualParameter> parameterStack, int parentLayerCount, ContextParameterBuildingScope? buildingScope)
         {
             // TODO -- handle scope/extension resources
             // we resolved it until to tenant, exit because it no longer contains parameters
@@ -56,6 +60,12 @@ namespace Azure.Generator.Management.Utilities
             {
                 // using the reference name of the last segment as the parameter name, aka resourceGroupName
                 parameterStack.Push(new ContextualParameter(current[^2].Value, current[^1].VariableName, id => id.ResourceGroupName()));
+            }
+            else if (current == RequestPathPattern.Extension)
+            {
+                Func<ScopedApi<ResourceIdentifier>, ScopedApi<ResourceIdentifier>> idExpression =
+                    buildingScope == ContextParameterBuildingScope.ResourceCollection ? id => id : id => id.Parent();
+                parameterStack.Push(new ContextualParameter("resourceUri", "resourceUri", idExpression));
             }
             else
             {
@@ -111,7 +121,7 @@ namespace Azure.Generator.Management.Utilities
                 }
             }
             // recursively get the parameters of its parent
-            BuildContextualParameterHierarchy(parent, parameterStack, parentLayerCount);
+            BuildContextualParameterHierarchy(parent, parameterStack, parentLayerCount, buildingScope);
 
             static ScopedApi<ResourceIdentifier> BuildParentInvocation(int parentLayerCount, ScopedApi<ResourceIdentifier> id)
             {

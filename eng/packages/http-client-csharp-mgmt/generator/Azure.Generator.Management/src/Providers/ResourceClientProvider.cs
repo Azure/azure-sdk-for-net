@@ -82,11 +82,14 @@ namespace Azure.Generator.Management.Providers
         internal ResourceScope ResourceScope => _resourceMetadata.ResourceScope;
         internal string? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
 
+        internal bool IsExtensionResource => ResourceScope == ResourceScope.Extension;
+
         internal ResourceCollectionClientProvider? ResourceCollection { get; private set; }
 
         protected override string BuildName() => ResourceName.EndsWith("Resource") ? ResourceName : $"{ResourceName}Resource";
 
         protected override FormattableString BuildDescription() => $"A class representing a {ResourceName} along with the instance operations that can be performed on it.\nIf you have a {typeof(ResourceIdentifier):C} you can construct a {Type:C} from an instance of {typeof(ArmClient):C} using the GetResource method.\nOtherwise you can get one from its parent resource {TypeOfParentResource:C} using the {FactoryMethodSignature.Name} method.";
+        //protected override FormattableString BuildDescription() => $"A class representing a {ResourceName} along with the instance operations that can be performed on it.\nIf you have a {typeof(ResourceIdentifier):C} you can construct a {Type:C} from an instance of  using the GetResource method.\nOtherwise you can get one from its parent resource using the {FactoryMethodSignature.Name} method.";
 
         private OperationSourceProvider? _source;
         internal OperationSourceProvider Source => _source ??= new OperationSourceProvider(this);
@@ -132,6 +135,11 @@ namespace Azure.Generator.Management.Providers
 
         private CSharpType BuildTypeOfParentResource()
         {
+            if (_resourceMetadata.ResourceScope == ResourceScope.Extension)
+            {
+                return typeof(Azure.ResourceManager.ArmResource);
+            }
+
             // if the resource has a parent resource id, we can find it in the output library
             if (_resourceMetadata.ParentResourceId is not null)
             {

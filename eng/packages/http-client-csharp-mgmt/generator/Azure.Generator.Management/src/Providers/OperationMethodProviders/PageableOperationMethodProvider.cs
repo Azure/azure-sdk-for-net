@@ -87,6 +87,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             // Generate return description for pageable methods
             FormattableString returnDescription = $"A collection of {_actualItemType:C} that may take multiple service requests to iterate over.";
+            ContextParameterBuildingScope buildingScope = _enclosingType is ResourceClientProvider ? ContextParameterBuildingScope.Resource : ContextParameterBuildingScope.ResourceCollection;
 
             return new MethodSignature(
                 _methodName,
@@ -94,7 +95,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _contextualPath),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _contextualPath, buildingScope),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,

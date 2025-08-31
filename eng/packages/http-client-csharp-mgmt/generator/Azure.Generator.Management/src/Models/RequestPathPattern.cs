@@ -29,6 +29,8 @@ namespace Azure.Generator.Management.Models
         public static readonly RequestPathPattern ManagementGroup = new("/providers/Microsoft.Management/managementGroups/{managementGroupId}");
         public static readonly RequestPathPattern ResourceGroup = new("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
         public static readonly RequestPathPattern Subscription = new("/subscriptions/{subscriptionId}");
+        public static readonly RequestPathPattern Extension = new("/{resourceUri}");
+
         public static readonly RequestPathPattern Tenant = new(string.Empty);
 
         public static RequestPathPattern GetFromScope(ResourceScope scope)
@@ -38,6 +40,7 @@ namespace Azure.Generator.Management.Models
                 ResourceScope.ResourceGroup => ResourceGroup,
                 ResourceScope.Subscription => Subscription,
                 ResourceScope.ManagementGroup => ManagementGroup,
+                ResourceScope.Extension => Extension,
                 ResourceScope.Tenant => Tenant,
                 _ => throw new InvalidOperationException($"Unhandled scope {scope}"),
             };
@@ -194,8 +197,9 @@ namespace Azure.Generator.Management.Models
         /// </summary>
         /// <param name="parameter"></param>
         /// <param name="contextualParameter"></param>
+        /// <param name="buildingScope"></param>
         /// <returns></returns>
-        public bool TryGetContextualParameter(ParameterProvider parameter, [MaybeNullWhen(false)] out ContextualParameter contextualParameter)
+        public bool TryGetContextualParameter(ParameterProvider parameter, [MaybeNullWhen(false)] out ContextualParameter contextualParameter, ContextParameterBuildingScope? buildingScope)
         {
             contextualParameter = null;
             if (parameter.Location != ParameterLocation.Path)
@@ -203,7 +207,7 @@ namespace Azure.Generator.Management.Models
                 return false;
             }
 
-            _contextualParameters ??= ContextualParameterBuilder.BuildContextualParameters(this).ToDictionary(p => p.VariableName);
+            _contextualParameters ??= ContextualParameterBuilder.BuildContextualParameters(this, buildingScope).ToDictionary(p => p.VariableName);
 
             return _contextualParameters.TryGetValue(parameter.WireInfo.SerializedName, out contextualParameter);
         }

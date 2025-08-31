@@ -8,6 +8,13 @@ using System;
 
 namespace Azure.Generator.Management.Models
 {
+    internal enum ContextParameterBuildingScope
+    {
+        Resource,
+        ResourceCollection,
+        Default
+    }
+
     /// <summary>
     /// A <see cref="ContextualParameter"/> represents a parameter which could be determined contextually from the Id property of its enclosing resource or resource collection class.
     /// </summary>

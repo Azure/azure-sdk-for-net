@@ -150,7 +150,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
-            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _isFakeLongRunningOperation);
+            ContextParameterBuildingScope buildingScope = _enclosingType is ResourceClientProvider ? ContextParameterBuildingScope.Resource : ContextParameterBuildingScope.ResourceCollection;
+            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, buildingScope, _isFakeLongRunningOperation);
         }
 
         protected virtual MethodSignature CreateSignature()
@@ -178,9 +179,14 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             {
                 ResourceMethodSnippets.CreateRequestContext(cancellationTokenParameter, out var contextVariable)
             };
-
             // Populate arguments for the REST client method call
-            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
+            var contextScope = _enclosingType switch
+            {
+                ResourceClientProvider => ContextParameterBuildingScope.Resource,
+                ResourceCollectionClientProvider => ContextParameterBuildingScope.ResourceCollection,
+                _ => ContextParameterBuildingScope.Default,
+            };
+            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, contextScope);
 
             tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 

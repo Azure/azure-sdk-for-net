@@ -6,6 +6,7 @@ using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Generator.Management.Utilities
@@ -16,6 +17,7 @@ namespace Azure.Generator.Management.Utilities
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
             RequestPathPattern contextualPath,
+            ContextParameterBuildingScope buildingScope,
             bool forceLro = false)
         {
             var requiredParameters = new List<ParameterProvider>();
@@ -35,7 +37,7 @@ namespace Azure.Generator.Management.Utilities
                 }
 
                 var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
-                if (!contextualPath.TryGetContextualParameter(outputParameter, out _))
+                if (!contextualPath.TryGetContextualParameter(outputParameter, out _, buildingScope))
                 {
                     if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
                     {
