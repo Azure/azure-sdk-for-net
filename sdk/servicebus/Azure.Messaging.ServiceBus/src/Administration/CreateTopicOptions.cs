@@ -221,7 +221,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
         public bool Equals(CreateTopicOptions other)
         {
-            if (other is CreateTopicOptions otherOptions
+            if (other is { } otherOptions
                 && Name.Equals(otherOptions.Name, StringComparison.OrdinalIgnoreCase)
                 && AutoDeleteOnIdle.Equals(otherOptions.AutoDeleteOnIdle)
                 && DefaultMessageTimeToLive.Equals(otherOptions.DefaultMessageTimeToLive)

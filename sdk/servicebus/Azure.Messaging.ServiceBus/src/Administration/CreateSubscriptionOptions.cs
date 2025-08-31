@@ -297,7 +297,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
         public bool Equals(CreateSubscriptionOptions other)
         {
-            if (other is CreateSubscriptionOptions otherOptions
+            if (other is { } otherOptions
                 && SubscriptionName.Equals(otherOptions.SubscriptionName, StringComparison.OrdinalIgnoreCase)
                 && TopicName.Equals(otherOptions.TopicName, StringComparison.OrdinalIgnoreCase)
                 && AutoDeleteOnIdle.Equals(otherOptions.AutoDeleteOnIdle)

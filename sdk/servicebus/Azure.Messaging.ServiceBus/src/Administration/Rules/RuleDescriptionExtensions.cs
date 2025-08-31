@@ -57,7 +57,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                     }
                 }
             }
-            catch (Exception ex) when (!(ex is ServiceBusException))
+            catch (Exception ex) when (ex is not ServiceBusException)
             {
                 throw new ServiceBusException(isTransient: false, message: "An error occurred while attempting to parse the rule property.", innerException: ex);
             }

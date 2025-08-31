@@ -346,7 +346,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
         public bool Equals(QueueProperties other)
         {
-            if (other is QueueProperties otherProperties
+            if (other is { } otherProperties
                 && Name.Equals(otherProperties.Name, StringComparison.OrdinalIgnoreCase)
                 && AutoDeleteOnIdle.Equals(otherProperties.AutoDeleteOnIdle)
                 && DefaultMessageTimeToLive.Equals(otherProperties.DefaultMessageTimeToLive)

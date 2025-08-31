@@ -119,7 +119,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <inheritdoc/>
         public bool Equals(CreateRuleOptions other)
         {
-            if (other is CreateRuleOptions otherOptions
+            if (other is { } otherOptions
                 && string.Equals(Name, otherOptions.Name, StringComparison.OrdinalIgnoreCase)
                 && (Filter == null || Filter.Equals(otherOptions.Filter))
                 && (Action == null || Action.Equals(otherOptions.Action)))

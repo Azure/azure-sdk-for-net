@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw new ArgumentException(key.ToString());
             }
 
-            if (!(valueObject is TValue))
+            if (valueObject is not TValue)
             {
                 throw new ArgumentException(key.ToString());
             }

@@ -324,7 +324,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
         public bool Equals(CreateQueueOptions other)
         {
-            if (other is CreateQueueOptions otherOptions
+            if (other is { } otherOptions
                 && Name.Equals(otherOptions.Name, StringComparison.OrdinalIgnoreCase)
                 && AutoDeleteOnIdle.Equals(otherOptions.AutoDeleteOnIdle)
                 && DefaultMessageTimeToLive.Equals(otherOptions.DefaultMessageTimeToLive)
