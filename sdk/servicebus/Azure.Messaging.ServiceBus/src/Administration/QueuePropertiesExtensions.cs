@@ -129,7 +129,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                         properties.EnableBatchedOperations = bool.Parse(element.Value);
                         break;
                     case "IsAnonymousAccessible":
-                        properties.IsAnonymousAccessible = Boolean.Parse(element.Value);
+                        properties.IsAnonymousAccessible = bool.Parse(element.Value);
                         break;
                     case "AuthorizationRules":
                         properties.AuthorizationRules = AuthorizationRules.ParseFromXElement(element);
@@ -147,7 +147,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                         properties.UserMetadata = element.Value;
                         break;
                     case "SupportOrdering":
-                        properties.SupportOrdering = Boolean.Parse(element.Value);
+                        properties.SupportOrdering = bool.Parse(element.Value);
                         break;
                     case "AutoDeleteOnIdle":
                         properties.AutoDeleteOnIdle = XmlConvert.ToTimeSpan(element.Value);
