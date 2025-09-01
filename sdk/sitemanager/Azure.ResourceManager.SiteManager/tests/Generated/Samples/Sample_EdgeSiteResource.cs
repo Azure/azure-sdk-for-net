@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSiteGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/Sites_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/Sites_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSiteGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/Sites_Delete_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/Sites_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateSiteGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/Sites_Update_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/Sites_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
