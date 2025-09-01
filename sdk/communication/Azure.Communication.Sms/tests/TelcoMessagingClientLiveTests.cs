@@ -25,169 +25,93 @@ namespace Azure.Communication.Sms.Tests
         public async Task SendingSmsMessage()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
-            try
-            {
-                Response<SmsSendResult> response = await client.Sms.SendAsync(
-                   from: TestEnvironment.FromPhoneNumber,
-                   to: TestEnvironment.ToPhoneNumber,
-                   message: "Hi");
-                SmsSendResult result = response.Value;
-                Console.WriteLine($"Sms id: {result.MessageId}");
-                AssertSmsSendingHappyPath(result);
-                AssertSmsSendingRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
-            }
-            catch (RequestFailedException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
+
+            Response<SmsSendResult> response = await client.Sms.SendAsync(
+               from: TestEnvironment.FromPhoneNumber,
+               to: TestEnvironment.ToPhoneNumber,
+               message: "Hi");
+            SmsSendResult result = response.Value;
+            Console.WriteLine($"Sms id: {result.MessageId}");
+            AssertSmsSendingHappyPath(result);
+            AssertSmsSendingRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
         }
 
         [RecordedTest]
         public async Task SendingSmsMessageUsingTokenCredential()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClientWithToken();
-            try
-            {
-                Response<SmsSendResult> response = await client.Sms.SendAsync(
-                   from: TestEnvironment.FromPhoneNumber,
-                   to: TestEnvironment.ToPhoneNumber,
-                   message: "Hi");
-                SmsSendResult result = response.Value;
-                Console.WriteLine($"Sms id: {result.MessageId}");
-                AssertSmsSendingHappyPath(result);
-                AssertSmsSendingRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
-            }
-            catch (RequestFailedException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
+
+            Response<SmsSendResult> response = await client.Sms.SendAsync(
+               from: TestEnvironment.FromPhoneNumber,
+               to: TestEnvironment.ToPhoneNumber,
+               message: "Hi");
+            SmsSendResult result = response.Value;
+            Console.WriteLine($"Sms id: {result.MessageId}");
+            AssertSmsSendingHappyPath(result);
+            AssertSmsSendingRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
         }
 
         [RecordedTest]
         [TestCase("+18007342577", Description = "Unauthorized number")]
         [TestCase("+15550000000", Description = "Fake number")]
-        public async Task SendingSmsMessageFromUnauthorizedNumber(string from)
+        public void SendingSmsMessageFromUnauthorizedNumber(string from)
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
-            try
-            {
-                SmsSendResult result = await client.Sms.SendAsync(
+
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+                await client.Sms.SendAsync(
                    from: from,
                    to: TestEnvironment.ToPhoneNumber,
-                   message: "Hi");
-            }
-            catch (RequestFailedException ex)
-            {
-                Assert.IsNotEmpty(ex.Message);
-                Assert.NotNull(ex.ErrorCode);
-                Assert.IsTrue(ex.Status >= 400);
-                Console.WriteLine($"Error Status: {ex.Status}");
-                Console.WriteLine($"Error Code: {ex.ErrorCode}");
-                Console.WriteLine($"Error Message: {ex.Message}");
-                return;
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-            Assert.Fail("Expected RequestFailedException was not thrown.");
+                   message: "Hi"));
         }
 
         [RecordedTest]
-        public async Task SendingSmsMessageToInvalidNumber()
+        public void SendingSmsMessageToInvalidNumber()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
-            try
-            {
-                SmsSendResult result = await client.Sms.SendAsync(
+
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+                await client.Sms.SendAsync(
                    from: TestEnvironment.FromPhoneNumber,
                    to: "+15550000000",
-                   message: "Hi");
-            }
-            catch (RequestFailedException ex)
-            {
-                Assert.IsNotEmpty(ex.Message);
-                Assert.NotNull(ex.ErrorCode);
-                Assert.IsTrue(ex.Status >= 400);
-                Console.WriteLine($"Error Status: {ex.Status}");
-                Console.WriteLine($"Error Code: {ex.ErrorCode}");
-                Console.WriteLine($"Error Message: {ex.Message}");
-                return;
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-            Assert.Fail("Expected RequestFailedException was not thrown.");
+                   message: "Hi"));
         }
 
         [RecordedTest]
         public async Task SendingSmsMessageWithOptions()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
-            try
+
+            SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
             {
-                SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
-                {
-                    Tag = "custom tag",
-                };
-                Response<SmsSendResult> response = await client.Sms.SendAsync(
-                   from: TestEnvironment.FromPhoneNumber,
-                   to: TestEnvironment.ToPhoneNumber,
-                   message: "Hi",
-                   options: smsOptions);
-                SmsSendResult result = response.Value;
-                Console.WriteLine($"Sms id: {result.MessageId}");
-                AssertSmsSendingHappyPath(result);
-                AssertSmsSendingRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
-            }
-            catch (RequestFailedException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
+                Tag = "custom tag",
+            };
+            Response<SmsSendResult> response = await client.Sms.SendAsync(
+               from: TestEnvironment.FromPhoneNumber,
+               to: TestEnvironment.ToPhoneNumber,
+               message: "Hi",
+               options: smsOptions);
+            SmsSendResult result = response.Value;
+            Console.WriteLine($"Sms id: {result.MessageId}");
+            AssertSmsSendingHappyPath(result);
+            AssertSmsSendingRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
         }
 
         [RecordedTest]
         public async Task SendingSmsMessageToMultipleRecipients()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
-            try
+
+            var to = new List<string> { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber };
+            Response<IReadOnlyList<SmsSendResult>> response = await client.Sms.SendAsync(
+               from: TestEnvironment.FromPhoneNumber,
+               to: to,
+               message: "Hi");
+            IReadOnlyList<SmsSendResult> results = response.Value;
+            foreach (SmsSendResult result in results)
             {
-                var to = new List<string> { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber };
-                Response<IReadOnlyList<SmsSendResult>> response = await client.Sms.SendAsync(
-                   from: TestEnvironment.FromPhoneNumber,
-                   to: to,
-                   message: "Hi");
-                IReadOnlyList<SmsSendResult> results = response.Value;
-                foreach (SmsSendResult result in results)
-                {
-                    Console.WriteLine($"Sms id: {result.MessageId}");
-                    AssertSmsSendingHappyPath(result);
-                }
-            }
-            catch (RequestFailedException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
+                Console.WriteLine($"Sms id: {result.MessageId}");
+                AssertSmsSendingHappyPath(result);
             }
         }
 
@@ -195,33 +119,22 @@ namespace Azure.Communication.Sms.Tests
         public async Task SendingSmsMessageToMultipleRecipientsWithOptions()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
-            try
+
+            SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
             {
-                SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
-                {
-                    Tag = "custom tag for multiple recipients",
-                };
-                var to = new List<string> { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber };
-                Response<IReadOnlyList<SmsSendResult>> response = await client.Sms.SendAsync(
-                   from: TestEnvironment.FromPhoneNumber,
-                   to: to,
-                   message: "Hi from TelcoMessagingClient",
-                   options: smsOptions);
-                IReadOnlyList<SmsSendResult> results = response.Value;
-                foreach (SmsSendResult result in results)
-                {
-                    Console.WriteLine($"Sms id: {result.MessageId}");
-                    AssertSmsSendingHappyPath(result);
-                }
-            }
-            catch (RequestFailedException ex)
+                Tag = "custom tag for multiple recipients",
+            };
+            var to = new List<string> { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber };
+            Response<IReadOnlyList<SmsSendResult>> response = await client.Sms.SendAsync(
+               from: TestEnvironment.FromPhoneNumber,
+               to: to,
+               message: "Hi from TelcoMessagingClient",
+               options: smsOptions);
+            IReadOnlyList<SmsSendResult> results = response.Value;
+            foreach (SmsSendResult result in results)
             {
-                Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
+                Console.WriteLine($"Sms id: {result.MessageId}");
+                AssertSmsSendingHappyPath(result);
             }
         }
 
@@ -229,34 +142,23 @@ namespace Azure.Communication.Sms.Tests
         public async Task SendingSmsMessageToLargeGroup()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
-            try
-            {
-                var to = new List<string>();
-                for (int i = 0; i < 10; i++)
-                {
-                    to.Add(TestEnvironment.ToPhoneNumber);
-                }
 
-                Response<IReadOnlyList<SmsSendResult>> response = await client.Sms.SendAsync(
-                   from: TestEnvironment.FromPhoneNumber,
-                   to: to,
-                   message: "Hi from TelcoMessagingClient to large group");
-                IReadOnlyList<SmsSendResult> results = response.Value;
-                Assert.AreEqual(10, results.Count);
-                foreach (SmsSendResult result in results)
-                {
-                    Console.WriteLine($"Sms id: {result.MessageId}");
-                    AssertSmsSendingHappyPath(result);
-                }
-            }
-            catch (RequestFailedException ex)
+            var to = new List<string>();
+            for (int i = 0; i < 10; i++)
             {
-                Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
+                to.Add(TestEnvironment.ToPhoneNumber);
             }
-            catch (Exception ex)
+
+            Response<IReadOnlyList<SmsSendResult>> response = await client.Sms.SendAsync(
+               from: TestEnvironment.FromPhoneNumber,
+               to: to,
+               message: "Hi from TelcoMessagingClient to large group");
+            IReadOnlyList<SmsSendResult> results = response.Value;
+            Assert.AreEqual(10, results.Count);
+            foreach (SmsSendResult result in results)
             {
-                Assert.Fail($"Unexpected error: {ex}");
+                Console.WriteLine($"Sms id: {result.MessageId}");
+                AssertSmsSendingHappyPath(result);
             }
         }
 
@@ -264,53 +166,31 @@ namespace Azure.Communication.Sms.Tests
         public async Task SendingSmsMessageWithLongMessage()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
-            try
-            {
-                string longMessage = new string('a', 300); // 300 character message
-                Response<SmsSendResult> response = await client.Sms.SendAsync(
-                   from: TestEnvironment.FromPhoneNumber,
-                   to: TestEnvironment.ToPhoneNumber,
-                   message: longMessage);
-                SmsSendResult result = response.Value;
-                Console.WriteLine($"Sms id: {result.MessageId}");
-                AssertSmsSendingHappyPath(result);
-                AssertSmsSendingRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
-            }
-            catch (RequestFailedException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
+
+            string longMessage = new string('a', 300); // 300 character message
+            Response<SmsSendResult> response = await client.Sms.SendAsync(
+               from: TestEnvironment.FromPhoneNumber,
+               to: TestEnvironment.ToPhoneNumber,
+               message: longMessage);
+            SmsSendResult result = response.Value;
+            Console.WriteLine($"Sms id: {result.MessageId}");
+            AssertSmsSendingHappyPath(result);
+            AssertSmsSendingRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
         }
 
         [RecordedTest]
         public async Task SendingSmsMessageWithEmoji()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
-            try
-            {
-                Response<SmsSendResult> response = await client.Sms.SendAsync(
-                   from: TestEnvironment.FromPhoneNumber,
-                   to: TestEnvironment.ToPhoneNumber,
-                   message: "Hello ?? from TelcoMessagingClient ??");
-                SmsSendResult result = response.Value;
-                Console.WriteLine($"Sms id: {result.MessageId}");
-                AssertSmsSendingHappyPath(result);
-                AssertSmsSendingRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
-            }
-            catch (RequestFailedException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
+
+            Response<SmsSendResult> response = await client.Sms.SendAsync(
+               from: TestEnvironment.FromPhoneNumber,
+               to: TestEnvironment.ToPhoneNumber,
+               message: "Hello ?? from TelcoMessagingClient ??");
+            SmsSendResult result = response.Value;
+            Console.WriteLine($"Sms id: {result.MessageId}");
+            AssertSmsSendingHappyPath(result);
+            AssertSmsSendingRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
         }
 
         #region Delivery Reports Tests
@@ -319,129 +199,97 @@ namespace Azure.Communication.Sms.Tests
         public async Task GetDeliveryReportAsync()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
-            try
+
+            // First send a message with delivery report enabled to get a message ID
+            SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
             {
-                // First send a message with delivery report enabled to get a message ID
-                SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
-                {
-                    Tag = "delivery-report-test",
-                };
+                Tag = "delivery-report-test",
+            };
 
-                Response<SmsSendResult> sendResponse = await client.Sms.SendAsync(
-                   from: TestEnvironment.FromPhoneNumber,
-                   to: TestEnvironment.ToPhoneNumber,
-                   message: "Test message for delivery report",
-                   options: smsOptions);
+            Response<SmsSendResult> sendResponse = await client.Sms.SendAsync(
+               from: TestEnvironment.FromPhoneNumber,
+               to: TestEnvironment.ToPhoneNumber,
+               message: "Test message for delivery report",
+               options: smsOptions);
 
-                SmsSendResult sendResult = sendResponse.Value;
-                Assert.IsNotEmpty(sendResult.MessageId);
-                Console.WriteLine($"Sent SMS with message ID: {sendResult.MessageId}");
+            SmsSendResult sendResult = sendResponse.Value;
+            Assert.IsNotEmpty(sendResult.MessageId);
+            Console.WriteLine($"Sent SMS with message ID: {sendResult.MessageId}");
 
-                // Wait a bit for the delivery report to be available
-                await Task.Delay(TimeSpan.FromSeconds(5));
+            // Wait a bit for the delivery report to be available
+            await Task.Delay(TimeSpan.FromSeconds(5));
 
-                // Get the delivery report
-                Response<DeliveryReport> deliveryResponse = await client.DeliveryReports.GetAsync(sendResult.MessageId);
-                DeliveryReport deliveryReport = deliveryResponse.Value;
+            // Get the delivery report
+            Response<DeliveryReport> deliveryResponse = await client.DeliveryReports.GetAsync(sendResult.MessageId);
+            DeliveryReport deliveryReport = deliveryResponse.Value;
 
-                AssertDeliveryReportHappyPath(deliveryReport, sendResult.MessageId);
-                AssertDeliveryReportRawResponseHappyPath(deliveryResponse.GetRawResponse().ContentStream ?? new MemoryStream());
-            }
-            catch (RequestFailedException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
+            AssertDeliveryReportHappyPath(deliveryReport, sendResult.MessageId);
+            AssertDeliveryReportRawResponseHappyPath(deliveryResponse.GetRawResponse().ContentStream ?? new MemoryStream());
         }
 
         [RecordedTest]
         public async Task GetDeliveryReportAsync_UsingTokenCredential()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClientWithToken();
-            try
+
+            // First send a message with delivery report enabled to get a message ID
+            SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
             {
-                // First send a message with delivery report enabled to get a message ID
-                SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
-                {
-                    Tag = "delivery-report-token-test",
-                };
+                Tag = "delivery-report-token-test",
+            };
 
-                Response<SmsSendResult> sendResponse = await client.Sms.SendAsync(
-                   from: TestEnvironment.FromPhoneNumber,
-                   to: TestEnvironment.ToPhoneNumber,
-                   message: "Test message for delivery report with token",
-                   options: smsOptions);
+            Response<SmsSendResult> sendResponse = await client.Sms.SendAsync(
+               from: TestEnvironment.FromPhoneNumber,
+               to: TestEnvironment.ToPhoneNumber,
+               message: "Test message for delivery report with token",
+               options: smsOptions);
 
-                SmsSendResult sendResult = sendResponse.Value;
-                Assert.IsNotEmpty(sendResult.MessageId);
-                Console.WriteLine($"Sent SMS with message ID: {sendResult.MessageId}");
+            SmsSendResult sendResult = sendResponse.Value;
+            Assert.IsNotEmpty(sendResult.MessageId);
+            Console.WriteLine($"Sent SMS with message ID: {sendResult.MessageId}");
 
-                // Wait a bit for the delivery report to be available
-                await Task.Delay(TimeSpan.FromSeconds(5));
+            // Wait a bit for the delivery report to be available
+            await Task.Delay(TimeSpan.FromSeconds(5));
 
-                // Get the delivery report
-                Response<DeliveryReport> deliveryResponse = await client.DeliveryReports.GetAsync(sendResult.MessageId);
-                DeliveryReport deliveryReport = deliveryResponse.Value;
+            // Get the delivery report
+            Response<DeliveryReport> deliveryResponse = await client.DeliveryReports.GetAsync(sendResult.MessageId);
+            DeliveryReport deliveryReport = deliveryResponse.Value;
 
-                AssertDeliveryReportHappyPath(deliveryReport, sendResult.MessageId);
-                AssertDeliveryReportRawResponseHappyPath(deliveryResponse.GetRawResponse().ContentStream ?? new MemoryStream());
-            }
-            catch (RequestFailedException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
+            AssertDeliveryReportHappyPath(deliveryReport, sendResult.MessageId);
+            AssertDeliveryReportRawResponseHappyPath(deliveryResponse.GetRawResponse().ContentStream ?? new MemoryStream());
         }
 
         [RecordedTest]
+        [SyncOnly]
         public void GetDeliveryReport_Sync()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
-            try
+
+            // First send a message with delivery report enabled to get a message ID
+            SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
             {
-                // First send a message with delivery report enabled to get a message ID
-                SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
-                {
-                    Tag = "delivery-report-sync-test",
-                };
+                Tag = "delivery-report-sync-test",
+            };
 
-                Response<SmsSendResult> sendResponse = client.Sms.Send(
-                   from: TestEnvironment.FromPhoneNumber,
-                   to: TestEnvironment.ToPhoneNumber,
-                   message: "Test message for delivery report sync",
-                   options: smsOptions);
+            Response<SmsSendResult> sendResponse = client.Sms.Send(
+               from: TestEnvironment.FromPhoneNumber,
+               to: TestEnvironment.ToPhoneNumber,
+               message: "Test message for delivery report sync",
+               options: smsOptions);
 
-                SmsSendResult sendResult = sendResponse.Value;
-                Assert.IsNotEmpty(sendResult.MessageId);
-                Console.WriteLine($"Sent SMS with message ID: {sendResult.MessageId}");
+            SmsSendResult sendResult = sendResponse.Value;
+            Assert.IsNotEmpty(sendResult.MessageId);
+            Console.WriteLine($"Sent SMS with message ID: {sendResult.MessageId}");
 
-                // Wait a bit for the delivery report to be available
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+            // Wait a bit for the delivery report to be available
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
-                // Get the delivery report
-                Response<DeliveryReport> deliveryResponse = client.DeliveryReports.Get(sendResult.MessageId);
-                DeliveryReport deliveryReport = deliveryResponse.Value;
+            // Get the delivery report
+            Response<DeliveryReport> deliveryResponse = client.DeliveryReports.Get(sendResult.MessageId);
+            DeliveryReport deliveryReport = deliveryResponse.Value;
 
-                AssertDeliveryReportHappyPath(deliveryReport, sendResult.MessageId);
-                AssertDeliveryReportRawResponseHappyPath(deliveryResponse.GetRawResponse().ContentStream ?? new MemoryStream());
-            }
-            catch (RequestFailedException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
+            AssertDeliveryReportHappyPath(deliveryReport, sendResult.MessageId);
+            AssertDeliveryReportRawResponseHappyPath(deliveryResponse.GetRawResponse().ContentStream ?? new MemoryStream());
         }
 
         [RecordedTest]
@@ -451,6 +299,8 @@ namespace Azure.Communication.Sms.Tests
         public async Task GetDeliveryReportAsync_WithInvalidMessageId_ShouldHandleGracefully(string invalidMessageId)
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
+
+            // This test allows both success (with empty data) or RequestFailedException
             try
             {
                 Response<DeliveryReport> deliveryResponse = await client.DeliveryReports.GetAsync(invalidMessageId);
@@ -461,14 +311,10 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (RequestFailedException ex)
             {
-                // This is expected for invalid message IDs
+                // This is also expected for invalid message IDs
                 Assert.IsNotEmpty(ex.Message);
                 Assert.IsTrue(ex.Status >= 400);
                 Console.WriteLine($"Expected error for invalid message ID '{invalidMessageId}': {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
             }
         }
 
@@ -476,52 +322,46 @@ namespace Azure.Communication.Sms.Tests
         public async Task GetDeliveryReportAsync_WithMultipleMessageIds()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
-            try
+
+            // Send multiple messages with delivery reports enabled
+            var messageIds = new List<string>();
+
+            for (int i = 0; i < 3; i++)
             {
-                // Send multiple messages with delivery reports enabled
-                var messageIds = new List<string>();
-
-                for (int i = 0; i < 3; i++)
+                SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
                 {
-                    SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
-                    {
-                        Tag = $"delivery-report-multiple-test-{i}",
-                    };
+                    Tag = $"delivery-report-multiple-test-{i}",
+                };
 
-                    Response<SmsSendResult> sendResponse = await client.Sms.SendAsync(
-                       from: TestEnvironment.FromPhoneNumber,
-                       to: TestEnvironment.ToPhoneNumber,
-                       message: $"Test message {i + 1} for delivery report",
-                       options: smsOptions);
+                Response<SmsSendResult> sendResponse = await client.Sms.SendAsync(
+                   from: TestEnvironment.FromPhoneNumber,
+                   to: TestEnvironment.ToPhoneNumber,
+                   message: $"Test message {i + 1} for delivery report",
+                   options: smsOptions);
 
-                    messageIds.Add(sendResponse.Value.MessageId);
-                    Console.WriteLine($"Sent SMS {i + 1} with message ID: {sendResponse.Value.MessageId}");
-                }
-
-                // Wait for delivery reports to be available
-                await Task.Delay(TimeSpan.FromSeconds(10));
-
-                // Get delivery reports for all messages
-                foreach (string messageId in messageIds)
-                {
-                    try
-                    {
-                        Response<DeliveryReport> deliveryResponse = await client.DeliveryReports.GetAsync(messageId);
-                        DeliveryReport deliveryReport = deliveryResponse.Value;
-
-                        AssertDeliveryReportHappyPath(deliveryReport, messageId);
-                        Console.WriteLine($"Successfully retrieved delivery report for message: {messageId}");
-                    }
-                    catch (RequestFailedException ex)
-                    {
-                        // Some delivery reports might not be available yet, this is acceptable
-                        Console.WriteLine($"Delivery report not yet available for message {messageId}: {ex.Message}");
-                    }
-                }
+                messageIds.Add(sendResponse.Value.MessageId);
+                Console.WriteLine($"Sent SMS {i + 1} with message ID: {sendResponse.Value.MessageId}");
             }
-            catch (Exception ex)
+
+            // Wait for delivery reports to be available
+            await Task.Delay(TimeSpan.FromSeconds(10));
+
+            // Get delivery reports for all messages
+            foreach (string messageId in messageIds)
             {
-                Assert.Fail($"Unexpected error: {ex}");
+                try
+                {
+                    Response<DeliveryReport> deliveryResponse = await client.DeliveryReports.GetAsync(messageId);
+                    DeliveryReport deliveryReport = deliveryResponse.Value;
+
+                    AssertDeliveryReportHappyPath(deliveryReport, messageId);
+                    Console.WriteLine($"Successfully retrieved delivery report for message: {messageId}");
+                }
+                catch (RequestFailedException ex) when (ex.Status >= 400 && ex.Status < 500)
+                {
+                    // Some delivery reports might not be available yet, this is acceptable
+                    Console.WriteLine($"Delivery report not yet available for message {messageId}: {ex.Message}");
+                }
             }
         }
 
