@@ -66,13 +66,13 @@ namespace Azure.Generator.Management.Providers
             return new MethodProvider(signature, body, this);
         }
 
+        //TODO: handle singleton extension resource case when we actually see it
         private IList<MethodProvider> BuildMethodsForExtensionResource(ResourceClientProvider resource)
         {
             var result = new List<MethodProvider>();
-
             var scopeParameter = new ParameterProvider("scope", $"The scope of the resource collection to get.", typeof(ResourceIdentifier));
             var signature = new MethodSignature(
-                $"Get{resource.ResourceName.Pluralize()}",
+                $"{resource.FactoryMethodSignature.Name}",
                 $"Gets a collection of {resource.ResourceCollection!.Type:C} objects within the specified scope.",
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                 resource.ResourceCollection!.Type,
