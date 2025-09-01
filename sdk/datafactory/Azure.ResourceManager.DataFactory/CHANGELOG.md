@@ -1,6 +1,6 @@
 # Release History
 
-## 1.10.0 (2025-09-01)
+## 1.10.0 (2025-09-03)
 
 ### Features Added
 - Added Managed Identity (MI) authentication support for Lakehouse, Warehouse, and HDInsight linked services.
