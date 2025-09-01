@@ -14,6 +14,8 @@ namespace Azure.Messaging.ServiceBus.Administration
 {
     internal static class RuleDescriptionExtensions
     {
+        private static readonly string[] s_uriSchemeKeys = ["@", "?", "#"];
+
         public static void ValidateDescriptionName(this RuleProperties description)
         {
             Argument.AssertNotNullOrWhiteSpace(description.Name, nameof(description.Name));
@@ -29,8 +31,7 @@ namespace Azure.Messaging.ServiceBus.Administration
 #pragma warning restore CA2208 // Instantiate argument exceptions correctly
             }
 
-            string[] uriSchemeKeys = ["@", "?", "#"];
-            foreach (var uriSchemeKey in uriSchemeKeys)
+            foreach (var uriSchemeKey in s_uriSchemeKeys)
             {
                 if (description.Name.Contains(uriSchemeKey))
                 {
