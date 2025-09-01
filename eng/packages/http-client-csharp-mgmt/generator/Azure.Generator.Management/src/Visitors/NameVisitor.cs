@@ -125,7 +125,7 @@ internal class NameVisitor : ScmLibraryVisitor
             return;
         }
         var enclosingType = propertyProvider.EnclosingType;
-        if (enclosingType is not InheritableSystemObjectModelProvider modelProvider
+        if (enclosingType is not Providers.InheritableSystemObjectModelProvider modelProvider
             || !modelProvider.CrossLanguageDefinitionId.Equals(KnownManagementTypes.ArmResourceId))
         {
             return;

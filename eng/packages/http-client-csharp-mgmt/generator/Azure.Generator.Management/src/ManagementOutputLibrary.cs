@@ -253,7 +253,7 @@ namespace Azure.Generator.Management
             ManagementClientGenerator.Instance.AddTypeToKeep(ExtensionProvider.Name);
 
             return [
-                .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
+                .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
                 ArmOperation,
                 ArmOperationOfT,
                 ProviderConstants,

@@ -18,16 +18,16 @@ using System.Linq;
 
 namespace Azure.Generator.Management.Visitors;
 
-internal class SystemObjectModelVisitor : ScmLibraryVisitor
+internal class InheritableSystemObjectModelProvider : ScmLibraryVisitor
 {
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
-        if (type is SystemObjectModelProvider systemType)
+        if (type is Providers.InheritableSystemObjectModelProvider systemType)
         {
             UpdateNamespace(systemType);
         }
 
-        if (type is not InheritableSystemObjectModelProvider && type?.BaseModelProvider is InheritableSystemObjectModelProvider baseSystemType)
+        if (type is not Providers.InheritableSystemObjectModelProvider && type?.BaseModelProvider is Providers.InheritableSystemObjectModelProvider baseSystemType)
         {
             Update(baseSystemType, type);
         }
@@ -41,12 +41,12 @@ internal class SystemObjectModelVisitor : ScmLibraryVisitor
             UpdateModelFactory(modelFactory);
         }
 
-        if (type is SystemObjectModelProvider systemType)
+        if (type is Providers.InheritableSystemObjectModelProvider systemType)
         {
             UpdateNamespace(systemType);
         }
 
-        if (type is ModelProvider model && model is not InheritableSystemObjectModelProvider && model.BaseModelProvider is InheritableSystemObjectModelProvider baseSystemType)
+        if (type is ModelProvider model && model is not Providers.InheritableSystemObjectModelProvider && model.BaseModelProvider is Providers.InheritableSystemObjectModelProvider baseSystemType)
         {
             Update(baseSystemType, model);
         }
@@ -68,14 +68,14 @@ internal class SystemObjectModelVisitor : ScmLibraryVisitor
         modelFactory.Update(methods: methods);
     }
 
-    private static void UpdateNamespace(SystemObjectModelProvider systemType)
+    private static void UpdateNamespace(Providers.InheritableSystemObjectModelProvider systemType)
     {
         // This is needed because we updated the namespace with NamespaceVisitor in Azure generator earlier
         systemType.Update(@namespace: systemType._type.Namespace);
     }
 
     private HashSet<ModelProvider> _updated = new();
-    private void Update(InheritableSystemObjectModelProvider baseSystemType, ModelProvider model)
+    private void Update(Providers.InheritableSystemObjectModelProvider baseSystemType, ModelProvider model)
     {
         // Add cache to avoid duplicated update of PreVisitModel and VisitType
         if (_updated.Contains(model))
@@ -158,7 +158,7 @@ internal class SystemObjectModelVisitor : ScmLibraryVisitor
     private static FormattableString? FromString(string? s) =>
         s is null ? null : s.Length == 0 ? (FormattableString)$"" : $"{s}";
 
-    private static HashSet<string> EnumerateBaseModelProperties(InheritableSystemObjectModelProvider baseSystemModel)
+    private static HashSet<string> EnumerateBaseModelProperties(Providers.InheritableSystemObjectModelProvider baseSystemModel)
     {
         var baseSystemPropertyNames = new HashSet<string>();
         ModelProvider? baseModel = baseSystemModel;

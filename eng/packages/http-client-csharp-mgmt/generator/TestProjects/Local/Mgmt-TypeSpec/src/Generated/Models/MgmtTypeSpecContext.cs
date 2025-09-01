@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using MgmtTypeSpec.Models;
@@ -38,8 +39,11 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(FooSettingsPropertiesMetaData))]
     [ModelReaderWriterBuildable(typeof(FooSettingsResource))]
     [ModelReaderWriterBuildable(typeof(FooSettingsUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(ZooAddressListListResult))]
     [ModelReaderWriterBuildable(typeof(ZooData))]
     [ModelReaderWriterBuildable(typeof(ZooListResult))]
