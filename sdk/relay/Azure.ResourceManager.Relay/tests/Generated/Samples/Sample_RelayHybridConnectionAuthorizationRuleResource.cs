@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Relay.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RelayHybridConnectionAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/HybridConnection/RelayHybridConnectionAuthorizationRuleGet.json
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2024-01-01/examples/HybridConnection/RelayHybridConnectionAuthorizationRuleGet.json
             // this example is just showing the usage of "HybridConnections_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Relay.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_RelayHybridConnectionAuthorizationRuleDelete()
         {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/HybridConnection/RelayHybridConnectionAuthorizationRuleDelete.json
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2024-01-01/examples/HybridConnection/RelayHybridConnectionAuthorizationRuleDelete.json
             // this example is just showing the usage of "HybridConnections_DeleteAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Relay.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_RelayHybridConnectionAuthorizationRuleCreate()
         {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/HybridConnection/RelayHybridConnectionAuthorizationRuleCreate.json
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2024-01-01/examples/HybridConnection/RelayHybridConnectionAuthorizationRuleCreate.json
             // this example is just showing the usage of "HybridConnections_CreateOrUpdateAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Relay.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_RelayHybridConnectionAuthorizationRuleListKey()
         {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/HybridConnection/RelayHybridConnectionAuthorizationRuleListKey.json
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2024-01-01/examples/HybridConnection/RelayHybridConnectionAuthorizationRuleListKey.json
             // this example is just showing the usage of "HybridConnections_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Relay.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKeys_RelayHybridConnectionAuthorizationRuleRegenerateKey()
         {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/HybridConnection/RelayHybridConnectionAuthorizationRuleRegenerateKey.json
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2024-01-01/examples/HybridConnection/RelayHybridConnectionAuthorizationRuleRegenerateKey.json
             // this example is just showing the usage of "HybridConnections_RegenerateKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

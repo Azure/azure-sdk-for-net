@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Relay.Models
 {
-    /// <summary> Result of the list of all private endpoint connections operation. </summary>
+    /// <summary> The response of a PrivateEndpointConnection list operation. </summary>
     internal partial class RelayPrivateEndpointConnectionListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Relay.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RelayPrivateEndpointConnectionListResult"/>. </summary>
-        internal RelayPrivateEndpointConnectionListResult()
+        /// <param name="value"> The PrivateEndpointConnection items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal RelayPrivateEndpointConnectionListResult(IEnumerable<RelayPrivateEndpointConnectionData> value)
         {
-            Value = new ChangeTrackingList<RelayPrivateEndpointConnectionData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RelayPrivateEndpointConnectionListResult"/>. </summary>
-        /// <param name="value"> A collection of private endpoint connection resources. </param>
-        /// <param name="nextLink"> A link for the next page of private endpoint connection resources. </param>
+        /// <param name="value"> The PrivateEndpointConnection items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RelayPrivateEndpointConnectionListResult(IReadOnlyList<RelayPrivateEndpointConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RelayPrivateEndpointConnectionListResult(IReadOnlyList<RelayPrivateEndpointConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A collection of private endpoint connection resources. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayPrivateEndpointConnectionListResult"/> for deserialization. </summary>
+        internal RelayPrivateEndpointConnectionListResult()
+        {
+        }
+
+        /// <summary> The PrivateEndpointConnection items on this page. </summary>
         public IReadOnlyList<RelayPrivateEndpointConnectionData> Value { get; }
-        /// <summary> A link for the next page of private endpoint connection resources. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

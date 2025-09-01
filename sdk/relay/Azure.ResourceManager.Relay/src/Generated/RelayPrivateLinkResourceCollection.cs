@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkResourceName"> The PrivateLinkResource name. </param>
+        /// <param name="privateLinkResourceName"> The name of the PrivateLinkResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkResourceName"> The PrivateLinkResource name. </param>
+        /// <param name="privateLinkResourceName"> The name of the PrivateLinkResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkResourceName"> The PrivateLinkResource name. </param>
+        /// <param name="privateLinkResourceName"> The name of the PrivateLinkResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkResourceName"> The PrivateLinkResource name. </param>
+        /// <param name="privateLinkResourceName"> The name of the PrivateLinkResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkResourceName"> The PrivateLinkResource name. </param>
+        /// <param name="privateLinkResourceName"> The name of the PrivateLinkResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkResourceName"> The PrivateLinkResource name. </param>
+        /// <param name="privateLinkResourceName"> The name of the PrivateLinkResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>

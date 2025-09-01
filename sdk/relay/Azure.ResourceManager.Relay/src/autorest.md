@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Relay
 namespace: Azure.ResourceManager.Relay
-require: https://github.com/Azure/azure-rest-api-specs/blob/df77748f7dff3fe12c13b7262e9b307c719e6918/specification/relay/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/16019d65735c2330ce2efd687d7a62d1985b1252/specification/relay/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -17,6 +17,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 
 request-path-to-resource-name:
@@ -82,11 +83,11 @@ rename-mapping:
   HybridConnection: RelayHybridConnection
 
 directive:
-  - from: NetworkRuleSets.json
+  - from: swagger-document
     where: $.definitions
     transform: >
       $.NWRuleSetIpRules['x-ms-client-name'] = 'RelayNetworkRuleSetIPRule';
-  - from: Namespaces.json
+  - from: swagger-document
     where: $.definitions
     transform: >
       $.RelayNamespaceProperties.properties.publicNetworkAccess['description'] = 'This determines if traffic is allowed over public network. By default it is enabled. DO NOT USE PublicNetworkAccess on Namespace API. Please use the NetworkRuleSet API to enable or disable PublicNetworkAccess.';

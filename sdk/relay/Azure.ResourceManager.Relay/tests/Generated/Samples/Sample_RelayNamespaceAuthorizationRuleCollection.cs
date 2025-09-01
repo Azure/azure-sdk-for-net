@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Relay.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RelayNameSpaceAuthorizationRuleCreate()
         {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/NameSpaces/RelayNameSpaceAuthorizationRuleCreate.json
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2024-01-01/examples/NameSpaces/RelayNameSpaceAuthorizationRuleCreate.json
             // this example is just showing the usage of "Namespaces_CreateOrUpdateAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Relay.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RelayNameSpaceAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/NameSpaces/RelayNameSpaceAuthorizationRuleGet.json
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2024-01-01/examples/NameSpaces/RelayNameSpaceAuthorizationRuleGet.json
             // this example is just showing the usage of "Namespaces_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Relay.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_RelayNameSpaceAuthorizationRuleListAll()
         {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/NameSpaces/RelayNameSpaceAuthorizationRuleListAll.json
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2024-01-01/examples/NameSpaces/RelayNameSpaceAuthorizationRuleListAll.json
             // this example is just showing the usage of "Namespaces_ListAuthorizationRules" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Relay.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_RelayNameSpaceAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/NameSpaces/RelayNameSpaceAuthorizationRuleGet.json
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2024-01-01/examples/NameSpaces/RelayNameSpaceAuthorizationRuleGet.json
             // this example is just showing the usage of "Namespaces_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Relay.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RelayNameSpaceAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/NameSpaces/RelayNameSpaceAuthorizationRuleGet.json
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2024-01-01/examples/NameSpaces/RelayNameSpaceAuthorizationRuleGet.json
             // this example is just showing the usage of "Namespaces_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

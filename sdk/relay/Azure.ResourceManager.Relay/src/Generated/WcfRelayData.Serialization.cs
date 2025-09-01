@@ -249,6 +249,7 @@ namespace Azure.ResourceManager.Relay
                 name,
                 type,
                 systemData,
+                location,
                 isDynamic,
                 createdAt,
                 updatedAt,
@@ -257,7 +258,6 @@ namespace Azure.ResourceManager.Relay
                 requiresClientAuthorization,
                 requiresTransportSecurity,
                 userMetadata,
-                location,
                 serializedAdditionalRawData);
         }
 
