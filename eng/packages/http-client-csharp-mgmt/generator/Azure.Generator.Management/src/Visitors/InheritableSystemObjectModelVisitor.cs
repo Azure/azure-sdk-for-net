@@ -18,7 +18,7 @@ using System.Linq;
 
 namespace Azure.Generator.Management.Visitors;
 
-internal class InheritableSystemObjectModelProvider : ScmLibraryVisitor
+internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 {
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
