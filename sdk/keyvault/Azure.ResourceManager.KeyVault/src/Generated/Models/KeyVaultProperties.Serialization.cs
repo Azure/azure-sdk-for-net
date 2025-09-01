@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             bool? enableSoftDelete = default;
             int? softDeleteRetentionInDays = default;
             bool? enableRbacAuthorization = default;
-            KeyVaultCreateMode? createMode = default;
+            ManagedHsmCreateMode? createMode = default;
             bool? enablePurgeProtection = default;
             KeyVaultNetworkRuleSet networkAcls = default;
-            KeyVaultProvisioningState? provisioningState = default;
+            VaultProvisioningState? provisioningState = default;
             IReadOnlyList<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections = default;
             string publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    createMode = property.Value.GetString().ToKeyVaultCreateMode();
+                    createMode = property.Value.GetString().ToManagedHsmCreateMode();
                     continue;
                 }
                 if (property.NameEquals("enablePurgeProtection"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    provisioningState = new KeyVaultProvisioningState(property.Value.GetString());
+                    provisioningState = new VaultProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnections"u8))

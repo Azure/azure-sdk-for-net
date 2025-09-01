@@ -38,10 +38,26 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Identity))
             {
@@ -98,21 +114,30 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
+            AzureLocation? location = default;
             ManagedHsmSku sku = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
             string groupId = default;
             IReadOnlyList<string> requiredMembers = default;
-            IList<string> requiredZoneNames = default;
+            IReadOnlyList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -120,15 +145,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                         continue;
                     }
                     sku = ManagedHsmSku.DeserializeManagedHsmSku(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerKeyVaultContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -145,9 +161,13 @@ namespace Azure.ResourceManager.KeyVault.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (property.NameEquals("identity"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerKeyVaultContext.Default);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -230,12 +250,12 @@ namespace Azure.ResourceManager.KeyVault.Models
                 name,
                 type,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 groupId,
                 requiredMembers ?? new ChangeTrackingList<string>(),
                 requiredZoneNames ?? new ChangeTrackingList<string>(),
+                location,
                 sku,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
                 serializedAdditionalRawData);
         }
@@ -282,8 +302,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             else
             {
-                builder.Append("  location: ");
-                builder.AppendLine($"'{Location.ToString()}'");
+                if (Optional.IsDefined(Location))
+                {
+                    builder.Append("  location: ");
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

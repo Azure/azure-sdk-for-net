@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> The reason that a managed hsm name could not be used. The reason element is only returned if NameAvailable is false. </summary>
+    /// <summary> The reason that a vault name could not be used. The Reason element is only returned if NameAvailable is false. </summary>
     public readonly partial struct ManagedHsmNameUnavailableReason : IEquatable<ManagedHsmNameUnavailableReason>
     {
         private readonly string _value;

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the key vault. </param>
         /// <param name="publicNetworkAccess"> Property to specify whether the vault will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultProperties(Guid tenantId, KeyVaultSku sku, IList<KeyVaultAccessPolicy> accessPolicies, Uri vaultUri, string hsmPoolResourceId, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enableRbacAuthorization, KeyVaultCreateMode? createMode, bool? enablePurgeProtection, KeyVaultNetworkRuleSet networkRuleSet, KeyVaultProvisioningState? provisioningState, IReadOnlyList<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections, string publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KeyVaultProperties(Guid tenantId, KeyVaultSku sku, IList<KeyVaultAccessPolicy> accessPolicies, Uri vaultUri, string hsmPoolResourceId, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enableRbacAuthorization, ManagedHsmCreateMode? createMode, bool? enablePurgeProtection, KeyVaultNetworkRuleSet networkRuleSet, VaultProvisioningState? provisioningState, IReadOnlyList<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections, string publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TenantId = tenantId;
             Sku = sku;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public bool? EnableRbacAuthorization { get; set; }
         /// <summary> The vault's create mode to indicate whether the vault need to be recovered or not. </summary>
         [WirePath("createMode")]
-        public KeyVaultCreateMode? CreateMode { get; set; }
+        public ManagedHsmCreateMode? CreateMode { get; set; }
         /// <summary> Property specifying whether protection against purge is enabled for this vault. Setting this property to true activates protection against purge for this vault and its content - only the Key Vault service may initiate a hard, irrecoverable deletion. The setting is effective only if soft delete is also enabled. Enabling this functionality is irreversible - that is, the property does not accept false as its value. </summary>
         [WirePath("enablePurgeProtection")]
         public bool? EnablePurgeProtection { get; set; }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public KeyVaultNetworkRuleSet NetworkRuleSet { get; set; }
         /// <summary> Provisioning state of the vault. </summary>
         [WirePath("provisioningState")]
-        public KeyVaultProvisioningState? ProvisioningState { get; set; }
+        public VaultProvisioningState? ProvisioningState { get; set; }
         /// <summary> List of private endpoint connections associated with the key vault. </summary>
         [WirePath("privateEndpointConnections")]
         public IReadOnlyList<KeyVaultPrivateEndpointConnectionItemData> PrivateEndpointConnections { get; }

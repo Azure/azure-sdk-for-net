@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             bool? enablePurgeProtection = default;
             ManagedHsmCreateMode? createMode = default;
             string statusMessage = default;
-            ManagedHsmProvisioningState? provisioningState = default;
+            ProvisioningState? provisioningState = default;
             ManagedHsmNetworkRuleSet networkAcls = default;
             IList<ManagedHsmGeoReplicatedRegion> regions = default;
             IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections = default;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    provisioningState = new ManagedHsmProvisioningState(property.Value.GetString());
+                    provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("networkAcls"u8))

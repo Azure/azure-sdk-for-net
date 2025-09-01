@@ -7,12 +7,12 @@
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> The create mode to indicate whether the resource is being created or is being recovered from a deleted resource. </summary>
+    /// <summary> The vault's create mode to indicate whether the vault need to be recovered or not. </summary>
     public enum ManagedHsmCreateMode
     {
-        /// <summary> Create a new managed HSM pool. This is the default option. </summary>
+        /// <summary> default. </summary>
         Default,
-        /// <summary> Recover the managed HSM pool from a soft-deleted resource. </summary>
+        /// <summary> recover. </summary>
         Recover
     }
 }

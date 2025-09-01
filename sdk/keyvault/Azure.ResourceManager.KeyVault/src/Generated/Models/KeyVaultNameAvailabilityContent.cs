@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -54,14 +53,14 @@ namespace Azure.ResourceManager.KeyVault.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ResourceType = "Microsoft.KeyVault/vaults";
+            ResourceType = VaultCheckNameAvailabilityParametersType.MicrosoftKeyVaultVaults;
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The vault name. </param>
         /// <param name="resourceType"> The type of resource, Microsoft.KeyVault/vaults. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultNameAvailabilityContent(string name, ResourceType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KeyVaultNameAvailabilityContent(string name, VaultCheckNameAvailabilityParametersType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ResourceType = resourceType;
@@ -78,6 +77,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.KeyVault/vaults. </summary>
         [WirePath("type")]
-        public ResourceType ResourceType { get; }
+        public VaultCheckNameAvailabilityParametersType ResourceType { get; }
     }
 }

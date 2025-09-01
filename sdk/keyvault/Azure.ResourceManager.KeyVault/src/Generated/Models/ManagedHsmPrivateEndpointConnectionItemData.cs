@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id, ETag? etag, SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id, ETag? etag, SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ETag = etag;
@@ -89,6 +89,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>
         [WirePath("properties.provisioningState")]
-        public ManagedHsmPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+        public KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
 }

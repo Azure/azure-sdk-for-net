@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing the DeletedManagedHsm data model. </summary>
+    /// <summary>
+    /// A class representing the DeletedManagedHsm data model.
+    /// Concrete proxy resource types can be created by aliasing this type using a specific property type.
+    /// </summary>
     public partial class DeletedManagedHsmData : ResourceData
     {
         /// <summary>
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeletedManagedHsmData"/>. </summary>
-        internal DeletedManagedHsmData()
+        public DeletedManagedHsmData()
         {
         }
 

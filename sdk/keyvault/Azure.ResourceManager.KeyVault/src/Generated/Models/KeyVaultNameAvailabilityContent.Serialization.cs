@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ResourceType);
+            writer.WriteStringValue(ResourceType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 return null;
             }
             string name = default;
-            ResourceType type = default;
+            VaultCheckNameAvailabilityParametersType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    type = new VaultCheckNameAvailabilityParametersType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

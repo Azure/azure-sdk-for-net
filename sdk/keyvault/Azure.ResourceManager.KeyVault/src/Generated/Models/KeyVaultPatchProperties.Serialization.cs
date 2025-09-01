@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             bool? enableSoftDelete = default;
             bool? enableRbacAuthorization = default;
             int? softDeleteRetentionInDays = default;
-            KeyVaultPatchMode? createMode = default;
+            ManagedHsmCreateMode? createMode = default;
             bool? enablePurgeProtection = default;
             KeyVaultNetworkRuleSet networkAcls = default;
             string publicNetworkAccess = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    createMode = property.Value.GetString().ToKeyVaultPatchMode();
+                    createMode = property.Value.GetString().ToManagedHsmCreateMode();
                     continue;
                 }
                 if (property.NameEquals("enablePurgeProtection"u8))

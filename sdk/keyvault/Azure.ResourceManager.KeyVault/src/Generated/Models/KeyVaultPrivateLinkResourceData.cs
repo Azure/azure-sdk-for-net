@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class KeyVaultPrivateLinkResourceData : ResourceData
+    public partial class KeyVaultPrivateLinkResourceData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateLinkResourceData"/>. </summary>
-        public KeyVaultPrivateLinkResourceData()
+        /// <param name="location"> The location. </param>
+        public KeyVaultPrivateLinkResourceData(AzureLocation location) : base(location)
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateLinkResourceData"/>. </summary>
@@ -60,20 +60,23 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="groupId"> Group identifier of private link resource. </param>
         /// <param name="requiredMembers"> Required member names of private link resource. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
-        /// <param name="location"> Azure location of the key vault resource. </param>
-        /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, AzureLocation? location, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal KeyVaultPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
-            Location = location;
-            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateLinkResourceData"/> for deserialization. </summary>
+        internal KeyVaultPrivateLinkResourceData()
+        {
         }
 
         /// <summary> Group identifier of private link resource. </summary>
@@ -85,11 +88,5 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Required DNS zone names of the the private link resource. </summary>
         [WirePath("properties.requiredZoneNames")]
         public IList<string> RequiredZoneNames { get; }
-        /// <summary> Azure location of the key vault resource. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; }
-        /// <summary> Tags assigned to the key vault resource. </summary>
-        [WirePath("tags")]
-        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

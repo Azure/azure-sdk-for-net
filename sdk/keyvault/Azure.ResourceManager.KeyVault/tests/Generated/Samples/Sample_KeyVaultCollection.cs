@@ -95,8 +95,8 @@ Certificates = {IdentityAccessCertificatePermission.Get, IdentityAccessCertifica
                 EnabledForTemplateDeployment = true,
                 NetworkRuleSet = new KeyVaultNetworkRuleSet
                 {
-                    Bypass = KeyVaultNetworkRuleBypassOption.AzureServices,
-                    DefaultAction = KeyVaultNetworkRuleAction.Deny,
+                    Bypass = ManagedHsmNetworkRuleBypassOption.AzureServices,
+                    DefaultAction = ManagedHsmNetworkRuleAction.Deny,
                     IPRules = { new KeyVaultIPRule("124.56.78.91"), new KeyVaultIPRule("'10.91.4.0/24'") },
                     VirtualNetworkRules = { new KeyVaultVirtualNetworkRule("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1") },
                 },
