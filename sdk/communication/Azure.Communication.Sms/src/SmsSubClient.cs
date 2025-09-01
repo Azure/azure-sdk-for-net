@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.Pipeline;
 using Azure.Communication.Sms.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,95 +14,25 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.Sms
 {
     /// <summary>
-    /// The Azure Communication Services SMS client.
+    /// The Azure Communication Services SMS messaging sub-client.
     /// </summary>
-    /// <remarks>
-    /// This class will be deprecated in an upcoming release. For new development, use <see cref="TelcoMessagingClient"/> instead,
-    /// which provides a more comprehensive API with sub-clients for SMS messaging, opt-out management, and delivery reports.
-    /// </remarks>
-    public class SmsClient
+    public class SmsSubClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         internal SmsRestClient RestClient { get; }
 
-        #region public constructors - all arguments need null check
-
-        /// <summary> Initializes a new instance of <see cref="SmsClient"/>.</summary>
-        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
-        public SmsClient(string connectionString)
-            : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
-                new SmsClientOptions())
-        { }
-
-        /// <summary> Initializes a new instance of <see cref="SmsClient"/>.</summary>
-        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
-        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public SmsClient(string connectionString, SmsClientOptions options)
-            : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
-                options ?? new SmsClientOptions())
-        { }
-
-        /// <summary> Initializes a new instance of <see cref="SmsClient"/>.</summary>
-        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
-        /// <param name="keyCredential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
-        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public SmsClient(Uri endpoint, AzureKeyCredential keyCredential, SmsClientOptions options = default)
-            : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
-                options ?? new SmsClientOptions())
-        { }
-
-        /// <summary> Initializes a new instance of <see cref="SmsClient"/>.</summary>
-        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
-        /// <param name="tokenCredential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
-        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public SmsClient(Uri endpoint, TokenCredential tokenCredential, SmsClientOptions options = default)
-            : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(tokenCredential, nameof(tokenCredential)),
-                options ?? new SmsClientOptions())
-        { }
-
-        #endregion
-
-        #region private constructors
-
-        private SmsClient(ConnectionString connectionString, SmsClientOptions options)
-            : this(connectionString.GetRequired("endpoint"), options.BuildHttpPipeline(connectionString), options)
-        { }
-
-        private SmsClient(string endpoint, TokenCredential tokenCredential, SmsClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(tokenCredential), options)
-        { }
-
-        private SmsClient(string endpoint, AzureKeyCredential keyCredential, SmsClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(keyCredential), options)
-        { }
-
-        private SmsClient(string endpoint, HttpPipeline httpPipeline, SmsClientOptions options)
+        internal SmsSubClient(ClientDiagnostics clientDiagnostics, SmsRestClient restClient)
         {
-            _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new SmsRestClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
-            OptOuts = new OptOutsClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
+            _clientDiagnostics = clientDiagnostics;
+            RestClient = restClient;
         }
 
-        #endregion
-
-        /// <summary>Initializes a new instance of <see cref="SmsClient"/> for mocking.</summary>
-        protected SmsClient()
+        /// <summary>Initializes a new instance of <see cref="SmsSubClient"/> for mocking.</summary>
+        protected SmsSubClient()
         {
             _clientDiagnostics = null;
             RestClient = null;
-            OptOuts = null;
         }
-
-        /// <summary>
-        /// Opt Out management client.
-        /// </summary>
-        public virtual OptOutsClient OptOuts { get; private set; }
 
         /// <summary>
         /// Sends a SMS <paramref name="from"/> a phone number that is acquired by the authenticated account, <paramref name="to"/> another phone number.
@@ -157,7 +86,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
         public virtual async Task<Response<IReadOnlyList<SmsSendResult>>> SendAsync(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsSubClient)}.{nameof(Send)}");
             scope.Start();
             try
             {
@@ -192,7 +121,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
         public virtual Response<IReadOnlyList<SmsSendResult>> Send(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsSubClient)}.{nameof(Send)}");
             scope.Start();
             try
             {

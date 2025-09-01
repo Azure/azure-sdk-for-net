@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,6 +33,52 @@ namespace Azure.Communication.Sms.Models
         public static OptOutResponseItem OptOutResponseItem(string to = null, int httpStatusCode = default, bool? isOptedOut = null, string errorMessage = null)
         {
             return new OptOutResponseItem(to, httpStatusCode, isOptedOut, errorMessage);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeliveryReport"/>. </summary>
+        /// <param name="deliveryStatus"> The delivery status of the message. </param>
+        /// <param name="deliveryStatusDetails"> Detailed information about the delivery status. </param>
+        /// <param name="deliveryAttempts"> Array of delivery attempts made for this message. </param>
+        /// <param name="receivedTimestamp"> The timestamp when the delivery report was received. </param>
+        /// <param name="tag"> Custom tag provided when sending the message. </param>
+        /// <param name="messageId"> The identifier of the outgoing message. </param>
+        /// <param name="from"> The sender's phone number in E.164 format. </param>
+        /// <param name="to"> The recipient's phone number in E.164 format. </param>
+        /// <returns> A new <see cref="Models.DeliveryReport"/> instance for mocking. </returns>
+        public static DeliveryReport DeliveryReport(DeliveryReportDeliveryStatus deliveryStatus = default, string deliveryStatusDetails = null, IEnumerable<DeliveryAttempt> deliveryAttempts = null, DateTimeOffset? receivedTimestamp = null, string tag = null, string messageId = null, string @from = null, string to = null)
+        {
+            deliveryAttempts ??= new List<DeliveryAttempt>();
+
+            return new DeliveryReport(
+                deliveryStatus,
+                deliveryStatusDetails,
+                deliveryAttempts?.ToList(),
+                receivedTimestamp,
+                tag,
+                messageId,
+                @from,
+                to);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeliveryAttempt"/>. </summary>
+        /// <param name="timestamp"> The timestamp of the delivery attempt. </param>
+        /// <param name="segmentsSucceeded"> Number of message segments that were successfully delivered. </param>
+        /// <param name="segmentsFailed"> Number of message segments that failed to be delivered. </param>
+        /// <returns> A new <see cref="Models.DeliveryAttempt"/> instance for mocking. </returns>
+        public static DeliveryAttempt DeliveryAttempt(DateTimeOffset timestamp = default, int segmentsSucceeded = default, int segmentsFailed = default)
+        {
+            return new DeliveryAttempt(timestamp, segmentsSucceeded, segmentsFailed);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ErrorResponse"/>. </summary>
+        /// <param name="type"> A URI reference that identifies the problem type. </param>
+        /// <param name="title"> A short, human-readable summary of the problem type. </param>
+        /// <param name="status"> The HTTP status code. </param>
+        /// <param name="traceId"> The trace identifier for the request. </param>
+        /// <returns> A new <see cref="Models.ErrorResponse"/> instance for mocking. </returns>
+        public static ErrorResponse ErrorResponse(string type = null, string title = null, int status = default, string traceId = null)
+        {
+            return new ErrorResponse(type, title, status, traceId);
         }
     }
 }
