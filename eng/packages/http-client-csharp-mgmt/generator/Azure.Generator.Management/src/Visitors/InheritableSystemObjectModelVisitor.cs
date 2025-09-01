@@ -22,12 +22,12 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 {
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
-        if (type is Providers.InheritableSystemObjectModelProvider systemType)
+        if (type is InheritableSystemObjectModelProvider systemType)
         {
             UpdateNamespace(systemType);
         }
 
-        if (type is not Providers.InheritableSystemObjectModelProvider && type?.BaseModelProvider is Providers.InheritableSystemObjectModelProvider baseSystemType)
+        if (type is not InheritableSystemObjectModelProvider && type?.BaseModelProvider is InheritableSystemObjectModelProvider baseSystemType)
         {
             Update(baseSystemType, type);
         }
@@ -41,12 +41,12 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             UpdateModelFactory(modelFactory);
         }
 
-        if (type is Providers.InheritableSystemObjectModelProvider systemType)
+        if (type is InheritableSystemObjectModelProvider systemType)
         {
             UpdateNamespace(systemType);
         }
 
-        if (type is ModelProvider model && model is not Providers.InheritableSystemObjectModelProvider && model.BaseModelProvider is Providers.InheritableSystemObjectModelProvider baseSystemType)
+        if (type is ModelProvider model && model is not InheritableSystemObjectModelProvider && model.BaseModelProvider is InheritableSystemObjectModelProvider baseSystemType)
         {
             Update(baseSystemType, model);
         }
@@ -68,14 +68,14 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         modelFactory.Update(methods: methods);
     }
 
-    private static void UpdateNamespace(Providers.InheritableSystemObjectModelProvider systemType)
+    private static void UpdateNamespace(InheritableSystemObjectModelProvider systemType)
     {
         // This is needed because we updated the namespace with NamespaceVisitor in Azure generator earlier
         systemType.Update(@namespace: systemType._type.Namespace);
     }
 
     private HashSet<ModelProvider> _updated = new();
-    private void Update(Providers.InheritableSystemObjectModelProvider baseSystemType, ModelProvider model)
+    private void Update(InheritableSystemObjectModelProvider baseSystemType, ModelProvider model)
     {
         // Add cache to avoid duplicated update of PreVisitModel and VisitType
         if (_updated.Contains(model))
@@ -158,7 +158,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     private static FormattableString? FromString(string? s) =>
         s is null ? null : s.Length == 0 ? (FormattableString)$"" : $"{s}";
 
-    private static HashSet<string> EnumerateBaseModelProperties(Providers.InheritableSystemObjectModelProvider baseSystemModel)
+    private static HashSet<string> EnumerateBaseModelProperties(InheritableSystemObjectModelProvider baseSystemModel)
     {
         var baseSystemPropertyNames = new HashSet<string>();
         ModelProvider? baseModel = baseSystemModel;
