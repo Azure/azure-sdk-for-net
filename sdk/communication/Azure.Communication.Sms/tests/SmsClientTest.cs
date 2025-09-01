@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Moq;
 using NUnit.Framework;
+using Azure.Communication.Sms.Models;
 
 namespace Azure.Communication.Sms.Tests
 {
@@ -155,6 +156,168 @@ namespace Azure.Communication.Sms.Tests
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);
         }
+
+        #region SMS Argument Validation Tests
+
+        [Test]
+        public void SendingSmsFromNullNumberShouldThrow()
+        {
+            SmsClient client = new SmsClient(TestConnectionString);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.SendAsync(
+                from: null,
+                to: "+14255550234",
+                message: "Hi"));
+        }
+
+        [Test]
+        public void SendingSmsWithNullMessagingConnectApiKeyShouldThrow()
+        {
+            SmsClient client = new SmsClient(TestConnectionString);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.SendAsync(
+                from: "+14255550123",
+                to: "+14255550234",
+                message: "Hi",
+                options: new SmsSendOptions(true)
+                {
+                    MessagingConnect = new MessagingConnectOptions(null, "partner")
+                }));
+        }
+
+        [Test]
+        public void SendingSmsWithNullMessagingConnectPartnerShouldThrow()
+        {
+            SmsClient client = new SmsClient(TestConnectionString);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.SendAsync(
+                from: "+14255550123",
+                to: "+14255550234",
+                message: "Hi",
+                options: new SmsSendOptions(true)
+                {
+                    MessagingConnect = new MessagingConnectOptions("apiKey", null)
+                }));
+        }
+
+        [Test]
+        public void SendingSmsToNullNumberShouldThrow()
+        {
+            SmsClient client = new SmsClient(TestConnectionString);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.SendAsync(
+                from: "+14255550123",
+                to: (IEnumerable<string>)null!,
+                message: "Hi"));
+        }
+
+        #endregion
+
+        #region OptOuts Argument Validation Tests
+
+        [Test]
+        public void CheckOptOutFromNullNumberShouldThrow()
+        {
+            SmsClient client = new SmsClient(TestConnectionString);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.OptOuts.CheckAsync(
+                from: null,
+                to: new[] { "+14255550234" }));
+        }
+
+        [Test]
+        public void CheckOptOutToNullNumberShouldThrow()
+        {
+            SmsClient client = new SmsClient(TestConnectionString);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.OptOuts.CheckAsync(
+                from: "+14255550123",
+                to: (IEnumerable<string>)null!));
+        }
+
+        [Test]
+        public void CheckOptOutToCollectionContainingNullShouldThrow()
+        {
+            SmsClient client = new SmsClient(TestConnectionString);
+
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            var recipientsWithNull = new string[] { "+14255550234", null };
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.OptOuts.CheckAsync(
+                from: "+14255550123",
+                to: recipientsWithNull));
+        }
+
+        [Test]
+        public void AddOptOutFromNullNumberShouldThrow()
+        {
+            SmsClient client = new SmsClient(TestConnectionString);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.OptOuts.AddAsync(
+                from: null,
+                to: new[] { "+14255550234" }));
+        }
+
+        [Test]
+        public void AddOptOutToNullNumberShouldThrow()
+        {
+            SmsClient client = new SmsClient(TestConnectionString);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.OptOuts.AddAsync(
+                from: "+14255550123",
+                to: (IEnumerable<string>)null!));
+        }
+
+        [Test]
+        public void AddOptOutToCollectionContainingNullShouldThrow()
+        {
+            SmsClient client = new SmsClient(TestConnectionString);
+
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            var recipientsWithNull = new string[] { "+14255550234", null };
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.OptOuts.AddAsync(
+                from: "+14255550123",
+                to: recipientsWithNull));
+        }
+
+        [Test]
+        public void RemoveOptOutFromNullNumberShouldThrow()
+        {
+            SmsClient client = new SmsClient(TestConnectionString);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.OptOuts.RemoveAsync(
+                from: null,
+                to: new[] { "+14255550234" }));
+        }
+
+        [Test]
+        public void RemoveOptOutToNullNumberShouldThrow()
+        {
+            SmsClient client = new SmsClient(TestConnectionString);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.OptOuts.RemoveAsync(
+                from: "+14255550123",
+                to: (IEnumerable<string>)null!));
+        }
+
+        [Test]
+        public void RemoveOptOutToCollectionContainingNullShouldThrow()
+        {
+            SmsClient client = new SmsClient(TestConnectionString);
+
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            var recipientsWithNull = new string[] { "+14255550234", null };
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.OptOuts.RemoveAsync(
+                from: "+14255550123",
+                to: recipientsWithNull));
+        }
+
+        #endregion
 
         private static IEnumerable<object?[]> TestDataForSingleSms()
         {

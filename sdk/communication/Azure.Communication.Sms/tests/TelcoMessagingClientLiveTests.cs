@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Communication.Sms.Models;
+using Azure.Core.TestFramework;
 
 namespace Azure.Communication.Sms.Tests
 {
@@ -20,7 +21,7 @@ namespace Azure.Communication.Sms.Tests
         {
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SendingSmsMessage()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
@@ -46,7 +47,7 @@ namespace Azure.Communication.Sms.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SendingSmsMessageUsingTokenCredential()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClientWithToken();
@@ -72,6 +73,7 @@ namespace Azure.Communication.Sms.Tests
             }
         }
 
+        [RecordedTest]
         [TestCase("+18007342577", Description = "Unauthorized number")]
         [TestCase("+15550000000", Description = "Fake number")]
         public async Task SendingSmsMessageFromUnauthorizedNumber(string from)
@@ -101,7 +103,7 @@ namespace Azure.Communication.Sms.Tests
             Assert.Fail("Expected RequestFailedException was not thrown.");
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SendingSmsMessageToInvalidNumber()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
@@ -129,7 +131,7 @@ namespace Azure.Communication.Sms.Tests
             Assert.Fail("Expected RequestFailedException was not thrown.");
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SendingSmsMessageWithOptions()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
@@ -160,7 +162,7 @@ namespace Azure.Communication.Sms.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SendingSmsMessageToMultipleRecipients()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
@@ -189,7 +191,7 @@ namespace Azure.Communication.Sms.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SendingSmsMessageToMultipleRecipientsWithOptions()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
@@ -223,7 +225,7 @@ namespace Azure.Communication.Sms.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SendingSmsMessageToLargeGroup()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
@@ -258,7 +260,7 @@ namespace Azure.Communication.Sms.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SendingSmsMessageWithLongMessage()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
@@ -285,7 +287,7 @@ namespace Azure.Communication.Sms.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SendingSmsMessageWithEmoji()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
@@ -313,7 +315,7 @@ namespace Azure.Communication.Sms.Tests
 
         #region Delivery Reports Tests
 
-        [Test]
+        [RecordedTest]
         public async Task GetDeliveryReportAsync()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
@@ -356,7 +358,7 @@ namespace Azure.Communication.Sms.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetDeliveryReportAsync_UsingTokenCredential()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClientWithToken();
@@ -399,7 +401,7 @@ namespace Azure.Communication.Sms.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public void GetDeliveryReport_Sync()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
@@ -442,6 +444,7 @@ namespace Azure.Communication.Sms.Tests
             }
         }
 
+        [RecordedTest]
         [TestCase("invalid-message-id")]
         [TestCase("non-existent-message-123")]
         [TestCase("fake-message-id")]
@@ -469,7 +472,7 @@ namespace Azure.Communication.Sms.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetDeliveryReportAsync_WithMultipleMessageIds()
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
