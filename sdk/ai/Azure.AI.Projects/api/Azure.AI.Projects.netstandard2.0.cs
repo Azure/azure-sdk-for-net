@@ -114,7 +114,7 @@ namespace Azure.AI.Projects
         public virtual Azure.AI.Projects.DeploymentsOperations GetDeploymentsOperationsClient() { throw null; }
         public virtual Azure.AI.Projects.Evaluations GetEvaluationsClient() { throw null; }
         public virtual Azure.AI.Projects.IndexesOperations GetIndexesOperationsClient() { throw null; }
-        public OpenAI.OpenAIClient GetOpenAIClient(string? connectionName = null, string? apiVersion = null) { throw null; }
+        public virtual OpenAI.OpenAIClient GetOpenAIClient(string? connectionName = null, string? apiVersion = null) { throw null; }
         public virtual Azure.AI.Projects.RedTeams GetRedTeamsClient() { throw null; }
     }
     public partial class AIProjectClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
@@ -370,14 +370,14 @@ namespace Azure.AI.Projects
     {
         protected ConnectionsOperations() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        public Azure.AI.Projects.ConnectionProperties GetConnection(string connectionName, bool includeCredentials = false, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.ConnectionProperties>> GetConnectionAsync(string connectionName, bool includeCredentials = false, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.Projects.ConnectionProperties GetConnection(string connectionName, bool includeCredentials = false, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.ConnectionProperties>> GetConnectionAsync(string connectionName, bool includeCredentials = false, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.ConnectionProperties> GetConnections(Azure.AI.Projects.ConnectionType? connectionType = default(Azure.AI.Projects.ConnectionType?), bool? defaultConnection = default(bool?), string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.CollectionResult GetConnections(string connectionType, bool? defaultConnection, string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.ConnectionProperties> GetConnectionsAsync(Azure.AI.Projects.ConnectionType? connectionType = default(Azure.AI.Projects.ConnectionType?), bool? defaultConnection = default(bool?), string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetConnectionsAsync(string connectionType, bool? defaultConnection, string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public Azure.AI.Projects.ConnectionProperties GetDefaultConnection(Azure.AI.Projects.ConnectionType? connectionType = default(Azure.AI.Projects.ConnectionType?), bool includeCredentials = false) { throw null; }
-        public System.Threading.Tasks.Task<Azure.AI.Projects.ConnectionProperties> GetDefaultConnectionAsync(Azure.AI.Projects.ConnectionType? connectionType = default(Azure.AI.Projects.ConnectionType?), bool includeCredentials = false) { throw null; }
+        public virtual Azure.AI.Projects.ConnectionProperties GetDefaultConnection(Azure.AI.Projects.ConnectionType? connectionType = default(Azure.AI.Projects.ConnectionType?), bool includeCredentials = false) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.Projects.ConnectionProperties> GetDefaultConnectionAsync(Azure.AI.Projects.ConnectionType? connectionType = default(Azure.AI.Projects.ConnectionType?), bool includeCredentials = false) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConnectionType : System.IEquatable<Azure.AI.Projects.ConnectionType>

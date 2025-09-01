@@ -28,8 +28,7 @@ public class Sample2ServiceSetup : PlaywrightServiceBrowserNUnit
         {
             OS = OSPlatform.Linux,
             ExposeNetwork = "<loopback>",
-            RunId = Guid.NewGuid().ToString(),
-            RunName = "Playwright Service Test Run",
+            RunName = "Playwright Workspaces Test Run",
         }
     )
     {
@@ -42,8 +41,7 @@ public class Sample2ServiceSetup : PlaywrightServiceBrowserNUnit
         {
             OS = OSPlatform.Linux,
             ExposeNetwork = "<loopback>",
-            RunId = Guid.NewGuid().ToString(),
-            RunName = "Playwright Service Test Run",
+            RunName = "Playwright Workspaces Test Run",
         }
     )
     {

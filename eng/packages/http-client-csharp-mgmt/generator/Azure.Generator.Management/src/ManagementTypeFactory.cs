@@ -115,7 +115,8 @@ namespace Azure.Generator.Management
 
         /// <inheritdoc/>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override ValueExpression DeserializeJsonValue(Type valueType, ScopedApi<JsonElement> element, SerializationFormat format)
+        public override ValueExpression DeserializeJsonValue(Type valueType, ScopedApi<JsonElement> element,
+            ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat format)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             if (KnownManagementTypes.IsKnownManagementType(valueType))
@@ -144,7 +145,7 @@ namespace Azure.Generator.Management
                 return deserializationExpression(valueType, element, format);
             }
 
-            return base.DeserializeJsonValue(valueType, element, format);
+            return base.DeserializeJsonValue(valueType, element, mrwOptionsParameter, format);
         }
 
         /// <inheritdoc/>
