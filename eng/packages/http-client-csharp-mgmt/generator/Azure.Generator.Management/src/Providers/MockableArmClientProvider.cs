@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.ResourceManager;
+using Humanizer;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -71,7 +72,7 @@ namespace Azure.Generator.Management.Providers
 
             var scopeParameter = new ParameterProvider("scope", $"The scope of the resource collection to get.", typeof(ResourceIdentifier));
             var signature = new MethodSignature(
-                $"Get{resource.Name}s",
+                $"Get{resource.ResourceName.Pluralize()}",
                 $"Gets a collection of {resource.ResourceCollection!.Type:C} objects within the specified scope.",
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                 resource.ResourceCollection!.Type,

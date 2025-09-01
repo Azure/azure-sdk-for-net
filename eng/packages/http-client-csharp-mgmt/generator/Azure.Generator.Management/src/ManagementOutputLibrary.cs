@@ -149,11 +149,12 @@ namespace Azure.Generator.Management
                     [ResourceScope.ResourceGroup] = new([], [], []),
                     [ResourceScope.Subscription] = new([], [], []),
                     [ResourceScope.Tenant] = new([], [], []),
-                    [ResourceScope.ManagementGroup] = new([], [], [])
+                    [ResourceScope.ManagementGroup] = new([], [], []),
+                    [ResourceScope.Extension] = new([], [], [])
                 };
                 foreach (var (metadata, resourceClient) in resourceDict)
                 {
-                    if (metadata.ParentResourceId is null && metadata.ResourceScope != ResourceScope.Extension)
+                    if (metadata.ParentResourceId is null)
                     {
                         resourcesAndMethodsPerScope[metadata.ResourceScope].ResourceClients.Add(resourceClient);
                     }
