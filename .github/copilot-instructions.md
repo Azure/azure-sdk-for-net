@@ -27,7 +27,7 @@ These are instructions when you are required to renew/change/update the generato
 
 The new generator could be `@azure-tools/http-client-csharp` or `@azure-tools/http-client-csharp-mgmt`.
 
-DO the following steps to renew/change/update the generator:
+Do the following steps to renew/change/update the generator:
 
 1. Figure out which new generator you should use. Determine this by the package name.
     - For namespace in pattern of `Azure.ResourceManager.*`, the new generator should be `@azure-tools/http-client-csharp-mgmt`.
