@@ -5,6 +5,7 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -18,9 +19,12 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             ResourceClientProvider resource,
             RequestPathPattern contextualPath,
             ResourceOperationMethodProvider updateMethodProvider,
-            RestClientInfo restClientInfo,
+            InputServiceMethod getMethod,
+            RestClientInfo updateRestClientInfo,
+            RestClientInfo getRestClientInfo,
+            bool isPatch,
             bool isAsync)
-            : base(resource, contextualPath, updateMethodProvider, restClientInfo, isAsync,
+            : base(resource, contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, isAsync,
                    isAsync ? "SetTagsAsync" : "SetTags",
                    "Replace the tags on the resource with the given set.")
         {
