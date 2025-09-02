@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// Gets or sets the Voice.
         /// </summary>
-        public VoiceType Voice
+        public VoiceProvider Voice
         {
             get
             {
@@ -30,7 +30,7 @@ namespace Azure.AI.VoiceLive
                 {
                     return null;
                 }
-                return _serviceVoice.ToObjectFromJson<VoiceType>();
+                return _serviceVoice.ToObjectFromJson<VoiceProvider>();
             }
             set
             {

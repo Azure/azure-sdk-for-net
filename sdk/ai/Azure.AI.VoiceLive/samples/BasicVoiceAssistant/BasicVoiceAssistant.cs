@@ -159,9 +159,9 @@ public class BasicVoiceAssistant : IDisposable
     {
         try
         {
-            await foreach (ServerEventBase serverEvent in _session!.GetUpdatesAsync(cancellationToken).ConfigureAwait(false))
+            await foreach (SessionUpdate serverEvent in _session!.GetUpdatesAsync(cancellationToken).ConfigureAwait(false))
             {
-                await HandleServerEventAsync(serverEvent, cancellationToken).ConfigureAwait(false);
+                await HandleSessionUpdateAsync(serverEvent, cancellationToken).ConfigureAwait(false);
             }
         }
         catch (OperationCanceledException)
@@ -178,17 +178,17 @@ public class BasicVoiceAssistant : IDisposable
     /// <summary>
     /// Handle different types of server events from VoiceLive.
     /// </summary>
-    private async Task HandleServerEventAsync(ServerEventBase serverEvent, CancellationToken cancellationToken)
+    private async Task HandleSessionUpdateAsync(SessionUpdate serverEvent, CancellationToken cancellationToken)
     {
         _logger.LogDebug("Received event: {EventType}", serverEvent.GetType().Name);
 
         switch (serverEvent)
         {
-            case ServerEventSessionCreated sessionCreated:
+            case SessionUpdateSessionCreated sessionCreated:
                 await HandleSessionCreatedAsync(sessionCreated, cancellationToken).ConfigureAwait(false);
                 break;
 
-            case ServerEventSessionUpdated sessionUpdated:
+            case SessionUpdateSessionUpdated sessionUpdated:
                 _logger.LogInformation("Session updated successfully");
 
                 // Start audio capture once session is ready
@@ -198,7 +198,7 @@ public class BasicVoiceAssistant : IDisposable
                 }
                 break;
 
-            case ServerEventInputAudioBufferSpeechStarted speechStarted:
+            case SessionUpdateInputAudioBufferSpeechStarted speechStarted:
                 _logger.LogInformation("🎤 User started speaking - stopping playback");
                 Console.WriteLine("🎤 Listening...");
 
@@ -230,7 +230,7 @@ public class BasicVoiceAssistant : IDisposable
                 }
                 break;
 
-            case ServerEventInputAudioBufferSpeechStopped speechStopped:
+            case SessionUpdateInputAudioBufferSpeechStopped speechStopped:
                 _logger.LogInformation("🎤 User stopped speaking");
                 Console.WriteLine("🤔 Processing...");
 
@@ -241,11 +241,11 @@ public class BasicVoiceAssistant : IDisposable
                 }
                 break;
 
-            case ServerEventResponseCreated responseCreated:
+            case SessionUpdateResponseCreated responseCreated:
                 _logger.LogInformation("🤖 Assistant response created");
                 break;
 
-            case ServerEventResponseAudioDelta audioDelta:
+            case SessionUpdateResponseAudioDelta audioDelta:
                 // Stream audio response to speakers
                 _logger.LogDebug("Received audio delta");
 
@@ -256,16 +256,16 @@ public class BasicVoiceAssistant : IDisposable
                 }
                 break;
 
-            case ServerEventResponseAudioDone audioDone:
+            case SessionUpdateResponseAudioDone audioDone:
                 _logger.LogInformation("🤖 Assistant finished speaking");
                 Console.WriteLine("🎤 Ready for next input...");
                 break;
 
-            case ServerEventResponseDone responseDone:
+            case SessionUpdateResponseDone responseDone:
                 _logger.LogInformation("✅ Response complete");
                 break;
 
-            case ServerEventError errorEvent:
+            case SessionUpdateError errorEvent:
                 _logger.LogError("❌ VoiceLive error: {ErrorMessage}", errorEvent.Error?.Message);
                 Console.WriteLine($"Error: {errorEvent.Error?.Message}");
                 break;
@@ -279,7 +279,7 @@ public class BasicVoiceAssistant : IDisposable
     /// <summary>
     /// Handle session created event.
     /// </summary>
-    private async Task HandleSessionCreatedAsync(ServerEventSessionCreated sessionCreated, CancellationToken cancellationToken)
+    private async Task HandleSessionCreatedAsync(SessionUpdateSessionCreated sessionCreated, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Session ready: {SessionId}", sessionCreated.Session?.Id);
 

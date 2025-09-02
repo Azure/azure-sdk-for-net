@@ -103,7 +103,7 @@ namespace Azure.AI.VoiceLive.Tests
         [Test]
         public void SpeechStartedEvent_CancelsResponseAndClearsStreamingAudio()
         {
-            // This test demonstrates how BasicVoiceAssistant.HandleServerEventAsync would be tested
+            // This test demonstrates how BasicVoiceAssistant.HandleSessionUpdateAsync would be tested
             // if the samples were accessible from the test project.
 
             Assert.Inconclusive(
@@ -111,7 +111,7 @@ namespace Azure.AI.VoiceLive.Tests
                 "To enable this test: " +
                 "1. Add project reference to BasicVoiceAssistant sample in test project, OR " +
                 "2. Move BasicVoiceAssistant to the main SDK with dependency injection support. " +
-                "Expected behavior: ServerEventInputAudioBufferSpeechStarted should call " +
+                "Expected behavior: SessionUpdateInputAudioBufferSpeechStarted should call " +
                 "CancelResponseAsync(), ClearStreamingAudioAsync(), and StopPlaybackAsync().");
         }
 
@@ -125,7 +125,7 @@ namespace Azure.AI.VoiceLive.Tests
                 "To enable this test: " +
                 "1. Add project reference to BasicVoiceAssistant sample in test project, OR " +
                 "2. Move BasicVoiceAssistant to the main SDK with dependency injection support. " +
-                "Expected behavior: ServerEventInputAudioBufferSpeechStopped should call " +
+                "Expected behavior: SessionUpdateInputAudioBufferSpeechStopped should call " +
                 "StartPlaybackAsync() on the AudioProcessor.");
         }
 
@@ -139,7 +139,7 @@ namespace Azure.AI.VoiceLive.Tests
                 "To enable this test: " +
                 "1. Add project reference to BasicVoiceAssistant sample in test project, OR " +
                 "2. Move BasicVoiceAssistant to the main SDK with dependency injection support. " +
-                "Expected behavior: ServerEventResponseAudioDelta with non-empty delta should call " +
+                "Expected behavior: SessionUpdateResponseAudioDelta with non-empty delta should call " +
                 "QueueAudioAsync() with the decoded audio data.");
         }
 
@@ -155,7 +155,7 @@ namespace Azure.AI.VoiceLive.Tests
                 "   SOLUTION: Add project reference or move to main SDK. " +
                 "2. OBSTACLE: AudioProcessor is concrete class with no interface. " +
                 "   SOLUTION: Introduce IAudioProcessor interface and constructor injection. " +
-                "3. OBSTACLE: HandleServerEventAsync is private method. " +
+                "3. OBSTACLE: HandleSessionUpdateAsync is private method. " +
                 "   SOLUTION: Make method protected virtual for better testability. " +
                 "4. OBSTACLE: _audioProcessor and _session fields are private. " +
                 "   SOLUTION: Use dependency injection pattern instead of direct instantiation. " +
@@ -163,13 +163,13 @@ namespace Azure.AI.VoiceLive.Tests
         }
 
         [Test]
-        public void ServerEventCreation_ValidatesEventFactory()
+        public void SessionUpdateCreation_ValidatesEventFactory()
         {
             // This test validates that we can create the server events needed for testing
             // and demonstrates the event creation patterns.
 
             // Create speech started event
-            var speechStartedEvent = VoiceLiveModelFactory.ServerEventInputAudioBufferSpeechStarted(
+            var speechStartedEvent = VoiceLiveModelFactory.SessionUpdateInputAudioBufferSpeechStarted(
                 eventId: "evt-1",
                 audioStartMs: 100,
                 itemId: "item-1");
@@ -179,7 +179,7 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.That(speechStartedEvent.ItemId, Is.EqualTo("item-1"));
 
             // Create speech stopped event
-            var speechStoppedEvent = VoiceLiveModelFactory.ServerEventInputAudioBufferSpeechStopped(
+            var speechStoppedEvent = VoiceLiveModelFactory.SessionUpdateInputAudioBufferSpeechStopped(
                 eventId: "evt-2",
                 audioEndMs: 2000,
                 itemId: "item-2");
@@ -192,7 +192,7 @@ namespace Azure.AI.VoiceLive.Tests
             var testAudioData = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08 };
             var audioDelta = BinaryData.FromBytes(testAudioData);
 
-            var responseAudioDeltaEvent = VoiceLiveModelFactory.ServerEventResponseAudioDelta(
+            var responseAudioDeltaEvent = VoiceLiveModelFactory.SessionUpdateResponseAudioDelta(
                 eventId: "evt-3",
                 responseId: "resp-1",
                 itemId: "item-3",

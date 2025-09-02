@@ -27,7 +27,7 @@ namespace Azure.AI.VoiceLive
         /// The method handles WebSocket message fragmentation automatically and ensures that complete
         /// messages are processed before yielding events.
         /// </remarks>
-        public async IAsyncEnumerable<ServerEventBase> GetUpdatesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
+        public async IAsyncEnumerable<SessionUpdate> GetUpdatesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 
@@ -53,7 +53,7 @@ namespace Azure.AI.VoiceLive
                 await foreach (BinaryData message in _receiveCollectionResult.WithCancellation(cancellationToken))
                 {
                     // Process the message and yield any server events
-                    foreach (ServerEventBase serverEvent in ProcessMessage(message))
+                    foreach (SessionUpdate serverEvent in ProcessMessage(message))
                     {
                         yield return serverEvent;
                     }
@@ -77,7 +77,7 @@ namespace Azure.AI.VoiceLive
         /// This method provides synchronous access to all server events from the service.
         /// For better performance and resource utilization, consider using <see cref="GetUpdatesAsync(CancellationToken)"/> instead.
         /// </remarks>
-        public IEnumerable<ServerEventBase> GetUpdates(CancellationToken cancellationToken = default)
+        public IEnumerable<SessionUpdate> GetUpdates(CancellationToken cancellationToken = default)
         {
             return GetUpdatesAsync(cancellationToken).ToBlockingEnumerable(cancellationToken);
         }
@@ -89,9 +89,9 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>An asynchronous enumerable of server events of the specified type.</returns>
         public async IAsyncEnumerable<T> GetUpdatesAsync<T>([EnumeratorCancellation] CancellationToken cancellationToken = default)
-            where T : ServerEventBase
+            where T : SessionUpdate
         {
-            await foreach (ServerEventBase serverEvent in GetUpdatesAsync(cancellationToken).ConfigureAwait(false))
+            await foreach (SessionUpdate serverEvent in GetUpdatesAsync(cancellationToken).ConfigureAwait(false))
             {
                 if (serverEvent is T typedEvent)
                 {
@@ -107,7 +107,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>The next server event of the specified type.</returns>
         public async Task<T> WaitForUpdateAsync<T>(CancellationToken cancellationToken = default)
-            where T : ServerEventBase
+            where T : SessionUpdate
         {
             await foreach (T serverEvent in GetUpdatesAsync<T>(cancellationToken).ConfigureAwait(false))
             {
@@ -122,14 +122,14 @@ namespace Azure.AI.VoiceLive
         /// </summary>
         /// <param name="message">The message to process.</param>
         /// <returns>An enumerable of server events extracted from the message.</returns>
-        private IEnumerable<ServerEventBase> ProcessMessage(BinaryData message)
+        private IEnumerable<SessionUpdate> ProcessMessage(BinaryData message)
         {
             if (message == null || message.ToArray().Length == 0)
             {
                 yield break;
             }
 
-            ServerEventBase serverEvent = null;
+            SessionUpdate serverEvent = null;
             try
             {
                 // Try to parse as JSON first
@@ -137,7 +137,7 @@ namespace Azure.AI.VoiceLive
                 JsonElement root = document.RootElement;
 
                 // Deserialize as a server event
-                serverEvent = ServerEventBase.DeserializeServerEventBase(root, ModelSerializationExtensions.WireOptions);
+                serverEvent = SessionUpdate.DeserializeSessionUpdate(root, ModelSerializationExtensions.WireOptions);
             }
             catch (JsonException)
             {

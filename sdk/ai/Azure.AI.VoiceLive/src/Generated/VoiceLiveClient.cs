@@ -115,11 +115,11 @@ namespace Azure.AI.VoiceLive
         /// <param name="event"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ServerEventResponseAnimationVisemeDone> ForceModels(string accept, BinaryData @event, CancellationToken cancellationToken = default)
+        internal virtual Response<SessionUpdateResponseAnimationVisemeDone> ForceModels(string accept, BinaryData @event, CancellationToken cancellationToken = default)
         {
             ForceModelsRequest spreadModel = new ForceModelsRequest(@event, null);
             Response result = ForceModels(accept, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((ServerEventResponseAnimationVisemeDone)result, result);
+            return Response.FromValue((SessionUpdateResponseAnimationVisemeDone)result, result);
         }
 
         /// <summary> ForceModels. </summary>
@@ -127,11 +127,11 @@ namespace Azure.AI.VoiceLive
         /// <param name="event"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ServerEventResponseAnimationVisemeDone>> ForceModelsAsync(string accept, BinaryData @event, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<SessionUpdateResponseAnimationVisemeDone>> ForceModelsAsync(string accept, BinaryData @event, CancellationToken cancellationToken = default)
         {
             ForceModelsRequest spreadModel = new ForceModelsRequest(@event, null);
             Response result = await ForceModelsAsync(accept, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((ServerEventResponseAnimationVisemeDone)result, result);
+            return Response.FromValue((SessionUpdateResponseAnimationVisemeDone)result, result);
         }
     }
 }

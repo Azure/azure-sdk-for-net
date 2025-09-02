@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Azure.AI.VoiceLive
 {
-    public partial class LLMVoice : VoiceType
+    public partial class LLMVoice : VoiceProvider
     {
         /// <summary>
         ///

@@ -65,6 +65,6 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         ///
         /// </summary>
-        public VoiceType Voice { get; }
+        public VoiceProvider Voice { get; }
     }
 }

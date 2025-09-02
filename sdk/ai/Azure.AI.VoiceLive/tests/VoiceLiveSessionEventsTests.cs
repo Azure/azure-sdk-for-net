@@ -59,10 +59,10 @@ namespace Azure.AI.VoiceLive.Tests
             var session = CreateSessionWithFakeSocket(out var fake);
             fake.EnqueueTextMessage(CreateSessionCreatedJson());
 
-            await foreach (ServerEventBase evt in session.GetUpdatesAsync())
+            await foreach (SessionUpdate evt in session.GetUpdatesAsync())
             {
-                Assert.That(evt, Is.TypeOf<ServerEventSessionCreated>());
-                var created = (ServerEventSessionCreated)evt;
+                Assert.That(evt, Is.TypeOf<SessionUpdateSessionCreated>());
+                var created = (SessionUpdateSessionCreated)evt;
                 Assert.That(created.Type.ToString(), Is.EqualTo("session.created"));
                 Assert.That(created.Session, Is.Not.Null);
                 break; // Only need first event
@@ -78,11 +78,11 @@ namespace Azure.AI.VoiceLive.Tests
             fake.EnqueueTextMessage(CreateSessionCreatedJson("evt-2"));
 
             int count = 0;
-            await foreach (ServerEventBase evt in session.GetUpdatesAsync())
+            await foreach (SessionUpdate evt in session.GetUpdatesAsync())
             {
                 count++;
-                Assert.That(evt, Is.TypeOf<ServerEventSessionCreated>());
-                Assert.That(((ServerEventSessionCreated)evt).Type.ToString(), Is.EqualTo("session.created"));
+                Assert.That(evt, Is.TypeOf<SessionUpdateSessionCreated>());
+                Assert.That(((SessionUpdateSessionCreated)evt).Type.ToString(), Is.EqualTo("session.created"));
                 break; // Stop after first valid event to avoid hanging waiting for more
             }
 
@@ -98,7 +98,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             await using var enumerator1 = session.GetUpdatesAsync().GetAsyncEnumerator();
             Assert.That(await enumerator1.MoveNextAsync(), Is.True, "First enumeration should obtain an event.");
-            Assert.That(enumerator1.Current, Is.TypeOf<ServerEventSessionCreated>());
+            Assert.That(enumerator1.Current, Is.TypeOf<SessionUpdateSessionCreated>());
 
             // Second enumeration attempt should throw InvalidOperationException when MoveNextAsync invoked.
             await using var enumerator2 = session.GetUpdatesAsync().GetAsyncEnumerator();
@@ -118,7 +118,7 @@ namespace Azure.AI.VoiceLive.Tests
                 fake.EnqueueTextMessage(CreateSessionCreatedJson("delayed"));
             });
 
-            var result = await session.WaitForUpdateAsync<ServerEventSessionCreated>(CancellationToken.None);
+            var result = await session.WaitForUpdateAsync<SessionUpdateSessionCreated>(CancellationToken.None);
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Type.ToString(), Is.EqualTo("session.created"));
         }
@@ -131,7 +131,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             try
             {
-                await session.WaitForUpdateAsync<ServerEventSessionCreated>(cts.Token);
+                await session.WaitForUpdateAsync<SessionUpdateSessionCreated>(cts.Token);
                 Assert.Fail("Did not throw");
             }
             catch (OperationCanceledException)

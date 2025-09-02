@@ -9,7 +9,7 @@ Azure Playwright is a fully managed service that uses the cloud to enable you to
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Developer.Playwright --prerelease
+dotnet add package Azure.Developer.Playwright
 ```
 
 ### Authenticate the client

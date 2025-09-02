@@ -153,7 +153,7 @@ namespace Azure.AI.VoiceLive
         /// The voice configuration to use for generating spoken responses. If not specified,
         /// the service will use a default voice.
         /// </value>
-        public VoiceType Voice { get; set; }
+        public VoiceProvider Voice { get; set; }
 
         /// <summary>
         /// Gets or sets the instructions for the conversation assistant.

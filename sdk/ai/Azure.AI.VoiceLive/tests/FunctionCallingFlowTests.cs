@@ -87,9 +87,9 @@ namespace Azure.AI.VoiceLive.Tests
             string eventJson = TestUtilities.BuildResponseFunctionCallArgumentsDoneEvent(functionName, callId, argumentsJson);
 
             // Parse to ensure the model factory path works for this event type.
-            var serverEvent = ServerEventBase.DeserializeServerEventBase(JsonDocument.Parse(eventJson).RootElement, ModelSerializationExtensions.WireOptions);
-            Assert.That(serverEvent, Is.TypeOf<ServerEventResponseFunctionCallArgumentsDone>());
-            var fDone = (ServerEventResponseFunctionCallArgumentsDone)serverEvent;
+            var serverEvent = SessionUpdate.DeserializeSessionUpdate(JsonDocument.Parse(eventJson).RootElement, ModelSerializationExtensions.WireOptions);
+            Assert.That(serverEvent, Is.TypeOf<SessionUpdateResponseFunctionCallArgumentsDone>());
+            var fDone = (SessionUpdateResponseFunctionCallArgumentsDone)serverEvent;
             Assert.That(fDone.Name, Is.EqualTo(functionName));
             Assert.That(fDone.CallId, Is.EqualTo(callId));
 

@@ -364,9 +364,9 @@ public class CustomerServiceBot : IDisposable
     {
         try
         {
-            await foreach (ServerEventBase serverEvent in _session!.GetUpdatesAsync(cancellationToken).ConfigureAwait(false))
+            await foreach (SessionUpdate serverEvent in _session!.GetUpdatesAsync(cancellationToken).ConfigureAwait(false))
             {
-                await HandleServerEventAsync(serverEvent, cancellationToken).ConfigureAwait(false);
+                await HandleSessionUpdateAsync(serverEvent, cancellationToken).ConfigureAwait(false);
             }
         }
         catch (OperationCanceledException)
@@ -383,17 +383,17 @@ public class CustomerServiceBot : IDisposable
     /// <summary>
     /// Handle different types of server events from VoiceLive.
     /// </summary>
-    private async Task HandleServerEventAsync(ServerEventBase serverEvent, CancellationToken cancellationToken)
+    private async Task HandleSessionUpdateAsync(SessionUpdate serverEvent, CancellationToken cancellationToken)
     {
         _logger.LogDebug("Received event: {EventType}", serverEvent.GetType().Name);
 
         switch (serverEvent)
         {
-            case ServerEventSessionCreated sessionCreated:
+            case SessionUpdateSessionCreated sessionCreated:
                 await HandleSessionCreatedAsync(sessionCreated, cancellationToken).ConfigureAwait(false);
                 break;
 
-            case ServerEventSessionUpdated sessionUpdated:
+            case SessionUpdateSessionUpdated sessionUpdated:
                 _logger.LogInformation("Session updated successfully with function tools");
 
                 // Start audio capture once session is ready
@@ -403,7 +403,7 @@ public class CustomerServiceBot : IDisposable
                 }
                 break;
 
-            case ServerEventInputAudioBufferSpeechStarted speechStarted:
+            case SessionUpdateInputAudioBufferSpeechStarted speechStarted:
                 _logger.LogInformation("🎤 Customer started speaking - stopping playback");
                 Console.WriteLine("🎤 Listening...");
 
@@ -424,7 +424,7 @@ public class CustomerServiceBot : IDisposable
                 }
                 break;
 
-            case ServerEventInputAudioBufferSpeechStopped speechStopped:
+            case SessionUpdateInputAudioBufferSpeechStopped speechStopped:
                 _logger.LogInformation("🎤 Customer stopped speaking");
                 Console.WriteLine("🤔 Processing...");
 
@@ -435,15 +435,15 @@ public class CustomerServiceBot : IDisposable
                 }
                 break;
 
-            case ServerEventResponseCreated responseCreated:
+            case SessionUpdateResponseCreated responseCreated:
                 _logger.LogInformation("🤖 Assistant response created");
                 break;
 
-            case ServerEventResponseOutputItemAdded outputItemAdded:
+            case SessionUpdateResponseOutputItemAdded outputItemAdded:
                 await HandleResponseOutputItemAddedAsync(outputItemAdded, cancellationToken).ConfigureAwait(false);
                 break;
 
-            case ServerEventResponseAudioDelta audioDelta:
+            case SessionUpdateResponseAudioDelta audioDelta:
                 // Stream audio response to speakers
                 _logger.LogDebug("Received audio delta");
 
@@ -454,26 +454,26 @@ public class CustomerServiceBot : IDisposable
                 }
                 break;
 
-            case ServerEventResponseAudioDone audioDone:
+            case SessionUpdateResponseAudioDone audioDone:
                 _logger.LogInformation("🤖 Assistant finished speaking");
                 Console.WriteLine("🎤 Ready for next customer inquiry...");
                 break;
 
-            case ServerEventResponseContentPartAdded partAdded:
+            case SessionUpdateResponseContentPartAdded partAdded:
                 if (_assistantMessageItems.Contains(partAdded.ItemId))
                 {
                     _assistantMessageResponses.Add(partAdded.ResponseId);
                 }
 
                 break;
-            case ServerEventResponseDone responseDone:
+            case SessionUpdateResponseDone responseDone:
                 _logger.LogInformation("✅ Response complete");
                 break;
-            case ServerEventResponseFunctionCallArgumentsDone functionCallArgumentsDone:
+            case SessionUpdateResponseFunctionCallArgumentsDone functionCallArgumentsDone:
                 _logger.LogInformation("🔧 Function call arguments done for call ID: {CallId}", functionCallArgumentsDone.CallId);
                 await HandleFunctionCallAsync(functionCallArgumentsDone.Name, functionCallArgumentsDone.CallId, functionCallArgumentsDone.Arguments, cancellationToken).ConfigureAwait(false);
                 break;
-            case ServerEventResponseAudioTranscriptDelta transcriptDelta:
+            case SessionUpdateResponseAudioTranscriptDelta transcriptDelta:
                 // For now, only deal with the assistant responses.
                 if (_assistantMessageResponses.Contains(transcriptDelta.ResponseId))
                 {
@@ -481,14 +481,14 @@ public class CustomerServiceBot : IDisposable
                 }
                 break;
 
-            case ServerEventResponseAudioTranscriptDone transcriptDone:
+            case SessionUpdateResponseAudioTranscriptDone transcriptDone:
                 // For now, only deal with the assistant responses.
                 if (_assistantMessageResponses.Contains(transcriptDone.ResponseId))
                 {
                     Console.WriteLine();
                 }
                 break;
-            case ServerEventError errorEvent:
+            case SessionUpdateError errorEvent:
                 _logger.LogError("❌ VoiceLive error: {ErrorMessage}", errorEvent.Error?.Message);
                 Console.WriteLine($"Error: {errorEvent.Error?.Message}");
                 break;
@@ -502,7 +502,7 @@ public class CustomerServiceBot : IDisposable
     /// <summary>
     /// Handle response output item added events, including function calls.
     /// </summary>
-    private async Task HandleResponseOutputItemAddedAsync(ServerEventResponseOutputItemAdded outputItemAdded, CancellationToken cancellationToken)
+    private async Task HandleResponseOutputItemAddedAsync(SessionUpdateResponseOutputItemAdded outputItemAdded, CancellationToken cancellationToken)
     {
         if (outputItemAdded.Item is ResponseFunctionCallItem item)
         {
@@ -566,7 +566,7 @@ public class CustomerServiceBot : IDisposable
     /// <summary>
     /// Handle session created event.
     /// </summary>
-    private async Task HandleSessionCreatedAsync(ServerEventSessionCreated sessionCreated, CancellationToken cancellationToken)
+    private async Task HandleSessionCreatedAsync(SessionUpdateSessionCreated sessionCreated, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Session ready: {SessionId}", sessionCreated.Session?.Id);
 

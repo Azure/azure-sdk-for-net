@@ -53,15 +53,15 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
             await session.ConfigureConversationSessionAsync(sessionOptions).ConfigureAwait(false);
 
             // Process events from the session
-            await foreach (ServerEventBase serverEvent in session.GetUpdatesAsync().ConfigureAwait(false))
+            await foreach (SessionUpdate serverEvent in session.GetUpdatesAsync().ConfigureAwait(false))
             {
-                if (serverEvent is ServerEventResponseAudioDelta audioDelta)
+                if (serverEvent is SessionUpdateResponseAudioDelta audioDelta)
                 {
                     // Play audio response
                     byte[] audioData = audioDelta.Delta.ToArray();
                     // ... audio playback logic
                 }
-                else if (serverEvent is ServerEventResponseTextDelta textDelta)
+                else if (serverEvent is SessionUpdateResponseTextDelta textDelta)
                 {
                     // Display text response
                     Console.Write(textDelta.Delta);
