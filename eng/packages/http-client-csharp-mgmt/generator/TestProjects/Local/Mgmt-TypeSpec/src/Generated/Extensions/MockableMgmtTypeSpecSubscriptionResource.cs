@@ -23,8 +23,8 @@ namespace MgmtTypeSpec.Mocking
     {
         private ClientDiagnostics _zoosClientDiagnostics;
         private Zoos _zoosRestClient;
-        private ClientDiagnostics _fooTasksClientDiagnostics;
-        private FooTasks _fooTasksRestClient;
+        private ClientDiagnostics _mgmtTypeSpecClientClientDiagnostics;
+        private MgmtTypeSpecClient _mgmtTypeSpecClientRestClient;
 
         /// <summary> Initializes a new instance of MockableMgmtTypeSpecSubscriptionResource for mocking. </summary>
         protected MockableMgmtTypeSpecSubscriptionResource()
@@ -42,9 +42,9 @@ namespace MgmtTypeSpec.Mocking
 
         private Zoos ZoosRestClient => _zoosRestClient ??= new Zoos(ZoosClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
-        private ClientDiagnostics FooTasksClientDiagnostics => _fooTasksClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics MgmtTypeSpecClientClientDiagnostics => _mgmtTypeSpecClientClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FooTasks FooTasksRestClient => _fooTasksRestClient ??= new FooTasks(FooTasksClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private MgmtTypeSpecClient MgmtTypeSpecClientRestClient => _mgmtTypeSpecClientRestClient ??= new MgmtTypeSpecClient(MgmtTypeSpecClientClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         /// <summary> List Zoo resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -79,7 +79,7 @@ namespace MgmtTypeSpec.Mocking
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
+            using DiagnosticScope scope = MgmtTypeSpecClientClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
             scope.Start();
             try
             {
@@ -87,7 +87,7 @@ namespace MgmtTypeSpec.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FooTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
+                HttpMessage message = MgmtTypeSpecClientRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
                 if (response.Value == null)
@@ -112,7 +112,7 @@ namespace MgmtTypeSpec.Mocking
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
+            using DiagnosticScope scope = MgmtTypeSpecClientClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
             scope.Start();
             try
             {
@@ -120,7 +120,7 @@ namespace MgmtTypeSpec.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FooTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
+                HttpMessage message = MgmtTypeSpecClientRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
                 if (response.Value == null)
