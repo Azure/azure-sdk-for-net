@@ -96,18 +96,7 @@ namespace Azure.ResourceManager.Storage
         [WirePath("properties.shareDeleteRetentionPolicy")]
         public DeleteRetentionPolicy ShareDeleteRetentionPolicy { get; set; }
         /// <summary> Protocol settings for file service. </summary>
-        internal ProtocolSettings ProtocolSettings { get; set; }
-        /// <summary> Setting for SMB protocol. </summary>
-        [WirePath("properties.protocolSettings.smb")]
-        public SmbSetting ProtocolSmbSetting
-        {
-            get => ProtocolSettings is null ? default : ProtocolSettings.SmbSetting;
-            set
-            {
-                if (ProtocolSettings is null)
-                    ProtocolSettings = new ProtocolSettings();
-                ProtocolSettings.SmbSetting = value;
-            }
-        }
+        [WirePath("properties.protocolSettings")]
+        public ProtocolSettings ProtocolSettings { get; set; }
     }
 }

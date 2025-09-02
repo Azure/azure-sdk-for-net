@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="ObjectReplicationPolicies"/>. </summary>
         /// <param name="value"> The replication policy between two storage accounts. </param>
+        /// <param name="nextLink"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectReplicationPolicies(IReadOnlyList<ObjectReplicationPolicyData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ObjectReplicationPolicies(IReadOnlyList<ObjectReplicationPolicyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The replication policy between two storage accounts. </summary>
         public IReadOnlyList<ObjectReplicationPolicyData> Value { get; }
+        /// <summary> Gets the next link. </summary>
+        public string NextLink { get; }
     }
 }

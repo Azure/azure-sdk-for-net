@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> The response from the List Storage Accounts operation. </summary>
+    /// <summary> The response of a StorageAccount list operation. </summary>
     internal partial class StorageAccountListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Storage.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountListResult"/>. </summary>
-        internal StorageAccountListResult()
+        /// <param name="value"> The StorageAccount items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal StorageAccountListResult(IEnumerable<StorageAccountData> value)
         {
-            Value = new ChangeTrackingList<StorageAccountData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountListResult"/>. </summary>
-        /// <param name="value"> Gets the list of storage accounts and their properties. </param>
-        /// <param name="nextLink"> Request URL that can be used to query next page of storage accounts. Returned when total number of requested storage accounts exceed maximum page size. </param>
+        /// <param name="value"> The StorageAccount items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountListResult(IReadOnlyList<StorageAccountData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageAccountListResult(IReadOnlyList<StorageAccountData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the list of storage accounts and their properties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountListResult"/> for deserialization. </summary>
+        internal StorageAccountListResult()
+        {
+        }
+
+        /// <summary> The StorageAccount items on this page. </summary>
         public IReadOnlyList<StorageAccountData> Value { get; }
-        /// <summary> Request URL that can be used to query next page of storage accounts. Returned when total number of requested storage accounts exceed maximum page size. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

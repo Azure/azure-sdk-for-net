@@ -301,16 +301,11 @@ namespace Azure.ResourceManager.Storage
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ProtocolSmbSetting", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProtocolSettings), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    protocolSettings: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      protocolSettings: {");
-                builder.Append("        smb: ");
                 builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
             }
             else
             {

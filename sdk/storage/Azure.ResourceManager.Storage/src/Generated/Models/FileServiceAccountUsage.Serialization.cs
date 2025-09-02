@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.Storage.Models
                 throw new FormatException($"The model {nameof(FileServiceAccountUsage)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(LiveShares))
+            if (Optional.IsDefined(LiveShares))
             {
                 writer.WritePropertyName("liveShares"u8);
                 writer.WriteObjectValue(LiveShares, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(SoftDeletedShares))
+            if (Optional.IsDefined(SoftDeletedShares))
             {
                 writer.WritePropertyName("softDeletedShares"u8);
                 writer.WriteObjectValue(SoftDeletedShares, options);

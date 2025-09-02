@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.Storage.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ListTableResource"/>. </summary>
-        internal ListTableResource()
+        /// <param name="value"> The Table items on this page. </param>
+        internal ListTableResource(IEnumerable<TableData> value)
         {
-            Value = new ChangeTrackingList<TableData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListTableResource"/>. </summary>
-        /// <param name="value"> List of tables returned. </param>
-        /// <param name="nextLink"> Request URL that can be used to query next page of tables. </param>
+        /// <param name="value"> The Table items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListTableResource(IReadOnlyList<TableData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListTableResource(IReadOnlyList<TableData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of tables returned. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListTableResource"/> for deserialization. </summary>
+        internal ListTableResource()
+        {
+        }
+
+        /// <summary> The Table items on this page. </summary>
         public IReadOnlyList<TableData> Value { get; }
-        /// <summary> Request URL that can be used to query next page of tables. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

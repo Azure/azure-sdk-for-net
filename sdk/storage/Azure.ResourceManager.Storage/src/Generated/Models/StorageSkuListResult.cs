@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageSkuListResult"/>. </summary>
         /// <param name="value"> Get the list result of storage SKUs and their properties. </param>
+        /// <param name="nextLink"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSkuListResult(IReadOnlyList<StorageSkuInformation> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageSkuListResult(IReadOnlyList<StorageSkuInformation> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Get the list result of storage SKUs and their properties. </summary>
         public IReadOnlyList<StorageSkuInformation> Value { get; }
+        /// <summary> Gets the next link. </summary>
+        public string NextLink { get; }
     }
 }

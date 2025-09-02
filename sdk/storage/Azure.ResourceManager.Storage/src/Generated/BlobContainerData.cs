@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Resource Etag. </param>
         /// <param name="version"> The version of the deleted blob container. </param>
         /// <param name="isDeleted"> Indicates whether the blob container was deleted. </param>
         /// <param name="deletedOn"> Blob container deletion time. </param>
@@ -81,10 +82,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="immutableStorageWithVersioning"> The object level immutability property of the container. The property is immutable and can only be set to true at the container creation time. Existing containers must undergo a migration process. </param>
         /// <param name="enableNfsV3RootSquash"> Enable NFSv3 root squash on blob container. </param>
         /// <param name="enableNfsV3AllSquash"> Enable NFSv3 all squash on blob container. </param>
-        /// <param name="etag"> Resource Etag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, StoragePublicAccessType? publicAccess, DateTimeOffset? lastModifiedOn, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IDictionary<string, string> metadata, BlobContainerImmutabilityPolicy immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, StoragePublicAccessType? publicAccess, DateTimeOffset? lastModifiedOn, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IDictionary<string, string> metadata, BlobContainerImmutabilityPolicy immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ETag = etag;
             Version = version;
             IsDeleted = isDeleted;
             DeletedOn = deletedOn;
@@ -104,10 +105,12 @@ namespace Azure.ResourceManager.Storage
             ImmutableStorageWithVersioning = immutableStorageWithVersioning;
             EnableNfsV3RootSquash = enableNfsV3RootSquash;
             EnableNfsV3AllSquash = enableNfsV3AllSquash;
-            ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Resource Etag. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; }
         /// <summary> The version of the deleted blob container. </summary>
         [WirePath("properties.version")]
         public string Version { get; }
@@ -165,8 +168,5 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Enable NFSv3 all squash on blob container. </summary>
         [WirePath("properties.enableNfsV3AllSquash")]
         public bool? EnableNfsV3AllSquash { get; set; }
-        /// <summary> Resource Etag. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
     }
 }

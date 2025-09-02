@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.Storage.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ListContainerItems"/>. </summary>
-        internal ListContainerItems()
+        /// <param name="value"> The ListContainerItem items on this page. </param>
+        internal ListContainerItems(IEnumerable<BlobContainerData> value)
         {
-            Value = new ChangeTrackingList<BlobContainerData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListContainerItems"/>. </summary>
-        /// <param name="value"> List of blobs containers returned. </param>
-        /// <param name="nextLink"> Request URL that can be used to query next page of containers. Returned when total number of requested containers exceed maximum page size. </param>
+        /// <param name="value"> The ListContainerItem items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListContainerItems(IReadOnlyList<BlobContainerData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListContainerItems(IReadOnlyList<BlobContainerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of blobs containers returned. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListContainerItems"/> for deserialization. </summary>
+        internal ListContainerItems()
+        {
+        }
+
+        /// <summary> The ListContainerItem items on this page. </summary>
         public IReadOnlyList<BlobContainerData> Value { get; }
-        /// <summary> Request URL that can be used to query next page of containers. Returned when total number of requested containers exceed maximum page size. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

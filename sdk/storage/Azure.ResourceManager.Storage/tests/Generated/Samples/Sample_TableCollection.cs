@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_TableOperationPut()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/TableOperationPut.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/TableOperationPut.json
             // this example is just showing the usage of "Table_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this TableServiceResource created on azure
             // for more information of creating TableServiceResource, please refer to the document of TableServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier tableServiceResourceId = TableServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_TableOperationPutOrPatchAcls()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/TableOperationPutOrPatchAcls.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/TableOperationPutOrPatchAclsTableCreate.json
             // this example is just showing the usage of "Table_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this TableServiceResource created on azure
             // for more information of creating TableServiceResource, please refer to the document of TableServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier tableServiceResourceId = TableServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -109,7 +109,7 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
         [Ignore("Only validating compilation of examples")]
         public async Task Get_TableOperationGet()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/TableOperationGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/TableOperationGet.json
             // this example is just showing the usage of "Table_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +119,7 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
 
             // this example assumes you already have this TableServiceResource created on azure
             // for more information of creating TableServiceResource, please refer to the document of TableServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier tableServiceResourceId = TableServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -143,7 +143,7 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_TableOperationList()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/TableOperationList.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/TableOperationList.json
             // this example is just showing the usage of "Table_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,7 +153,7 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
 
             // this example assumes you already have this TableServiceResource created on azure
             // for more information of creating TableServiceResource, please refer to the document of TableServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9290";
             string accountName = "sto328";
             ResourceIdentifier tableServiceResourceId = TableServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -179,7 +179,7 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_TableOperationGet()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/TableOperationGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/TableOperationGet.json
             // this example is just showing the usage of "Table_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -189,7 +189,7 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
 
             // this example assumes you already have this TableServiceResource created on azure
             // for more information of creating TableServiceResource, please refer to the document of TableServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier tableServiceResourceId = TableServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -209,7 +209,7 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_TableOperationGet()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/TableOperationGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/TableOperationGet.json
             // this example is just showing the usage of "Table_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -219,7 +219,7 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
 
             // this example assumes you already have this TableServiceResource created on azure
             // for more information of creating TableServiceResource, please refer to the document of TableServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier tableServiceResourceId = TableServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

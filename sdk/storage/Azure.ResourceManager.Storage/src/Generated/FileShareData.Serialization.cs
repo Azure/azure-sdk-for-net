@@ -537,6 +537,7 @@ namespace Azure.ResourceManager.Storage
                 name,
                 type,
                 systemData,
+                etag,
                 lastModifiedTime,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 shareQuota,
@@ -563,7 +564,6 @@ namespace Azure.ResourceManager.Storage
                 signedIdentifiers ?? new ChangeTrackingList<StorageSignedIdentifier>(),
                 snapshotTime,
                 fileSharePaidBursting,
-                etag,
                 serializedAdditionalRawData);
         }
 

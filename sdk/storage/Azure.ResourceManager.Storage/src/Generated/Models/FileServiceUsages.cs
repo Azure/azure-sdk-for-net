@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.Storage.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FileServiceUsages"/>. </summary>
-        internal FileServiceUsages()
+        /// <param name="value"> The FileServiceUsage items on this page. </param>
+        internal FileServiceUsages(IEnumerable<FileServiceUsageData> value)
         {
-            Value = new ChangeTrackingList<FileServiceUsageData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="FileServiceUsages"/>. </summary>
-        /// <param name="value"> List of file service usages returned. </param>
-        /// <param name="nextLink"> Request URL that can be used to query next page of file service usages. Returned when total number of requested file service usages exceed maximum page size. </param>
+        /// <param name="value"> The FileServiceUsage items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileServiceUsages(IReadOnlyList<FileServiceUsageData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FileServiceUsages(IReadOnlyList<FileServiceUsageData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of file service usages returned. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServiceUsages"/> for deserialization. </summary>
+        internal FileServiceUsages()
+        {
+        }
+
+        /// <summary> The FileServiceUsage items on this page. </summary>
         public IReadOnlyList<FileServiceUsageData> Value { get; }
-        /// <summary> Request URL that can be used to query next page of file service usages. Returned when total number of requested file service usages exceed maximum page size. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Storage.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="LocalUsers"/>. </summary>
-        internal LocalUsers()
+        /// <param name="value"> The LocalUser items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal LocalUsers(IEnumerable<StorageAccountLocalUserData> value)
         {
-            Value = new ChangeTrackingList<StorageAccountLocalUserData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="LocalUsers"/>. </summary>
-        /// <param name="value"> The list of local users associated with the storage account. </param>
-        /// <param name="nextLink"> Request URL that can be used to query next page of local users. Returned when total number of requested local users exceeds the maximum page size. </param>
+        /// <param name="value"> The LocalUser items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LocalUsers(IReadOnlyList<StorageAccountLocalUserData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LocalUsers(IReadOnlyList<StorageAccountLocalUserData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of local users associated with the storage account. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalUsers"/> for deserialization. </summary>
+        internal LocalUsers()
+        {
+        }
+
+        /// <summary> The LocalUser items on this page. </summary>
         public IReadOnlyList<StorageAccountLocalUserData> Value { get; }
-        /// <summary> Request URL that can be used to query next page of local users. Returned when total number of requested local users exceeds the maximum page size. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Represents the provisioning state of the storage task assignment. </summary>
+    /// <summary> Gets the status of the storage account at the time the operation was called. </summary>
     public readonly partial struct StorageTaskAssignmentProvisioningState : IEquatable<StorageTaskAssignmentProvisioningState>
     {
         private readonly string _value;

@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
-require: https://github.com/Azure/azure-rest-api-specs/blob/2219e4e4e0409bcb88a2b82e8febe1a3baecaf18/specification/storage/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/438b4eb669efc1e30db9f858e8ec47b2185fc294/specification/storage/resource-manager/readme.md
 #tag: package-2024-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -263,11 +263,14 @@ rename-mapping:
     StorageTaskReportProperties.finishTime: FinishedOn|date-time
     TriggerParameters: ExecutionTriggerParameters
     TriggerParametersUpdate: ExecutionTriggerParametersUpdate
-    TriggerType: ExecutionTriggerType
+    TriggerType: TaskExecutionTriggerType
+    ExecutionTrigger.type: TaskExecutionTriggerType
+    ExecutionTriggerUpdate.type: TaskExecutionTriggerType
     ObjectReplicationPolicyPropertiesMetrics.enabled: IsMetricsEnabled
     AccountLimits: FileServiceAccountLimits
     AccountUsage: FileServiceAccountUsage
     AccountUsageElements: FileServiceAccountUsageElements
+    ActiveDirectoryProperties.domainGuid: ActiveDirectoryDomainGuid
 
 directive:
     - from: swagger-document
@@ -331,10 +334,11 @@ directive:
     - from: swagger-document
       where: $.definitions.Encryption
       transform: $.required = undefined; # this is a fix for swagger issue, and it should be resolved in azure-rest-api-specs/pull/19357
+    # Minghao: Remove for code gen error
     # this is a temporary fix
-    - from: swagger-document
-      where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default/tables/{tableName}"].put.parameters
-      transform: $[2].required = true
+    # - from: swagger-document
+    #   where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default/tables/{tableName}"].put.parameters
+    #   transform: $[2].required = true
     # convenience change: expand the array result out
     - from: swagger-document
       where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listKeys"].post
@@ -354,38 +358,79 @@ directive:
       where: $.definitions.StorageAccountCheckNameAvailabilityParameters.properties.type
       transform: $["x-ms-constant"] = true;
     # maxpagesize should be int
-    - from: blob.json
+    - from: swagger-document
       where: $.paths..parameters[?(@.name === "$maxpagesize")]
       transform: >
           $['type'] = "integer";
           $['format'] = "int32";
-    - from: file.json
+    - from: swagger-document
       where: $.paths..parameters[?(@.name === "$maxpagesize")]
       transform: >
           $['type'] = "integer";
           $['format'] = "int32";
-    - from: queue.json
+    - from: swagger-document
       where: $.paths..parameters[?(@.name === "$maxpagesize")]
       transform: >
           $['type'] = "integer";
           $['format'] = "int32";
+
     # Fix ProvisioningState
-    - from: storage.json
-      where: $.definitions
+    - from: swagger-document
+      where: $.definitions.ProvisioningState
       transform: >
-          $.StorageAccountProperties.properties.provisioningState['x-ms-enum'] = {
-              "name": "StorageAccountProvisioningState",
-              "modelAsString": true
+          $['x-ms-enum'] = {
+                "name": "StorageAccountProvisioningState",
+                "modelAsString": true,
+                "values": [
+                  {
+                    "name": "Creating",
+                    "value": "Creating"
+                  },
+                  {
+                    "name": "ResolvingDNS",
+                    "value": "ResolvingDNS"
+                  },
+                  {
+                    "name": "Succeeded",
+                    "value": "Succeeded"
+                  }
+                ]
+              };
+    # Minghao: Remove a code gen error
+    # - from: swagger-document
+    #   where: $.definitions
+    #   transform: >
+    #       $.StorageTaskAssignmentProperties.properties.provisioningState['x-ms-enum'] = {
+    #           "name": "StorageTaskAssignmentProvisioningState",
+    #           "modelAsString": true
+    #         };
+    #       $.StorageTaskAssignmentUpdateProperties.properties.provisioningState['x-ms-enum'] = {
+    #           "name": "StorageTaskAssignmentProvisioningState",
+    #           "modelAsString": true
+    #         };
+    - from: swagger-document
+      where: $.definitions.StorageAccountMigration
+      transform: >
+          delete $['allOf'];
+          $['properties'] = {
+            "id": {
+              "type": "string",
+              "readOnly": true,
+              "description": "Migration Resource Id"
+            },
+            "name": {
+              "type": "string",
+              "description": "current value is 'default' for customer initiated migration"
+            },
+            "type": {
+              "type": "string",
+              "description": "SrpAccountMigrationType in ARM contract which is 'accountMigrations'"
+            },
+            "properties": {
+              "$ref": "#/definitions/StorageAccountMigrationProperties",
+              "description": "The properties of a storage account’s ongoing or enqueued migration.",
+              "x-ms-client-flatten": true,
+              "x-ms-client-name": "StorageAccountMigrationDetails"
             }
-    - from: storageTaskAssignments.json
-      where: $.definitions
-      transform: >
-          $.StorageTaskAssignmentProperties.properties.provisioningState['x-ms-enum'] = {
-              "name": "StorageTaskAssignmentProvisioningState",
-              "modelAsString": true
-            };
-          $.StorageTaskAssignmentUpdateProperties.properties.provisioningState['x-ms-enum'] = {
-              "name": "StorageTaskAssignmentProvisioningState",
-              "modelAsString": true
-            };
+          };
 ```
