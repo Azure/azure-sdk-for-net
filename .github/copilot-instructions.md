@@ -23,7 +23,7 @@ This repo contains Azure SDKs for various Azure services and tools that generate
 
 ## SDK generator renew
 
-This is instructions when you are required to renew/change/update the generator of one specific package to the new generator.
+These are instructions when you are required to renew/change/update the generator of one specific package to the new generator.
 
 The new generator could be `@azure-tools/http-client-csharp` or `@azure-tools/http-client-csharp-mgmt`.
 
