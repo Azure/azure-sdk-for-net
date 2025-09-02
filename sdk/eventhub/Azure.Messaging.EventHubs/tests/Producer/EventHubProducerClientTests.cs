@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Shared;
+using Azure.Identity;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
@@ -263,12 +264,21 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void SasCredentialConstructorSetsTheIdentifier()
+        public async Task SasCredentialConstructorSetsTheIdentifier()
         {
             var expected = "Test-Identifier";
-            var credential = new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value);
+            //Uri uri = new Uri("amqps://udktestamqp-ns-001.servicebus.windows-int.net/testudkamqp-eh-01");
+            Uri uri = new Uri("https://dailyudktestamqp-ns-001.servicebus.windows-int.net/dailyudktestamqp-eh-01");
+            UserDelegationKeyCredential userDelegationKeyCredential = new UserDelegationKeyCredential(new InteractiveBrowserCredential());
+            MessagingUserDelegationKey userDelegationKey = await userDelegationKeyCredential.GenerateUserDelegationKeyAsync(uri,
+                DateTime.UtcNow, DateTime.UtcNow.AddHours(2));
+            var credential = new UserDelegationSharedAccessSignatureToken(userDelegationKey, uri, "s");
             var options = new EventHubProducerClientOptions { Identifier = expected };
-            var producer = new EventHubProducerClient("namespace", "eventHub", credential, options);
+            var producer = new EventHubProducerClient("dailyudktestamqp-ns-001.servicebus.windows-int.net", "dailyudktestamqp-eh-01", credential, options);
+
+            var batchOptions = new CreateBatchOptions { PartitionKey = "testKey" };
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(10).ToList(), batchOptions);
+            await producer.SendAsync(batch);
 
             Assert.That(producer.Identifier, Is.SameAs(expected));
         }

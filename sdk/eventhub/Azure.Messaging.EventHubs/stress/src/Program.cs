@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics.Tracing;
 using Azure.Core.Diagnostics;
+using System.IO;
 
 namespace Azure.Messaging.EventHubs.Stress;
 
@@ -41,7 +42,7 @@ public class Program
     {
         // See if there are environment variables available to use in the .env file
         var environment = new Dictionary<string, string>();
-        var environmentFile = Environment.GetEnvironmentVariable("ENV_FILE");
+        var environmentFile = Path.Combine(AppContext.BaseDirectory, "Infrastructure", "envvariables.txt");
         if (!(string.IsNullOrEmpty(environmentFile)))
         {
             environment = EnvironmentReader.LoadFromFile(environmentFile);
@@ -59,7 +60,7 @@ public class Program
         // test scenario runs are run in parallel.
 
         var testScenarioTasks = new List<Task>();
-        var testsToRun = opts.All ? Enum.GetValues(typeof(TestScenarioName)) : new TestScenarioName[]{StringToTestScenario(opts.Test)};
+        var testsToRun =  new TestScenarioName[]{StringToTestScenario("ConsumerTest") };
 
         var testParameters = new TestParameters();
         testParameters.EventHubsConnectionString = eventHubsConnectionString;
