@@ -31,7 +31,7 @@ internal class RestClientVisitor : ScmLibraryVisitor
             {
                 // omit methods for ClientProvider, MPG will implement its own client methods
                 // put create request methods to client directly
-                type.Update(methods: [.. client.RestClient.Methods], modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForClient(type));
+                type.Update(methods: [.. client.RestClient.Methods], modifiers: TransformPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForClient(type));
             }
         }
 
@@ -86,7 +86,7 @@ internal class RestClientVisitor : ScmLibraryVisitor
         rootClient.Update(
             fields:[apiVersionField, endpointField],
             methods: [.. rootClient.RestClient.Methods], // put create request methods to client directly
-            modifiers: TransfromPublicModifiersToInternal(rootClient),
+            modifiers: TransformPublicModifiersToInternal(rootClient),
             relativeFilePath: TransformRelativeFilePathForClient(rootClient),
             properties: [pipelineProperty, clientDiagnosticsProperty],
             constructors: [ctor, ConstructorProviderHelpers.BuildMockingConstructor(rootClient)]);
@@ -95,7 +95,7 @@ internal class RestClientVisitor : ScmLibraryVisitor
     private static string TransformRelativeFilePathForClient(TypeProvider type)
         => Path.Combine("src", "Generated", "RestOperations", $"{type.Name}RestOperations.cs");
 
-    private static TypeSignatureModifiers TransfromPublicModifiersToInternal(TypeProvider type)
+    private static TypeSignatureModifiers TransformPublicModifiersToInternal(TypeProvider type)
     {
         var modifiers = type.DeclarationModifiers;
         if (modifiers.HasFlag(TypeSignatureModifiers.Public))
