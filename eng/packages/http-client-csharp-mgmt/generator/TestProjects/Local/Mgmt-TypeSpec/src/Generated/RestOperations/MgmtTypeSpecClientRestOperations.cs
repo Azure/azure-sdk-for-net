@@ -12,22 +12,16 @@ using Azure.Core.Pipeline;
 
 namespace MgmtTypeSpec
 {
-    internal partial class FooTasks
+    internal partial class MgmtTypeSpecClient
     {
-        private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly Uri _endpoint;
 
-        /// <summary> Initializes a new instance of FooTasks for mocking. </summary>
-        protected FooTasks()
-        {
-        }
-
-        /// <summary> Initializes a new instance of FooTasks. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal FooTasks(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="apiVersion"> The API version to use for this client. </param>
+        public MgmtTypeSpecClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -35,8 +29,13 @@ namespace MgmtTypeSpec
             _apiVersion = apiVersion;
         }
 
+        /// <summary> Initializes a new instance of MgmtTypeSpecClient for mocking. </summary>
+        protected MgmtTypeSpecClient()
+        {
+        }
+
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
