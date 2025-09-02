@@ -79,6 +79,31 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WritePropertyName("endpointType"u8);
                 writer.WriteStringValue(EndpointType.Value.ToString());
             }
+            if (Optional.IsDefined(EndpointId))
+            {
+                writer.WritePropertyName("endpointId"u8);
+                writer.WriteStringValue(EndpointId);
+            }
+            if (Optional.IsDefined(ComputeName))
+            {
+                writer.WritePropertyName("computeName"u8);
+                writer.WriteStringValue(ComputeName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastActive))
+            {
+                writer.WritePropertyName("lastActive"u8);
+                writer.WriteStringValue(LastActive);
+            }
+            if (Optional.IsDefined(Size))
+            {
+                writer.WritePropertyName("size"u8);
+                writer.WriteObjectValue(Size, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -124,6 +149,11 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             string projectId = default;
             string branchId = default;
             EndpointType? endpointType = default;
+            string endpointId = default;
+            string computeName = default;
+            EndpointStatus? status = default;
+            string lastActive = default;
+            AutoscalingSize size = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,6 +215,39 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                     endpointType = new EndpointType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("endpointId"u8))
+                {
+                    endpointId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("computeName"u8))
+                {
+                    computeName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("status"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = new EndpointStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("lastActive"u8))
+                {
+                    lastActive = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("size"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    size = AutoscalingSize.DeserializeAutoscalingSize(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -200,6 +263,11 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 projectId,
                 branchId,
                 endpointType,
+                endpointId,
+                computeName,
+                status,
+                lastActive,
+                size,
                 serializedAdditionalRawData);
         }
 
