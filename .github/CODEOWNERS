@@ -918,9 +918,6 @@
 # ServiceLabel: %VideoAnalyzer
 # ServiceOwners:                                                   @giakas
 
-# ServiceLabel: %VirtualEnclaves
-# ServiceOwners:                                                   @jchavaherrera @Azure/azure-virtual-enclaves
-
 # ServiceLabel: %Web Apps
 # ServiceOwners:                                                   @AzureAppServiceCLI @antcp
 
@@ -1155,6 +1152,9 @@
 
 # ServiceLabel: %%Migration Assessment %Mgmt
 # ServiceOwners:                                                   @srilipta-swain
+
+# ServiceLabel: %Virtual Enclaves
+# ServiceOwners:                                                   @jchavaherrera @Azure/azure-virtual-enclaves
 
 # PRLabel: %Weights & Biases
 /sdk/weightsandbiases/Azure.ResourceManager.*/                     @aggarwalsw

@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
                 var client = new ArmClient(credential, default, options);
 
                 // Get specific subscription
-                string subscriptionId = "1fbade44-8ae7-42be-a05b-7919a3938975";
+                string subscriptionId = "your_subscription_id";
                 var subscription = await client.GetSubscriptions().GetAsync(subscriptionId);
 
                 // Get existing resource group
-                string resourceGroupName = "jorgechav_rg";
+                string resourceGroupName = "your_resource_group";
                 Console.WriteLine($"Getting resource group {resourceGroupName}...");
                 var resourceGroup = await subscription.Value.GetResourceGroupAsync(resourceGroupName);
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
                 };
 
                 // Create the community
-                string communityName = "jorgechav-community2";
+                string communityName = "your_community_name";
                 Console.WriteLine($"Creating community {communityName}...");
 
                 var communities = resourceGroup.Value.GetCommunityResources();
