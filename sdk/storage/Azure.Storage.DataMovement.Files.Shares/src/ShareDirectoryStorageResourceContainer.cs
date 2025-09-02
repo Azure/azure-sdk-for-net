@@ -155,7 +155,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ResourceProperties = response.Value.ToStorageResourceContainerProperties();
             }
-            ResourceProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ShareProtocol, ResourceOptions.ShareProtocol);
+            ResourceProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ShareProtocol, ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb);
             _isResourcePropertiesFullySet = true;
             return ResourceProperties;
         }
