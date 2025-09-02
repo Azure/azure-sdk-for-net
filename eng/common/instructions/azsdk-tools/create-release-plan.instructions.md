@@ -1,5 +1,10 @@
 # Release Plan Creation Process
 You goal is to create a valid release plan. You must prompt user to provide all required information and all input must match the format and requirement mentioned in step 3 below.
+
+> **Important Note**
+> Do **not** ask the user to manually edit the DevOps work item.
+> To update a release plan manually, the user must use the [Release Planner Tool](https://apps.powerapps.com/play/e/ed2ffefd-774d-40dd-ab23-7fff01aeec9f/a/821ab569-ae60-420d-8264-d7b5d5ef734c?tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47).
+
 Follow these steps in order to create or manage a release plan for an API specification pull request:
 
 ## Step 1: Validate Prerequisites
