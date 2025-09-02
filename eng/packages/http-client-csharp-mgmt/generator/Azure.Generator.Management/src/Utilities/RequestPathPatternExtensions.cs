@@ -22,15 +22,14 @@ namespace Azure.Generator.Management.Utilities
             ScopedApi<ResourceIdentifier> idProperty,
             IReadOnlyList<ParameterProvider> requestParameters,
             VariableExpression requestContext,
-            IReadOnlyList<ParameterProvider> methodParameters,
-            ContextParameterBuildingScope? buildingScope = null)
+            IReadOnlyList<ParameterProvider> methodParameters)
         {
             var arguments = new List<ValueExpression>();
             // here we always assume that the parameter name matches the parameter name in the request path.
             foreach (var parameter in requestParameters)
             {
                 // find the corresponding contextual parameter in the contextual parameter list
-                if (contextualPath.TryGetContextualParameter(parameter, out var contextualParameter, buildingScope))
+                if (contextualPath.TryGetContextualParameter(parameter, out var contextualParameter))
                 {
                     arguments.Add(Convert(contextualParameter.BuildValueExpression(idProperty), typeof(string), parameter.Type));
                 }

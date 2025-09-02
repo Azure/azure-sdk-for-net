@@ -22,19 +22,18 @@ namespace Azure.Generator.Management.Utilities
         /// provided by this contextual request path pattern.
         /// </summary>
         /// <param name="requestPathPattern">The contextual request path pattern.</param>
-        /// <param name="buildingScope"></param>
         /// <returns></returns>
-        public static IReadOnlyList<ContextualParameter> BuildContextualParameters(RequestPathPattern requestPathPattern, ContextParameterBuildingScope? buildingScope = null)
+        public static IReadOnlyList<ContextualParameter> BuildContextualParameters(RequestPathPattern requestPathPattern)
         {
             // we use a stack here because we are building the contextual parameters in reverse order.
             var result = new Stack<ContextualParameter>();
 
-            BuildContextualParameterHierarchy(requestPathPattern, result, 0, buildingScope);
+            BuildContextualParameterHierarchy(requestPathPattern, result, 0);
 
             return [.. result];
         }
 
-        private static void BuildContextualParameterHierarchy(RequestPathPattern current, Stack<ContextualParameter> parameterStack, int parentLayerCount, ContextParameterBuildingScope? buildingScope)
+        private static void BuildContextualParameterHierarchy(RequestPathPattern current, Stack<ContextualParameter> parameterStack, int parentLayerCount)
         {
             // TODO -- handle scope/extension resources
             // we resolved it until to tenant, exit because it no longer contains parameters
@@ -63,8 +62,7 @@ namespace Azure.Generator.Management.Utilities
             }
             else if (current == RequestPathPattern.Extension)
             {
-                Func<ScopedApi<ResourceIdentifier>, ScopedApi<ResourceIdentifier>> idExpression =
-                    buildingScope == ContextParameterBuildingScope.ResourceCollection ? id => id : id => id.Parent();
+                Func<ScopedApi<ResourceIdentifier>, ScopedApi<ResourceIdentifier>> idExpression = id => BuildParentInvocation(parentLayerCount, id);
                 parameterStack.Push(new ContextualParameter("resourceUri", "resourceUri", idExpression));
             }
             else
@@ -121,7 +119,7 @@ namespace Azure.Generator.Management.Utilities
                 }
             }
             // recursively get the parameters of its parent
-            BuildContextualParameterHierarchy(parent, parameterStack, parentLayerCount, buildingScope);
+            BuildContextualParameterHierarchy(parent, parameterStack, parentLayerCount);
 
             static ScopedApi<ResourceIdentifier> BuildParentInvocation(int parentLayerCount, ScopedApi<ResourceIdentifier> id)
             {

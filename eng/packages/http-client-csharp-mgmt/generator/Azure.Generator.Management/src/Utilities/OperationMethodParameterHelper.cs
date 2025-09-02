@@ -17,7 +17,6 @@ namespace Azure.Generator.Management.Utilities
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
             RequestPathPattern contextualPath,
-            ContextParameterBuildingScope buildingScope,
             bool forceLro = false)
         {
             var requiredParameters = new List<ParameterProvider>();
@@ -37,7 +36,7 @@ namespace Azure.Generator.Management.Utilities
                 }
 
                 var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
-                if (!contextualPath.TryGetContextualParameter(outputParameter, out _, buildingScope))
+                if (!contextualPath.TryGetContextualParameter(outputParameter, out _))
                 {
                     if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
                     {
