@@ -5,6 +5,7 @@ import "./foo.tsp";
 import "./bar.tsp";
 import "./zoo.tsp";
 import "./routes.tsp";
+import "./endpoint.tsp";
 
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;

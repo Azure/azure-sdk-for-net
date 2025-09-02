@@ -178,7 +178,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             {
                 ResourceMethodSnippets.CreateRequestContext(cancellationTokenParameter, out var contextVariable)
             };
-
             // Populate arguments for the REST client method call
             var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
 
