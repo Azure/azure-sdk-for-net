@@ -28,3 +28,6 @@ enum Versions {
   @useDependency(Azure.Core.Versions.v1_0_Preview_1)
   v2024_05_01: "2024-05-01",
 }
+
+@@clientLocation(Bars.get, "Bar");
+@@clientLocation(Bars.update, "Bar");
