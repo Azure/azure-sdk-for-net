@@ -1,0 +1,22 @@
+{
+    "name": "Metric",
+    "iKey": "12345678-1234-1234-1234-123456789012",
+    "tags": {
+        "ai.application.ver": null
+    },
+    "data": {
+        "baseType": "MetricData",
+        "baseData": {
+            "metrics": [
+                {
+                    "name": "testMetric",
+                    "value": 23.56,
+                    "count": 1,
+                    "min": 23.56,
+                    "max": 23.56
+                }
+            ],
+            "ver": 2
+        }
+    }
+}

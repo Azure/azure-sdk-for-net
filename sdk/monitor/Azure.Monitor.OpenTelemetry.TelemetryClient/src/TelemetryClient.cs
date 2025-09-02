@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Metrics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.TelemetryClient
@@ -28,9 +30,11 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient
         };
 
         private readonly LoggerProvider loggerProvider;
-        private readonly ILogger logger;
         private readonly TracerProvider tracerProvider;
+        private readonly MeterProvider meterProvider;
+        private readonly ILogger logger;
         private readonly Tracer tracer;
+        private readonly Meter meter;
 
         /// <summary>
         /// Send events, metrics, and other telemetry to the Application Insights service.
@@ -54,6 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient
                 .AddLogging(builder => { builder.SetMinimumLevel(LogLevel.Trace); })
                 .AddOpenTelemetry()
                 .WithTracing(tracingBuilder => tracingBuilder.AddSource(appInsightsTracerName))
+                .WithMetrics(metricsBuilder => metricsBuilder.AddMeter("ApplicationInsightsMeter"))
                 .WithLogging(
                     configureBuilder: _ => { },
                     configureOptions: options => { options.IncludeScopes = true; })
@@ -67,7 +72,9 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient
             logger = loggerFactory.CreateLogger("ApplicationInsightsLogger");
 
             tracerProvider = serviceProvider.GetRequiredService<TracerProvider>();
+            meterProvider = serviceProvider.GetRequiredService<MeterProvider>();
             tracer = tracerProvider.GetTracer(appInsightsTracerName);
+            meter = new Meter("ApplicationInsightsMeter");
         }
 
         /// <summary>
@@ -269,6 +276,47 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient
         }
 
         /// <summary>
+        /// This method is not the preferred method for sending metrics.
+        /// Metrics should always be pre-aggregated across a time period before being sent.<br />
+        /// Use one of the <c>GetMetric(..)</c> overloads to get a metric object for accessing SDK pre-aggregation capabilities.<br />
+        /// If you are implementing your own pre-aggregation logic, then you can use this method.
+        /// If your application requires sending a separate telemetry item at every occasion without aggregation across time,
+        /// you likely have a use case for event telemetry./>.
+        /// </summary>
+        /// <param name="name">Metric name.</param>
+        /// <param name="value">Metric value.</param>
+        public void TrackMetric(string name, double value)
+        {
+            TrackMetric(name, value, null!);
+        }
+
+        /// <summary>
+        /// This method is not the preferred method for sending metrics.
+        /// Metrics should always be pre-aggregated across a time period before being sent.<br />
+        /// Use one of the <c>GetMetric(..)</c> overloads to get a metric object for accessing SDK pre-aggregation capabilities.<br />
+        /// If you are implementing your own pre-aggregation logic, then you can use this method.
+        /// If your application requires sending a separate telemetry item at every occasion without aggregation across time,
+        /// you likely have a use case for event telemetry./>.
+        /// </summary>
+        /// <param name="name">Metric name.</param>
+        /// <param name="value">Metric value.</param>
+        /// <param name="properties">Named string values you can use to classify and filter metrics.</param>
+        public void TrackMetric(string name, double value, IDictionary<string, string> properties)
+        {
+            var scopeState = CreateScopeState(properties);
+            TagList tags = default;
+            foreach (var kv in scopeState)
+            {
+                tags.Add(kv.Key, kv.Value);
+            }
+
+            // An histogramm is used to have the value, valueSum, valueMin and valueMax columns populated in the customMetrics Kusto table. In this way,
+            // the behavior is consistent with the Application Insights one.
+            Histogram<double> histogram = meter.CreateHistogram<double>(name);
+            histogram.Record(value, tags);
+        }
+
+        /// <summary>
         /// Flushes the in-memory buffer and any metrics being pre-aggregated.
         /// </summary>
         /// <remarks>
@@ -278,6 +326,7 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient
         {
             loggerProvider.ForceFlush();
             tracerProvider.ForceFlush();
+            meterProvider.ForceFlush();
         }
 
         private async Task StartHostedServicesAsync(ServiceProvider serviceProvider)
