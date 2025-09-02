@@ -476,7 +476,7 @@ namespace Azure.Generator.Management.Providers
             var getClients = _resourceMetadata.Methods.Where(m => m.Kind == ResourceOperationKind.Get).Select(m => m.InputClient).Distinct();
             // get rest client that has both get and update methods
             var clients = updateClients.Intersect(getClients);
-            return clients.SingleOrDefault();
+            return clients.FirstOrDefault();
         }
 
         private MethodProvider BuildGetChildResourceMethod(ResourceClientProvider childResource)
