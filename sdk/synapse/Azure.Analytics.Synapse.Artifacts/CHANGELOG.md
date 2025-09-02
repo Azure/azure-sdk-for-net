@@ -58,9 +58,6 @@
 - Model OracleLinkedService parameter connection_string now is not required
 - Model GreenplumLinkedService remove parameter password
 - Model ExpressionV2 parameter value change its type from string to object
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-preview.21 (2025-03-07)
 
