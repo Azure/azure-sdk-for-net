@@ -481,6 +481,7 @@ namespace Azure.Generator.Management.Providers
 
         private (bool IsPatch, InputClient? UpdateClient) PopulateUpdateClient()
         {
+            // first try to find a patch method
             var patchClient = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Update)?.InputClient;
             if (patchClient is not null)
             {
