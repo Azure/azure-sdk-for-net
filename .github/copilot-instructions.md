@@ -40,8 +40,8 @@ DO the following steps to renew/change/update the generator:
         - `emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"` if the new generator is `@azure-tools/http-client-csharp`.
     - If this file does not exist, create this file with the following content:
     ```yaml
-    directory: specification/<service directory>/<service name>.Management
-    commit: <put a place holder here>
+    directory: specification/placeholderServiceDir/PlaceholderServiceName.Management
+    commit: PlaceholderCommitId
     repo: Azure/azure-rest-api-specs
     emitterPackageJsonPath: <the corresponding file path for the corresponding generator>
     ```
