@@ -444,11 +444,11 @@ namespace Azure.Generator.Management.Providers
             // Only generate tag methods if the resource model has tag properties, has get and update methods
             if (HasTags() && _resourceMetadata.Methods.Any(m => m.Kind == ResourceOperationKind.Get) && updateMethodProvider is not null)
             {
-                // Find the update method to get its rest client
-                var updateMethod = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Update || m.Kind == ResourceOperationKind.Create);
-                if (updateMethod is not null)
+                // Find the update input client, which should have both get and update methods
+                var client = GetUpdateClient();
+                if (client is not null)
                 {
-                    var updateRestClientInfo = _clientInfos[updateMethod.InputClient];
+                    var updateRestClientInfo = _clientInfos[client];
 
                     methods.AddRange([
                         new AddTagMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, true),
@@ -468,6 +468,15 @@ namespace Azure.Generator.Management.Providers
             }
 
             return [.. methods];
+        }
+
+        private InputClient? GetUpdateClient()
+        {
+            var updateClients = _resourceMetadata.Methods.Where(m => m.Kind == ResourceOperationKind.Update || m.Kind == ResourceOperationKind.Create).Select(m => m.InputClient).Distinct();
+            var getClients = _resourceMetadata.Methods.Where(m => m.Kind == ResourceOperationKind.Get).Select(m => m.InputClient).Distinct();
+            // get rest client that has both get and update methods
+            var clients = updateClients.Intersect(getClients);
+            return clients.SingleOrDefault();
         }
 
         private MethodProvider BuildGetChildResourceMethod(ResourceClientProvider childResource)
