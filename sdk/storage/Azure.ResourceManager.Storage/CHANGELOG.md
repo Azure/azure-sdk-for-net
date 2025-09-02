@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Upgraded api-version to 2025-01-01
+
 ## 1.4.4 (2025-07-28)
 
 ### Features Added
