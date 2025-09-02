@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="identity"> The identity of the connected cluster. </param>
         /// <param name="kind"> The kind of connected cluster. </param>
         /// <returns> A new <see cref="Kubernetes.ConnectedClusterData"/> instance for mocking. </returns>
-        public static ConnectedClusterData ConnectedClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConnectedClusterProperties properties = default, ConnectedClusterIdentity identity = default, ConnectedClusterKind? kind = default)
+        public static ConnectedClusterData ConnectedClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConnectedClusterProperties properties = default, ManagedServiceIdentity identity = default, ConnectedClusterKind? kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -164,16 +164,6 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public static OidcIssuerProfile OidcIssuerProfile(bool? enabled = default, string issuerUri = default, string selfHostedIssuerUri = default)
         {
             return new OidcIssuerProfile(enabled, issuerUri, selfHostedIssuerUri, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Identity for the connected cluster. </summary>
-        /// <param name="principalId"> The principal id of connected cluster identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant id associated with the connected cluster. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of identity used for the connected cluster. The type 'SystemAssigned, includes a system created identity. The type 'None' means no identity is assigned to the connected cluster. </param>
-        /// <returns> A new <see cref="Models.ConnectedClusterIdentity"/> instance for mocking. </returns>
-        public static ConnectedClusterIdentity ConnectedClusterIdentity(string principalId = default, string tenantId = default, ResourceIdentityType @type = default)
-        {
-            return new ConnectedClusterIdentity(principalId, tenantId, @type, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Object containing updates for patch operations. </summary>

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <param name="properties"> Describes the connected cluster resource properties. </param>
         /// <param name="identity"> The identity of the connected cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> or <paramref name="identity"/> is null. </exception>
-        public ConnectedClusterData(AzureLocation location, ConnectedClusterProperties properties, ConnectedClusterIdentity identity) : base(location)
+        public ConnectedClusterData(AzureLocation location, ConnectedClusterProperties properties, ManagedServiceIdentity identity) : base(location)
         {
             Argument.AssertNotNull(properties, nameof(properties));
             Argument.AssertNotNull(identity, nameof(identity));
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <param name="properties"> Describes the connected cluster resource properties. </param>
         /// <param name="identity"> The identity of the connected cluster. </param>
         /// <param name="kind"> The kind of connected cluster. </param>
-        internal ConnectedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ConnectedClusterProperties properties, ConnectedClusterIdentity identity, ConnectedClusterKind? kind) : base(id, name, resourceType, systemData, tags, location)
+        internal ConnectedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ConnectedClusterProperties properties, ManagedServiceIdentity identity, ConnectedClusterKind? kind) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Kubernetes
         public ConnectedClusterProperties Properties { get; set; }
 
         /// <summary> The identity of the connected cluster. </summary>
-        public ConnectedClusterIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The kind of connected cluster. </summary>
         public ConnectedClusterKind? Kind { get; set; }

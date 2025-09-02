@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Kubernetes
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
             writer.WritePropertyName("identity"u8);
-            writer.WriteObjectValue(Identity, options);
+            ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Kubernetes
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ConnectedClusterProperties properties = default;
-            ConnectedClusterIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             ConnectedClusterKind? kind = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Kubernetes
                 }
                 if (prop.NameEquals("identity"u8))
                 {
-                    identity = ConnectedClusterIdentity.DeserializeConnectedClusterIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKubernetesContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))

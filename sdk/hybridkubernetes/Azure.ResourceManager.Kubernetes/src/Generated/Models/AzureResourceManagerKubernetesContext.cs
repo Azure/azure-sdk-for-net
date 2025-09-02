@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.Kubernetes
     [ModelReaderWriterBuildable(typeof(ArcAgentProfile))]
     [ModelReaderWriterBuildable(typeof(ArcAgentryConfigurations))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterData))]
-    [ModelReaderWriterBuildable(typeof(ConnectedClusterIdentity))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterList))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterPatch))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterPatchProperties))]
@@ -31,11 +30,13 @@ namespace Azure.ResourceManager.Kubernetes
     [ModelReaderWriterBuildable(typeof(Gateway))]
     [ModelReaderWriterBuildable(typeof(HybridConnectionConfig))]
     [ModelReaderWriterBuildable(typeof(ListClusterUserCredentialProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(OidcIssuerProfile))]
     [ModelReaderWriterBuildable(typeof(SecurityProfile))]
     [ModelReaderWriterBuildable(typeof(SecurityProfileWorkloadIdentity))]
     [ModelReaderWriterBuildable(typeof(SystemComponent))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerKubernetesContext : ModelReaderWriterContext
     {
     }
