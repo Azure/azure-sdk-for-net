@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The file type of flow log. </summary>
+        [WirePath("type")]
         public FlowLogFormatType? FormatType { get; set; }
         /// <summary> The version (revision) of the flow log. </summary>
+        [WirePath("version")]
         public int? Version { get; set; }
     }
 }

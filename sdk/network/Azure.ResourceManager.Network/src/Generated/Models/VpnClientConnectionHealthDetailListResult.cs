@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of vpn client connection health. </summary>
+        [WirePath("value")]
         public IReadOnlyList<VpnClientConnectionHealthDetail> Value { get; }
     }
 }

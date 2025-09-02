@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
-using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -17,10 +18,13 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         public AddTagMethodProvider(
             ResourceClientProvider resource,
             RequestPathPattern contextualPath,
-            MethodProvider updateMethodProvider,
-            RestClientInfo restClientInfo,
+            ResourceOperationMethodProvider updateMethodProvider,
+            InputServiceMethod getMethod,
+            RestClientInfo updateRestClientInfo,
+            RestClientInfo getRestClientInfo,
+            bool isPatch,
             bool isAsync)
-            : base(resource, contextualPath, updateMethodProvider, restClientInfo, isAsync,
+            : base(resource, contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, isAsync,
                    isAsync ? "AddTagAsync" : "AddTag",
                    "Add a tag to the current resource.")
         {
@@ -39,7 +43,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var valueParam = _valueParameter;
             var cancellationTokenParam = KnownParameters.CancellationTokenParameter;
 
-            var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resource, _clientDiagnosticsField, "AddTag", out var scopeVariable);
+            var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resource, _updateClientDiagnosticsField, "AddTag", out var scopeVariable);
 
             // Build try block
             var tryStatements = new List<MethodBodyStatement>();

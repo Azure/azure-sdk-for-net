@@ -26,13 +26,20 @@ namespace Azure.Generator.Management.Tests.Common
                         ],
                         decorators: decorators);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
-            var testNameParameter = InputFactory.Parameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
-            var subscriptionIdParameter = InputFactory.Parameter("subscriptionId", new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid"), location: InputRequestLocation.Path, kind: InputParameterKind.Client);
-            var resourceGroupParameter = InputFactory.Parameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path, kind: InputParameterKind.Client);
-            var dataParameter = InputFactory.Parameter("data", responseModel, location: InputRequestLocation.Body);
-            var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
-            var createOperation = InputFactory.Operation(name: "createTest", responses: [responseType], parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
-            var updateOperation = InputFactory.Operation(name: "update", responses: [responseType], parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
+            var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
+            // the http operation parameters
+            var subsIdOpParameter = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
+            var rgOpParameter = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
+            var testNameOpParameter = InputFactory.PathParameter("testName", InputPrimitiveType.String, isRequired: true);
+            var dataOpParameter = InputFactory.BodyParameter("data", responseModel, isRequired: true);
+            var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
+            var createOperation = InputFactory.Operation(name: "createTest", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
+            var updateOperation = InputFactory.Operation(name: "update", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
+            // the method parameters
+            var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
+            var resourceGroupParameter = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var dataParameter = InputFactory.MethodParameter("data", responseModel, location: InputRequestLocation.Body);
             var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
@@ -40,10 +47,11 @@ namespace Azure.Generator.Management.Tests.Common
                 TestClientName,
                 methods: [getMethod, createMethod, updateMethod],
                 crossLanguageDefinitionId: $"Test.{TestClientName}");
-            decorators.Add(BuildResourceMetadata(responseModel, client, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, [
-                new ResourceMethod(ResourceOperationKind.Get, getMethod, client),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, client),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, client)
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
+            decorators.Add(BuildResourceMetadata(responseModel, client, resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, [
+                new ResourceMethod(ResourceOperationKind.Get, getMethod, getMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, client),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, createMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, client),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, updateMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, client)
             ], "ResponseType"));
             return (client, [responseModel]);
         }
@@ -61,12 +69,7 @@ namespace Azure.Generator.Management.Tests.Common
                 ["resourceIdPattern"] = FromLiteralString(resourceIdPattern),
                 ["resourceType"] = FromLiteralString(resourceType),
                 ["resourceScope"] = FromLiteralString(resourceScope.ToString()),
-                ["methods"] = BinaryData.FromObjectAsJson(methods.Select(m => new Dictionary<string, string>
-                {
-                    ["id"] = m.InputMethod.CrossLanguageDefinitionId,
-                    ["kind"] = m.Kind.ToString()
-                }
-                ), options),
+                ["methods"] = BinaryData.FromObjectAsJson(methods.Select(SerializeResourceMethod), options),
                 ["singletonResourceName"] = BinaryData.FromObjectAsJson(singletonResourceName, options),
                 ["resourceName"] = BinaryData.FromObjectAsJson(resourceName, options),
             };
@@ -75,6 +78,22 @@ namespace Azure.Generator.Management.Tests.Common
 
             static BinaryData FromLiteralString(string literal)
                 => BinaryData.FromString($"\"{literal}\"");
+
+            static Dictionary<string, string> SerializeResourceMethod(ResourceMethod m)
+            {
+                var result = new Dictionary<string, string>
+                {
+                    ["methodId"] = m.InputMethod.CrossLanguageDefinitionId,
+                    ["kind"] = m.Kind.ToString(),
+                    ["operationPath"] = m.OperationPath,
+                    ["operationScope"] = m.OperationScope.ToString()
+                };
+                if (m.ResourceScope != null)
+                {
+                    result["resourceScope"] = m.ResourceScope;
+                }
+                return result;
+            }
         }
     }
 }

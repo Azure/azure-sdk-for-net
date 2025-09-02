@@ -4,8 +4,10 @@
 using Azure.Generator.Management.Models;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources;
+using Humanizer;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -58,6 +60,28 @@ namespace Azure.Generator.Management.Utilities
                 ResourceOperationKind.List => isAsync ? "GetAllAsync" : "GetAll",
                 _ => null
             };
+        }
+
+        /// <summary>
+        /// Gets the appropriate method name for an extension operation based on its kind and corresponding resource name.
+        /// </summary>
+        /// <param name="operationKind">The kind of resource operation to perform (e.g., List, Create).</param>
+        /// <param name="resourceName">The name of the resource for which the operation is being performed.</param>
+        /// <param name="isAsync">Whether the method should be asynchronous.</param>
+        /// <returns>The method name to use for the extension operation, or null if no override is needed.</returns>
+        public static string? GetExtensionOperationMethodName(ResourceOperationKind operationKind, string resourceName, bool isAsync)
+        {
+            return operationKind switch
+            {
+                ResourceOperationKind.List => isAsync ? $"Get{resourceName.Pluralize()}Async" : $"Get{resourceName.Pluralize()}",
+                _ => null
+            };
+        }
+
+        public static string GetDiagnosticScope(TypeProvider enclosingType, string methodName, bool isAsync)
+        {
+            var rawMethodName = isAsync && methodName.EndsWith("Async") ? methodName[..^5] : methodName; // trim "Async" if the method is async method
+            return $"{enclosingType.Type.Name}.{rawMethodName}";
         }
 
         /// <summary>
