@@ -389,10 +389,10 @@
 # ServiceOwners:                                                   @qike-ms @jwilder @thomas1206 @seanmck
 
 # PRLabel: %Contoso Widget Manager
-/sdk/contosowidgetmanager/                                         @shirelmr @reilleymilne
+/sdk/contosowidgetmanager/                                         @shirelmr @reilleymilne @michiisai
 
 # ServiceLabel: %Contoso Widget Manager
-# ServiceOwners:                                                   @shirelmr @reilleymilne
+# ServiceOwners:                                                   @shirelmr @reilleymilne @michiisai
 
 # ServiceLabel: %Cosmos
 /sdk/cosmosdb/                                                     @pjohari-ms @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar
