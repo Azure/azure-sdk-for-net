@@ -30,11 +30,12 @@ internal class RestClientVisitor : ScmLibraryVisitor
             else
             {
                 // omit methods for ClientProvider, MPG will implement its own client methods
-                // put create request methods to client directly and remove RestClientProvider
+                // put create request methods to client directly
                 type.Update(methods: [.. client.RestClient.Methods], modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForClient(type));
             }
         }
 
+        // remove RestClientProvider
         if (type is RestClientProvider)
         {
             return null;
@@ -82,10 +83,9 @@ internal class RestClientVisitor : ScmLibraryVisitor
             ctorBody,
             rootClient);
 
-        // put create request methods to client directly and remove RestClientProvider
         rootClient.Update(
             fields:[apiVersionField, endpointField],
-            methods: [.. rootClient.RestClient.Methods],
+            methods: [.. rootClient.RestClient.Methods], // put create request methods to client directly
             modifiers: TransfromPublicModifiersToInternal(rootClient),
             relativeFilePath: TransformRelativeFilePathForClient(rootClient),
             properties: [pipelineProperty, clientDiagnosticsProperty],
