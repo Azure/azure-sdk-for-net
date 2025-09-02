@@ -62,8 +62,7 @@ namespace Azure.Generator.Management.Utilities
             }
             else if (current == RequestPathPattern.Extension)
             {
-                Func<ScopedApi<ResourceIdentifier>, ScopedApi<ResourceIdentifier>> idExpression = id => BuildParentInvocation(parentLayerCount, id);
-                parameterStack.Push(new ContextualParameter("resourceUri", "resourceUri", idExpression));
+                parameterStack.Push(new ContextualParameter("resourceUri", "resourceUri", id => BuildParentInvocation(parentLayerCount, id)));
             }
             else
             {
