@@ -31,9 +31,20 @@ namespace Azure.AI.VoiceLive
                 // Configure the WebSocket connection
                 //clientWebSocket.Options.AddSubProtocol("voicelive-v1");
 
-                // Add authorization header
-                string credentialValue = _credential.Key;
-                clientWebSocket.Options.SetRequestHeader("api-key", $"{credentialValue}");
+                if (_credential != null)
+                {
+                    // Add authorization header
+                    string credentialValue = _credential.Key;
+                    clientWebSocket.Options.SetRequestHeader("api-key", $"{credentialValue}");
+                }
+
+                if (_tokenCredential != null)
+                {
+                    var tokenOptions = new TokenRequestContext(new string[] { "https://cognitiveservices.azure.com/.default" });
+
+                    var token = await _tokenCredential.GetTokenAsync(tokenOptions, cancellationToken).ConfigureAwait(false);
+                    clientWebSocket.Options.SetRequestHeader("Authorization", $"Bearer {token.Token}");
+                }
 
                 // Add any additional headers required by the VoiceLive service
                 clientWebSocket.Options.SetRequestHeader("User-Agent", "Azure-VoiceLive-SDK/.NET");

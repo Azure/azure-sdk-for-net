@@ -28,7 +28,7 @@ namespace Azure.AI.VoiceLive
             // Convert the HTTP endpoint to a WebSocket endpoint
             Uri webSocketEndpoint = ConvertToWebSocketEndpoint(_endpoint, model);
 
-            VoiceLiveSession session = new(this, webSocketEndpoint, _keyCredential);
+            VoiceLiveSession session = _keyCredential != null ? new(this, webSocketEndpoint, _keyCredential) : new(this, webSocketEndpoint, _tokenCredential);
 
             await session.ConnectAsync(cancellationToken).ConfigureAwait(false);
 

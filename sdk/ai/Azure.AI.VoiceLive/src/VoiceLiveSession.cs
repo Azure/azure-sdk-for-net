@@ -32,6 +32,7 @@ namespace Azure.AI.VoiceLive
         private readonly VoiceLiveClient _parentClient;
         private readonly Uri _endpoint;
         private readonly AzureKeyCredential _credential;
+        private readonly TokenCredential _tokenCredential;
         private readonly SemaphoreSlim _audioSendSemaphore = new(1, 1);
         private readonly SemaphoreSlim _clientSendSemaphore = new(1, 1);
         private readonly object _singleReceiveLock = new();
@@ -62,6 +63,26 @@ namespace Azure.AI.VoiceLive
             _parentClient = parentClient;
             _endpoint = endpoint;
             _credential = credential;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VoiceLiveSession"/> class.
+        /// </summary>
+        /// <param name="parentClient">The parent <see cref="VoiceLiveClient"/> instance.</param>
+        /// <param name="endpoint">The WebSocket endpoint to connect to.</param>
+        /// <param name="credential">The credential to use for authentication.</param>
+        protected internal VoiceLiveSession(
+            VoiceLiveClient parentClient,
+            Uri endpoint,
+            TokenCredential credential)
+        {
+            Argument.AssertNotNull(parentClient, nameof(parentClient));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            _parentClient = parentClient;
+            _endpoint = endpoint;
+            _tokenCredential = credential;
         }
 
         /// <summary>
