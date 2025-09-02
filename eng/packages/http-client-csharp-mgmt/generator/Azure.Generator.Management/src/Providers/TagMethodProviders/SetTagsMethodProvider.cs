@@ -43,7 +43,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var tagsParam = _signature.Parameters[0];
             var cancellationTokenParam = _signature.Parameters[1];
 
-            var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resource, _clientDiagnosticsField, "SetTags", out var scopeVariable);
+            var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resource, _updateClientDiagnosticsField, "SetTags", out var scopeVariable);
 
             // Build try block
             var tryStatements = new List<MethodBodyStatement>();

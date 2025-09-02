@@ -306,8 +306,13 @@ namespace MgmtTypeSpec
                 else
                 {
                     BarData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags[key] = value;
-                    Response<BarResource> result = await UpdateAsync(current, cancellationToken).ConfigureAwait(false);
+                    BarData patch = new BarData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    Response<BarResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -349,8 +354,13 @@ namespace MgmtTypeSpec
                 else
                 {
                     BarData current = Get(cancellationToken).Value.Data;
-                    current.Tags[key] = value;
-                    Response<BarResource> result = Update(current, cancellationToken);
+                    BarData patch = new BarData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    Response<BarResource> result = Update(patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -391,8 +401,9 @@ namespace MgmtTypeSpec
                 else
                 {
                     BarData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags.ReplaceWith(tags);
-                    Response<BarResource> result = await UpdateAsync(current, cancellationToken).ConfigureAwait(false);
+                    BarData patch = new BarData();
+                    patch.Tags.ReplaceWith(tags);
+                    Response<BarResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -433,8 +444,9 @@ namespace MgmtTypeSpec
                 else
                 {
                     BarData current = Get(cancellationToken).Value.Data;
-                    current.Tags.ReplaceWith(tags);
-                    Response<BarResource> result = Update(current, cancellationToken);
+                    BarData patch = new BarData();
+                    patch.Tags.ReplaceWith(tags);
+                    Response<BarResource> result = Update(patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -474,8 +486,13 @@ namespace MgmtTypeSpec
                 else
                 {
                     BarData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags.Remove(key);
-                    Response<BarResource> result = await UpdateAsync(current, cancellationToken).ConfigureAwait(false);
+                    BarData patch = new BarData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    Response<BarResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -515,8 +532,13 @@ namespace MgmtTypeSpec
                 else
                 {
                     BarData current = Get(cancellationToken).Value.Data;
-                    current.Tags.Remove(key);
-                    Response<BarResource> result = Update(current, cancellationToken);
+                    BarData patch = new BarData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    Response<BarResource> result = Update(patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

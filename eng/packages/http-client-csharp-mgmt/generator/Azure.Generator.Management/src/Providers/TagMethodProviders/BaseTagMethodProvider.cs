@@ -31,8 +31,8 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected readonly ClientProvider _updateRestClient;
         protected readonly ClientProvider _getRestClient;
         protected readonly RequestPathPattern _contextualPath;
-        protected readonly FieldProvider _clientDiagnosticsField;
-        protected readonly FieldProvider _restClientField;
+        protected readonly FieldProvider _updateClientDiagnosticsField;
+        protected readonly FieldProvider _getRestClientField;
         protected readonly bool _isPatch;
         protected readonly bool _isAsync;
         protected readonly bool _isLongRunningUpdateOperation;
@@ -62,8 +62,8 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             _isPatch = isPatch;
             _isAsync = isAsync;
             _isLongRunningUpdateOperation = updateMethodProvider.IsLongRunningOperation;
-            _clientDiagnosticsField = updateRestClientInfo.DiagnosticsField;
-            _restClientField = updateRestClientInfo.RestClientField;
+            _updateClientDiagnosticsField = updateRestClientInfo.DiagnosticsField;
+            _getRestClientField = getRestClientInfo.RestClientField;
 
             _signature = CreateMethodSignature(methodName, methodDescription);
             _bodyStatements = BuildBodyStatements();
@@ -118,7 +118,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var requestMethod = _getRestClient.GetRequestMethodByOperation(_getMethodProvider.Operation);
             var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
 
-            statements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, "CreateGetRequest", arguments, out var messageVariable));
+            statements.Add(ResourceMethodSnippets.CreateHttpMessage(_getRestClientField, "CreateGetRequest", arguments, out var messageVariable));
 
             statements.AddRange(ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                 messageVariable,

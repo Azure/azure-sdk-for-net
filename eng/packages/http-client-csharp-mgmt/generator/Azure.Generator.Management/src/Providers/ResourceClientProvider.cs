@@ -474,7 +474,7 @@ namespace Azure.Generator.Management.Providers
 
         private (bool IsPatch, InputClient? UpdateClient) PopulateUpdateClient()
         {
-            var patchClient = _resourceMetadata.Methods.FirstOrDefault(IsTagsPatchMethod)?.InputClient;
+            var patchClient = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Update)?.InputClient;
             if (patchClient is not null)
             {
                 return (true, patchClient);
@@ -483,22 +483,6 @@ namespace Azure.Generator.Management.Providers
             // if there is no tags patch method, fall back to the put method
             var putClient = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Create)?.InputClient;
             return (false, putClient);
-
-            bool IsTagsPatchMethod(ResourceMethod method)
-            {
-                if (method.Kind != ResourceOperationKind.Update)
-                {
-                    return false;
-                }
-                foreach (var parameter in method.InputMethod.Operation.Parameters)
-                {
-                    if (parameter is InputBodyParameter && parameter.Name.Equals("tags", StringComparison.OrdinalIgnoreCase))
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
         }
 
         private MethodProvider BuildGetChildResourceMethod(ResourceClientProvider childResource)
