@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Bicep.Models
 {
-    public partial class DecompileOperationSuccessResponse : IUtf8JsonSerializable, IJsonModel<DecompileOperationSuccessResponse>
+    public partial class DecompileOperationSuccessResult : IUtf8JsonSerializable, IJsonModel<DecompileOperationSuccessResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DecompileOperationSuccessResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DecompileOperationSuccessResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DecompileOperationSuccessResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DecompileOperationSuccessResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DecompileOperationSuccessResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DecompileOperationSuccessResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DecompileOperationSuccessResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DecompileOperationSuccessResult)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("files"u8);
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
             }
         }
 
-        DecompileOperationSuccessResponse IJsonModel<DecompileOperationSuccessResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DecompileOperationSuccessResult IJsonModel<DecompileOperationSuccessResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DecompileOperationSuccessResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DecompileOperationSuccessResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DecompileOperationSuccessResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DecompileOperationSuccessResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDecompileOperationSuccessResponse(document.RootElement, options);
+            return DeserializeDecompileOperationSuccessResult(document.RootElement, options);
         }
 
-        internal static DecompileOperationSuccessResponse DeserializeDecompileOperationSuccessResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DecompileOperationSuccessResult DeserializeDecompileOperationSuccessResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
             {
                 return null;
             }
-            IReadOnlyList<FileDefinition> files = default;
+            IReadOnlyList<DecompiledFile> files = default;
             string entryPoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
             {
                 if (property.NameEquals("files"u8))
                 {
-                    List<FileDefinition> array = new List<FileDefinition>();
+                    List<DecompiledFile> array = new List<DecompiledFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FileDefinition.DeserializeFileDefinition(item, options));
+                        array.Add(DecompiledFile.DeserializeDecompiledFile(item, options));
                     }
                     files = array;
                     continue;
@@ -107,38 +107,38 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DecompileOperationSuccessResponse(files, entryPoint, serializedAdditionalRawData);
+            return new DecompileOperationSuccessResult(files, entryPoint, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DecompileOperationSuccessResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DecompileOperationSuccessResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DecompileOperationSuccessResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DecompileOperationSuccessResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesBicepContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DecompileOperationSuccessResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DecompileOperationSuccessResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DecompileOperationSuccessResponse IPersistableModel<DecompileOperationSuccessResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DecompileOperationSuccessResult IPersistableModel<DecompileOperationSuccessResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DecompileOperationSuccessResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DecompileOperationSuccessResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDecompileOperationSuccessResponse(document.RootElement, options);
+                        return DeserializeDecompileOperationSuccessResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DecompileOperationSuccessResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DecompileOperationSuccessResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DecompileOperationSuccessResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DecompileOperationSuccessResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

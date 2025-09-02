@@ -14,24 +14,24 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmResourcesBicepModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.DecompileOperationSuccessResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DecompileOperationSuccessResult"/>. </summary>
         /// <param name="files"> An array of key-value pairs containing the entryPoint string as the key for the Bicep file decompiled from the ARM json template. </param>
         /// <param name="entryPoint"> The file path to the main Bicep file generated from the decompiled ARM json template. </param>
-        /// <returns> A new <see cref="Models.DecompileOperationSuccessResponse"/> instance for mocking. </returns>
-        public static DecompileOperationSuccessResponse DecompileOperationSuccessResponse(IEnumerable<FileDefinition> files = null, string entryPoint = null)
+        /// <returns> A new <see cref="Models.DecompileOperationSuccessResult"/> instance for mocking. </returns>
+        public static DecompileOperationSuccessResult DecompileOperationSuccessResult(IEnumerable<DecompiledFile> files = null, string entryPoint = null)
         {
-            files ??= new List<FileDefinition>();
+            files ??= new List<DecompiledFile>();
 
-            return new DecompileOperationSuccessResponse(files?.ToList(), entryPoint, serializedAdditionalRawData: null);
+            return new DecompileOperationSuccessResult(files?.ToList(), entryPoint, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FileDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DecompiledFile"/>. </summary>
         /// <param name="path"> The file path of the Bicep file. </param>
         /// <param name="contents"> The contents of the Bicep file. </param>
-        /// <returns> A new <see cref="Models.FileDefinition"/> instance for mocking. </returns>
-        public static FileDefinition FileDefinition(string path = null, string contents = null)
+        /// <returns> A new <see cref="Models.DecompiledFile"/> instance for mocking. </returns>
+        public static DecompiledFile DecompiledFile(string path = null, string contents = null)
         {
-            return new FileDefinition(path, contents, serializedAdditionalRawData: null);
+            return new DecompiledFile(path, contents, serializedAdditionalRawData: null);
         }
     }
 }

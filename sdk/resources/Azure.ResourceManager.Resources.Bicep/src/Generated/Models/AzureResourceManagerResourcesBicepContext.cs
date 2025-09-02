@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Resources.Bicep.Models;
 
 namespace Azure.ResourceManager.Resources.Bicep
 {
@@ -13,6 +14,10 @@ namespace Azure.ResourceManager.Resources.Bicep
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(DecompiledFile))]
+    [ModelReaderWriterBuildable(typeof(DecompileOperationContent))]
+    [ModelReaderWriterBuildable(typeof(DecompileOperationSuccessResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     public partial class AzureResourceManagerResourcesBicepContext : ModelReaderWriterContext
     {
     }

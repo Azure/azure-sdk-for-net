@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Bicep.Models
 {
-    public partial class FileDefinition : IUtf8JsonSerializable, IJsonModel<FileDefinition>
+    public partial class DecompiledFile : IUtf8JsonSerializable, IJsonModel<DecompiledFile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DecompiledFile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FileDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DecompiledFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FileDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DecompiledFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DecompiledFile)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Path))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
             }
         }
 
-        FileDefinition IJsonModel<FileDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DecompiledFile IJsonModel<DecompiledFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FileDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DecompiledFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DecompiledFile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFileDefinition(document.RootElement, options);
+            return DeserializeDecompiledFile(document.RootElement, options);
         }
 
-        internal static FileDefinition DeserializeFileDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DecompiledFile DeserializeDecompiledFile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -103,38 +103,38 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FileDefinition(path, contents, serializedAdditionalRawData);
+            return new DecompiledFile(path, contents, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FileDefinition>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DecompiledFile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FileDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DecompiledFile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesBicepContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FileDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DecompiledFile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FileDefinition IPersistableModel<FileDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DecompiledFile IPersistableModel<DecompiledFile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FileDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DecompiledFile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFileDefinition(document.RootElement, options);
+                        return DeserializeDecompiledFile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DecompiledFile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FileDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DecompiledFile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
