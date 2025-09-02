@@ -23,10 +23,9 @@ namespace Azure.ResourceManager.Kubernetes
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes the connected cluster resource properties. </param>
         /// <param name="identity"> The identity of the connected cluster. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="properties"/> or <paramref name="identity"/> is null. </exception>
-        public ConnectedClusterData(string location, ConnectedClusterProperties properties, ConnectedClusterIdentity identity) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> or <paramref name="identity"/> is null. </exception>
+        public ConnectedClusterData(AzureLocation location, ConnectedClusterProperties properties, ConnectedClusterIdentity identity) : base(location)
         {
-            Argument.AssertNotNull(location, nameof(location));
             Argument.AssertNotNull(properties, nameof(properties));
             Argument.AssertNotNull(identity, nameof(identity));
 
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <param name="properties"> Describes the connected cluster resource properties. </param>
         /// <param name="identity"> The identity of the connected cluster. </param>
         /// <param name="kind"> The kind of connected cluster. </param>
-        internal ConnectedClusterData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, ConnectedClusterProperties properties, ConnectedClusterIdentity identity, ConnectedClusterKind? kind) : base(id, name, resourceType, systemData, tags, location)
+        internal ConnectedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ConnectedClusterProperties properties, ConnectedClusterIdentity identity, ConnectedClusterKind? kind) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

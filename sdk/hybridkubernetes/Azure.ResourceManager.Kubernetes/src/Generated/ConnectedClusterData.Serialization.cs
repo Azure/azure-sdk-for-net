@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.Kubernetes
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
-            string location = default;
+            AzureLocation location = default;
             ConnectedClusterProperties properties = default;
             ConnectedClusterIdentity identity = default;
             ConnectedClusterKind? kind = default;
@@ -94,7 +94,11 @@ namespace Azure.ResourceManager.Kubernetes
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -143,7 +147,7 @@ namespace Azure.ResourceManager.Kubernetes
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
