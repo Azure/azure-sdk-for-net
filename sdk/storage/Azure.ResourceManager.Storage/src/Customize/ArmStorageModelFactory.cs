@@ -6,11 +6,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using static Azure.Core.Pipeline.TaskExtensions;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -69,10 +67,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="T:Azure.ResourceManager.Storage.StorageAccountData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountData StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, StorageProvisioningState? provisioningState, StorageAccountEndpoints primaryEndpoints, AzureLocation? primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, AzureLocation? secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, LargeFileSharesState? largeFileSharesState, IEnumerable<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType)
-        {
-            return null;
-        }
-        //=> StorageAccountData(id, name, resourceType, systemData, tags, location, sku, kind, identity, extendedLocation, provisioningState.ToString(), primaryEndpoints, primaryLocation, statusOfPrimary, lastGeoFailoverOn, secondaryLocation, statusOfSecondary, createdOn, customDomain, sasPolicy, keyExpirationPeriodInDays, keyCreationTime, secondaryEndpoints, encryption, accessTier, azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly, networkRuleSet, isSftpEnabled, isLocalUserEnabled, default, isHnsEnabled, geoReplicationStats, isFailoverInProgress, largeFileSharesState, privateEndpointConnections, routingPreference, blobRestoreStatus, allowBlobPublicAccess, minimumTlsVersion, allowSharedKeyAccess, isNfsV3Enabled, allowCrossTenantReplication, isDefaultToOAuthAuthentication, publicNetworkAccess, immutableStorageWithVersioning, allowedCopyScope, storageAccountSkuConversionStatus, dnsEndpointType, default, default);
+            => StorageAccountData(id, name, resourceType, systemData, tags, location, sku, kind, identity, extendedLocation, provisioningState.ToString(), primaryEndpoints, primaryLocation, statusOfPrimary, lastGeoFailoverOn, secondaryLocation, statusOfSecondary, createdOn, customDomain, sasPolicy, keyExpirationPeriodInDays, keyCreationTime, secondaryEndpoints, encryption, accessTier, azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly, networkRuleSet, isSftpEnabled, isLocalUserEnabled, default, isHnsEnabled, geoReplicationStats, isFailoverInProgress, largeFileSharesState, privateEndpointConnections, routingPreference, blobRestoreStatus, allowBlobPublicAccess, minimumTlsVersion, allowSharedKeyAccess, isNfsV3Enabled, allowCrossTenantReplication, isDefaultToOAuthAuthentication, publicNetworkAccess, immutableStorageWithVersioning, allowedCopyScope, storageAccountSkuConversionStatus, dnsEndpointType, default, default);
 
         /// <summary> Initializes a new instance of <see cref="Storage.StorageAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -129,10 +124,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Storage.StorageAccountData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountData StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, StorageProvisioningState? provisioningState, StorageAccountEndpoints primaryEndpoints, AzureLocation? primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, AzureLocation? secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, LargeFileSharesState? largeFileSharesState, IEnumerable<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? isAccountMigrationInProgress)
-        {
-            return null;
-        }
-        //=> StorageAccountData(id, name, resourceType, systemData, tags, location, sku, kind, identity, extendedLocation, provisioningState.ToString(), primaryEndpoints, primaryLocation, statusOfPrimary, lastGeoFailoverOn, secondaryLocation, statusOfSecondary, createdOn, customDomain, sasPolicy, keyExpirationPeriodInDays, keyCreationTime, secondaryEndpoints, encryption, accessTier, azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly, networkRuleSet, isSftpEnabled, isLocalUserEnabled, isExtendedGroupEnabled, isHnsEnabled, geoReplicationStats, isFailoverInProgress, largeFileSharesState, privateEndpointConnections, routingPreference, blobRestoreStatus, allowBlobPublicAccess, minimumTlsVersion, allowSharedKeyAccess, isNfsV3Enabled, allowCrossTenantReplication, isDefaultToOAuthAuthentication, publicNetworkAccess, immutableStorageWithVersioning, allowedCopyScope, storageAccountSkuConversionStatus, dnsEndpointType, isSkuConversionBlocked, isAccountMigrationInProgress);
+            => StorageAccountData(id, name, resourceType, systemData, tags, location, sku, kind, identity, extendedLocation, provisioningState.ToString(), primaryEndpoints, primaryLocation, statusOfPrimary, lastGeoFailoverOn, secondaryLocation, statusOfSecondary, createdOn, customDomain, sasPolicy, keyExpirationPeriodInDays, keyCreationTime, secondaryEndpoints, encryption, accessTier, azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly, networkRuleSet, isSftpEnabled, isLocalUserEnabled, isExtendedGroupEnabled, isHnsEnabled, geoReplicationStats, isFailoverInProgress, largeFileSharesState, privateEndpointConnections, routingPreference, blobRestoreStatus, allowBlobPublicAccess, minimumTlsVersion, allowSharedKeyAccess, isNfsV3Enabled, allowCrossTenantReplication, isDefaultToOAuthAuthentication, publicNetworkAccess, immutableStorageWithVersioning, allowedCopyScope, storageAccountSkuConversionStatus, dnsEndpointType, isSkuConversionBlocked, isAccountMigrationInProgress);
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageTaskAssignmentProperties"/>. </summary>
         /// <param name="taskId"> Id of the corresponding storage task. </param>
@@ -189,6 +181,35 @@ namespace Azure.ResourceManager.Storage.Models
         public static ImmutabilityPolicyData ImmutabilityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? immutabilityPeriodSinceCreationInDays = null, ImmutabilityPolicyState? state = null, bool? allowProtectedAppendWrites = null, bool? allowProtectedAppendWritesAll = null, ETag? etag = null)
             => ImmutabilityPolicyData(id, name, resourceType, systemData, immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites, allowProtectedAppendWritesAll, etag);
 
+        /// <summary> Initializes a new instance of <see cref="Storage.BlobContainerData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="version"> The version of the deleted blob container. </param>
+        /// <param name="isDeleted"> Indicates whether the blob container was deleted. </param>
+        /// <param name="deletedOn"> Blob container deletion time. </param>
+        /// <param name="remainingRetentionDays"> Remaining retention days for soft deleted blob container. </param>
+        /// <param name="defaultEncryptionScope"> Default the container to use specified encryption scope for all writes. </param>
+        /// <param name="preventEncryptionScopeOverride"> Block override of encryption scope from the container default. </param>
+        /// <param name="publicAccess"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
+        /// <param name="lastModifiedOn"> Returns the date and time the container was last modified. </param>
+        /// <param name="leaseStatus"> The lease status of the container. </param>
+        /// <param name="leaseState"> Lease state of the container. </param>
+        /// <param name="leaseDuration"> Specifies whether the lease on a container is of infinite or fixed duration, only when the container is leased. </param>
+        /// <param name="metadata"> A name-value pair to associate with the container as metadata. </param>
+        /// <param name="immutabilityPolicy"> The ImmutabilityPolicy property of the container. </param>
+        /// <param name="legalHold"> The LegalHold property of the container. </param>
+        /// <param name="hasLegalHold"> The hasLegalHold public property is set to true by SRP if there are at least one existing tag. The hasLegalHold public property is set to false by SRP if all existing legal hold tags are cleared out. There can be a maximum of 1000 blob containers with hasLegalHold=true for a given account. </param>
+        /// <param name="hasImmutabilityPolicy"> The hasImmutabilityPolicy public property is set to true by SRP if ImmutabilityPolicy has been created for this container. The hasImmutabilityPolicy public property is set to false by SRP if ImmutabilityPolicy has not been created for this container. </param>
+        /// <param name="immutableStorageWithVersioning"> The object level immutability property of the container. The property is immutable and can only be set to true at the container creation time. Existing containers must undergo a migration process. </param>
+        /// <param name="enableNfsV3RootSquash"> Enable NFSv3 root squash on blob container. </param>
+        /// <param name="enableNfsV3AllSquash"> Enable NFSv3 all squash on blob container. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <returns> A new <see cref="Storage.BlobContainerData"/> instance for mocking. </returns>
+        public static BlobContainerData BlobContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string version = null, bool? isDeleted = null, DateTimeOffset? deletedOn = null, int? remainingRetentionDays = null, string defaultEncryptionScope = null, bool? preventEncryptionScopeOverride = null, StoragePublicAccessType? publicAccess = null, DateTimeOffset? lastModifiedOn = null, StorageLeaseStatus? leaseStatus = null, StorageLeaseState? leaseState = null, StorageLeaseDurationType? leaseDuration = null, IDictionary<string, string> metadata = null, BlobContainerImmutabilityPolicy immutabilityPolicy = null, LegalHoldProperties legalHold = null, bool? hasLegalHold = null, bool? hasImmutabilityPolicy = null, ImmutableStorageWithVersioning immutableStorageWithVersioning = null, bool? enableNfsV3RootSquash = null, bool? enableNfsV3AllSquash = null, ETag? etag = null)
+            => BlobContainerData(id, name, resourceType, systemData, etag, version, isDeleted, deletedOn, remainingRetentionDays, defaultEncryptionScope, preventEncryptionScopeOverride, publicAccess, lastModifiedOn, leaseStatus, leaseState, leaseDuration, metadata, immutabilityPolicy, legalHold, enableNfsV3RootSquash, enableNfsV3AllSquash);
+
         /// <summary> Initializes a new instance of <see cref="Storage.FileShareData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -222,8 +243,38 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="fileSharePaidBursting"> File Share Paid Bursting properties. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <returns> A new <see cref="Storage.FileShareData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FileShareData FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata = null, int? shareQuota = null, int? provisionedIops = null, int? provisionedBandwidthMibps = null, int? includedBurstIops = null, long? maxBurstCreditsForIops = null, DateTimeOffset? nextAllowedQuotaDowngradeOn = null, DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn = null, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn = null, FileShareEnabledProtocol? enabledProtocol = null, RootSquashType? rootSquash = null, string version = null, bool? isDeleted = null, DateTimeOffset? deletedOn = null, int? remainingRetentionDays = null, FileShareAccessTier? accessTier = null, DateTimeOffset? accessTierChangeOn = null, string accessTierStatus = null, long? shareUsageBytes = null, StorageLeaseStatus? leaseStatus = null, StorageLeaseState? leaseState = null, StorageLeaseDurationType? leaseDuration = null, IEnumerable<StorageSignedIdentifier> signedIdentifiers = null, DateTimeOffset? snapshotOn = null, FileSharePropertiesFileSharePaidBursting fileSharePaidBursting = null, ETag? etag = null)
-            => FileShareData(id, name, resourceType, systemData, etag, lastModifiedOn, metadata, shareQuota, provisionedIops, provisionedBandwidthMibps, includedBurstIops, maxBurstCreditsForIops, nextAllowedQuotaDowngradeOn, nextAllowedProvisionedIopsDowngradeOn, nextAllowedProvisionedBandwidthDowngradeOn, enabledProtocol, rootSquash, version, isDeleted, deletedOn, remainingRetentionDays, accessTier, accessTierChangeOn, accessTierStatus, shareUsageBytes, leaseStatus, leaseState, leaseDuration, signedIdentifiers, snapshotOn, fileSharePaidBursting);
+        public static FileShareData FileShareData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? lastModifiedOn = null, IDictionary<string, string> metadata = null, int? shareQuota = null, int? provisionedIops = null, int? provisionedBandwidthMibps = null, int? includedBurstIops = null, long? maxBurstCreditsForIops = null, DateTimeOffset? nextAllowedQuotaDowngradeOn = null, DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn = null, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn = null, FileShareEnabledProtocol? enabledProtocol = null, RootSquashType? rootSquash = null, string version = null, bool? isDeleted = null, DateTimeOffset? deletedOn = null, int? remainingRetentionDays = null, FileShareAccessTier? accessTier = null, DateTimeOffset? accessTierChangeOn = null, string accessTierStatus = null, long? shareUsageBytes = null, StorageLeaseStatus? leaseStatus = null, StorageLeaseState? leaseState = null, StorageLeaseDurationType? leaseDuration = null, IEnumerable<StorageSignedIdentifier> signedIdentifiers = null, DateTimeOffset? snapshotOn = null, FileSharePropertiesFileSharePaidBursting fileSharePaidBursting = null, ETag? etag = null)
+            => FileShareData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                lastModifiedOn,
+                metadata,
+                shareQuota,
+                provisionedIops,
+                provisionedBandwidthMibps,
+                includedBurstIops,
+                maxBurstCreditsForIops,
+                nextAllowedQuotaDowngradeOn,
+                nextAllowedProvisionedIopsDowngradeOn,
+                nextAllowedProvisionedBandwidthDowngradeOn,
+                enabledProtocol,
+                rootSquash,
+                version,
+                isDeleted,
+                deletedOn,
+                remainingRetentionDays,
+                accessTier,
+                accessTierChangeOn,
+                accessTierStatus,
+                shareUsageBytes,
+                leaseStatus,
+                leaseState,
+                leaseDuration,
+                signedIdentifiers,
+                snapshotOn,
+                fileSharePaidBursting);
     }
 }

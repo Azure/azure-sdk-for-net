@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    [CodeGenSerialization(nameof(ActiveDirectoryDomainGuid), DeserializationValueHook = nameof(DeserializeNullableGuid))]
+    //[CodeGenSerialization(nameof(DomainGuid), DeserializationValueHook = nameof(DeserializeNullableGuid))]
     public partial class StorageActiveDirectoryProperties
     {
         /// <summary> Initializes a new instance of <see cref="StorageActiveDirectoryProperties"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void DeserializeNullableGuid(JsonProperty property, ref Guid? domainGuid)
+        private static void DeserializeNullableGuid(JsonProperty property, ref Guid domainGuid)
         {
             if (string.IsNullOrEmpty(property.Value.GetString()))
             {
