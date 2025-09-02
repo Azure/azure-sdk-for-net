@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace MgmtTypeSpec
 {
-    internal partial class Bars
+    internal partial class EndpointResources
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of Bars for mocking. </summary>
-        protected Bars()
+        /// <summary> Initializes a new instance of EndpointResources for mocking. </summary>
+        protected EndpointResources()
         {
         }
 
-        /// <summary> Initializes a new instance of Bars. </summary>
+        /// <summary> Initializes a new instance of EndpointResources. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Bars(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal EndpointResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,21 +41,34 @@ namespace MgmtTypeSpec
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string fooName, string barName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetRequest(string resourceUri, string endpointName, RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/MgmtTypeSpec/endpoints/", false);
+            uri.AppendPath(endpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string endpointName, RequestContent content, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Method = RequestMethod.Put;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
-            uri.AppendPath(fooName, true);
-            uri.AppendPath("/bars/", false);
-            uri.AppendPath(barName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/MgmtTypeSpec/endpoints/", false);
+            uri.AppendPath(endpointName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.SetValue("Content-Type", "application/json");
@@ -64,55 +77,38 @@ namespace MgmtTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string fooName, string barName, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(string resourceUri, string endpointName, RequestContent content, RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Method = RequestMethod.Patch;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/MgmtTypeSpec/endpoints/", false);
+            uri.AppendPath(endpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string resourceUri, string endpointName, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Method = RequestMethod.Delete;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
-            uri.AppendPath(fooName, true);
-            uri.AppendPath("/bars/", false);
-            uri.AppendPath(barName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/MgmtTypeSpec/endpoints/", false);
+            uri.AppendPath(endpointName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            return message;
-        }
-
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
-        {
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
-            uri.AppendPath(fooName, true);
-            uri.AppendPath("/bars", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
-        {
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }
