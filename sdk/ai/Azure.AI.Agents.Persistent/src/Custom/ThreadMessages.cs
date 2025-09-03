@@ -140,7 +140,7 @@ namespace Azure.AI.Agents.Persistent
 
             // Serialize the plain text into JSON so that the underlying generated code
             // sees a properly quoted/escaped string instead of raw text.
-            BinaryData contentJson = BinaryData.FromObjectAsJson(content);
+            BinaryData contentJson = BinaryData.FromString(JsonSerializer.Serialize(content, CustomSharedJsonContext.Default.String));
 
             return await CreateMessageAsync(
                 threadId,
@@ -181,7 +181,7 @@ namespace Azure.AI.Agents.Persistent
 
             // Serialize the plain text into JSON so that the underlying generated code
             // sees a properly quoted/escaped string instead of raw text.
-            BinaryData contentJson = BinaryData.FromObjectAsJson(content);
+            BinaryData contentJson = BinaryData.FromString(JsonSerializer.Serialize(content, CustomSharedJsonContext.Default.String));
 
             // Reuse the existing generated method internally by converting the string to BinaryData.
             return CreateMessage(
@@ -246,7 +246,7 @@ namespace Azure.AI.Agents.Persistent
             }
 
             // Now serialize the array of JsonElements into a single BinaryData for the request:
-            BinaryData serializedBlocks = BinaryData.FromObjectAsJson(jsonElements);
+            BinaryData serializedBlocks = BinaryData.FromString(JsonSerializer.Serialize(jsonElements, CustomSharedJsonContext.Default.ListJsonElement));
 
             return await CreateMessageAsync(
                 threadId,
@@ -310,7 +310,7 @@ namespace Azure.AI.Agents.Persistent
             }
 
             // Now serialize the array of JsonElements into a single BinaryData for the request:
-            BinaryData serializedBlocks = BinaryData.FromObjectAsJson(jsonElements);
+            BinaryData serializedBlocks = BinaryData.FromString(JsonSerializer.Serialize(jsonElements, CustomSharedJsonContext.Default.ListJsonElement));
 
             return CreateMessage(
                 threadId,

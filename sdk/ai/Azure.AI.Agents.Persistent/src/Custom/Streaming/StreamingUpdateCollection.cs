@@ -95,7 +95,7 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
                     }
                     catch (Exception ex)
                     {
-                        string errorJson = JsonSerializer.Serialize(new { error = ex.GetBaseException().Message });
+                        string errorJson = JsonSerializer.Serialize(new StreamingErrorInfo { Error = ex.GetBaseException().Message }, StreamingJsonContext.Default.StreamingErrorInfo);
                         toolOutput = new ToolOutput(newActionUpdate.ToolCallId, errorJson);
                         hasError = true;
                     }

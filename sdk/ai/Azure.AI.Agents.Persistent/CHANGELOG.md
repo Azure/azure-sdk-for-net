@@ -6,6 +6,7 @@
 - Updated `Microsoft.Extensions.AI.Abstractions` dependency to version 9.8.0.`
 - Added support of `FileSearchTool` and `CodeInterpreterTool` for `PersistentAgentsChatClient`
 - Bugfix: Addressed issues related to `ResponseFormat` when using `PersistentAgentsChatClient` with Structured Outputs.
+- Updated the library to enable .NET Ahead-of-Time (AOT) compilation support.
 
 ### Breaking Changes
 
