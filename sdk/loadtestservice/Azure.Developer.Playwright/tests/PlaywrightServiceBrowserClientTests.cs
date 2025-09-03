@@ -55,7 +55,7 @@ public class PlaywrightServiceBrowserClientTests
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
         var customRunName = "Custom Run Name";
-        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
+        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01)
         {
             RunName = customRunName
         };
@@ -73,7 +73,7 @@ public class PlaywrightServiceBrowserClientTests
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
         var longRunName = new string('a', 250);
-        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
+        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01)
         {
             RunName = longRunName
         };
@@ -358,7 +358,7 @@ public class PlaywrightServiceBrowserClientTests
             .Setup(x => x.TestRunsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContent>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContext>()))
             .ReturnsAsync(Mock.Of<Response>());
         var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null, environment);
-        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
+        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01)
         {
             ServiceAuth = ServiceAuthType.AccessToken
         };
@@ -626,7 +626,7 @@ public class PlaywrightServiceBrowserClientTests
             .Setup(x => x.TestRuns(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContent>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContext>()))
             .Returns(Mock.Of<Response>());
         var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null, environment);
-        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
+        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01)
         {
             ServiceAuth = ServiceAuthType.AccessToken
         };
@@ -675,7 +675,7 @@ public class PlaywrightServiceBrowserClientTests
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
         var notGuidRunId = new string('a', 201);
-        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
+        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01);
         ArgumentException? exception = Assert.Throws<ArgumentException>(() => clientOptions.RunId = notGuidRunId);
         Assert.That(exception, Is.Not.Null);
         Assert.That(exception!.Message, Is.EqualTo(Constants.s_playwright_service_runId_not_guid_error_message));
@@ -711,7 +711,7 @@ public class PlaywrightServiceBrowserClientTests
         var authorizationHeader = connectOptions.Options!.Headers!.Where(x => x.Key == "Authorization").FirstOrDefault().Value!;
         Assert.Multiple(() =>
         {
-            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={Constants.s_default_os}&runId={runId}&api-version=2025-07-01-preview"));
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={Constants.s_default_os}&runId={runId}&api-version=2025-09-01"));
             Assert.That(connectOptions.Options!.Timeout, Is.EqualTo(3 * 60 * 1000));
             Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo(Constants.s_default_expose_network));
             Assert.That(authorizationHeader, Is.EqualTo("Bearer valid_token"));
@@ -781,7 +781,7 @@ public class PlaywrightServiceBrowserClientTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os=windows&runId={runId}&api-version=2025-07-01-preview"));
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os=windows&runId={runId}&api-version=2025-09-01"));
             Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo("localhost"));
         });
     }
@@ -808,7 +808,7 @@ public class PlaywrightServiceBrowserClientTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={Constants.s_default_os}&runId={runId}&api-version=2025-07-01-preview"));
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={Constants.s_default_os}&runId={runId}&api-version=2025-09-01"));
             Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo(Constants.s_default_expose_network));
         });
     }
@@ -836,7 +836,7 @@ public class PlaywrightServiceBrowserClientTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={OSConstants.s_wINDOWS}&runId={newRunId}&api-version=2025-07-01-preview"));
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={OSConstants.s_wINDOWS}&runId={newRunId}&api-version=2025-09-01"));
             Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo("expose-network"));
         });
     }
@@ -866,7 +866,7 @@ public class PlaywrightServiceBrowserClientTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={OSConstants.s_wINDOWS}&runId={newRunId}&api-version=2025-07-01-preview"));
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={OSConstants.s_wINDOWS}&runId={newRunId}&api-version=2025-09-01"));
             Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo("expose-network"));
         });
     }
@@ -897,7 +897,7 @@ public class PlaywrightServiceBrowserClientTests
         ConnectOptions<BrowserConnectOptions> connectOptions = await client.GetConnectOptionsAsync<BrowserConnectOptions>();
         Assert.Multiple(() =>
         {
-            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={OSConstants.s_wINDOWS}&runId={runId}&api-version=2025-07-01-preview"));
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={OSConstants.s_wINDOWS}&runId={runId}&api-version=2025-09-01"));
             Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo("localhost"));
             Assert.That(client._options.RunName, Is.EqualTo(runName));
         });
@@ -938,7 +938,7 @@ public class PlaywrightServiceBrowserClientTests
         var authorizationHeader = connectOptions.Options!.Headers!.Where(x => x.Key == "Authorization").FirstOrDefault().Value!;
         Assert.Multiple(() =>
         {
-            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={Constants.s_default_os}&runId={runId}&api-version=2025-07-01-preview"));
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={Constants.s_default_os}&runId={runId}&api-version=2025-09-01"));
             Assert.That(connectOptions.Options!.Timeout, Is.EqualTo(3 * 60 * 1000));
             Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo(Constants.s_default_expose_network));
             Assert.That(authorizationHeader, Is.EqualTo("Bearer valid_token"));
@@ -1008,7 +1008,7 @@ public class PlaywrightServiceBrowserClientTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os=windows&runId={runId}&api-version=2025-07-01-preview"));
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os=windows&runId={runId}&api-version=2025-09-01"));
             Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo("localhost"));
         });
     }
@@ -1035,7 +1035,7 @@ public class PlaywrightServiceBrowserClientTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={Constants.s_default_os}&runId={runId}&api-version=2025-07-01-preview"));
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={Constants.s_default_os}&runId={runId}&api-version=2025-09-01"));
             Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo(Constants.s_default_expose_network));
         });
     }
@@ -1063,7 +1063,7 @@ public class PlaywrightServiceBrowserClientTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={OSConstants.s_wINDOWS}&runId={newRunId}&api-version=2025-07-01-preview"));
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={OSConstants.s_wINDOWS}&runId={newRunId}&api-version=2025-09-01"));
             Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo("expose-network"));
         });
     }
@@ -1093,7 +1093,7 @@ public class PlaywrightServiceBrowserClientTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={OSConstants.s_wINDOWS}&runId={newRunId}&api-version=2025-07-01-preview"));
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={OSConstants.s_wINDOWS}&runId={newRunId}&api-version=2025-09-01"));
             Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo("expose-network"));
         });
     }
@@ -1122,7 +1122,7 @@ public class PlaywrightServiceBrowserClientTests
         ConnectOptions<BrowserConnectOptions> connectOptions = client.GetConnectOptions<BrowserConnectOptions>();
         Assert.Multiple(() =>
         {
-            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={OSConstants.s_wINDOWS}&runId={runId}&api-version=2025-07-01-preview"));
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={OSConstants.s_wINDOWS}&runId={runId}&api-version=2025-09-01"));
             Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo("localhost"));
         });
     }

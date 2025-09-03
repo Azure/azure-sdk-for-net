@@ -14,7 +14,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The BarQuotaProperties. </summary>
-    internal partial class BarQuotaProperties : IJsonModel<BarQuotaProperties>
+    public partial class BarQuotaProperties : IJsonModel<BarQuotaProperties>
     {
         /// <summary> Initializes a new instance of <see cref="BarQuotaProperties"/> for deserialization. </summary>
         internal BarQuotaProperties()
@@ -40,7 +40,7 @@ namespace MgmtTypeSpec.Models
                 throw new FormatException($"The model {nameof(BarQuotaProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("left"u8);
-            writer.WriteObjectValue<object>(Left, options);
+            writer.WriteNumberValue(Left);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -83,13 +83,13 @@ namespace MgmtTypeSpec.Models
             {
                 return null;
             }
-            object left = default;
+            int left = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("left"u8))
                 {
-                    left = prop.Value.GetObject();
+                    left = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
