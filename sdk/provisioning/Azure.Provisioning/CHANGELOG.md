@@ -1,14 +1,10 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (2025-09-03)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added a new protected API in `ProvisionableConstruct` to support a `ProvisionableResource` as property of another `ProvisionableConstruct`.
 
 ## 1.3.0 (2025-08-01)
 
