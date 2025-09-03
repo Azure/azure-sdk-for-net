@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.Storage.Samples
                 {
                     SmbSetting = new SmbSetting
                     {
-                        Required = true,
+                        IsRequired = true,
                     },
-                    Required = true,
+                    IsRequired = true,
                 },
             };
             ArmOperation<FileServiceResource> lro = await fileService.CreateOrUpdateAsync(WaitUntil.Completed, data);

@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("Required", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsRequired", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  encryptionInTransit: ");

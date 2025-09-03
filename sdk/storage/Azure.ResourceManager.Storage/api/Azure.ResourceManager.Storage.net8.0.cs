@@ -2858,7 +2858,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class ProtocolSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ProtocolSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ProtocolSettings>
     {
         public ProtocolSettings() { }
-        public bool? Required { get { throw null; } set { } }
+        public bool? IsRequired { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.SmbSetting SmbSetting { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ProtocolSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ProtocolSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2985,8 +2985,8 @@ namespace Azure.ResourceManager.Storage.Models
         public string AuthenticationMethods { get { throw null; } set { } }
         public string ChannelEncryption { get { throw null; } set { } }
         public bool? IsMultiChannelEnabled { get { throw null; } set { } }
+        public bool? IsRequired { get { throw null; } set { } }
         public string KerberosTicketEncryption { get { throw null; } set { } }
-        public bool? Required { get { throw null; } set { } }
         public string Versions { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.SmbSetting System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.SmbSetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

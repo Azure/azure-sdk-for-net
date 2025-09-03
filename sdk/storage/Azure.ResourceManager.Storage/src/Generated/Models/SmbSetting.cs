@@ -100,14 +100,14 @@ namespace Azure.ResourceManager.Storage.Models
         internal EncryptionInTransit EncryptionInTransit { get; set; }
         /// <summary> Indicates whether encryption in transit is required. </summary>
         [WirePath("encryptionInTransit.required")]
-        public bool? Required
+        public bool? IsRequired
         {
-            get => EncryptionInTransit is null ? default : EncryptionInTransit.Required;
+            get => EncryptionInTransit is null ? default : EncryptionInTransit.IsRequired;
             set
             {
                 if (EncryptionInTransit is null)
                     EncryptionInTransit = new EncryptionInTransit();
-                EncryptionInTransit.Required = value;
+                EncryptionInTransit.IsRequired = value;
             }
         }
     }

@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("Required", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsRequired", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  nfs: ");

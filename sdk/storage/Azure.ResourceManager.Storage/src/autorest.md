@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
 require: https://github.com/Azure/azure-rest-api-specs/blob/438b4eb669efc1e30db9f858e8ec47b2185fc294/specification/storage/resource-manager/readme.md
-#tag: package-2024-01
+#tag: package-2025-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,7 +20,7 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug:
+# mgmt-debug:
 #  show-serialized-names: true
 
 list-exception:
@@ -152,8 +152,8 @@ rename-mapping:
     TagFilter.op: Operator
     TagProperty: LegalHoldTag
     AccessTier: StorageAccountAccessTier
-    StorageAccountSkuConversionStatus.startTime: StartOn
-    StorageAccountSkuConversionStatus.endTime: EndOn
+    StorageAccountSkuConversionStatus.startTime: StartOn|date-time
+    StorageAccountSkuConversionStatus.endTime: EndOn|date-time
     SkuConversionStatus: StorageAccountSkuConversionState
     PrivateLinkResource: StoragePrivateLinkResourceData
     MigrationState: ImmutableStorageWithVersioningMigrationState
@@ -271,6 +271,16 @@ rename-mapping:
     AccountUsage: FileServiceAccountUsage
     AccountUsageElements: FileServiceAccountUsageElements
     ActiveDirectoryProperties.domainGuid: ActiveDirectoryDomainGuid
+    StorageAccountCheckNameAvailabilityParameters.type: -|resource-type
+    DeletedAccount.properties.storageAccountResourceId: -|arm-id
+    DeletedAccount.properties.creationTime: -|date-time
+    DeletedAccount.properties.deletionTime: -|date-time
+    StorageAccount.properties.primaryLocation: -|azure-location
+    StorageAccount.properties.secondaryLocation: -|azure-location
+    PrivateLinkResource.properties.groupId: -|arm-id
+    ResourceAccessRule.resourceId: -|arm-id
+    VirtualNetworkRule.id: -|arm-id
+    EncryptionInTransit.required: IsRequired
 
 directive:
     - from: swagger-document
@@ -297,48 +307,9 @@ directive:
                   $.properties[key] = property;
               }
           }
-    # assigning formats
-    - from: swagger-document
-      where: $.definitions.StorageAccountCheckNameAvailabilityParameters.properties.type
-      transform: $["x-ms-format"] = "resource-type";
-    - from: swagger-document
-      where: $.definitions.DeletedAccountProperties.properties.storageAccountResourceId
-      transform: $["x-ms-format"] = "arm-id";
-    - from: swagger-document
-      where: $.definitions.DeletedAccountProperties.properties.creationTime
-      transform: $["format"] = "date-time";
-    - from: swagger-document
-      where: $.definitions.DeletedAccountProperties.properties.deletionTime
-      transform: $["format"] = "date-time";
-    - from: swagger-document
-      where: $.definitions.StorageAccountProperties.properties.primaryLocation
-      transform: $["x-ms-format"] = "azure-location";
-    - from: swagger-document
-      where: $.definitions.StorageAccountProperties.properties.secondaryLocation
-      transform: $["x-ms-format"] = "azure-location";
-    - from: swagger-document
-      where: $.definitions.StorageAccountSkuConversionStatus.properties.startTime
-      transform: $["format"] = "date-time";
-    - from: swagger-document
-      where: $.definitions.StorageAccountSkuConversionStatus.properties.endTime
-      transform: $["format"] = "date-time";
-    - from: swagger-document
-      where: $.definitions.PrivateLinkResourceProperties.properties.groupId
-      transform: $["x-ms-format"] = "arm-id";
-    - from: swagger-document
-      where: $.definitions.ResourceAccessRule.properties.resourceId
-      transform: $["x-ms-format"] = "arm-id";
-    - from: swagger-document
-      where: $.definitions.VirtualNetworkRule.properties.id
-      transform: $["x-ms-format"] = "arm-id";
     - from: swagger-document
       where: $.definitions.Encryption
       transform: $.required = undefined; # this is a fix for swagger issue, and it should be resolved in azure-rest-api-specs/pull/19357
-    # Minghao: Remove for code gen error
-    # this is a temporary fix
-    # - from: swagger-document
-    #   where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default/tables/{tableName}"].put.parameters
-    #   transform: $[2].required = true
     # convenience change: expand the array result out
     - from: swagger-document
       where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listKeys"].post
@@ -396,18 +367,6 @@ directive:
                   }
                 ]
               };
-    # Minghao: Remove a code gen error
-    # - from: swagger-document
-    #   where: $.definitions
-    #   transform: >
-    #       $.StorageTaskAssignmentProperties.properties.provisioningState['x-ms-enum'] = {
-    #           "name": "StorageTaskAssignmentProvisioningState",
-    #           "modelAsString": true
-    #         };
-    #       $.StorageTaskAssignmentUpdateProperties.properties.provisioningState['x-ms-enum'] = {
-    #           "name": "StorageTaskAssignmentProvisioningState",
-    #           "modelAsString": true
-    #         };
     - from: swagger-document
       where: $.definitions.StorageAccountMigration
       transform: >
