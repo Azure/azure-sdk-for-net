@@ -65,12 +65,12 @@ public partial class RouteTable : ProvisionableResource
     /// <summary>
     /// Collection of routes contained within a route table.
     /// </summary>
-    public BicepList<Route> Routes 
+    public BicepList<RouteResource> Routes 
     {
         get { Initialize(); return _routes!; }
         set { Initialize(); _routes!.Assign(value); }
     }
-    private BicepList<Route>? _routes;
+    private BicepList<RouteResource>? _routes;
 
     /// <summary>
     /// Resource tags.
@@ -112,11 +112,11 @@ public partial class RouteTable : ProvisionableResource
     /// <summary>
     /// A collection of references to subnets.
     /// </summary>
-    public BicepList<Subnet> Subnets 
+    public BicepList<SubnetResource> Subnets 
     {
         get { Initialize(); return _subnets!; }
     }
-    private BicepList<Subnet>? _subnets;
+    private BicepList<SubnetResource>? _subnets;
 
     /// <summary>
     /// Creates a new RouteTable.
@@ -143,12 +143,12 @@ public partial class RouteTable : ProvisionableResource
         _disableBgpRoutePropagation = DefineProperty<bool>("DisableBgpRoutePropagation", ["properties", "disableBgpRoutePropagation"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
-        _routes = DefineListProperty<Route>("Routes", ["properties", "routes"]);
+        _routes = DefineListProperty<RouteResource>("Routes", ["properties", "routes"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
-        _subnets = DefineListProperty<Subnet>("Subnets", ["properties", "subnets"], isOutput: true);
+        _subnets = DefineListProperty<SubnetResource>("Subnets", ["properties", "subnets"], isOutput: true);
     }
 
     /// <summary>

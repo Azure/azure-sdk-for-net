@@ -132,11 +132,11 @@ public partial class ServiceEndpointPolicy : ProvisionableResource
     /// <summary>
     /// A collection of references to subnets.
     /// </summary>
-    public BicepList<Subnet> Subnets 
+    public BicepList<SubnetResource> Subnets 
     {
         get { Initialize(); return _subnets!; }
     }
-    private BicepList<Subnet>? _subnets;
+    private BicepList<SubnetResource>? _subnets;
 
     /// <summary>
     /// Creates a new ServiceEndpointPolicy.
@@ -170,7 +170,7 @@ public partial class ServiceEndpointPolicy : ProvisionableResource
         _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
-        _subnets = DefineListProperty<Subnet>("Subnets", ["properties", "subnets"], isOutput: true);
+        _subnets = DefineListProperty<SubnetResource>("Subnets", ["properties", "subnets"], isOutput: true);
     }
 
     /// <summary>

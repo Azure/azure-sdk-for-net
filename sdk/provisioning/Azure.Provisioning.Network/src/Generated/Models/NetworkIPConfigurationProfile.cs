@@ -33,12 +33,12 @@ public partial class NetworkIPConfigurationProfile : ProvisionableConstruct
     /// The reference to the subnet resource to create a container network
     /// interface ip configuration.
     /// </summary>
-    public Subnet Subnet 
+    public SubnetResource Subnet 
     {
         get { Initialize(); return _subnet!; }
         set { Initialize(); AssignOrReplace(ref _subnet, value); }
     }
-    private Subnet? _subnet;
+    private SubnetResource? _subnet;
 
     /// <summary>
     /// The provisioning state of the IP configuration profile resource.
@@ -93,7 +93,7 @@ public partial class NetworkIPConfigurationProfile : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
-        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"], new Subnet("subnet"));
+        _subnet = DefineModelProperty<SubnetResource>("Subnet", ["properties", "subnet"], new SubnetResource("subnetResource"));
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"]);

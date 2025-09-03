@@ -151,11 +151,11 @@ public partial class FrontendIPConfiguration : ProvisionableResource
     /// <summary>
     /// The reference to the subnet resource.
     /// </summary>
-    public Subnet Subnet 
+    public SubnetResource Subnet 
     {
         get { Initialize(); return _subnet!; }
     }
-    private Subnet? _subnet;
+    private SubnetResource? _subnet;
 
     /// <summary>
     /// A list of availability zones denoting the IP allocated for the resource
@@ -202,7 +202,7 @@ public partial class FrontendIPConfiguration : ProvisionableResource
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _publicIPAddress = DefineModelProperty<PublicIPAddress>("PublicIPAddress", ["properties", "publicIPAddress"], new PublicIPAddress("publicIPAddress"), isOutput: true);
         _publicIPPrefixId = DefineProperty<ResourceIdentifier>("PublicIPPrefixId", ["properties", "publicIPPrefix", "id"], isOutput: true);
-        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"], new Subnet("subnet"), isOutput: true);
+        _subnet = DefineModelProperty<SubnetResource>("Subnet", ["properties", "subnet"], new SubnetResource("subnetResource"), isOutput: true);
         _zones = DefineListProperty<string>("Zones", ["zones"], isOutput: true);
     }
 

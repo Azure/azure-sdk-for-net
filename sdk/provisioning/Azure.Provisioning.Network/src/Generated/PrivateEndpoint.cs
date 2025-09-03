@@ -129,12 +129,12 @@ public partial class PrivateEndpoint : ProvisionableResource
     /// <summary>
     /// The ID of the subnet from which the private IP will be allocated.
     /// </summary>
-    public Subnet Subnet 
+    public SubnetResource Subnet 
     {
         get { Initialize(); return _subnet!; }
         set { Initialize(); AssignOrReplace(ref _subnet, value); }
     }
-    private Subnet? _subnet;
+    private SubnetResource? _subnet;
 
     /// <summary>
     /// Resource tags.
@@ -205,7 +205,7 @@ public partial class PrivateEndpoint : ProvisionableResource
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _manualPrivateLinkServiceConnections = DefineListProperty<NetworkPrivateLinkServiceConnection>("ManualPrivateLinkServiceConnections", ["properties", "manualPrivateLinkServiceConnections"]);
         _privateLinkServiceConnections = DefineListProperty<NetworkPrivateLinkServiceConnection>("PrivateLinkServiceConnections", ["properties", "privateLinkServiceConnections"]);
-        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"], new Subnet("subnet"));
+        _subnet = DefineModelProperty<SubnetResource>("Subnet", ["properties", "subnet"], new SubnetResource("subnetResource"));
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _networkInterfaces = DefineListProperty<NetworkInterface>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);

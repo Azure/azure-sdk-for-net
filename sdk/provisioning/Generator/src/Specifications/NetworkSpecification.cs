@@ -4,8 +4,6 @@
 using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -18,8 +16,8 @@ public class NetworkSpecification() :
     protected override void Customize()
     {
         // Patch models
-        //CustomizeModel("Route", m => m.Name = "RouteResource");
-        //CustomizeModel("Subnet", m => m.Name = "SubnetResource");
+        CustomizeResource<RouteResource>(r => r.Name = "RouteResource");
+        CustomizeResource<SubnetResource>(r => r.Name = "SubnetResource");
         RemoveProperty<VirtualNetworkPeeringResource>("SyncRemoteAddressSpace");
 
         // Naming requirements

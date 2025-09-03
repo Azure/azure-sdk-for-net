@@ -7,19 +7,22 @@
 
 using Azure;
 using Azure.Core;
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 using System;
 using System.ComponentModel;
+using System.Net;
 
 namespace Azure.Provisioning.Network;
 
 /// <summary>
-/// Route.
+/// SubnetResource.
 /// </summary>
-public partial class Route : ProvisionableResource
+public partial class SubnetResource : ProvisionableResource
 {
     /// <summary>
-    /// The name of the route.
+    /// The name of the subnet.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -29,7 +32,7 @@ public partial class Route : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The destination CIDR to which the route applies.
+    /// The address prefix for the subnet.
     /// </summary>
     public BicepValue<string> AddressPrefix 
     {
@@ -39,15 +42,46 @@ public partial class Route : ProvisionableResource
     private BicepValue<string>? _addressPrefix;
 
     /// <summary>
-    /// A value indicating whether this route overrides overlapping BGP routes
-    /// regardless of LPM.
+    /// List of address prefixes for the subnet.
     /// </summary>
-    public BicepValue<bool> HasBgpOverride 
+    public BicepList<string> AddressPrefixes 
     {
-        get { Initialize(); return _hasBgpOverride!; }
-        set { Initialize(); _hasBgpOverride!.Assign(value); }
+        get { Initialize(); return _addressPrefixes!; }
+        set { Initialize(); _addressPrefixes!.Assign(value); }
     }
-    private BicepValue<bool>? _hasBgpOverride;
+    private BicepList<string>? _addressPrefixes;
+
+    /// <summary>
+    /// Application gateway IP configurations of virtual network resource.
+    /// </summary>
+    public BicepList<ApplicationGatewayIPConfiguration> ApplicationGatewayIPConfigurations 
+    {
+        get { Initialize(); return _applicationGatewayIPConfigurations!; }
+        set { Initialize(); _applicationGatewayIPConfigurations!.Assign(value); }
+    }
+    private BicepList<ApplicationGatewayIPConfiguration>? _applicationGatewayIPConfigurations;
+
+    /// <summary>
+    /// Set this property to false to disable default outbound connectivity for
+    /// all VMs in the subnet. This property can only be set at the time of
+    /// subnet creation and cannot be updated for an existing subnet.
+    /// </summary>
+    public BicepValue<bool> DefaultOutboundAccess 
+    {
+        get { Initialize(); return _defaultOutboundAccess!; }
+        set { Initialize(); _defaultOutboundAccess!.Assign(value); }
+    }
+    private BicepValue<bool>? _defaultOutboundAccess;
+
+    /// <summary>
+    /// An array of references to the delegations on the subnet.
+    /// </summary>
+    public BicepList<ServiceDelegation> Delegations 
+    {
+        get { Initialize(); return _delegations!; }
+        set { Initialize(); _delegations!.Assign(value); }
+    }
+    private BicepList<ServiceDelegation>? _delegations;
 
     /// <summary>
     /// Resource ID.
@@ -60,25 +94,109 @@ public partial class Route : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// The IP address packets should be forwarded to. Next hop values are only
-    /// allowed in routes where the next hop type is VirtualAppliance.
+    /// Array of IpAllocation which reference this subnet.
     /// </summary>
-    public BicepValue<string> NextHopIPAddress 
+    public BicepList<WritableSubResource> IPAllocations 
     {
-        get { Initialize(); return _nextHopIPAddress!; }
-        set { Initialize(); _nextHopIPAddress!.Assign(value); }
+        get { Initialize(); return _iPAllocations!; }
+        set { Initialize(); _iPAllocations!.Assign(value); }
     }
-    private BicepValue<string>? _nextHopIPAddress;
+    private BicepList<WritableSubResource>? _iPAllocations;
 
     /// <summary>
-    /// The type of Azure hop the packet should be sent to.
+    /// A list of IPAM Pools for allocating IP address prefixes.
     /// </summary>
-    public BicepValue<RouteNextHopType> NextHopType 
+    public BicepList<IpamPoolPrefixAllocation> IpamPoolPrefixAllocations 
     {
-        get { Initialize(); return _nextHopType!; }
-        set { Initialize(); _nextHopType!.Assign(value); }
+        get { Initialize(); return _ipamPoolPrefixAllocations!; }
+        set { Initialize(); _ipamPoolPrefixAllocations!.Assign(value); }
     }
-    private BicepValue<RouteNextHopType>? _nextHopType;
+    private BicepList<IpamPoolPrefixAllocation>? _ipamPoolPrefixAllocations;
+
+    /// <summary>
+    /// Gets or sets Id.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> NatGatewayId 
+    {
+        get { Initialize(); return _natGatewayId!; }
+        set { Initialize(); _natGatewayId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _natGatewayId;
+
+    /// <summary>
+    /// The reference to the NetworkSecurityGroup resource.
+    /// </summary>
+    public NetworkSecurityGroup NetworkSecurityGroup 
+    {
+        get { Initialize(); return _networkSecurityGroup!; }
+        set { Initialize(); AssignOrReplace(ref _networkSecurityGroup, value); }
+    }
+    private NetworkSecurityGroup? _networkSecurityGroup;
+
+    /// <summary>
+    /// Enable or Disable apply network policies on private end point in the
+    /// subnet.
+    /// </summary>
+    public BicepValue<VirtualNetworkPrivateEndpointNetworkPolicy> PrivateEndpointNetworkPolicy 
+    {
+        get { Initialize(); return _privateEndpointNetworkPolicy!; }
+        set { Initialize(); _privateEndpointNetworkPolicy!.Assign(value); }
+    }
+    private BicepValue<VirtualNetworkPrivateEndpointNetworkPolicy>? _privateEndpointNetworkPolicy;
+
+    /// <summary>
+    /// Enable or Disable apply network policies on private link service in the
+    /// subnet.
+    /// </summary>
+    public BicepValue<VirtualNetworkPrivateLinkServiceNetworkPolicy> PrivateLinkServiceNetworkPolicy 
+    {
+        get { Initialize(); return _privateLinkServiceNetworkPolicy!; }
+        set { Initialize(); _privateLinkServiceNetworkPolicy!.Assign(value); }
+    }
+    private BicepValue<VirtualNetworkPrivateLinkServiceNetworkPolicy>? _privateLinkServiceNetworkPolicy;
+
+    /// <summary>
+    /// The reference to the RouteTable resource.
+    /// </summary>
+    public RouteTable RouteTable 
+    {
+        get { Initialize(); return _routeTable!; }
+        set { Initialize(); AssignOrReplace(ref _routeTable, value); }
+    }
+    private RouteTable? _routeTable;
+
+    /// <summary>
+    /// An array of service endpoint policies.
+    /// </summary>
+    public BicepList<ServiceEndpointPolicy> ServiceEndpointPolicies 
+    {
+        get { Initialize(); return _serviceEndpointPolicies!; }
+        set { Initialize(); _serviceEndpointPolicies!.Assign(value); }
+    }
+    private BicepList<ServiceEndpointPolicy>? _serviceEndpointPolicies;
+
+    /// <summary>
+    /// An array of service endpoints.
+    /// </summary>
+    public BicepList<ServiceEndpointProperties> ServiceEndpoints 
+    {
+        get { Initialize(); return _serviceEndpoints!; }
+        set { Initialize(); _serviceEndpoints!.Assign(value); }
+    }
+    private BicepList<ServiceEndpointProperties>? _serviceEndpoints;
+
+    /// <summary>
+    /// Set this property to Tenant to allow sharing subnet with other
+    /// subscriptions in your AAD tenant. This property can only be set if
+    /// defaultOutboundAccess is set to false, both properties can only be set
+    /// if subnet is empty.
+    /// </summary>
+    public BicepValue<SharingScope> SharingScope 
+    {
+        get { Initialize(); return _sharingScope!; }
+        set { Initialize(); _sharingScope!.Assign(value); }
+    }
+    private BicepValue<SharingScope>? _sharingScope;
 
     /// <summary>
     /// A unique read-only string that changes whenever the resource is updated.
@@ -90,7 +208,35 @@ public partial class Route : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
-    /// The provisioning state of the route resource.
+    /// Array of IP configuration profiles which reference this subnet.
+    /// </summary>
+    public BicepList<NetworkIPConfigurationProfile> IPConfigurationProfiles 
+    {
+        get { Initialize(); return _iPConfigurationProfiles!; }
+    }
+    private BicepList<NetworkIPConfigurationProfile>? _iPConfigurationProfiles;
+
+    /// <summary>
+    /// An array of references to the network interface IP configurations using
+    /// subnet.
+    /// </summary>
+    public BicepList<NetworkIPConfiguration> IPConfigurations 
+    {
+        get { Initialize(); return _iPConfigurations!; }
+    }
+    private BicepList<NetworkIPConfiguration>? _iPConfigurations;
+
+    /// <summary>
+    /// An array of references to private endpoints.
+    /// </summary>
+    public BicepList<PrivateEndpoint> PrivateEndpoints 
+    {
+        get { Initialize(); return _privateEndpoints!; }
+    }
+    private BicepList<PrivateEndpoint>? _privateEndpoints;
+
+    /// <summary>
+    /// The provisioning state of the subnet resource.
     /// </summary>
     public BicepValue<NetworkProvisioningState> ProvisioningState 
     {
@@ -99,49 +245,94 @@ public partial class Route : ProvisionableResource
     private BicepValue<NetworkProvisioningState>? _provisioningState;
 
     /// <summary>
-    /// Gets or sets a reference to the parent RouteTable.
+    /// A read-only string identifying the intention of use for this subnet
+    /// based on delegations and other user-defined properties.
     /// </summary>
-    public RouteTable? Parent
+    public BicepValue<string> Purpose 
+    {
+        get { Initialize(); return _purpose!; }
+    }
+    private BicepValue<string>? _purpose;
+
+    /// <summary>
+    /// An array of references to the external resources using subnet.
+    /// </summary>
+    public BicepList<ResourceNavigationLink> ResourceNavigationLinks 
+    {
+        get { Initialize(); return _resourceNavigationLinks!; }
+    }
+    private BicepList<ResourceNavigationLink>? _resourceNavigationLinks;
+
+    /// <summary>
+    /// An array of references to services injecting into this subnet.
+    /// </summary>
+    public BicepList<ServiceAssociationLink> ServiceAssociationLinks 
+    {
+        get { Initialize(); return _serviceAssociationLinks!; }
+    }
+    private BicepList<ServiceAssociationLink>? _serviceAssociationLinks;
+
+    /// <summary>
+    /// Gets or sets a reference to the parent VirtualNetwork.
+    /// </summary>
+    public VirtualNetwork? Parent
     {
         get { Initialize(); return _parent!.Value; }
         set { Initialize(); _parent!.Value = value; }
     }
-    private ResourceReference<RouteTable>? _parent;
+    private ResourceReference<VirtualNetwork>? _parent;
 
     /// <summary>
-    /// Creates a new Route.
+    /// Creates a new SubnetResource.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the Route resource.  This can be used
-    /// to refer to the resource in expressions, but is not the Azure name of
-    /// the resource.  This value can contain letters, numbers, and
+    /// The the Bicep identifier name of the SubnetResource resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the Route.</param>
-    public Route(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/routeTables/routes", resourceVersion ?? "2025-01-01")
+    /// <param name="resourceVersion">Version of the SubnetResource.</param>
+    public SubnetResource(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Network/virtualNetworks/subnets", resourceVersion ?? "2025-01-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of Route.
+    /// Define all the provisionable properties of SubnetResource.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _addressPrefix = DefineProperty<string>("AddressPrefix", ["properties", "addressPrefix"]);
-        _hasBgpOverride = DefineProperty<bool>("HasBgpOverride", ["properties", "hasBgpOverride"]);
+        _addressPrefixes = DefineListProperty<string>("AddressPrefixes", ["properties", "addressPrefixes"]);
+        _applicationGatewayIPConfigurations = DefineListProperty<ApplicationGatewayIPConfiguration>("ApplicationGatewayIPConfigurations", ["properties", "applicationGatewayIPConfigurations"]);
+        _defaultOutboundAccess = DefineProperty<bool>("DefaultOutboundAccess", ["properties", "defaultOutboundAccess"]);
+        _delegations = DefineListProperty<ServiceDelegation>("Delegations", ["properties", "delegations"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
-        _nextHopIPAddress = DefineProperty<string>("NextHopIPAddress", ["properties", "nextHopIpAddress"]);
-        _nextHopType = DefineProperty<RouteNextHopType>("NextHopType", ["properties", "nextHopType"]);
+        _iPAllocations = DefineListProperty<WritableSubResource>("IPAllocations", ["properties", "ipAllocations"]);
+        _ipamPoolPrefixAllocations = DefineListProperty<IpamPoolPrefixAllocation>("IpamPoolPrefixAllocations", ["properties", "ipamPoolPrefixAllocations"]);
+        _natGatewayId = DefineProperty<ResourceIdentifier>("NatGatewayId", ["properties", "natGateway", "id"]);
+        _networkSecurityGroup = DefineModelProperty<NetworkSecurityGroup>("NetworkSecurityGroup", ["properties", "networkSecurityGroup"], new NetworkSecurityGroup("networkSecurityGroup"));
+        _privateEndpointNetworkPolicy = DefineProperty<VirtualNetworkPrivateEndpointNetworkPolicy>("PrivateEndpointNetworkPolicy", ["properties", "privateEndpointNetworkPolicies"]);
+        _privateLinkServiceNetworkPolicy = DefineProperty<VirtualNetworkPrivateLinkServiceNetworkPolicy>("PrivateLinkServiceNetworkPolicy", ["properties", "privateLinkServiceNetworkPolicies"]);
+        _routeTable = DefineModelProperty<RouteTable>("RouteTable", ["properties", "routeTable"], new RouteTable("routeTable"));
+        _serviceEndpointPolicies = DefineListProperty<ServiceEndpointPolicy>("ServiceEndpointPolicies", ["properties", "serviceEndpointPolicies"]);
+        _serviceEndpoints = DefineListProperty<ServiceEndpointProperties>("ServiceEndpoints", ["properties", "serviceEndpoints"]);
+        _sharingScope = DefineProperty<SharingScope>("SharingScope", ["properties", "sharingScope"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _iPConfigurationProfiles = DefineListProperty<NetworkIPConfigurationProfile>("IPConfigurationProfiles", ["properties", "ipConfigurationProfiles"], isOutput: true);
+        _iPConfigurations = DefineListProperty<NetworkIPConfiguration>("IPConfigurations", ["properties", "ipConfigurations"], isOutput: true);
+        _privateEndpoints = DefineListProperty<PrivateEndpoint>("PrivateEndpoints", ["properties", "privateEndpoints"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _parent = DefineResource<RouteTable>("Parent", ["parent"], isRequired: true);
+        _purpose = DefineProperty<string>("Purpose", ["properties", "purpose"], isOutput: true);
+        _resourceNavigationLinks = DefineListProperty<ResourceNavigationLink>("ResourceNavigationLinks", ["properties", "resourceNavigationLinks"], isOutput: true);
+        _serviceAssociationLinks = DefineListProperty<ServiceAssociationLink>("ServiceAssociationLinks", ["properties", "serviceAssociationLinks"], isOutput: true);
+        _parent = DefineResource<VirtualNetwork>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
-    /// Supported Route resource versions.
+    /// Supported SubnetResource resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -487,21 +678,21 @@ public partial class Route : ProvisionableResource
     }
 
     /// <summary>
-    /// Creates a reference to an existing Route.
+    /// Creates a reference to an existing SubnetResource.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the Route resource.  This can be used
-    /// to refer to the resource in expressions, but is not the Azure name of
-    /// the resource.  This value can contain letters, numbers, and
+    /// The the Bicep identifier name of the SubnetResource resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the Route.</param>
-    /// <returns>The existing Route resource.</returns>
-    public static Route FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the SubnetResource.</param>
+    /// <returns>The existing SubnetResource resource.</returns>
+    public static SubnetResource FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
-    /// Get the requirements for naming this Route resource.
+    /// Get the requirements for naming this SubnetResource resource.
     /// </summary>
     /// <returns>Naming requirements.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]

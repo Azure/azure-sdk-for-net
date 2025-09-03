@@ -170,12 +170,12 @@ public partial class VirtualNetwork : ProvisionableResource
     /// <summary>
     /// A list of subnets in a Virtual Network.
     /// </summary>
-    public BicepList<Subnet> Subnets 
+    public BicepList<SubnetResource> Subnets 
     {
         get { Initialize(); return _subnets!; }
         set { Initialize(); _subnets!.Assign(value); }
     }
-    private BicepList<Subnet>? _subnets;
+    private BicepList<SubnetResource>? _subnets;
 
     /// <summary>
     /// Resource tags.
@@ -277,7 +277,7 @@ public partial class VirtualNetwork : ProvisionableResource
         _iPAllocations = DefineListProperty<WritableSubResource>("IPAllocations", ["properties", "ipAllocations"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _privateEndpointVnetPolicy = DefineProperty<PrivateEndpointVnetPolicy>("PrivateEndpointVnetPolicy", ["properties", "privateEndpointVNetPolicies"]);
-        _subnets = DefineListProperty<Subnet>("Subnets", ["properties", "subnets"]);
+        _subnets = DefineListProperty<SubnetResource>("Subnets", ["properties", "subnets"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _virtualNetworkPeerings = DefineListProperty<VirtualNetworkPeering>("VirtualNetworkPeerings", ["properties", "virtualNetworkPeerings"]);
         _defaultPublicNatGatewayId = DefineProperty<ResourceIdentifier>("DefaultPublicNatGatewayId", ["properties", "defaultPublicNatGateway", "id"], isOutput: true);

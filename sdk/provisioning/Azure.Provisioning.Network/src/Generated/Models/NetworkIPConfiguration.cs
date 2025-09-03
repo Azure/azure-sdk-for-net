@@ -52,12 +52,12 @@ public partial class NetworkIPConfiguration : ProvisionableConstruct
     /// <summary>
     /// The reference to the subnet resource.
     /// </summary>
-    public Subnet Subnet 
+    public SubnetResource Subnet 
     {
         get { Initialize(); return _subnet!; }
         set { Initialize(); AssignOrReplace(ref _subnet, value); }
     }
-    private Subnet? _subnet;
+    private SubnetResource? _subnet;
 
     /// <summary>
     /// The reference to the public IP resource.
@@ -123,7 +123,7 @@ public partial class NetworkIPConfiguration : ProvisionableConstruct
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _privateIPAddress = DefineProperty<string>("PrivateIPAddress", ["properties", "privateIPAddress"]);
         _privateIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PrivateIPAllocationMethod", ["properties", "privateIPAllocationMethod"]);
-        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"], new Subnet("subnet"));
+        _subnet = DefineModelProperty<SubnetResource>("Subnet", ["properties", "subnet"], new SubnetResource("subnetResource"));
         _publicIPAddress = DefineModelProperty<PublicIPAddress>("PublicIPAddress", ["properties", "publicIPAddress"], new PublicIPAddress("publicIPAddress"));
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
