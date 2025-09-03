@@ -392,4 +392,25 @@ directive:
           "$ref": "#/definitions/DppIdentityDetails",
           "description": "Input Managed Identity Details"
         };
+      $.BackupVaultResource.properties.eTag =  {
+          "description": "Optional ETag.",
+          "type": "string"
+        };
+  - from: dataprotection.json
+    where: $.definitions
+    transform: >
+      $.BackupInstanceResource.properties.tags = {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Proxy Resource tags.",
+          "type": "object"
+        };
+  - from: dataprotection.json
+    where: $.definitions
+    transform: >
+      $.ResourceGuardResource.properties.eTag =  {
+          "description": "Optional ETag.",
+          "type": "string"
+        };
 ```

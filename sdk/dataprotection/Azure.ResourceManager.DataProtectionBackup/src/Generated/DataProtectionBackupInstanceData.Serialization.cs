@@ -43,6 +43,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsCollectionDefined(Tag))
+            {
+                writer.WritePropertyName("tag"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tag)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
         }
 
         DataProtectionBackupInstanceData IJsonModel<DataProtectionBackupInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -66,6 +77,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 return null;
             }
             DataProtectionBackupInstanceProperties properties = default;
+            IDictionary<string, string> tag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -81,6 +93,20 @@ namespace Azure.ResourceManager.DataProtectionBackup
                         continue;
                     }
                     properties = DataProtectionBackupInstanceProperties.DeserializeDataProtectionBackupInstanceProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("tag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tag = dictionary;
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -119,6 +145,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 type,
                 systemData,
                 properties,
+                tag ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

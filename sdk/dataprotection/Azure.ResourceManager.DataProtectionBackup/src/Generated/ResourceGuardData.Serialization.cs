@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
         }
 
         ResourceGuardData IJsonModel<ResourceGuardData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -66,6 +71,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 return null;
             }
             ResourceGuardProperties properties = default;
+            ETag? eTag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -83,6 +89,15 @@ namespace Azure.ResourceManager.DataProtectionBackup
                         continue;
                     }
                     properties = ResourceGuardProperties.DeserializeResourceGuardProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("eTag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -142,6 +157,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                eTag,
                 serializedAdditionalRawData);
         }
 

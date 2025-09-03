@@ -65,10 +65,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> ResourceGuardResource properties. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceGuardData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceGuardProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ResourceGuardData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceGuardProperties properties, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            ETag = eTag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -79,5 +81,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> ResourceGuardResource properties. </summary>
         public ResourceGuardProperties Properties { get; set; }
+        /// <summary> Optional ETag. </summary>
+        public ETag? ETag { get; set; }
     }
 }

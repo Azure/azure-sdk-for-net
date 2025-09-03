@@ -70,10 +70,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> BackupVaultResource properties. </param>
+        /// <param name="identity"> Input Managed Identity Details. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataProtectionBackupVaultProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DataProtectionBackupVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataProtectionBackupVaultProperties properties, ManagedServiceIdentity identity, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Identity = identity;
+            ETag = eTag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -84,5 +88,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> BackupVaultResource properties. </summary>
         public DataProtectionBackupVaultProperties Properties { get; set; }
+        /// <summary> Input Managed Identity Details. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Optional ETag. </summary>
+        public ETag? ETag { get; set; }
     }
 }
