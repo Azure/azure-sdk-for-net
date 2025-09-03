@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="sourceResourceGroup"> Resource Group Name of the Datasource. </param>
         /// <param name="sourceSubscriptionId"> SubscriptionId corresponding to the DataSource. </param>
         /// <param name="startOn"> StartTime of the job(in UTC). </param>
-        /// <param name="status"> Status of the job like InProgress/Success/Failed/Cancelled/SuccessWithWarning. </param>
+        /// <param name="status"> Status of the job like InProgress/Completed/Failed/Cancelled/CompletedWithWarnings/Cancelling/Paused. </param>
         /// <param name="subscriptionId"> Subscription Id of the corresponding backup vault. </param>
         /// <param name="supportedActions"> List of supported actions. </param>
         /// <param name="vaultName"> Name of the vault. </param>
@@ -127,15 +127,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="sourceResourceGroup"> Resource Group Name of the Datasource. </param>
         /// <param name="sourceSubscriptionId"> SubscriptionId corresponding to the DataSource. </param>
         /// <param name="startOn"> StartTime of the job(in UTC). </param>
-        /// <param name="status"> Status of the job like InProgress/Success/Failed/Cancelled/SuccessWithWarning. </param>
+        /// <param name="status"> Status of the job like InProgress/Completed/Failed/Cancelled/CompletedWithWarnings/Cancelling/Paused. </param>
         /// <param name="subscriptionId"> Subscription Id of the corresponding backup vault. </param>
         /// <param name="supportedActions"> List of supported actions. </param>
         /// <param name="vaultName"> Name of the vault. </param>
-        /// <param name="eTag"></param>
+        /// <param name="etag"></param>
         /// <param name="sourceDataStoreName"></param>
         /// <param name="destinationDataStoreName"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan? duration, DateTimeOffset? endOn, IReadOnlyList<ResponseError> errorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, Uri progressUri, string rehydrationPriority, string restoreType, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IList<string> supportedActions, string vaultName, ETag? eTag, string sourceDataStoreName, string destinationDataStoreName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan? duration, DateTimeOffset? endOn, IReadOnlyList<ResponseError> errorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, Uri progressUri, string rehydrationPriority, string restoreType, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IList<string> supportedActions, string vaultName, ETag? etag, string sourceDataStoreName, string destinationDataStoreName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActivityId = activityId;
             BackupInstanceFriendlyName = backupInstanceFriendlyName;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             SubscriptionId = subscriptionId;
             SupportedActions = supportedActions;
             VaultName = vaultName;
-            ETag = eTag;
+            ETag = etag;
             SourceDataStoreName = sourceDataStoreName;
             DestinationDataStoreName = destinationDataStoreName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string SourceSubscriptionId { get; set; }
         /// <summary> StartTime of the job(in UTC). </summary>
         public DateTimeOffset StartOn { get; set; }
-        /// <summary> Status of the job like InProgress/Success/Failed/Cancelled/SuccessWithWarning. </summary>
+        /// <summary> Status of the job like InProgress/Completed/Failed/Cancelled/CompletedWithWarnings/Cancelling/Paused. </summary>
         public string Status { get; set; }
         /// <summary> Subscription Id of the corresponding backup vault. </summary>
         public string SubscriptionId { get; set; }

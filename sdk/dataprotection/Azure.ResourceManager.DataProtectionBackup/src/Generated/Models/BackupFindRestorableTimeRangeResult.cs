@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BackupFindRestorableTimeRangeResult"/>. </summary>
-        public BackupFindRestorableTimeRangeResult()
+        internal BackupFindRestorableTimeRangeResult()
         {
         }
 
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> AzureBackupFindRestorableTimeRangesResponseResource properties. </summary>
-        public BackupFindRestorableTimeRangeResultProperties Properties { get; set; }
+        public BackupFindRestorableTimeRangeResultProperties Properties { get; }
     }
 }

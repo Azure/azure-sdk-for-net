@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRetentionTag"/>. </summary>
-        /// <param name="eTag"> Retention Tag version. </param>
+        /// <param name="etag"> Retention Tag version. </param>
         /// <param name="id"> Retention Tag version. </param>
         /// <param name="tagName"> Retention Tag Name to relate it to retention rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupRetentionTag(ETag? eTag, string id, string tagName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataProtectionBackupRetentionTag(ETag? etag, string id, string tagName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ETag = eTag;
+            ETag = etag;
             Id = id;
             TagName = tagName;
             _serializedAdditionalRawData = serializedAdditionalRawData;

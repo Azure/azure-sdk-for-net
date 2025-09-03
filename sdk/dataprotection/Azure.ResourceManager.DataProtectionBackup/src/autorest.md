@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: DataProtectionBackup
 namespace: Azure.ResourceManager.DataProtectionBackup
-require: https://github.com/Azure/azure-rest-api-specs/blob/a6ba164815464151a4adb687ea12a7a7090ed7fe/specification/dataprotection/resource-manager/readme.md
-#tag: package-2024-04
+require: https://github.com/Azure/azure-rest-api-specs/blob/b690e1f36c59d1b9c619205b6876c046ea00b7cb/specification/dataprotection/resource-manager/readme.md
+#tag: package-2025-07-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -116,10 +116,12 @@ rename-mapping:
   RestorableTimeRange.startTime: StartOn|date-time
   RestorableTimeRange.endTime: EndOn|date-time
   SyncBackupInstanceRequest: BackupInstanceSyncContent
+  AzureBackupRehydrationRequest.rehydrationRetentionDuration: -|duration
   AzureBackupRehydrationRequest: BackupRehydrationContent
   AzureBackupRestoreRequest: BackupRestoreContent
   AzureBackupRestoreRequest.sourceResourceId: -|arm-id
   AzureBackupRecoveryPointBasedRestoreRequest: BackupRecoveryPointBasedRestoreContent
+  AzureBackupRestoreWithRehydrationRequest.rehydrationRetentionDuration: -|duration
   AzureBackupRestoreWithRehydrationRequest: BackupRestoreWithRehydrationContent
   AzureBackupRecoveryTimeBasedRestoreRequest: BackupRecoveryTimeBasedRestoreContent
   AzureBackupRecoveryTimeBasedRestoreRequest.recoveryPointTime: RecoverOn|date-time
@@ -145,6 +147,7 @@ rename-mapping:
   AdHocBackupRuleOptions: AdhocBackupRules
   AdHocBackupRuleOptions.triggerOption: BackupTrigger
   AdhocBackupTriggerOption: AdhocBackupTriggerSetting
+  DeleteOption.duration: -|duration
   DeleteOption: DataProtectionBackupDeleteSetting
   AbsoluteDeleteOption: DataProtectionBackupAbsoluteDeleteSetting
   AbsoluteMarker: BackupAbsoluteMarker
@@ -203,6 +206,7 @@ rename-mapping:
   StorageSetting.datastoreType: DataStoreType
   CopyOption: DataProtectionBackupCopySetting
   CopyOnExpiryOption: CopyOnExpirySetting
+  CustomCopyOption.duration: -|duration
   CustomCopyOption: CustomCopySetting
   ImmediateCopyOption: ImmediateCopySetting
   Day: DataProtectionBackupDay
@@ -276,17 +280,9 @@ rename-mapping:
   EncryptionState: BackupVaultEncryptionState
   IdentityType: BackupVaultCmkKekIdentityType
   InfrastructureEncryptionState: BackupVaultInfrastructureEncryptionState
+  ClientDiscoveryForLogSpecification.blobDuration: -|duration
 
 directive:
-# Correct the type of properties
-  - from: dataprotection.json
-    where: $.definitions
-    transform: >
-      $.AzureBackupRehydrationRequest.properties.rehydrationRetentionDuration['format'] = 'duration';
-      $.AzureBackupRestoreWithRehydrationRequest.properties.rehydrationRetentionDuration['format'] = 'duration';
-      $.DeleteOption.properties.duration['format'] = 'duration';
-      $.CustomCopyOption.properties.duration['format'] = 'duration';
-      $.ClientDiscoveryForLogSpecification.properties.blobDuration['format'] = 'duration';
 # Remove all the operation related methods
   - remove-operation: OperationResult_Get
   - remove-operation: OperationStatus_Get
@@ -389,4 +385,11 @@ directive:
     where: $.parameters
     transform: >
       delete $.SubscriptionIdParameter.format;
+  - from: dataprotection.json
+    where: $.definitions
+    transform: >
+      $.BackupVaultResource.properties.identity = {
+          "$ref": "#/definitions/DppIdentityDetails",
+          "description": "Input Managed Identity Details"
+        };
 ```

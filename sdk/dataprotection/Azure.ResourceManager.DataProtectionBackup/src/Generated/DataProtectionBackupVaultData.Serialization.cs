@@ -40,16 +40,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
-            }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
         }
 
         DataProtectionBackupVaultData IJsonModel<DataProtectionBackupVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,8 +63,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 return null;
             }
             DataProtectionBackupVaultProperties properties = default;
-            ManagedServiceIdentity identity = default;
-            ETag? eTag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -88,24 +76,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 if (property.NameEquals("properties"u8))
                 {
                     properties = DataProtectionBackupVaultProperties.DeserializeDataProtectionBackupVaultProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataProtectionBackupContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("eTag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -165,8 +135,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                identity,
-                eTag,
                 serializedAdditionalRawData);
         }
 
