@@ -107,7 +107,6 @@ public class BasicContainerServiceTests
                 type: 'SystemAssigned'
               }
             }
-            """)
-            .Lint();
+            """);
     }
 }

@@ -58,7 +58,6 @@ public class BasicApplicationInsightsTests
             output appInsightsName string = appInsights.name
 
             output appInsightsKey string = appInsights.properties.InstrumentationKey
-            """)
-            .Lint();
+            """);
     }
 }

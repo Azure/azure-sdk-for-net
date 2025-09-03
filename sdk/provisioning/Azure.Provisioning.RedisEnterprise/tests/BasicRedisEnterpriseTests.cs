@@ -109,7 +109,6 @@ public class BasicRedisEnterpriseTests
               }
               parent: redisDatabase
             }
-            """)
-            .Lint();
+            """);
     }
 }

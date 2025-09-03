@@ -60,7 +60,6 @@ public class BasicRedisTests
                 minimumTlsVersion: '1.2'
               }
             }
-            """)
-            .Lint();
+            """);
     }
 }

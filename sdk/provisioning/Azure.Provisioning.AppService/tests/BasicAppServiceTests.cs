@@ -11,8 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Provisioning.AppService.Tests;
 
-public class BasicAppServiceTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true */)
+public class BasicAppServiceTests
 {
     internal static Trycep CreateBasicFunctionAppTest()
     {
@@ -210,7 +209,6 @@ public class BasicAppServiceTests(bool async)
               }
               kind: 'functionapp'
             }
-            """)
-            .Lint();
+            """);
     }
 }

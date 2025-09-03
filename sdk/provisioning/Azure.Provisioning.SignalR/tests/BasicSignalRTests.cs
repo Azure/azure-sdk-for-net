@@ -8,8 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Provisioning.SignalR.Tests;
 
-public class BasicSignalRTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicSignalRTests
 {
     internal static Trycep CreateSignalRServiceTest()
     {
@@ -162,7 +161,6 @@ public class BasicSignalRTests(bool async)
                 capacity: 1
               }
             }
-            """)
-            .Lint();
+            """);
     }
 }

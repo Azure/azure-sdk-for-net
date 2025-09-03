@@ -2,12 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.TestFramework;
+using System.Threading.Tasks;
 using Azure.Communication.Identity;
-using static Azure.Communication.Rooms.RoomsClientOptions;
-using Azure.Core.TestFramework.Models;
 using Azure.Communication.Tests;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Identity;
+using Microsoft.Extensions.Options;
+using static Azure.Communication.Rooms.RoomsClientOptions;
 
 namespace Azure.Communication.Rooms.Tests
 {
@@ -55,7 +59,7 @@ namespace Azure.Communication.Rooms.Tests
         /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
         protected RoomsClient CreateClientWithConnectionString(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2024_04_15)
         {
-            var client = new RoomsClient(
+            var client =new RoomsClient(
                     TestEnvironment.CommunicationConnectionStringRooms,
                     CreateRoomsClientOptionsWithCorrelationVectorLogs(apiVersion));
 
@@ -72,9 +76,10 @@ namespace Azure.Communication.Rooms.Tests
         protected RoomsClient CreateClientWithAzureKeyCredential(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2024_04_15)
         {
             var client = new RoomsClient(
-                    TestEnvironment.CommunicationRoomsEndpoint,
-                     new AzureKeyCredential(TestEnvironment.CommunicationRoomsAccessKey),
-                    CreateRoomsClientOptionsWithCorrelationVectorLogs(apiVersion));
+                TestEnvironment.CommunicationRoomsTrafficManagerUrl,
+                new AzureKeyCredential(TestEnvironment.CommunicationRoomsAccessKey),
+                CreateRoomsClientOptionsWithCorrelationVectorLogs(apiVersion,
+                    TestEnvironment.CommunicationRoomsEndpoint));
 
             return isInstrumented ? InstrumentClient(client) : client;
         }
@@ -118,11 +123,32 @@ namespace Azure.Communication.Rooms.Tests
                     TestEnvironment.CommunicationConnectionStringRooms,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2023_10_01))));
 
-        private RoomsClientOptions CreateRoomsClientOptionsWithCorrelationVectorLogs(ServiceVersion version)
+        private RoomsClientOptions CreateRoomsClientOptionsWithCorrelationVectorLogs(ServiceVersion version, Uri? resourceUrl = null)
         {
             RoomsClientOptions roomsClientOptions = new RoomsClientOptions(version);
             roomsClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
+            if (resourceUrl is not null)
+            {
+                roomsClientOptions.AddPolicy(new OverrideHostEndpointPolicy(resourceUrl), HttpPipelinePosition.PerCall);
+            }
+
             return InstrumentClientOptions(roomsClientOptions);
+        }
+
+        private class OverrideHostEndpointPolicy(Uri overrideEndpoint) : HttpPipelinePolicy
+        {
+            public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+                => await ProcessNextAsync(WithOverrideHost(message), pipeline);
+
+            public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+                => ProcessNext(WithOverrideHost(message), pipeline);
+
+            private HttpMessage WithOverrideHost(HttpMessage message)
+            {
+                message.Request.Headers.Add("x-ms-host", overrideEndpoint.Host);
+                message.SetProperty("uriToSignRequestWith", new Uri(overrideEndpoint, message.Request.Uri.PathAndQuery));
+                return message;
+            }
         }
     }
 }

@@ -95,7 +95,6 @@ public class BasicServiceBusTests
               }
               parent: sb
             }
-            """)
-            .Lint();
+            """);
     }
 }

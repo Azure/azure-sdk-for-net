@@ -7,8 +7,7 @@ using NUnit.Framework;
 
 namespace Azure.Provisioning.Search.Tests;
 
-public class BasicSearchTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicSearchTests
 {
     internal static Trycep CreateSearchServiceTest()
     {
@@ -55,7 +54,6 @@ public class BasicSearchTests(bool async)
                 name: 'standard'
               }
             }
-            """)
-            .Lint();
+            """);
     }
 }

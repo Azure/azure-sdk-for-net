@@ -96,7 +96,6 @@ public class BasicAppConfigurationTests
               }
               parent: configStore
             }
-            """)
-            .Lint();
+            """);
     }
 }

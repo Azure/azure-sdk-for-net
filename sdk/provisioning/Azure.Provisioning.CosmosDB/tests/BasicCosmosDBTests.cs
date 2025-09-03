@@ -141,7 +141,6 @@ public class BasicCosmosDBTests
             output containerName string = containerName
 
             output containerId string = container.id
-            """)
-            .Lint();
+            """);
     }
 }

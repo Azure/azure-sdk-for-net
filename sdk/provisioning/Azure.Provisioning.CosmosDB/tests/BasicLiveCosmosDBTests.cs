@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Provisioning.Expressions;
+using Azure.Core.TestFramework;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -13,10 +13,12 @@ public class BasicLiveCosmosDBTests(bool async)
 {
     [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.documentdb/cosmosdb-free/main.bicep")]
+    [LiveOnly]
     public async Task CreateCosmosSqlDB()
     {
         await using Trycep test = BasicCosmosDBTests.CreateCosmosSqlDBTest();
         await test.SetupLiveCalls(this)
+            .Lint()
             .ValidateAsync();
     }
 }

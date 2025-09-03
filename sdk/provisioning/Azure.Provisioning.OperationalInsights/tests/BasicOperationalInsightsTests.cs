@@ -2,16 +2,13 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.OperationalInsights.Tests;
 
-public class BasicOperationalInsightsTests(bool async)
-    : ProvisioningTestBase(async/*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicOperationalInsightsTests
 {
     internal static Trycep CreateWorkspaceTest()
     {
@@ -58,7 +55,6 @@ public class BasicOperationalInsightsTests(bool async)
                 }
               }
             }
-            """)
-            .Lint();
+            """);
     }
 }

@@ -100,7 +100,6 @@ public class BasicSqlTests
               }
               parent: sql
             }
-            """)
-            .Lint();
+            """);
     }
 }

@@ -163,8 +163,7 @@ public class BasicPostgreSqlTests
               }
               parent: server
             }
-            """)
-            .Lint();
+            """);
     }
 
     // this test is only a unit test that validates the "convenience property" StorageSizeInGB would not override the actual
@@ -189,7 +188,7 @@ public class BasicPostgreSqlTests
             """
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
-            
+
             resource testServer 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' = {
               name: take('testserver-${uniqueString(resourceGroup().id)}', 63)
               location: location
