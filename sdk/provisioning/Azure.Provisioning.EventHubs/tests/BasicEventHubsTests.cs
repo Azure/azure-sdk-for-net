@@ -94,7 +94,6 @@ public class BasicEventHubsTests
               }
               parent: hub
             }
-            """)
-            .Lint();
+            """);
     }
 }

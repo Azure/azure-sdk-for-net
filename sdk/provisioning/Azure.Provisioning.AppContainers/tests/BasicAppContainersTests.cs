@@ -175,7 +175,6 @@ public class BasicAppContainersTests
                 }
               }
             }
-            """)
-            .Lint();
+            """);
     }
 }

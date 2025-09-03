@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -12,10 +13,12 @@ public class BasicLiveKeyVaultTests(bool async)
 {
     [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.keyvault/key-vault-create/main.bicep")]
+    [LiveOnly]
     public async Task CreateKeyVaultAndSecret()
     {
         await using Trycep test = BasicKeyVaultTests.CreateKeyVaultAndSecretTest();
         await test.SetupLiveCalls(this)
+            .Lint()
             .ValidateAsync();
     }
 }

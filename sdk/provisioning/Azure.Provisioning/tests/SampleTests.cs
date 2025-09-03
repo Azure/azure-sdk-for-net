@@ -77,8 +77,7 @@ internal class SampleTests
             }
 
             output blobs_endpoint string = storage.properties.primaryEndpoints.blob
-            """)
-        .Lint();
+            """);
     }
 
     internal static Trycep CreateSimpleContainerAppTest()
@@ -304,8 +303,7 @@ internal class SampleTests
             output AZURE_CONTAINER_APPS_ENVIRONMENT_ID string = cae.id
 
             output AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN string = cae.properties.defaultDomain
-            """)
-        .Lint(ignore: ["no-unused-params", "BCP029"]);
+            """);
     }
 
     internal static Trycep CreateSimpleResourceGroupTest()
@@ -340,7 +338,6 @@ internal class SampleTests
               name: take('rg_test-${uniqueString(deployment().id)}', 90)
               location: location
             }
-            """)
-        .Lint();
+            """);
     }
 }

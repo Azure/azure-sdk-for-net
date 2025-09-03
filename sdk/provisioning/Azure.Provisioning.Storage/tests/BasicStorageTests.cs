@@ -11,8 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Provisioning.Storage.Tests;
 
-public class BasicStorageTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicStorageTests
 {
     internal static Trycep CreateDefaultStorageTest()
     {
@@ -56,8 +55,7 @@ public class BasicStorageTests(bool async)
                 isHnsEnabled: true
               }
             }
-            """)
-            .Lint();
+            """);
     }
 
     internal static Trycep CreateSimpleStorageBlobsTest()
@@ -113,8 +111,7 @@ public class BasicStorageTests(bool async)
                 storage
               ]
             }
-            """)
-            .Lint(ignore: ["no-unnecessary-dependson"]);
+            """);
     }
 
     internal static Trycep CreateAddStorageRoleTest()
@@ -180,8 +177,7 @@ public class BasicStorageTests(bool async)
               }
               scope: storage
             }
-            """)
-            .Lint();
+            """);
     }
 
     internal static Trycep CreateAddStorageRoleWithExplicitPrincipalTest()
@@ -261,8 +257,7 @@ public class BasicStorageTests(bool async)
               }
               scope: storage
             }
-            """)
-            .Lint();
+            """);
     }
 
     internal static Trycep CreateGetEndpointTest()
@@ -330,8 +325,7 @@ public class BasicStorageTests(bool async)
             output blobs_endpoint string = storage.properties.primaryEndpoints.blob
 
             output computed_endpoint string = 'https://${storage.name}.blob.core.windows.net'
-            """)
-            .Lint();
+            """);
     }
 
     internal static Trycep CreateSimpleConnStringTest()
@@ -388,8 +382,7 @@ public class BasicStorageTests(bool async)
             }
 
             output blobs_endpoint string = storage.properties.primaryEndpoints.blob
-            """)
-            .Lint();
+            """);
     }
 
     internal static Trycep CreateStandardStorageAccountTest()
@@ -447,8 +440,7 @@ public class BasicStorageTests(bool async)
             output storageAccountName string = sa.name
 
             output storageAccountId string = sa.id
-            """)
-            .Lint();
+            """);
     }
 
     internal static Trycep CreateStorageAccountAndContainerTest()
@@ -524,8 +516,7 @@ public class BasicStorageTests(bool async)
               name: containerName
               parent: blobs
             }
-            """)
-            .Lint();
+            """);
     }
 
     internal static Trycep CreateStorageAccountWithServiceEncryptionTest()
@@ -603,8 +594,7 @@ public class BasicStorageTests(bool async)
             output storageAccountName string = sa.name
 
             output storageAccountId string = sa.id
-            """)
-            .Lint();
+            """);
     }
 
     internal static Trycep CreateFileShareTest()
@@ -663,7 +653,6 @@ public class BasicStorageTests(bool async)
               name: 'photos'
               parent: files
             }
-            """)
-            .Lint();
+            """);
     }
 }

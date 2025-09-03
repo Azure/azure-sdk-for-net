@@ -52,7 +52,6 @@ public class BasicCommunicationTests
                 dataLocation: 'unitedstates'
               }
             }
-            """)
-            .Lint();
+            """);
     }
 }

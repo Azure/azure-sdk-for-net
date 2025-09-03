@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -12,10 +13,12 @@ public class BasicLiveSearchTests(bool async)
 {
     [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.search/azure-search-create/main.bicep")]
+    [LiveOnly]
     public async Task CreateSearchService()
     {
         await using Trycep test = BasicSearchTests.CreateSearchServiceTest();
         await test.SetupLiveCalls(this)
+            .Lint()
             .DeployAsync();
     }
 }

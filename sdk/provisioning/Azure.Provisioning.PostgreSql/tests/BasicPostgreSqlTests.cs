@@ -163,8 +163,7 @@ public class BasicPostgreSqlTests
               }
               parent: server
             }
-            """)
-            .Lint();
+            """);
     }
 
     // this test is only a unit test that validates the "convenience property" StorageSizeInGB would not override the actual

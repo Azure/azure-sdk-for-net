@@ -119,7 +119,6 @@ public class BasicEventGridTests
               }
               parent: topic
             }
-            """)
-            .Lint();
+            """);
     }
 }

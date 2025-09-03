@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -12,10 +13,12 @@ public class BasicLiveEventGridTests(bool async)
 {
     [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.eventgrid/event-grid-subscription-and-storage/main.bicep")]
+    [LiveOnly]
     public async Task CreateEventGridForBlobs()
     {
         await using Trycep test = BasicEventGridTests.CreateEventGridForBlobsTest();
         await test.SetupLiveCalls(this)
+            .Lint()
             .ValidateAsync();
     }
 }

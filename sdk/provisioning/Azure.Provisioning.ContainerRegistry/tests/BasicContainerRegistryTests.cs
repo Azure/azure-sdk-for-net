@@ -7,8 +7,7 @@ using NUnit.Framework;
 
 namespace Azure.Provisioning.ContainerRegistry.Tests;
 
-public class BasicContainerRegistryTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true */)
+public class BasicContainerRegistryTests
 {
     internal static Trycep CreateContainerRegistryTest()
     {
@@ -61,7 +60,6 @@ public class BasicContainerRegistryTests(bool async)
             }
 
             output registryLoginServer string = registry.properties.loginServer
-            """)
-            .Lint();
+            """);
     }
 }

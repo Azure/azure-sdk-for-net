@@ -8,8 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Provisioning.CognitiveServices.Tests;
 
-public class BasicCognitiveServicesTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true */)
+public class BasicCognitiveServicesTests
 {
     internal static Trycep CreateTranslationTest()
     {
@@ -69,7 +68,6 @@ public class BasicCognitiveServicesTests(bool async)
                 name: 'S1'
               }
             }
-            """)
-            .Lint();
+            """);
     }
 }

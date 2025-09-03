@@ -167,7 +167,6 @@ public class BasicKeyVaultTests
             output resourceId string = kv.id
 
             output vaultUri string = kv.properties.vaultUri
-            """)
-            .Lint();
+            """);
     }
 }

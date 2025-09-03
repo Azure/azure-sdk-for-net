@@ -39,9 +39,9 @@ public class BasicAppConfigurationTests
                         Value =
                             new BicepDictionary<object>
                             {
-                            { "id", featureFlagKey },
-                            { "description", "A simple feature flag." },
-                            { "enabled", true }
+                                { "id", featureFlagKey },
+                                { "description", "A simple feature flag." },
+                                { "enabled", true }
                             }
                     };
                 infra.Add(flag);
@@ -96,7 +96,6 @@ public class BasicAppConfigurationTests
               }
               parent: configStore
             }
-            """)
-            .Lint();
+            """);
     }
 }

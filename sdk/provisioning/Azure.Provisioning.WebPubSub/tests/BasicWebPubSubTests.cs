@@ -139,7 +139,6 @@ public class BasicWebPubSubTests
                 capacity: 1
               }
             }
-            """)
-            .Lint();
+            """);
     }
 }

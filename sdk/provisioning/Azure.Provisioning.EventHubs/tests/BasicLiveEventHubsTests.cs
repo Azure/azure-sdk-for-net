@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -13,10 +14,12 @@ public class BasicLiveEventHubsTests(bool async)
 {
     [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.eventhub/event-hubs-create-event-hub-and-consumer-group/main.bicep")]
+    [LiveOnly]
     public async Task CreateEventHubAndConsumerGroup()
     {
         await using Trycep test = BasicEventHubsTests.CreateEventHubAndConsumerGroupTest();
         await test.SetupLiveCalls(this)
+            .Lint()
             .ValidateAsync();
     }
 }

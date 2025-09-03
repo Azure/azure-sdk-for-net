@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Provisioning.Resources;
+using Azure.Core.TestFramework;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -13,10 +13,12 @@ public class BasicLiveSignalRTests(bool async)
 {
     [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.signalrservice/signalr/main.bicep")]
+    [LiveOnly]
     public async Task CreateSignalRService()
     {
         await using Trycep test = BasicSignalRTests.CreateSignalRServiceTest();
         await test.SetupLiveCalls(this)
+            .Lint()
             .ValidateAsync();
     }
 }
