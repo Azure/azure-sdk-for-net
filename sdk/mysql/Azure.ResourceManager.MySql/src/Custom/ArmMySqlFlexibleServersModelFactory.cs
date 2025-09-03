@@ -149,5 +149,89 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.MySqlFlexibleServerStorage"/> instance for mocking. </returns>
         public static MySqlFlexibleServerStorage MySqlFlexibleServerStorage(int? storageSizeInGB, int? iops, MySqlFlexibleServerEnableStatusEnum? autoGrow, MySqlFlexibleServerEnableStatusEnum? logOnDisk, string storageSku, MySqlFlexibleServerEnableStatusEnum? autoIoScaling)
             => MySqlFlexibleServerStorage(storageSizeInGB, iops, autoGrow, logOnDisk, storageSku, autoIoScaling, null);
+
+        /// <summary> Initializes a new instance of <see cref="Models.OperationStatusExtendedResult"/>. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="properties"> The extended properties of Operation Results. </param>
+        /// <returns> A new <see cref="Models.OperationStatusExtendedResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OperationStatusExtendedResult OperationStatusExtendedResult(ResourceIdentifier id, ResourceIdentifier resourceId, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IEnumerable<OperationStatusResult> operations, ResponseError error, IReadOnlyDictionary<string, BinaryData> properties)
+        {
+            operations ??= new List<OperationStatusResult>();
+            properties ??= new Dictionary<string, BinaryData>();
+
+            return new OperationStatusExtendedResult(
+                id,
+                resourceId,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations?.ToList(),
+                error,
+                serializedAdditionalRawData: null,
+                properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OperationStatusResult"/>. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <returns> A new <see cref="Models.OperationStatusResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OperationStatusResult OperationStatusResult(ResourceIdentifier id, ResourceIdentifier resourceId, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IEnumerable<OperationStatusResult> operations, ResponseError error)
+        {
+            operations ??= new List<OperationStatusResult>();
+
+            return new OperationStatusResult(
+                id,
+                resourceId,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations?.ToList(),
+                error,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerBackupAndExportResult"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="status"> The operation status. </param>
+        /// <param name="startOn"> Start time. </param>
+        /// <param name="endOn"> End time. </param>
+        /// <param name="percentComplete"> Operation progress (0-100). </param>
+        /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
+        /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
+        /// <param name="backupMetadata"> Metadata related to backup to be stored for restoring resource in key-value pairs. </param>
+        /// <param name="error"> The error object. </param>
+        /// <returns> A new <see cref="Models.MySqlFlexibleServerBackupAndExportResult"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerBackupAndExportResult MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MySqlFlexibleServerBackupAndExportOperationStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupMetadata, ResponseError error)
+            => MySqlFlexibleServerBackupAndExportResult(id, name, resourceType, systemData, status, startOn, endOn, percentComplete, datasourceSizeInBytes, dataTransferredInBytes, backupMetadata, error);
+
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerConfigurations"/>. </summary>
+        /// <param name="values"> The list of server configurations. </param>
+        /// <returns> A new <see cref="Models.MySqlFlexibleServerConfigurations"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerConfigurations MySqlFlexibleServerConfigurations(IEnumerable<MySqlFlexibleServerConfigurationData> values)
+            => MySqlFlexibleServerConfigurations(values, null);
     }
 }

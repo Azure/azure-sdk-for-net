@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<StorageTaskResource> IAsyncEnumerable<StorageTaskResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
