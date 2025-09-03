@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
-            if (Optional.IsDefined(FullVersion))
+            if (options.Format != "W" && Optional.IsDefined(FullVersion))
             {
                 writer.WritePropertyName("fullVersion"u8);
                 writer.WriteStringValue(FullVersion);

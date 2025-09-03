@@ -9,12 +9,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
-using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers
+namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
 {
-    [CodeGenType("MySqlFlexibleServersExtensions")]
-    public static partial class FlexibleServersExtensions
+    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    public partial class MockableMySqlFlexibleServersSubscriptionResource : ArmResource
     {
         /// <summary>
         /// Get the operation result for a long running operation.
@@ -29,16 +28,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="operationId"> The operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Task<Response<OperationStatusExtendedResult>> GetOperationResultAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
+        public virtual Task<Response<OperationStatusExtendedResult>> GetOperationResultAsync(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException("This method is deprecated.");
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -54,16 +52,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="operationId"> The operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Response<OperationStatusExtendedResult> GetOperationResult(this SubscriptionResource subscriptionResource, AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<OperationStatusExtendedResult> GetOperationResult(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException("This method is deprecated.");
+            throw new NotSupportedException();
         }
     }
 }

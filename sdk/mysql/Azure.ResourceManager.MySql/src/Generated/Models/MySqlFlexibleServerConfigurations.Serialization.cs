@@ -36,13 +36,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
             if (Optional.IsCollectionDefined(Values))
             {
-                writer.WritePropertyName("values"u8);
+                writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -81,12 +86,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<MySqlFlexibleServerConfigurationData> values = default;
+            IReadOnlyList<MySqlFlexibleServerConfigurationData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("values"u8))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +103,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         array.Add(MySqlFlexibleServerConfigurationData.DeserializeMySqlFlexibleServerConfigurationData(item, options));
                     }
-                    values = array;
+                    value = array;
+                    continue;
+                }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,7 +121,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MySqlFlexibleServerConfigurations(values ?? new ChangeTrackingList<MySqlFlexibleServerConfigurationData>(), serializedAdditionalRawData);
+            return new MySqlFlexibleServerConfigurations(value ?? new ChangeTrackingList<MySqlFlexibleServerConfigurationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerConfigurations>.Write(ModelReaderWriterOptions options)

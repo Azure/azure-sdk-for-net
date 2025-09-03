@@ -17,215 +17,31 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMySqlFlexibleServersModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerAadAdministratorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="administratorType"> Type of the sever administrator. </param>
-        /// <param name="login"> Login name of the server administrator. </param>
-        /// <param name="sid"> SID (object ID) of the server administrator. </param>
-        /// <param name="tenantId"> Tenant ID of the administrator. </param>
-        /// <param name="identityResourceId"> The resource id of the identity used for AAD Authentication. </param>
-        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerAadAdministratorData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerAadAdministratorData MySqlFlexibleServerAadAdministratorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MySqlFlexibleServerAdministratorType? administratorType = null, string login = null, string sid = null, Guid? tenantId = null, ResourceIdentifier identityResourceId = null)
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse"/>. </summary>
+        /// <param name="privateDnsZoneSuffix"> Represents the private DNS zone suffix. </param>
+        /// <returns> A new <see cref="Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerPrivateDnsZoneSuffixResponse MySqlFlexibleServerPrivateDnsZoneSuffixResponse(string privateDnsZoneSuffix = null)
         {
-            return new MySqlFlexibleServerAadAdministratorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                administratorType,
-                login,
-                sid,
-                tenantId,
-                identityResourceId,
-                serializedAdditionalRawData: null);
+            return new MySqlFlexibleServerPrivateDnsZoneSuffixResponse(privateDnsZoneSuffix, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerBackupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="backupType"> Backup type. </param>
-        /// <param name="completedOn"> Backup completed time (ISO8601 format). </param>
-        /// <param name="source"> Backup source. </param>
-        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerBackupData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerBackupData MySqlFlexibleServerBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string backupType = null, DateTimeOffset? completedOn = null, string source = null)
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <returns> A new <see cref="Models.MySqlFlexibleServerNameAvailabilityContent"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerNameAvailabilityContent MySqlFlexibleServerNameAvailabilityContent(string name = null, ResourceType? resourceType = null)
         {
-            return new MySqlFlexibleServerBackupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                backupType,
-                completedOn,
-                source,
-                serializedAdditionalRawData: null);
+            return new MySqlFlexibleServerNameAvailabilityContent(name, resourceType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerBackupSettings"/>. </summary>
-        /// <param name="backupName"> The name of the backup. </param>
-        /// <param name="backupFormat"> Backup Format for the current backup. (CollatedFormat is INTERNAL – DO NOT USE). </param>
-        /// <returns> A new <see cref="Models.MySqlFlexibleServerBackupSettings"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerBackupSettings MySqlFlexibleServerBackupSettings(string backupName = null, MySqlFlexibleServerBackupFormat? backupFormat = null)
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerNameAvailabilityResult"/>. </summary>
+        /// <param name="message"> Error Message. </param>
+        /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
+        /// <param name="reason"> Reason for name being unavailable. </param>
+        /// <returns> A new <see cref="Models.MySqlFlexibleServerNameAvailabilityResult"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerNameAvailabilityResult MySqlFlexibleServerNameAvailabilityResult(string message = null, bool? isNameAvailable = null, string reason = null)
         {
-            return new MySqlFlexibleServerBackupSettings(backupName, backupFormat, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerBackupAndExportResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> The operation status. </param>
-        /// <param name="startOn"> Start time. </param>
-        /// <param name="endOn"> End time. </param>
-        /// <param name="percentComplete"> Operation progress (0-100). </param>
-        /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
-        /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
-        /// <param name="backupMetadata"> Metadata related to backup to be stored for restoring resource in key-value pairs. </param>
-        /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.MySqlFlexibleServerBackupAndExportResult"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerBackupAndExportResult MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MySqlFlexibleServerBackupAndExportOperationStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, long? datasourceSizeInBytes = null, long? dataTransferredInBytes = null, string backupMetadata = null, ResponseError error = null)
-        {
-            return new MySqlFlexibleServerBackupAndExportResult(
-                id,
-                name,
-                resourceType,
-                systemData,
-                status,
-                startOn,
-                endOn,
-                percentComplete,
-                datasourceSizeInBytes,
-                dataTransferredInBytes,
-                backupMetadata,
-                error,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerValidateBackupResult"/>. </summary>
-        /// <param name="numberOfContainers"> Estimated no of storage containers required for resource data to be backed up. </param>
-        /// <returns> A new <see cref="Models.MySqlFlexibleServerValidateBackupResult"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerValidateBackupResult MySqlFlexibleServerValidateBackupResult(int? numberOfContainers = null)
-        {
-            return new MySqlFlexibleServerValidateBackupResult(numberOfContainers, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerBackupV2Data"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="backupNameV2"> Backup name. </param>
-        /// <param name="backupType"></param>
-        /// <param name="completedOn"> Backup completed time (ISO8601 format). </param>
-        /// <param name="source"> Backup source. </param>
-        /// <param name="provisioningState"> The provisioning state of backup resource. </param>
-        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerBackupV2Data"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerBackupV2Data MySqlFlexibleServerBackupV2Data(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string backupNameV2 = null, MySqlFlexibleServerBackupType? backupType = null, DateTimeOffset? completedOn = null, string source = null, MySqlFlexibleServerBackupProvisioningState? provisioningState = null)
-        {
-            return new MySqlFlexibleServerBackupV2Data(
-                id,
-                name,
-                resourceType,
-                systemData,
-                backupNameV2,
-                backupType,
-                completedOn,
-                source,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="value"> Value of the configuration. </param>
-        /// <param name="currentValue"> Current value of the configuration. </param>
-        /// <param name="description"> Description of the configuration. </param>
-        /// <param name="documentationLink"> The link used to get the document from community or Azure site. </param>
-        /// <param name="defaultValue"> Default value of the configuration. </param>
-        /// <param name="dataType"> Data type of the configuration. </param>
-        /// <param name="allowedValues"> Allowed values of the configuration. </param>
-        /// <param name="source"> Source of the configuration. </param>
-        /// <param name="isReadOnly"> If is the configuration read only. </param>
-        /// <param name="isConfigPendingRestart"> If is the configuration pending restart or not. </param>
-        /// <param name="isDynamicConfig"> If is the configuration dynamic. </param>
-        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerConfigurationData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerConfigurationData MySqlFlexibleServerConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string currentValue = null, string description = null, string documentationLink = null, string defaultValue = null, string dataType = null, string allowedValues = null, MySqlFlexibleServerConfigurationSource? source = null, MySqlFlexibleServerConfigReadOnlyState? isReadOnly = null, MySqlFlexibleServerConfigPendingRestartState? isConfigPendingRestart = null, MySqlFlexibleServerConfigDynamicState? isDynamicConfig = null)
-        {
-            return new MySqlFlexibleServerConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                value,
-                currentValue,
-                description,
-                documentationLink,
-                defaultValue,
-                dataType,
-                allowedValues,
-                source,
-                isReadOnly,
-                isConfigPendingRestart,
-                isDynamicConfig,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerConfigurations"/>. </summary>
-        /// <param name="values"> The list of server configurations. </param>
-        /// <returns> A new <see cref="Models.MySqlFlexibleServerConfigurations"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerConfigurations MySqlFlexibleServerConfigurations(IEnumerable<MySqlFlexibleServerConfigurationData> values = null)
-        {
-            values ??= new List<MySqlFlexibleServerConfigurationData>();
-
-            return new MySqlFlexibleServerConfigurations(values?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerDatabaseData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="charset"> The charset of the database. </param>
-        /// <param name="collation"> The collation of the database. </param>
-        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerDatabaseData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerDatabaseData MySqlFlexibleServerDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string charset = null, string collation = null)
-        {
-            return new MySqlFlexibleServerDatabaseData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                charset,
-                collation,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerFirewallRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="startIPAddress"> The start IP address of the server firewall rule. Must be IPv4 format. </param>
-        /// <param name="endIPAddress"> The end IP address of the server firewall rule. Must be IPv4 format. </param>
-        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerFirewallRuleData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerFirewallRuleData MySqlFlexibleServerFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress startIPAddress = null, IPAddress endIPAddress = null)
-        {
-            return new MySqlFlexibleServerFirewallRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                startIPAddress,
-                endIPAddress,
-                serializedAdditionalRawData: null);
+            return new MySqlFlexibleServerNameAvailabilityResult(message, isNameAvailable, reason, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerData"/>. </summary>
@@ -365,64 +181,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
                 connectionState,
                 provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HighAvailabilityValidationEstimation"/>. </summary>
-        /// <param name="estimatedDowntime"> Estimated seconds of downtime for the deployment. </param>
-        /// <param name="scheduledStandbyAvailabilityZone"> Scheduled Availability zone of the standby server. </param>
-        /// <param name="expectedStandbyAvailabilityZone"> Expected Availability zone of the standby server. </param>
-        /// <returns> A new <see cref="Models.HighAvailabilityValidationEstimation"/> instance for mocking. </returns>
-        public static HighAvailabilityValidationEstimation HighAvailabilityValidationEstimation(int? estimatedDowntime = null, string scheduledStandbyAvailabilityZone = null, string expectedStandbyAvailabilityZone = null)
-        {
-            return new HighAvailabilityValidationEstimation(estimatedDowntime, scheduledStandbyAvailabilityZone, expectedStandbyAvailabilityZone, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.AdvancedThreatProtectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
-        /// <param name="state"> Specifies the state of the Advanced Threat Protection, whether it is enabled or disabled or a state has not been applied yet on the specific database or server. </param>
-        /// <param name="provisioningState"> Provisioning state of the Threat Protection. </param>
-        /// <returns> A new <see cref="FlexibleServers.AdvancedThreatProtectionData"/> instance for mocking. </returns>
-        public static AdvancedThreatProtectionData AdvancedThreatProtectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, AdvancedThreatProtectionState? state = null, AdvancedThreatProtectionProvisioningState? provisioningState = null)
-        {
-            return new AdvancedThreatProtectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                createdOn,
-                state,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerLogFile"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="sizeInKB"> The size in kb of the logFile. </param>
-        /// <param name="createdOn"> Creation timestamp of the log file. </param>
-        /// <param name="typePropertiesType"> Type of the log file. </param>
-        /// <param name="lastModifiedOn"> Last modified timestamp of the log file. </param>
-        /// <param name="uri"> The url to download the log file from. </param>
-        /// <returns> A new <see cref="Models.MySqlFlexibleServerLogFile"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerLogFile MySqlFlexibleServerLogFile(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? sizeInKB = null, DateTimeOffset? createdOn = null, string typePropertiesType = null, DateTimeOffset? lastModifiedOn = null, Uri uri = null)
-        {
-            return new MySqlFlexibleServerLogFile(
-                id,
-                name,
-                resourceType,
-                systemData,
-                sizeInKB,
-                createdOn,
-                typePropertiesType,
-                lastModifiedOn,
-                uri,
                 serializedAdditionalRawData: null);
         }
 
@@ -609,90 +367,256 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerDelegatedSubnetUsage(subnetName, usage, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> Resource name to verify. </param>
-        /// <param name="resourceType"> Resource type used for verification. </param>
-        /// <returns> A new <see cref="Models.MySqlFlexibleServerNameAvailabilityContent"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerNameAvailabilityContent MySqlFlexibleServerNameAvailabilityContent(string name = null, ResourceType? resourceType = null)
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerAadAdministratorData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="administratorType"> Type of the sever administrator. </param>
+        /// <param name="login"> Login name of the server administrator. </param>
+        /// <param name="sid"> SID (object ID) of the server administrator. </param>
+        /// <param name="tenantId"> Tenant ID of the administrator. </param>
+        /// <param name="identityResourceId"> The resource id of the identity used for AAD Authentication. </param>
+        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerAadAdministratorData"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerAadAdministratorData MySqlFlexibleServerAadAdministratorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MySqlFlexibleServerAdministratorType? administratorType = null, string login = null, string sid = null, Guid? tenantId = null, ResourceIdentifier identityResourceId = null)
         {
-            return new MySqlFlexibleServerNameAvailabilityContent(name, resourceType, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerNameAvailabilityResult"/>. </summary>
-        /// <param name="message"> Error Message. </param>
-        /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
-        /// <param name="reason"> Reason for name being unavailable. </param>
-        /// <returns> A new <see cref="Models.MySqlFlexibleServerNameAvailabilityResult"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerNameAvailabilityResult MySqlFlexibleServerNameAvailabilityResult(string message = null, bool? isNameAvailable = null, string reason = null)
-        {
-            return new MySqlFlexibleServerNameAvailabilityResult(message, isNameAvailable, reason, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationStatusExtendedResult"/>. </summary>
-        /// <param name="id"> Fully qualified ID for the async operation. </param>
-        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
-        /// <param name="name"> Name of the async operation. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
-        /// <param name="operations"> The operations list. </param>
-        /// <param name="error"> If present, details of the operation error. </param>
-        /// <param name="properties"> The extended properties of Operation Results. </param>
-        /// <returns> A new <see cref="Models.OperationStatusExtendedResult"/> instance for mocking. </returns>
-        public static OperationStatusExtendedResult OperationStatusExtendedResult(ResourceIdentifier id = null, ResourceIdentifier resourceId = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, IReadOnlyDictionary<string, BinaryData> properties = null)
-        {
-            operations ??= new List<OperationStatusResult>();
-            properties ??= new Dictionary<string, BinaryData>();
-
-            return new OperationStatusExtendedResult(
+            return new MySqlFlexibleServerAadAdministratorData(
                 id,
-                resourceId,
                 name,
-                status,
-                percentComplete,
-                startOn,
-                endOn,
-                operations?.ToList(),
-                error,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationStatusResult"/>. </summary>
-        /// <param name="id"> Fully qualified ID for the async operation. </param>
-        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
-        /// <param name="name"> Name of the async operation. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
-        /// <param name="operations"> The operations list. </param>
-        /// <param name="error"> If present, details of the operation error. </param>
-        /// <returns> A new <see cref="Models.OperationStatusResult"/> instance for mocking. </returns>
-        public static OperationStatusResult OperationStatusResult(ResourceIdentifier id = null, ResourceIdentifier resourceId = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null)
-        {
-            operations ??= new List<OperationStatusResult>();
-
-            return new OperationStatusResult(
-                id,
-                resourceId,
-                name,
-                status,
-                percentComplete,
-                startOn,
-                endOn,
-                operations?.ToList(),
-                error,
+                resourceType,
+                systemData,
+                administratorType,
+                login,
+                sid,
+                tenantId,
+                identityResourceId,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse"/>. </summary>
-        /// <param name="privateDnsZoneSuffix"> Represents the private DNS zone suffix. </param>
-        /// <returns> A new <see cref="Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerPrivateDnsZoneSuffixResponse MySqlFlexibleServerPrivateDnsZoneSuffixResponse(string privateDnsZoneSuffix = null)
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.AdvancedThreatProtectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
+        /// <param name="state"> Specifies the state of the Advanced Threat Protection, whether it is enabled or disabled or a state has not been applied yet on the specific database or server. </param>
+        /// <param name="provisioningState"> Provisioning state of the Threat Protection. </param>
+        /// <returns> A new <see cref="FlexibleServers.AdvancedThreatProtectionData"/> instance for mocking. </returns>
+        public static AdvancedThreatProtectionData AdvancedThreatProtectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, AdvancedThreatProtectionState? state = null, AdvancedThreatProtectionProvisioningState? provisioningState = null)
         {
-            return new MySqlFlexibleServerPrivateDnsZoneSuffixResponse(privateDnsZoneSuffix, serializedAdditionalRawData: null);
+            return new AdvancedThreatProtectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                createdOn,
+                state,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerBackupSettings"/>. </summary>
+        /// <param name="backupName"> The name of the backup. </param>
+        /// <param name="backupFormat"> Backup Format for the current backup. (CollatedFormat is INTERNAL – DO NOT USE). </param>
+        /// <returns> A new <see cref="Models.MySqlFlexibleServerBackupSettings"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerBackupSettings MySqlFlexibleServerBackupSettings(string backupName = null, MySqlFlexibleServerBackupFormat? backupFormat = null)
+        {
+            return new MySqlFlexibleServerBackupSettings(backupName, backupFormat, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerBackupAndExportResult"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="error"> The error object. </param>
+        /// <param name="status"> The operation status. </param>
+        /// <param name="startOn"> Start time. </param>
+        /// <param name="endOn"> End time. </param>
+        /// <param name="percentComplete"> Operation progress (0-100). </param>
+        /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
+        /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
+        /// <param name="backupMetadata"> Metadata related to backup to be stored for restoring resource in key-value pairs. </param>
+        /// <returns> A new <see cref="Models.MySqlFlexibleServerBackupAndExportResult"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerBackupAndExportResult MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResponseError error = null, MySqlFlexibleServerBackupAndExportOperationStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, long? datasourceSizeInBytes = null, long? dataTransferredInBytes = null, string backupMetadata = null)
+        {
+            return new MySqlFlexibleServerBackupAndExportResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                error,
+                status,
+                startOn,
+                endOn,
+                percentComplete,
+                datasourceSizeInBytes,
+                dataTransferredInBytes,
+                backupMetadata,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerBackupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="backupType"> Backup type. </param>
+        /// <param name="completedOn"> Backup completed time (ISO8601 format). </param>
+        /// <param name="source"> Backup source. </param>
+        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerBackupData"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerBackupData MySqlFlexibleServerBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string backupType = null, DateTimeOffset? completedOn = null, string source = null)
+        {
+            return new MySqlFlexibleServerBackupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                backupType,
+                completedOn,
+                source,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerBackupV2Data"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="backupNameV2"> Backup name. </param>
+        /// <param name="backupType"></param>
+        /// <param name="completedOn"> Backup completed time (ISO8601 format). </param>
+        /// <param name="source"> Backup source. </param>
+        /// <param name="provisioningState"> The provisioning state of backup resource. </param>
+        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerBackupV2Data"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerBackupV2Data MySqlFlexibleServerBackupV2Data(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string backupNameV2 = null, MySqlFlexibleServerBackupType? backupType = null, DateTimeOffset? completedOn = null, string source = null, MySqlFlexibleServerBackupProvisioningState? provisioningState = null)
+        {
+            return new MySqlFlexibleServerBackupV2Data(
+                id,
+                name,
+                resourceType,
+                systemData,
+                backupNameV2,
+                backupType,
+                completedOn,
+                source,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerConfigurations"/>. </summary>
+        /// <param name="values"> The Configuration items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.MySqlFlexibleServerConfigurations"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerConfigurations MySqlFlexibleServerConfigurations(IEnumerable<MySqlFlexibleServerConfigurationData> values = null, Uri nextLink = null)
+        {
+            values ??= new List<MySqlFlexibleServerConfigurationData>();
+
+            return new MySqlFlexibleServerConfigurations(values?.ToList(), nextLink, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="value"> Value of the configuration. </param>
+        /// <param name="currentValue"> Current value of the configuration. </param>
+        /// <param name="description"> Description of the configuration. </param>
+        /// <param name="documentationLink"> The link used to get the document from community or Azure site. </param>
+        /// <param name="defaultValue"> Default value of the configuration. </param>
+        /// <param name="dataType"> Data type of the configuration. </param>
+        /// <param name="allowedValues"> Allowed values of the configuration. </param>
+        /// <param name="source"> Source of the configuration. </param>
+        /// <param name="isReadOnly"> If is the configuration read only. </param>
+        /// <param name="isConfigPendingRestart"> If is the configuration pending restart or not. </param>
+        /// <param name="isDynamicConfig"> If is the configuration dynamic. </param>
+        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerConfigurationData"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerConfigurationData MySqlFlexibleServerConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string currentValue = null, string description = null, string documentationLink = null, string defaultValue = null, string dataType = null, string allowedValues = null, MySqlFlexibleServerConfigurationSource? source = null, MySqlFlexibleServerConfigReadOnlyState? isReadOnly = null, MySqlFlexibleServerConfigPendingRestartState? isConfigPendingRestart = null, MySqlFlexibleServerConfigDynamicState? isDynamicConfig = null)
+        {
+            return new MySqlFlexibleServerConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                value,
+                currentValue,
+                description,
+                documentationLink,
+                defaultValue,
+                dataType,
+                allowedValues,
+                source,
+                isReadOnly,
+                isConfigPendingRestart,
+                isDynamicConfig,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerDatabaseData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="charset"> The charset of the database. </param>
+        /// <param name="collation"> The collation of the database. </param>
+        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerDatabaseData"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerDatabaseData MySqlFlexibleServerDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string charset = null, string collation = null)
+        {
+            return new MySqlFlexibleServerDatabaseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                charset,
+                collation,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerFirewallRuleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="startIPAddress"> The start IP address of the server firewall rule. Must be IPv4 format. </param>
+        /// <param name="endIPAddress"> The end IP address of the server firewall rule. Must be IPv4 format. </param>
+        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerFirewallRuleData"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerFirewallRuleData MySqlFlexibleServerFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress startIPAddress = null, IPAddress endIPAddress = null)
+        {
+            return new MySqlFlexibleServerFirewallRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startIPAddress,
+                endIPAddress,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerLogFile"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="sizeInKB"> The size in kb of the logFile. </param>
+        /// <param name="createdOn"> Creation timestamp of the log file. </param>
+        /// <param name="typePropertiesType"> Type of the log file. </param>
+        /// <param name="lastModifiedOn"> Last modified timestamp of the log file. </param>
+        /// <param name="uri"> The url to download the log file from. </param>
+        /// <returns> A new <see cref="Models.MySqlFlexibleServerLogFile"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerLogFile MySqlFlexibleServerLogFile(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? sizeInKB = null, DateTimeOffset? createdOn = null, string typePropertiesType = null, DateTimeOffset? lastModifiedOn = null, Uri uri = null)
+        {
+            return new MySqlFlexibleServerLogFile(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sizeInKB,
+                createdOn,
+                typePropertiesType,
+                lastModifiedOn,
+                uri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerMaintenanceData"/>. </summary>
@@ -756,6 +680,24 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 requiredMembers?.ToList(),
                 requiredZoneNames?.ToList(),
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerValidateBackupResult"/>. </summary>
+        /// <param name="numberOfContainers"> Estimated no of storage containers required for resource data to be backed up. </param>
+        /// <returns> A new <see cref="Models.MySqlFlexibleServerValidateBackupResult"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerValidateBackupResult MySqlFlexibleServerValidateBackupResult(int? numberOfContainers = null)
+        {
+            return new MySqlFlexibleServerValidateBackupResult(numberOfContainers, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HighAvailabilityValidationEstimation"/>. </summary>
+        /// <param name="estimatedDowntime"> Estimated seconds of downtime for the deployment. </param>
+        /// <param name="scheduledStandbyAvailabilityZone"> Scheduled Availability zone of the standby server. </param>
+        /// <param name="expectedStandbyAvailabilityZone"> Expected Availability zone of the standby server. </param>
+        /// <returns> A new <see cref="Models.HighAvailabilityValidationEstimation"/> instance for mocking. </returns>
+        public static HighAvailabilityValidationEstimation HighAvailabilityValidationEstimation(int? estimatedDowntime = null, string scheduledStandbyAvailabilityZone = null, string expectedStandbyAvailabilityZone = null)
+        {
+            return new HighAvailabilityValidationEstimation(estimatedDowntime, scheduledStandbyAvailabilityZone, expectedStandbyAvailabilityZone, serializedAdditionalRawData: null);
         }
     }
 }

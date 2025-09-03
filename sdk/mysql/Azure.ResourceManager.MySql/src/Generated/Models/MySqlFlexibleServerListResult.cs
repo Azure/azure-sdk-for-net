@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> A list of servers. </summary>
+    /// <summary> The response of a Server list operation. </summary>
     internal partial class MySqlFlexibleServerListResult
     {
         /// <summary>
@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerListResult"/>. </summary>
-        /// <param name="value"> The list of servers. </param>
-        /// <param name="nextLink"> The link used to get the next page of operations. </param>
+        /// <param name="value"> The Server items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerListResult(IReadOnlyList<MySqlFlexibleServerData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MySqlFlexibleServerListResult(IReadOnlyList<MySqlFlexibleServerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of servers. </summary>
+        /// <summary> The Server items on this page. </summary>
         public IReadOnlyList<MySqlFlexibleServerData> Value { get; }
-        /// <summary> The link used to get the next page of operations. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

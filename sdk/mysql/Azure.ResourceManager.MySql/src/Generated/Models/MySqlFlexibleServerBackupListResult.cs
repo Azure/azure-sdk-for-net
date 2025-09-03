@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> A list of server backups. </summary>
+    /// <summary> The response of a ServerBackup list operation. </summary>
     internal partial class MySqlFlexibleServerBackupListResult
     {
         /// <summary>
@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupListResult"/>. </summary>
-        /// <param name="value"> The list of backups of a server. </param>
-        /// <param name="nextLink"> The link used to get the next page of operations. </param>
+        /// <param name="value"> The ServerBackup items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerBackupListResult(IReadOnlyList<MySqlFlexibleServerBackupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MySqlFlexibleServerBackupListResult(IReadOnlyList<MySqlFlexibleServerBackupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of backups of a server. </summary>
+        /// <summary> The ServerBackup items on this page. </summary>
         public IReadOnlyList<MySqlFlexibleServerBackupData> Value { get; }
-        /// <summary> The link used to get the next page of operations. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

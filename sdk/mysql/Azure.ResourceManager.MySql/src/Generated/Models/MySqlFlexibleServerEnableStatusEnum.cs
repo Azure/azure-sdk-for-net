@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> Enum to indicate whether value is 'Enabled' or 'Disabled'. </summary>
+    /// <summary> Whether or not geo redundant backup is enabled. </summary>
     public readonly partial struct MySqlFlexibleServerEnableStatusEnum : IEquatable<MySqlFlexibleServerEnableStatusEnum>
     {
         private readonly string _value;

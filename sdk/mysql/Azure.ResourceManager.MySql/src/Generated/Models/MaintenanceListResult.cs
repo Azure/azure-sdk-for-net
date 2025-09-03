@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> A list of maintenances. </summary>
+    /// <summary> The response of a Maintenance list operation. </summary>
     internal partial class MaintenanceListResult
     {
         /// <summary>
@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceListResult"/>. </summary>
-        /// <param name="value"> The list of maintenances in a server. </param>
-        /// <param name="nextLink"> The link used to get the next page of operations. </param>
+        /// <param name="value"> The Maintenance items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceListResult(IReadOnlyList<MySqlFlexibleServerMaintenanceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MaintenanceListResult(IReadOnlyList<MySqlFlexibleServerMaintenanceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of maintenances in a server. </summary>
+        /// <summary> The Maintenance items on this page. </summary>
         public IReadOnlyList<MySqlFlexibleServerMaintenanceData> Value { get; }
-        /// <summary> The link used to get the next page of operations. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

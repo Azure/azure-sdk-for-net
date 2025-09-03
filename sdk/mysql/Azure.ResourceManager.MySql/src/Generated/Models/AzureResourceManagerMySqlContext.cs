@@ -46,7 +46,6 @@ namespace Azure.ResourceManager.MySql
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerConfigurationData))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerConfigurationForBatchUpdate))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerConfigurationListForBatchUpdate))]
-    [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerConfigurationListResult))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerConfigurationResource))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerConfigurations))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerData))]

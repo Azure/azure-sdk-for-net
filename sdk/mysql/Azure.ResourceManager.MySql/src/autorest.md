@@ -18,7 +18,7 @@ batch:
 
 ``` yaml $(tag) == 'package-flexibleserver-2024-12-01-preview'
 namespace: Azure.ResourceManager.MySql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/3a54096db1d5a4a3f5f5c2e9e17098e892773ad5/specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/bb58530b93212845aeb78120d6762677c7610ef7/specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/readme.md
 output-folder: $(this-folder)/Generated
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
@@ -97,7 +97,7 @@ rename-mapping:
   FirewallRuleListResult: MySqlFlexibleServerFirewallRuleListResult
   DatabaseListResult: MySqlFlexibleServerDatabaseListResult
   ConfigurationSource: MySqlFlexibleServerConfigurationSource
-  ConfigurationListResult: MySqlFlexibleServerConfigurationListResult
+  ConfigurationListResult: MySqlFlexibleServerConfigurations
   ConfigurationForBatchUpdate: MySqlFlexibleServerConfigurationForBatchUpdate
   ConfigurationListForBatchUpdate: MySqlFlexibleServerConfigurationListForBatchUpdate
   VirtualNetworkSubnetUsageParameter: MySqlFlexibleServerVirtualNetworkSubnetUsageParameter
@@ -158,34 +158,6 @@ override-operation-name:
 
 directive:
   - remove-operation: OperationProgress_Get
-  - from: FlexibleServers.json
-    where: $.definitions
-    transform: >
-      $.MySQLServerIdentity['x-ms-client-flatten'] = false;
-      $.MySQLServerIdentity.properties.userAssignedIdentities.additionalProperties['$ref'] = '#/definitions/UserAssignedIdentity';
-      delete $.MySQLServerIdentity.properties.userAssignedIdentities.additionalProperties.items;
-      $.ServerProperties.properties.privateEndpointConnections.items['$ref'] = '../../../../../../common-types/resource-management/v5/privatelinks.json#/definitions/PrivateEndpointConnection';
-
-  # Add a new mode for update operation
-  - from: Configurations.json
-    where: $.definitions
-    transform: >
-      $.MySqlFlexibleServerConfigurations =  {
-          'type': 'object',
-          'properties': {
-            'values': {
-              'type': 'array',
-              'items': {
-                '$ref': '#/definitions/Configuration'
-              },
-              'description': 'The list of server configurations.'
-            }
-          },
-          'description': 'A list of server configurations.'
-        };
-  - from: Configurations.json
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/updateConfigurations'].post
-    transform: >
-      $.responses['200']['schema']['$ref'] = '#/definitions/MySqlFlexibleServerConfigurations';
+  - remove-operation: OperationResults_Get
 
 ```

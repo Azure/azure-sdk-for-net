@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CapabilitySetsList"/>. </summary>
-        /// <param name="value"> A list of supported capability sets. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        /// <param name="value"> The CapabilitySetsList items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapabilitySetsList(IReadOnlyList<MySqlFlexibleServersCapabilityData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CapabilitySetsList(IReadOnlyList<MySqlFlexibleServersCapabilityData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of supported capability sets. </summary>
+        /// <summary> The CapabilitySetsList items on this page. </summary>
         public IReadOnlyList<MySqlFlexibleServersCapabilityData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

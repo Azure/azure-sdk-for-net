@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> A list of server configurations. </summary>
+    /// <summary> The response of a Configuration list operation. </summary>
     public partial class MySqlFlexibleServerConfigurations
     {
         /// <summary>
@@ -52,15 +52,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigurations"/>. </summary>
-        /// <param name="values"> The list of server configurations. </param>
+        /// <param name="values"> The Configuration items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerConfigurations(IReadOnlyList<MySqlFlexibleServerConfigurationData> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MySqlFlexibleServerConfigurations(IReadOnlyList<MySqlFlexibleServerConfigurationData> values, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Values = values;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of server configurations. </summary>
+        /// <summary> The Configuration items on this page. </summary>
         public IReadOnlyList<MySqlFlexibleServerConfigurationData> Values { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                ((IJsonModel<ResponseError>)Error).Write(writer, options);
+            }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -56,11 +61,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
-            }
-            if (Optional.IsDefined(Error))
-            {
-                writer.WritePropertyName("error"u8);
-                ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
+            ResponseError error = default;
             MySqlFlexibleServerBackupAndExportOperationStatus? status = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
             double? percentComplete = default;
-            ResponseError error = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -118,6 +118,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("error"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMySqlContext.Default);
+                    continue;
+                }
                 if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -152,15 +161,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         continue;
                     }
                     percentComplete = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("error"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMySqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -233,6 +233,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 name,
                 type,
                 systemData,
+                error,
                 status,
                 startTime,
                 endTime,
@@ -240,7 +241,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 datasourceSizeInBytes,
                 dataTransferredInBytes,
                 backupMetadata,
-                error,
                 serializedAdditionalRawData);
         }
 

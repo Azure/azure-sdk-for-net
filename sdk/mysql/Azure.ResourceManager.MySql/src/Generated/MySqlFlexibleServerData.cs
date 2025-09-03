@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <summary> Major version of MySQL. 8.0.21 stands for MySQL 8.0, 5.7.44 stands for MySQL 5.7. </summary>
         public MySqlFlexibleServerVersion? Version { get; set; }
         /// <summary> Major version and actual engine version. </summary>
-        public string FullVersion { get; set; }
+        public string FullVersion { get; }
         /// <summary> availability Zone information of the server. </summary>
         public string AvailabilityZone { get; set; }
         /// <summary> The mode to create a new MySQL server. </summary>

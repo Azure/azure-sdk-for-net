@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> A list of the server's Advanced Threat Protection configurations. </summary>
+    /// <summary> The response of a AdvancedThreatProtection list operation. </summary>
     internal partial class AdvancedThreatProtectionListResult
     {
         /// <summary>
@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AdvancedThreatProtectionListResult"/>. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        /// <param name="value"> The AdvancedThreatProtection items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AdvancedThreatProtectionListResult(IReadOnlyList<AdvancedThreatProtectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AdvancedThreatProtectionListResult(IReadOnlyList<AdvancedThreatProtectionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of results. </summary>
+        /// <summary> The AdvancedThreatProtection items on this page. </summary>
         public IReadOnlyList<AdvancedThreatProtectionData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
