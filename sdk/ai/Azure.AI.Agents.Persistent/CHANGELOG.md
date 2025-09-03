@@ -11,6 +11,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fix handling of streaming update of unexpected type [issue](https://github.com/Azure/azure-sdk-for-net/issues/52407).
 
 ### Other Changes
 
