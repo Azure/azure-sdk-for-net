@@ -10,9 +10,16 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> The proxy options. </summary>
     public partial class ProxyOptions
     {
-        /// <summary> Initializes a new instance of ProxyOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyOptions"/>. </summary>
         public ProxyOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProxyOptions"/>. </summary>
+        /// <param name="transport"></param>
+        internal ProxyOptions(ProxyOptionsTransport transport)
+        {
+            Transport = transport;
         }
 
         /// <summary> Gets or sets the transport. </summary>

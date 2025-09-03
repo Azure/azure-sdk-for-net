@@ -95,12 +95,12 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             if (Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
-                writer.WriteObjectValue(Pattern);
+                ((IJsonModel<ResourceTypeAliasPattern>)Pattern).Write(writer, options);
             }
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                ((IJsonModel<ResourceTypeAliasPathMetadata>)Metadata).Write(writer, options);
             }
             writer.WriteEndObject();
         }

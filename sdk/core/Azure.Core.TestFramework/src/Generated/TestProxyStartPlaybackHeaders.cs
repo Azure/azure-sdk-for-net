@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using Azure;
-using Azure.Core;
-
 namespace Azure.Core.TestFramework
 {
     internal partial class TestProxyStartPlaybackHeaders

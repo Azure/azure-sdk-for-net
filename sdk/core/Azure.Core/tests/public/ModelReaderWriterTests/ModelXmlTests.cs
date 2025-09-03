@@ -39,9 +39,8 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
                 if (format.Equals("J"))
                     expectedSerializedString += "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>";
                 expectedSerializedString += "<RenamedChildModelXml><ChildValue>ChildRed</ChildValue></RenamedChildModelXml>";
-                //TODO this is broken until we update the IXmlSerializable interface to include ModelSerializerOptions
-                //if (format.Equals(ModelSerializerFormat.Json))
-                //    expectedSerializedString += "<ChildReadOnlyProperty>ChildReadOnly</ChildReadOnlyProperty>";
+                if (format.Equals(ModelReaderWriterOptions.Json.Format))
+                    expectedSerializedString += "<ChildReadOnlyProperty>ChildReadOnly</ChildReadOnlyProperty>";
                 expectedSerializedString += "</Tag>";
                 return expectedSerializedString;
             }
@@ -51,9 +50,8 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
                 if (format.Equals("J"))
                     expectedSerializedString += ",\"readOnlyProperty\":\"ReadOnly\"";
                 expectedSerializedString += ",\"renamedChildModelXml\":{\"childValue\":\"ChildRed\"";
-                //TODO this is broken until we update the IXmlSerializable interface to include ModelSerializerOptions
-                //if (format.Equals(ModelSerializerFormat.Json))
-                //    expectedSerializedString += ",\"childReadOnlyProperty\":\"ChildReadOnly\"";
+                if (format.Equals(ModelReaderWriterOptions.Json.Format))
+                    expectedSerializedString += ",\"childReadOnlyProperty\":\"ChildReadOnly\"";
                 expectedSerializedString += "}}";
                 return expectedSerializedString;
             }

@@ -6,14 +6,13 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
     /// <summary> Start object to be specified when starting playback or record. </summary>
     public partial class StartInformation
     {
-        /// <summary> Initializes a new instance of StartInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartInformation"/>. </summary>
         /// <param name="xRecordingFile"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> is null. </exception>
         public StartInformation(string xRecordingFile)
@@ -21,6 +20,15 @@ namespace Azure.Core.TestFramework.Models
             Argument.AssertNotNull(xRecordingFile, nameof(xRecordingFile));
 
             XRecordingFile = xRecordingFile;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StartInformation"/>. </summary>
+        /// <param name="xRecordingFile"></param>
+        /// <param name="xRecordingAssetsFile"></param>
+        internal StartInformation(string xRecordingFile, string xRecordingAssetsFile)
+        {
+            XRecordingFile = xRecordingFile;
+            XRecordingAssetsFile = xRecordingAssetsFile;
         }
 
         /// <summary> Gets the x recording file. </summary>
