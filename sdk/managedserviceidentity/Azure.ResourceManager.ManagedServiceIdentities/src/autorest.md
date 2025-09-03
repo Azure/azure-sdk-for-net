@@ -54,7 +54,6 @@ rename-mapping:
   Identity: UserAssignedIdentity
   AzureResource: IdentityAssociatedResourceData
   FederatedIdentityCredential.properties.issuer: IssuerUri
-  FederatedIdentityCredentialsListResult.nextLink: -|string
 
 generate-arm-resource-extensions:
   - /{scope}/providers/Microsoft.ManagedIdentity/identities/default
