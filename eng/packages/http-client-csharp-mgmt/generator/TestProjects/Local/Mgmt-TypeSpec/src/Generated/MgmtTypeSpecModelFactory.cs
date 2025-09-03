@@ -18,6 +18,14 @@ namespace MgmtTypeSpec.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class MgmtTypeSpecModelFactory
     {
+        /// <summary> The FooPreviewAction. </summary>
+        /// <param name="action"> The action to be performed. </param>
+        /// <param name="result"></param>
+        /// <returns> A new <see cref="Models.FooPreviewAction"/> instance for mocking. </returns>
+        public static FooPreviewAction FooPreviewAction(string action = default, string result = default)
+        {
+            return new FooPreviewAction(action, result, additionalBinaryDataProperties: null);
+        }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -206,15 +214,6 @@ namespace MgmtTypeSpec.Models
             value ??= new ChangeTrackingList<SubResource>();
 
             return new ZooAddressListListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The FooPreviewAction. </summary>
-        /// <param name="action"> The action to be performed. </param>
-        /// <param name="result"></param>
-        /// <returns> A new <see cref="Models.FooPreviewAction"/> instance for mocking. </returns>
-        public static FooPreviewAction FooPreviewAction(string action = default, string result = default)
-        {
-            return new FooPreviewAction(action, result, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
