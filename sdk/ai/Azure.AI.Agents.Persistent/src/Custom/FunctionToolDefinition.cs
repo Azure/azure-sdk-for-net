@@ -52,7 +52,7 @@ public partial class FunctionToolDefinition
     /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="description"/> is null. </exception>
     public FunctionToolDefinition(string name, string description)
-        : this(name, description, BinaryData.FromObjectAsJson(new { type = "object", properties = new { } }))
+        : this(name, description, BinaryData.FromString("{\"type\":\"object\",\"properties\":{}}"))
     { }
 
     /*

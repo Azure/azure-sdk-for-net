@@ -64,7 +64,8 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         private static readonly JsonSerializerOptions s_jsonOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping // Allow non-ASCII characters
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, // Allow non-ASCII characters
+            TypeInfoResolver = OpenTelemetryJsonContext.Default
         };
 
         private readonly Activity _activity;
@@ -121,10 +122,12 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             scope.SetTagMaybe(GenAiRequestTemperatureKey, createAgentRequest.Temperature);
             scope.SetTagMaybe(GenAiRequestTopPKey, createAgentRequest.TopP);
 
-            object evnt = s_traceContent ? new { content = createAgentRequest.Instructions } : "";
+            string eventContent = s_traceContent
+                ? JsonSerializer.Serialize(new InstructionsEvent { Content = createAgentRequest.Instructions }, OpenTelemetryJsonContext.Default.InstructionsEvent)
+                : "";
             ActivityTagsCollection messageTags = new() {
                    { GenAiSystemKey, GenAiSystemValue},
-                   { GenAiEventContent, evnt != null ? JsonSerializer.Serialize(evnt) : null  }
+                   { GenAiEventContent, eventContent }
             };
 
             scope._activity?.AddEvent(
@@ -176,22 +179,22 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             }
 
             var createMessageRequest = DeserializeCreateMessageRequest(content);
-            object evnt = null;
+            string eventContent;
             if (s_traceContent)
             {
                 string message = createMessageRequest.Content.ToString().Trim('"');
-                evnt = new { content = message, role = createMessageRequest.Role.ToString() };
+                eventContent = JsonSerializer.Serialize(new MessageEvent { Content = message, Role = createMessageRequest.Role.ToString() }, OpenTelemetryJsonContext.Default.MessageEvent);
             }
             else
             {
-                evnt = new { role = createMessageRequest.Role.ToString() };
+                eventContent = JsonSerializer.Serialize(new RoleEvent { Role = createMessageRequest.Role.ToString() }, OpenTelemetryJsonContext.Default.RoleEvent);
             }
 
             scope.SetTagMaybe(GenAiThreadIdKey, threadId);
             ActivityTagsCollection messageTags = new() {
                    { GenAiSystemKey, GenAiSystemValue},
                    { GenAiThreadIdKey, threadId},
-                   { GenAiEventContent, evnt != null ? JsonSerializer.Serialize(evnt) : null  }
+                   { GenAiEventContent, eventContent }
             };
             scope._activity?.AddEvent(
                 new ActivityEvent(EventNameUserMessage, tags: messageTags)
@@ -602,19 +605,11 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         {
             // Build the event body
             var eventBody = s_traceContent
-                ? new
-                {
-                    content = toolOutput.Output,
-                    id = toolOutput.ToolCallId
-                }
-                : new
-                {
-                    content = string.Empty,
-                    id = toolOutput.ToolCallId
-                };
+                ? new ToolOutputEvent { Content = toolOutput.Output, Id = toolOutput.ToolCallId }
+                : new ToolOutputEvent { Content = string.Empty, Id = toolOutput.ToolCallId };
 
             // Serialize the event body
-            string serializedEventBody = JsonSerializer.Serialize(eventBody, s_jsonOptions);
+            string serializedEventBody = JsonSerializer.Serialize(eventBody, OpenTelemetryJsonContext.Default.ToolOutputEvent);
 
             // Build the attributes
             var attributes = new Dictionary<string, object>
@@ -968,7 +963,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             eventBody["role"] = threadMessage.Role.ToString();
 
             // Serialize the event body
-            string serializedEventBody = JsonSerializer.Serialize(eventBody, s_jsonOptions);
+            string serializedEventBody = JsonSerializer.Serialize(eventBody, OpenTelemetryJsonContext.Default.DictionaryStringObject);
 
             // Build the attributes
             Dictionary<string, object> attributes = new()
@@ -1084,7 +1079,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                 var toolCalls = ProcessToolCalls(toolCallDetails);
                 if (toolCalls != null)
                 {
-                    attributes[GenAiEventContent] = JsonSerializer.Serialize(new { tool_calls = toolCalls }, s_jsonOptions);
+                    attributes[GenAiEventContent] = JsonSerializer.Serialize(new ToolCallsEvent { ToolCalls = toolCalls }, OpenTelemetryJsonContext.Default.ToolCallsEvent);
                 }
             }
 
@@ -1115,10 +1110,11 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                     switch (toolCall)
                     {
                         case RunStepFunctionToolCall functionToolCall:
-                            toolCallAttributes["function"] = new
+                            var parsedArguments = JsonSerializer.Deserialize(functionToolCall.Arguments, OpenTelemetryJsonContext.Default.DictionaryStringObject);
+                            toolCallAttributes["function"] = new Dictionary<string, object>
                             {
-                                name = functionToolCall.Name,
-                                arguments = JsonSerializer.Deserialize<Dictionary<string, object>>(functionToolCall.Arguments)
+                                { "name", functionToolCall.Name },
+                                { "arguments", parsedArguments }
                             };
                             break;
 
@@ -1128,10 +1124,10 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                                 var outputDictionary = ConvertToDictionary(output);
                                 outputList.Add(outputDictionary); // Add output to the list
                             }
-                            toolCallAttributes["code_interpreter"] = new
+                            toolCallAttributes["code_interpreter"] = new Dictionary<string, object>
                             {
-                                input = codeInterpreterToolCall.Input,
-                                outputs = outputList
+                                { "input", codeInterpreterToolCall.Input },
+                                { "outputs", outputList }
                             };
                             break;
 
@@ -1199,20 +1195,28 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             s_enableTelemetry = AppContextSwitchHelper.GetConfigValue(EnableOpenTelemetrySwitch, EnableOpenTelemetryEnvironmentVariable);
         }
 
-        // To convert an object to a dictionary, you can use the following method:
-        public static Dictionary<string, object> ConvertToDictionary(object obj)
+        private static Dictionary<string, object> ConvertToDictionary(RunStepCodeInterpreterToolCallOutput output)
         {
-            if (obj == null)
+            if (output == null)
             {
-                throw new ArgumentNullException(nameof(obj));
+                throw new ArgumentNullException(nameof(output));
             }
 
-            return obj.GetType()
-                      .GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance)
-                      .ToDictionary(
-                          prop => prop.Name,
-                          prop => prop.GetValue(obj, null)
-                      );
+            return output switch
+            {
+                RunStepCodeInterpreterLogOutput logOutput => new Dictionary<string, object>
+                {
+                    { "Logs", logOutput.Logs }
+                },
+                RunStepCodeInterpreterImageOutput imageOutput => new Dictionary<string, object>
+                {
+                    { "Image", imageOutput.Image }
+                },
+                _ => new Dictionary<string, object>
+                {
+                    { "UnsupportedType", output.GetType().Name }
+                }
+            };
         }
 
         public static IReadOnlyDictionary<string, string> GetToolCallAttributes(RunStepToolCall toolCall)
@@ -1222,25 +1226,55 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                 throw new ArgumentNullException(nameof(toolCall));
             }
 
-            // Get the actual type of the toolCall instance
-            Type actualType = toolCall.GetType();
-
-            // Create the attribute name by removing "RunStep" and "ToolCall" from the class name
-            string attributeName = actualType.Name
-                .Replace("RunStep", string.Empty)
-                .Replace("ToolCall", string.Empty);
-
-            // Try to find a property with the parsed name
-            PropertyInfo property = actualType.GetProperty(attributeName, BindingFlags.Public | BindingFlags.Instance);
-
-            if (property != null && property.PropertyType == typeof(IReadOnlyDictionary<string, string>))
+            return toolCall switch
             {
-                // Get the value of the property
-                return property.GetValue(toolCall) as IReadOnlyDictionary<string, string>;
-            }
-
-            // Return null if the property is not found or is not of the expected type
-            return null;
+                RunStepAzureAISearchToolCall azureSearch => azureSearch.AzureAISearch,
+                RunStepBingCustomSearchToolCall bingCustomSearch => bingCustomSearch.BingCustomSearch,
+                RunStepBingGroundingToolCall bingGrounding => bingGrounding.BingGrounding,
+                RunStepMicrosoftFabricToolCall fabric => fabric.MicrosoftFabric,
+                RunStepOpenAPIToolCall openApi => openApi.OpenAPI,
+                RunStepSharepointToolCall sharepoint => sharepoint.SharePoint,
+                _ => null // Return null for tool calls that don't have dictionary attributes (e.g. RunStepFunctionToolCall, RunStepCodeInterpreterToolCall)
+            };
         }
+    }
+
+    internal class InstructionsEvent
+    {
+        public string Content { get; set; }
+    }
+
+    internal class MessageEvent
+    {
+        public string Content { get; set; }
+        public string Role { get; set; }
+    }
+
+    internal class RoleEvent
+    {
+        public string Role { get; set; }
+    }
+
+    internal class ToolOutputEvent
+    {
+        public string Content { get; set; }
+        public string Id { get; set; }
+    }
+
+    internal class ToolCallsEvent
+    {
+        [JsonPropertyName("tool_calls")]
+        public List<Dictionary<string, object>> ToolCalls { get; set; }
+    }
+
+    [JsonSerializable(typeof(InstructionsEvent))]
+    [JsonSerializable(typeof(MessageEvent))]
+    [JsonSerializable(typeof(RoleEvent))]
+    [JsonSerializable(typeof(ToolOutputEvent))]
+    [JsonSerializable(typeof(ToolCallsEvent))]
+    [JsonSerializable(typeof(Dictionary<string, object>))]
+    [JsonSerializable(typeof(List<Dictionary<string, object>>))]
+    internal partial class OpenTelemetryJsonContext : JsonSerializerContext
+    {
     }
 }
