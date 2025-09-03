@@ -110,6 +110,58 @@ namespace MgmtTypeSpec
             return GetMockableMgmtTypeSpecArmClient(client).GetZooResource(id);
         }
 
+        /// <summary> Gets an object representing a <see cref="EndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EndpointResource"/> object. </returns>
+        public static EndpointResource GetEndpointResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMgmtTypeSpecArmClient(client).GetEndpointResource(id);
+        }
+
+        /// <summary> Gets a collection of <see cref="EndpointResourceCollection"/> objects within the specified scope. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="EndpointResource"/> objects. </returns>
+        public static EndpointResourceCollection GetEndpointResources(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMgmtTypeSpecArmClient(client).GetEndpointResources(scope);
+        }
+
+        /// <summary> Gets the endpoint to the resource. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="endpointName"> The name of the EndpointResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<EndpointResource> GetEndpointResource(this ArmClient client, ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMgmtTypeSpecArmClient(client).GetEndpointResource(scope, endpointName, cancellationToken);
+        }
+
+        /// <summary> Gets the endpoint to the resource. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="endpointName"> The name of the EndpointResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<EndpointResource>> GetEndpointResourceAsync(this ArmClient client, ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableMgmtTypeSpecArmClient(client).GetEndpointResourceAsync(scope, endpointName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets a collection of Foos in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>

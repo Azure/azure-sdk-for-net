@@ -21,14 +21,14 @@ namespace Azure.Security.KeyVault.Administration
 
         internal HttpMessage CreateFullBackupRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/backup", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -37,14 +37,14 @@ namespace Azure.Security.KeyVault.Administration
 
         internal HttpMessage CreatePreFullBackupRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/prebackup", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -53,14 +53,14 @@ namespace Azure.Security.KeyVault.Administration
 
         internal HttpMessage CreateFullRestoreOperationRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
-            Request request = message.Request;
-            request.Method = RequestMethod.Put;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/restore", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -69,14 +69,14 @@ namespace Azure.Security.KeyVault.Administration
 
         internal HttpMessage CreatePreFullRestoreOperationRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
-            Request request = message.Request;
-            request.Method = RequestMethod.Put;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/prerestore", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -85,64 +85,64 @@ namespace Azure.Security.KeyVault.Administration
 
         internal HttpMessage CreateFullBackupStatusRequest(string jobId, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/backup/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/pending", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateRestoreStatusRequest(string jobId, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/restore/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/pending", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateSelectiveKeyRestoreStatusRequest(string jobId, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/restore/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath("/pending", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateSelectiveKeyRestoreOperationRequest(string keyName, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
-            Request request = message.Request;
-            request.Method = RequestMethod.Put;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/keys/", false);
             uri.AppendPath(keyName, true);
             uri.AppendPath("/restore", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -151,15 +151,15 @@ namespace Azure.Security.KeyVault.Administration
 
         internal HttpMessage CreateUpdateSettingRequest(string settingName, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Patch;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/settings/", false);
             uri.AppendPath(settingName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -168,29 +168,29 @@ namespace Azure.Security.KeyVault.Administration
 
         internal HttpMessage CreateGetSettingRequest(string settingName, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/settings/", false);
             uri.AppendPath(settingName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateGetSettingsRequest(RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/settings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

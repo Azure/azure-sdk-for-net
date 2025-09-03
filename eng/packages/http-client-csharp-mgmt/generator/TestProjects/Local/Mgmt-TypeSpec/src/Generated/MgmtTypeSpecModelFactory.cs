@@ -18,6 +18,14 @@ namespace MgmtTypeSpec.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class MgmtTypeSpecModelFactory
     {
+        /// <summary> The FooPreviewAction. </summary>
+        /// <param name="action"> The action to be performed. </param>
+        /// <param name="result"></param>
+        /// <returns> A new <see cref="Models.FooPreviewAction"/> instance for mocking. </returns>
+        public static FooPreviewAction FooPreviewAction(string action = default, string result = default)
+        {
+            return new FooPreviewAction(action, result, additionalBinaryDataProperties: null);
+        }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -184,13 +192,22 @@ namespace MgmtTypeSpec.Models
             return new ZooAddressListListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The FooPreviewAction. </summary>
-        /// <param name="action"> The action to be performed. </param>
-        /// <param name="result"></param>
-        /// <returns> A new <see cref="Models.FooPreviewAction"/> instance for mocking. </returns>
-        public static FooPreviewAction FooPreviewAction(string action = default, string result = default)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="endpointProp"> Gets or sets the Prop. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointProp"/> is null. </exception>
+        /// <returns> A new <see cref="MgmtTypeSpec.EndpointResourceData"/> instance for mocking. </returns>
+        public static EndpointResourceData EndpointResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string endpointProp = default)
         {
-            return new FooPreviewAction(action, result, additionalBinaryDataProperties: null);
+            return new EndpointResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                endpointProp is null ? default : new EndpointProperties(endpointProp, new Dictionary<string, BinaryData>()));
         }
 
         /// <summary> The ZooRecommendation. </summary>

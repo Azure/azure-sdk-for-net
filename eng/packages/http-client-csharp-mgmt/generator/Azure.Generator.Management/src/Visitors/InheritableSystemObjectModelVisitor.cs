@@ -18,11 +18,11 @@ using System.Linq;
 
 namespace Azure.Generator.Management.Visitors;
 
-internal class SystemObjectModelVisitor : ScmLibraryVisitor
+internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 {
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
-        if (type is SystemObjectModelProvider systemType)
+        if (type is InheritableSystemObjectModelProvider systemType)
         {
             UpdateNamespace(systemType);
         }
@@ -41,7 +41,7 @@ internal class SystemObjectModelVisitor : ScmLibraryVisitor
             UpdateModelFactory(modelFactory);
         }
 
-        if (type is SystemObjectModelProvider systemType)
+        if (type is InheritableSystemObjectModelProvider systemType)
         {
             UpdateNamespace(systemType);
         }
@@ -68,7 +68,7 @@ internal class SystemObjectModelVisitor : ScmLibraryVisitor
         modelFactory.Update(methods: methods);
     }
 
-    private static void UpdateNamespace(SystemObjectModelProvider systemType)
+    private static void UpdateNamespace(InheritableSystemObjectModelProvider systemType)
     {
         // This is needed because we updated the namespace with NamespaceVisitor in Azure generator earlier
         systemType.Update(@namespace: systemType._type.Namespace);
