@@ -23,7 +23,7 @@ namespace Azure.Generator.Providers
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpRequestProvider"/> class.
         /// </summary>
-        /// <param name="original"></param>
+        /// <param name="original">The original value expression to wrap.</param>
         public HttpRequestProvider(ValueExpression original) : base(typeof(Request), original)
         {
         }
