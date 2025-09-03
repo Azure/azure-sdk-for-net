@@ -34,20 +34,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 throw new FormatException($"The model {nameof(KubernetesClusterList)} does not support writing '{format}' format.");
             }
 
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
-            }
-            if (Optional.IsCollectionDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,23 +83,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            string nextLink = default;
             IReadOnlyList<NetworkCloudKubernetesClusterData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<NetworkCloudKubernetesClusterData> array = new List<NetworkCloudKubernetesClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -111,13 +99,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new KubernetesClusterList(nextLink, value ?? new ChangeTrackingList<NetworkCloudKubernetesClusterData>(), serializedAdditionalRawData);
+            return new KubernetesClusterList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterList>.Write(ModelReaderWriterOptions options)

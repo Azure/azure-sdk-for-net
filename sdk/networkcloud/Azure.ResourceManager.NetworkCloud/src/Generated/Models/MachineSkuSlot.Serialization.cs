@@ -281,7 +281,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new MachineSkuSlot(
-                rackSlot,
                 bootstrapProtocol,
                 cpuCores,
                 cpuSockets,
@@ -293,6 +292,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 networkInterfaces ?? new ChangeTrackingList<NetworkCloudNetworkInterface>(),
                 totalThreads,
                 vendor,
+                rackSlot,
                 serializedAdditionalRawData);
         }
 

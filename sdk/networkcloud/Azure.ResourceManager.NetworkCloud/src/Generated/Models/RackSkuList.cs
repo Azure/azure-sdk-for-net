@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RackSkuList"/>. </summary>
-        internal RackSkuList()
+        /// <param name="value"> The RackSku items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal RackSkuList(IEnumerable<NetworkCloudRackSkuData> value)
         {
-            Value = new ChangeTrackingList<NetworkCloudRackSkuData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RackSkuList"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        /// <param name="value"> The list of Rack SKUs. </param>
+        /// <param name="value"> The RackSku items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RackSkuList(string nextLink, IReadOnlyList<NetworkCloudRackSkuData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RackSkuList(IReadOnlyList<NetworkCloudRackSkuData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The link used to get the next page of operations. </summary>
-        public string NextLink { get; }
-        /// <summary> The list of Rack SKUs. </summary>
+        /// <summary> Initializes a new instance of <see cref="RackSkuList"/> for deserialization. </summary>
+        internal RackSkuList()
+        {
+        }
+
+        /// <summary> The RackSku items on this page. </summary>
         public IReadOnlyList<NetworkCloudRackSkuData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

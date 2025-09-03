@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkCloudKubernetesClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), administratorConfiguration, controlPlaneNodeConfiguration, kubernetesVersion, serializedAdditionalRawData);
+            return new NetworkCloudKubernetesClusterPatch(administratorConfiguration, controlPlaneNodeConfiguration, kubernetesVersion, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudKubernetesClusterPatch>.Write(ModelReaderWriterOptions options)

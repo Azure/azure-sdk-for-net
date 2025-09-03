@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkCloudRackPatch(tags ?? new ChangeTrackingDictionary<string, string>(), rackLocation, rackSerialNumber, serializedAdditionalRawData);
+            return new NetworkCloudRackPatch(rackLocation, rackSerialNumber, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudRackPatch>.Write(ModelReaderWriterOptions options)

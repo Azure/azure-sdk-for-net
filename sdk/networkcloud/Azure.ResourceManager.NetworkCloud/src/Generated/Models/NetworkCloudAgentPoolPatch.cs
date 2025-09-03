@@ -52,22 +52,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentPoolPatch"/>. </summary>
-        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
         /// <param name="administratorConfiguration"> The configuration of administrator credentials for the control plane nodes. </param>
         /// <param name="count"> The number of virtual machines that use this configuration. </param>
         /// <param name="upgradeSettings"> The configuration of the agent pool. </param>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudAgentPoolPatch(IDictionary<string, string> tags, NodePoolAdministratorConfigurationPatch administratorConfiguration, long? count, AgentPoolUpgradeSettings upgradeSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkCloudAgentPoolPatch(NodePoolAdministratorConfigurationPatch administratorConfiguration, long? count, AgentPoolUpgradeSettings upgradeSettings, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
             AdministratorConfiguration = administratorConfiguration;
             Count = count;
             UpgradeSettings = upgradeSettings;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> The configuration of administrator credentials for the control plane nodes. </summary>
         internal NodePoolAdministratorConfigurationPatch AdministratorConfiguration { get; set; }
         /// <summary> SshPublicKey represents the public key used to authenticate with a resource through SSH. </summary>
@@ -85,5 +83,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public long? Count { get; set; }
         /// <summary> The configuration of the agent pool. </summary>
         public AgentPoolUpgradeSettings UpgradeSettings { get; set; }
+        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

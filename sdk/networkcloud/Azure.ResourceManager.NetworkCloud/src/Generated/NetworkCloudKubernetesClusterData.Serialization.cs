@@ -445,8 +445,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
-                extendedLocation,
                 aadConfiguration,
                 administratorConfiguration,
                 attachedNetworkIds ?? new ChangeTrackingList<ResourceIdentifier>(),
@@ -464,6 +462,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 networkConfiguration,
                 nodes ?? new ChangeTrackingList<KubernetesClusterNode>(),
                 provisioningState,
+                etag,
+                extendedLocation,
                 serializedAdditionalRawData);
         }
 
