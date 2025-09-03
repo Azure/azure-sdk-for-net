@@ -65,6 +65,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, // Allow non-ASCII characters
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             TypeInfoResolver = OpenTelemetryJsonContext.Default
         };
 
@@ -124,7 +125,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
 
             string eventContent = s_traceContent
                 ? JsonSerializer.Serialize(new InstructionsEvent { Content = createAgentRequest.Instructions }, OpenTelemetryJsonContext.Default.InstructionsEvent)
-                : "";
+                : JsonSerializer.Serialize("", OpenTelemetryJsonContext.Default.String);
             ActivityTagsCollection messageTags = new() {
                    { GenAiSystemKey, GenAiSystemValue},
                    { GenAiEventContent, eventContent }
@@ -1241,23 +1242,29 @@ namespace Azure.AI.Agents.Persistent.Telemetry
 
     internal class InstructionsEvent
     {
+        [JsonPropertyName("content")]
         public string Content { get; set; }
     }
 
     internal class MessageEvent
     {
+        [JsonPropertyName("content")]
         public string Content { get; set; }
+        [JsonPropertyName("role")]
         public string Role { get; set; }
     }
 
     internal class RoleEvent
     {
+        [JsonPropertyName("role")]
         public string Role { get; set; }
     }
 
     internal class ToolOutputEvent
     {
+        [JsonPropertyName("content")]
         public string Content { get; set; }
+        [JsonPropertyName("id")]
         public string Id { get; set; }
     }
 
@@ -1272,6 +1279,8 @@ namespace Azure.AI.Agents.Persistent.Telemetry
     [JsonSerializable(typeof(RoleEvent))]
     [JsonSerializable(typeof(ToolOutputEvent))]
     [JsonSerializable(typeof(ToolCallsEvent))]
+    [JsonSerializable(typeof(string))]
+    [JsonSerializable(typeof(JsonElement))]
     [JsonSerializable(typeof(Dictionary<string, object>))]
     [JsonSerializable(typeof(List<Dictionary<string, object>>))]
     internal partial class OpenTelemetryJsonContext : JsonSerializerContext
