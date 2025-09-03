@@ -2,12 +2,6 @@
 
 ## 1.0.0 (2025-09-10)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
 - Updated versioning for general availability.
 
