@@ -1111,11 +1111,13 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                     switch (toolCall)
                     {
                         case RunStepFunctionToolCall functionToolCall:
-                            var parsedArguments = JsonSerializer.Deserialize(functionToolCall.Arguments, OpenTelemetryJsonContext.Default.DictionaryStringObject);
+                            var argsDict = string.IsNullOrEmpty(functionToolCall.Arguments)
+                                ? new Dictionary<string, object>()
+                                : JsonSerializer.Deserialize(functionToolCall.Arguments, OpenTelemetryJsonContext.Default.DictionaryStringObject);
                             toolCallAttributes["function"] = new Dictionary<string, object>
                             {
                                 { "name", functionToolCall.Name },
-                                { "arguments", parsedArguments }
+                                { "arguments", argsDict }
                             };
                             break;
 
