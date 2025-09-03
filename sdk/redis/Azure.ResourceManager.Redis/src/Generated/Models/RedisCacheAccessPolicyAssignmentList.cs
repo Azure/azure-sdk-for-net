@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Redis.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyAssignmentList"/>. </summary>
-        internal RedisCacheAccessPolicyAssignmentList()
+        /// <param name="value"> The RedisCacheAccessPolicyAssignment items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal RedisCacheAccessPolicyAssignmentList(IEnumerable<RedisCacheAccessPolicyAssignmentData> value)
         {
-            Value = new ChangeTrackingList<RedisCacheAccessPolicyAssignmentData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyAssignmentList"/>. </summary>
-        /// <param name="value"> List of access policies assignments (with properties) of a Redis cache. </param>
-        /// <param name="nextLink"> Link for next set. </param>
+        /// <param name="value"> The RedisCacheAccessPolicyAssignment items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisCacheAccessPolicyAssignmentList(IReadOnlyList<RedisCacheAccessPolicyAssignmentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisCacheAccessPolicyAssignmentList(IReadOnlyList<RedisCacheAccessPolicyAssignmentData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of access policies assignments (with properties) of a Redis cache. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyAssignmentList"/> for deserialization. </summary>
+        internal RedisCacheAccessPolicyAssignmentList()
+        {
+        }
+
+        /// <summary> The RedisCacheAccessPolicyAssignment items on this page. </summary>
         public IReadOnlyList<RedisCacheAccessPolicyAssignmentData> Value { get; }
-        /// <summary> Link for next set. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

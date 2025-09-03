@@ -36,302 +36,6 @@ namespace Azure.ResourceManager.Redis
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string name, string linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/linkedServers/", false);
-            uri.AppendPath(linkedServerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string name, string linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/linkedServers/", false);
-            uri.AppendPath(linkedServerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Adds a linked server to the Redis cache (requires Premium SKU). </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> The name of the Redis cache. </param>
-        /// <param name="linkedServerName"> The name of the linked server that is being added to the Redis cache. </param>
-        /// <param name="content"> Parameters supplied to the Create Linked server operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="linkedServerName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string name, string linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, name, linkedServerName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Adds a linked server to the Redis cache (requires Premium SKU). </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> The name of the Redis cache. </param>
-        /// <param name="linkedServerName"> The name of the linked server that is being added to the Redis cache. </param>
-        /// <param name="content"> Parameters supplied to the Create Linked server operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="linkedServerName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string name, string linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, name, linkedServerName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string name, string linkedServerName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/linkedServers/", false);
-            uri.AppendPath(linkedServerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string name, string linkedServerName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/linkedServers/", false);
-            uri.AppendPath(linkedServerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Deletes the linked server from a redis cache (requires Premium SKU). </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> The name of the redis cache. </param>
-        /// <param name="linkedServerName"> The name of the linked server that is being added to the Redis cache. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string name, string linkedServerName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name, linkedServerName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes the linked server from a redis cache (requires Premium SKU). </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> The name of the redis cache. </param>
-        /// <param name="linkedServerName"> The name of the linked server that is being added to the Redis cache. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string name, string linkedServerName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name, linkedServerName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string name, string linkedServerName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/linkedServers/", false);
-            uri.AppendPath(linkedServerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string name, string linkedServerName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/linkedServers/", false);
-            uri.AppendPath(linkedServerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the detailed information about a linked server of a redis cache (requires Premium SKU). </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> The name of the redis cache. </param>
-        /// <param name="linkedServerName"> The name of the linked server. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RedisLinkedServerWithPropertyData>> GetAsync(string subscriptionId, string resourceGroupName, string name, string linkedServerName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, name, linkedServerName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RedisLinkedServerWithPropertyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((RedisLinkedServerWithPropertyData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the detailed information about a linked server of a redis cache (requires Premium SKU). </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> The name of the redis cache. </param>
-        /// <param name="linkedServerName"> The name of the linked server. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RedisLinkedServerWithPropertyData> Get(string subscriptionId, string resourceGroupName, string name, string linkedServerName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, name, linkedServerName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RedisLinkedServerWithPropertyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((RedisLinkedServerWithPropertyData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string name)
         {
             var uri = new RawRequestUriBuilder();
@@ -421,6 +125,302 @@ namespace Azure.ResourceManager.Redis
                         value = RedisLinkedServerWithPropertiesList.DeserializeRedisLinkedServerWithPropertiesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string name, string linkedServerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/linkedServers/", false);
+            uri.AppendPath(linkedServerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string name, string linkedServerName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/linkedServers/", false);
+            uri.AppendPath(linkedServerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the detailed information about a linked server of a redis cache (requires Premium SKU). </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the redis cache. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<RedisLinkedServerWithPropertyData>> GetAsync(string subscriptionId, string resourceGroupName, string name, string linkedServerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, name, linkedServerName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RedisLinkedServerWithPropertyData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((RedisLinkedServerWithPropertyData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the detailed information about a linked server of a redis cache (requires Premium SKU). </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the redis cache. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<RedisLinkedServerWithPropertyData> Get(string subscriptionId, string resourceGroupName, string name, string linkedServerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, name, linkedServerName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RedisLinkedServerWithPropertyData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((RedisLinkedServerWithPropertyData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string name, string linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/linkedServers/", false);
+            uri.AppendPath(linkedServerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string name, string linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/linkedServers/", false);
+            uri.AppendPath(linkedServerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Adds a linked server to the Redis cache (requires Premium SKU). </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The <see cref="string"/> to use. </param>
+        /// <param name="linkedServerName"> The <see cref="string"/> to use. </param>
+        /// <param name="content"> Parameters supplied to the Create Linked server operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="linkedServerName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string name, string linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, name, linkedServerName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Adds a linked server to the Redis cache (requires Premium SKU). </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The <see cref="string"/> to use. </param>
+        /// <param name="linkedServerName"> The <see cref="string"/> to use. </param>
+        /// <param name="content"> Parameters supplied to the Create Linked server operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="linkedServerName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Create(string subscriptionId, string resourceGroupName, string name, string linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, name, linkedServerName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string name, string linkedServerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/linkedServers/", false);
+            uri.AppendPath(linkedServerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string name, string linkedServerName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/linkedServers/", false);
+            uri.AppendPath(linkedServerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Deletes the linked server from a redis cache (requires Premium SKU). </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the redis cache. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string name, string linkedServerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name, linkedServerName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes the linked server from a redis cache (requires Premium SKU). </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the redis cache. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string name, string linkedServerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name, linkedServerName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }

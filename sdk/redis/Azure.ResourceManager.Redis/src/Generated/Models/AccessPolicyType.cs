@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Redis.Models
         private const string CustomValue = "Custom";
         private const string BuiltInValue = "BuiltIn";
 
-        /// <summary> Custom. </summary>
+        /// <summary> User-configurable access policy, using the redis access policy authoring language *. </summary>
         public static AccessPolicyType Custom { get; } = new AccessPolicyType(CustomValue);
-        /// <summary> BuiltIn. </summary>
+        /// <summary> Built-in or well-known access policies, whose policy is not configurable. *. </summary>
         public static AccessPolicyType BuiltIn { get; } = new AccessPolicyType(BuiltInValue);
         /// <summary> Determines if two <see cref="AccessPolicyType"/> values are the same. </summary>
         public static bool operator ==(AccessPolicyType left, AccessPolicyType right) => left.Equals(right);
