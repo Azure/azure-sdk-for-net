@@ -6,7 +6,7 @@
 - Updated `Microsoft.Extensions.AI.Abstractions` dependency to version 9.8.0.`
 - Added support of `FileSearchTool` and `CodeInterpreterTool` for `PersistentAgentsChatClient`
 - Bugfix: Addressed issues related to `ResponseFormat` when using `PersistentAgentsChatClient` with Structured Outputs.
-- Make `Azure.AI.Agents.Persistent` AOT comatible.
+- Make `Azure.AI.Agents.Persistent` AOT compatible.
 
 ### Breaking Changes
 
