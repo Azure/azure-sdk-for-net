@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="reason"> The reason that a managed hsm name could not be used. The reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> An error message explaining the Reason value in more detail. </param>
         /// <returns> A new <see cref="Models.ManagedHsmNameAvailabilityResult"/> instance for mocking. </returns>
-        public static ManagedHsmNameAvailabilityResult ManagedHsmNameAvailabilityResult(bool? isNameAvailable = null, ManagedHsmNameUnavailableReason? reason = null, string message = null)
+        public static ManagedHsmNameAvailabilityResult ManagedHsmNameAvailabilityResult(bool? isNameAvailable = null, KeyVaultNameUnavailableReason? reason = null, string message = null)
         {
             return new ManagedHsmNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="name"> The vault name. </param>
         /// <param name="resourceType"> The type of resource, Microsoft.KeyVault/vaults. </param>
         /// <returns> A new <see cref="Models.KeyVaultNameAvailabilityContent"/> instance for mocking. </returns>
-        public static KeyVaultNameAvailabilityContent KeyVaultNameAvailabilityContent(string name = null, VaultCheckNameAvailabilityParametersType resourceType = default)
+        public static KeyVaultNameAvailabilityContent KeyVaultNameAvailabilityContent(string name = null, ResourceType resourceType = default)
         {
             return new KeyVaultNameAvailabilityContent(name, resourceType, serializedAdditionalRawData: null);
         }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="reason"> The reason that a vault name could not be used. The Reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> An error message explaining the Reason value in more detail. </param>
         /// <returns> A new <see cref="Models.KeyVaultNameAvailabilityResult"/> instance for mocking. </returns>
-        public static KeyVaultNameAvailabilityResult KeyVaultNameAvailabilityResult(bool? nameAvailable = null, ManagedHsmNameUnavailableReason? reason = null, string message = null)
+        public static KeyVaultNameAvailabilityResult KeyVaultNameAvailabilityResult(bool? nameAvailable = null, KeyVaultNameUnavailableReason? reason = null, string message = null)
         {
             return new KeyVaultNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
         }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="scheduledPurgeOn"> The scheduled purge date in UTC. </param>
         /// <param name="securityDomainProperties"> Managed HSM security domain properties. </param>
         /// <returns> A new <see cref="Models.ManagedHsmProperties"/> instance for mocking. </returns>
-        public static ManagedHsmProperties ManagedHsmProperties(Guid? tenantId = null, IEnumerable<string> initialAdminObjectIds = null, Uri hsmUri = null, bool? enableSoftDelete = null, int? softDeleteRetentionInDays = null, bool? enablePurgeProtection = null, ManagedHsmCreateMode? createMode = null, string statusMessage = null, ProvisioningState? provisioningState = null, ManagedHsmNetworkRuleSet networkRuleSet = null, IEnumerable<ManagedHsmGeoReplicatedRegion> regions = null, IEnumerable<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections = null, ManagedHsmPublicNetworkAccess? publicNetworkAccess = null, DateTimeOffset? scheduledPurgeOn = null, ManagedHSMSecurityDomainProperties securityDomainProperties = null)
+        public static ManagedHsmProperties ManagedHsmProperties(Guid? tenantId = null, IEnumerable<string> initialAdminObjectIds = null, Uri hsmUri = null, bool? enableSoftDelete = null, int? softDeleteRetentionInDays = null, bool? enablePurgeProtection = null, KeyVaultCreateMode? createMode = null, string statusMessage = null, ManagedHsmProvisioningState? provisioningState = null, ManagedHsmNetworkRuleSet networkRuleSet = null, IEnumerable<ManagedHsmGeoReplicatedRegion> regions = null, IEnumerable<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections = null, ManagedHsmPublicNetworkAccess? publicNetworkAccess = null, DateTimeOffset? scheduledPurgeOn = null, ManagedHSMSecurityDomainProperties securityDomainProperties = null)
         {
             initialAdminObjectIds ??= new List<string>();
             regions ??= new List<ManagedHsmGeoReplicatedRegion>();
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <returns> A new <see cref="Models.ManagedHsmPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateEndpointConnectionItemData ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id = null, ETag? etag = null, ResourceIdentifier privateEndpointId = null, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        public static ManagedHsmPrivateEndpointConnectionItemData ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id = null, ETag? etag = null, ResourceIdentifier privateEndpointId = null, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
             return new ManagedHsmPrivateEndpointConnectionItemData(
                 id,
@@ -237,11 +237,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of the vault. </param>
-        /// <param name="location"> Azure location of the key vault resource. </param>
-        /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <returns> A new <see cref="KeyVault.KeyVaultData"/> instance for mocking. </returns>
-        public static KeyVaultData KeyVaultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, KeyVaultProperties properties = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
+        public static KeyVaultData KeyVaultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, KeyVaultProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -250,9 +250,9 @@ namespace Azure.ResourceManager.KeyVault.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                location,
                 tags,
+                location,
+                properties,
                 serializedAdditionalRawData: null);
         }
 
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the key vault. </param>
         /// <param name="publicNetworkAccess"> Property to specify whether the vault will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </param>
         /// <returns> A new <see cref="Models.KeyVaultProperties"/> instance for mocking. </returns>
-        public static KeyVaultProperties KeyVaultProperties(Guid tenantId = default, KeyVaultSku sku = null, IEnumerable<KeyVaultAccessPolicy> accessPolicies = null, Uri vaultUri = null, string hsmPoolResourceId = null, bool? enabledForDeployment = null, bool? enabledForDiskEncryption = null, bool? enabledForTemplateDeployment = null, bool? enableSoftDelete = null, int? softDeleteRetentionInDays = null, bool? enableRbacAuthorization = null, ManagedHsmCreateMode? createMode = null, bool? enablePurgeProtection = null, KeyVaultNetworkRuleSet networkRuleSet = null, VaultProvisioningState? provisioningState = null, IEnumerable<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections = null, string publicNetworkAccess = null)
+        public static KeyVaultProperties KeyVaultProperties(Guid tenantId = default, KeyVaultSku sku = null, IEnumerable<KeyVaultAccessPolicy> accessPolicies = null, Uri vaultUri = null, string hsmPoolResourceId = null, bool? enabledForDeployment = null, bool? enabledForDiskEncryption = null, bool? enabledForTemplateDeployment = null, bool? enableSoftDelete = null, int? softDeleteRetentionInDays = null, bool? enableRbacAuthorization = null, KeyVaultCreateMode? createMode = null, bool? enablePurgeProtection = null, KeyVaultNetworkRuleSet networkRuleSet = null, VaultProvisioningState? provisioningState = null, IEnumerable<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections = null, string publicNetworkAccess = null)
         {
             accessPolicies ??= new List<KeyVaultAccessPolicy>();
             privateEndpointConnections ??= new List<KeyVaultPrivateEndpointConnectionItemData>();
@@ -319,116 +319,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyVault.ManagedHsmKeyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="attributes"> The attributes of the key. </param>
-        /// <param name="kty"> The type of the key. For valid values, see JsonWebKeyType. </param>
-        /// <param name="keyOps"></param>
-        /// <param name="keySize"> The key size in bits. For example: 2048, 3072, or 4096 for RSA. Default for RSA and RSA-HSM keys is 2048. Exception made for bring your own key (BYOK), key exchange keys default to 4096. </param>
-        /// <param name="curveName"> The elliptic curve name. For valid values, see JsonWebKeyCurveName. Default for EC and EC-HSM keys is P-256. </param>
-        /// <param name="keyUri"> The URI to retrieve the current version of the key. </param>
-        /// <param name="keyUriWithVersion"> The URI to retrieve the specific version of the key. </param>
-        /// <param name="rotationPolicy"> Key rotation policy in response. It will be used for both output and input. Omitted if empty. </param>
-        /// <param name="releasePolicy"> Key release policy in response. It will be used for both output and input. Omitted if empty. </param>
-        /// <returns> A new <see cref="KeyVault.ManagedHsmKeyData"/> instance for mocking. </returns>
-        public static ManagedHsmKeyData ManagedHsmKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, ManagedHsmKeyAttributes attributes = null, JsonWebKeyType? kty = null, IEnumerable<JsonWebKeyOperation> keyOps = null, int? keySize = null, JsonWebKeyCurveName? curveName = null, Uri keyUri = null, string keyUriWithVersion = null, ManagedHsmRotationPolicy rotationPolicy = null, ManagedHsmKeyReleasePolicy releasePolicy = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            keyOps ??= new List<JsonWebKeyOperation>();
-
-            return new ManagedHsmKeyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                attributes,
-                kty,
-                keyOps?.ToList(),
-                keySize,
-                curveName,
-                keyUri,
-                keyUriWithVersion,
-                rotationPolicy,
-                releasePolicy,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmKeyProperties"/>. </summary>
-        /// <param name="attributes"> The attributes of the key. </param>
-        /// <param name="keyType"> The type of the key. For valid values, see JsonWebKeyType. </param>
-        /// <param name="keyOps"></param>
-        /// <param name="keySize"> The key size in bits. For example: 2048, 3072, or 4096 for RSA. Default for RSA and RSA-HSM keys is 2048. Exception made for bring your own key (BYOK), key exchange keys default to 4096. </param>
-        /// <param name="curveName"> The elliptic curve name. For valid values, see JsonWebKeyCurveName. Default for EC and EC-HSM keys is P-256. </param>
-        /// <param name="keyUri"> The URI to retrieve the current version of the key. </param>
-        /// <param name="keyUriWithVersion"> The URI to retrieve the specific version of the key. </param>
-        /// <param name="rotationPolicy"> Key rotation policy in response. It will be used for both output and input. Omitted if empty. </param>
-        /// <param name="releasePolicy"> Key release policy in response. It will be used for both output and input. Omitted if empty. </param>
-        /// <returns> A new <see cref="Models.ManagedHsmKeyProperties"/> instance for mocking. </returns>
-        public static ManagedHsmKeyProperties ManagedHsmKeyProperties(ManagedHsmKeyAttributes attributes = null, JsonWebKeyType? keyType = null, IEnumerable<JsonWebKeyOperation> keyOps = null, int? keySize = null, JsonWebKeyCurveName? curveName = null, Uri keyUri = null, string keyUriWithVersion = null, ManagedHsmRotationPolicy rotationPolicy = null, ManagedHsmKeyReleasePolicy releasePolicy = null)
-        {
-            keyOps ??= new List<JsonWebKeyOperation>();
-
-            return new ManagedHsmKeyProperties(
-                attributes,
-                keyType,
-                keyOps?.ToList(),
-                keySize,
-                curveName,
-                keyUri,
-                keyUriWithVersion,
-                rotationPolicy,
-                releasePolicy,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmKeyAttributes"/>. </summary>
-        /// <param name="isEnabled"> Determines whether or not the object is enabled. </param>
-        /// <param name="notBefore"> Not before date in seconds since 1970-01-01T00:00:00Z. </param>
-        /// <param name="expires"> Expiry date in seconds since 1970-01-01T00:00:00Z. </param>
-        /// <param name="created"> Creation time in seconds since 1970-01-01T00:00:00Z. </param>
-        /// <param name="updated"> Last updated time in seconds since 1970-01-01T00:00:00Z. </param>
-        /// <param name="recoveryLevel"> The deletion recovery level currently in effect for the object. If it contains 'Purgeable', then the object can be permanently deleted by a privileged user; otherwise, only the system can purge the object at the end of the retention interval. </param>
-        /// <param name="canExported"> Indicates if the private key can be exported. </param>
-        /// <returns> A new <see cref="Models.ManagedHsmKeyAttributes"/> instance for mocking. </returns>
-        public static ManagedHsmKeyAttributes ManagedHsmKeyAttributes(bool? isEnabled = null, long? notBefore = null, long? expires = null, long? created = null, long? updated = null, DeletionRecoveryLevel? recoveryLevel = null, bool? canExported = null)
-        {
-            return new ManagedHsmKeyAttributes(
-                isEnabled,
-                notBefore,
-                expires,
-                created,
-                updated,
-                recoveryLevel,
-                canExported,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmKeyRotationPolicyAttributes"/>. </summary>
-        /// <param name="created"> Creation time in seconds since 1970-01-01T00:00:00Z. </param>
-        /// <param name="updated"> Last updated time in seconds since 1970-01-01T00:00:00Z. </param>
-        /// <param name="expiryTime"> The expiration time for the new key version. It should be in ISO8601 format. Eg: 'P90D', 'P1Y'. </param>
-        /// <returns> A new <see cref="Models.ManagedHsmKeyRotationPolicyAttributes"/> instance for mocking. </returns>
-        public static ManagedHsmKeyRotationPolicyAttributes ManagedHsmKeyRotationPolicyAttributes(long? created = null, long? updated = null, string expiryTime = null)
-        {
-            return new ManagedHsmKeyRotationPolicyAttributes(created, updated, expiryTime, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedHSMKeyCreateOrUpdateContent"/>. </summary>
-        /// <param name="tags"> The tags that will be assigned to the key. </param>
-        /// <param name="properties"> The properties of the key to be created. </param>
-        /// <returns> A new <see cref="Models.ManagedHSMKeyCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static ManagedHSMKeyCreateOrUpdateContent ManagedHSMKeyCreateOrUpdateContent(IDictionary<string, string> tags = null, ManagedHsmKeyProperties properties = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ManagedHSMKeyCreateOrUpdateContent(tags, properties, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -443,7 +333,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <returns> A new <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null, ETag? etag = null, ResourceIdentifier privateEndpointId = null, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null, ETag? etag = null, ResourceIdentifier privateEndpointId = null, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -463,7 +353,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmPrivateLinkResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -475,14 +365,14 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="sku"> SKU details. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <returns> A new <see cref="Models.ManagedHsmPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateLinkResourceData ManagedHsmPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, AzureLocation? location = null, ManagedHsmSku sku = null, IReadOnlyDictionary<string, string> tags = null, ManagedServiceIdentity identity = null)
+        /// <returns> A new <see cref="Models.ManagedHsmPrivateLinkResource"/> instance for mocking. </returns>
+        public static ManagedHsmPrivateLinkResource ManagedHsmPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, AzureLocation? location = null, ManagedHsmSku sku = null, IReadOnlyDictionary<string, string> tags = null, ManagedServiceIdentity identity = null)
         {
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
             tags ??= new Dictionary<string, string>();
 
-            return new ManagedHsmPrivateLinkResourceData(
+            return new ManagedHsmPrivateLinkResource(
                 id,
                 name,
                 resourceType,
@@ -529,118 +419,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 location,
                 accessPolicies != null ? new KeyVaultAccessPolicyProperties(accessPolicies?.ToList(), serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KeyVault.KeyVaultKeyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The supported Azure location where the managed HSM Pool should be created. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="attributes"> The attributes of the key. </param>
-        /// <param name="keyType"> The type of the key. For valid values, see JsonWebKeyType. </param>
-        /// <param name="keyOps"></param>
-        /// <param name="keySize"> The key size in bits. For example: 2048, 3072, or 4096 for RSA. Default for RSA and RSA-HSM keys is 2048. Exception made for bring your own key (BYOK), key exchange keys default to 4096. </param>
-        /// <param name="curveName"> The elliptic curve name. For valid values, see JsonWebKeyCurveName. Default for EC and EC-HSM keys is P-256. </param>
-        /// <param name="keyUri"> The URI to retrieve the current version of the key. </param>
-        /// <param name="keyUriWithVersion"> The URI to retrieve the specific version of the key. </param>
-        /// <param name="rotationPolicy"> Key rotation policy in response. It will be used for both output and input. Omitted if empty. </param>
-        /// <param name="releasePolicy"> Key release policy in response. It will be used for both output and input. Omitted if empty. </param>
-        /// <returns> A new <see cref="KeyVault.KeyVaultKeyData"/> instance for mocking. </returns>
-        public static KeyVaultKeyData KeyVaultKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null, KeyAttributes attributes = null, JsonWebKeyType? keyType = null, IEnumerable<JsonWebKeyOperation> keyOps = null, int? keySize = null, JsonWebKeyCurveName? curveName = null, Uri keyUri = null, string keyUriWithVersion = null, RotationPolicy rotationPolicy = null, KeyReleasePolicy releasePolicy = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            keyOps ??= new List<JsonWebKeyOperation>();
-
-            return new KeyVaultKeyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                tags,
-                attributes,
-                keyType,
-                keyOps?.ToList(),
-                keySize,
-                curveName,
-                keyUri,
-                keyUriWithVersion,
-                rotationPolicy,
-                releasePolicy,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KeyProperties"/>. </summary>
-        /// <param name="attributes"> The attributes of the key. </param>
-        /// <param name="keyType"> The type of the key. For valid values, see JsonWebKeyType. </param>
-        /// <param name="keyOps"></param>
-        /// <param name="keySize"> The key size in bits. For example: 2048, 3072, or 4096 for RSA. Default for RSA and RSA-HSM keys is 2048. Exception made for bring your own key (BYOK), key exchange keys default to 4096. </param>
-        /// <param name="curveName"> The elliptic curve name. For valid values, see JsonWebKeyCurveName. Default for EC and EC-HSM keys is P-256. </param>
-        /// <param name="keyUri"> The URI to retrieve the current version of the key. </param>
-        /// <param name="keyUriWithVersion"> The URI to retrieve the specific version of the key. </param>
-        /// <param name="rotationPolicy"> Key rotation policy in response. It will be used for both output and input. Omitted if empty. </param>
-        /// <param name="releasePolicy"> Key release policy in response. It will be used for both output and input. Omitted if empty. </param>
-        /// <returns> A new <see cref="Models.KeyProperties"/> instance for mocking. </returns>
-        public static KeyProperties KeyProperties(KeyAttributes attributes = null, JsonWebKeyType? keyType = null, IEnumerable<JsonWebKeyOperation> keyOps = null, int? keySize = null, JsonWebKeyCurveName? curveName = null, Uri keyUri = null, string keyUriWithVersion = null, RotationPolicy rotationPolicy = null, KeyReleasePolicy releasePolicy = null)
-        {
-            keyOps ??= new List<JsonWebKeyOperation>();
-
-            return new KeyProperties(
-                attributes,
-                keyType,
-                keyOps?.ToList(),
-                keySize,
-                curveName,
-                keyUri,
-                keyUriWithVersion,
-                rotationPolicy,
-                releasePolicy,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KeyAttributes"/>. </summary>
-        /// <param name="isEnabled"> Determines whether or not the object is enabled. </param>
-        /// <param name="notBefore"> Not before date in seconds since 1970-01-01T00:00:00Z. </param>
-        /// <param name="expires"> Expiry date in seconds since 1970-01-01T00:00:00Z. </param>
-        /// <param name="created"> Creation time in seconds since 1970-01-01T00:00:00Z. </param>
-        /// <param name="updated"> Last updated time in seconds since 1970-01-01T00:00:00Z. </param>
-        /// <param name="recoveryLevel"> The deletion recovery level currently in effect for the object. If it contains 'Purgeable', then the object can be permanently deleted by a privileged user; otherwise, only the system can purge the object at the end of the retention interval. </param>
-        /// <param name="canExported"> Indicates if the private key can be exported. </param>
-        /// <returns> A new <see cref="Models.KeyAttributes"/> instance for mocking. </returns>
-        public static KeyAttributes KeyAttributes(bool? isEnabled = null, long? notBefore = null, long? expires = null, long? created = null, long? updated = null, DeletionRecoveryLevel? recoveryLevel = null, bool? canExported = null)
-        {
-            return new KeyAttributes(
-                isEnabled,
-                notBefore,
-                expires,
-                created,
-                updated,
-                recoveryLevel,
-                canExported,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KeyRotationPolicyAttributes"/>. </summary>
-        /// <param name="created"> Creation time in seconds since 1970-01-01T00:00:00Z. </param>
-        /// <param name="updated"> Last updated time in seconds since 1970-01-01T00:00:00Z. </param>
-        /// <param name="expiryTime"> The expiration time for the new key version. It should be in ISO8601 format. Eg: 'P90D', 'P1Y'. </param>
-        /// <returns> A new <see cref="Models.KeyRotationPolicyAttributes"/> instance for mocking. </returns>
-        public static KeyRotationPolicyAttributes KeyRotationPolicyAttributes(long? created = null, long? updated = null, string expiryTime = null)
-        {
-            return new KeyRotationPolicyAttributes(created, updated, expiryTime, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VaultKeyCreateOrUpdateContent"/>. </summary>
-        /// <param name="tags"> The tags that will be assigned to the key. </param>
-        /// <param name="properties"> The properties of the key to be created. </param>
-        /// <returns> A new <see cref="Models.VaultKeyCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static VaultKeyCreateOrUpdateContent VaultKeyCreateOrUpdateContent(IDictionary<string, string> tags = null, KeyProperties properties = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new VaultKeyCreateOrUpdateContent(tags, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVault.KeyVaultPrivateEndpointConnectionData"/>. </summary>

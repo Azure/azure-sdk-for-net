@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="scheduledPurgeOn"> The scheduled purge date in UTC. </param>
         /// <param name="securityDomainProperties"> Managed HSM security domain properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmProperties(Guid? tenantId, IList<string> initialAdminObjectIds, Uri hsmUri, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enablePurgeProtection, ManagedHsmCreateMode? createMode, string statusMessage, ProvisioningState? provisioningState, ManagedHsmNetworkRuleSet networkRuleSet, IList<ManagedHsmGeoReplicatedRegion> regions, IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections, ManagedHsmPublicNetworkAccess? publicNetworkAccess, DateTimeOffset? scheduledPurgeOn, ManagedHSMSecurityDomainProperties securityDomainProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedHsmProperties(Guid? tenantId, IList<string> initialAdminObjectIds, Uri hsmUri, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enablePurgeProtection, KeyVaultCreateMode? createMode, string statusMessage, ManagedHsmProvisioningState? provisioningState, ManagedHsmNetworkRuleSet networkRuleSet, IList<ManagedHsmGeoReplicatedRegion> regions, IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections, ManagedHsmPublicNetworkAccess? publicNetworkAccess, DateTimeOffset? scheduledPurgeOn, ManagedHSMSecurityDomainProperties securityDomainProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TenantId = tenantId;
             InitialAdminObjectIds = initialAdminObjectIds;
@@ -110,13 +110,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         public bool? EnablePurgeProtection { get; set; }
         /// <summary> The create mode to indicate whether the resource is being created or is being recovered from a deleted resource. </summary>
         [WirePath("createMode")]
-        public ManagedHsmCreateMode? CreateMode { get; set; }
+        public KeyVaultCreateMode? CreateMode { get; set; }
         /// <summary> Resource Status Message. </summary>
         [WirePath("statusMessage")]
         public string StatusMessage { get; }
         /// <summary> Provisioning state. </summary>
         [WirePath("provisioningState")]
-        public ProvisioningState? ProvisioningState { get; }
+        public ManagedHsmProvisioningState? ProvisioningState { get; }
         /// <summary> Rules governing the accessibility of the key vault from specific network locations. </summary>
         [WirePath("networkAcls")]
         public ManagedHsmNetworkRuleSet NetworkRuleSet { get; set; }

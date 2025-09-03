@@ -85,7 +85,7 @@ rename-mapping:
   Secret: KeyVaultSecret
   MhsmPrivateEndpointConnectionItem: ManagedHsmPrivateEndpointConnectionItemData
   MhsmPrivateEndpointConnectionItem.id: -|arm-id
-  MhsmPrivateLinkResource: ManagedHsmPrivateLinkResourceData
+  MHSMPrivateLinkResource: ManagedHsmPrivateLinkResourceData
   ActionsRequired: ManagedHsmActionsRequiredMessage
   NetworkRuleAction: ManagedHsmNetworkRuleAction
   NetworkRuleBypassOptions: ManagedHsmNetworkRuleBypassOption
@@ -177,4 +177,80 @@ directive:
       {
           delete $[path];
       }
+  - from: openapi.json
+    where: $.paths
+    transform: >
+      var pathsToDelete = [
+        '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/keys',
+        '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/keys/{keyName}',
+        '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/keys/{keyName}/versions/{keyVersion}',
+        '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/keys/{keyName}/versions',
+        '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}',
+        '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys',
+        '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions/{keyVersion}',
+        '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions'
+      ];
+      for (var i = 0; i < pathsToDelete.length; i++) {
+        delete $[pathsToDelete[i]];
+      }
+  - from: openapi.json
+    where: $.definitions
+    transform: >
+      $.Vault.properties.tags['readOnly'] = false;
+      $.Vault.properties.location['readOnly'] = false;
+      $.MHSMPrivateEndpointConnectionProvisioningState= {
+            "type": "string",
+            "readOnly": true,
+            "description": "The current provisioning state.",
+            "enum": [
+              "Succeeded",
+              "Creating",
+              "Updating",
+              "Deleting",
+              "Failed",
+              "Disconnected"
+            ],
+            "x-ms-enum": {
+              "name": "ManagedHsmPrivateEndpointConnectionProvisioningState",
+              "modelAsString": true,
+              "values": [
+                {
+                  "name": "Succeeded",
+                  "value": "Succeeded"
+                },
+                {
+                  "name": "Creating",
+                  "value": "Creating"
+                },
+                {
+                  "name": "Updating",
+                  "value": "Updating"
+                },
+                {
+                  "name": "Deleting",
+                  "value": "Deleting"
+                },
+                {
+                  "name": "Failed",
+                  "value": "Failed"
+                },
+                {
+                  "name": "Disconnected",
+                  "value": "Disconnected"
+                }
+              ]
+            }
+      };
+      $.MHSMPrivateEndpointConnectionProperties.properties.provisioningState['$ref'] = '#/definitions/MHSMPrivateEndpointConnectionProvisioningState';
+      $.Reason['x-ms-enum']['name'] = 'KeyVaultNameUnavailableReason';
+      $.Reason['x-ms-enum']['modelAsString'] = false;
+      $.NetworkRuleBypassOptions['x-ms-enum']['name'] = 'KeyVaultNetworkRuleBypassOption';
+      $.NetworkRuleAction['x-ms-enum']['name'] = 'KeyVaultNetworkRuleAction';
+      $.CreateMode['x-ms-enum']['name'] = 'KeyVaultPatchMode';
+      $.CreateMode['x-ms-enum']['name'] = 'KeyVaultCreateMode';
+      $.ActionsRequired['x-ms-enum']['name'] = 'KeyVaultActionsRequiredMessage';
+      $.ProvisioningState['x-ms-enum']['name'] = 'KeyVaultProvisioningState';
+      $.ProvisioningState['x-ms-enum']['name'] = 'ManagedHsmProvisioningState';
+      $.VaultCheckNameAvailabilityParameters.properties.type['x-ms-constant'] = true;
+      $.PrivateEndpointServiceConnectionStatus['x-ms-enum']['name'] = 'ManagedHsmPrivateEndpointServiceConnectionStatus';
 ```

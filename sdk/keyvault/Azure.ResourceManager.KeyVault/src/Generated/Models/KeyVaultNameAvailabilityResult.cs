@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="reason"> The reason that a vault name could not be used. The Reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> An error message explaining the Reason value in more detail. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultNameAvailabilityResult(bool? nameAvailable, ManagedHsmNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KeyVaultNameAvailabilityResult(bool? nameAvailable, KeyVaultNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NameAvailable = nameAvailable;
             Reason = reason;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public bool? NameAvailable { get; }
         /// <summary> The reason that a vault name could not be used. The Reason element is only returned if NameAvailable is false. </summary>
         [WirePath("reason")]
-        public ManagedHsmNameUnavailableReason? Reason { get; }
+        public KeyVaultNameUnavailableReason? Reason { get; }
         /// <summary> An error message explaining the Reason value in more detail. </summary>
         [WirePath("message")]
         public string Message { get; }

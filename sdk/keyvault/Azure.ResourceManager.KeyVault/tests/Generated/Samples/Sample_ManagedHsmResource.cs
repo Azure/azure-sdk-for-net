@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
             ManagedHsmResource managedHsm = client.GetManagedHsmResource(managedHsmResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedHsmPrivateLinkResourceData item in managedHsm.GetMHSMPrivateLinkResourcesByManagedHsmResourceAsync())
+            await foreach (ManagedHsmPrivateLinkResource item in managedHsm.GetMHSMPrivateLinkResourcesByManagedHsmResourceAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

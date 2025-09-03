@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="ipRules"> The list of IP address rules. </param>
         /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultNetworkRuleSet(ManagedHsmNetworkRuleBypassOption? bypass, ManagedHsmNetworkRuleAction? defaultAction, IList<KeyVaultIPRule> ipRules, IList<KeyVaultVirtualNetworkRule> virtualNetworkRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KeyVaultNetworkRuleSet(KeyVaultNetworkRuleBypassOption? bypass, KeyVaultNetworkRuleAction? defaultAction, IList<KeyVaultIPRule> ipRules, IList<KeyVaultVirtualNetworkRule> virtualNetworkRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Bypass = bypass;
             DefaultAction = defaultAction;
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Tells what traffic can bypass network rules. This can be 'AzureServices' or 'None'.  If not specified the default is 'AzureServices'. </summary>
         [WirePath("bypass")]
-        public ManagedHsmNetworkRuleBypassOption? Bypass { get; set; }
+        public KeyVaultNetworkRuleBypassOption? Bypass { get; set; }
         /// <summary> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </summary>
         [WirePath("defaultAction")]
-        public ManagedHsmNetworkRuleAction? DefaultAction { get; set; }
+        public KeyVaultNetworkRuleAction? DefaultAction { get; set; }
         /// <summary> The list of IP address rules. </summary>
         [WirePath("ipRules")]
         public IList<KeyVaultIPRule> IPRules { get; }

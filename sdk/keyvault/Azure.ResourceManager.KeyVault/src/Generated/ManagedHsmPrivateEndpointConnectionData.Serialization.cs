@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.KeyVault
             SystemData systemData = default;
             SubResource privateEndpoint = default;
             ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
-            KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default;
+            ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.KeyVault
                             {
                                 continue;
                             }
-                            provisioningState = new KeyVaultPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
+                            provisioningState = new ManagedHsmPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

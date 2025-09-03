@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
             {
                 PrivateLinkServiceConnectionState = new ManagedHsmPrivateLinkServiceConnectionState
                 {
-                    Status = KeyVaultPrivateEndpointServiceConnectionStatus.Approved,
+                    Status = ManagedHsmPrivateEndpointServiceConnectionStatus.Approved,
                     Description = "My name is Joe and I'm approving this.",
                 },
             };

@@ -41,22 +41,6 @@ namespace Azure.ResourceManager.KeyVault
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
-            if (options.Format != "W" && Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
         }
 
         KeyVaultData IJsonModel<KeyVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -80,8 +64,8 @@ namespace Azure.ResourceManager.KeyVault
                 return null;
             }
             Models.KeyVaultProperties properties = default;
-            AzureLocation? location = default;
-            IReadOnlyDictionary<string, string> tags = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -93,15 +77,6 @@ namespace Azure.ResourceManager.KeyVault
                 if (property.NameEquals("properties"u8))
                 {
                     properties = Models.KeyVaultProperties.DeserializeKeyVaultProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -116,6 +91,11 @@ namespace Azure.ResourceManager.KeyVault
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -153,9 +133,9 @@ namespace Azure.ResourceManager.KeyVault
                 name,
                 type,
                 systemData,
-                properties,
-                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
                 serializedAdditionalRawData);
         }
 
@@ -201,11 +181,8 @@ namespace Azure.ResourceManager.KeyVault
             }
             else
             {
-                if (Optional.IsDefined(Location))
-                {
-                    builder.Append("  location: ");
-                    builder.AppendLine($"'{Location.Value.ToString()}'");
-                }
+                builder.Append("  location: ");
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault
     /// A class representing the KeyVault data model.
     /// Resource information with extended details.
     /// </summary>
-    public partial class KeyVaultData : ResourceData
+    public partial class KeyVaultData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.KeyVault
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultData"/>. </summary>
+        /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of the vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public KeyVaultData(Models.KeyVaultProperties properties)
+        public KeyVaultData(AzureLocation location, Models.KeyVaultProperties properties) : base(location)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultData"/>. </summary>
@@ -67,15 +67,13 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of the vault. </param>
-        /// <param name="location"> Azure location of the key vault resource. </param>
-        /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Models.KeyVaultProperties properties, AzureLocation? location, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal KeyVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.KeyVaultProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
-            Location = location;
-            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -87,11 +85,5 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Properties of the vault. </summary>
         [WirePath("properties")]
         public Models.KeyVaultProperties Properties { get; set; }
-        /// <summary> Azure location of the key vault resource. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; }
-        /// <summary> Tags assigned to the key vault resource. </summary>
-        [WirePath("tags")]
-        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

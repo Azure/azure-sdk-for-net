@@ -83,30 +83,6 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedHSMKeyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedHSMKeyResource.CreateResourceIdentifier" /> to create a <see cref="ManagedHSMKeyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedHSMKeyResource"/> object. </returns>
-        public virtual ManagedHSMKeyResource GetManagedHSMKeyResource(ResourceIdentifier id)
-        {
-            ManagedHSMKeyResource.ValidateResourceId(id);
-            return new ManagedHSMKeyResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedHSMKeyVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedHSMKeyVersionResource.CreateResourceIdentifier" /> to create a <see cref="ManagedHSMKeyVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedHSMKeyVersionResource"/> object. </returns>
-        public virtual ManagedHSMKeyVersionResource GetManagedHSMKeyVersionResource(ResourceIdentifier id)
-        {
-            ManagedHSMKeyVersionResource.ValidateResourceId(id);
-            return new ManagedHSMKeyVersionResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ManagedHsmPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ManagedHsmPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ManagedHsmPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -116,30 +92,6 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         {
             ManagedHsmPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new ManagedHsmPrivateEndpointConnectionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="VaultKeyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VaultKeyResource.CreateResourceIdentifier" /> to create a <see cref="VaultKeyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VaultKeyResource"/> object. </returns>
-        public virtual VaultKeyResource GetVaultKeyResource(ResourceIdentifier id)
-        {
-            VaultKeyResource.ValidateResourceId(id);
-            return new VaultKeyResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="VaultKeyVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VaultKeyVersionResource.CreateResourceIdentifier" /> to create a <see cref="VaultKeyVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VaultKeyVersionResource"/> object. </returns>
-        public virtual VaultKeyVersionResource GetVaultKeyVersionResource(ResourceIdentifier id)
-        {
-            VaultKeyVersionResource.ValidateResourceId(id);
-            return new VaultKeyVersionResource(Client, id);
         }
 
         /// <summary>
