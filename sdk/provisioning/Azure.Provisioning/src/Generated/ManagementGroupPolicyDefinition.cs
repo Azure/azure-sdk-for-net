@@ -21,7 +21,7 @@ public partial class ManagementGroupPolicyDefinition : ProvisionableResource
     /// <summary>
     /// The name of the policy definition to create.
     /// </summary>
-    public BicepValue<string> Name
+    public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
         set { Initialize(); _name!.Assign(value); }
@@ -31,7 +31,7 @@ public partial class ManagementGroupPolicyDefinition : ProvisionableResource
     /// <summary>
     /// The policy definition description.
     /// </summary>
-    public BicepValue<string> Description
+    public BicepValue<string> Description 
     {
         get { Initialize(); return _description!; }
         set { Initialize(); _description!.Assign(value); }
@@ -41,7 +41,7 @@ public partial class ManagementGroupPolicyDefinition : ProvisionableResource
     /// <summary>
     /// The display name of the policy definition.
     /// </summary>
-    public BicepValue<string> DisplayName
+    public BicepValue<string> DisplayName 
     {
         get { Initialize(); return _displayName!; }
         set { Initialize(); _displayName!.Assign(value); }
@@ -65,7 +65,7 @@ public partial class ManagementGroupPolicyDefinition : ProvisionableResource
     /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
     /// &quot;value&quot; }.
     /// </summary>
-    public BicepValue<BinaryData> Metadata
+    public BicepValue<BinaryData> Metadata 
     {
         get { Initialize(); return _metadata!; }
         set { Initialize(); _metadata!.Assign(value); }
@@ -76,7 +76,7 @@ public partial class ManagementGroupPolicyDefinition : ProvisionableResource
     /// The policy definition mode. Some examples are All, Indexed,
     /// Microsoft.KeyVault.Data.
     /// </summary>
-    public BicepValue<string> Mode
+    public BicepValue<string> Mode 
     {
         get { Initialize(); return _mode!; }
         set { Initialize(); _mode!.Assign(value); }
@@ -87,7 +87,7 @@ public partial class ManagementGroupPolicyDefinition : ProvisionableResource
     /// The parameter definitions for parameters used in the policy rule. The
     /// keys are the parameter names.
     /// </summary>
-    public BicepDictionary<ArmPolicyParameter> Parameters
+    public BicepDictionary<ArmPolicyParameter> Parameters 
     {
         get { Initialize(); return _parameters!; }
         set { Initialize(); _parameters!.Assign(value); }
@@ -110,7 +110,7 @@ public partial class ManagementGroupPolicyDefinition : ProvisionableResource
     /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
     /// &quot;value&quot; }.
     /// </summary>
-    public BicepValue<BinaryData> PolicyRule
+    public BicepValue<BinaryData> PolicyRule 
     {
         get { Initialize(); return _policyRule!; }
         set { Initialize(); _policyRule!.Assign(value); }
@@ -121,7 +121,7 @@ public partial class ManagementGroupPolicyDefinition : ProvisionableResource
     /// The type of policy definition. Possible values are NotSpecified,
     /// BuiltIn, Custom, and Static.
     /// </summary>
-    public BicepValue<PolicyType> PolicyType
+    public BicepValue<PolicyType> PolicyType 
     {
         get { Initialize(); return _policyType!; }
         set { Initialize(); _policyType!.Assign(value); }
@@ -132,7 +132,7 @@ public partial class ManagementGroupPolicyDefinition : ProvisionableResource
     /// Fully qualified resource ID for the resource. Ex -
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id
+    public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
     }
@@ -142,7 +142,7 @@ public partial class ManagementGroupPolicyDefinition : ProvisionableResource
     /// Azure Resource Manager metadata containing createdBy and modifiedBy
     /// information.
     /// </summary>
-    public SystemData SystemData
+    public SystemData SystemData 
     {
         get { Initialize(); return _systemData!; }
     }
