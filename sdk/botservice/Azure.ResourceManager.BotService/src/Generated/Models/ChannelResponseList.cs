@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.BotService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ChannelResponseList"/>. </summary>
-        internal ChannelResponseList()
+        /// <param name="value"> The BotChannel items on this page. </param>
+        internal ChannelResponseList(IEnumerable<BotChannelData> value)
         {
-            Value = new ChangeTrackingList<BotChannelData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ChannelResponseList"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of bot service channel resources. </param>
-        /// <param name="value"> Gets the list of bot service channel results and their properties. </param>
+        /// <param name="value"> The BotChannel items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChannelResponseList(string nextLink, IReadOnlyList<BotChannelData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChannelResponseList(IReadOnlyList<BotChannelData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The link used to get the next page of bot service channel resources. </summary>
-        public string NextLink { get; }
-        /// <summary> Gets the list of bot service channel results and their properties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChannelResponseList"/> for deserialization. </summary>
+        internal ChannelResponseList()
+        {
+        }
+
+        /// <summary> The BotChannel items on this page. </summary>
         public IReadOnlyList<BotChannelData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
