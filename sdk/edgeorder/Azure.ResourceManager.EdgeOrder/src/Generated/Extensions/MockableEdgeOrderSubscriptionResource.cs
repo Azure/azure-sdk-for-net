@@ -17,12 +17,14 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableEdgeOrderSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _edgeOrderAddressClientDiagnostics;
-        private EdgeOrderManagementRestOperations _edgeOrderAddressRestClient;
-        private ClientDiagnostics _defaultClientDiagnostics;
-        private EdgeOrderManagementRestOperations _defaultRestClient;
-        private ClientDiagnostics _edgeOrderItemClientDiagnostics;
-        private EdgeOrderManagementRestOperations _edgeOrderItemRestClient;
+        private ClientDiagnostics _edgeOrderAddressAddressResourcesClientDiagnostics;
+        private AddressResourcesRestOperations _edgeOrderAddressAddressResourcesRestClient;
+        private ClientDiagnostics _edgeOrderItemOrderItemResourcesClientDiagnostics;
+        private OrderItemResourcesRestOperations _edgeOrderItemOrderItemResourcesRestClient;
+        private ClientDiagnostics _productsAndConfigurationsClientDiagnostics;
+        private ProductsAndConfigurationsRestOperations _productsAndConfigurationsRestClient;
+        private ClientDiagnostics _ordersClientDiagnostics;
+        private OrdersRestOperations _ordersRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableEdgeOrderSubscriptionResource"/> class for mocking. </summary>
         protected MockableEdgeOrderSubscriptionResource()
@@ -36,12 +38,14 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         {
         }
 
-        private ClientDiagnostics EdgeOrderAddressClientDiagnostics => _edgeOrderAddressClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", EdgeOrderAddressResource.ResourceType.Namespace, Diagnostics);
-        private EdgeOrderManagementRestOperations EdgeOrderAddressRestClient => _edgeOrderAddressRestClient ??= new EdgeOrderManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EdgeOrderAddressResource.ResourceType));
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private EdgeOrderManagementRestOperations DefaultRestClient => _defaultRestClient ??= new EdgeOrderManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics EdgeOrderItemClientDiagnostics => _edgeOrderItemClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", EdgeOrderItemResource.ResourceType.Namespace, Diagnostics);
-        private EdgeOrderManagementRestOperations EdgeOrderItemRestClient => _edgeOrderItemRestClient ??= new EdgeOrderManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EdgeOrderItemResource.ResourceType));
+        private ClientDiagnostics EdgeOrderAddressAddressResourcesClientDiagnostics => _edgeOrderAddressAddressResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", EdgeOrderAddressResource.ResourceType.Namespace, Diagnostics);
+        private AddressResourcesRestOperations EdgeOrderAddressAddressResourcesRestClient => _edgeOrderAddressAddressResourcesRestClient ??= new AddressResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EdgeOrderAddressResource.ResourceType));
+        private ClientDiagnostics EdgeOrderItemOrderItemResourcesClientDiagnostics => _edgeOrderItemOrderItemResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", EdgeOrderItemResource.ResourceType.Namespace, Diagnostics);
+        private OrderItemResourcesRestOperations EdgeOrderItemOrderItemResourcesRestClient => _edgeOrderItemOrderItemResourcesRestClient ??= new OrderItemResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EdgeOrderItemResource.ResourceType));
+        private ClientDiagnostics ProductsAndConfigurationsClientDiagnostics => _productsAndConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ProductsAndConfigurationsRestOperations ProductsAndConfigurationsRestClient => _productsAndConfigurationsRestClient ??= new ProductsAndConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics OrdersClientDiagnostics => _ordersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private OrdersRestOperations OrdersRestClient => _ordersRestClient ??= new OrdersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         }
 
         /// <summary>
-        /// Lists all the addresses available under the subscription.
+        /// List all the addresses available under the subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -58,11 +62,11 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ListAddressesAtSubscriptionLevel</description>
+        /// <description>AddressResource_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -72,17 +76,18 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// </summary>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
+        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeOrderAddressResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EdgeOrderAddressResource> GetEdgeOrderAddressesAsync(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EdgeOrderAddressResource> GetEdgeOrderAddressesAsync(string filter = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderAddressRestClient.CreateListAddressesAtSubscriptionLevelRequest(Id.SubscriptionId, filter, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderAddressRestClient.CreateListAddressesAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, filter, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), EdgeOrderAddressClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrderAddresses", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderAddressAddressResourcesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderAddressAddressResourcesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, skipToken, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), EdgeOrderAddressAddressResourcesClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrderAddresses", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists all the addresses available under the subscription.
+        /// List all the addresses available under the subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -90,11 +95,11 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ListAddressesAtSubscriptionLevel</description>
+        /// <description>AddressResource_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -104,251 +109,18 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// </summary>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
+        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderAddressResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EdgeOrderAddressResource> GetEdgeOrderAddresses(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EdgeOrderAddressResource> GetEdgeOrderAddresses(string filter = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderAddressRestClient.CreateListAddressesAtSubscriptionLevelRequest(Id.SubscriptionId, filter, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderAddressRestClient.CreateListAddressesAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, filter, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), EdgeOrderAddressClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrderAddresses", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderAddressAddressResourcesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderAddressAddressResourcesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, skipToken, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), EdgeOrderAddressAddressResourcesClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrderAddresses", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// This method provides the list of product families for the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listProductFamilies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListProductFamilies</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Filters for showing the product families. </param>
-        /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
-        /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ProductFamily"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProductFamily> GetProductFamiliesAsync(ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesRequest(Id.SubscriptionId, content, expand, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesNextPageRequest(nextLink, Id.SubscriptionId, content, expand, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductFamily.DeserializeProductFamily(e), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamilies", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// This method provides the list of product families for the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listProductFamilies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListProductFamilies</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Filters for showing the product families. </param>
-        /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
-        /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="ProductFamily"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProductFamily> GetProductFamilies(ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesRequest(Id.SubscriptionId, content, expand, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesNextPageRequest(nextLink, Id.SubscriptionId, content, expand, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductFamily.DeserializeProductFamily(e), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamilies", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// This method provides the list of configurations for the given product family, product line and product under subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Filters for showing the configurations. </param>
-        /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ProductConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProductConfiguration> GetConfigurationsAsync(ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListConfigurationsRequest(Id.SubscriptionId, content, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, content, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductConfiguration.DeserializeProductConfiguration(e), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetConfigurations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// This method provides the list of configurations for the given product family, product line and product under subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Filters for showing the configurations. </param>
-        /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="ProductConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProductConfiguration> GetConfigurations(ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListConfigurationsRequest(Id.SubscriptionId, content, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, content, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductConfiguration.DeserializeProductConfiguration(e), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetConfigurations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// This method provides the list of product families metadata for the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/productFamiliesMetadata</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListProductFamiliesMetadata</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProductFamiliesMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProductFamiliesMetadata> GetProductFamiliesMetadataAsync(string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesMetadataRequest(Id.SubscriptionId, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesMetadataNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductFamiliesMetadata.DeserializeProductFamiliesMetadata(e), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadata", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// This method provides the list of product families metadata for the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/productFamiliesMetadata</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListProductFamiliesMetadata</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProductFamiliesMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProductFamiliesMetadata> GetProductFamiliesMetadata(string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesMetadataRequest(Id.SubscriptionId, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesMetadataNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductFamiliesMetadata.DeserializeProductFamiliesMetadata(e), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadata", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists order at subscription level.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListOrderAtSubscriptionLevel</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListOrderAtSubscriptionLevelRequest(Id.SubscriptionId, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListOrderAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderResource(Client, EdgeOrderData.DeserializeEdgeOrderData(e)), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrders", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists order at subscription level.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListOrderAtSubscriptionLevel</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EdgeOrderResource> GetEdgeOrders(string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListOrderAtSubscriptionLevelRequest(Id.SubscriptionId, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListOrderAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderResource(Client, EdgeOrderData.DeserializeEdgeOrderData(e)), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrders", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists order item at subscription level.
+        /// List order items at subscription level.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -356,11 +128,11 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ListOrderItemsAtSubscriptionLevel</description>
+        /// <description>OrderItemResource_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -368,20 +140,21 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
-        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="filter"> $filter is supported to filter based on order id and order Item Type. Filter supports only equals operation. </param>
+        /// <param name="expand"> $expand is supported on parent device details, device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Parent Device Details for order item provides details on the devices of the product, Device Details for order item provides details on the devices of the child configurations of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
+        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeOrderItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EdgeOrderItemResource> GetEdgeOrderItemsAsync(string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EdgeOrderItemResource> GetEdgeOrderItemsAsync(string filter = null, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderItemRestClient.CreateListOrderItemsAtSubscriptionLevelRequest(Id.SubscriptionId, filter, expand, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderItemRestClient.CreateListOrderItemsAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, filter, expand, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), EdgeOrderItemClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrderItems", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderItemOrderItemResourcesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, expand, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderItemOrderItemResourcesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, expand, skipToken, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), EdgeOrderItemOrderItemResourcesClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrderItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists order item at subscription level.
+        /// List order items at subscription level.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -389,11 +162,11 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ListOrderItemsAtSubscriptionLevel</description>
+        /// <description>OrderItemResource_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -401,16 +174,253 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
-        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="filter"> $filter is supported to filter based on order id and order Item Type. Filter supports only equals operation. </param>
+        /// <param name="expand"> $expand is supported on parent device details, device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Parent Device Details for order item provides details on the devices of the product, Device Details for order item provides details on the devices of the child configurations of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
+        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EdgeOrderItemResource> GetEdgeOrderItems(string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EdgeOrderItemResource> GetEdgeOrderItems(string filter = null, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderItemRestClient.CreateListOrderItemsAtSubscriptionLevelRequest(Id.SubscriptionId, filter, expand, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderItemRestClient.CreateListOrderItemsAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, filter, expand, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), EdgeOrderItemClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrderItems", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderItemOrderItemResourcesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, expand, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderItemOrderItemResourcesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, expand, skipToken, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), EdgeOrderItemOrderItemResourcesClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrderItems", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List configurations for the given product family, product line and product for the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProductsAndConfigurationsOperationGroup_ListConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Filters for showing the configurations. </param>
+        /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> An async collection of <see cref="EdgeOrderConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EdgeOrderConfiguration> GetConfigurationsProductsAndConfigurationsAsync(ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsRestClient.CreateListConfigurationsRequest(Id.SubscriptionId, content, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsRestClient.CreateListConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, content, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EdgeOrderConfiguration.DeserializeEdgeOrderConfiguration(e), ProductsAndConfigurationsClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetConfigurationsProductsAndConfigurations", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List configurations for the given product family, product line and product for the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProductsAndConfigurationsOperationGroup_ListConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Filters for showing the configurations. </param>
+        /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="EdgeOrderConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EdgeOrderConfiguration> GetConfigurationsProductsAndConfigurations(ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsRestClient.CreateListConfigurationsRequest(Id.SubscriptionId, content, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsRestClient.CreateListConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, content, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EdgeOrderConfiguration.DeserializeEdgeOrderConfiguration(e), ProductsAndConfigurationsClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetConfigurationsProductsAndConfigurations", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List product families for the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listProductFamilies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProductsAndConfigurationsOperationGroup_ListProductFamilies</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Filters for showing the product families. </param>
+        /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
+        /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> An async collection of <see cref="EdgeOrderProductFamily"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EdgeOrderProductFamily> GetProductFamiliesProductsAndConfigurationsAsync(ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsRestClient.CreateListProductFamiliesRequest(Id.SubscriptionId, content, expand, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsRestClient.CreateListProductFamiliesNextPageRequest(nextLink, Id.SubscriptionId, content, expand, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EdgeOrderProductFamily.DeserializeEdgeOrderProductFamily(e), ProductsAndConfigurationsClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesProductsAndConfigurations", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List product families for the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listProductFamilies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProductsAndConfigurationsOperationGroup_ListProductFamilies</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Filters for showing the product families. </param>
+        /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
+        /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="EdgeOrderProductFamily"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EdgeOrderProductFamily> GetProductFamiliesProductsAndConfigurations(ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsRestClient.CreateListProductFamiliesRequest(Id.SubscriptionId, content, expand, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsRestClient.CreateListProductFamiliesNextPageRequest(nextLink, Id.SubscriptionId, content, expand, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EdgeOrderProductFamily.DeserializeEdgeOrderProductFamily(e), ProductsAndConfigurationsClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesProductsAndConfigurations", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List product families metadata for the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/productFamiliesMetadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProductsAndConfigurationsOperationGroup_ListProductFamiliesMetadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ProductFamiliesMetadataDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProductFamiliesMetadataDetails> GetProductFamiliesMetadataProductsAndConfigurationsAsync(string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsRestClient.CreateListProductFamiliesMetadataRequest(Id.SubscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsRestClient.CreateListProductFamiliesMetadataNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductFamiliesMetadataDetails.DeserializeProductFamiliesMetadataDetails(e), ProductsAndConfigurationsClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadataProductsAndConfigurations", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List product families metadata for the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/productFamiliesMetadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProductsAndConfigurationsOperationGroup_ListProductFamiliesMetadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ProductFamiliesMetadataDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProductFamiliesMetadataDetails> GetProductFamiliesMetadataProductsAndConfigurations(string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsRestClient.CreateListProductFamiliesMetadataRequest(Id.SubscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsRestClient.CreateListProductFamiliesMetadataNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductFamiliesMetadataDetails.DeserializeProductFamiliesMetadataDetails(e), ProductsAndConfigurationsClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadataProductsAndConfigurations", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List orders at subscription level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OrdersOperationGroup_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
+        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OrdersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrdersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skipToken, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderResource(Client, EdgeOrderData.DeserializeEdgeOrderData(e)), OrdersClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrders", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List orders at subscription level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OrdersOperationGroup_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
+        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EdgeOrderResource> GetEdgeOrders(string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OrdersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrdersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skipToken, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderResource(Client, EdgeOrderData.DeserializeEdgeOrderData(e)), OrdersClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetEdgeOrders", "value", "nextLink", cancellationToken);
         }
     }
 }

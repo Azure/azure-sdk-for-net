@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (options.Format != "W" && Optional.IsDefined(MeterGuid))
             {
                 writer.WritePropertyName("meterGuid"u8);
-                writer.WriteStringValue(MeterGuid.Value);
+                writer.WriteStringValue(MeterGuid);
             }
         }
 
@@ -62,21 +62,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Guid? meterGuid = default;
+            string meterGuid = default;
             BillingType billingType = default;
             double? multiplier = default;
-            EdgeOrderProductChargingType? chargingType = default;
+            ChargingType? chargingType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterGuid"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    meterGuid = property.Value.GetGuid();
+                    meterGuid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("billingType"u8))
@@ -99,7 +95,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    chargingType = new EdgeOrderProductChargingType(property.Value.GetString());
+                    chargingType = new ChargingType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

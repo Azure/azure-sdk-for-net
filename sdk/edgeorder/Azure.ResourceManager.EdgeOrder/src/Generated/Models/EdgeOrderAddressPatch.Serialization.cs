@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EdgeOrderAddressPatch(tags ?? new ChangeTrackingDictionary<string, string>(), shippingAddress, contactDetails, serializedAdditionalRawData);
+            return new EdgeOrderAddressPatch(shippingAddress, contactDetails, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderAddressPatch>.Write(ModelReaderWriterOptions options)

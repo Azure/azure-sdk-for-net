@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (options.Format != "W" && Optional.IsDefined(ImageUri))
             {
                 writer.WritePropertyName("imageUrl"u8);
-                writer.WriteStringValue(ImageUri.AbsoluteUri);
+                writer.WriteStringValue(ImageUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             EdgeOrderProductImageType? imageType = default;
-            Uri imageUrl = default;
+            string imageUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,11 +98,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (property.NameEquals("imageUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    imageUrl = new Uri(property.Value.GetString());
+                    imageUrl = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
