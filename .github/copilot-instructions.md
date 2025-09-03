@@ -37,7 +37,7 @@ Do the following steps to renew/change/update the generator:
 3. Find the `tsp-location.yaml` file in the above package directory.
     - If this file exists, add an extra property at the end of this file with
         - `emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"` if the new generator is `@azure-tools/http-client-csharp-mgmt`.
-        - `emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"` if the new generator is `@azure-tools/http-client-csharp`.
+        - `emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"` if the new generator is `@azure-typespec/http-client-csharp`.
     - If this file does not exist, create this file with the following content:
     ```yaml
     directory: specification/placeholderServiceDir/PlaceholderServiceName.Management
