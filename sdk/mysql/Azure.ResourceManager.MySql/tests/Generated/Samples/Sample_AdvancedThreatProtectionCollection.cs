@@ -9,10 +9,10 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.MySql.Models;
+using Azure.ResourceManager.MySql.FlexibleServers.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.MySql.Samples
+namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 {
     public partial class Sample_AdvancedThreatProtectionCollection
     {
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.MySql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServerResource created on azure
-            // for more information of creating ServerResource, please refer to the document of ServerResource
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "threatprotection-4799";
             string serverName = "threatprotection-6440";
-            ResourceIdentifier serverResourceId = ServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            ServerResource server = client.GetServerResource(serverResourceId);
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
             // get the collection of this AdvancedThreatProtectionResource
-            AdvancedThreatProtectionCollection collection = server.GetAdvancedThreatProtections();
+            AdvancedThreatProtectionCollection collection = mySqlFlexibleServer.GetAdvancedThreatProtections();
 
             // invoke the operation
             AdvancedThreatProtectionName advancedThreatProtectionName = AdvancedThreatProtectionName.Default;
@@ -64,16 +64,16 @@ namespace Azure.ResourceManager.MySql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServerResource created on azure
-            // for more information of creating ServerResource, please refer to the document of ServerResource
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "threatprotection-4799";
             string serverName = "threatprotection-6440";
-            ResourceIdentifier serverResourceId = ServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            ServerResource server = client.GetServerResource(serverResourceId);
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
             // get the collection of this AdvancedThreatProtectionResource
-            AdvancedThreatProtectionCollection collection = server.GetAdvancedThreatProtections();
+            AdvancedThreatProtectionCollection collection = mySqlFlexibleServer.GetAdvancedThreatProtections();
 
             // invoke the operation
             AdvancedThreatProtectionName advancedThreatProtectionName = AdvancedThreatProtectionName.Default;
@@ -100,16 +100,16 @@ namespace Azure.ResourceManager.MySql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServerResource created on azure
-            // for more information of creating ServerResource, please refer to the document of ServerResource
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "threatprotection-6852";
             string serverName = "threatprotection-2080";
-            ResourceIdentifier serverResourceId = ServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            ServerResource server = client.GetServerResource(serverResourceId);
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
             // get the collection of this AdvancedThreatProtectionResource
-            AdvancedThreatProtectionCollection collection = server.GetAdvancedThreatProtections();
+            AdvancedThreatProtectionCollection collection = mySqlFlexibleServer.GetAdvancedThreatProtections();
 
             // invoke the operation
             AdvancedThreatProtectionName advancedThreatProtectionName = AdvancedThreatProtectionName.Default;
@@ -134,16 +134,16 @@ namespace Azure.ResourceManager.MySql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServerResource created on azure
-            // for more information of creating ServerResource, please refer to the document of ServerResource
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "threatprotection-6852";
             string serverName = "threatprotection-2080";
-            ResourceIdentifier serverResourceId = ServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            ServerResource server = client.GetServerResource(serverResourceId);
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
             // get the collection of this AdvancedThreatProtectionResource
-            AdvancedThreatProtectionCollection collection = server.GetAdvancedThreatProtections();
+            AdvancedThreatProtectionCollection collection = mySqlFlexibleServer.GetAdvancedThreatProtections();
 
             // invoke the operation and iterate over the result
             await foreach (AdvancedThreatProtectionResource item in collection.GetAllAsync())
@@ -170,16 +170,16 @@ namespace Azure.ResourceManager.MySql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServerResource created on azure
-            // for more information of creating ServerResource, please refer to the document of ServerResource
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "threatprotection-6852";
             string serverName = "threatprotection-2080";
-            ResourceIdentifier serverResourceId = ServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            ServerResource server = client.GetServerResource(serverResourceId);
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
             // get the collection of this AdvancedThreatProtectionResource
-            AdvancedThreatProtectionCollection collection = server.GetAdvancedThreatProtections();
+            AdvancedThreatProtectionCollection collection = mySqlFlexibleServer.GetAdvancedThreatProtections();
 
             // invoke the operation
             AdvancedThreatProtectionName advancedThreatProtectionName = AdvancedThreatProtectionName.Default;
@@ -200,16 +200,16 @@ namespace Azure.ResourceManager.MySql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServerResource created on azure
-            // for more information of creating ServerResource, please refer to the document of ServerResource
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "threatprotection-6852";
             string serverName = "threatprotection-2080";
-            ResourceIdentifier serverResourceId = ServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            ServerResource server = client.GetServerResource(serverResourceId);
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
             // get the collection of this AdvancedThreatProtectionResource
-            AdvancedThreatProtectionCollection collection = server.GetAdvancedThreatProtections();
+            AdvancedThreatProtectionCollection collection = mySqlFlexibleServer.GetAdvancedThreatProtections();
 
             // invoke the operation
             AdvancedThreatProtectionName advancedThreatProtectionName = AdvancedThreatProtectionName.Default;

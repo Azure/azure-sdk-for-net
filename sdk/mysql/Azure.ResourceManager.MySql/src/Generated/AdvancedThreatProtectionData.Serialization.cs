@@ -12,9 +12,9 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.MySql.Models;
+using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
-namespace Azure.ResourceManager.MySql
+namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     public partial class AdvancedThreatProtectionData : IUtf8JsonSerializable, IJsonModel<AdvancedThreatProtectionData>
     {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MySql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            ResourceManager.Models.SystemData systemData = default;
+            SystemData systemData = default;
             DateTimeOffset? creationTime = default;
             AdvancedThreatProtectionState? state = default;
             AdvancedThreatProtectionProvisioningState? provisioningState = default;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MySql
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MySql.Models
+namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> The response of a ServerBackupV2 list operation. </summary>
     internal partial class ServerBackupV2ListResult
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of <see cref="ServerBackupV2ListResult"/>. </summary>
         internal ServerBackupV2ListResult()
         {
-            Value = new ChangeTrackingList<ServerBackupV2Data>();
+            Value = new ChangeTrackingList<MySqlFlexibleServerBackupV2Data>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerBackupV2ListResult"/>. </summary>
         /// <param name="value"> The ServerBackupV2 items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerBackupV2ListResult(IReadOnlyList<ServerBackupV2Data> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServerBackupV2ListResult(IReadOnlyList<MySqlFlexibleServerBackupV2Data> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> The ServerBackupV2 items on this page. </summary>
-        public IReadOnlyList<ServerBackupV2Data> Value { get; }
+        public IReadOnlyList<MySqlFlexibleServerBackupV2Data> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

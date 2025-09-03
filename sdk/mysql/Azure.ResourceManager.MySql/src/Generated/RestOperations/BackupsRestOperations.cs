@@ -11,9 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.MySql.Models;
+using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
-namespace Azure.ResourceManager.MySql
+namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     internal partial class BackupsRestOperations
     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServerBackupData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlFlexibleServerBackupData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        ServerBackupData value = default;
+                        MySqlFlexibleServerBackupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ServerBackupData.DeserializeServerBackupData(document.RootElement);
+                        value = MySqlFlexibleServerBackupData.DeserializeMySqlFlexibleServerBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServerBackupData)null, message.Response);
+                    return Response.FromValue((MySqlFlexibleServerBackupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServerBackupData> Get(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
+        public Response<MySqlFlexibleServerBackupData> Get(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,13 +128,13 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        ServerBackupData value = default;
+                        MySqlFlexibleServerBackupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ServerBackupData.DeserializeServerBackupData(document.RootElement);
+                        value = MySqlFlexibleServerBackupData.DeserializeMySqlFlexibleServerBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServerBackupData)null, message.Response);
+                    return Response.FromValue((MySqlFlexibleServerBackupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServerBackupData>> PutAsync(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlFlexibleServerBackupData>> PutAsync(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -199,9 +199,9 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        ServerBackupData value = default;
+                        MySqlFlexibleServerBackupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ServerBackupData.DeserializeServerBackupData(document.RootElement);
+                        value = MySqlFlexibleServerBackupData.DeserializeMySqlFlexibleServerBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServerBackupData> Put(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
+        public Response<MySqlFlexibleServerBackupData> Put(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -230,9 +230,9 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        ServerBackupData value = default;
+                        MySqlFlexibleServerBackupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ServerBackupData.DeserializeServerBackupData(document.RootElement);
+                        value = MySqlFlexibleServerBackupData.DeserializeMySqlFlexibleServerBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServerBackupListResult>> ListByServerAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlFlexibleServerBackupListResult>> ListByServerAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -295,9 +295,9 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        ServerBackupListResult value = default;
+                        MySqlFlexibleServerBackupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ServerBackupListResult.DeserializeServerBackupListResult(document.RootElement);
+                        value = MySqlFlexibleServerBackupListResult.DeserializeMySqlFlexibleServerBackupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServerBackupListResult> ListByServer(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public Response<MySqlFlexibleServerBackupListResult> ListByServer(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -324,9 +324,9 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        ServerBackupListResult value = default;
+                        MySqlFlexibleServerBackupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ServerBackupListResult.DeserializeServerBackupListResult(document.RootElement);
+                        value = MySqlFlexibleServerBackupListResult.DeserializeMySqlFlexibleServerBackupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServerBackupListResult>> ListByServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlFlexibleServerBackupListResult>> ListByServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -377,9 +377,9 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        ServerBackupListResult value = default;
+                        MySqlFlexibleServerBackupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ServerBackupListResult.DeserializeServerBackupListResult(document.RootElement);
+                        value = MySqlFlexibleServerBackupListResult.DeserializeMySqlFlexibleServerBackupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServerBackupListResult> ListByServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public Response<MySqlFlexibleServerBackupListResult> ListByServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -408,9 +408,9 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        ServerBackupListResult value = default;
+                        MySqlFlexibleServerBackupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ServerBackupListResult.DeserializeServerBackupListResult(document.RootElement);
+                        value = MySqlFlexibleServerBackupListResult.DeserializeMySqlFlexibleServerBackupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

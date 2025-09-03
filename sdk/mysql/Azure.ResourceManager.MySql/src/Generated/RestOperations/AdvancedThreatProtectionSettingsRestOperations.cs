@@ -11,9 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.MySql.Models;
+using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
-namespace Azure.ResourceManager.MySql
+namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     internal partial class AdvancedThreatProtectionSettingsRestOperations
     {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MySql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AdvancedThreatProtectionData>(data, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.MySql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AdvancedThreatProtectionPatch>(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;

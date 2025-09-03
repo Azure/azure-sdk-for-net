@@ -11,9 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.MySql.Models;
+using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
-namespace Azure.ResourceManager.MySql
+namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     internal partial class LocationBasedCapabilitySetRestOperations
     {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MySql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string locationName, string capabilitySetName)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation locationName, string capabilitySetName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MySql
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string locationName, string capabilitySetName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation locationName, string capabilitySetName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -75,12 +75,11 @@ namespace Azure.ResourceManager.MySql
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="capabilitySetName"> Name of capability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="capabilitySetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="capabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapabilityData>> GetAsync(string subscriptionId, string locationName, string capabilitySetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="capabilitySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="capabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MySqlFlexibleServersCapabilityData>> GetAsync(string subscriptionId, AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(capabilitySetName, nameof(capabilitySetName));
 
             using var message = CreateGetRequest(subscriptionId, locationName, capabilitySetName);
@@ -89,13 +88,13 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        CapabilityData value = default;
+                        MySqlFlexibleServersCapabilityData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CapabilityData.DeserializeCapabilityData(document.RootElement);
+                        value = MySqlFlexibleServersCapabilityData.DeserializeMySqlFlexibleServersCapabilityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CapabilityData)null, message.Response);
+                    return Response.FromValue((MySqlFlexibleServersCapabilityData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -106,12 +105,11 @@ namespace Azure.ResourceManager.MySql
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="capabilitySetName"> Name of capability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="capabilitySetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="capabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapabilityData> Get(string subscriptionId, string locationName, string capabilitySetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="capabilitySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="capabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MySqlFlexibleServersCapabilityData> Get(string subscriptionId, AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(capabilitySetName, nameof(capabilitySetName));
 
             using var message = CreateGetRequest(subscriptionId, locationName, capabilitySetName);
@@ -120,19 +118,19 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        CapabilityData value = default;
+                        MySqlFlexibleServersCapabilityData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CapabilityData.DeserializeCapabilityData(document.RootElement);
+                        value = MySqlFlexibleServersCapabilityData.DeserializeMySqlFlexibleServersCapabilityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CapabilityData)null, message.Response);
+                    return Response.FromValue((MySqlFlexibleServersCapabilityData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string locationName)
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, AzureLocation locationName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -145,7 +143,7 @@ namespace Azure.ResourceManager.MySql
             return uri;
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string locationName)
+        internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation locationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -168,12 +166,11 @@ namespace Azure.ResourceManager.MySql
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapabilitySetsList>> ListAsync(string subscriptionId, string locationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CapabilitySetsList>> ListAsync(string subscriptionId, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             using var message = CreateListRequest(subscriptionId, locationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -195,12 +192,11 @@ namespace Azure.ResourceManager.MySql
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapabilitySetsList> List(string subscriptionId, string locationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CapabilitySetsList> List(string subscriptionId, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             using var message = CreateListRequest(subscriptionId, locationName);
             _pipeline.Send(message, cancellationToken);
@@ -218,7 +214,7 @@ namespace Azure.ResourceManager.MySql
             }
         }
 
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string locationName)
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation locationName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -226,7 +222,7 @@ namespace Azure.ResourceManager.MySql
             return uri;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string locationName)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, AzureLocation locationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -245,13 +241,12 @@ namespace Azure.ResourceManager.MySql
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapabilitySetsList>> ListNextPageAsync(string nextLink, string subscriptionId, string locationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CapabilitySetsList>> ListNextPageAsync(string nextLink, string subscriptionId, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, locationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -274,13 +269,12 @@ namespace Azure.ResourceManager.MySql
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapabilitySetsList> ListNextPage(string nextLink, string subscriptionId, string locationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CapabilitySetsList> ListNextPage(string nextLink, string subscriptionId, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, locationName);
             _pipeline.Send(message, cancellationToken);

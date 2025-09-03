@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MySql.Models
+namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> location capability set. </summary>
     internal partial class CapabilitySetsList
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of <see cref="CapabilitySetsList"/>. </summary>
         internal CapabilitySetsList()
         {
-            Value = new ChangeTrackingList<CapabilityData>();
+            Value = new ChangeTrackingList<MySqlFlexibleServersCapabilityData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapabilitySetsList"/>. </summary>
         /// <param name="value"> The CapabilitySetsList items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapabilitySetsList(IReadOnlyList<CapabilityData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CapabilitySetsList(IReadOnlyList<MySqlFlexibleServersCapabilityData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> The CapabilitySetsList items on this page. </summary>
-        public IReadOnlyList<CapabilityData> Value { get; }
+        public IReadOnlyList<MySqlFlexibleServersCapabilityData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

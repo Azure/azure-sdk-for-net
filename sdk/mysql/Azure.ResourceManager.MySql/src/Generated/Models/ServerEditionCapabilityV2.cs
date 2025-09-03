@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MySql.Models
+namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Server edition capabilities. </summary>
     public partial class ServerEditionCapabilityV2
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of <see cref="ServerEditionCapabilityV2"/>. </summary>
         internal ServerEditionCapabilityV2()
         {
-            SupportedStorageEditions = new ChangeTrackingList<StorageEditionCapability>();
+            SupportedStorageEditions = new ChangeTrackingList<MySqlFlexibleServerStorageEditionCapability>();
             SupportedSkus = new ChangeTrackingList<SkuCapabilityV2>();
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <param name="supportedStorageEditions"> A list of supported storage editions. </param>
         /// <param name="supportedSkus"> A list of supported Skus. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerEditionCapabilityV2(string name, string defaultSku, int? defaultStorageSize, IReadOnlyList<StorageEditionCapability> supportedStorageEditions, IReadOnlyList<SkuCapabilityV2> supportedSkus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServerEditionCapabilityV2(string name, string defaultSku, int? defaultStorageSize, IReadOnlyList<MySqlFlexibleServerStorageEditionCapability> supportedStorageEditions, IReadOnlyList<SkuCapabilityV2> supportedSkus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DefaultSku = defaultSku;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Default storage size. </summary>
         public int? DefaultStorageSize { get; }
         /// <summary> A list of supported storage editions. </summary>
-        public IReadOnlyList<StorageEditionCapability> SupportedStorageEditions { get; }
+        public IReadOnlyList<MySqlFlexibleServerStorageEditionCapability> SupportedStorageEditions { get; }
         /// <summary> A list of supported Skus. </summary>
         public IReadOnlyList<SkuCapabilityV2> SupportedSkus { get; }
     }

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MySql.Models
+namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> The response of a AdvancedThreatProtection list operation. </summary>
     internal partial class AdvancedThreatProtectionListResult

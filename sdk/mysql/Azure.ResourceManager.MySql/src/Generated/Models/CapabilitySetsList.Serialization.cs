@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MySql.Models
+namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     internal partial class CapabilitySetsList : IUtf8JsonSerializable, IJsonModel<CapabilitySetsList>
     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<CapabilityData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            IReadOnlyList<CapabilityData> value = default;
+            IReadOnlyList<MySqlFlexibleServersCapabilityData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    List<CapabilityData> array = new List<CapabilityData>();
+                    List<MySqlFlexibleServersCapabilityData> array = new List<MySqlFlexibleServersCapabilityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CapabilityData.DeserializeCapabilityData(item, options));
+                        array.Add(MySqlFlexibleServersCapabilityData.DeserializeMySqlFlexibleServersCapabilityData(item, options));
                     }
                     value = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CapabilitySetsList(value ?? new ChangeTrackingList<CapabilityData>(), nextLink, serializedAdditionalRawData);
+            return new CapabilitySetsList(value ?? new ChangeTrackingList<MySqlFlexibleServersCapabilityData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapabilitySetsList>.Write(ModelReaderWriterOptions options)

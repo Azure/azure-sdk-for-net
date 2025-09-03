@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MySql.Models
+namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> The AdvancedThreatProtectionName. </summary>
     public readonly partial struct AdvancedThreatProtectionName : IEquatable<AdvancedThreatProtectionName>

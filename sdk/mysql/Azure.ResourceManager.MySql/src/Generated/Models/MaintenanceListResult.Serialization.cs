@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MySql.Models
+namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     internal partial class MaintenanceListResult : IUtf8JsonSerializable, IJsonModel<MaintenanceListResult>
     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<MaintenanceData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            IReadOnlyList<MaintenanceData> value = default;
+            IReadOnlyList<MySqlFlexibleServerMaintenanceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    List<MaintenanceData> array = new List<MaintenanceData>();
+                    List<MySqlFlexibleServerMaintenanceData> array = new List<MySqlFlexibleServerMaintenanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceData.DeserializeMaintenanceData(item, options));
+                        array.Add(MySqlFlexibleServerMaintenanceData.DeserializeMySqlFlexibleServerMaintenanceData(item, options));
                     }
                     value = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MaintenanceListResult(value ?? new ChangeTrackingList<MaintenanceData>(), nextLink, serializedAdditionalRawData);
+            return new MaintenanceListResult(value ?? new ChangeTrackingList<MySqlFlexibleServerMaintenanceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceListResult>.Write(ModelReaderWriterOptions options)

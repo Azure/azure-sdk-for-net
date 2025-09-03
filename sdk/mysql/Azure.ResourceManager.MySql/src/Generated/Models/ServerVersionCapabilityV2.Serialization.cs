@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MySql.Models
+namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     public partial class ServerVersionCapabilityV2 : IUtf8JsonSerializable, IJsonModel<ServerVersionCapabilityV2>
     {

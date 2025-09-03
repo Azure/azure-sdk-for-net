@@ -9,10 +9,10 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.MySql.Models;
+using Azure.ResourceManager.MySql.FlexibleServers.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.MySql.Samples
+namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 {
     public partial class Sample_AdvancedThreatProtectionResource
     {

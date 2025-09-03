@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MySql.Models
+namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     public partial class ImportSourceProperties : IUtf8JsonSerializable, IJsonModel<ImportSourceProperties>
     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MySql.Models
             if (Optional.IsDefined(StorageUri))
             {
                 writer.WritePropertyName("storageUrl"u8);
-                writer.WriteStringValue(StorageUri);
+                writer.WriteStringValue(StorageUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SasToken))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MySql.Models
                 return null;
             }
             ImportSourceStorageType? storageType = default;
-            string storageUrl = default;
+            Uri storageUrl = default;
             string sasToken = default;
             string dataDirPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -110,7 +110,11 @@ namespace Azure.ResourceManager.MySql.Models
                 }
                 if (property.NameEquals("storageUrl"u8))
                 {
-                    storageUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sasToken"u8))

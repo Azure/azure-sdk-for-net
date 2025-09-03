@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MySql.Models
+namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     internal partial class ServerBackupV2ListResult : IUtf8JsonSerializable, IJsonModel<ServerBackupV2ListResult>
     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<ServerBackupV2Data>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            IReadOnlyList<ServerBackupV2Data> value = default;
+            IReadOnlyList<MySqlFlexibleServerBackupV2Data> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    List<ServerBackupV2Data> array = new List<ServerBackupV2Data>();
+                    List<MySqlFlexibleServerBackupV2Data> array = new List<MySqlFlexibleServerBackupV2Data>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerBackupV2Data.DeserializeServerBackupV2Data(item, options));
+                        array.Add(MySqlFlexibleServerBackupV2Data.DeserializeMySqlFlexibleServerBackupV2Data(item, options));
                     }
                     value = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServerBackupV2ListResult(value ?? new ChangeTrackingList<ServerBackupV2Data>(), nextLink, serializedAdditionalRawData);
+            return new ServerBackupV2ListResult(value ?? new ChangeTrackingList<MySqlFlexibleServerBackupV2Data>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerBackupV2ListResult>.Write(ModelReaderWriterOptions options)

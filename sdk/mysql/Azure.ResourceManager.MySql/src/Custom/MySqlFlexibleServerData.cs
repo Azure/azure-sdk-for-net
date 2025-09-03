@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             modelGroupIds.Add(gid);
                     }
                     model.PrivateEndpoint = item.PrivateEndpoint;
-                    model.ConnectionState = item.ConnectionState;
+                    model.ConnectionState = item.PrivateLinkServiceConnectionState;
                     list.Add(model);
                 }
                 return list;

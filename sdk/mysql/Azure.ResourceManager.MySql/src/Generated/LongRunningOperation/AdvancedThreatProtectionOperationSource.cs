@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MySql
+namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     internal class AdvancedThreatProtectionOperationSource : IOperationSource<AdvancedThreatProtectionResource>
     {
