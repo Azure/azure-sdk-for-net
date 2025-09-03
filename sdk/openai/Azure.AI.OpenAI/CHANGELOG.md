@@ -1,5 +1,19 @@
 # Release History
 
+## 2.3.0-beta.2 (2025-08-21)
+
+### Features Added
+
+This small update includes `[Experimental]` additions to `AzureOpenAIClientOptions` that enables providing custom key/value pairs for headers and query string parameters via `DefaultHeaders` and `DefaultQueryParameters`, respectively.
+
+## 2.3.0-beta.1 (2025-08-07)
+
+This update restores compatibility with the latest `2.3.0` release of `OpenAI` and enables access to the latest features. For details, please see [the full OpenAI 2.3.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#230-2025-08-01).
+
+### Features Added
+
+- A substantial number of new features are carried forward from the `OpenAI` library. Please see [the full OpenAI 2.3.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#230-2025-08-01) for details.
+
 ## 2.2.0-beta.5 (2025-07-11)
 
 This update converges new feature updates from the recent `2.2.0` release of `OpenAI` together with support based on the contemporary `2025-04-01-preview` Azure OpenAI Service API label.

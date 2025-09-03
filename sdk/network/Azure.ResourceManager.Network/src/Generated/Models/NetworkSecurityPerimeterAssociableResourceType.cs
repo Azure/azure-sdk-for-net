@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A friendly name for the properties of perimeter associable resources. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
         /// <summary> Public DNS zone names of the resources. </summary>
+        [WirePath("properties.publicDnsZones")]
         public IReadOnlyList<string> PublicDnsZones { get; }
     }
 }

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Minimum number of scale units deployed for ExpressRoute gateway. </summary>
+        [WirePath("min")]
         public int? Min { get; set; }
         /// <summary> Maximum number of scale units deployed for ExpressRoute gateway. </summary>
+        [WirePath("max")]
         public int? Max { get; set; }
     }
 }

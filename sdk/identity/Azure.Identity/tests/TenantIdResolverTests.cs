@@ -109,5 +109,64 @@ namespace Azure.Identity.Tests
                 StringAssert.Contains($"The current credential is not configured to acquire tokens for tenant {tokenRequestContext.TenantId}", ex.Message);
             }
         }
+
+        [Test]
+        public void ResolveWithCaseInsensitiveTenantIdComparison()
+        {
+            const string upperCaseTenantId = "CLIENT-TENANT";
+            const string lowerCaseTenantId = "client-tenant";
+            const string mixedCaseTenantId = "Client-Tenant";
+
+            var contextWithUpperCase = new TokenRequestContext(Array.Empty<string>(), tenantId: upperCaseTenantId);
+            var contextWithLowerCase = new TokenRequestContext(Array.Empty<string>(), tenantId: lowerCaseTenantId);
+            var contextWithMixedCase = new TokenRequestContext(Array.Empty<string>(), tenantId: mixedCaseTenantId);
+
+            // Test that different case variations of the same tenant ID are considered equal
+            var result1 = TenantIdResolverBase.Default.Resolve(lowerCaseTenantId, contextWithUpperCase, TenantIdResolverBase.AllTenants);
+            var result2 = TenantIdResolverBase.Default.Resolve(upperCaseTenantId, contextWithLowerCase, TenantIdResolverBase.AllTenants);
+            var result3 = TenantIdResolverBase.Default.Resolve(mixedCaseTenantId, contextWithLowerCase, TenantIdResolverBase.AllTenants);
+
+            // All should resolve to the context tenant ID as that takes precedence
+            Assert.AreEqual(upperCaseTenantId, result1);
+            Assert.AreEqual(lowerCaseTenantId, result2);
+            Assert.AreEqual(lowerCaseTenantId, result3);
+        }
+
+        [Test]
+        public void ResolveWithCaseInsensitiveAdfsTenantId()
+        {
+            const string upperCaseAdfs = "ADFS";
+            const string mixedCaseAdfs = "Adfs";
+            const string lowerCaseAdfs = "adfs";
+
+            var contextWithHint = new TokenRequestContext(Array.Empty<string>(), tenantId: "some-hint");
+
+            // Test that different case variations of ADFS are all recognized
+            var result1 = TenantIdResolverBase.Default.Resolve(upperCaseAdfs, contextWithHint, TenantIdResolverBase.AllTenants);
+            var result2 = TenantIdResolverBase.Default.Resolve(mixedCaseAdfs, contextWithHint, TenantIdResolverBase.AllTenants);
+            var result3 = TenantIdResolverBase.Default.Resolve(lowerCaseAdfs, contextWithHint, TenantIdResolverBase.AllTenants);
+
+            // For ADFS, the explicit tenant ID should be returned regardless of case
+            Assert.AreEqual(upperCaseAdfs, result1);
+            Assert.AreEqual(mixedCaseAdfs, result2);
+            Assert.AreEqual(lowerCaseAdfs, result3);
+        }
+
+        [Test]
+        public void ResolveWithCaseInsensitiveComparisonForAllowedTenants()
+        {
+            const string explicitTenantId = "explicit-tenant";
+            const string upperCaseContextTenant = "CONTEXT-TENANT";
+            const string lowerCaseContextTenant = "context-tenant";
+
+            var contextWithUpperCase = new TokenRequestContext(Array.Empty<string>(), tenantId: upperCaseContextTenant);
+            var additionallyAllowedTenants = new[] { lowerCaseContextTenant };
+
+            // The context tenant ID (uppercase) should be allowed because it matches
+            // the additionally allowed tenant (lowercase) in a case-insensitive manner
+            var result = TenantIdResolverBase.Default.Resolve(explicitTenantId, contextWithUpperCase, additionallyAllowedTenants);
+
+            Assert.AreEqual(upperCaseContextTenant, result);
+        }
     }
 }

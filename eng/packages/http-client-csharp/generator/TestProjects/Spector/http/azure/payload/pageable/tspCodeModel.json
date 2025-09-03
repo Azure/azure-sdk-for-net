@@ -1,0 +1,324 @@
+{
+  "name": "_Specs_.Azure.Payload.Pageable",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [
+    {
+      "$id": "1",
+      "kind": "constant",
+      "name": "listContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    }
+  ],
+  "models": [
+    {
+      "$id": "3",
+      "kind": "model",
+      "name": "PagedUser",
+      "namespace": "Azure.Core",
+      "crossLanguageDefinitionId": "Azure.Core.Page",
+      "usage": "Output,Json",
+      "doc": "Paged collection of User items",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "4",
+          "kind": "property",
+          "name": "value",
+          "serializedName": "value",
+          "doc": "The User items on this page",
+          "type": {
+            "$id": "5",
+            "kind": "array",
+            "name": "ArrayUser",
+            "valueType": {
+              "$id": "6",
+              "kind": "model",
+              "name": "User",
+              "namespace": "_Specs_.Azure.Payload.Pageable",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.User",
+              "usage": "Output,Json",
+              "doc": "User model",
+              "decorators": [],
+              "properties": [
+                {
+                  "$id": "7",
+                  "kind": "property",
+                  "name": "name",
+                  "serializedName": "name",
+                  "doc": "User name",
+                  "type": {
+                    "$id": "8",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.User.name",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "name"
+                    }
+                  },
+                  "isHttpMetadata": false
+                }
+              ]
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.Core.Page.value",
+          "serializationOptions": {
+            "json": {
+              "name": "value"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "9",
+          "kind": "property",
+          "name": "nextLink",
+          "serializedName": "nextLink",
+          "doc": "The link to the next page of items",
+          "type": {
+            "$id": "10",
+            "kind": "url",
+            "name": "ResourceLocation",
+            "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+            "baseType": {
+              "$id": "11",
+              "kind": "url",
+              "name": "url",
+              "crossLanguageDefinitionId": "TypeSpec.url",
+              "decorators": []
+            },
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.Core.Page.nextLink",
+          "serializationOptions": {
+            "json": {
+              "name": "nextLink"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$ref": "6"
+    }
+  ],
+  "clients": [
+    {
+      "$id": "12",
+      "kind": "client",
+      "name": "PageableClient",
+      "namespace": "_Specs_.Azure.Payload.Pageable",
+      "doc": "Test describing pageable.",
+      "methods": [
+        {
+          "$id": "13",
+          "kind": "paging",
+          "name": "list",
+          "accessibility": "public",
+          "apiVersions": [],
+          "doc": "List users",
+          "operation": {
+            "$id": "14",
+            "name": "list",
+            "resourceName": "Pageable",
+            "doc": "List users",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "15",
+                "kind": "query",
+                "name": "maxpagesize",
+                "serializedName": "maxpagesize",
+                "doc": "The maximum number of result items per page.",
+                "type": {
+                  "$id": "16",
+                  "kind": "int32",
+                  "name": "int32",
+                  "crossLanguageDefinitionId": "TypeSpec.int32",
+                  "decorators": []
+                },
+                "isApiVersion": false,
+                "explode": false,
+                "optional": true,
+                "scope": "Method",
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list.maxpagesize",
+                "readOnly": false
+              },
+              {
+                "$id": "17",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "1"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list.accept"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "3"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/azure/payload/pageable",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "18",
+              "kind": "method",
+              "name": "maxpagesize",
+              "serializedName": "maxpagesize",
+              "doc": "The maximum number of result items per page.",
+              "type": {
+                "$id": "19",
+                "kind": "int32",
+                "name": "int32",
+                "crossLanguageDefinitionId": "TypeSpec.int32",
+                "decorators": []
+              },
+              "location": "Query",
+              "isApiVersion": false,
+              "optional": true,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list.maxpagesize",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "20",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "1"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "5"
+            },
+            "resultSegments": [
+              "value"
+            ]
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list",
+          "pagingMetadata": {
+            "itemPropertySegments": [
+              "value"
+            ],
+            "nextLink": {
+              "responseSegments": [
+                "nextLink"
+              ],
+              "responseLocation": "Body"
+            }
+          }
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "21",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "22",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "23",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.endpoint"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable",
+      "apiVersions": []
+    }
+  ]
+}

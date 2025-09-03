@@ -42,7 +42,7 @@
           "decorators": []
         }
       ],
-      "namespace": "",
+      "namespace": "SpecialHeaders.Repeatability",
       "isFixed": true,
       "isFlags": false,
       "usage": "Output",
@@ -75,8 +75,9 @@
             "parameters": [
               {
                 "$id": "8",
+                "kind": "header",
                 "name": "repeatabilityRequestID",
-                "nameInRequest": "Repeatability-Request-ID",
+                "serializedName": "Repeatability-Request-ID",
                 "type": {
                   "$id": "9",
                   "kind": "string",
@@ -84,20 +85,19 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "scope": "Method",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.immediateSuccess.repeatabilityRequestID"
               },
               {
                 "$id": "10",
+                "kind": "header",
                 "name": "repeatabilityFirstSent",
-                "nameInRequest": "Repeatability-First-Sent",
+                "serializedName": "Repeatability-First-Sent",
                 "type": {
                   "$id": "11",
                   "kind": "utcDateTime",
@@ -113,15 +113,13 @@
                   "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
                   "decorators": []
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "scope": "Method",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.immediateSuccess.repeatabilityFirstSent"
               }
             ],
             "responses": [
@@ -154,8 +152,9 @@
           "parameters": [
             {
               "$id": "13",
+              "kind": "method",
               "name": "repeatabilityRequestID",
-              "nameInRequest": "Repeatability-Request-ID",
+              "serializedName": "Repeatability-Request-ID",
               "type": {
                 "$id": "14",
                 "kind": "string",
@@ -165,18 +164,18 @@
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.immediateSuccess.repeatabilityRequestID",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "15",
+              "kind": "method",
               "name": "repeatabilityFirstSent",
-              "nameInRequest": "Repeatability-First-Sent",
+              "serializedName": "Repeatability-First-Sent",
               "type": {
                 "$id": "16",
                 "kind": "utcDateTime",
@@ -194,13 +193,12 @@
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.immediateSuccess.repeatabilityFirstSent",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {},
@@ -213,8 +211,9 @@
       "parameters": [
         {
           "$id": "18",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
             "$id": "19",
@@ -222,14 +221,10 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "20",
@@ -239,7 +234,10 @@
             },
             "value": "http://localhost:3000"
           },
-          "serverUrlTemplate": "{endpoint}"
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.endpoint"
         }
       ],
       "decorators": [],

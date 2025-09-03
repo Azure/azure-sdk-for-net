@@ -35,18 +35,22 @@ namespace Samples
         public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::Samples.Models.Cat>> AsPages(string continuationToken, int? pageSizeHint)
         {
             global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
-            do
+            while (true)
             {
                 global::Azure.Response response = this.GetNextResponse(pageSizeHint, nextPage);
                 if ((response is null))
                 {
                     yield break;
                 }
-                global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
-                nextPage = (responseWithType.NextCat != null) ? new global::System.Uri(responseWithType.NextCat) : null;
-                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)responseWithType.Cats), nextPage?.AbsoluteUri, response);
+                global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
+                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)result.Cats), nextPage?.AbsoluteUri, response);
+                string nextPageString = result.NextCat;
+                if ((nextPageString == null))
+                {
+                    yield break;
+                }
+                nextPage = new global::System.Uri(nextPageString);
             }
-            while ((nextPage != null));
         }
 
         /// <summary> Get next page. </summary>

@@ -2,17 +2,12 @@
   <PropertyGroup>
     <Version>1.2.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.1.1</ApiCompatVersion>
+    <ApiCompatVersion>1.1.2</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.MySql</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.DBforMySQL.</Description>
     <PackageTags>azure;management;arm;resource manager;mysql</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
   </PropertyGroup>
-
-  <ItemGroup>
-    <!-- TODO: Temporarily pin the version of generator here, will remove this in https://github.com/Azure/azure-sdk-for-net/issues/51436 -->
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="3.0.0-beta.20250718.1" PrivateAssets="All" />
-  </ItemGroup>
 
 </Project>

@@ -13,8 +13,15 @@ namespace Azure.Identity
 {
     /// <summary>
     /// Enables authentication to Microsoft Entra ID as the user signed in to Visual Studio Code via
-    /// the broker. Note that this credential relies on a reference to the Azure.Identity.Broker package.
+    /// the broker.
     /// </summary>
+    /// <remarks>
+    /// This credential requires installation of the following components:
+    /// <list type="bullet">
+    /// <item><description><see href="https://www.nuget.org/packages/Azure.Identity.Broker">Azure.Identity.Broker package</see></description></item>
+    /// <item><description><see href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureresourcegroups">Azure Resources extension</see></description></item>
+    /// </list>
+    /// </remarks>
     public class VisualStudioCodeCredential : InteractiveBrowserCredential
     {
         private const string CredentialsSection = "VS Code Azure";
@@ -51,7 +58,7 @@ namespace Azure.Identity
         {
             if (!_isBrokerOptionsEnabled)
             {
-                throw new CredentialUnavailableException($"The {nameof(VisualStudioCodeCredential)} requires the Azure.Identity.Broker package to be referenced. {CredentialsSection} {Troubleshooting}");
+                throw new CredentialUnavailableException($"{nameof(VisualStudioCodeCredential)} requires the Azure.Identity.Broker package to be referenced from the project. {CredentialsSection} {Troubleshooting}");
             }
 
             using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope($"{nameof(VisualStudioCodeCredential)}.{nameof(GetToken)}", requestContext);

@@ -13,37 +13,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.DatasetDriftDetected event. </summary>
     public partial class MachineLearningServicesDatasetDriftDetectedEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesDatasetDriftDetectedEventData"/>. </summary>
         /// <param name="dataDriftId"> The ID of the data drift monitor that triggered the event. </param>
@@ -51,15 +22,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="runId"> The ID of the Run that detected data drift. </param>
         /// <param name="baseDatasetId"> The ID of the base Dataset used to detect drift. </param>
         /// <param name="targetDatasetId"> The ID of the target Dataset used to detect drift. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataDriftId"/>, <paramref name="dataDriftName"/>, <paramref name="runId"/>, <paramref name="baseDatasetId"/> or <paramref name="targetDatasetId"/> is null. </exception>
         internal MachineLearningServicesDatasetDriftDetectedEventData(string dataDriftId, string dataDriftName, string runId, string baseDatasetId, string targetDatasetId)
         {
-            Argument.AssertNotNull(dataDriftId, nameof(dataDriftId));
-            Argument.AssertNotNull(dataDriftName, nameof(dataDriftName));
-            Argument.AssertNotNull(runId, nameof(runId));
-            Argument.AssertNotNull(baseDatasetId, nameof(baseDatasetId));
-            Argument.AssertNotNull(targetDatasetId, nameof(targetDatasetId));
-
             DataDriftId = dataDriftId;
             DataDriftName = dataDriftName;
             RunId = runId;
@@ -76,8 +40,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="driftCoefficient"> The coefficient result that triggered the event. </param>
         /// <param name="startTime"> The start time of the target dataset time series that resulted in drift detection. </param>
         /// <param name="endTime"> The end time of the target dataset time series that resulted in drift detection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningServicesDatasetDriftDetectedEventData(string dataDriftId, string dataDriftName, string runId, string baseDatasetId, string targetDatasetId, double? driftCoefficient, DateTimeOffset? startTime, DateTimeOffset? endTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningServicesDatasetDriftDetectedEventData(string dataDriftId, string dataDriftName, string runId, string baseDatasetId, string targetDatasetId, double? driftCoefficient, DateTimeOffset? startTime, DateTimeOffset? endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataDriftId = dataDriftId;
             DataDriftName = dataDriftName;
@@ -87,28 +51,30 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             DriftCoefficient = driftCoefficient;
             StartTime = startTime;
             EndTime = endTime;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesDatasetDriftDetectedEventData"/> for deserialization. </summary>
-        internal MachineLearningServicesDatasetDriftDetectedEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the data drift monitor that triggered the event. </summary>
         public string DataDriftId { get; }
+
         /// <summary> The name of the data drift monitor that triggered the event. </summary>
         public string DataDriftName { get; }
+
         /// <summary> The ID of the Run that detected data drift. </summary>
         public string RunId { get; }
+
         /// <summary> The ID of the base Dataset used to detect drift. </summary>
         public string BaseDatasetId { get; }
+
         /// <summary> The ID of the target Dataset used to detect drift. </summary>
         public string TargetDatasetId { get; }
+
         /// <summary> The coefficient result that triggered the event. </summary>
         public double? DriftCoefficient { get; }
+
         /// <summary> The start time of the target dataset time series that resulted in drift detection. </summary>
         public DateTimeOffset? StartTime { get; }
+
         /// <summary> The end time of the target dataset time series that resulted in drift detection. </summary>
         public DateTimeOffset? EndTime { get; }
     }

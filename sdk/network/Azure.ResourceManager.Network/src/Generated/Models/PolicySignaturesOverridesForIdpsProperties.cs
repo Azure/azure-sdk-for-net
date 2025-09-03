@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>
+        [WirePath("signatures")]
         public IDictionary<string, string> Signatures { get; }
     }
 }

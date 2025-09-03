@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 namespace Azure.Developer.Playwright;
 
 /// <summary>
-/// Sets up and manages the Playwright service browser client.
+/// Sets up and manages the Playwright Workspaces browser client.
 /// </summary>
 public class PlaywrightServiceBrowserClient : IDisposable
 {
@@ -92,7 +92,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         _playwrightVersion = playwrightVersion ?? new PlaywrightVersion();
         _clientUtility = clientUtility ?? new ClientUtilities(_environment, playwrightVersion: _playwrightVersion);
         _ciProvider = ciProvider ?? new CIProvider(_environment);
-        _options = options ?? new PlaywrightServiceBrowserClientOptions(PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview, environment: _environment, clientUtility: _clientUtility);
+        _options = options ?? new PlaywrightServiceBrowserClientOptions(PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_09_01, environment: _environment, clientUtility: _clientUtility);
         _logger = logger ?? _options.Logger;
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
         _entraLifecycle = entraLifecycle ?? new EntraLifecycle(jsonWebTokenHandler: _jsonWebTokenHandler, logger: _logger, environment: _environment, tokenCredential: tokenCredential);
@@ -104,11 +104,10 @@ public class PlaywrightServiceBrowserClient : IDisposable
         _ = _options.RunName;
         _ = _options.ExposeNetwork;
         _ = _options.ServiceAuth;
-        _ = _options.UseCloudHostedBrowsers;
     }
 
     /// <summary>
-    /// Gets the connect options for connecting to Playwright Service's cloud hosted browsers.
+    /// Gets the connect options for connecting to Playwright Workspaces's cloud hosted browsers.
     /// </summary>
     /// <typeparam name="T">The type of the connect options.</typeparam>
     /// <param name="os">The operating system.</param>
@@ -120,14 +119,6 @@ public class PlaywrightServiceBrowserClient : IDisposable
     public virtual async Task<ConnectOptions<T>> GetConnectOptionsAsync<T>(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, CancellationToken cancellationToken = default) where T : class, new()
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
-        var environmentValueForUseCloudHostedBrowsers = _environment.GetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable);
-        if (bool.TryParse(environmentValueForUseCloudHostedBrowsers, out var useCloudHostedBrowsers) && !useCloudHostedBrowsers)
-        {
-            if (!useCloudHostedBrowsers)
-            {
-                throw new Exception(Constants.s_service_endpoint_removed_since_scalable_execution_disabled_error_message);
-            }
-        }
         if (string.IsNullOrEmpty(_options.ServiceEndpoint))
             throw new Exception(Constants.s_no_service_endpoint_error_message);
         string _serviceOs = Uri.EscapeDataString(ClientUtilities.GetServiceCompatibleOs(os) ?? ClientUtilities.GetServiceCompatibleOs(_options.OS)!);
@@ -162,7 +153,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
     }
 
     /// <summary>
-    /// Gets the connect options for connecting to Playwright Service's cloud hosted browsers.
+    /// Gets the connect options for connecting to Playwright Workspaces's cloud hosted browsers.
     /// </summary>
     /// <typeparam name="T">The type of the connect options.</typeparam>
     /// <param name="os">The operating system.</param>
@@ -174,14 +165,6 @@ public class PlaywrightServiceBrowserClient : IDisposable
     public virtual ConnectOptions<T> GetConnectOptions<T>(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, CancellationToken cancellationToken = default) where T : class, new()
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
-        var environmentValueForUseCloudHostedBrowsers = _environment.GetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable);
-        if (bool.TryParse(environmentValueForUseCloudHostedBrowsers, out var useCloudHostedBrowsers) && !useCloudHostedBrowsers)
-        {
-            if (!useCloudHostedBrowsers)
-            {
-                throw new Exception(Constants.s_service_endpoint_removed_since_scalable_execution_disabled_error_message);
-            }
-        }
         if (string.IsNullOrEmpty(_options.ServiceEndpoint))
             throw new Exception(Constants.s_no_service_endpoint_error_message);
         string _serviceOs = Uri.EscapeDataString(ClientUtilities.GetServiceCompatibleOs(os) ?? ClientUtilities.GetServiceCompatibleOs(_options.OS)!);
@@ -227,14 +210,6 @@ public class PlaywrightServiceBrowserClient : IDisposable
             _logger?.LogInformation("Exiting initialization as service endpoint is not set.");
             return;
         }
-        if (!_options.UseCloudHostedBrowsers)
-        {
-            // Since playwright-dotnet checks PLAYWRIGHT_SERVICE_ACCESS_TOKEN and PLAYWRIGHT_SERVICE_URL to be set, remove PLAYWRIGHT_SERVICE_URL so that tests are run locally.
-            // If customers use GetConnectOptionsAsync, after setting disableScalableExecution, an error will be thrown.
-            _logger?.LogInformation("Disabling scalable execution since UseCloudHostedBrowsers is set to false.");
-            _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), null);
-            return;
-        }
         // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
         if (_options.ServiceAuth == ServiceAuthType.AccessToken)
         {
@@ -260,14 +235,6 @@ public class PlaywrightServiceBrowserClient : IDisposable
         if (string.IsNullOrEmpty(_options.ServiceEndpoint))
         {
             _logger?.LogInformation("Exiting initialization as service endpoint is not set.");
-            return;
-        }
-        if (!_options.UseCloudHostedBrowsers)
-        {
-            // Since playwright-dotnet checks PLAYWRIGHT_SERVICE_ACCESS_TOKEN and PLAYWRIGHT_SERVICE_URL to be set, remove PLAYWRIGHT_SERVICE_URL so that tests are run locally.
-            // If customers use GetConnectOptionsAsync, after setting disableScalableExecution, an error will be thrown.
-            _logger?.LogInformation("Disabling scalable execution since UseCloudHostedBrowsers is set to false.");
-            _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), null);
             return;
         }
         // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
@@ -310,7 +277,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
     public virtual void Dispose()
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
-        _logger?.LogInformation("Cleaning up Playwright service resources.");
+        _logger?.LogInformation("Cleaning up Playwright Workspaces resources.");
         RotationTimer?.Dispose();
         GC.SuppressFinalize(this);
     }
@@ -386,7 +353,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         }
         catch (RequestFailedException ex)
         {
-            _logger?.LogError($"Failed to create the test run in the Playwright service: {ex.Message}. Please refer to https://aka.ms/pww/docs/troubleshooting for more information.");
+            _logger?.LogError($"Failed to create the test run in the Playwright Workspaces: {ex.Message}. Please refer to https://aka.ms/pww/docs/troubleshooting for more information.");
             throw new Exception(Constants.s_playwright_service_create_test_run_error, ex);
         }
     }
@@ -435,7 +402,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         }
         catch (RequestFailedException ex)
         {
-            _logger?.LogError($"Failed to create the test run in the Playwright service: {ex.Message}");
+            _logger?.LogError($"Failed to create the test run in the Playwright Workspaces: {ex.Message}");
             throw new Exception(Constants.s_playwright_service_create_test_run_error, ex);
         }
     }
