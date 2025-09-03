@@ -212,8 +212,13 @@ internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingU
 	                    return false;
 	                }
 
-	                var updates = StreamingUpdate.FromEvent(_events.Current);
-	                _updates = updates.GetEnumerator();
+	                IEnumerable<StreamingUpdate> updates = StreamingUpdate.FromEvent(_events.Current);
+                    if (updates is null)
+                    {
+                        StreamingUpdateReason updateKind = StreamingUpdateReasonExtensions.FromSseEventLabel(_events.Current.EventType);
+                        throw new InvalidOperationException($"Unknown streaming update reason {updateKind}");
+                    }
+                    _updates = updates.GetEnumerator();
 
 	                if (_updates.MoveNext())
 	                {
