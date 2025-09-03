@@ -188,7 +188,7 @@ public class BasicPostgreSqlTests
             """
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
-
+            
             resource testServer 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' = {
               name: take('testserver-${uniqueString(resourceGroup().id)}', 63)
               location: location
