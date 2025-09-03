@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -14,33 +16,40 @@ namespace Azure.Communication.CallAutomation
     public partial class TranscriptionOptions
     {
         /// <summary> Initializes a new instance of TranscriptionOptions. </summary>
-        /// <param name="transportUri"> Transport URL for live transcription. </param>
-        /// <param name="locale"> Defines the locale for the data e.g en-CA, en-AU. </param>
-        /// <param name="startTranscription"> Determines if the transcription should be started immediately after call is answered or not. </param>
         /// <param name="transcriptionTransport"> The type of transport to be used for live transcription, eg. Websocket. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transportUri"/> or <paramref name="locale"/> is null. </exception>
-        public TranscriptionOptions(Uri transportUri, string locale, bool? startTranscription = null, TranscriptionTransport transcriptionTransport = default)
+        public TranscriptionOptions(TranscriptionTransport transcriptionTransport = default)
         {
-            Argument.AssertNotNull(transportUri, nameof(transportUri));
-            Argument.AssertNotNull(locale, nameof(locale));
+            TranscriptionTransport = transcriptionTransport == default ? TranscriptionTransport.Websocket : transcriptionTransport;
+        }
 
-            TransportUrl = transportUri;
-            TranscriptionTransport = transcriptionTransport;
-            Locale = locale;
-            StartTranscription = startTranscription;
+        /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/>. </summary>
+        /// <param name="streamingTransport"> Transport URL for live transcription. </param>
+        /// <param name="locales"> Defines the list locale for the language identification e.g en-CA, en-AU. </param>
+        public TranscriptionOptions(IEnumerable<string> locales, TranscriptionTransport streamingTransport = default)
+        {
+            TranscriptionTransport = streamingTransport == default ? TranscriptionTransport.Websocket : streamingTransport;
+            Locales = locales.ToList<string>();
         }
 
         /// <summary> Transport URL for live transcription. </summary>
-        public Uri TransportUrl { get; }
+        public Uri TransportUrl { get; set; }
         /// <summary> The type of transport to be used for live transcription, eg. Websocket. </summary>
         public TranscriptionTransport TranscriptionTransport { get; }
         /// <summary> Defines the locale for the data e.g en-CA, en-AU. </summary>
-        public string Locale { get; }
+        public string Locale { get; set; }
         /// <summary> Determines if the transcription should be started immediately after call is answered or not. </summary>
-        public bool? StartTranscription { get; }
+        public bool? StartTranscription { get; set; }
         /// <summary> Endpoint where the custom model was deployed. </summary>
         public string SpeechRecognitionModelEndpointId { get; set; }
         /// <summary> Enables intermediate results for the transcribed speech. </summary>
         public bool? EnableIntermediateResults { get; set; }
+        /// <summary> PII redaction configuration options. </summary>
+        public PiiRedactionOptions PiiRedactionOptions { get; set; }
+        /// <summary> Indicating if sentiment analysis should be used. </summary>
+        public bool? EnableSentimentAnalysis { get; set; }
+        /// <summary> List of languages for Language Identification. </summary>
+        public IList<string> Locales { get; }
+        /// <summary> Summarization configuration options. </summary>
+        public SummarizationOptions SummarizationOptions { get; set; }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -27,6 +28,7 @@ namespace Azure.Communication.CallAutomation
             TransportType = transportType;
             Locale = locale;
             StartTranscription = startTranscription;
+            Locales = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptionsInternal"/>. </summary>
@@ -36,7 +38,11 @@ namespace Azure.Communication.CallAutomation
         /// <param name="speechModelEndpointId"> Endpoint where the custom model was deployed. </param>
         /// <param name="startTranscription"> Determines if the transcription should be started immediately after call is answered or not. </param>
         /// <param name="enableIntermediateResults"> Enables intermediate results for the transcribed speech. </param>
-        internal TranscriptionOptionsInternal(string transportUrl, TranscriptionTransport transportType, string locale, string speechModelEndpointId, bool startTranscription, bool? enableIntermediateResults)
+        /// <param name="piiRedactionOptions"> PII redaction configuration options. </param>
+        /// <param name="enableSentimentAnalysis"> Indicating if sentiment analysis should be used. </param>
+        /// <param name="locales"> List of languages for Language Identification. </param>
+        /// <param name="summarizationOptions"> Summarization configuration options. </param>
+        internal TranscriptionOptionsInternal(string transportUrl, TranscriptionTransport transportType, string locale, string speechModelEndpointId, bool startTranscription, bool? enableIntermediateResults, PiiRedactionOptionsInternal piiRedactionOptions, bool? enableSentimentAnalysis, IList<string> locales, SummarizationOptionsInternal summarizationOptions)
         {
             TransportUrl = transportUrl;
             TransportType = transportType;
@@ -44,6 +50,10 @@ namespace Azure.Communication.CallAutomation
             SpeechModelEndpointId = speechModelEndpointId;
             StartTranscription = startTranscription;
             EnableIntermediateResults = enableIntermediateResults;
+            PiiRedactionOptions = piiRedactionOptions;
+            EnableSentimentAnalysis = enableSentimentAnalysis;
+            Locales = locales;
+            SummarizationOptions = summarizationOptions;
         }
 
         /// <summary> Transport URL for live transcription. </summary>
@@ -58,5 +68,13 @@ namespace Azure.Communication.CallAutomation
         public bool StartTranscription { get; }
         /// <summary> Enables intermediate results for the transcribed speech. </summary>
         public bool? EnableIntermediateResults { get; set; }
+        /// <summary> PII redaction configuration options. </summary>
+        public PiiRedactionOptionsInternal PiiRedactionOptions { get; set; }
+        /// <summary> Indicating if sentiment analysis should be used. </summary>
+        public bool? EnableSentimentAnalysis { get; set; }
+        /// <summary> List of languages for Language Identification. </summary>
+        public IList<string> Locales { get; }
+        /// <summary> Summarization configuration options. </summary>
+        public SummarizationOptionsInternal SummarizationOptions { get; set; }
     }
 }

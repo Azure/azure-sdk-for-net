@@ -134,19 +134,32 @@ namespace Azure.Communication.CallAutomation
         /// Phrases are set to the value if choice is selected via phrase detection.
         /// If Dtmf input is recognized, then Label will be the identifier for the choice detected and phrases will be set to null
         /// </param>
+        /// <param name="languageIdentified"> The identified language for a spoken phrase. </param>
+        /// <param name="sentimentAnalysisResult"> Gets or sets the sentiment analysis result. </param>
+        /// <param name="confidence"> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </param>
         /// <returns> A new <see cref="CallAutomation.ChoiceResult"/> instance for mocking. </returns>
-        public static ChoiceResult ChoiceResult(string label = null, string recognizedPhrase = null)
+        public static ChoiceResult ChoiceResult(string label = null, string recognizedPhrase = null, string languageIdentified = null, SentimentAnalysisResult sentimentAnalysisResult = null, double? confidence = null)
         {
-            return new ChoiceResult(label, recognizedPhrase);
+            return new ChoiceResult(label, recognizedPhrase, languageIdentified, sentimentAnalysisResult, confidence);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.SentimentAnalysisResult"/>. </summary>
+        /// <param name="sentiment"> Gets or sets the value of the sentiment detected (positive, negative, neutral, mixed). </param>
+        /// <returns> A new <see cref="CallAutomation.SentimentAnalysisResult"/> instance for mocking. </returns>
+        public static SentimentAnalysisResult SentimentAnalysisResult(string sentiment = null)
+        {
+            return new SentimentAnalysisResult(sentiment);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.SpeechResult"/>. </summary>
         /// <param name="speech"> The recognized speech in string. </param>
-        /// <param name="confidence"> The confidence of the recognized speech. </param>
+        /// <param name="confidence"> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </param>
+        /// <param name="languageIdentified"> The identified language. </param>
+        /// <param name="sentimentAnalysisResult"> Gets or sets the sentiment analysis result. </param>
         /// <returns> A new <see cref="CallAutomation.SpeechResult"/> instance for mocking. </returns>
-        public static SpeechResult SpeechResult(string speech = null, double? confidence = null)
+        public static SpeechResult SpeechResult(string speech = null, double? confidence = null, string languageIdentified = null, SentimentAnalysisResult sentimentAnalysisResult = null)
         {
-            return new SpeechResult(speech, confidence);
+            return new SpeechResult(speech, confidence, languageIdentified, sentimentAnalysisResult);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.UserConsent"/>. </summary>

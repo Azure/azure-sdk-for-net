@@ -11,6 +11,12 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class StartTranscriptionOptions
     {
+        /// <summary> Initializes a new instance of <see cref="StartTranscriptionOptions"/>. </summary>
+        /// <param name="locales"> Defines the list locale for the language identification e.g en-CA, en-AU. </param>
+        public StartTranscriptionOptions(IEnumerable<string> locales)
+        {
+            Locales = locales.ToList<string>();
+        }
         /// <summary> Defines Locale for the transcription e,g en-US. </summary>
         public string Locale { get; set; }
         /// <summary> Endpoint where the custom model was deployed. </summary>
@@ -22,5 +28,14 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
         public string OperationCallbackUri { get; set; }
+
+        /// <summary> PII redaction configuration options. </summary>
+        public PiiRedactionOptions PiiRedactionOptions { get; set; }
+        /// <summary> Indicating if sentiment analysis should be used. </summary>
+        public bool? EnableSentimentAnalysis { get; set; }
+        /// <summary> List of languages for Language Identification. </summary>
+        public IList<string> Locales { get; }
+        /// <summary> Summarization configuration options. </summary>
+        public SummarizationOptions SummarizationOptions { get; set; }
     }
 }
