@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core.TestFramework;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.Tests;
@@ -10,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Provisioning.Deployment.Tests;
 
+[LiveOnly]
 internal class ExtensionTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
 {
