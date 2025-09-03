@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Feature Flag Telemetry object. </summary>
-    public partial class FeatureFlagTelemetry
+    public partial class FeatureFlagTelemetryConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FeatureFlagTelemetry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureFlagTelemetryConfiguration"/>. </summary>
         /// <param name="enabled"> The enabled state of the telemetry. </param>
-        public FeatureFlagTelemetry(bool enabled)
+        public FeatureFlagTelemetryConfiguration(bool enabled)
         {
             Enabled = enabled;
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FeatureFlagTelemetry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureFlagTelemetryConfiguration"/>. </summary>
         /// <param name="enabled"> The enabled state of the telemetry. </param>
         /// <param name="metadata"> The metadata to include on outbound telemetry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FeatureFlagTelemetry(bool enabled, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FeatureFlagTelemetryConfiguration(bool enabled, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             Metadata = metadata;

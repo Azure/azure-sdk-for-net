@@ -69,7 +69,7 @@ namespace Azure.Data.AppConfiguration
             {
                 writer.WritePropertyName("variants"u8);
                 writer.WriteStartArray();
-                foreach (FeatureFlagVariant item in Variants)
+                foreach (FeatureFlagVariantDefinition item in Variants)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -164,9 +164,9 @@ namespace Azure.Data.AppConfiguration
             string description = default;
             bool? enabled = default;
             FeatureFlagConditions conditions = default;
-            IList<FeatureFlagVariant> variants = default;
+            IList<FeatureFlagVariantDefinition> variants = default;
             FeatureFlagAllocation allocation = default;
-            FeatureFlagTelemetry telemetry = default;
+            FeatureFlagTelemetryConfiguration telemetry = default;
             IDictionary<string, string> tags = default;
             bool? isReadOnly = default;
             DateTimeOffset? lastModified = default;
@@ -218,10 +218,10 @@ namespace Azure.Data.AppConfiguration
                     {
                         continue;
                     }
-                    List<FeatureFlagVariant> array = new List<FeatureFlagVariant>();
+                    List<FeatureFlagVariantDefinition> array = new List<FeatureFlagVariantDefinition>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FeatureFlagVariant.DeserializeFeatureFlagVariant(item, options));
+                        array.Add(FeatureFlagVariantDefinition.DeserializeFeatureFlagVariantDefinition(item, options));
                     }
                     variants = array;
                     continue;
@@ -241,7 +241,7 @@ namespace Azure.Data.AppConfiguration
                     {
                         continue;
                     }
-                    telemetry = FeatureFlagTelemetry.DeserializeFeatureFlagTelemetry(prop.Value, options);
+                    telemetry = FeatureFlagTelemetryConfiguration.DeserializeFeatureFlagTelemetryConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -300,7 +300,7 @@ namespace Azure.Data.AppConfiguration
                 description,
                 enabled,
                 conditions,
-                variants ?? new ChangeTrackingList<FeatureFlagVariant>(),
+                variants ?? new ChangeTrackingList<FeatureFlagVariantDefinition>(),
                 allocation,
                 telemetry,
                 tags ?? new ChangeTrackingDictionary<string, string>(),

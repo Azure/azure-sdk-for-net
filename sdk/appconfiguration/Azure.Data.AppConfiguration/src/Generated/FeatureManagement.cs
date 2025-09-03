@@ -911,7 +911,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetFeatureFlagRevisions(string name, string label, string after, IEnumerable<SettingFields> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
+        public virtual Pageable<BinaryData> GetFeatureFlagRevisions(string name, string label, string after, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureManagement.GetFeatureFlagRevisions");
             scope.Start();
@@ -962,7 +962,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetFeatureFlagRevisionsAsync(string name, string label, string after, IEnumerable<SettingFields> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetFeatureFlagRevisionsAsync(string name, string label, string after, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureManagement.GetFeatureFlagRevisions");
             scope.Start();
@@ -1005,7 +1005,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<FeatureFlag> GetFeatureFlagRevisions(string name = default, string label = default, string after = default, IEnumerable<SettingFields> @select = default, IEnumerable<string> tags = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<FeatureFlag> GetFeatureFlagRevisions(string name = default, string label = default, string after = default, IEnumerable<FeatureFlagFields> @select = default, IEnumerable<string> tags = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             return new FeatureManagementGetFeatureFlagRevisionsCollectionResultOfT(
                 this,
@@ -1038,7 +1038,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<FeatureFlag> GetFeatureFlagRevisionsAsync(string name = default, string label = default, string after = default, IEnumerable<SettingFields> @select = default, IEnumerable<string> tags = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FeatureFlag> GetFeatureFlagRevisionsAsync(string name = default, string label = default, string after = default, IEnumerable<FeatureFlagFields> @select = default, IEnumerable<string> tags = default, string syncToken = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             return new FeatureManagementGetFeatureFlagRevisionsAsyncCollectionResultOfT(
                 this,
@@ -1077,7 +1077,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CheckFeatureFlagRevisions(string name, string label, string after, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context)
+        public virtual Response CheckFeatureFlagRevisions(string name, string label, string after, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureManagement.CheckFeatureFlagRevisions");
             scope.Start();
@@ -1118,7 +1118,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CheckFeatureFlagRevisionsAsync(string name, string label, string after, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context)
+        public virtual async Task<Response> CheckFeatureFlagRevisionsAsync(string name, string label, string after, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FeatureManagement.CheckFeatureFlagRevisions");
             scope.Start();
@@ -1151,7 +1151,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response CheckFeatureFlagRevisions(string name = default, string label = default, string after = default, IEnumerable<SettingFields> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
+        public virtual Response CheckFeatureFlagRevisions(string name = default, string label = default, string after = default, IEnumerable<FeatureFlagFields> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
         {
             return CheckFeatureFlagRevisions(name, label, after, @select, tags, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
@@ -1173,7 +1173,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CheckFeatureFlagRevisionsAsync(string name = default, string label = default, string after = default, IEnumerable<SettingFields> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CheckFeatureFlagRevisionsAsync(string name = default, string label = default, string after = default, IEnumerable<FeatureFlagFields> @select = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
         {
             return await CheckFeatureFlagRevisionsAsync(name, label, after, @select, tags, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }

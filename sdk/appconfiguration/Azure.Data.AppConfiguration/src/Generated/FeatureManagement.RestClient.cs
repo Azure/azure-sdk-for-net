@@ -269,7 +269,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetFeatureFlagRevisionsRequest(string name, string label, string after, IEnumerable<SettingFields> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateGetFeatureFlagRevisionsRequest(string name, string label, string after, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -290,7 +290,7 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("After", after, true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<SettingFields> changeTrackingList && changeTrackingList.IsUndefined))
+            if (@select != null && !(@select is ChangeTrackingList<FeatureFlagFields> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$Select", @select, ",", null, true);
             }
@@ -314,7 +314,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateNextGetFeatureFlagRevisionsRequest(Uri nextPage, string name, string label, string after, IEnumerable<SettingFields> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateNextGetFeatureFlagRevisionsRequest(Uri nextPage, string name, string label, string after, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -326,7 +326,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateCheckFeatureFlagRevisionsRequest(string name, string label, string after, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context)
+        internal HttpMessage CreateCheckFeatureFlagRevisionsRequest(string name, string label, string after, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -347,7 +347,7 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("After", after, true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<SettingFields> changeTrackingList && changeTrackingList.IsUndefined))
+            if (@select != null && !(@select is ChangeTrackingList<FeatureFlagFields> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$Select", @select, ",", null, true);
             }

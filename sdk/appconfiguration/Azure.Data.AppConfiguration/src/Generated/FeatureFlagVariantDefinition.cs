@@ -11,27 +11,27 @@ using System.Collections.Generic;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Feature Flag Variants object. </summary>
-    public partial class FeatureFlagVariant
+    public partial class FeatureFlagVariantDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FeatureFlagVariant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureFlagVariantDefinition"/>. </summary>
         /// <param name="name"> The name of the variant. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public FeatureFlagVariant(string name)
+        public FeatureFlagVariantDefinition(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FeatureFlagVariant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureFlagVariantDefinition"/>. </summary>
         /// <param name="name"> The name of the variant. </param>
         /// <param name="configurationValue"> The value of the variant. </param>
         /// <param name="statusOverride"> Determines if the variant should override the status of the flag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FeatureFlagVariant(string name, string configurationValue, StatusOverride? statusOverride, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FeatureFlagVariantDefinition(string name, string configurationValue, StatusOverride? statusOverride, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ConfigurationValue = configurationValue;

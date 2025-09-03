@@ -103,7 +103,7 @@ namespace Azure.Data.AppConfiguration.Tests {
             return SerializeAndCompare(x, y);
         }
 
-        private bool VariantsEquals(IList<FeatureFlagVariant> x, IList<FeatureFlagVariant> y)
+        private bool VariantsEquals(IList<FeatureFlagVariantDefinition> x, IList<FeatureFlagVariantDefinition> y)
         {
             if (x == null && y == null)
                 return true;
@@ -127,7 +127,7 @@ namespace Azure.Data.AppConfiguration.Tests {
             return SerializeAndCompare(x, y);
         }
 
-        private bool TelemetryEquals(FeatureFlagTelemetry x, FeatureFlagTelemetry y)
+        private bool TelemetryEquals(FeatureFlagTelemetryConfiguration x, FeatureFlagTelemetryConfiguration y)
         {
             if (x == null && y == null)
                 return true;

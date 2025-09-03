@@ -143,10 +143,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="name"> The name of the variant. </param>
         /// <param name="configurationValue"> The value of the variant. </param>
         /// <param name="statusOverride"> Determines if the variant should override the status of the flag. </param>
-        /// <returns> A new <see cref="AppConfiguration.FeatureFlagVariant"/> instance for mocking. </returns>
-        public static FeatureFlagVariant FeatureFlagVariant(string name = default, string configurationValue = default, StatusOverride? statusOverride = default)
+        /// <returns> A new <see cref="AppConfiguration.FeatureFlagVariantDefinition"/> instance for mocking. </returns>
+        public static FeatureFlagVariantDefinition FeatureFlagVariantDefinition(string name = default, string configurationValue = default, StatusOverride? statusOverride = default)
         {
-            return new FeatureFlagVariant(name, configurationValue, statusOverride, additionalBinaryDataProperties: null);
+            return new FeatureFlagVariantDefinition(name, configurationValue, statusOverride, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Defines how to allocate variants based on context. </summary>
@@ -208,12 +208,12 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Feature Flag Telemetry object. </summary>
         /// <param name="enabled"> The enabled state of the telemetry. </param>
         /// <param name="metadata"> The metadata to include on outbound telemetry. </param>
-        /// <returns> A new <see cref="AppConfiguration.FeatureFlagTelemetry"/> instance for mocking. </returns>
-        public static FeatureFlagTelemetry FeatureFlagTelemetry(bool enabled = default, IDictionary<string, string> metadata = default)
+        /// <returns> A new <see cref="AppConfiguration.FeatureFlagTelemetryConfiguration"/> instance for mocking. </returns>
+        public static FeatureFlagTelemetryConfiguration FeatureFlagTelemetryConfiguration(bool enabled = default, IDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
-            return new FeatureFlagTelemetry(enabled, metadata, additionalBinaryDataProperties: null);
+            return new FeatureFlagTelemetryConfiguration(enabled, metadata, additionalBinaryDataProperties: null);
         }
     }
 }

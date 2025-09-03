@@ -472,7 +472,7 @@ namespace Azure.Data.AppConfiguration
 
             var pageableImplementation = GetFeatureFlagsPageableImplementation(selector, cancellationToken);
 
-            return new AsyncConditionalPageable(pageableImplementation);
+            return new AsyncConditionalPageable<FeatureFlag>(pageableImplementation);
         }
 
         /// <summary>
@@ -486,32 +486,32 @@ namespace Azure.Data.AppConfiguration
 
             var pageableImplementation = GetFeatureFlagsPageableImplementation(selector, cancellationToken);
 
-            return new ConditionalPageable(pageableImplementation);
+            return new ConditionalPageable<FeatureFlag>(pageableImplementation);
         }
 
-        private ConditionalPageableImplementation GetFeatureFlagsPageableImplementation(FeatureFlagSelector selector, CancellationToken cancellationToken)
+        private ConditionalPageableImplementation<FeatureFlag> GetFeatureFlagsPageableImplementation(FeatureFlagSelector selector, CancellationToken cancellationToken)
         {
             var name = selector.NameFilter;
             var label = selector.LabelFilter;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
             var tags = selector.TagsFilter;
+            IEnumerable<FeatureFlagFields> fieldsSplit = selector.Fields.Split();
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            IEnumerable<string> fieldsString = selector.Fields.Split();
 
             context.AddClassifier(304, false);
 
             HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
             {
-                return CreateGetFeatureFlagsRequest(name, label, _syncToken, null, dateTime, fieldsString, null, conditions, tags, context);
+                return GetFeatureManagementClient().CreateGetFeatureFlagsRequest(name, label, _syncToken, null, dateTime, fieldsSplit, conditions, tags, context);
             }
 
             HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string nextLink)
             {
-                return CreateNextGetFeatureFlagsRequest(nextLink, name, label, _syncToken, null, dateTime, fieldsString, null, conditions, tags, context);
+                return GetFeatureManagementClient().CreateNextGetFeatureFlagsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, label, _syncToken, null, dateTime, fieldsSplit, conditions, tags, context);
             }
 
-            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseGetFeatureFlagsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.GetFeatureFlags", context);
+            return new ConditionalPageableImplementation<FeatureFlag>(FirstPageRequest, NextPageRequest, ParseGetGetFeatureFlagsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.GetFeatureFlags", context);
         }
 
         /// <summary>
@@ -551,11 +551,11 @@ namespace Azure.Data.AppConfiguration
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
             var tags = selector.TagsFilter;
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            IEnumerable<string> fieldsString = selector.Fields.Split();
+            IEnumerable<FeatureFlagFields> fieldsSplit = selector.Fields.Split();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetFeatureFlagRevisionsRequest(name, label, _syncToken, null, dateTime, fieldsString, tags, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetFeatureFlagRevisionsRequest(nextLink, name, label, _syncToken, null, dateTime, fieldsString, tags, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => GetFeatureManagementClient().CreateGetFeatureFlagRevisionsRequest(name, label, null, fieldsSplit, tags, _syncToken, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GetFeatureManagementClient().CreateGetFeatureFlagRevisionsRequest(name, label, nextLink, fieldsSplit, tags, _syncToken, null, context);
+            return PageableHelpers.CreateAsyncPageable<FeatureFlag>(FirstPageRequest, NextPageRequest, element => FeatureFlag.DeserializeFeatureFlag(element, default), ClientDiagnostics, Pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -571,11 +571,12 @@ namespace Azure.Data.AppConfiguration
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
             var tags = selector.TagsFilter;
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            IEnumerable<string> fieldsString = selector.Fields.Split();
+            IEnumerable<FeatureFlagFields> fieldsSplit = selector.Fields.Split();
+            IEnumerable<string> fieldsString = selector.Fields.SplitAsStrings();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetFeatureFlagRevisionsRequest(name, label, _syncToken, null, dateTime, fieldsString, tags, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetFeatureFlagRevisionsRequest(nextLink, name, label, _syncToken, null, dateTime, fieldsString, tags, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => GetFeatureManagementClient().CreateGetFeatureFlagRevisionsRequest(name, label, null, fieldsSplit, tags, _syncToken, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetFeatureFlagsRequest(nextLink, name, label, _syncToken, null, dateTime, fieldsSplit, null, context);
+            return PageableHelpers.CreatePageable<FeatureFlag>(FirstPageRequest, NextPageRequest, element => FeatureFlag.DeserializeFeatureFlag(element, default), ClientDiagnostics, Pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -612,7 +613,22 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<FeatureFlag>> SetFeatureFlagReadOnlyAsync(string name, string label, bool isReadOnly, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            return await GetFeatureManagementClient().PutFeatureFlagLockAsync(name, label, cancellationToken: cancellationToken).ConfigureAwait(false);
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetFeatureFlagReadOnly)}");
+            scope.AddAttribute(OTelAttributeKey, name);
+            scope.Start();
+
+            try
+            {
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+
+                return await GetFeatureManagementClient().PutFeatureFlagLockAsync(name, label, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -660,6 +676,16 @@ namespace Azure.Data.AppConfiguration
             Argument.AssertNotNull(flag, nameof(flag));
             MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.ETag } : default;
             return GetFeatureManagementClient().PutFeatureFlagLock(flag.Name, flag.Label, matchConditions: requestOptions);
+        }
+
+        internal virtual FeatureManagement GetFeatureManagementClient()
+        {
+            if (_cachedFeatureManagement is null)
+            {
+                _cachedFeatureManagement = new FeatureManagement(ClientDiagnostics, Pipeline, _endpoint, _apiVersion);
+            }
+
+            return _cachedFeatureManagement;
         }
     }
 }

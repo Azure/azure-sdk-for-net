@@ -145,8 +145,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(mockResponse);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            Response<FeatureFlag> response = await service.GetFeatureFlagAsync(requestFlag.Name, requestFlag.Label,
-                matchConditions: new MatchConditions { IfNoneMatch = requestFlag.ETag });
+            Response<FeatureFlag> response = await service.GetFeatureFlagAsync(requestFlag, true);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             FeatureFlag flag = ConfigurationModelFactory.FeatureFlag();
@@ -171,8 +170,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(new MockResponse(304));
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            Response<FeatureFlag> response = await service.GetFeatureFlagAsync(requestFlag.Name, requestFlag.Label,
-                matchConditions: new MatchConditions { IfNoneMatch = requestFlag.ETag });
+            Response<FeatureFlag> response = await service.GetFeatureFlagAsync(requestFlag, true);
 
             MockRequest request = mockTransport.SingleRequest;
 
@@ -204,8 +202,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(mockResponse);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            Response<FeatureFlag> response = await service.GetFeatureFlagAsync(s_testFlag.Name, s_testFlag.Label,
-                acceptDatetime: DateTimeOffset.MaxValue.UtcDateTime.ToString("R", CultureInfo.InvariantCulture));
+            Response<FeatureFlag> response = await service.GetFeatureFlagAsync(s_testFlag, DateTimeOffset.MaxValue.UtcDateTime);
 
             MockRequest request = mockTransport.SingleRequest;
 
@@ -219,7 +216,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public async Task PutFeatureFlag()
+        public async Task SetFeatureFlag()
         {
             var response = new MockResponse(200);
             response.SetContent(SerializationHelpers.Serialize(s_testFlag, SerializeFeatureFlag));
@@ -227,7 +224,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            FeatureFlag flag = await service.PutFeatureFlagAsync(s_testFlag.Name, s_testFlag, s_testFlag.Label);
+            FeatureFlag flag = await service.SetFeatureFlagAsync(s_testFlag);
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
@@ -238,7 +235,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public void PutFeatureFlagAlreadyExists()
+        public void SetFeatureFlagAlreadyExists()
         {
             var response = new MockResponse(412);
 
@@ -247,14 +244,13 @@ namespace Azure.Data.AppConfiguration.Tests
 
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                FeatureFlag flag = await service.PutFeatureFlagAsync(s_testFlag.Name, s_testFlag, s_testFlag.Label,
-                    matchConditions: new MatchConditions { IfNoneMatch = ETag.All });
+                FeatureFlag flag = await service.AddFeatureFlagAsync(s_testFlag);
             });
             Assert.AreEqual(412, exception.Status);
         }
 
         [Test]
-        public void PutFeatureFlagReadOnlyFlagError()
+        public void SetFeatureFlagReadOnlyFlagError()
         {
             var response = new MockResponse(409);
 
@@ -263,13 +259,13 @@ namespace Azure.Data.AppConfiguration.Tests
 
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                FeatureFlag flag = await service.PutFeatureFlagAsync(s_testFlag.Name, s_testFlag, s_testFlag.Label);
+                FeatureFlag flag = await service.SetFeatureFlagAsync(s_testFlag);
             });
             Assert.AreEqual(409, exception.Status);
         }
 
         [Test]
-        public async Task PutFeatureFlagIfUnchangedUnmodified()
+        public async Task SetFeatureFlagIfUnchangedUnmodified()
         {
             var requestFlag = s_testFlag.Clone();
             requestFlag.ETag = new ETag("v1");
@@ -283,8 +279,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            FeatureFlag flag = await service.PutFeatureFlagAsync(requestFlag.Name, requestFlag, requestFlag.Label,
-                matchConditions: new MatchConditions { IfMatch = requestFlag.ETag });
+            FeatureFlag flag = await service.SetFeatureFlagAsync(requestFlag, onlyIfUnchanged: true);
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
@@ -297,7 +292,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public void PutFeatureFlagIfUnchangedModified()
+        public void SetFeatureFlagIfUnchangedModified()
         {
             var requestFlag = s_testFlag.Clone();
             requestFlag.ETag = new ETag("v1");
@@ -313,8 +308,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                Response<FeatureFlag> response = await service.PutFeatureFlagAsync(requestFlag.Name, requestFlag, requestFlag.Label,
-                    matchConditions: new MatchConditions { IfMatch = requestFlag.ETag });
+                Response<FeatureFlag> response = await service.SetFeatureFlagAsync(requestFlag, onlyIfUnchanged: true);
             });
             Assert.AreEqual(412, exception.Status);
 
@@ -384,7 +378,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                Response<FeatureFlag> response = await service.DeleteFeatureFlagAsync(s_testFlag.Name, s_testFlag.Label);
+                await service.DeleteFeatureFlagAsync(s_testFlag.Name, s_testFlag.Label);
             });
             Assert.AreEqual(409, exception.Status);
         }
@@ -404,8 +398,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(mockResponse);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            Response<FeatureFlag> response = await service.DeleteFeatureFlagAsync(requestFlag.Name, requestFlag.Label,
-                ifMatch: requestFlag.ETag);
+            Response response = await service.DeleteFeatureFlagAsync(requestFlag, onlyIfUnchanged: true);
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
@@ -413,7 +406,7 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.AreEqual($"https://contoso.appconfig.io/feature-management/ff/test_flag?api-version={s_version}&label=test_label", request.Uri.ToString());
             Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
             Assert.AreEqual("\"v1\"", ifMatch);
-            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(200, response.Status);
         }
 
         [Test]
@@ -433,8 +426,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                Response<FeatureFlag> response = await service.DeleteFeatureFlagAsync(requestFlag.Name, requestFlag.Label,
-                    ifMatch: requestFlag.ETag);
+                Response response = await service.DeleteFeatureFlagAsync(requestFlag, onlyIfUnchanged: true);
             });
             Assert.AreEqual(412, exception.Status);
 
@@ -456,7 +448,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 CreateFeatureFlag(0),
                 CreateFeatureFlag(1)
             };
-            response1.SetContent(SerializationHelpers.Serialize((Flags: response1Flags, NextLink: $"https://contoso.appconfig.io/feature-management/ff?after=5&api-version={s_version}"), SerializeFeatureFlagBatch));
+            response1.SetContent(SerializationHelpers.Serialize((Flags: response1Flags, NextLink: $"/feature-management/ff?after=5&api-version={s_version}"), SerializeFeatureFlagBatch));
 
             var response2 = new MockResponse(200);
             var response2Flags = new[]
@@ -472,7 +464,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             int flagIndex = 0;
 
-            await foreach (FeatureFlag value in service.GetFeatureFlagsAsync())
+            await foreach (FeatureFlag value in service.GetFeatureFlagsAsync(new FeatureFlagSelector()))
             {
                 Assert.AreEqual("flag" + flagIndex, value.Name);
                 flagIndex++;
@@ -487,7 +479,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             MockRequest request2 = mockTransport.Requests[1];
             Assert.AreEqual(RequestMethod.Get, request2.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/feature-management/ff?after=5&api-version={s_version}", request2.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/feature-management/ff?api-version={s_version}&After=5", request2.Uri.ToString());
             AssertRequestCommon(request1);
         }
 
@@ -505,7 +497,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 CreateFeatureFlag(0, mockTags),
                 CreateFeatureFlag(1, mockTags)
             };
-            response1.SetContent(SerializationHelpers.Serialize((Flags: response1Flags, NextLink: $"https://contoso.appconfig.io/feature-management/ff?after=5&api-version={s_version}"), SerializeFeatureFlagBatch));
+            response1.SetContent(SerializationHelpers.Serialize((Flags: response1Flags, NextLink: $"/feature-management/ff?after=5&api-version={s_version}"), SerializeFeatureFlagBatch));
 
             var response2 = new MockResponse(200);
             var response2Flags = new[]
@@ -522,7 +514,13 @@ namespace Azure.Data.AppConfiguration.Tests
             var parsedTags = mockTags.Select(t => $"{t.Key}={t.Value}").ToList();
             int flagIndex = 0;
 
-            await foreach (FeatureFlag value in service.GetFeatureFlagsAsync(tags: parsedTags, cancellationToken: CancellationToken.None))
+            var selector = new FeatureFlagSelector();
+            foreach (var tag in parsedTags)
+            {
+                selector.TagsFilter.Add(tag);
+            }
+
+            await foreach (FeatureFlag value in service.GetFeatureFlagsAsync(selector, CancellationToken.None))
             {
                 Assert.AreEqual("flag" + flagIndex, value.Name);
                 Assert.AreEqual(mockTags, value.Tags);
@@ -571,7 +569,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            FeatureFlag flag = await service.PutFeatureFlagAsync(s_testFlag.Name, s_testFlag, s_testFlag.Label);
+            FeatureFlag flag = await service.SetFeatureFlagAsync(s_testFlag);
             MockRequest request = mockTransport.SingleRequest;
 
             StringAssert.Contains("api-version", request.Uri.ToUri().ToString());
@@ -588,7 +586,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            FeatureFlag flag = await service.PutFeatureFlagAsync(s_testFlag.Name, s_testFlag, s_testFlag.Label);
+            FeatureFlag flag = await service.SetFeatureFlagAsync(s_testFlag);
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
@@ -618,7 +616,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            FeatureFlag flag = await service.PutFeatureFlagLockAsync(testFlag.Name, testFlag.Label);
+            FeatureFlag flag = await service.SetFeatureFlagReadOnlyAsync(testFlag.Name, testFlag.Label, true);
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
@@ -648,7 +646,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            FeatureFlag flag = await service.DeleteFeatureFlagLockAsync(testFlag.Name, testFlag.Label);
+            FeatureFlag flag = await service.SetFeatureFlagReadOnlyAsync(testFlag.Name, testFlag.Label, false);
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
@@ -774,7 +772,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 json.WriteStartArray("variants");
                 foreach (var variant in flag.Variants)
                 {
-                    ((IJsonModel<FeatureFlagVariant>)variant).Write(json, ModelSerializationExtensions.WireOptions);
+                    ((IJsonModel<FeatureFlagVariantDefinition>)variant).Write(json, ModelSerializationExtensions.WireOptions);
                 }
                 json.WriteEndArray();
             }
@@ -788,7 +786,7 @@ namespace Azure.Data.AppConfiguration.Tests
             if (flag.Telemetry != null)
             {
                 json.WritePropertyName("telemetry");
-                ((IJsonModel<FeatureFlagTelemetry>)flag.Telemetry).Write(json, ModelSerializationExtensions.WireOptions);
+                ((IJsonModel<FeatureFlagTelemetryConfiguration>)flag.Telemetry).Write(json, ModelSerializationExtensions.WireOptions);
             }
 
             if (flag.Tags != null && flag.Tags.Count > 0)

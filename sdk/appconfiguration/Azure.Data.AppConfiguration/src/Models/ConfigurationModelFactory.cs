@@ -116,7 +116,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="lastModified"> The last time a modifying operation was performed on the given feature flag. </param>
         /// <param name="eTag"> An ETag indicating the state of a feature flag within a configuration store. </param>
         /// <returns> A new <see cref="AppConfiguration.FeatureFlag"/> instance for mocking. </returns>
-        public static FeatureFlag FeatureFlag(string name = default, string @alias = default, string label = default, string description = default, bool? enabled = default, FeatureFlagConditions conditions = default, IEnumerable<FeatureFlagVariant> variants = default, FeatureFlagAllocation allocation = default, FeatureFlagTelemetry telemetry = default, IDictionary<string, string> tags = default, bool? isReadOnly = default, DateTimeOffset? lastModified = default, ETag eTag = default)
+        public static FeatureFlag FeatureFlag(string name = default, string @alias = default, string label = default, string description = default, bool? enabled = default, FeatureFlagConditions conditions = default, IEnumerable<FeatureFlagVariantDefinition> variants = default, FeatureFlagAllocation allocation = default, FeatureFlagTelemetryConfiguration telemetry = default, IDictionary<string, string> tags = default, bool? isReadOnly = default, DateTimeOffset? lastModified = default, ETag eTag = default)
         {
             return new FeatureFlag(
                 name,

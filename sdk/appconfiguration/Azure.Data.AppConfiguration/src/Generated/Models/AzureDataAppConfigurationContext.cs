@@ -28,8 +28,8 @@ namespace Azure.Data.AppConfiguration
     [ModelReaderWriterBuildable(typeof(PercentileAllocation))]
     [ModelReaderWriterBuildable(typeof(UserAllocation))]
     [ModelReaderWriterBuildable(typeof(GroupAllocation))]
-    [ModelReaderWriterBuildable(typeof(FeatureFlagTelemetry))]
-    [ModelReaderWriterBuildable(typeof(FeatureFlagVariant))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlagTelemetryConfiguration))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlagVariantDefinition))]
     public partial class AzureDataAppConfigurationContext : ModelReaderWriterContext
     {
     }

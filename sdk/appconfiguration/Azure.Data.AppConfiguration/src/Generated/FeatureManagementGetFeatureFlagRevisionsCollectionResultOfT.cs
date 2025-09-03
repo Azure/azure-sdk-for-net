@@ -19,7 +19,7 @@ namespace Azure.Data.AppConfiguration
         private readonly string _name;
         private readonly string _label;
         private readonly string _after;
-        private readonly IEnumerable<SettingFields> _select;
+        private readonly IEnumerable<FeatureFlagFields> _select;
         private readonly IEnumerable<string> _tags;
         private readonly string _syncToken;
         private readonly MatchConditions _matchConditions;
@@ -44,7 +44,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public FeatureManagementGetFeatureFlagRevisionsCollectionResultOfT(FeatureManagement client, string name, string label, string after, IEnumerable<SettingFields> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context) : base(context?.CancellationToken ?? default)
+        public FeatureManagementGetFeatureFlagRevisionsCollectionResultOfT(FeatureManagement client, string name, string label, string after, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _name = name;

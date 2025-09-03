@@ -16,7 +16,7 @@ namespace Azure.Data.AppConfiguration
     [CodeGenSerialization(nameof(ETag), SerializationValueHook = nameof(SerializationEtag), DeserializationValueHook = nameof(DeserializeEtag))]
     public partial class FeatureFlag
     {
-        private IList<FeatureFlagVariant> _variants;
+        private IList<FeatureFlagVariantDefinition> _variants;
         private IDictionary<string, string> _tags;
 
         /// <summary> Initializes a new instance of <see cref="FeatureFlag"/>. </summary>
@@ -63,9 +63,9 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// A list of variant definitions for the feature flag.
         /// </summary>
-        public IList<FeatureFlagVariant> Variants
+        public IList<FeatureFlagVariantDefinition> Variants
         {
-            get => _variants ?? (_variants = new ChangeTrackingList<FeatureFlagVariant>());
+            get => _variants ?? (_variants = new ChangeTrackingList<FeatureFlagVariantDefinition>());
             internal set => _variants = value;
         }
 

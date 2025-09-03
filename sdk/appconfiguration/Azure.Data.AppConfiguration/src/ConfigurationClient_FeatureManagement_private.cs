@@ -15,14 +15,7 @@ namespace Azure.Data.AppConfiguration
 {
     public partial class ConfigurationClient
     {
-        private const string NameQueryFilter = "key";
-
-        private static async Task<Response<FeatureFlag>> CreateFeatureFlagResponseAsync(Response response, CancellationToken cancellation)
-        {
-            var options = ModelReaderWriterOptions.Json;
-            FeatureFlag result = FeatureFlag.DeserializeFeatureFlag(response.Content.ToObjectFromJson<JsonElement>(), options);
-            return Response.FromValue(result, response);
-        }
+        private const string NameQueryFilter = "name";
 
         private static Response<FeatureFlag> CreateFeatureFlagResponse(Response response)
         {
@@ -31,30 +24,12 @@ namespace Azure.Data.AppConfiguration
             return Response.FromValue(result, response);
         }
 
-        private static Response<ConfigurationSetting> CreateResourceModifiedResponse(Response response)
+        private static Response<FeatureFlag> CreateFeatureFlagResourceModifiedResponse(Response response)
         {
-            return new NoBodyResponse<ConfigurationSetting>(response);
+            return new NoBodyResponse<FeatureFlag>(response);
         }
 
-        private static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
-        {
-            Debug.Assert(connectionString != null); // callers check this
-
-            var parsed = ConnectionString.Parse(connectionString);
-
-            uri = new Uri(parsed.GetRequired("Endpoint"));
-            credential = parsed.GetRequired("Id");
-            try
-            {
-                secret = Convert.FromBase64String(parsed.GetRequired("Secret"));
-            }
-            catch (FormatException)
-            {
-                throw new InvalidOperationException("Specified Secret value isn't a valid base64 string");
-            }
-        }
-
-        private HttpMessage CreateNextGetConfigurationSettingsRequest(string nextLink, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, string snapshot, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
+        private HttpMessage CreateNextGetFeatureFlagsRequest(string nextLink, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<FeatureFlagFields> @select, MatchConditions matchConditions, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -79,45 +54,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        private HttpMessage CreateNextGetSnapshotsRequest(string nextLink, string name, string after, IEnumerable<SnapshotFields> @select, IEnumerable<ConfigurationSnapshotStatus> status, string syncToken, RequestContext context)
-        {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            if (syncToken != null)
-            {
-                request.Headers.SetValue("Sync-Token", syncToken);
-            }
-            request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.snapshotset+json");
-            return message;
-        }
-
-        private HttpMessage CreateNextGetLabelsRequest(string nextLink, string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, RequestContext context)
-        {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            if (syncToken != null)
-            {
-                request.Headers.SetValue("Sync-Token", syncToken);
-            }
-            if (acceptDatetime != null)
-            {
-                request.Headers.SetValue("Accept-Datetime", acceptDatetime);
-            }
-            request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.labelset+json");
-            return message;
-        }
-
-        private HttpMessage CreateNextGetRevisionsRequest(string nextLink, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, IEnumerable<string> tags, RequestContext context)
+        private HttpMessage CreateNextGetFeatureFlagRevisionsRequest(string nextLink, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<FeatureFlagFields> @select, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -137,25 +74,44 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        #region nobody wants to see these
         /// <summary>
-        /// Check if two ConfigurationSetting instances are equal.
+        /// Parses the response of a <see cref="GetFeatureFlags(FeatureFlagSelector, CancellationToken)"/> request.
+        /// The "@nextLink" JSON property is not reliable since the service does not return a response body for 304
+        /// responses. This method also attempts to extract the next link address from the "Link" header.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
+        private (List<FeatureFlag> Values, string NextLink) ParseGetGetFeatureFlagsResponse(Response response)
+        {
+            var values = new List<FeatureFlag>();
+            string nextLink = null;
 
-        /// <summary>
-        /// Get a hash code for the ConfigurationSetting.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => base.GetHashCode();
+            if (response.Status == 200)
+            {
+                var document = response.ContentStream != null ? JsonDocument.Parse(response.ContentStream) : JsonDocument.Parse(response.Content);
 
-        /// <summary>
-        /// Creates a Key Value string in reference to the ConfigurationSetting.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
-        #endregion
+                if (document.RootElement.TryGetProperty("items", out var itemsValue))
+                {
+                    foreach (var jsonItem in itemsValue.EnumerateArray())
+                    {
+                        FeatureFlag setting = FeatureFlag.DeserializeFeatureFlag(jsonItem, default);
+                        values.Add(setting);
+                    }
+                }
+
+                if (document.RootElement.TryGetProperty("@nextLink", out var nextLinkValue))
+                {
+                    nextLink = nextLinkValue.GetString();
+                }
+            }
+
+            // The "Link" header is formatted as:
+            // <nextLink>; rel="next"
+            if (nextLink == null && response.Headers.TryGetValue("Link", out string linkHeader))
+            {
+                int nextLinkEndIndex = linkHeader.IndexOf('>');
+                nextLink = linkHeader.Substring(1, nextLinkEndIndex - 1);
+            }
+
+            return (values, nextLink);
+        }
     }
 }

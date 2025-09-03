@@ -38,7 +38,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="lastModified"> The last time a modifying operation was performed on the given feature flag. </param>
         /// <param name="eTag"> An ETag indicating the state of a feature flag within a configuration store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FeatureFlag(string name, string @alias, string label, string description, bool? enabled, FeatureFlagConditions conditions, IList<FeatureFlagVariant> variants, FeatureFlagAllocation allocation, FeatureFlagTelemetry telemetry, IDictionary<string, string> tags, bool? isReadOnly, DateTimeOffset? lastModified, ETag eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FeatureFlag(string name, string @alias, string label, string description, bool? enabled, FeatureFlagConditions conditions, IList<FeatureFlagVariantDefinition> variants, FeatureFlagAllocation allocation, FeatureFlagTelemetryConfiguration telemetry, IDictionary<string, string> tags, bool? isReadOnly, DateTimeOffset? lastModified, ETag eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Alias = @alias;
@@ -78,6 +78,6 @@ namespace Azure.Data.AppConfiguration
         public FeatureFlagAllocation Allocation { get; set; }
 
         /// <summary> The telemetry settings of the feature flag. </summary>
-        public FeatureFlagTelemetry Telemetry { get; set; }
+        public FeatureFlagTelemetryConfiguration Telemetry { get; set; }
     }
 }

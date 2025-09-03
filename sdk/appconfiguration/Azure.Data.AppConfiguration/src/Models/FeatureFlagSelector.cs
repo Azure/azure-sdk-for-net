@@ -24,38 +24,38 @@ namespace Azure.Data.AppConfiguration
         public static readonly string Any = "*";
 
         /// <summary>
-        /// Name filter that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
+        /// Name filter that will be used to select a set of <see cref="FeatureFlag"/> entities.
         /// </summary>
         /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
         public string NameFilter { get; set; }
 
         /// <summary>
-        /// Label filter that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
+        /// Label filter that will be used to select a set of <see cref="FeatureFlag"/> entities.
         /// </summary>
         /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
         public string LabelFilter { get; set; }
 
         /// <summary>
-        /// Tag filter that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
+        /// Tag filter that will be used to select a set of <see cref="FeatureFlag"/> entities.
         /// Each tag in the list should be expressed as a string in the format `tag=value`.
         /// </summary>
         /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
         public IList<string> TagsFilter { get; }
 
         /// <summary>
-        /// The fields of the <see cref="ConfigurationSetting"/> to retrieve for each setting in the retrieved group.
+        /// The fields of the <see cref="FeatureFlag"/> to retrieve for each setting in the retrieved group.
         /// </summary>
-        public SettingFields Fields { get; set; } = SettingFields.All;
+        public FeatureFlagFields Fields { get; set; } = FeatureFlagFields.All;
 
         /// <summary>
-        /// Indicates the point in time in the revision history of the selected <see cref="ConfigurationSetting"/> entities to retrieve.
-        /// If set, all properties of the <see cref="ConfigurationSetting"/> entities in the returned group will be exactly what they
+        /// Indicates the point in time in the revision history of the selected <see cref="FeatureFlag"/> entities to retrieve.
+        /// If set, all properties of the <see cref="FeatureFlag"/> entities in the returned group will be exactly what they
         /// were at this time.
         /// </summary>
         public DateTimeOffset? AcceptDateTime { get; set; }
 
         /// <summary>
-        /// Creates a default <see cref="SettingSelector"/> that will retrieve all <see cref="ConfigurationSetting"/> entities in the configuration store.
+        /// Creates a default <see cref="SettingSelector"/> that will retrieve all <see cref="FeatureFlag"/> entities in the configuration store.
         /// </summary>
         public FeatureFlagSelector()
         {
