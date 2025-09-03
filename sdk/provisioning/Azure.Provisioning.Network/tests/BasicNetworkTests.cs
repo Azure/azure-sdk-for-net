@@ -10,14 +10,11 @@ using NUnit.Framework;
 
 namespace Azure.Provisioning.Network.Tests;
 
-public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
+public class BasicNetworkTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/2db70d7aed6588333dc10f26bf19618995151018/quickstarts/microsoft.network/vnet-two-subnets/main.bicep")]
-    public async Task VNetTwoSubnets()
+    internal static Trycep CreateVNetTwoSubnetsTest()
     {
-        await using Trycep test = CreateBicepTest();
-        test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:VNetTwoSubnets
@@ -70,12 +67,12 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
                     },
                     Subnets =
                     [
-                        new Subnet("subnet1")
+                        new SubnetResource("subnet1")
                         {
                             Name = subnet1Name,
                             AddressPrefix = subnet1Prefix
                         },
-                        new Subnet("subnet2")
+                        new SubnetResource("subnet2")
                         {
                             Name = subnet2Name,
                             AddressPrefix = subnet2Prefix
@@ -85,8 +82,15 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
                 infra.Add(vnet);
                 #endregion
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/2db70d7aed6588333dc10f26bf19618995151018/quickstarts/microsoft.network/vnet-two-subnets/main.bicep")]
+    public async Task VNetTwoSubnets()
+    {
+        await using Trycep test = CreateVNetTwoSubnetsTest();
+        test.Compare(
             """
             @description('VNet name')
             param vnetName string = 'VNet1'
@@ -134,16 +138,12 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
               }
               location: location
             }
-            """)
-        .Lint();
+            """);
     }
 
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/2db70d7aed6588333dc10f26bf19618995151018/quickstarts/microsoft.network/nat-gateway-vnet/main.bicep")]
-    public async Task NatGatewayVNet()
+    internal static Trycep CreateNatGatewayVNetTest()
     {
-        await using Trycep test = CreateBicepTest();
-        test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:NatGatewayVNet
@@ -233,7 +233,7 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
                     },
                     Subnets =
                     [
-                        new Subnet("subnet")
+                        new SubnetResource("subnet")
                         {
                             Name = subnetName,
                             AddressPrefix = vnetSubnetPrefix,
@@ -248,8 +248,15 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
                 infra.Add(vnet);
                 #endregion
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/2db70d7aed6588333dc10f26bf19618995151018/quickstarts/microsoft.network/nat-gateway-vnet/main.bicep")]
+    public async Task NatGatewayVNet()
+    {
+        await using Trycep test = CreateNatGatewayVNetTest();
+        test.Compare(
             """
             @description('Name of the virtual network')
             param vnetName string = 'myVnet'
@@ -332,16 +339,12 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
               }
               location: location
             }
-            """)
-        .Lint();
+            """);
     }
 
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/2db70d7aed6588333dc10f26bf19618995151018/quickstarts/microsoft.network/networkwatcher-flowLogs-create/main.bicep")]
-    public async Task NetworkWatcherFlowLogsCreate()
+    internal static Trycep CreateNetworkWatcherFlowLogsCreateTest()
     {
-        await using Trycep test = CreateBicepTest();
-        test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:NetworkWatcherFlowLogsCreate
@@ -430,8 +433,15 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
                 infra.Add(flowLog);
                 #endregion
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/2db70d7aed6588333dc10f26bf19618995151018/quickstarts/microsoft.network/networkwatcher-flowLogs-create/main.bicep")]
+    public async Task NetworkWatcherFlowLogsCreate()
+    {
+        await using Trycep test = CreateNetworkWatcherFlowLogsCreateTest();
+        test.Compare(
             """
             @description('Name of the Network Watcher attached to your subscription. Format: NetworkWatcher_<region_name>')
             param networkWatcherName string = 'NetworkWatcher_${location}'
@@ -488,16 +498,12 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
               location: location
               parent: networkWatcher
             }
-            """)
-        .Lint();
+            """);
     }
 
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/2db70d7aed6588333dc10f26bf19618995151018/quickstarts/microsoft.network/security-group-create/azuredeploy.json#L42")]
-    public async Task SecurityGroupCreate()
+    internal static Trycep CreateSecurityGroupCreateTest()
     {
-        await using Trycep test = CreateBicepTest();
-        test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:SecurityGroupCreate
@@ -578,7 +584,7 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
                     },
                     Subnets =
                     [
-                        new Subnet("subnet")
+                        new SubnetResource("subnet")
                         {
                             Name = subnetName,
                             AddressPrefix = subnetPrefix,
@@ -592,8 +598,15 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
                 infra.Add(virtualNetwork);
                 #endregion
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/2db70d7aed6588333dc10f26bf19618995151018/quickstarts/microsoft.network/security-group-create/azuredeploy.json#L42")]
+    public async Task SecurityGroupCreate()
+    {
+        await using Trycep test = CreateSecurityGroupCreateTest();
+        test.Compare(
             """
             @description('Address prefix')
             param addressPrefix string = '10.0.0.0/16'
@@ -655,7 +668,6 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
               }
               location: location
             }
-            """)
-        .Lint();
+            """);
     }
 }

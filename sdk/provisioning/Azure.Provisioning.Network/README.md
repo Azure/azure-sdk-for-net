@@ -78,12 +78,12 @@ VirtualNetwork vnet = new(nameof(vnet), VirtualNetwork.ResourceVersions.V2021_08
     },
     Subnets =
     [
-        new Subnet("subnet1")
+        new SubnetResource("subnet1")
         {
             Name = subnet1Name,
             AddressPrefix = subnet1Prefix
         },
-        new Subnet("subnet2")
+        new SubnetResource("subnet2")
         {
             Name = subnet2Name,
             AddressPrefix = subnet2Prefix
@@ -184,7 +184,7 @@ VirtualNetwork vnet = new(nameof(vnet), VirtualNetwork.ResourceVersions.V2020_06
     },
     Subnets =
     [
-        new Subnet("subnet")
+        new SubnetResource("subnet")
         {
             Name = subnetName,
             AddressPrefix = vnetSubnetPrefix,
@@ -281,7 +281,7 @@ VirtualNetwork virtualNetwork = new(nameof(virtualNetwork), VirtualNetwork.Resou
     },
     Subnets =
     [
-        new Subnet("subnet")
+        new SubnetResource("subnet")
         {
             Name = subnetName,
             AddressPrefix = subnetPrefix,
