@@ -40,11 +40,11 @@ namespace SpecialWords
     [ModelReaderWriterBuildable(typeof(Pass))]
     [ModelReaderWriterBuildable(typeof(Raise))]
     [ModelReaderWriterBuildable(typeof(Return))]
+    [ModelReaderWriterBuildable(typeof(SameAsModel))]
     [ModelReaderWriterBuildable(typeof(Try))]
     [ModelReaderWriterBuildable(typeof(While))]
     [ModelReaderWriterBuildable(typeof(With))]
     [ModelReaderWriterBuildable(typeof(Yield))]
-    [ModelReaderWriterBuildable(typeof(SameAsModel))]
     public partial class SpecialWordsContext : ModelReaderWriterContext
     {
     }

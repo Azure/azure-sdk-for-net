@@ -23,3 +23,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.EventGrid
       safeName: AzureResourceManagerEventGrid
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.EventGrid
+      ExpectedWarningsFilepath: None

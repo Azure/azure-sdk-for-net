@@ -63,10 +63,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Represents the VerifierWorkspace update properties. </summary>
         internal VerifierWorkspaceUpdateProperties Properties { get; set; }
         /// <summary> Gets or sets the verifier workspace update description. </summary>
+        [WirePath("properties.description")]
         public string VerifierWorkspaceUpdateDescription
         {
             get => Properties is null ? default : Properties.Description;

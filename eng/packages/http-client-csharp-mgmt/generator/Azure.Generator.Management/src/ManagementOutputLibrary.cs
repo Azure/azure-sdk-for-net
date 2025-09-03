@@ -34,22 +34,32 @@ namespace Azure.Generator.Management
         // but currently this is the best we could do right now.
         internal Dictionary<TypeProvider, string> PageableMethodScopes { get; } = new();
 
-        private IReadOnlyList<ResourceClientProvider>? _resourceClients;
+        private IReadOnlyDictionary<string, ResourceClientProvider>? _resourcesByIdDict;
+        private IReadOnlyList<ResourceClientProvider>? _resources;
         private IReadOnlyList<ResourceCollectionClientProvider>? _resourceCollections;
-        private IReadOnlyList<MockableResourceProvider>? _mockableResourceProviders;
+        private IReadOnlyDictionary<ResourceScope, MockableResourceProvider>? _mockableResourcesByScopeDict;
+        private IReadOnlyList<MockableResourceProvider>? _mockableResources;
         private ExtensionProvider? _extensionProvider;
 
-        internal IReadOnlyList<ResourceClientProvider> ResourceProviders => GetValue(ref _resourceClients);
+        internal IReadOnlyList<ResourceClientProvider> ResourceProviders => GetValue(ref _resources);
         internal IReadOnlyList<ResourceCollectionClientProvider> ResourceCollectionProviders => GetValue(ref _resourceCollections);
-        internal IReadOnlyList<MockableResourceProvider> MockableResourceProviders => GetValue(ref _mockableResourceProviders);
+        internal IReadOnlyList<MockableResourceProvider> MockableResourceProviders => GetValue(ref _mockableResources);
         internal ExtensionProvider ExtensionProvider => GetValue(ref _extensionProvider);
+
+        // our initialization process should guarantee that here we never get a KeyNotFoundException
+        internal ResourceClientProvider GetResourceById(string id) => GetValue(ref _resourcesByIdDict)[id];
+
+        // our initialization process should guarantee that here we never get a KeyNotFoundException
+        internal MockableResourceProvider GetMockableResourceByScope(ResourceScope scope) => GetValue(ref _mockableResourcesByScopeDict)[scope];
 
         private T GetValue<T>(ref T? field) where T : class
         {
             InitializeResourceClients(
-                ref _resourceClients,
+                ref _resourcesByIdDict,
+                ref _resources,
                 ref _resourceCollections,
-                ref _mockableResourceProviders,
+                ref _mockableResourcesByScopeDict,
+                ref _mockableResources,
                 ref _extensionProvider);
 
             return field!;
@@ -59,19 +69,25 @@ namespace Azure.Generator.Management
         /// This method initializes the resource clients, collections, and mockable clients.
         /// We do all of these in the same method to ensure they are initialized together
         /// </summary>
-        /// <param name="_resourceClients"></param>
-        /// <param name="_collectionClients"></param>
-        /// <param name="_mockableClients"></param>
-        /// <param name="_extensionProvider"></param>
+        /// <param name="_resourcesByIdDict">Represent a map from resource id pattern to the <see cref="ResourceClientProvider"/>. </param>
+        /// <param name="_resources">The full list of <see cref="ResourceClientProvider"/>. </param>
+        /// <param name="_resourceCollections">The full list of <see cref="ResourceCollectionClientProvider"/>. </param>
+        /// <param name="_mockableResourcesByScopeDict">Represent a dictionary from scope to the corresponding <see cref="MockableResourceProvider"/>. </param>
+        /// <param name="_mockableResources">The full list of <see cref="MockableResourceProvider"/>. </param>
+        /// <param name="_extensionProvider">The <see cref="T:ExtensionProvider"/>. </param>
         private static void InitializeResourceClients(
-            ref IReadOnlyList<ResourceClientProvider>? _resourceClients,
-            ref IReadOnlyList<ResourceCollectionClientProvider>? _collectionClients,
-            ref IReadOnlyList<MockableResourceProvider>? _mockableClients,
+            ref IReadOnlyDictionary<string, ResourceClientProvider>? _resourcesByIdDict,
+            ref IReadOnlyList<ResourceClientProvider>? _resources,
+            ref IReadOnlyList<ResourceCollectionClientProvider>? _resourceCollections,
+            ref IReadOnlyDictionary<ResourceScope, MockableResourceProvider>? _mockableResourcesByScopeDict,
+            ref IReadOnlyList<MockableResourceProvider>? _mockableResources,
             ref ExtensionProvider? _extensionProvider)
         {
-            if (_resourceClients is not null ||
-                _collectionClients is not null ||
-                _mockableClients is not null ||
+            if (_resourcesByIdDict is not null ||
+                _resources is not null ||
+                _resourceCollections is not null ||
+                _mockableResourcesByScopeDict is not null ||
+                _mockableResources is not null ||
                 _extensionProvider is not null)
             {
                 return; // already initialized
@@ -98,31 +114,30 @@ namespace Azure.Generator.Management
             }
 
             // resources and collections are now initialized
-            _resourceClients = [.. resourceDict.Values];
-            _collectionClients = collections;
+            _resourcesByIdDict = resourceDict.ToDictionary(kv => kv.Key.ResourceIdPattern, kv => kv.Value);
+            _resources = [.. resourceDict.Values];
+            _resourceCollections = collections;
 
             // build mockable resources
             var resourcesAndMethodsPerScope = BuildResourcesAndNonResourceMethods(
                 resourceDict,
                 resourceMethodCategories,
                 ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
-            var mockableArmClientResource = new MockableArmClientProvider(_resourceClients);
-            var mockableResources = new List<MockableResourceProvider>(resourcesAndMethodsPerScope.Count)
-            {
-                // add the arm client mockable resource
-                mockableArmClientResource
-            };
+            var mockableArmClientResource = new MockableArmClientProvider(_resources);
+            var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
             foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
-                if (resourcesInScope.Count > 0 || nonResourceMethods.Count > 0)
+                if (scope != ResourceScope.Extension &&
+                    (resourcesInScope.Count > 0 || resourceMethods.Count > 0 || nonResourceMethods.Count > 0))
                 {
                     var mockableExtension = new MockableResourceProvider(scope, resourcesInScope, resourceMethods, nonResourceMethods);
-                    mockableResources.Add(mockableExtension);
+                    mockableResources.Add(scope, mockableExtension);
                 }
             }
 
-            _mockableClients = mockableResources;
-            _extensionProvider = new ExtensionProvider(mockableResources);
+            _mockableResourcesByScopeDict = mockableResources;
+            _mockableResources = [mockableArmClientResource, ..mockableResources.Values];
+            _extensionProvider = new ExtensionProvider(_mockableResources);
 
             static Dictionary<ResourceScope, ResourcesAndNonResourceMethodsInScope> BuildResourcesAndNonResourceMethods(
                 IReadOnlyDictionary<ResourceMetadata, ResourceClientProvider> resourceDict,
@@ -136,6 +151,7 @@ namespace Azure.Generator.Management
                     [ResourceScope.Subscription] = new([], [], []),
                     [ResourceScope.Tenant] = new([], [], []),
                     [ResourceScope.ManagementGroup] = new([], [], []),
+                    [ResourceScope.Extension] = new([], [], [])
                 };
                 foreach (var (metadata, resourceClient) in resourceDict)
                 {
@@ -239,7 +255,7 @@ namespace Azure.Generator.Management
             ManagementClientGenerator.Instance.AddTypeToKeep(ExtensionProvider.Name);
 
             return [
-                .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
+                .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
                 ArmOperation,
                 ArmOperationOfT,
                 ProviderConstants,

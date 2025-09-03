@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>JobDefinitions_Get</description>
+        /// <description>JobDefinition_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>JobDefinitions_Get</description>
+        /// <description>JobDefinition_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <description>Project_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <description>Project_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Projects_Delete</description>
+        /// <description>Project_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Projects_Delete</description>
+        /// <description>Project_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Projects_Update</description>
+        /// <description>Project_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Projects_Update</description>
+        /// <description>Project_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

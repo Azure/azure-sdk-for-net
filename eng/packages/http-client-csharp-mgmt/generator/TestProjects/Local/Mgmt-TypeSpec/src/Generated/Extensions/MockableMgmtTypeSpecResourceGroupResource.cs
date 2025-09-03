@@ -71,6 +71,39 @@ namespace MgmtTypeSpec.Mocking
             return new FooSettingsResource(Client, Id.AppendProviderResource("MgmtTypeSpec", "FooSettings", "default"));
         }
 
+        /// <summary> Gets a collection of Bazs in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Bazs and their operations over a BazResource. </returns>
+        public virtual BazCollection GetBazs()
+        {
+            return GetCachedClient(client => new BazCollection(client, Id));
+        }
+
+        /// <summary> Get a Baz. </summary>
+        /// <param name="bazName"> The name of the Baz. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bazName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bazName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BazResource>> GetBazAsync(string bazName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bazName, nameof(bazName));
+
+            return await GetBazs().GetAsync(bazName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a Baz. </summary>
+        /// <param name="bazName"> The name of the Baz. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bazName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bazName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BazResource> GetBaz(string bazName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bazName, nameof(bazName));
+
+            return GetBazs().Get(bazName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of Zoos in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of Zoos and their operations over a ZooResource. </returns>
         public virtual ZooCollection GetZoos()

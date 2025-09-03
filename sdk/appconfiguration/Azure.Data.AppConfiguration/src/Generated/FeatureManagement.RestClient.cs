@@ -23,9 +23,6 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateGetFeatureFlagsRequest(string name, string label, string syncToken, string after, string acceptDatetime, IEnumerable<FeatureFlagFields> @select, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/feature-management/ff", false);
@@ -53,7 +50,10 @@ namespace Azure.Data.AppConfiguration
                     uri.AppendQuery("tags", @param, true);
                 }
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -72,21 +72,18 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateNextGetFeatureFlagsRequest(Uri nextPage, string name, string label, string syncToken, string after, string acceptDatetime, IEnumerable<FeatureFlagFields> @select, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json;profile=\\\"https://azconfig.io/mime-profiles/feature-management/ffset\\\";charset=utf-8, application/problem+json");
             return message;
         }
 
         internal HttpMessage CreateCheckFeatureFlagsRequest(string name, string label, string syncToken, string after, string acceptDatetime, IEnumerable<FeatureFlagFields> @select, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Head;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/feature-management/ff", false);
@@ -114,7 +111,10 @@ namespace Azure.Data.AppConfiguration
                     uri.AppendQuery("tags", @param, true);
                 }
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Head;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -132,9 +132,6 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateGetFeatureFlagRequest(string name, string label, IEnumerable<FeatureFlagFields> @select, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/feature-management/ff/", false);
@@ -155,7 +152,10 @@ namespace Azure.Data.AppConfiguration
                     uri.AppendQuery("tags", @param, true);
                 }
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -174,9 +174,6 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateCheckFeatureFlagRequest(string name, string label, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Head;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/feature-management/ff/", false);
@@ -197,7 +194,10 @@ namespace Azure.Data.AppConfiguration
                     uri.AppendQuery("tags", @param, true);
                 }
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Head;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -215,9 +215,6 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreatePutFeatureFlagRequest(string name, RequestContent content, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Put;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/feature-management/ff/", false);
@@ -227,7 +224,10 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("label", label, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json;profile=\\\"https://azconfig.io/mime-profiles/feature-management/ff\\\"​;charset=utf-8");
             if (syncToken != null)
             {
@@ -244,9 +244,6 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateDeleteFeatureFlagRequest(string name, string label, string syncToken, ETag? ifMatch, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200204);
-            Request request = message.Request;
-            request.Method = RequestMethod.Delete;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/feature-management/ff/", false);
@@ -256,7 +253,10 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("label", label, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200204);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Delete;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -271,9 +271,6 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateGetFeatureFlagRevisionsRequest(string name, string label, string after, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/feature-management/revisions", false);
@@ -301,7 +298,10 @@ namespace Azure.Data.AppConfiguration
                     uri.AppendQuery("tags", @param, true);
                 }
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -316,21 +316,18 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateNextGetFeatureFlagRevisionsRequest(Uri nextPage, string name, string label, string after, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json;profile=\\\"https://azconfig.io/mime-profiles/feature-management/ffset\\\"​;charset=utf-8, application/problem+json");
             return message;
         }
 
         internal HttpMessage CreateCheckFeatureFlagRevisionsRequest(string name, string label, string after, IEnumerable<FeatureFlagFields> @select, IEnumerable<string> tags, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Head;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/feature-management/revisions", false);
@@ -358,15 +355,15 @@ namespace Azure.Data.AppConfiguration
                     uri.AppendQuery("tags", @param, true);
                 }
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Head;
             return message;
         }
 
         internal HttpMessage CreatePutFeatureFlagLockRequest(string name, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Put;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/feature-management/locks/", false);
@@ -376,7 +373,10 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("label", label, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Put;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -391,9 +391,6 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateDeleteFeatureFlagLockRequest(string name, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Delete;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/feature-management/locks/", false);
@@ -403,7 +400,10 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("label", label, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Delete;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);

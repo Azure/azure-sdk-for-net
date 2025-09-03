@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> HTTP configuration of the connectivity check. </summary>
+        [WirePath("HTTPConfiguration")]
         public NetworkHttpConfiguration HttpProtocolConfiguration { get; set; }
     }
 }

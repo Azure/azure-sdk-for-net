@@ -82,21 +82,19 @@ namespace Azure.Generator.Management.Providers
         internal ResourceScope ResourceScope => _resourceMetadata.ResourceScope;
         internal string? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
 
+        internal bool IsExtensionResource => ResourceScope == ResourceScope.Extension;
+
         internal ResourceCollectionClientProvider? ResourceCollection { get; private set; }
 
         protected override string BuildName() => ResourceName.EndsWith("Resource") ? ResourceName : $"{ResourceName}Resource";
 
-        // TODO: Add support for getting parent resource from a resource
-        protected override FormattableString BuildDescription() => $"A class representing a {ResourceName} along with the instance operations that can be performed on it.\nIf you have a {typeof(ResourceIdentifier):C} you can construct a {Type:C} from an instance of {typeof(ArmClient):C} using the GetResource method.\nOtherwise you can get one from its parent resource (TODO: add parent resource information).";
+        protected override FormattableString BuildDescription() => $"A class representing a {ResourceName} along with the instance operations that can be performed on it.\nIf you have a {typeof(ResourceIdentifier):C} you can construct a {Type:C} from an instance of {typeof(ArmClient):C} using the GetResource method.\nOtherwise you can get one from its parent resource {TypeOfParentResource:C} using the {FactoryMethodSignature.Name} method.";
 
         private OperationSourceProvider? _source;
         internal OperationSourceProvider Source => _source ??= new OperationSourceProvider(this);
 
         internal ModelProvider ResourceData { get; }
         internal string ResourceName { get; }
-        // TODO -- we should not need to expose this.
-        // Instead, if some method needs more method, we should prepare them and pass it in as an argument
-        internal IEnumerable<ResourceMethod> ResourceServiceMethods => _resourceServiceMethods;
 
         internal string? SingletonResourceName => _resourceMetadata.SingletonResourceName;
 
@@ -107,24 +105,76 @@ namespace Azure.Generator.Management.Providers
         private IReadOnlyList<ResourceClientProvider>? _childResources;
         public IReadOnlyList<ResourceClientProvider> ChildResources => _childResources ??= BuildChildResources();
 
+        private CSharpType? _typeOfParentResource;
+        internal CSharpType TypeOfParentResource => _typeOfParentResource ??= BuildTypeOfParentResource();
+
         private IReadOnlyList<ResourceClientProvider> BuildChildResources()
         {
-            // first we find all the resources from the output library
-            var allResources = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders
-                .OfType<ResourceClientProvider>();
-
-            var childResources = new List<ResourceClientProvider>();
-            // TODO -- this is quite cumbersome that every time we have to iterate all the resources to find the child resources of this resource.
-            // maybe later we could maintain a map in the OutputLibrary so that we could get them directly.
-            foreach (var candidate in allResources)
+            var childResources = new List<ResourceClientProvider>(_resourceMetadata.ChildResourceIds.Count);
+            // the resourcemetadata has a list of the ids of child resources
+            foreach (var childId in _resourceMetadata.ChildResourceIds)
             {
-                // check if the request path of this resource, is the same as the parent resource request path of the candidate.
-                if (_resourceMetadata.ResourceIdPattern == candidate._resourceMetadata.ParentResourceId)
+                // if the child resource id is not in the output library, we cannot find it.
+                var childResource = ManagementClientGenerator.Instance.OutputLibrary.GetResourceById(childId);
+                if (childResource is null)
                 {
-                    childResources.Add(candidate);
+                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                        "general-warning",
+                        $"Cannot find child resource with id {childId} for resource {ResourceName}."
+                    );
+                    continue;
                 }
+                childResources.Add(childResource);
             }
             return childResources;
+        }
+
+        private CSharpType BuildTypeOfParentResource()
+        {
+            if (_resourceMetadata.ResourceScope == ResourceScope.Extension)
+            {
+                return typeof(Azure.ResourceManager.ArmResource);
+            }
+
+            // if the resource has a parent resource id, we can find it in the output library
+            if (_resourceMetadata.ParentResourceId is not null)
+            {
+                return ManagementClientGenerator.Instance.OutputLibrary.GetResourceById(_resourceMetadata.ParentResourceId).Type;
+            }
+            // if it does not, this resource's parent must be one of the MockableResource
+            return ManagementClientGenerator.Instance.OutputLibrary.GetMockableResourceByScope(_resourceMetadata.ResourceScope).ArmCoreType;
+        }
+
+        private MethodSignature? _factoryMethodSignature;
+        internal MethodSignature FactoryMethodSignature => _factoryMethodSignature ??= BuildFactoryMethodSignature();
+
+        private MethodSignature BuildFactoryMethodSignature()
+        {
+            if (ResourceCollection != null)
+            {
+                // we have the collection, we are not a singleton resource
+                var pluralOfResourceName = ResourceName.Pluralize();
+                return new MethodSignature(
+                    $"Get{pluralOfResourceName}",
+                    $"Gets a collection of {pluralOfResourceName} in the {TypeOfParentResource:C}",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                    ResourceCollection.Type,
+                    $"An object representing collection of {pluralOfResourceName} and their operations over a {Name}.",
+                    []
+                    );
+            }
+            else
+            {
+                // we do not have a collection, we are a singleton resource
+                return new MethodSignature(
+                    $"Get{ResourceName}",
+                    $"Gets an object representing a {Type:C} along with the instance operations that can be performed on it in the {TypeOfParentResource:C}.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                    Type,
+                    $"Returns a {Type:C} object.",
+                    []
+                    );
+            }
         }
 
         protected override FieldProvider[] BuildFields()
@@ -263,7 +313,7 @@ namespace Azure.Generator.Management.Providers
                 // iterate through all parameters in this method to find a matching parameter
                 foreach (var parameter in resourceMethod.InputMethod.Operation.Parameters)
                 {
-                    if (parameter.Location != InputRequestLocation.Path)
+                    if (parameter is not InputPathParameter)
                     {
                         continue; // Skip parameters that are not in the path
                     }
@@ -394,23 +444,25 @@ namespace Azure.Generator.Management.Providers
                 ResourceMethodSnippets.BuildValidateResourceIdMethod(this, _resourceTypeField)
             };
             methods.AddRange(operationMethods);
+            var getMethod = _resourceServiceMethods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Get)?.InputMethod;
 
             // Only generate tag methods if the resource model has tag properties, has get and update methods
-            if (HasTags() && _resourceMetadata.Methods.Any(m => m.Kind == ResourceOperationKind.Get) && updateMethodProvider is not null)
+            if (HasTags() && getMethod is not null && updateMethodProvider is not null)
             {
-                // Find the update method to get its rest client
-                var updateMethod = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Update || m.Kind == ResourceOperationKind.Create);
-                if (updateMethod is not null)
+                (bool isPatch, InputClient? updateClient) = PopulateUpdateClient();
+                var getClient = PopulateGetClient();
+                if (updateClient is not null && getClient is not null)
                 {
-                    var updateRestClientInfo = _clientInfos[updateMethod.InputClient];
+                    var updateRestClientInfo = _clientInfos[updateClient];
+                    var getRestClientInfo = _clientInfos[getClient];
 
                     methods.AddRange([
-                        new AddTagMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, true),
-                        new AddTagMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, false),
-                        new SetTagsMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, true),
-                        new SetTagsMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, false),
-                        new RemoveTagMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, true),
-                        new RemoveTagMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, false)
+                        new AddTagMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                        new AddTagMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
+                        new SetTagsMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                        new SetTagsMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
+                        new RemoveTagMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                        new RemoveTagMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, false)
                     ]);
                 }
             }
@@ -424,18 +476,29 @@ namespace Azure.Generator.Management.Providers
             return [.. methods];
         }
 
+        private InputClient? PopulateGetClient()
+            => _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Get)?.InputClient;
+
+        private (bool IsPatch, InputClient? UpdateClient) PopulateUpdateClient()
+        {
+            // first try to find a patch method
+            var patchClient = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Update)?.InputClient;
+            if (patchClient is not null)
+            {
+                return (true, patchClient);
+            }
+
+            // if there is no tags patch method, fall back to the put method
+            var putClient = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Create)?.InputClient;
+            return (false, putClient);
+        }
+
         private MethodProvider BuildGetChildResourceMethod(ResourceClientProvider childResource)
         {
             var thisResource = This.As<ArmResource>();
             if (childResource.IsSingleton)
             {
-                var signature = new MethodSignature(
-                    $"Get{childResource.ResourceName}",
-                    $"Gets an object representing a {childResource.ResourceName} along with the instance operations that can be performed on it in the {ResourceName}.",
-                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
-                    childResource.Type,
-                    $"Returns a {childResource.Type:C} object.",
-                    []);
+                var signature = childResource.FactoryMethodSignature;
                 var lastSegment = childResource.ResourceTypeValue.Split('/')[^1];
                 var bodyStatement = Return(New.Instance(childResource.Type, thisResource.Client(), thisResource.Id().AppendChildResource(Literal(lastSegment), Literal(childResource.SingletonResourceName!))));
                 return new MethodProvider(signature, bodyStatement, this);
@@ -443,14 +506,7 @@ namespace Azure.Generator.Management.Providers
             else
             {
                 Debug.Assert(childResource.ResourceCollection is not null, "Child resource collection should not be null for non-singleton resources.");
-                var pluralChildResourceName = childResource.ResourceName.Pluralize();
-                var signature = new MethodSignature(
-                    $"Get{pluralChildResourceName}",
-                    $"Gets a collection of {pluralChildResourceName} in the {ResourceName}.",
-                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
-                    childResource.ResourceCollection.Type,
-                    $"An object representing collection of {pluralChildResourceName} and their operations over a {ResourceName}.",
-                    []);
+                var signature = childResource.FactoryMethodSignature;
                 var bodyStatement = Return(thisResource.GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(childResource.ResourceCollection.Type, client, thisResource.Id())));
                 return new MethodProvider(signature, bodyStatement, this);
             }

@@ -56,7 +56,7 @@ namespace Azure.Generator.Management
             AddVisitor(new SafeFlattenVisitor());
             AddVisitor(new RestClientVisitor());
             AddVisitor(new ResourceVisitor());
-            AddVisitor(new SystemObjectModelVisitor());
+            AddVisitor(new InheritableSystemObjectModelVisitor());
             AddVisitor(new TypeFilterVisitor());
             AddVisitor(new PaginationVisitor());
             AddVisitor(new ModelFactoryVisitor());

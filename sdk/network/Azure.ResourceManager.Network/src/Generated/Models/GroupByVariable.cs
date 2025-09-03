@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> User Session clause variable. </summary>
+        [WirePath("variableName")]
         public ApplicationGatewayFirewallUserSessionVariable VariableName { get; set; }
     }
 }

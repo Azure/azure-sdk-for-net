@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             }
             MccCacheNodeInstallProperties properties = default;
             IReadOnlyDictionary<string, string> tags = default;
-            string location = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 }
                 if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))

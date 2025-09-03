@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            AzureMonitorAlertSettings azureMonitorAlertSettings = default;
-            ClassicAlertSettings classicAlertSettings = default;
+            RecoveryServicesAzureMonitorAlertSettings azureMonitorAlertSettings = default;
+            RecoveryServicesClassicAlertSettings classicAlertSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    azureMonitorAlertSettings = AzureMonitorAlertSettings.DeserializeAzureMonitorAlertSettings(property.Value, options);
+                    azureMonitorAlertSettings = RecoveryServicesAzureMonitorAlertSettings.DeserializeRecoveryServicesAzureMonitorAlertSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("classicAlertSettings"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    classicAlertSettings = ClassicAlertSettings.DeserializeClassicAlertSettings(property.Value, options);
+                    classicAlertSettings = RecoveryServicesClassicAlertSettings.DeserializeRecoveryServicesClassicAlertSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

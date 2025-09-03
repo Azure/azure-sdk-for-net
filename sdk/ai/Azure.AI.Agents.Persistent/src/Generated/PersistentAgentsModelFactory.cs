@@ -427,7 +427,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepSharepointToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <param name="sharePoint"> Reserved for future use. </param>
+        /// <param name="sharePoint"> SharePoint tool input and output. </param>
         /// <returns> A new <see cref="Persistent.RunStepSharepointToolCall"/> instance for mocking. </returns>
         public static RunStepSharepointToolCall RunStepSharepointToolCall(string id = null, IReadOnlyDictionary<string, string> sharePoint = null)
         {
@@ -438,7 +438,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <param name="microsoftFabric"> Reserved for future use. </param>
+        /// <param name="microsoftFabric"> Fabric input and output. </param>
         /// <returns> A new <see cref="Persistent.RunStepMicrosoftFabricToolCall"/> instance for mocking. </returns>
         public static RunStepMicrosoftFabricToolCall RunStepMicrosoftFabricToolCall(string id = null, IReadOnlyDictionary<string, string> microsoftFabric = null)
         {
@@ -942,7 +942,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCalls">
         /// The collection of tool calls for the tool call detail item.
         /// Please note <see cref="Persistent.RunStepDeltaToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepDeltaAzureAISearchToolCall"/>, <see cref="Persistent.RunStepDeltaAzureFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaCustomBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/>, <see cref="Persistent.RunStepDeltaFileSearchToolCall"/>, <see cref="Persistent.RunStepDeltaFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaMcpToolCall"/> and <see cref="Persistent.RunStepDeltaOpenAPIToolCall"/>.
+        /// The available derived classes include <see cref="Persistent.RunStepDeltaAzureAISearchToolCall"/>, <see cref="Persistent.RunStepDeltaAzureFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaCustomBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/>, <see cref="Persistent.RunStepDeltaMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepDeltaFileSearchToolCall"/>, <see cref="Persistent.RunStepDeltaFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaMcpToolCall"/>, <see cref="Persistent.RunStepDeltaOpenAPIToolCall"/> and <see cref="Persistent.RunStepDeltaSharepointToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Persistent.RunStepDeltaToolCallObject"/> instance for mocking. </returns>
         public static RunStepDeltaToolCallObject RunStepDeltaToolCallObject(IEnumerable<RunStepDeltaToolCall> toolCalls = null)
@@ -1140,6 +1140,30 @@ namespace Azure.AI.Agents.Persistent
             azureAISearch ??= new Dictionary<string, string>();
 
             return new RunStepDeltaAzureAISearchToolCall(index, id, "azure_ai_search", serializedAdditionalRawData: null, azureAISearch);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaMicrosoftFabricToolCall"/>. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="microsoftFabric"> Fabric input and output. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaMicrosoftFabricToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaMicrosoftFabricToolCall RunStepDeltaMicrosoftFabricToolCall(int index = default, string id = null, IReadOnlyDictionary<string, string> microsoftFabric = null)
+        {
+            microsoftFabric ??= new Dictionary<string, string>();
+
+            return new RunStepDeltaMicrosoftFabricToolCall(index, id, "fabric_dataagent", serializedAdditionalRawData: null, microsoftFabric);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaSharepointToolCall"/>. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="sharepointGrounding"> SharePoint tool input and output. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaSharepointToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaSharepointToolCall RunStepDeltaSharepointToolCall(int index = default, string id = null, IReadOnlyDictionary<string, string> sharepointGrounding = null)
+        {
+            sharepointGrounding ??= new Dictionary<string, string>();
+
+            return new RunStepDeltaSharepointToolCall(index, id, "sharepoint_grounding", serializedAdditionalRawData: null, sharepointGrounding);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaMCPObject"/>. </summary>

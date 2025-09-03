@@ -1228,10 +1228,20 @@
       ]
     },
     {
-      "filename": "**/sdk/provisioning/**/*.cs",
+      "filename": "**/sdk/provisioning/Azure.Provisioning.PostgreSql/**/*.cs",
       "words": [
-        "Awsec",
-        "Freemium",
+        "awsec"
+      ]
+    },
+    {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Sql/**/*.cs",
+      "words": [
+        "Freemium"
+      ]
+    },
+    {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Storage/**/*.cs",
+      "words": [
         "Mibps"
       ]
     },
@@ -1247,6 +1257,12 @@
         "hana",
         "msrp",
         "unprovisioning"
+      ]
+    },
+    {
+      "filename": "**/sdk/recoveryservices/**/*.cs",
+      "words": [
+        "bcdr",
       ]
     },
     {

@@ -15,21 +15,21 @@ namespace Azure.Data.AppConfiguration
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ConfigurationSetting))]
-    [ModelReaderWriterBuildable(typeof(ConfigurationSnapshot))]
     [ModelReaderWriterBuildable(typeof(ConfigurationSettingsFilter))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SnapshotUpdateParameters))]
-    [ModelReaderWriterBuildable(typeof(SettingLabel))]
-    [ModelReaderWriterBuildable(typeof(FeatureFlagListResult))]
+    [ModelReaderWriterBuildable(typeof(ConfigurationSnapshot))]
     [ModelReaderWriterBuildable(typeof(FeatureFlag))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlagAllocation))]
     [ModelReaderWriterBuildable(typeof(FeatureFlagConditions))]
     [ModelReaderWriterBuildable(typeof(FeatureFlagFilter))]
-    [ModelReaderWriterBuildable(typeof(FeatureFlagAllocation))]
-    [ModelReaderWriterBuildable(typeof(PercentileAllocation))]
-    [ModelReaderWriterBuildable(typeof(UserAllocation))]
-    [ModelReaderWriterBuildable(typeof(GroupAllocation))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlagListResult))]
     [ModelReaderWriterBuildable(typeof(FeatureFlagTelemetryConfiguration))]
     [ModelReaderWriterBuildable(typeof(FeatureFlagVariantDefinition))]
+    [ModelReaderWriterBuildable(typeof(GroupAllocation))]
+    [ModelReaderWriterBuildable(typeof(PercentileAllocation))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SettingLabel))]
+    [ModelReaderWriterBuildable(typeof(SnapshotUpdateParameters))]
+    [ModelReaderWriterBuildable(typeof(UserAllocation))]
     public partial class AzureDataAppConfigurationContext : ModelReaderWriterContext
     {
     }
