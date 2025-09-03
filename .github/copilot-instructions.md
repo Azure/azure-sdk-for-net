@@ -32,7 +32,7 @@ Do the following steps to renew/change/update the generator:
 1. Figure out which new generator you should use. Determine this by the package name.
     - For namespace in pattern of `Azure.ResourceManager.*`, the new generator should be `@azure-tools/http-client-csharp-mgmt`.
     - For namespace in pattern of `Azure.Provisioning.*`, you should reject this request because now we do not have a valid generator for it yet.
-    - For namespace in any other pattern, the new generator should be `@azure-tools/http-client-csharp`.
+    - For namespace in any other pattern, the new generator should be `@azure-typespec/http-client-csharp`.
 2. Find the package directory in the `sdk` directory for that package. Search for the `*.csproj` file with the request package name, you should find a directory in this pattern `sdk/<service-directory>/<requested-package-name>`, and inside this sub-directory, there is such a `<requested-package-name>.csproj` file.
 3. Find the `tsp-location.yaml` file in the above package directory.
     - If this file exists, add an extra property at the end of this file with
