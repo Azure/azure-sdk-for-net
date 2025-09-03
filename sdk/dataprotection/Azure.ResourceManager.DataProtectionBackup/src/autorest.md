@@ -385,6 +385,7 @@ directive:
     where: $.parameters
     transform: >
       delete $.SubscriptionIdParameter.format;
+# TODO: fix TypeSpec convert issue, remove after fix
   - from: dataprotection.json
     where: $.definitions
     transform: >

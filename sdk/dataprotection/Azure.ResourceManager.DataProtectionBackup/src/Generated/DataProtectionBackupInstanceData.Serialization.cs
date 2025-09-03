@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsCollectionDefined(Tag))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tag"u8);
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
-                foreach (var item in Tag)
+                foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteStringValue(item.Value);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 return null;
             }
             DataProtectionBackupInstanceProperties properties = default;
-            IDictionary<string, string> tag = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     properties = DataProtectionBackupInstanceProperties.DeserializeDataProtectionBackupInstanceProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("tag"u8))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
-                    tag = dictionary;
+                    tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 type,
                 systemData,
                 properties,
-                tag ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

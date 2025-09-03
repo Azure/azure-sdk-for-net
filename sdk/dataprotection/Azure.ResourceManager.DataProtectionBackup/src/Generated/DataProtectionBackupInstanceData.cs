@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupInstanceData"/>. </summary>
         public DataProtectionBackupInstanceData()
         {
-            Tag = new ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupInstanceData"/>. </summary>
@@ -63,18 +63,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> BackupInstanceResource properties. </param>
-        /// <param name="tag"> Proxy Resource tags. </param>
+        /// <param name="tags"> Proxy Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataProtectionBackupInstanceProperties properties, IDictionary<string, string> tag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DataProtectionBackupInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataProtectionBackupInstanceProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            Tag = tag;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> BackupInstanceResource properties. </summary>
         public DataProtectionBackupInstanceProperties Properties { get; set; }
         /// <summary> Proxy Resource tags. </summary>
-        public IDictionary<string, string> Tag { get; }
+        public IDictionary<string, string> Tags { get; }
     }
 }

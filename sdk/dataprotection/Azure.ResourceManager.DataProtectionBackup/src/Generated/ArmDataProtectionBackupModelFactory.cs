@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> BackupInstanceResource properties. </param>
-        /// <param name="tag"> Proxy Resource tags. </param>
+        /// <param name="tags"> Proxy Resource tags. </param>
         /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupInstanceData"/> instance for mocking. </returns>
-        public static DataProtectionBackupInstanceData DataProtectionBackupInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataProtectionBackupInstanceProperties properties = null, IDictionary<string, string> tag = null)
+        public static DataProtectionBackupInstanceData DataProtectionBackupInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataProtectionBackupInstanceProperties properties = null, IDictionary<string, string> tags = null)
         {
-            tag ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
 
             return new DataProtectionBackupInstanceData(
                 id,
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 resourceType,
                 systemData,
                 properties,
-                tag,
+                tags,
                 serializedAdditionalRawData: null);
         }
 
