@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Resource ID. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> The iteration number. </summary>
+        [WirePath("changeNumber")]
         public string ChangeNumber { get; }
     }
 }

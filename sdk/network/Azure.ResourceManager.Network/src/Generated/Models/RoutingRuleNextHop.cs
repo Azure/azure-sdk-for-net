@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Next hop type. </summary>
+        [WirePath("nextHopType")]
         public RoutingRuleNextHopType NextHopType { get; set; }
         /// <summary> Next hop address. Only required if the next hop type is VirtualAppliance. </summary>
+        [WirePath("nextHopAddress")]
         public string NextHopAddress { get; set; }
     }
 }

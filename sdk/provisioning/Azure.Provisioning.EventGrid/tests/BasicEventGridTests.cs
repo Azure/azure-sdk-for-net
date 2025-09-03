@@ -1,10 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.Tests;
@@ -12,15 +9,11 @@ using NUnit.Framework;
 
 namespace Azure.Provisioning.EventGrid.Tests;
 
-public class BasicEventGridTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicEventGridTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.eventgrid/event-grid-subscription-and-storage/main.bicep")]
-    public async Task CreateEventGridForBlobs()
+    internal static Trycep CreateEventGridForBlobsTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:EventGridBasic
@@ -30,7 +23,7 @@ public class BasicEventGridTests(bool async)
                 infra.Add(webhookUri);
 
                 StorageAccount storage =
-                    new(nameof(storage))
+                    new(nameof(storage), StorageAccount.ResourceVersions.V2024_01_01)
                     {
                         Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
                         Kind = StorageKind.StorageV2,
@@ -41,7 +34,7 @@ public class BasicEventGridTests(bool async)
                 infra.Add(storage);
 
                 SystemTopic topic =
-                    new(nameof(topic))
+                    new(nameof(topic), SystemTopic.ResourceVersions.V2022_06_15)
                     {
                         Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
                         Source = storage.Id,
@@ -50,7 +43,7 @@ public class BasicEventGridTests(bool async)
                 infra.Add(topic);
 
                 SystemTopicEventSubscription subscription =
-                    new(nameof(subscription))
+                    new(nameof(subscription), SystemTopicEventSubscription.ResourceVersions.V2022_06_15)
                     {
                         Parent = topic,
                         Destination = new WebHookEventSubscriptionDestination { Endpoint = webhookUri },
@@ -67,8 +60,15 @@ public class BasicEventGridTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.eventgrid/event-grid-subscription-and-storage/main.bicep")]
+    public async Task CreateEventGridForBlobs()
+    {
+        await using Trycep test = CreateEventGridForBlobsTest();
+        test.Compare(
             """
             param webhookUri string
 
@@ -119,8 +119,6 @@ public class BasicEventGridTests(bool async)
               }
               parent: topic
             }
-            """)
-        .Lint()
-        .ValidateAndDeployAsync();
+            """);
     }
 }

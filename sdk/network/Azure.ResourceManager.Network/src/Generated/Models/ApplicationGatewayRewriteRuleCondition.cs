@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The condition parameter of the RewriteRuleCondition. </summary>
+        [WirePath("variable")]
         public string Variable { get; set; }
         /// <summary> The pattern, either fixed string or regular expression, that evaluates the truthfulness of the condition. </summary>
+        [WirePath("pattern")]
         public string Pattern { get; set; }
         /// <summary> Setting this parameter to truth value with force the pattern to do a case in-sensitive comparison. </summary>
+        [WirePath("ignoreCase")]
         public bool? IgnoreCase { get; set; }
         /// <summary> Setting this value as truth will force to check the negation of the condition given by the user. </summary>
+        [WirePath("negate")]
         public bool? Negate { get; set; }
     }
 }

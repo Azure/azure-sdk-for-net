@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Minimum scale Units for Autoscale configuration. </summary>
+        [WirePath("min")]
         public int? Min { get; set; }
         /// <summary> Maximum Scale Units for Autoscale configuration. </summary>
+        [WirePath("max")]
         public int? Max { get; set; }
     }
 }

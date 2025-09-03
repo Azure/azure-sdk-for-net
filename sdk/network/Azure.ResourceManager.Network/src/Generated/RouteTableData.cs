@@ -49,16 +49,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Collection of routes contained within a route table. </summary>
+        [WirePath("properties.routes")]
         public IList<RouteData> Routes { get; }
         /// <summary> A collection of references to subnets. </summary>
+        [WirePath("properties.subnets")]
         public IReadOnlyList<SubnetData> Subnets { get; }
         /// <summary> Whether to disable the routes learned by BGP on that route table. True means disable. </summary>
+        [WirePath("properties.disableBgpRoutePropagation")]
         public bool? DisableBgpRoutePropagation { get; set; }
         /// <summary> The provisioning state of the route table resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The resource GUID property of the route table. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
     }
 }

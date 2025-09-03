@@ -74,10 +74,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The address of this radius server. </summary>
+        [WirePath("radiusServerAddress")]
         public string RadiusServerAddress { get; set; }
         /// <summary> The initial score assigned to this radius server. </summary>
+        [WirePath("radiusServerScore")]
         public long? RadiusServerScore { get; set; }
         /// <summary> The secret used for this radius server. </summary>
+        [WirePath("radiusServerSecret")]
         public string RadiusServerSecret { get; set; }
     }
 }
