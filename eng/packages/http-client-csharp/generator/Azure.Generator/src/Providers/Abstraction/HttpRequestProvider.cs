@@ -12,32 +12,46 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
 {
-    internal record HttpRequestProvider : HttpRequestApi
+    /// <summary>
+    /// Provides functionality to construct and manipulate HTTP request objects for Azure.
+    /// </summary>
+    public record HttpRequestProvider : HttpRequestApi
     {
         private static HttpRequestApi? _instance;
         internal static HttpRequestApi Instance => _instance ??= new HttpRequestProvider(Empty);
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpRequestProvider"/> class.
+        /// </summary>
+        /// <param name="original"></param>
         public HttpRequestProvider(ValueExpression original) : base(typeof(Request), original)
         {
         }
 
+        /// <inheritdoc/>
         public override Type UriBuilderType => typeof(RawRequestUriBuilder);
 
+        /// <inheritdoc/>
         public override ValueExpression Content()
             => Original.Property(nameof(Request.Content));
 
+        /// <inheritdoc/>
         public override HttpRequestApi FromExpression(ValueExpression original)
             => new HttpRequestProvider(original);
 
+        /// <inheritdoc/>
         public override MethodBodyStatement SetHeaders(IReadOnlyList<ValueExpression> arguments)
             => Original.Property(nameof(Request.Headers)).Invoke(nameof(RequestHeaders.SetValue), arguments).Terminate();
 
+        /// <inheritdoc/>
         public MethodBodyStatement SetMethod(ScopedApi<string> httpMethod)
             => Original.Property(nameof(Request.Method)).Assign(CreateRequestMethod(httpMethod)).Terminate();
 
+        /// <inheritdoc/>
         public MethodBodyStatement SetUri(ValueExpression value)
             => Original.Property("Uri").Assign(value).Terminate();
 
+        /// <inheritdoc/>
         public override HttpRequestApi ToExpression() => this;
 
         private ValueExpression CreateRequestMethod(ScopedApi<string> httpMethod)
