@@ -172,6 +172,7 @@ internal static class BicepTypeMapping
             {
                 throw new InvalidOperationException($"Cannot convert {construct} into a Bicep expression because it contains multiple statements.");
             }
+            // TODO -- this is a workaround until https://github.com/Azure/azure-sdk-for-net/issues/52277 is resolved
             if (statements[0] is ResourceStatement resource)
             {
                 // handle the case when we are using a resource as property of other resources

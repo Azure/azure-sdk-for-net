@@ -107,7 +107,7 @@ MapsClientOptions options = new();
 // In a library's client class constructor:
 var userAgentPolicy = new UserAgentPolicy(Assembly.GetExecutingAssembly());
 ClientPipeline pipeline = ClientPipeline.Create(
-    options, 
+    options,
     perCallPolicies: new[] { userAgentPolicy },
     perTryPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
     beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
@@ -116,9 +116,22 @@ ClientPipeline pipeline = ClientPipeline.Create(
 var customUserAgent = new UserAgentPolicy(Assembly.GetExecutingAssembly(), "MyApp/1.0");
 ClientPipeline pipeline2 = ClientPipeline.Create(
     options,
-    perCallPolicies: new[] { customUserAgent }, 
+    perCallPolicies: new[] { customUserAgent },
     perTryPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
     beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
 ```
 
 The generated User-Agent header follows the format: `"LibraryName/Version (.NET Framework; OS Information)"` or `"ApplicationId LibraryName/Version (.NET Framework; OS Information)"` when an application ID is provided.
+
+## Configure a custom network timeout duration
+
+Some services have operations that can take more than the duration of the default timeout value to complete. The `NetworkTimeout` property in `ClientPipelineOptions` can be configured to override the default.
+
+```C# Snippet:ConfigurationCustomNetworkTimeout
+MapsClientOptions options = new()
+{
+    // Increase the default network timeout.
+    NetworkTimeout = TimeSpan.FromMinutes(5)
+};
+MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential, options);
+```

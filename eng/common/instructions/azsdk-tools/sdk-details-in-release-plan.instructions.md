@@ -34,6 +34,6 @@ description: 'Identify languages configured in the TypeSpec project and add it t
 
 # Step 3: Update Release Plan with SDK Information
 **Goal**: Update the release plan with the languages and package names identified in Step 1.
-1. Use `UpdateReleasePlanSDKInfo` to update the release plan work item with the JSON object created in Step 1.
+1. Use `azsdk_update_sdk_details_in_release_plan` to update the release plan work item with the JSON object created in Step 1.
 2. Confirm successful update of the release plan with the SDK information and summary of languages and package names.
 **Success Criteria**: Release plan updated with languages and package names.
