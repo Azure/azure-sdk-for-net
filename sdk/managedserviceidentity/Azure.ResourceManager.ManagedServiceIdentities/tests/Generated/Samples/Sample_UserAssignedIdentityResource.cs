@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this UserAssignedIdentityResource created on azure
             // for more information of creating UserAssignedIdentityResource, please refer to the document of UserAssignedIdentityResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-5678-9012-123456789012";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             ResourceIdentifier userAssignedIdentityResourceId = UserAssignedIdentityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this UserAssignedIdentityResource created on azure
             // for more information of creating UserAssignedIdentityResource, please refer to the document of UserAssignedIdentityResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-5678-9012-123456789012";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             ResourceIdentifier userAssignedIdentityResourceId = UserAssignedIdentityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this UserAssignedIdentityResource created on azure
             // for more information of creating UserAssignedIdentityResource, please refer to the document of UserAssignedIdentityResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-5678-9012-123456789012";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             ResourceIdentifier userAssignedIdentityResourceId = UserAssignedIdentityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         }
 
         /// <summary> Gets the systemAssignedIdentity available under the specified RP scope. </summary>
-        /// <param name="scope"> The resource provider scope of the resource. Parent resource being extended by Managed Identities. </param>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<SystemAssignedIdentityData>> GetByScopeAsync(string scope, CancellationToken cancellationToken = default)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         }
 
         /// <summary> Gets the systemAssignedIdentity available under the specified RP scope. </summary>
-        /// <param name="scope"> The resource provider scope of the resource. Parent resource being extended by Managed Identities. </param>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<SystemAssignedIdentityData> GetByScope(string scope, CancellationToken cancellationToken = default)
