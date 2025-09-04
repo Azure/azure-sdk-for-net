@@ -200,7 +200,12 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientOptions: options);
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey,
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
@@ -231,7 +236,17 @@ namespace Azure.Storage.Blobs
             _authenticationPolicy = null;
             options ??= new BlobClientOptions();
 
-            _clientConfiguration = new BlobClientConfiguration(options);
+            _clientConfiguration = new BlobClientConfiguration(
+                pipeline: options.Build(null),
+                sharedKeyCredential: null,
+                sasCredential: null,
+                tokenCredential: null,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey,
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(blobContainerUri);
@@ -269,7 +284,12 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(authPolicy),
                 sharedKeyCredential: credential,
-                clientOptions: options);
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey,
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(blobContainerUri);
@@ -309,7 +329,12 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(_authenticationPolicy),
                 sasCredential: credential,
-                clientOptions: options);
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey,
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(blobContainerUri);
@@ -349,7 +374,12 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(_authenticationPolicy),
                 tokenCredential: credential,
-                clientOptions: options);
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey,
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(blobContainerUri);
@@ -434,7 +464,12 @@ namespace Azure.Storage.Blobs
                 new BlobClientConfiguration(
                     pipeline: pipeline,
                     sharedKeyCredential: null,
-                    clientOptions: options),
+                    clientDiagnostics: new ClientDiagnostics(options),
+                    version: options.Version,
+                    customerProvidedKey: null,
+                    transferValidation: options.TransferValidation,
+                    encryptionScope: null,
+                    trimBlobNameSlashes: options.TrimBlobNameSlashes),
                 clientSideEncryption: null);
         }
 
@@ -4070,61 +4105,6 @@ namespace Azure.Storage.Blobs
             }
 
             return _parentBlobServiceClient;
-        }
-        #endregion
-
-        #region internal accessors for Azure.Storage.DataMovement.Blobs
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BlobContainerClient"/>
-        /// class with identical configurations but with additional Http Pipeline Policies.
-        /// </summary>
-        /// <param name="client">
-        /// The storage client which to clone the configurations from.
-        /// </param>
-        /// <param name="policies">
-        /// The additional policies and its pipeline position to add to the client.
-        /// </param>
-        /// <returns></returns>
-        protected static BlobContainerClient WithAdditionalPolicies(
-            BlobContainerClient client,
-            params (HttpPipelinePolicy Policy, HttpPipelinePosition Position)[] policies)
-        {
-            Argument.AssertNotNullOrEmpty(policies, nameof(policies));
-
-            // Update the client options with the injected policies.
-            BlobClientOptions existingOptions = client?.ClientConfiguration?.ClientOptions;
-            BlobClientOptions options = existingOptions != default ? new(existingOptions) : new BlobClientOptions();
-            foreach ((HttpPipelinePolicy policy, HttpPipelinePosition position) in policies)
-            {
-                options.AddPolicy(policy, position);
-            }
-
-            // Create a deep copy of the BlobContainerClient but with an updated client options
-            // with an additional injected pipeline policy with the user agent string
-            // based on the credential type.
-            if (client.ClientConfiguration.TokenCredential != default)
-            {
-                return new BlobContainerClient(
-                    client.Uri,
-                    client.ClientConfiguration.TokenCredential,
-                    options);
-            }
-            else if (client.ClientConfiguration.SasCredential != default)
-            {
-                return new BlobContainerClient(
-                    client.Uri,
-                    client.ClientConfiguration.SasCredential,
-                    options);
-            }
-            else if (client.ClientConfiguration.SharedKeyCredential != default)
-            {
-                return new BlobContainerClient(
-                    client.Uri,
-                    client.ClientConfiguration.SharedKeyCredential,
-                    options);
-            }
-
-            return new BlobContainerClient(client.Uri, options);
         }
         #endregion
 
