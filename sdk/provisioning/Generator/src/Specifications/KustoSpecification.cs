@@ -38,6 +38,35 @@ public class KustoSpecification() :
         });
         RemoveProperty<KustoReadOnlyFollowingDatabase>("Location");
         RemoveProperty<KustoReadWriteDatabase>("Location");
+
+        CustomizeResource<KustoCosmosDBDataConnection>(r =>
+        {
+            r.BaseType = GetModel<KustoDataConnectionResource>() as TypeModel;
+            r.DiscriminatorName = "kind";
+            r.DiscriminatorValue = "CosmosDb";
+        });
+        CustomizeResource<KustoEventGridDataConnection>(r =>
+        {
+            r.BaseType = GetModel<KustoDataConnectionResource>() as TypeModel;
+            r.DiscriminatorName = "kind";
+            r.DiscriminatorValue = "EventGrid";
+        });
+        CustomizeResource<KustoEventHubDataConnection>(r =>
+        {
+            r.BaseType = GetModel<KustoDataConnectionResource>() as TypeModel;
+            r.DiscriminatorName = "kind";
+            r.DiscriminatorValue = "EventHub";
+        });
+        CustomizeResource<KustoIotHubDataConnection>(r =>
+        {
+            r.BaseType = GetModel<KustoDataConnectionResource>() as TypeModel;
+            r.DiscriminatorName = "kind";
+            r.DiscriminatorValue = "IotHub";
+        });
+        RemoveProperty<KustoCosmosDBDataConnection>("Location");
+        RemoveProperty<KustoEventGridDataConnection>("Location");
+        RemoveProperty<KustoEventHubDataConnection>("Location");
+        RemoveProperty<KustoIotHubDataConnection>("Location");
     }
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
@@ -46,10 +75,19 @@ public class KustoSpecification() :
 
         result.Add(typeof(KustoReadOnlyFollowingDatabase), typeof(KustoSpecification).GetMethod(nameof(CreateOrUpdateKustoReadOnlyFollowingDatabase), BindingFlags.NonPublic | BindingFlags.Static)!);
         result.Add(typeof(KustoReadWriteDatabase), typeof(KustoSpecification).GetMethod(nameof(CreateOrUpdateKustoReadWriteDatabase), BindingFlags.NonPublic | BindingFlags.Static)!);
+
+        result.Add(typeof(KustoCosmosDBDataConnection), typeof(KustoSpecification).GetMethod(nameof(CreateOrUpdateKustoCosmosDBDataConnection), BindingFlags.NonPublic | BindingFlags.Static)!);
+        result.Add(typeof(KustoEventGridDataConnection), typeof(KustoSpecification).GetMethod(nameof(CreateOrUpdateKustoEventGridDataConnection), BindingFlags.NonPublic | BindingFlags.Static)!);
+        result.Add(typeof(KustoEventHubDataConnection), typeof(KustoSpecification).GetMethod(nameof(CreateOrUpdateKustoEventHubDataConnection), BindingFlags.NonPublic | BindingFlags.Static)!);
+        result.Add(typeof(KustoIotHubDataConnection), typeof(KustoSpecification).GetMethod(nameof(CreateOrUpdateKustoIotHubDataConnection), BindingFlags.NonPublic | BindingFlags.Static)!);
         return result;
     }
 
     // These methods are here as a workaround to generate correct properties for the above two discriminated child resources.
     private static ArmOperation<KustoDatabaseResource> CreateOrUpdateKustoReadOnlyFollowingDatabase(KustoReadOnlyFollowingDatabase content) { return null!; }
     private static ArmOperation<KustoDatabaseResource> CreateOrUpdateKustoReadWriteDatabase(KustoReadWriteDatabase content) { return null!; }
+    private static ArmOperation<KustoDataConnectionResource> CreateOrUpdateKustoCosmosDBDataConnection(KustoCosmosDBDataConnection content) { return null!; }
+    private static ArmOperation<KustoDataConnectionResource> CreateOrUpdateKustoEventGridDataConnection(KustoEventGridDataConnection content) { return null!; }
+    private static ArmOperation<KustoDataConnectionResource> CreateOrUpdateKustoEventHubDataConnection(KustoEventHubDataConnection content) { return null!; }
+    private static ArmOperation<KustoDataConnectionResource> CreateOrUpdateKustoIotHubDataConnection(KustoIotHubDataConnection content) { return null!; }
 }
