@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Globalization;
@@ -621,8 +622,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
-
-                return await GetFeatureManagementClient().PutFeatureFlagLockAsync(name, label, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await PutOrDeleteLockAsync(name, label, default, isReadOnly, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -641,7 +641,8 @@ namespace Azure.Data.AppConfiguration
         public virtual Response<FeatureFlag> SetFeatureFlagReadOnly(string name, string label, bool isReadOnly, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            return GetFeatureManagementClient().PutFeatureFlagLock(name, label, cancellationToken: cancellationToken);
+            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+            return PutOrDeleteLock(name, label, default, isReadOnly, context);
         }
 
         /// <summary>
@@ -658,7 +659,8 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(flag, nameof(flag));
             MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.ETag } : default;
-            return await GetFeatureManagementClient().PutFeatureFlagLockAsync(flag.Name, flag.Label, matchConditions: requestOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+            return await PutOrDeleteLockAsync(flag.Name, flag.Label, requestOptions, isReadOnly, context).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -675,7 +677,24 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(flag, nameof(flag));
             MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.ETag } : default;
-            return GetFeatureManagementClient().PutFeatureFlagLock(flag.Name, flag.Label, matchConditions: requestOptions);
+            RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+            return PutOrDeleteLock(flag.Name, flag.Label, requestOptions, isReadOnly, context);
+        }
+
+        private async Task<Response<FeatureFlag>> PutOrDeleteLockAsync(string name, string label, MatchConditions requestOptions, bool isReadOnly, RequestContext context)
+        {
+            Response<FeatureFlag> response = isReadOnly
+                ? await GetFeatureManagementClient().PutFeatureFlagLockAsync(name, label, matchConditions: requestOptions, cancellationToken: context.CancellationToken).ConfigureAwait(false)
+                : await GetFeatureManagementClient().DeleteFeatureFlagLockAsync(name, label, matchConditions: requestOptions, cancellationToken: context.CancellationToken).ConfigureAwait(false);
+            return response;
+        }
+
+        private Response<FeatureFlag> PutOrDeleteLock(string name, string label, MatchConditions requestOptions, bool isReadOnly, RequestContext context)
+        {
+            Response<FeatureFlag> response = isReadOnly
+                ? GetFeatureManagementClient().PutFeatureFlagLock(name, label, matchConditions: requestOptions, cancellationToken: context.CancellationToken)
+                : GetFeatureManagementClient().DeleteFeatureFlagLock(name, label, matchConditions: requestOptions, cancellationToken: context.CancellationToken);
+            return response;
         }
 
         internal virtual FeatureManagement GetFeatureManagementClient()
