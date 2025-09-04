@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    internal partial class ProtocolSettings : IUtf8JsonSerializable, IJsonModel<ProtocolSettings>
+    public partial class ProtocolSettings : IUtf8JsonSerializable, IJsonModel<ProtocolSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProtocolSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 writer.WritePropertyName("smb"u8);
                 writer.WriteObjectValue(SmbSetting, options);
+            }
+            if (Optional.IsDefined(Nfs))
+            {
+                writer.WritePropertyName("nfs"u8);
+                writer.WriteObjectValue(Nfs, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,6 +83,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             SmbSetting smb = default;
+            NfsSetting nfs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,13 +97,22 @@ namespace Azure.ResourceManager.Storage.Models
                     smb = SmbSetting.DeserializeSmbSetting(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("nfs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nfs = NfsSetting.DeserializeNfsSetting(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ProtocolSettings(smb, serializedAdditionalRawData);
+            return new ProtocolSettings(smb, nfs, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -123,6 +138,26 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     builder.Append("  smb: ");
                     BicepSerializationHelpers.AppendChildObject(builder, SmbSetting, options, 2, false, "  smb: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("Required", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nfs: ");
+                builder.AppendLine("{");
+                builder.AppendLine("    encryptionInTransit: {");
+                builder.Append("      required: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("    }");
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Nfs))
+                {
+                    builder.Append("  nfs: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Nfs, options, 2, false, "  nfs: ");
                 }
             }
 
