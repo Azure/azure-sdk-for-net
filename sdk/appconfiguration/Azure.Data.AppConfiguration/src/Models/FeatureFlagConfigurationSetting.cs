@@ -117,23 +117,6 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Gets or sets a description of the feature.
-        /// </summary>
-        public string Description
-        {
-            get
-            {
-                CheckValid();
-                return _description;
-            }
-            set
-            {
-                CheckValid();
-                _description = value;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a display name for the feature to use for display rather than the ID.
         /// </summary>
         public string DisplayName
