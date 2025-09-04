@@ -30,7 +30,7 @@ namespace Azure.Identity
         internal const string InteractiveLoginRequired = "Azure Developer CLI could not login. Interactive login is required.";
         internal const string AzdCLIInternalError = "AzdCLIInternalError: The command failed with an unexpected error. Here is the traceback:";
         internal const string ClaimsChallengeLoginFormat = "Azure Developer CLI authentication requires multi-factor authentication or additional claims. Please run '{0}' to re-authenticate with the required claims. After completing login, retry the operation.";
-        internal const string AzdUnknownClaimsFlagError = "Claims challenges are not supported by the installed Azure Developer CLI version. Please update to version 1.18.1 or later.";
+        internal const string AzdUnknownClaimsFlagError = "Azure Developer CLI authentication requires multi-factor authentication or additional claims. However, claims challenges are not supported by the installed Azure Developer CLI version. Please update to version 1.18.1 or later.";
         internal TimeSpan ProcessTimeout { get; private set; }
 
         private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
@@ -151,7 +151,7 @@ namespace Azure.Identity
                 // If an older azd version doesn't recognize the --claims flag, surface explicit guidance to update.
                 if (!string.IsNullOrWhiteSpace(context.Claims) && exception.Message.IndexOf("unknown flag: --claims", StringComparison.OrdinalIgnoreCase) >= 0)
                 {
-                    throw new CredentialUnavailableException(AzdUnknownClaimsFlagError);
+                    throw new AuthenticationFailedException(AzdUnknownClaimsFlagError);
                 }
 
                 // If a claims challenge was provided we attempted to invoke 'azd auth token' including the claims so azd can persist them.
