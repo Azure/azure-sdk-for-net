@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.5 (Unreleased)
-
-### Features Added
+## 1.3.0 (2025-09-04)
 
 ### Breaking Changes
 
 - Deprecated `SharedTokenCacheCredentialBrokerOptions`. The supporting credential (`SharedTokenCacheCredential`) was a legacy mechanism for authenticating clients using credentials provided to Visual Studio. For brokered authentication, consider using `InteractiveBrowserCredential` instead.
-
-### Bugs Fixed
 
 ### Other Changes
 
