@@ -5,13 +5,16 @@ description: 'Identify languages configured in the TypeSpec project and add it t
 **Goal**: Identify languages configured in the TypeSpec project and generate the json object with language and package name.
 1. Identify the language emitter configuration in the `tspconfig.yaml` file in the TypeSpec project root.
 2. Identify the package name or namespace for each language emitter.
+   - For Java and Python, use `package-dir` to get the package name.
+   - For .NET, use namespace property to get package name.
+   - For JavaScript, use `packagedetails:name` property to get package name.
+   - For Go, use module name and remove `github.com/Azure/azure-sdk-for-go/` to get package name
 3. Map the language name in emitter to one of the following in Pascal case(except .NET):
    - .NET
    - Java
    - Python
    - JavaScript
    - Go
-4. Remove `github.com/Azure/azure-sdk-for-go/` from Go package name.
 4. Create a JSON array object with the following structure:
    ```json
    [
