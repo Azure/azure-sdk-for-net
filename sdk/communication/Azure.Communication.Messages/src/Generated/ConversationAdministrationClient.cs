@@ -986,7 +986,6 @@ namespace Azure.Communication.Messages
             uri.AppendPath(conversationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
             request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             return message;
@@ -1004,7 +1003,6 @@ namespace Azure.Communication.Messages
             uri.AppendPath(":terminate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
             request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             return message;
