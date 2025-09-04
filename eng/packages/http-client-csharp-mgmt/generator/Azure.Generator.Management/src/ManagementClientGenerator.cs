@@ -51,6 +51,7 @@ namespace Azure.Generator.Management
             // Include Azure.ResourceManager
             AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
             // renaming should come first
+            AddVisitor(new FlattenPropertyVisitor());
             AddVisitor(new NameVisitor());
             AddVisitor(new SerializationVisitor());
             AddVisitor(new SafeFlattenVisitor());

@@ -22,15 +22,18 @@ namespace MgmtTypeSpec
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
         /// <param name="property"></param>
         /// <param name="anotherProperty"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="property"/> or <paramref name="anotherProperty"/> is null. </exception>
-        public BarSettingsResourceData(BarQuotaProperties @property, BarQuotaProperties anotherProperty)
+        /// <param name="flattenedNestedProperty"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="property"/>, <paramref name="anotherProperty"/> or <paramref name="flattenedNestedProperty"/> is null. </exception>
+        public BarSettingsResourceData(BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarQuotaProperties flattenedNestedProperty)
         {
             Argument.AssertNotNull(@property, nameof(@property));
             Argument.AssertNotNull(anotherProperty, nameof(anotherProperty));
+            Argument.AssertNotNull(flattenedNestedProperty, nameof(flattenedNestedProperty));
 
             StringArray = new ChangeTrackingList<string>();
             Property = @property;
             AnotherProperty = anotherProperty;
+            FlattenedNestedProperty = flattenedNestedProperty;
         }
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
@@ -43,13 +46,15 @@ namespace MgmtTypeSpec
         /// <param name="stringArray"></param>
         /// <param name="property"></param>
         /// <param name="anotherProperty"></param>
-        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty) : base(id, name, resourceType, systemData)
+        /// <param name="flattenedNestedProperty"></param>
+        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarQuotaProperties flattenedNestedProperty) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             StringArray = stringArray;
             Property = @property;
             AnotherProperty = anotherProperty;
+            FlattenedNestedProperty = flattenedNestedProperty;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -63,6 +68,9 @@ namespace MgmtTypeSpec
 
         /// <summary> Gets or sets the AnotherProperty. </summary>
         internal BarQuotaProperties AnotherProperty { get; set; }
+
+        /// <summary> Gets or sets the FlattenedNestedProperty. </summary>
+        internal BarQuotaProperties FlattenedNestedProperty { get; set; }
 
         /// <summary> enabled. </summary>
         public bool? IsEnabled
@@ -96,6 +104,19 @@ namespace MgmtTypeSpec
             set
             {
                 AnotherProperty = value.HasValue ? new BarQuotaProperties(value.Value) : default;
+            }
+        }
+
+        /// <summary> enabled. </summary>
+        public int? FlattenedNestedPropertyLeft
+        {
+            get
+            {
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.Left;
+            }
+            set
+            {
+                FlattenedNestedProperty = value.HasValue ? new BarQuotaProperties(value.Value) : default;
             }
         }
     }

@@ -112,8 +112,9 @@ namespace MgmtTypeSpec.Models
         /// <param name="stringArray"></param>
         /// <param name="propertyLeft"> enabled. </param>
         /// <param name="anotherPropertyLeft"> enabled. </param>
+        /// <param name="flattenedNestedPropertyLeft"> enabled. </param>
         /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsResourceData"/> instance for mocking. </returns>
-        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default)
+        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, int? flattenedNestedPropertyLeft = default)
         {
             stringArray ??= new ChangeTrackingList<string>();
 
@@ -126,7 +127,8 @@ namespace MgmtTypeSpec.Models
                 isEnabled is null ? default : new BarSettingsProperties(isEnabled, new Dictionary<string, BinaryData>()),
                 stringArray.ToList(),
                 propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, new Dictionary<string, BinaryData>()),
-                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, new Dictionary<string, BinaryData>()));
+                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, new Dictionary<string, BinaryData>()),
+                flattenedNestedPropertyLeft is null ? default : new BarQuotaProperties(flattenedNestedPropertyLeft.Value, new Dictionary<string, BinaryData>()));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
