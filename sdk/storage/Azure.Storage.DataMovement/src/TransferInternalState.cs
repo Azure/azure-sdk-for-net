@@ -6,16 +6,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Defines the state of the transfer
     /// </summary>
-    internal class TransferInternalState
+    internal class TransferInternalState : IDisposable
     {
         private string _id;
         private TransferStatus _status;
+
+        public delegate bool RemoveTransferDelegate(string transferId);
+        private RemoveTransferDelegate _removeTransfer;
 
         public TaskCompletionSource<TransferStatus> CompletionSource;
 
@@ -26,12 +30,15 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Constructor to resume current jobs
         /// </summary>
+        /// <param name="removeTransferDelegate">Delegate to call to remove transfer from the respective TransferManager.</param>
         /// <param name="id">The transfer ID of the transfer object.</param>
         /// <param name="status">The Transfer Status of the Transfer. See <see cref="TransferStatus"/>.</param>
         public TransferInternalState(
+            RemoveTransferDelegate removeTransferDelegate,
             string id = default,
             TransferStatus status = default)
         {
+            _removeTransfer = removeTransferDelegate ?? throw new ArgumentNullException(nameof(removeTransferDelegate));
             _id = string.IsNullOrEmpty(id) ? Guid.NewGuid().ToString() : id;
             _status = status;
             CompletionSource = new TaskCompletionSource<TransferStatus>(
@@ -42,6 +49,14 @@ namespace Azure.Storage.DataMovement
                 CompletionSource.TrySetResult(status);
             }
             CancellationTokenSource = new CancellationTokenSource();
+        }
+
+        public void Dispose()
+        {
+            // Dispose of the CancellationTokenSource to release resources if not already disposed.
+            CancellationTokenSource?.Dispose();
+            CompletionSource?.TrySetCanceled();
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -98,7 +113,11 @@ namespace Azure.Storage.DataMovement
                     // If the _completionSource has been cancelled or the exception
                     // has been set, we don't need to check if TrySetResult returns false
                     // because it's acceptable to cancel or have an error occur before then.
+
                     CompletionSource.TrySetResult(_status);
+
+                    // Tell the transfer manager to clean up the completed/paused job.
+                    _removeTransfer(_id);
                 }
                 return true;
             }
@@ -133,6 +152,9 @@ namespace Azure.Storage.DataMovement
             if (!CancellationTokenSource.IsCancellationRequested)
             {
                 CancellationTokenSource.Cancel();
+                // Dispose the CancellationTokenSource after cancellation to release resources.
+                // CancellationTokens created from this CancellationTokenSource are still valid.
+                CancellationTokenSource.Dispose();
                 return true;
             }
             return false;
