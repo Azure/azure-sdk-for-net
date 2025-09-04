@@ -74,15 +74,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             await Task.WhenAll(partitionPropertiesTasks).ConfigureAwait(false);
             EventProcessorCheckpoint[] checkpoints = null;
 
+            // Query the eventhub in batches to avoid resource exhaustion
+            var batchSize = partitions.Length < 10 ? partitions.Length : 50; // find the optimal batch size
+
             try
             {
-                checkpoints = await Task.WhenAll(checkpointTasks).ConfigureAwait(false);
+                var checkpointsList = new List<EventProcessorCheckpoint>();
+                var checkpointTaskList = checkpointTasks.ToList();
+
+                for (int i = 0; i < checkpointTaskList.Count; i += batchSize)
+                {
+                    var batch = checkpointTaskList.Skip(i).Take(batchSize);
+                    var batchResults = await Task.WhenAll(batch).ConfigureAwait(false);
+                    checkpointsList.AddRange(batchResults);
+                }
+                checkpoints = checkpointsList.ToArray();
             }
             catch (Exception e)
             {
                 _logger.LogWarning($"Encountered an exception while getting checkpoints for Event Hub '{_client.EventHubName}' used for scaling. Error: {e.Message}");
             }
-
             return CreateTriggerMetrics(partitionPropertiesTasks.Select(t => t.Result).ToList(), checkpoints);
         }
 
