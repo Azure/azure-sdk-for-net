@@ -1,4 +1,4 @@
-# Azure.Provisioning.Kusto client library for .NET
+# Azure Provisioning Kusto client library for .NET
 
 Azure.Provisioning.Kusto simplifies declarative resource provisioning in .NET.
 
@@ -21,6 +21,10 @@ dotnet add package Azure.Provisioning.Kusto
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
+
+## Examples
+
+Examples will be added later.
 
 ## Troubleshooting
 
