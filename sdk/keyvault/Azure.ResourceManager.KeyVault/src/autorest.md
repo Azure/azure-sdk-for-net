@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: KeyVault
 namespace: Azure.ResourceManager.KeyVault
-require: https://github.com/Azure/azure-rest-api-specs/blob/ceb81cf0f16b76604c88ec6b541f0e09d9ca8963/specification/keyvault/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/9d67e86a7617c5e7851b1a1e10e9a8537838f2a9/specification/keyvault/resource-manager/readme.md
 #tag: package-2023-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -80,7 +80,6 @@ rename-mapping:
   CheckMhsmNameAvailabilityResult: ManagedHsmNameAvailabilityResult
   CheckMhsmNameAvailabilityResult.nameAvailable : IsNameAvailable
   CheckMhsmNameAvailabilityParameters: MhsmNameAvailabilityParameters
-  Reason: ManagedHsmNameUnavailableReason
   ActivationStatus: ManagedHSMSecurityDomainActivationStatus
   Attributes: SecretBaseAttributes
   GeoReplicationRegionProvisioningState: ManagedHsmGeoReplicatedRegionProvisioningState
@@ -89,12 +88,8 @@ rename-mapping:
   MhsmPrivateEndpointConnectionItem: ManagedHsmPrivateEndpointConnectionItemData
   MhsmPrivateEndpointConnectionItem.id: -|arm-id
   MhsmPrivateLinkResource: ManagedHsmPrivateLinkResourceData
-  ActionsRequired: ManagedHsmActionsRequiredMessage
-  NetworkRuleAction: ManagedHsmNetworkRuleAction
-  NetworkRuleBypassOptions: ManagedHsmNetworkRuleBypassOption
   MhsmVirtualNetworkRule.id: SubnetId|arm-id
   PublicNetworkAccess: ManagedHsmPublicNetworkAccess
-  CreateMode: ManagedHsmCreateMode
   ManagedHsmProperties.networkAcls: NetworkRuleSet
   MhsmipRule: ManagedHsmIPRule
   DeletedManagedHsmProperties.mhsmId: -|arm-id
@@ -134,6 +129,14 @@ rename-mapping:
   ManagedHsmKeyAttributes.enabled: isEnabled
   ManagedHsmKeyAttributes.exportable: canExported
   ManagedHsmKeyProperties.kty: keyType
+  VaultProvisioningState: KeyVaultProvisioningState
+  ProvisioningState: ManagedHsmProvisioningState
+  CreateMode: KeyVaultCreateMode
+  PrivateEndpointServiceConnectionStatus: KeyVaultPrivateEndpointServiceConnectionStatus
+  NetworkRuleBypassOptions: KeyVaultNetworkRuleBypassOption
+  ActionsRequired: KeyVaultActionsRequiredMessage
+  NetworkRuleAction: KeyVaultNetworkRuleAction
+  Reason: KeyVaultNameUnavailableReason
 
 prompted-enum-values: Default
 
@@ -246,19 +249,11 @@ directive:
             }
       };
       $.MHSMPrivateEndpointConnectionProperties.properties.provisioningState['$ref'] = '#/definitions/MHSMPrivateEndpointConnectionProvisioningState';
-  # Resolve the issue of the missing related Tag methods in the KeyVaultResource class.
-  - from: openapi.json
-    where: $.definitions.Vault.properties
-    transform: >
-      $.tags['readOnly'] = false;
-      $.location['readOnly'] = false;
   # The directive processing in the above managedHsm.json and keyvault.json files is similar.
   - from: openapi.json
-    where: $.definitions
+    where: $.definitions.VaultCheckNameAvailabilityParameters.properties
     transform: >
-      $.VaultProvisioningState['x-ms-enum']['name'] = 'KeyVaultProvisioningState';
-      $.ProvisioningState['x-ms-enum']['name'] = 'ManagedHsmProvisioningState';
-      $.VaultCheckNameAvailabilityParameters.properties.type['x-ms-constant'] = true;
+      $.type['x-ms-constant'] = true;
   # The following are all merged from multiple JSON files into one JSON file,
   # where multiple nodes in the definitions reference the same node (with different original names, but currently the same).
   - from: openapi.json
@@ -304,7 +299,6 @@ directive:
           ]
       };
       $.ManagedHsmProperties.properties.createMode['$ref'] = '#/definitions/MHSMCreateMode';
-      $.CreateMode['x-ms-enum']['name'] = 'KeyVaultCreateMode';
   - from: openapi.json
     where: $.definitions
     transform: >
@@ -323,7 +317,6 @@ directive:
           }
       };
       $.MHSMPrivateLinkServiceConnectionState.properties.status['$ref'] = '#/definitions/MHSMPrivateEndpointServiceConnectionStatus';
-      $.PrivateEndpointServiceConnectionStatus['x-ms-enum']['name'] = 'KeyVaultPrivateEndpointServiceConnectionStatus';
   - from: openapi.json
     where: $.definitions
     transform: >
@@ -341,7 +334,6 @@ directive:
           }
       };
       $.CheckMhsmNameAvailabilityResult.properties.reason['$ref'] = '#/definitions/MHSMReason';
-      $.Reason['x-ms-enum']['name'] = 'KeyVaultNameUnavailableReason';
       $.Reason['x-ms-enum']['modelAsString'] = false;
   - from: openapi.json
     where: $.definitions
@@ -359,7 +351,6 @@ directive:
           }
       };
       $.MHSMNetworkRuleSet.properties.bypass['$ref'] = '#/definitions/MHSMNetworkRuleBypassOptions';
-      $.NetworkRuleBypassOptions['x-ms-enum']['name'] = 'KeyVaultNetworkRuleBypassOption';
       $.MHSMNetworkRuleAction = {
           "type": "string",
           "description": "The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated.",
@@ -373,7 +364,6 @@ directive:
           }
       };
       $.MHSMNetworkRuleSet.properties.defaultAction['$ref'] = '#/definitions/MHSMNetworkRuleAction';
-      $.NetworkRuleAction['x-ms-enum']['name'] = 'KeyVaultNetworkRuleAction';
   - from: openapi.json
     where: $.definitions
     transform: >
@@ -389,5 +379,4 @@ directive:
           }
       };
       $.MHSMPrivateLinkServiceConnectionState.properties.actionsRequired['$ref'] = '#/definitions/MHSMActionsRequired';
-      $.ActionsRequired['x-ms-enum']['name'] = 'KeyVaultActionsRequiredMessage';
 ```
