@@ -30,6 +30,7 @@ List<Specification> rpSpecs =
     new KeyVaultSpecification(),
     new KubernetesSpecification(),
     new KubernetesConfigurationSpecification(),
+    new KustoSpecification(),
     new OperationalInsightsSpecification(),
     new PostgreSqlSpecification(),
     new RedisSpecification(),
