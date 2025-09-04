@@ -213,12 +213,12 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="trustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
+        /// <param name="isTrustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
         /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
         /// <param name="ipRules"> List of IpRules. </param>
         /// <returns> A new <see cref="Relay.RelayNetworkRuleSetData"/> instance for mocking. </returns>
-        public static RelayNetworkRuleSetData RelayNetworkRuleSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? trustedServiceAccessEnabled = null, RelayNetworkRuleSetDefaultAction? defaultAction = null, RelayPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<RelayNetworkRuleSetIPRule> ipRules = null)
+        public static RelayNetworkRuleSetData RelayNetworkRuleSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isTrustedServiceAccessEnabled = null, RelayNetworkRuleSetDefaultAction? defaultAction = null, RelayPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<RelayNetworkRuleSetIPRule> ipRules = null)
         {
             ipRules ??= new List<RelayNetworkRuleSetIPRule>();
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Relay.Models
                 name,
                 resourceType,
                 systemData,
-                trustedServiceAccessEnabled,
+                isTrustedServiceAccessEnabled,
                 defaultAction,
                 publicNetworkAccess,
                 ipRules?.ToList(),
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Relay.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RelayNetworkRuleSetData RelayNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelayNetworkRuleSetDefaultAction? defaultAction, RelayPublicNetworkAccess? publicNetworkAccess, IEnumerable<RelayNetworkRuleSetIPRule> ipRules)
         {
-            return RelayNetworkRuleSetData(id: id, name: name, resourceType: resourceType, systemData: systemData, trustedServiceAccessEnabled: default, defaultAction: defaultAction, publicNetworkAccess: publicNetworkAccess, ipRules: ipRules);
+            return RelayNetworkRuleSetData(id: id, name: name, resourceType: resourceType, systemData: systemData, isTrustedServiceAccessEnabled: default, defaultAction: defaultAction, publicNetworkAccess: publicNetworkAccess, ipRules: ipRules);
         }
     }
 }

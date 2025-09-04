@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.Relay
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="trustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
+        /// <param name="isTrustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
         /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
         /// <param name="ipRules"> List of IpRules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RelayNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? trustedServiceAccessEnabled, RelayNetworkRuleSetDefaultAction? defaultAction, RelayPublicNetworkAccess? publicNetworkAccess, IList<RelayNetworkRuleSetIPRule> ipRules, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RelayNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isTrustedServiceAccessEnabled, RelayNetworkRuleSetDefaultAction? defaultAction, RelayPublicNetworkAccess? publicNetworkAccess, IList<RelayNetworkRuleSetIPRule> ipRules, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            TrustedServiceAccessEnabled = trustedServiceAccessEnabled;
+            IsTrustedServiceAccessEnabled = isTrustedServiceAccessEnabled;
             DefaultAction = defaultAction;
             PublicNetworkAccess = publicNetworkAccess;
             IPRules = ipRules;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary> Value that indicates whether Trusted Service Access is Enabled or not. </summary>
-        public bool? TrustedServiceAccessEnabled { get; set; }
+        public bool? IsTrustedServiceAccessEnabled { get; set; }
         /// <summary> Default Action for Network Rule Set. </summary>
         public RelayNetworkRuleSetDefaultAction? DefaultAction { get; set; }
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>

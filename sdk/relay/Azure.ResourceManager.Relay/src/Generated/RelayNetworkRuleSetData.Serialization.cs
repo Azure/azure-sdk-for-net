@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.Relay
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TrustedServiceAccessEnabled))
+            if (Optional.IsDefined(IsTrustedServiceAccessEnabled))
             {
                 writer.WritePropertyName("trustedServiceAccessEnabled"u8);
-                writer.WriteBooleanValue(TrustedServiceAccessEnabled.Value);
+                writer.WriteBooleanValue(IsTrustedServiceAccessEnabled.Value);
             }
             if (Optional.IsDefined(DefaultAction))
             {

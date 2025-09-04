@@ -65,6 +65,7 @@ rename-mapping:
   HybridConnection.properties.requiresClientAuthorization: IsClientAuthorizationRequired
   AccessKeys: RelayAccessKeys
   RegenerateAccessKeyParameters: RelayRegenerateAccessKeyContent
+  NetworkRuleSet.properties.trustedServiceAccessEnabled: IsTrustedServiceAccessEnabled
   NetworkRuleSet: RelayNetworkRuleSet
   DefaultAction: RelayNetworkRuleSetDefaultAction
   NetworkRuleIPAction: RelayNetworkRuleIPAction
