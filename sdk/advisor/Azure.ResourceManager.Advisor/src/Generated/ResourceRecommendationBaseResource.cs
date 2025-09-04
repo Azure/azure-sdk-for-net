@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Advisor.Models;
 
 namespace Azure.ResourceManager.Advisor
 {
@@ -31,8 +32,8 @@ namespace Azure.ResourceManager.Advisor
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _resourceRecommendationBaseRecommendationsClientDiagnostics;
-        private readonly RecommendationsRestOperations _resourceRecommendationBaseRecommendationsRestClient;
+        private readonly ClientDiagnostics _resourceRecommendationBaseResourceRecommendationBasesClientDiagnostics;
+        private readonly ResourceRecommendationBasesRestOperations _resourceRecommendationBaseResourceRecommendationBasesRestClient;
         private readonly ResourceRecommendationBaseData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -57,9 +58,9 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ResourceRecommendationBaseResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _resourceRecommendationBaseRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string resourceRecommendationBaseRecommendationsApiVersion);
-            _resourceRecommendationBaseRecommendationsRestClient = new RecommendationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceRecommendationBaseRecommendationsApiVersion);
+            _resourceRecommendationBaseResourceRecommendationBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string resourceRecommendationBaseResourceRecommendationBasesApiVersion);
+            _resourceRecommendationBaseResourceRecommendationBasesRestClient = new ResourceRecommendationBasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceRecommendationBaseResourceRecommendationBasesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -102,11 +103,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Suppressions_Get</description>
+        /// <description>SuppressionContract_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -133,11 +134,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Suppressions_Get</description>
+        /// <description>SuppressionContract_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -164,11 +165,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Recommendations_Get</description>
+        /// <description>ResourceRecommendationBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,11 +180,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ResourceRecommendationBaseResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseResource.Get");
+            using var scope = _resourceRecommendationBaseResourceRecommendationBasesClientDiagnostics.CreateScope("ResourceRecommendationBaseResource.Get");
             scope.Start();
             try
             {
-                var response = await _resourceRecommendationBaseRecommendationsRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceRecommendationBaseResourceRecommendationBasesRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ResourceRecommendationBaseResource(Client, response.Value), response.GetRawResponse());
@@ -204,11 +205,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Recommendations_Get</description>
+        /// <description>ResourceRecommendationBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -219,13 +220,97 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ResourceRecommendationBaseResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseResource.Get");
+            using var scope = _resourceRecommendationBaseResourceRecommendationBasesClientDiagnostics.CreateScope("ResourceRecommendationBaseResource.Get");
             scope.Start();
             try
             {
-                var response = _resourceRecommendationBaseRecommendationsRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                var response = _resourceRecommendationBaseResourceRecommendationBasesRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ResourceRecommendationBaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update the tracked properties of a Recommendation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceRecommendationBase_Patch</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> The properties to update on the recommendation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ResourceRecommendationBaseResource>> UpdateAsync(ResourceRecommendationBasePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _resourceRecommendationBaseResourceRecommendationBasesClientDiagnostics.CreateScope("ResourceRecommendationBaseResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _resourceRecommendationBaseResourceRecommendationBasesRestClient.PatchAsync(Id.Parent, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ResourceRecommendationBaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update the tracked properties of a Recommendation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceRecommendationBase_Patch</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> The properties to update on the recommendation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ResourceRecommendationBaseResource> Update(ResourceRecommendationBasePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _resourceRecommendationBaseResourceRecommendationBasesClientDiagnostics.CreateScope("ResourceRecommendationBaseResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _resourceRecommendationBaseResourceRecommendationBasesRestClient.Patch(Id.Parent, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new ResourceRecommendationBaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

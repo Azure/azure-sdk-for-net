@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Recommendations_Get</description>
+        /// <description>ResourceRecommendationBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Recommendations_Get</description>
+        /// <description>ResourceRecommendationBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,6 +143,42 @@ namespace Azure.ResourceManager.Advisor.Mocking
         {
             SuppressionContractResource.ValidateResourceId(id);
             return new SuppressionContractResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AdvisorScoreEntityResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AdvisorScoreEntityResource.CreateResourceIdentifier" /> to create an <see cref="AdvisorScoreEntityResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AdvisorScoreEntityResource"/> object. </returns>
+        public virtual AdvisorScoreEntityResource GetAdvisorScoreEntityResource(ResourceIdentifier id)
+        {
+            AdvisorScoreEntityResource.ValidateResourceId(id);
+            return new AdvisorScoreEntityResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AdvisorAssessmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AdvisorAssessmentResource.CreateResourceIdentifier" /> to create an <see cref="AdvisorAssessmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AdvisorAssessmentResource"/> object. </returns>
+        public virtual AdvisorAssessmentResource GetAdvisorAssessmentResource(ResourceIdentifier id)
+        {
+            AdvisorAssessmentResource.ValidateResourceId(id);
+            return new AdvisorAssessmentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AdvisorResiliencyReviewResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AdvisorResiliencyReviewResource.CreateResourceIdentifier" /> to create an <see cref="AdvisorResiliencyReviewResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AdvisorResiliencyReviewResource"/> object. </returns>
+        public virtual AdvisorResiliencyReviewResource GetAdvisorResiliencyReviewResource(ResourceIdentifier id)
+        {
+            AdvisorResiliencyReviewResource.ValidateResourceId(id);
+            return new AdvisorResiliencyReviewResource(Client, id);
         }
     }
 }

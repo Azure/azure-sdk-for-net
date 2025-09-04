@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RecommendationMetadata_Get</description>
+        /// <description>MetadataEntity_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RecommendationMetadata_Get</description>
+        /// <description>MetadataEntity_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

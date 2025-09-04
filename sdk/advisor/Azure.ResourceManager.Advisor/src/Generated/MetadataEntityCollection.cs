@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Advisor
     /// </summary>
     public partial class MetadataEntityCollection : ArmCollection, IEnumerable<MetadataEntityResource>, IAsyncEnumerable<MetadataEntityResource>
     {
-        private readonly ClientDiagnostics _metadataEntityRecommendationMetadataClientDiagnostics;
-        private readonly RecommendationMetadataRestOperations _metadataEntityRecommendationMetadataRestClient;
+        private readonly ClientDiagnostics _metadataEntityClientDiagnostics;
+        private readonly MetadataEntitiesRestOperations _metadataEntityRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MetadataEntityCollection"/> class for mocking. </summary>
         protected MetadataEntityCollection()
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal MetadataEntityCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _metadataEntityRecommendationMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", MetadataEntityResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MetadataEntityResource.ResourceType, out string metadataEntityRecommendationMetadataApiVersion);
-            _metadataEntityRecommendationMetadataRestClient = new RecommendationMetadataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, metadataEntityRecommendationMetadataApiVersion);
+            _metadataEntityClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", MetadataEntityResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MetadataEntityResource.ResourceType, out string metadataEntityApiVersion);
+            _metadataEntityRestClient = new MetadataEntitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, metadataEntityApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RecommendationMetadata_Get</description>
+        /// <description>MetadataEntity_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _metadataEntityRecommendationMetadataClientDiagnostics.CreateScope("MetadataEntityCollection.Get");
+            using var scope = _metadataEntityClientDiagnostics.CreateScope("MetadataEntityCollection.Get");
             scope.Start();
             try
             {
-                var response = await _metadataEntityRecommendationMetadataRestClient.GetAsync(name, cancellationToken).ConfigureAwait(false);
+                var response = await _metadataEntityRestClient.GetAsync(name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MetadataEntityResource(Client, response.Value), response.GetRawResponse());
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RecommendationMetadata_Get</description>
+        /// <description>MetadataEntity_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _metadataEntityRecommendationMetadataClientDiagnostics.CreateScope("MetadataEntityCollection.Get");
+            using var scope = _metadataEntityClientDiagnostics.CreateScope("MetadataEntityCollection.Get");
             scope.Start();
             try
             {
-                var response = _metadataEntityRecommendationMetadataRestClient.Get(name, cancellationToken);
+                var response = _metadataEntityRestClient.Get(name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MetadataEntityResource(Client, response.Value), response.GetRawResponse());
@@ -151,11 +151,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RecommendationMetadata_List</description>
+        /// <description>MetadataEntity_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> An async collection of <see cref="MetadataEntityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MetadataEntityResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _metadataEntityRecommendationMetadataRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _metadataEntityRecommendationMetadataRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MetadataEntityResource(Client, MetadataEntityData.DeserializeMetadataEntityData(e)), _metadataEntityRecommendationMetadataClientDiagnostics, Pipeline, "MetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _metadataEntityRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _metadataEntityRestClient.CreateListNextPageRequest(nextLink);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MetadataEntityResource(Client, MetadataEntityData.DeserializeMetadataEntityData(e)), _metadataEntityClientDiagnostics, Pipeline, "MetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RecommendationMetadata_List</description>
+        /// <description>MetadataEntity_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -197,9 +197,9 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> A collection of <see cref="MetadataEntityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MetadataEntityResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _metadataEntityRecommendationMetadataRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _metadataEntityRecommendationMetadataRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MetadataEntityResource(Client, MetadataEntityData.DeserializeMetadataEntityData(e)), _metadataEntityRecommendationMetadataClientDiagnostics, Pipeline, "MetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _metadataEntityRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _metadataEntityRestClient.CreateListNextPageRequest(nextLink);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MetadataEntityResource(Client, MetadataEntityData.DeserializeMetadataEntityData(e)), _metadataEntityClientDiagnostics, Pipeline, "MetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -211,11 +211,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RecommendationMetadata_Get</description>
+        /// <description>MetadataEntity_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -231,11 +231,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _metadataEntityRecommendationMetadataClientDiagnostics.CreateScope("MetadataEntityCollection.Exists");
+            using var scope = _metadataEntityClientDiagnostics.CreateScope("MetadataEntityCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _metadataEntityRecommendationMetadataRestClient.GetAsync(name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _metadataEntityRestClient.GetAsync(name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -254,11 +254,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RecommendationMetadata_Get</description>
+        /// <description>MetadataEntity_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _metadataEntityRecommendationMetadataClientDiagnostics.CreateScope("MetadataEntityCollection.Exists");
+            using var scope = _metadataEntityClientDiagnostics.CreateScope("MetadataEntityCollection.Exists");
             scope.Start();
             try
             {
-                var response = _metadataEntityRecommendationMetadataRestClient.Get(name, cancellationToken: cancellationToken);
+                var response = _metadataEntityRestClient.Get(name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -297,11 +297,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RecommendationMetadata_Get</description>
+        /// <description>MetadataEntity_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -317,11 +317,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _metadataEntityRecommendationMetadataClientDiagnostics.CreateScope("MetadataEntityCollection.GetIfExists");
+            using var scope = _metadataEntityClientDiagnostics.CreateScope("MetadataEntityCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _metadataEntityRecommendationMetadataRestClient.GetAsync(name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _metadataEntityRestClient.GetAsync(name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<MetadataEntityResource>(response.GetRawResponse());
                 return Response.FromValue(new MetadataEntityResource(Client, response.Value), response.GetRawResponse());
@@ -342,11 +342,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RecommendationMetadata_Get</description>
+        /// <description>MetadataEntity_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -362,11 +362,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _metadataEntityRecommendationMetadataClientDiagnostics.CreateScope("MetadataEntityCollection.GetIfExists");
+            using var scope = _metadataEntityClientDiagnostics.CreateScope("MetadataEntityCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _metadataEntityRecommendationMetadataRestClient.Get(name, cancellationToken: cancellationToken);
+                var response = _metadataEntityRestClient.Get(name, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<MetadataEntityResource>(response.GetRawResponse());
                 return Response.FromValue(new MetadataEntityResource(Client, response.Value), response.GetRawResponse());
