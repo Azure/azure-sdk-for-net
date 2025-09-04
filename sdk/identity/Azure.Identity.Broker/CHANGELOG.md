@@ -12,6 +12,9 @@
 
 ### Other Changes
 
+- Updated `Microsoft.Identity.Client.Broker` dependency to version 4.76.0
+- Updated `Azure.Identity` dependency to version 1.15.0
+
 ## 1.3.0-beta.4 (2025-07-11)
 
 ### Features Added
