@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this SystemAssignedIdentityResource created on azure
             // for more information of creating SystemAssignedIdentityResource, please refer to the document of SystemAssignedIdentityResource
-            string scope = "subscriptions/subId/resourceGroups/resourceGroupName/providers/Resource.Provider/resourceType/resourceName/identities/default";
+            string scope = "subscriptions/12345678-1234-5678-9012-123456789012/resourceGroups/resourceGroupName";
             ResourceIdentifier systemAssignedIdentityResourceId = SystemAssignedIdentityResource.CreateResourceIdentifier(scope);
             SystemAssignedIdentityResource systemAssignedIdentity = client.GetSystemAssignedIdentityResource(systemAssignedIdentityResourceId);
 

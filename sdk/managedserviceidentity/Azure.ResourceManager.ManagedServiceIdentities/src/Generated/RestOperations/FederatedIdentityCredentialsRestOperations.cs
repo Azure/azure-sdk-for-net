@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             uri.AppendPath("/providers/Microsoft.ManagedIdentity/userAssignedIdentities/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/federatedIdentityCredentials", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
             {
                 uri.AppendQuery("$top", top.Value, true);
@@ -55,7 +56,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             {
                 uri.AppendQuery("$skiptoken", skiptoken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -73,6 +73,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             uri.AppendPath("/providers/Microsoft.ManagedIdentity/userAssignedIdentities/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/federatedIdentityCredentials", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
             {
                 uri.AppendQuery("$top", top.Value, true);
@@ -81,7 +82,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             {
                 uri.AppendQuery("$skiptoken", skiptoken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         }
 
         /// <summary> Lists all the federated identity credentials under the specified user assigned identity. </summary>
-        /// <param name="subscriptionId"> The Id of the Subscription to which the identity belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="top"> Number of records to return. </param>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         }
 
         /// <summary> Lists all the federated identity credentials under the specified user assigned identity. </summary>
-        /// <param name="subscriptionId"> The Id of the Subscription to which the identity belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="top"> Number of records to return. </param>
@@ -145,6 +145,110 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                         value = FederatedIdentityCredentialsListResult.DeserializeFederatedIdentityCredentialsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string federatedIdentityCredentialResourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedIdentity/userAssignedIdentities/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/federatedIdentityCredentials/", false);
+            uri.AppendPath(federatedIdentityCredentialResourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string federatedIdentityCredentialResourceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedIdentity/userAssignedIdentities/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/federatedIdentityCredentials/", false);
+            uri.AppendPath(federatedIdentityCredentialResourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the federated identity credential. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceName"> The name of the identity resource. </param>
+        /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<FederatedIdentityCredentialData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, federatedIdentityCredentialResourceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        FederatedIdentityCredentialData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((FederatedIdentityCredentialData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the federated identity credential. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceName"> The name of the identity resource. </param>
+        /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<FederatedIdentityCredentialData> Get(string subscriptionId, string resourceGroupName, string resourceName, string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, federatedIdentityCredentialResourceName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        FederatedIdentityCredentialData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((FederatedIdentityCredentialData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -193,7 +297,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         }
 
         /// <summary> Create or update a federated identity credential under the specified user assigned identity. </summary>
-        /// <param name="subscriptionId"> The Id of the Subscription to which the identity belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
@@ -227,7 +331,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         }
 
         /// <summary> Create or update a federated identity credential under the specified user assigned identity. </summary>
-        /// <param name="subscriptionId"> The Id of the Subscription to which the identity belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
@@ -255,110 +359,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                         value = FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string federatedIdentityCredentialResourceName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ManagedIdentity/userAssignedIdentities/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/federatedIdentityCredentials/", false);
-            uri.AppendPath(federatedIdentityCredentialResourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string federatedIdentityCredentialResourceName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ManagedIdentity/userAssignedIdentities/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/federatedIdentityCredentials/", false);
-            uri.AppendPath(federatedIdentityCredentialResourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the federated identity credential. </summary>
-        /// <param name="subscriptionId"> The Id of the Subscription to which the identity belongs. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the identity resource. </param>
-        /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FederatedIdentityCredentialData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, federatedIdentityCredentialResourceName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        FederatedIdentityCredentialData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((FederatedIdentityCredentialData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the federated identity credential. </summary>
-        /// <param name="subscriptionId"> The Id of the Subscription to which the identity belongs. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the identity resource. </param>
-        /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FederatedIdentityCredentialData> Get(string subscriptionId, string resourceGroupName, string resourceName, string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, federatedIdentityCredentialResourceName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        FederatedIdentityCredentialData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((FederatedIdentityCredentialData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         }
 
         /// <summary> Deletes the federated identity credential. </summary>
-        /// <param name="subscriptionId"> The Id of the Subscription to which the identity belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         }
 
         /// <summary> Deletes the federated identity credential. </summary>
-        /// <param name="subscriptionId"> The Id of the Subscription to which the identity belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 
         /// <summary> Lists all the federated identity credentials under the specified user assigned identity. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Id of the Subscription to which the identity belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="top"> Number of records to return. </param>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 
         /// <summary> Lists all the federated identity credentials under the specified user assigned identity. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Id of the Subscription to which the identity belongs. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="top"> Number of records to return. </param>

@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserAssignedIdentitiesListResult"/>. </summary>
-        /// <param name="value"> The collection of userAssignedIdentities returned by the listing operation. </param>
-        /// <param name="nextLink"> The url to get the next page of results, if any. </param>
+        /// <param name="value"> The Identity items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserAssignedIdentitiesListResult(IReadOnlyList<UserAssignedIdentityData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UserAssignedIdentitiesListResult(IReadOnlyList<UserAssignedIdentityData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The collection of userAssignedIdentities returned by the listing operation. </summary>
+        /// <summary> The Identity items on this page. </summary>
         public IReadOnlyList<UserAssignedIdentityData> Value { get; }
-        /// <summary> The url to get the next page of results, if any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
