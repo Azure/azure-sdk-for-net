@@ -30,6 +30,16 @@ public partial class KustoCluster : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
+    /// Gets or sets the Location.
+    /// </summary>
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
+
+    /// <summary>
     /// The SKU of the cluster.
     /// </summary>
     public KustoSku Sku 
@@ -216,6 +226,16 @@ public partial class KustoCluster : ProvisionableResource
     private BicepValue<KustoClusterNetworkAccessFlag>? _restrictOutboundNetworkAccess;
 
     /// <summary>
+    /// Gets or sets the Tags.
+    /// </summary>
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
+
+    /// <summary>
     /// The cluster&apos;s external tenants.
     /// </summary>
     public BicepList<KustoClusterTrustedExternalTenant> TrustedExternalTenants 
@@ -283,6 +303,15 @@ public partial class KustoCluster : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
+    /// Gets the Id.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
+
+    /// <summary>
     /// Properties of the peer cluster involved in a migration to/from this
     /// cluster.
     /// </summary>
@@ -329,6 +358,15 @@ public partial class KustoCluster : ProvisionableResource
     private BicepValue<string>? _stateReason;
 
     /// <summary>
+    /// Gets the SystemData.
+    /// </summary>
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
+
+    /// <summary>
     /// Indicates whether the cluster is zonal or non-zonal.
     /// </summary>
     public BicepValue<KustoClusterZoneStatus> ZoneStatus 
@@ -359,6 +397,7 @@ public partial class KustoCluster : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _sku = DefineModelProperty<KustoSku>("Sku", ["sku"], isRequired: true);
         _acceptedAudiences = DefineListProperty<AcceptedAudience>("AcceptedAudiences", ["properties", "acceptedAudiences"]);
         _allowedFqdnList = DefineListProperty<string>("AllowedFqdnList", ["properties", "allowedFqdnList"]);
@@ -377,6 +416,7 @@ public partial class KustoCluster : ProvisionableResource
         _publicIPType = DefineProperty<KustoClusterPublicIPType>("PublicIPType", ["properties", "publicIPType"]);
         _publicNetworkAccess = DefineProperty<KustoClusterPublicNetworkAccess>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
         _restrictOutboundNetworkAccess = DefineProperty<KustoClusterNetworkAccessFlag>("RestrictOutboundNetworkAccess", ["properties", "restrictOutboundNetworkAccess"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _trustedExternalTenants = DefineListProperty<KustoClusterTrustedExternalTenant>("TrustedExternalTenants", ["properties", "trustedExternalTenants"]);
         _virtualClusterGraduationProperties = DefineProperty<string>("VirtualClusterGraduationProperties", ["properties", "virtualClusterGraduationProperties"]);
         _virtualNetworkConfiguration = DefineModelProperty<KustoClusterVirtualNetworkConfiguration>("VirtualNetworkConfiguration", ["properties", "virtualNetworkConfiguration"]);
@@ -384,11 +424,13 @@ public partial class KustoCluster : ProvisionableResource
         _clusterUri = DefineProperty<Uri>("ClusterUri", ["properties", "uri"], isOutput: true);
         _dataIngestionUri = DefineProperty<Uri>("DataIngestionUri", ["properties", "dataIngestionUri"], isOutput: true);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _migrationCluster = DefineModelProperty<MigrationClusterProperties>("MigrationCluster", ["properties", "migrationCluster"], isOutput: true);
         _privateEndpointConnections = DefineListProperty<KustoPrivateEndpointConnection>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
         _provisioningState = DefineProperty<KustoProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _state = DefineProperty<KustoClusterState>("State", ["properties", "state"], isOutput: true);
         _stateReason = DefineProperty<string>("StateReason", ["properties", "stateReason"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _zoneStatus = DefineProperty<KustoClusterZoneStatus>("ZoneStatus", ["properties", "zoneStatus"], isOutput: true);
     }
 

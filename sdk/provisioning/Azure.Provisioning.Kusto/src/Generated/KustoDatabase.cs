@@ -7,6 +7,7 @@
 
 using Azure.Core;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 using System;
 
 namespace Azure.Provisioning.Kusto;
@@ -35,6 +36,24 @@ public partial class KustoDatabase : ProvisionableResource
         set { Initialize(); _location!.Assign(value); }
     }
     private BicepValue<AzureLocation>? _location;
+
+    /// <summary>
+    /// Gets the Id.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
+
+    /// <summary>
+    /// Gets the SystemData.
+    /// </summary>
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent KustoCluster.
@@ -69,6 +88,8 @@ public partial class KustoDatabase : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<KustoCluster>("Parent", ["parent"], isRequired: true);
     }
 

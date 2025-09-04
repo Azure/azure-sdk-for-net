@@ -8,6 +8,7 @@
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 using System;
 
 namespace Azure.Provisioning.Kusto;
@@ -113,6 +114,15 @@ public partial class KustoAttachedDatabaseConfiguration : ProvisionableResource
     private BicepList<string>? _attachedDatabaseNames;
 
     /// <summary>
+    /// Gets the Id.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
+
+    /// <summary>
     /// The provisioned state of the resource.
     /// </summary>
     public BicepValue<KustoProvisioningState> ProvisioningState 
@@ -120,6 +130,15 @@ public partial class KustoAttachedDatabaseConfiguration : ProvisionableResource
         get { Initialize(); return _provisioningState!; }
     }
     private BicepValue<KustoProvisioningState>? _provisioningState;
+
+    /// <summary>
+    /// Gets the SystemData.
+    /// </summary>
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent KustoCluster.
@@ -162,7 +181,9 @@ public partial class KustoAttachedDatabaseConfiguration : ProvisionableResource
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _tableLevelSharingProperties = DefineModelProperty<KustoDatabaseTableLevelSharingProperties>("TableLevelSharingProperties", ["properties", "tableLevelSharingProperties"]);
         _attachedDatabaseNames = DefineListProperty<string>("AttachedDatabaseNames", ["properties", "attachedDatabaseNames"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _provisioningState = DefineProperty<KustoProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<KustoCluster>("Parent", ["parent"], isRequired: true);
     }
 

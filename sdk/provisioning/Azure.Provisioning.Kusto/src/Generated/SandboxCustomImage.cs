@@ -5,7 +5,9 @@
 
 #nullable enable
 
+using Azure.Core;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 using System;
 
 namespace Azure.Provisioning.Kusto;
@@ -71,6 +73,15 @@ public partial class SandboxCustomImage : ProvisionableResource
     private BicepValue<string>? _requirementsFileContent;
 
     /// <summary>
+    /// Gets the Id.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
+
+    /// <summary>
     /// The provisioned state of the resource.
     /// </summary>
     public BicepValue<KustoProvisioningState> ProvisioningState 
@@ -78,6 +89,15 @@ public partial class SandboxCustomImage : ProvisionableResource
         get { Initialize(); return _provisioningState!; }
     }
     private BicepValue<KustoProvisioningState>? _provisioningState;
+
+    /// <summary>
+    /// Gets the SystemData.
+    /// </summary>
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent KustoCluster.
@@ -115,7 +135,9 @@ public partial class SandboxCustomImage : ProvisionableResource
         _language = DefineProperty<SandboxCustomImageLanguage>("Language", ["properties", "language"]);
         _languageVersion = DefineProperty<string>("LanguageVersion", ["properties", "languageVersion"]);
         _requirementsFileContent = DefineProperty<string>("RequirementsFileContent", ["properties", "requirementsFileContent"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _provisioningState = DefineProperty<KustoProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<KustoCluster>("Parent", ["parent"], isRequired: true);
     }
 

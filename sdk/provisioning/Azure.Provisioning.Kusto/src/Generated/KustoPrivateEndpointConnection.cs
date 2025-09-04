@@ -7,6 +7,7 @@
 
 using Azure.Core;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 using System;
 
 namespace Azure.Provisioning.Kusto;
@@ -46,6 +47,15 @@ public partial class KustoPrivateEndpointConnection : ProvisionableResource
     private BicepValue<string>? _groupId;
 
     /// <summary>
+    /// Gets the Id.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
+
+    /// <summary>
     /// Gets Id.
     /// </summary>
     public BicepValue<ResourceIdentifier> PrivateEndpointId 
@@ -62,6 +72,15 @@ public partial class KustoPrivateEndpointConnection : ProvisionableResource
         get { Initialize(); return _provisioningState!; }
     }
     private BicepValue<string>? _provisioningState;
+
+    /// <summary>
+    /// Gets the SystemData.
+    /// </summary>
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent KustoCluster.
@@ -98,8 +117,10 @@ public partial class KustoPrivateEndpointConnection : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _connectionState = DefineModelProperty<KustoPrivateLinkServiceConnectionStateProperty>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
         _groupId = DefineProperty<string>("GroupId", ["properties", "groupId"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["properties", "privateEndpoint", "id"], isOutput: true);
         _provisioningState = DefineProperty<string>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<KustoCluster>("Parent", ["parent"], isRequired: true);
     }
 

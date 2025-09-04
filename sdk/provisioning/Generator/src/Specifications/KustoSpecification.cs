@@ -5,8 +5,6 @@ using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Kusto.Models;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -36,8 +34,8 @@ public class KustoSpecification() :
             r.DiscriminatorName = "kind";
             r.DiscriminatorValue = "ReadWrite";
         });
-        RemoveProperty<KustoReadOnlyFollowingDatabase>("Location");
-        RemoveProperty<KustoReadWriteDatabase>("Location");
+        RemoveProperties<KustoReadOnlyFollowingDatabase>("Id", "Name", "Location", "SystemData");
+        RemoveProperties<KustoReadWriteDatabase>("Id", "Name", "Location", "SystemData");
 
         CustomizeResource<KustoCosmosDBDataConnection>(r =>
         {
@@ -63,10 +61,10 @@ public class KustoSpecification() :
             r.DiscriminatorName = "kind";
             r.DiscriminatorValue = "IotHub";
         });
-        RemoveProperty<KustoCosmosDBDataConnection>("Location");
-        RemoveProperty<KustoEventGridDataConnection>("Location");
-        RemoveProperty<KustoEventHubDataConnection>("Location");
-        RemoveProperty<KustoIotHubDataConnection>("Location");
+        RemoveProperties<KustoCosmosDBDataConnection>("Id", "Name", "Location", "SystemData");
+        RemoveProperties<KustoEventGridDataConnection>("Id", "Name", "Location", "SystemData");
+        RemoveProperties<KustoEventHubDataConnection>("Id", "Name", "Location", "SystemData");
+        RemoveProperties<KustoIotHubDataConnection>("Id", "Name", "Location", "SystemData");
     }
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()

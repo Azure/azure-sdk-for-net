@@ -5,7 +5,9 @@
 
 #nullable enable
 
+using Azure.Core;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 using System;
 
 namespace Azure.Provisioning.Kusto;
@@ -76,6 +78,15 @@ public partial class KustoDatabasePrincipalAssignment : ProvisionableResource
     private BicepValue<Guid>? _aadObjectId;
 
     /// <summary>
+    /// Gets the Id.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
+
+    /// <summary>
     /// The principal name.
     /// </summary>
     public BicepValue<string> PrincipalName 
@@ -92,6 +103,15 @@ public partial class KustoDatabasePrincipalAssignment : ProvisionableResource
         get { Initialize(); return _provisioningState!; }
     }
     private BicepValue<KustoProvisioningState>? _provisioningState;
+
+    /// <summary>
+    /// Gets the SystemData.
+    /// </summary>
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// The tenant name of the principal.
@@ -140,8 +160,10 @@ public partial class KustoDatabasePrincipalAssignment : ProvisionableResource
         _role = DefineProperty<KustoDatabasePrincipalRole>("Role", ["properties", "role"]);
         _tenantId = DefineProperty<Guid>("TenantId", ["properties", "tenantId"]);
         _aadObjectId = DefineProperty<Guid>("AadObjectId", ["properties", "aadObjectId"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _principalName = DefineProperty<string>("PrincipalName", ["properties", "principalName"], isOutput: true);
         _provisioningState = DefineProperty<KustoProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _tenantName = DefineProperty<string>("TenantName", ["properties", "tenantName"], isOutput: true);
         _parent = DefineResource<KustoDatabase>("Parent", ["parent"], isRequired: true);
     }

@@ -27,10 +27,12 @@ namespace Azure.Provisioning.Kusto
         public Azure.Provisioning.BicepValue<string> DatabaseNameOverride { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DatabaseNamePrefix { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoDatabaseDefaultPrincipalsModificationKind> DefaultPrincipalsModificationKind { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Kusto.KustoCluster? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.Kusto.KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Kusto.KustoAttachedDatabaseConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
@@ -102,6 +104,7 @@ namespace Azure.Provisioning.Kusto
         public Azure.Provisioning.BicepValue<System.Uri> DataIngestionUri { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoClusterEngineType> EngineType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsAutoStopEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsDiskEncryptionEnabled { get { throw null; } set { } }
@@ -110,6 +113,7 @@ namespace Azure.Provisioning.Kusto
         public Azure.Provisioning.BicepValue<bool> IsStreamingIngestEnabled { get { throw null; } set { } }
         public Azure.Provisioning.Kusto.KustoKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Kusto.KustoLanguageExtension> LanguageExtensionsValue { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.Kusto.MigrationClusterProperties MigrationCluster { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Kusto.OptimizedAutoscale OptimizedAutoscale { get { throw null; } set { } }
@@ -121,6 +125,8 @@ namespace Azure.Provisioning.Kusto
         public Azure.Provisioning.Kusto.KustoSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoClusterState> State { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> StateReason { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Kusto.KustoClusterTrustedExternalTenant> TrustedExternalTenants { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> VirtualClusterGraduationProperties { get { throw null; } set { } }
         public Azure.Provisioning.Kusto.KustoClusterVirtualNetworkConfiguration VirtualNetworkConfiguration { get { throw null; } set { } }
@@ -163,12 +169,14 @@ namespace Azure.Provisioning.Kusto
         public KustoClusterPrincipalAssignment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.Guid> AadObjectId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ClusterPrincipalId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Kusto.KustoCluster? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PrincipalName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoPrincipalAssignmentType> PrincipalType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoClusterPrincipalRole> Role { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> TenantName { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -262,9 +270,11 @@ namespace Azure.Provisioning.Kusto
     public partial class KustoDatabase : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public KustoDatabase(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Kusto.KustoCluster? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Kusto.KustoDatabase FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -303,12 +313,14 @@ namespace Azure.Provisioning.Kusto
         public KustoDatabasePrincipalAssignment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.Guid> AadObjectId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> DatabasePrincipalId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Kusto.KustoDatabase? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PrincipalName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoPrincipalAssignmentType> PrincipalType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoDatabasePrincipalRole> Role { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> TenantName { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -372,9 +384,11 @@ namespace Azure.Provisioning.Kusto
     public partial class KustoDataConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public KustoDataConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Kusto.KustoDatabase? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Kusto.KustoDataConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -594,12 +608,14 @@ namespace Azure.Provisioning.Kusto
     {
         public KustoManagedPrivateEndpoint(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Kusto.KustoCluster? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateLinkResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PrivateLinkResourceRegion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> RequestMessage { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Kusto.KustoManagedPrivateEndpoint FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -625,10 +641,12 @@ namespace Azure.Provisioning.Kusto
         public KustoPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.Kusto.KustoPrivateLinkServiceConnectionStateProperty ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Kusto.KustoCluster? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Kusto.KustoPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -701,6 +719,7 @@ namespace Azure.Provisioning.Kusto
     {
         public KustoScript(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ForceUpdateTag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Kusto.KustoDatabase? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.PrincipalPermissionsAction> PrincipalPermissionsAction { get { throw null; } set { } }
@@ -710,6 +729,7 @@ namespace Azure.Provisioning.Kusto
         public Azure.Provisioning.BicepValue<System.Uri> ScriptUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ScriptUriSasToken { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> ShouldContinueOnErrors { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Kusto.KustoScript FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -906,12 +926,14 @@ namespace Azure.Provisioning.Kusto
     {
         public SandboxCustomImage(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> BaseImageName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.SandboxCustomImageLanguage> Language { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> LanguageVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Kusto.KustoCluster? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> RequirementsFileContent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Kusto.SandboxCustomImage FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions

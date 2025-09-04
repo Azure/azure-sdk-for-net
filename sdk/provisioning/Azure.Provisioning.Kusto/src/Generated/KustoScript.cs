@@ -5,7 +5,9 @@
 
 #nullable enable
 
+using Azure.Core;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 using System;
 
 namespace Azure.Provisioning.Kusto;
@@ -102,6 +104,15 @@ public partial class KustoScript : ProvisionableResource
     private BicepValue<bool>? _shouldContinueOnErrors;
 
     /// <summary>
+    /// Gets the Id.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
+
+    /// <summary>
     /// The provisioned state of the resource.
     /// </summary>
     public BicepValue<KustoProvisioningState> ProvisioningState 
@@ -109,6 +120,15 @@ public partial class KustoScript : ProvisionableResource
         get { Initialize(); return _provisioningState!; }
     }
     private BicepValue<KustoProvisioningState>? _provisioningState;
+
+    /// <summary>
+    /// Gets the SystemData.
+    /// </summary>
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent KustoDatabase.
@@ -149,7 +169,9 @@ public partial class KustoScript : ProvisionableResource
         _scriptUri = DefineProperty<Uri>("ScriptUri", ["properties", "scriptUrl"]);
         _scriptUriSasToken = DefineProperty<string>("ScriptUriSasToken", ["properties", "scriptUrlSasToken"]);
         _shouldContinueOnErrors = DefineProperty<bool>("ShouldContinueOnErrors", ["properties", "continueOnErrors"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _provisioningState = DefineProperty<KustoProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<KustoDatabase>("Parent", ["parent"], isRequired: true);
     }
 
