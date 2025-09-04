@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using Azure.Core.Pipeline;
-using Azure.Generator.Providers;
 using Azure.Generator.Providers.Abstraction;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
+
 namespace Azure.Generator.Management.Providers.Abstraction
 {
     internal record ManagementHttpPipelineProvider : HttpPipelineProvider
@@ -18,9 +18,7 @@ namespace Azure.Generator.Management.Providers.Abstraction
         }
 
         public override ValueExpression InvokeCreateMessage(HttpRequestOptionsApi requestOptions, ValueExpression responseClassifier)
-        {
-            return Original.Invoke(nameof(HttpPipeline.CreateMessage));
-        }
+            => Original.Invoke(nameof(HttpPipeline.CreateMessage));
 
         /// <inheritdoc/>
         public override ClientPipelineApi FromExpression(ValueExpression expression)
