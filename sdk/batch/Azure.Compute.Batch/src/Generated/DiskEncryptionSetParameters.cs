@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary> Specifies how Tasks should be distributed across Compute Nodes. </summary>
-    public partial class BatchTaskSchedulingPolicy
+    /// <summary> The ARM resource id of the disk encryption set. </summary>
+    public partial class DiskEncryptionSetParameters
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +46,21 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/>. </summary>
-        /// <param name="nodeFillType"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
-        public BatchTaskSchedulingPolicy(BatchNodeFillType nodeFillType)
+        /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetParameters"/>. </summary>
+        public DiskEncryptionSetParameters()
         {
-            NodeFillType = nodeFillType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/>. </summary>
-        /// <param name="jobDefaultOrder"> The order for scheduling tasks from different jobs with the same priority. If not specified, the default is none. </param>
-        /// <param name="nodeFillType"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
+        /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetParameters"/>. </summary>
+        /// <param name="id"> The ARM resource id of the disk encryption set. The resource must be in the same subscription as the Batch account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskSchedulingPolicy(BatchJobDefaultOrder? jobDefaultOrder, BatchNodeFillType nodeFillType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiskEncryptionSetParameters(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            JobDefaultOrder = jobDefaultOrder;
-            NodeFillType = nodeFillType;
+            Id = id;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/> for deserialization. </summary>
-        internal BatchTaskSchedulingPolicy()
-        {
-        }
-
-        /// <summary> The order for scheduling tasks from different jobs with the same priority. If not specified, the default is none. </summary>
-        public BatchJobDefaultOrder? JobDefaultOrder { get; set; }
-        /// <summary> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </summary>
-        public BatchNodeFillType NodeFillType { get; set; }
+        /// <summary> The ARM resource id of the disk encryption set. The resource must be in the same subscription as the Batch account. </summary>
+        public ResourceIdentifier Id { get; set; }
     }
 }

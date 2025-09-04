@@ -76,7 +76,7 @@ namespace Azure.Compute.Batch
         /// <param name="metadata"> A list of name-value pairs associated with the schedule as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
         /// <param name="jobScheduleStatistics"> The lifetime resource usage statistics for the Job Schedule. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobSchedule(string id, string displayName, Uri uri, ETag? eTag, DateTimeOffset? lastModified, DateTimeOffset? creationTime, BatchJobScheduleState? state, DateTimeOffset? stateTransitionTime, BatchJobScheduleState? previousState, DateTimeOffset? previousStateTransitionTime, BatchJobScheduleConfiguration schedule, BatchJobSpecification jobSpecification, BatchJobScheduleExecutionInfo executionInfo, IList<BatchMetadataItem> metadata, BatchJobScheduleStatistics jobScheduleStatistics, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchJobSchedule(string id, string displayName, Uri uri, ETag eTag, DateTimeOffset lastModified, DateTimeOffset creationTime, BatchJobScheduleState state, DateTimeOffset stateTransitionTime, BatchJobScheduleState? previousState, DateTimeOffset? previousStateTransitionTime, BatchJobScheduleConfiguration schedule, BatchJobSpecification jobSpecification, BatchJobScheduleExecutionInfo executionInfo, IList<BatchMetadataItem> metadata, BatchJobScheduleStatistics jobScheduleStatistics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             DisplayName = displayName;
@@ -108,15 +108,15 @@ namespace Azure.Compute.Batch
         /// <summary> The URL of the Job Schedule. </summary>
         public Uri Uri { get; }
         /// <summary> The ETag of the Job Schedule. This is an opaque string. You can use it to detect whether the Job Schedule has changed between requests. In particular, you can be pass the ETag with an Update Job Schedule request to specify that your changes should take effect only if nobody else has modified the schedule in the meantime. </summary>
-        public ETag? ETag { get; }
+        public ETag ETag { get; }
         /// <summary> The last modified time of the Job Schedule. This is the last time at which the schedule level data, such as the Job specification or recurrence information, changed. It does not factor in job-level changes such as new Jobs being created or Jobs changing state. </summary>
-        public DateTimeOffset? LastModified { get; }
+        public DateTimeOffset LastModified { get; }
         /// <summary> The creation time of the Job Schedule. </summary>
-        public DateTimeOffset? CreationTime { get; }
+        public DateTimeOffset CreationTime { get; }
         /// <summary> The current state of the Job Schedule. </summary>
-        public BatchJobScheduleState? State { get; }
+        public BatchJobScheduleState State { get; }
         /// <summary> The time at which the Job Schedule entered the current state. </summary>
-        public DateTimeOffset? StateTransitionTime { get; }
+        public DateTimeOffset StateTransitionTime { get; }
         /// <summary> The previous state of the Job Schedule. This property is not present if the Job Schedule is in its initial active state. </summary>
         public BatchJobScheduleState? PreviousState { get; }
         /// <summary> The time at which the Job Schedule entered its previous state. This property is not present if the Job Schedule is in its initial active state. </summary>

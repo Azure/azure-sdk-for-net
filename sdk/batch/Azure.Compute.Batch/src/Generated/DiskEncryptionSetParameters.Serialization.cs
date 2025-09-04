@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchTaskSchedulingPolicy : IUtf8JsonSerializable, IJsonModel<BatchTaskSchedulingPolicy>
+    public partial class DiskEncryptionSetParameters : IUtf8JsonSerializable, IJsonModel<DiskEncryptionSetParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchTaskSchedulingPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskEncryptionSetParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BatchTaskSchedulingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DiskEncryptionSetParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,19 +28,17 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskSchedulingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiskEncryptionSetParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchTaskSchedulingPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskEncryptionSetParameters)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(JobDefaultOrder))
+            if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("jobDefaultOrder"u8);
-                writer.WriteStringValue(JobDefaultOrder.Value.ToString());
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("nodeFillType"u8);
-            writer.WriteStringValue(NodeFillType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -58,19 +56,19 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchTaskSchedulingPolicy IJsonModel<BatchTaskSchedulingPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DiskEncryptionSetParameters IJsonModel<DiskEncryptionSetParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskSchedulingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiskEncryptionSetParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchTaskSchedulingPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskEncryptionSetParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchTaskSchedulingPolicy(document.RootElement, options);
+            return DeserializeDiskEncryptionSetParameters(document.RootElement, options);
         }
 
-        internal static BatchTaskSchedulingPolicy DeserializeBatchTaskSchedulingPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DiskEncryptionSetParameters DeserializeDiskEncryptionSetParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -78,24 +76,18 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            BatchJobDefaultOrder? jobDefaultOrder = default;
-            BatchNodeFillType nodeFillType = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobDefaultOrder"u8))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    jobDefaultOrder = new BatchJobDefaultOrder(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("nodeFillType"u8))
-                {
-                    nodeFillType = new BatchNodeFillType(property.Value.GetString());
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,46 +96,46 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchTaskSchedulingPolicy(jobDefaultOrder, nodeFillType, serializedAdditionalRawData);
+            return new DiskEncryptionSetParameters(id, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BatchTaskSchedulingPolicy>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DiskEncryptionSetParameters>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskSchedulingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiskEncryptionSetParameters>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BatchTaskSchedulingPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskEncryptionSetParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BatchTaskSchedulingPolicy IPersistableModel<BatchTaskSchedulingPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DiskEncryptionSetParameters IPersistableModel<DiskEncryptionSetParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskSchedulingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiskEncryptionSetParameters>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBatchTaskSchedulingPolicy(document.RootElement, options);
+                        return DeserializeDiskEncryptionSetParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchTaskSchedulingPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskEncryptionSetParameters)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BatchTaskSchedulingPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DiskEncryptionSetParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BatchTaskSchedulingPolicy FromResponse(Response response)
+        internal static DiskEncryptionSetParameters FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchTaskSchedulingPolicy(document.RootElement);
+            return DeserializeDiskEncryptionSetParameters(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
