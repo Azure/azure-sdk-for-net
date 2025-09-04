@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+using Azure.Identity;
 using ClientModel.Tests;
 using ClientModel.Tests.Mocks;
 using NUnit.Framework;
@@ -80,6 +82,30 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
 
         // Act
         var message = await SendMessageAsync(pipeline, messageContexts);
+
+        // Assert - should use message property, not service-level contexts
+        AssertHasAuthorization(message);
+        AssertTokenProviderCalled(tokenProvider, shouldCallAsync: true);
+    }
+
+    [Test]
+    public async Task BearerTokenPolicyWithPopulatedContextsAndMessagePropertySetTokenCredential()
+    {
+        // Arrange
+        var tokenProvider = new MockTokenCredential();
+        var serviceContexts = new Dictionary<string, object>[]
+        {
+            new Dictionary<string, object>
+            {
+                { GetTokenOptions.ScopesPropertyName, new string[] { "https://ai.azure.com/.default" } },
+                { GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" }
+            }
+        };
+        var policy = new BearerTokenPolicy(tokenProvider, serviceContexts);
+        var pipeline = CreatePipelineWithPolicy(policy);
+
+        // Act
+        var message = await SendMessageAsync(pipeline);
 
         // Assert - should use message property, not service-level contexts
         AssertHasAuthorization(message);
@@ -170,6 +196,31 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
         }
     }
 
+    private class MockTokenCredential : TokenCredential
+    {
+        private readonly bool _returnNull;
+        public bool GetTokenCalled { get; private set; }
+        public bool GetTokenAsyncCalled { get; private set; }
+        public bool CreateTokenOptionsCalled { get; private set; }
+
+        public MockTokenCredential(bool returnNull = false)
+        {
+            _returnNull = returnNull;
+        }
+
+        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+            GetTokenAsyncCalled = true;
+            return new ValueTask<AccessToken>(new AccessToken("mock_token_value", DateTimeOffset.UtcNow.AddHours(1)));
+        }
+
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+            GetTokenCalled = true;
+            return new AccessToken("mock_token_value", DateTimeOffset.UtcNow.AddHours(1));
+        }
+    }
+
     private static IReadOnlyDictionary<string, object> CreateContext(string scope)
     {
         return new Dictionary<string, object>
@@ -224,6 +275,18 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
     }
 
     private void AssertTokenProviderCalled(MockAuthenticationTokenProvider tokenProvider, bool shouldCallAsync)
+    {
+        if (shouldCallAsync && IsAsync)
+        {
+            Assert.IsTrue(tokenProvider.GetTokenAsyncCalled);
+        }
+        else
+        {
+            Assert.IsTrue(tokenProvider.GetTokenCalled);
+        }
+    }
+
+    private void AssertTokenProviderCalled(MockTokenCredential tokenProvider, bool shouldCallAsync)
     {
         if (shouldCallAsync && IsAsync)
         {
