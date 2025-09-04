@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NeonBranchProperties NeonBranchProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IEnumerable<Attributes> attributes, string projectId, string parentId, string roleName, string databaseName, IEnumerable<NeonRoleProperties> roles, IEnumerable<NeonDatabaseProperties> databases, IEnumerable<NeonEndpointProperties> endpoints)
         {
-            return NeonBranchProperties(entityId: entityId, entityName: entityName, createdAt: createdAt, provisioningState: provisioningState, attributes: attributes, projectId: projectId, parentId: parentId, roleName: roleName, databaseName: databaseName, roles: roles, databases: databases, endpoints: endpoints, branchId: default, branch: default, dataSize: default, lastActive: default, computeHours: default, @protected: ((bool?)default), isDefault: ((bool?)default));
+            return NeonBranchProperties(entityId: entityId, entityName: entityName, createdAt: createdAt, provisioningState: provisioningState, attributes: attributes, projectId: projectId, parentId: parentId, roleName: roleName, databaseName: databaseName, roles: roles, databases: databases, endpoints: endpoints, branchId: default, branch: default, dataSize: default, lastActive: default, computeHours: default, protected: ((bool?)default), isDefault: ((bool?)default));
 }
 
     /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NeonPostgres.Models.NeonRoleProperties" />. </summary>
