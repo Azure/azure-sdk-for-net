@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
@@ -71,8 +72,19 @@ public static class ReflectionExtensions
         return true;
     }
 
+    public static Type? GetDataTypeFromResource(Type resourceType)
+    {
+        if (!typeof(ArmResource).IsAssignableFrom(resourceType))
+        {
+            return null;
+        }
+
+        return resourceType.GetProperty("Data")?.PropertyType;
+    }
+
     public static bool IsResourceData(this Type type) =>
         typeof(ResourceData).IsAssignableFrom(type) ||
+        // hack for Sql
         typeof(ResourceWithWritableName).IsAssignableFrom(type);
 
     public static bool IsModelType(this Type type, List<Type>? visited = default) =>
@@ -98,7 +110,7 @@ public static class ReflectionExtensions
     {
         Type? i = GetGenericInterface(type, typeof(IDictionary<,>)) ?? GetGenericInterface(type, typeof(IReadOnlyDictionary<,>));
         return i is not null && predicate(i.GetGenericArguments()[1]);
-    }   
+    }
 
     public static bool IsListOf(this Type type, Func<Type, bool> predicate)
     {
@@ -128,7 +140,7 @@ public static class ReflectionExtensions
             bool d = type.IsDictionaryOf(t => t.IsUsableType(visited));
             bool r = type.IsResourceData();
             bool m = type.IsModelType(visited);
-            IList<PropertyInfo> failures = [..type.GetProperties().Where(p => !p.PropertyType.IsUsableType(visited))];
+            IList<PropertyInfo> failures = [.. type.GetProperties().Where(p => !p.PropertyType.IsUsableType(visited))];
             Console.WriteLine(type.FullName + ": " + string.Join(", ", failures.Select(p => p.Name)));
         }
         return usable;
