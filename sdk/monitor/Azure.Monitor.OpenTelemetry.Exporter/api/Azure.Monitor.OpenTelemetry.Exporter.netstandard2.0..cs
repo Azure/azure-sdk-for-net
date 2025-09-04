@@ -16,8 +16,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public bool DisableOfflineStorage { get { throw null; } set { } }
         public bool EnableLiveMetrics { get { throw null; } set { } }
         public float SamplingRatio { get { throw null; } set { } }
-        public string StorageDirectory { get { throw null; } set { } }
         public double? TracesPerSecond { get { throw null; } set { } }
+        public string StorageDirectory { get { throw null; } set { } }
         public Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions.ServiceVersion Version { get { throw null; } set { } }
         public enum ServiceVersion
         {
