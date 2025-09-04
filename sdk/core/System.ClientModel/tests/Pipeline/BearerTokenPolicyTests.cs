@@ -83,7 +83,6 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
         // Act
         var message = await SendMessageAsync(pipeline, messageContexts);
 
-        // Assert - should use message property, not service-level contexts
         AssertHasAuthorization(message);
         AssertTokenProviderCalled(tokenProvider, shouldCallAsync: true);
     }
@@ -114,7 +113,6 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
         // Act
         var message = await SendMessageAsync(pipeline);
 
-        // Assert - should use message property, not service-level contexts
         AssertHasAuthorization(message);
         AssertTokenProviderCalled(tokenProvider, shouldCallAsync: true);
         Assert.AreEqual("parentRequestIdValue", tokenProvider.ReceivedRequestContext.ParentRequestId);
@@ -153,7 +151,6 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
         // Act
         var message = await SendMessageAsync(pipeline);
 
-        // Assert - should use message property, not service-level contexts
         AssertHasAuthorization(message);
         AssertTokenProviderCalled(tokenProvider, shouldCallAsync: true);
         Assert.AreEqual("parentRequestIdValue", tokenProvider.ReceivedRequestContext.ParentRequestId);
@@ -164,6 +161,34 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
         Assert.AreEqual("proofOfPossessionNonceValue", tokenProvider.ReceivedRequestContext.ProofOfPossessionNonce);
         Assert.AreEqual(new Uri("https://example.com"), tokenProvider.ReceivedRequestContext.ResourceRequestUri);
         Assert.AreEqual("requestMethodValue", tokenProvider.ReceivedRequestContext.ResourceRequestMethod);
+    }
+
+    [Test]
+    public async Task BearerTokenPolicyWithNoScopesTokenCredential()
+    {
+        // Arrange
+        var tokenProvider = new MockTokenCredential();
+        var serviceContexts = new Dictionary<string, object>[]
+        {
+            new Dictionary<string, object>
+            {
+                { "parentRequestId", "parentRequestIdValue" },
+                { "claims", "claimsValue"},
+                { "tenantId", "tenantIdValue" },
+                { "isCaeEnabled", true },
+                { "isProofOfPossessionEnabled", true },
+                { "proofOfPossessionNonce", "proofOfPossessionNonceValue" },
+                { "requestUri", new Uri("https://example.com") },
+                { "requestMethod", "requestMethodValue" }
+            }
+        };
+        var policy = new BearerTokenPolicy(tokenProvider, serviceContexts);
+        var pipeline = CreatePipelineWithPolicy(policy);
+
+        // Act
+        var message = await SendMessageAsync(pipeline);
+
+         Assert.IsFalse(message.Request.Headers.TryGetValue("Authorization", out var authHeader));
     }
 
     [Test]
