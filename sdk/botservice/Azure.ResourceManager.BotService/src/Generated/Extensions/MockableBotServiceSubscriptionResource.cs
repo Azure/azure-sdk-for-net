@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.BotService.Mocking
     {
         private ClientDiagnostics _botClientDiagnostics;
         private BotsRestOperations _botRestClient;
-        private ClientDiagnostics _botConnectionSettingBotConnectionClientDiagnostics;
-        private BotConnectionRestOperations _botConnectionSettingBotConnectionRestClient;
-        private ClientDiagnostics _qnAMakerEndpointKeysClientDiagnostics;
-        private QnAMakerEndpointKeysRestOperations _qnAMakerEndpointKeysRestClient;
-        private ClientDiagnostics _hostSettingsClientDiagnostics;
-        private HostSettingsRestOperations _hostSettingsRestClient;
+        private ClientDiagnostics _botConnectionOperationGroupClientDiagnostics;
+        private BotConnectionOperationGroupRestOperations _botConnectionOperationGroupRestClient;
+        private ClientDiagnostics _qnAMakerEndpointKeysOperationGroupClientDiagnostics;
+        private QnAMakerEndpointKeysOperationGroupRestOperations _qnAMakerEndpointKeysOperationGroupRestClient;
+        private ClientDiagnostics _hostSettingsOperationGroupClientDiagnostics;
+        private HostSettingsOperationGroupRestOperations _hostSettingsOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableBotServiceSubscriptionResource"/> class for mocking. </summary>
         protected MockableBotServiceSubscriptionResource()
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.BotService.Mocking
 
         private ClientDiagnostics BotClientDiagnostics => _botClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService", BotResource.ResourceType.Namespace, Diagnostics);
         private BotsRestOperations BotRestClient => _botRestClient ??= new BotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BotResource.ResourceType));
-        private ClientDiagnostics BotConnectionSettingBotConnectionClientDiagnostics => _botConnectionSettingBotConnectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService", BotConnectionSettingResource.ResourceType.Namespace, Diagnostics);
-        private BotConnectionRestOperations BotConnectionSettingBotConnectionRestClient => _botConnectionSettingBotConnectionRestClient ??= new BotConnectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BotConnectionSettingResource.ResourceType));
-        private ClientDiagnostics QnAMakerEndpointKeysClientDiagnostics => _qnAMakerEndpointKeysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private QnAMakerEndpointKeysRestOperations QnAMakerEndpointKeysRestClient => _qnAMakerEndpointKeysRestClient ??= new QnAMakerEndpointKeysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics HostSettingsClientDiagnostics => _hostSettingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private HostSettingsRestOperations HostSettingsRestClient => _hostSettingsRestClient ??= new HostSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics BotConnectionOperationGroupClientDiagnostics => _botConnectionOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private BotConnectionOperationGroupRestOperations BotConnectionOperationGroupRestClient => _botConnectionOperationGroupRestClient ??= new BotConnectionOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics QnAMakerEndpointKeysOperationGroupClientDiagnostics => _qnAMakerEndpointKeysOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private QnAMakerEndpointKeysOperationGroupRestOperations QnAMakerEndpointKeysOperationGroupRestClient => _qnAMakerEndpointKeysOperationGroupRestClient ??= new QnAMakerEndpointKeysOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics HostSettingsOperationGroupClientDiagnostics => _hostSettingsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private HostSettingsOperationGroupRestOperations HostSettingsOperationGroupRestClient => _hostSettingsOperationGroupRestClient ??= new HostSettingsOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_List</description>
+        /// <description>Bot_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_List</description>
+        /// <description>Bot_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -123,15 +123,11 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_ListServiceProviders</description>
+        /// <description>BotConnectionOperationGroup_GetBotConnectionServiceProviders</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,8 +135,8 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <returns> An async collection of <see cref="BotServiceProvider"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BotServiceProvider> GetBotConnectionServiceProvidersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BotConnectionSettingBotConnectionRestClient.CreateListServiceProvidersRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BotServiceProvider.DeserializeBotServiceProvider(e), BotConnectionSettingBotConnectionClientDiagnostics, Pipeline, "MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BotConnectionOperationGroupRestClient.CreateGetBotConnectionServiceProvidersRequest(Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BotServiceProvider.DeserializeBotServiceProvider(e), BotConnectionOperationGroupClientDiagnostics, Pipeline, "MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -152,15 +148,11 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_ListServiceProviders</description>
+        /// <description>BotConnectionOperationGroup_GetBotConnectionServiceProviders</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,8 +160,8 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <returns> A collection of <see cref="BotServiceProvider"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BotServiceProvider> GetBotConnectionServiceProviders(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BotConnectionSettingBotConnectionRestClient.CreateListServiceProvidersRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BotServiceProvider.DeserializeBotServiceProvider(e), BotConnectionSettingBotConnectionClientDiagnostics, Pipeline, "MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BotConnectionOperationGroupRestClient.CreateGetBotConnectionServiceProvidersRequest(Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BotServiceProvider.DeserializeBotServiceProvider(e), BotConnectionOperationGroupClientDiagnostics, Pipeline, "MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -181,26 +173,26 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>QnAMakerEndpointKeys_Get</description>
+        /// <description>QnAMakerEndpointKeysOperationGroup_GetBotServiceQnAMakerEndpointKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<GetBotServiceQnAMakerEndpointKeyResult>> GetBotServiceQnAMakerEndpointKeyAsync(GetBotServiceQnAMakerEndpointKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = QnAMakerEndpointKeysClientDiagnostics.CreateScope("MockableBotServiceSubscriptionResource.GetBotServiceQnAMakerEndpointKey");
+            using var scope = QnAMakerEndpointKeysOperationGroupClientDiagnostics.CreateScope("MockableBotServiceSubscriptionResource.GetBotServiceQnAMakerEndpointKey");
             scope.Start();
             try
             {
-                var response = await QnAMakerEndpointKeysRestClient.GetAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await QnAMakerEndpointKeysOperationGroupRestClient.GetBotServiceQnAMakerEndpointKeyAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -219,26 +211,26 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>QnAMakerEndpointKeys_Get</description>
+        /// <description>QnAMakerEndpointKeysOperationGroup_GetBotServiceQnAMakerEndpointKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<GetBotServiceQnAMakerEndpointKeyResult> GetBotServiceQnAMakerEndpointKey(GetBotServiceQnAMakerEndpointKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = QnAMakerEndpointKeysClientDiagnostics.CreateScope("MockableBotServiceSubscriptionResource.GetBotServiceQnAMakerEndpointKey");
+            using var scope = QnAMakerEndpointKeysOperationGroupClientDiagnostics.CreateScope("MockableBotServiceSubscriptionResource.GetBotServiceQnAMakerEndpointKey");
             scope.Start();
             try
             {
-                var response = QnAMakerEndpointKeysRestClient.Get(Id.SubscriptionId, content, cancellationToken);
+                var response = QnAMakerEndpointKeysOperationGroupRestClient.GetBotServiceQnAMakerEndpointKey(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -257,22 +249,22 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>HostSettings_Get</description>
+        /// <description>HostSettingsOperationGroup_GetBotServiceHostSettings</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BotServiceHostSettingsResult>> GetBotServiceHostSettingsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = HostSettingsClientDiagnostics.CreateScope("MockableBotServiceSubscriptionResource.GetBotServiceHostSettings");
+            using var scope = HostSettingsOperationGroupClientDiagnostics.CreateScope("MockableBotServiceSubscriptionResource.GetBotServiceHostSettings");
             scope.Start();
             try
             {
-                var response = await HostSettingsRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                var response = await HostSettingsOperationGroupRestClient.GetBotServiceHostSettingsAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -291,22 +283,22 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>HostSettings_Get</description>
+        /// <description>HostSettingsOperationGroup_GetBotServiceHostSettings</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BotServiceHostSettingsResult> GetBotServiceHostSettings(CancellationToken cancellationToken = default)
         {
-            using var scope = HostSettingsClientDiagnostics.CreateScope("MockableBotServiceSubscriptionResource.GetBotServiceHostSettings");
+            using var scope = HostSettingsOperationGroupClientDiagnostics.CreateScope("MockableBotServiceSubscriptionResource.GetBotServiceHostSettings");
             scope.Start();
             try
             {
-                var response = HostSettingsRestClient.Get(Id.SubscriptionId, cancellationToken);
+                var response = HostSettingsOperationGroupRestClient.GetBotServiceHostSettings(Id.SubscriptionId, cancellationToken);
                 return response;
             }
             catch (Exception e)
