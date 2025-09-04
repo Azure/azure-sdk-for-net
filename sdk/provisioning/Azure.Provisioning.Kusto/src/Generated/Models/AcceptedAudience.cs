@@ -6,6 +6,7 @@
 #nullable enable
 
 using Azure.Provisioning.Primitives;
+using System;
 
 namespace Azure.Provisioning.Kusto;
 
@@ -14,6 +15,16 @@ namespace Azure.Provisioning.Kusto;
 /// </summary>
 public partial class AcceptedAudience : ProvisionableConstruct
 {
+    /// <summary>
+    /// GUID or valid URL representing an accepted audience.
+    /// </summary>
+    public BicepValue<string> Value 
+    {
+        get { Initialize(); return _value!; }
+        set { Initialize(); _value!.Assign(value); }
+    }
+    private BicepValue<string>? _value;
+
     /// <summary>
     /// Creates a new AcceptedAudience.
     /// </summary>
@@ -27,5 +38,6 @@ public partial class AcceptedAudience : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _value = DefineProperty<string>("Value", ["value"]);
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable enable
 
+using Azure.Core;
 using Azure.Provisioning.Primitives;
 using System;
 
@@ -24,6 +25,57 @@ public partial class KustoManagedPrivateEndpoint : ProvisionableResource
         set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
+
+    /// <summary>
+    /// The groupId in which the managed private endpoint is created.
+    /// </summary>
+    public BicepValue<string> GroupId 
+    {
+        get { Initialize(); return _groupId!; }
+        set { Initialize(); _groupId!.Assign(value); }
+    }
+    private BicepValue<string>? _groupId;
+
+    /// <summary>
+    /// The ARM resource ID of the resource for which the managed private
+    /// endpoint is created.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> PrivateLinkResourceId 
+    {
+        get { Initialize(); return _privateLinkResourceId!; }
+        set { Initialize(); _privateLinkResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _privateLinkResourceId;
+
+    /// <summary>
+    /// The region of the resource to which the managed private endpoint is
+    /// created.
+    /// </summary>
+    public BicepValue<string> PrivateLinkResourceRegion 
+    {
+        get { Initialize(); return _privateLinkResourceRegion!; }
+        set { Initialize(); _privateLinkResourceRegion!.Assign(value); }
+    }
+    private BicepValue<string>? _privateLinkResourceRegion;
+
+    /// <summary>
+    /// The user request message.
+    /// </summary>
+    public BicepValue<string> RequestMessage 
+    {
+        get { Initialize(); return _requestMessage!; }
+        set { Initialize(); _requestMessage!.Assign(value); }
+    }
+    private BicepValue<string>? _requestMessage;
+
+    /// <summary>
+    /// The provisioned state of the resource.
+    /// </summary>
+    public BicepValue<KustoProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<KustoProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets or sets a reference to the parent KustoCluster.
@@ -57,6 +109,11 @@ public partial class KustoManagedPrivateEndpoint : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _groupId = DefineProperty<string>("GroupId", ["properties", "groupId"]);
+        _privateLinkResourceId = DefineProperty<ResourceIdentifier>("PrivateLinkResourceId", ["properties", "privateLinkResourceId"]);
+        _privateLinkResourceRegion = DefineProperty<string>("PrivateLinkResourceRegion", ["properties", "privateLinkResourceRegion"]);
+        _requestMessage = DefineProperty<string>("RequestMessage", ["properties", "requestMessage"]);
+        _provisioningState = DefineProperty<KustoProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _parent = DefineResource<KustoCluster>("Parent", ["parent"], isRequired: true);
     }
 

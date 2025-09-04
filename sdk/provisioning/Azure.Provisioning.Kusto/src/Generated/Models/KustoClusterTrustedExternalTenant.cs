@@ -6,6 +6,7 @@
 #nullable enable
 
 using Azure.Provisioning.Primitives;
+using System;
 
 namespace Azure.Provisioning.Kusto;
 
@@ -14,6 +15,16 @@ namespace Azure.Provisioning.Kusto;
 /// </summary>
 public partial class KustoClusterTrustedExternalTenant : ProvisionableConstruct
 {
+    /// <summary>
+    /// GUID representing an external tenant.
+    /// </summary>
+    public BicepValue<string> Value 
+    {
+        get { Initialize(); return _value!; }
+        set { Initialize(); _value!.Assign(value); }
+    }
+    private BicepValue<string>? _value;
+
     /// <summary>
     /// Creates a new KustoClusterTrustedExternalTenant.
     /// </summary>
@@ -28,5 +39,6 @@ public partial class KustoClusterTrustedExternalTenant : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _value = DefineProperty<string>("Value", ["value"]);
     }
 }

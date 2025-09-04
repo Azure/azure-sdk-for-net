@@ -5,7 +5,11 @@
 
 #nullable enable
 
+using Azure;
+using Azure.Core;
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 using System;
 
 namespace Azure.Provisioning.Kusto;
@@ -24,6 +28,314 @@ public partial class KustoCluster : ProvisionableResource
         set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
+
+    /// <summary>
+    /// The SKU of the cluster.
+    /// </summary>
+    public KustoSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private KustoSku? _sku;
+
+    /// <summary>
+    /// The cluster&apos;s accepted audiences.
+    /// </summary>
+    public BicepList<AcceptedAudience> AcceptedAudiences 
+    {
+        get { Initialize(); return _acceptedAudiences!; }
+        set { Initialize(); _acceptedAudiences!.Assign(value); }
+    }
+    private BicepList<AcceptedAudience>? _acceptedAudiences;
+
+    /// <summary>
+    /// List of allowed FQDNs(Fully Qualified Domain Name) for egress from
+    /// Cluster.
+    /// </summary>
+    public BicepList<string> AllowedFqdnList 
+    {
+        get { Initialize(); return _allowedFqdnList!; }
+        set { Initialize(); _allowedFqdnList!.Assign(value); }
+    }
+    private BicepList<string>? _allowedFqdnList;
+
+    /// <summary>
+    /// The list of ips in the format of CIDR allowed to connect to the cluster.
+    /// </summary>
+    public BicepList<string> AllowedIPRangeList 
+    {
+        get { Initialize(); return _allowedIPRangeList!; }
+        set { Initialize(); _allowedIPRangeList!.Assign(value); }
+    }
+    private BicepList<string>? _allowedIPRangeList;
+
+    /// <summary>
+    /// List of callout policies for egress from Cluster.
+    /// </summary>
+    public BicepList<KustoCalloutPolicy> CalloutPolicies 
+    {
+        get { Initialize(); return _calloutPolicies!; }
+        set { Initialize(); _calloutPolicies!.Assign(value); }
+    }
+    private BicepList<KustoCalloutPolicy>? _calloutPolicies;
+
+    /// <summary>
+    /// The engine type.
+    /// </summary>
+    public BicepValue<KustoClusterEngineType> EngineType 
+    {
+        get { Initialize(); return _engineType!; }
+        set { Initialize(); _engineType!.Assign(value); }
+    }
+    private BicepValue<KustoClusterEngineType>? _engineType;
+
+    /// <summary>
+    /// The identity of the cluster, if configured.
+    /// </summary>
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
+
+    /// <summary>
+    /// A boolean value that indicates if the cluster could be automatically
+    /// stopped (due to lack of data or no activity for many days).
+    /// </summary>
+    public BicepValue<bool> IsAutoStopEnabled 
+    {
+        get { Initialize(); return _isAutoStopEnabled!; }
+        set { Initialize(); _isAutoStopEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isAutoStopEnabled;
+
+    /// <summary>
+    /// A boolean value that indicates if the cluster&apos;s disks are
+    /// encrypted.
+    /// </summary>
+    public BicepValue<bool> IsDiskEncryptionEnabled 
+    {
+        get { Initialize(); return _isDiskEncryptionEnabled!; }
+        set { Initialize(); _isDiskEncryptionEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isDiskEncryptionEnabled;
+
+    /// <summary>
+    /// A boolean value that indicates if double encryption is enabled.
+    /// </summary>
+    public BicepValue<bool> IsDoubleEncryptionEnabled 
+    {
+        get { Initialize(); return _isDoubleEncryptionEnabled!; }
+        set { Initialize(); _isDoubleEncryptionEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isDoubleEncryptionEnabled;
+
+    /// <summary>
+    /// A boolean value that indicates if the purge operations are enabled.
+    /// </summary>
+    public BicepValue<bool> IsPurgeEnabled 
+    {
+        get { Initialize(); return _isPurgeEnabled!; }
+        set { Initialize(); _isPurgeEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isPurgeEnabled;
+
+    /// <summary>
+    /// A boolean value that indicates if the streaming ingest is enabled.
+    /// </summary>
+    public BicepValue<bool> IsStreamingIngestEnabled 
+    {
+        get { Initialize(); return _isStreamingIngestEnabled!; }
+        set { Initialize(); _isStreamingIngestEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isStreamingIngestEnabled;
+
+    /// <summary>
+    /// KeyVault properties for the cluster encryption.
+    /// </summary>
+    public KustoKeyVaultProperties KeyVaultProperties 
+    {
+        get { Initialize(); return _keyVaultProperties!; }
+        set { Initialize(); AssignOrReplace(ref _keyVaultProperties, value); }
+    }
+    private KustoKeyVaultProperties? _keyVaultProperties;
+
+    /// <summary>
+    /// The list of language extensions.
+    /// </summary>
+    public BicepList<KustoLanguageExtension> LanguageExtensionsValue 
+    {
+        get { Initialize(); return _languageExtensionsValue!; }
+        set { Initialize(); _languageExtensionsValue!.Assign(value); }
+    }
+    private BicepList<KustoLanguageExtension>? _languageExtensionsValue;
+
+    /// <summary>
+    /// Optimized auto scale definition.
+    /// </summary>
+    public OptimizedAutoscale OptimizedAutoscale 
+    {
+        get { Initialize(); return _optimizedAutoscale!; }
+        set { Initialize(); AssignOrReplace(ref _optimizedAutoscale, value); }
+    }
+    private OptimizedAutoscale? _optimizedAutoscale;
+
+    /// <summary>
+    /// Indicates what public IP type to create - IPv4 (default), or DualStack
+    /// (both IPv4 and IPv6).
+    /// </summary>
+    public BicepValue<KustoClusterPublicIPType> PublicIPType 
+    {
+        get { Initialize(); return _publicIPType!; }
+        set { Initialize(); _publicIPType!.Assign(value); }
+    }
+    private BicepValue<KustoClusterPublicIPType>? _publicIPType;
+
+    /// <summary>
+    /// Public network access to the cluster is enabled by default. When
+    /// disabled, only private endpoint connection to the cluster is allowed.
+    /// </summary>
+    public BicepValue<KustoClusterPublicNetworkAccess> PublicNetworkAccess 
+    {
+        get { Initialize(); return _publicNetworkAccess!; }
+        set { Initialize(); _publicNetworkAccess!.Assign(value); }
+    }
+    private BicepValue<KustoClusterPublicNetworkAccess>? _publicNetworkAccess;
+
+    /// <summary>
+    /// Whether or not to restrict outbound network access.  Value is optional
+    /// but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;.
+    /// </summary>
+    public BicepValue<KustoClusterNetworkAccessFlag> RestrictOutboundNetworkAccess 
+    {
+        get { Initialize(); return _restrictOutboundNetworkAccess!; }
+        set { Initialize(); _restrictOutboundNetworkAccess!.Assign(value); }
+    }
+    private BicepValue<KustoClusterNetworkAccessFlag>? _restrictOutboundNetworkAccess;
+
+    /// <summary>
+    /// The cluster&apos;s external tenants.
+    /// </summary>
+    public BicepList<KustoClusterTrustedExternalTenant> TrustedExternalTenants 
+    {
+        get { Initialize(); return _trustedExternalTenants!; }
+        set { Initialize(); _trustedExternalTenants!.Assign(value); }
+    }
+    private BicepList<KustoClusterTrustedExternalTenant>? _trustedExternalTenants;
+
+    /// <summary>
+    /// Virtual Cluster graduation properties.
+    /// </summary>
+    public BicepValue<string> VirtualClusterGraduationProperties 
+    {
+        get { Initialize(); return _virtualClusterGraduationProperties!; }
+        set { Initialize(); _virtualClusterGraduationProperties!.Assign(value); }
+    }
+    private BicepValue<string>? _virtualClusterGraduationProperties;
+
+    /// <summary>
+    /// Virtual network definition.
+    /// </summary>
+    public KustoClusterVirtualNetworkConfiguration VirtualNetworkConfiguration 
+    {
+        get { Initialize(); return _virtualNetworkConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _virtualNetworkConfiguration, value); }
+    }
+    private KustoClusterVirtualNetworkConfiguration? _virtualNetworkConfiguration;
+
+    /// <summary>
+    /// The availability zones of the cluster.
+    /// </summary>
+    public BicepList<string> Zones 
+    {
+        get { Initialize(); return _zones!; }
+        set { Initialize(); _zones!.Assign(value); }
+    }
+    private BicepList<string>? _zones;
+
+    /// <summary>
+    /// The cluster URI.
+    /// </summary>
+    public BicepValue<Uri> ClusterUri 
+    {
+        get { Initialize(); return _clusterUri!; }
+    }
+    private BicepValue<Uri>? _clusterUri;
+
+    /// <summary>
+    /// The cluster data ingestion URI.
+    /// </summary>
+    public BicepValue<Uri> DataIngestionUri 
+    {
+        get { Initialize(); return _dataIngestionUri!; }
+    }
+    private BicepValue<Uri>? _dataIngestionUri;
+
+    /// <summary>
+    /// A unique read-only string that changes whenever the resource is updated.
+    /// </summary>
+    public BicepValue<ETag> ETag 
+    {
+        get { Initialize(); return _eTag!; }
+    }
+    private BicepValue<ETag>? _eTag;
+
+    /// <summary>
+    /// Properties of the peer cluster involved in a migration to/from this
+    /// cluster.
+    /// </summary>
+    public MigrationClusterProperties MigrationCluster 
+    {
+        get { Initialize(); return _migrationCluster!; }
+    }
+    private MigrationClusterProperties? _migrationCluster;
+
+    /// <summary>
+    /// A list of private endpoint connections.
+    /// </summary>
+    public BicepList<KustoPrivateEndpointConnection> PrivateEndpointConnections 
+    {
+        get { Initialize(); return _privateEndpointConnections!; }
+    }
+    private BicepList<KustoPrivateEndpointConnection>? _privateEndpointConnections;
+
+    /// <summary>
+    /// The provisioned state of the resource.
+    /// </summary>
+    public BicepValue<KustoProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<KustoProvisioningState>? _provisioningState;
+
+    /// <summary>
+    /// The state of the resource.
+    /// </summary>
+    public BicepValue<KustoClusterState> State 
+    {
+        get { Initialize(); return _state!; }
+    }
+    private BicepValue<KustoClusterState>? _state;
+
+    /// <summary>
+    /// The reason for the cluster&apos;s current state.
+    /// </summary>
+    public BicepValue<string> StateReason 
+    {
+        get { Initialize(); return _stateReason!; }
+    }
+    private BicepValue<string>? _stateReason;
+
+    /// <summary>
+    /// Indicates whether the cluster is zonal or non-zonal.
+    /// </summary>
+    public BicepValue<KustoClusterZoneStatus> ZoneStatus 
+    {
+        get { Initialize(); return _zoneStatus!; }
+    }
+    private BicepValue<KustoClusterZoneStatus>? _zoneStatus;
 
     /// <summary>
     /// Creates a new KustoCluster.
@@ -47,6 +359,37 @@ public partial class KustoCluster : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _sku = DefineModelProperty<KustoSku>("Sku", ["sku"], isRequired: true);
+        _acceptedAudiences = DefineListProperty<AcceptedAudience>("AcceptedAudiences", ["properties", "acceptedAudiences"]);
+        _allowedFqdnList = DefineListProperty<string>("AllowedFqdnList", ["properties", "allowedFqdnList"]);
+        _allowedIPRangeList = DefineListProperty<string>("AllowedIPRangeList", ["properties", "allowedIpRangeList"]);
+        _calloutPolicies = DefineListProperty<KustoCalloutPolicy>("CalloutPolicies", ["properties", "calloutPolicies"]);
+        _engineType = DefineProperty<KustoClusterEngineType>("EngineType", ["properties", "engineType"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _isAutoStopEnabled = DefineProperty<bool>("IsAutoStopEnabled", ["properties", "enableAutoStop"]);
+        _isDiskEncryptionEnabled = DefineProperty<bool>("IsDiskEncryptionEnabled", ["properties", "enableDiskEncryption"]);
+        _isDoubleEncryptionEnabled = DefineProperty<bool>("IsDoubleEncryptionEnabled", ["properties", "enableDoubleEncryption"]);
+        _isPurgeEnabled = DefineProperty<bool>("IsPurgeEnabled", ["properties", "enablePurge"]);
+        _isStreamingIngestEnabled = DefineProperty<bool>("IsStreamingIngestEnabled", ["properties", "enableStreamingIngest"]);
+        _keyVaultProperties = DefineModelProperty<KustoKeyVaultProperties>("KeyVaultProperties", ["properties", "keyVaultProperties"]);
+        _languageExtensionsValue = DefineListProperty<KustoLanguageExtension>("LanguageExtensionsValue", ["properties", "languageExtensions", "value"]);
+        _optimizedAutoscale = DefineModelProperty<OptimizedAutoscale>("OptimizedAutoscale", ["properties", "optimizedAutoscale"]);
+        _publicIPType = DefineProperty<KustoClusterPublicIPType>("PublicIPType", ["properties", "publicIPType"]);
+        _publicNetworkAccess = DefineProperty<KustoClusterPublicNetworkAccess>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
+        _restrictOutboundNetworkAccess = DefineProperty<KustoClusterNetworkAccessFlag>("RestrictOutboundNetworkAccess", ["properties", "restrictOutboundNetworkAccess"]);
+        _trustedExternalTenants = DefineListProperty<KustoClusterTrustedExternalTenant>("TrustedExternalTenants", ["properties", "trustedExternalTenants"]);
+        _virtualClusterGraduationProperties = DefineProperty<string>("VirtualClusterGraduationProperties", ["properties", "virtualClusterGraduationProperties"]);
+        _virtualNetworkConfiguration = DefineModelProperty<KustoClusterVirtualNetworkConfiguration>("VirtualNetworkConfiguration", ["properties", "virtualNetworkConfiguration"]);
+        _zones = DefineListProperty<string>("Zones", ["zones"]);
+        _clusterUri = DefineProperty<Uri>("ClusterUri", ["properties", "uri"], isOutput: true);
+        _dataIngestionUri = DefineProperty<Uri>("DataIngestionUri", ["properties", "dataIngestionUri"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _migrationCluster = DefineModelProperty<MigrationClusterProperties>("MigrationCluster", ["properties", "migrationCluster"], isOutput: true);
+        _privateEndpointConnections = DefineListProperty<KustoPrivateEndpointConnection>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        _provisioningState = DefineProperty<KustoProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _state = DefineProperty<KustoClusterState>("State", ["properties", "state"], isOutput: true);
+        _stateReason = DefineProperty<string>("StateReason", ["properties", "stateReason"], isOutput: true);
+        _zoneStatus = DefineProperty<KustoClusterZoneStatus>("ZoneStatus", ["properties", "zoneStatus"], isOutput: true);
     }
 
     /// <summary>

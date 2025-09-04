@@ -26,6 +26,83 @@ public partial class KustoClusterPrincipalAssignment : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
+    /// The principal ID assigned to the cluster principal. It can be a user
+    /// email, application ID, or security group name.
+    /// </summary>
+    public BicepValue<string> ClusterPrincipalId 
+    {
+        get { Initialize(); return _clusterPrincipalId!; }
+        set { Initialize(); _clusterPrincipalId!.Assign(value); }
+    }
+    private BicepValue<string>? _clusterPrincipalId;
+
+    /// <summary>
+    /// Principal type.
+    /// </summary>
+    public BicepValue<KustoPrincipalAssignmentType> PrincipalType 
+    {
+        get { Initialize(); return _principalType!; }
+        set { Initialize(); _principalType!.Assign(value); }
+    }
+    private BicepValue<KustoPrincipalAssignmentType>? _principalType;
+
+    /// <summary>
+    /// Cluster principal role.
+    /// </summary>
+    public BicepValue<KustoClusterPrincipalRole> Role 
+    {
+        get { Initialize(); return _role!; }
+        set { Initialize(); _role!.Assign(value); }
+    }
+    private BicepValue<KustoClusterPrincipalRole>? _role;
+
+    /// <summary>
+    /// The tenant id of the principal.
+    /// </summary>
+    public BicepValue<Guid> TenantId 
+    {
+        get { Initialize(); return _tenantId!; }
+        set { Initialize(); _tenantId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _tenantId;
+
+    /// <summary>
+    /// The service principal object id in AAD (Azure active directory).
+    /// </summary>
+    public BicepValue<Guid> AadObjectId 
+    {
+        get { Initialize(); return _aadObjectId!; }
+    }
+    private BicepValue<Guid>? _aadObjectId;
+
+    /// <summary>
+    /// The principal name.
+    /// </summary>
+    public BicepValue<string> PrincipalName 
+    {
+        get { Initialize(); return _principalName!; }
+    }
+    private BicepValue<string>? _principalName;
+
+    /// <summary>
+    /// The provisioned state of the resource.
+    /// </summary>
+    public BicepValue<KustoProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<KustoProvisioningState>? _provisioningState;
+
+    /// <summary>
+    /// The tenant name of the principal.
+    /// </summary>
+    public BicepValue<string> TenantName 
+    {
+        get { Initialize(); return _tenantName!; }
+    }
+    private BicepValue<string>? _tenantName;
+
+    /// <summary>
     /// Gets or sets a reference to the parent KustoCluster.
     /// </summary>
     public KustoCluster? Parent
@@ -58,6 +135,14 @@ public partial class KustoClusterPrincipalAssignment : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _clusterPrincipalId = DefineProperty<string>("ClusterPrincipalId", ["properties", "principalId"]);
+        _principalType = DefineProperty<KustoPrincipalAssignmentType>("PrincipalType", ["properties", "principalType"]);
+        _role = DefineProperty<KustoClusterPrincipalRole>("Role", ["properties", "role"]);
+        _tenantId = DefineProperty<Guid>("TenantId", ["properties", "tenantId"]);
+        _aadObjectId = DefineProperty<Guid>("AadObjectId", ["properties", "aadObjectId"], isOutput: true);
+        _principalName = DefineProperty<string>("PrincipalName", ["properties", "principalName"], isOutput: true);
+        _provisioningState = DefineProperty<KustoProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _tenantName = DefineProperty<string>("TenantName", ["properties", "tenantName"], isOutput: true);
         _parent = DefineResource<KustoCluster>("Parent", ["parent"], isRequired: true);
     }
 

@@ -6,6 +6,7 @@
 #nullable enable
 
 using Azure.Provisioning.Primitives;
+using System;
 
 namespace Azure.Provisioning.Kusto;
 
@@ -14,6 +15,42 @@ namespace Azure.Provisioning.Kusto;
 /// </summary>
 public partial class MigrationClusterProperties : ProvisionableConstruct
 {
+    /// <summary>
+    /// The resource ID of the cluster.
+    /// </summary>
+    public BicepValue<string> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<string>? _id;
+
+    /// <summary>
+    /// The public URL of the cluster.
+    /// </summary>
+    public BicepValue<Uri> Uri 
+    {
+        get { Initialize(); return _uri!; }
+    }
+    private BicepValue<Uri>? _uri;
+
+    /// <summary>
+    /// The public data ingestion URL of the cluster.
+    /// </summary>
+    public BicepValue<Uri> DataIngestionUri 
+    {
+        get { Initialize(); return _dataIngestionUri!; }
+    }
+    private BicepValue<Uri>? _dataIngestionUri;
+
+    /// <summary>
+    /// The role of the cluster in the migration process.
+    /// </summary>
+    public BicepValue<MigrationClusterRole> Role 
+    {
+        get { Initialize(); return _role!; }
+    }
+    private BicepValue<MigrationClusterRole>? _role;
+
     /// <summary>
     /// Creates a new MigrationClusterProperties.
     /// </summary>
@@ -27,5 +64,9 @@ public partial class MigrationClusterProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _id = DefineProperty<string>("Id", ["id"], isOutput: true);
+        _uri = DefineProperty<Uri>("Uri", ["uri"], isOutput: true);
+        _dataIngestionUri = DefineProperty<Uri>("DataIngestionUri", ["dataIngestionUri"], isOutput: true);
+        _role = DefineProperty<MigrationClusterRole>("Role", ["role"], isOutput: true);
     }
 }

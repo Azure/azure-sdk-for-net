@@ -6,6 +6,7 @@
 #nullable enable
 
 using Azure.Provisioning.Primitives;
+using System;
 
 namespace Azure.Provisioning.Kusto;
 
@@ -14,6 +15,46 @@ namespace Azure.Provisioning.Kusto;
 /// </summary>
 public partial class KustoKeyVaultProperties : ProvisionableConstruct
 {
+    /// <summary>
+    /// The name of the key vault key.
+    /// </summary>
+    public BicepValue<string> KeyName 
+    {
+        get { Initialize(); return _keyName!; }
+        set { Initialize(); _keyName!.Assign(value); }
+    }
+    private BicepValue<string>? _keyName;
+
+    /// <summary>
+    /// The version of the key vault key.
+    /// </summary>
+    public BicepValue<string> KeyVersion 
+    {
+        get { Initialize(); return _keyVersion!; }
+        set { Initialize(); _keyVersion!.Assign(value); }
+    }
+    private BicepValue<string>? _keyVersion;
+
+    /// <summary>
+    /// The Uri of the key vault.
+    /// </summary>
+    public BicepValue<Uri> KeyVaultUri 
+    {
+        get { Initialize(); return _keyVaultUri!; }
+        set { Initialize(); _keyVaultUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _keyVaultUri;
+
+    /// <summary>
+    /// The user assigned identity (ARM resource id) that has access to the key.
+    /// </summary>
+    public BicepValue<string> UserIdentity 
+    {
+        get { Initialize(); return _userIdentity!; }
+        set { Initialize(); _userIdentity!.Assign(value); }
+    }
+    private BicepValue<string>? _userIdentity;
+
     /// <summary>
     /// Creates a new KustoKeyVaultProperties.
     /// </summary>
@@ -27,5 +68,9 @@ public partial class KustoKeyVaultProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _keyName = DefineProperty<string>("KeyName", ["keyName"]);
+        _keyVersion = DefineProperty<string>("KeyVersion", ["keyVersion"]);
+        _keyVaultUri = DefineProperty<Uri>("KeyVaultUri", ["keyVaultUri"]);
+        _userIdentity = DefineProperty<string>("UserIdentity", ["userIdentity"]);
     }
 }

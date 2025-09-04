@@ -26,6 +26,91 @@ public partial class KustoScript : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
+    /// A unique string. If changed the script will be applied again.
+    /// </summary>
+    public BicepValue<string> ForceUpdateTag 
+    {
+        get { Initialize(); return _forceUpdateTag!; }
+        set { Initialize(); _forceUpdateTag!.Assign(value); }
+    }
+    private BicepValue<string>? _forceUpdateTag;
+
+    /// <summary>
+    /// Indicates if the permissions for the script caller are kept following
+    /// completion of the script.
+    /// </summary>
+    public BicepValue<PrincipalPermissionsAction> PrincipalPermissionsAction 
+    {
+        get { Initialize(); return _principalPermissionsAction!; }
+        set { Initialize(); _principalPermissionsAction!.Assign(value); }
+    }
+    private BicepValue<PrincipalPermissionsAction>? _principalPermissionsAction;
+
+    /// <summary>
+    /// The script content. This property should be used when the script is
+    /// provide inline and not through file in a SA. Must not be used together
+    /// with scriptUrl and scriptUrlSasToken properties.
+    /// </summary>
+    public BicepValue<string> ScriptContent 
+    {
+        get { Initialize(); return _scriptContent!; }
+        set { Initialize(); _scriptContent!.Assign(value); }
+    }
+    private BicepValue<string>? _scriptContent;
+
+    /// <summary>
+    /// Differentiates between the type of script commands included - Database
+    /// or Cluster. The default is Database.
+    /// </summary>
+    public BicepValue<KustoScriptLevel> ScriptLevel 
+    {
+        get { Initialize(); return _scriptLevel!; }
+        set { Initialize(); _scriptLevel!.Assign(value); }
+    }
+    private BicepValue<KustoScriptLevel>? _scriptLevel;
+
+    /// <summary>
+    /// The url to the KQL script blob file. Must not be used together with
+    /// scriptContent property.
+    /// </summary>
+    public BicepValue<Uri> ScriptUri 
+    {
+        get { Initialize(); return _scriptUri!; }
+        set { Initialize(); _scriptUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _scriptUri;
+
+    /// <summary>
+    /// The SaS token that provide read access to the file which contain the
+    /// script. Must be provided when using scriptUrl property.
+    /// </summary>
+    public BicepValue<string> ScriptUriSasToken 
+    {
+        get { Initialize(); return _scriptUriSasToken!; }
+        set { Initialize(); _scriptUriSasToken!.Assign(value); }
+    }
+    private BicepValue<string>? _scriptUriSasToken;
+
+    /// <summary>
+    /// Flag that indicates whether to continue if one of the command fails.
+    /// </summary>
+    public BicepValue<bool> ShouldContinueOnErrors 
+    {
+        get { Initialize(); return _shouldContinueOnErrors!; }
+        set { Initialize(); _shouldContinueOnErrors!.Assign(value); }
+    }
+    private BicepValue<bool>? _shouldContinueOnErrors;
+
+    /// <summary>
+    /// The provisioned state of the resource.
+    /// </summary>
+    public BicepValue<KustoProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<KustoProvisioningState>? _provisioningState;
+
+    /// <summary>
     /// Gets or sets a reference to the parent KustoDatabase.
     /// </summary>
     public KustoDatabase? Parent
@@ -57,6 +142,14 @@ public partial class KustoScript : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _forceUpdateTag = DefineProperty<string>("ForceUpdateTag", ["properties", "forceUpdateTag"]);
+        _principalPermissionsAction = DefineProperty<PrincipalPermissionsAction>("PrincipalPermissionsAction", ["properties", "principalPermissionsAction"]);
+        _scriptContent = DefineProperty<string>("ScriptContent", ["properties", "scriptContent"]);
+        _scriptLevel = DefineProperty<KustoScriptLevel>("ScriptLevel", ["properties", "scriptLevel"]);
+        _scriptUri = DefineProperty<Uri>("ScriptUri", ["properties", "scriptUrl"]);
+        _scriptUriSasToken = DefineProperty<string>("ScriptUriSasToken", ["properties", "scriptUrlSasToken"]);
+        _shouldContinueOnErrors = DefineProperty<bool>("ShouldContinueOnErrors", ["properties", "continueOnErrors"]);
+        _provisioningState = DefineProperty<KustoProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _parent = DefineResource<KustoDatabase>("Parent", ["parent"], isRequired: true);
     }
 

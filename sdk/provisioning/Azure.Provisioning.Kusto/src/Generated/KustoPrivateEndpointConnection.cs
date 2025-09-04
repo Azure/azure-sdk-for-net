@@ -5,6 +5,7 @@
 
 #nullable enable
 
+using Azure.Core;
 using Azure.Provisioning.Primitives;
 using System;
 
@@ -24,6 +25,43 @@ public partial class KustoPrivateEndpointConnection : ProvisionableResource
         set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
+
+    /// <summary>
+    /// Connection State of the Private Endpoint Connection.
+    /// </summary>
+    public KustoPrivateLinkServiceConnectionStateProperty ConnectionState 
+    {
+        get { Initialize(); return _connectionState!; }
+        set { Initialize(); AssignOrReplace(ref _connectionState, value); }
+    }
+    private KustoPrivateLinkServiceConnectionStateProperty? _connectionState;
+
+    /// <summary>
+    /// Group id of the private endpoint.
+    /// </summary>
+    public BicepValue<string> GroupId 
+    {
+        get { Initialize(); return _groupId!; }
+    }
+    private BicepValue<string>? _groupId;
+
+    /// <summary>
+    /// Gets Id.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> PrivateEndpointId 
+    {
+        get { Initialize(); return _privateEndpointId!; }
+    }
+    private BicepValue<ResourceIdentifier>? _privateEndpointId;
+
+    /// <summary>
+    /// Provisioning state of the private endpoint.
+    /// </summary>
+    public BicepValue<string> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<string>? _provisioningState;
 
     /// <summary>
     /// Gets or sets a reference to the parent KustoCluster.
@@ -58,6 +96,10 @@ public partial class KustoPrivateEndpointConnection : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _connectionState = DefineModelProperty<KustoPrivateLinkServiceConnectionStateProperty>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
+        _groupId = DefineProperty<string>("GroupId", ["properties", "groupId"], isOutput: true);
+        _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["properties", "privateEndpoint", "id"], isOutput: true);
+        _provisioningState = DefineProperty<string>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _parent = DefineResource<KustoCluster>("Parent", ["parent"], isRequired: true);
     }
 

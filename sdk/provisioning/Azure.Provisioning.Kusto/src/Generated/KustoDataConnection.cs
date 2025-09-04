@@ -5,6 +5,7 @@
 
 #nullable enable
 
+using Azure.Core;
 using Azure.Provisioning.Primitives;
 using System;
 
@@ -24,6 +25,16 @@ public partial class KustoDataConnection : ProvisionableResource
         set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
+
+    /// <summary>
+    /// Resource location.
+    /// </summary>
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Gets or sets a reference to the parent KustoDatabase.
@@ -57,6 +68,7 @@ public partial class KustoDataConnection : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _parent = DefineResource<KustoDatabase>("Parent", ["parent"], isRequired: true);
     }
 

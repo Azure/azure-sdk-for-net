@@ -6,6 +6,7 @@
 #nullable enable
 
 using Azure.Provisioning.Primitives;
+using System;
 
 namespace Azure.Provisioning.Kusto;
 
@@ -14,6 +15,36 @@ namespace Azure.Provisioning.Kusto;
 /// </summary>
 public partial class KustoSku : ProvisionableConstruct
 {
+    /// <summary>
+    /// SKU name.
+    /// </summary>
+    public BicepValue<KustoSkuName> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<KustoSkuName>? _name;
+
+    /// <summary>
+    /// The number of instances of the cluster.
+    /// </summary>
+    public BicepValue<int> Capacity 
+    {
+        get { Initialize(); return _capacity!; }
+        set { Initialize(); _capacity!.Assign(value); }
+    }
+    private BicepValue<int>? _capacity;
+
+    /// <summary>
+    /// SKU tier.
+    /// </summary>
+    public BicepValue<KustoSkuTier> Tier 
+    {
+        get { Initialize(); return _tier!; }
+        set { Initialize(); _tier!.Assign(value); }
+    }
+    private BicepValue<KustoSkuTier>? _tier;
+
     /// <summary>
     /// Creates a new KustoSku.
     /// </summary>
@@ -27,5 +58,8 @@ public partial class KustoSku : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _name = DefineProperty<KustoSkuName>("Name", ["name"]);
+        _capacity = DefineProperty<int>("Capacity", ["capacity"]);
+        _tier = DefineProperty<KustoSkuTier>("Tier", ["tier"]);
     }
 }

@@ -6,6 +6,7 @@
 #nullable enable
 
 using Azure.Provisioning.Primitives;
+using System;
 
 namespace Azure.Provisioning.Kusto;
 
@@ -15,6 +16,47 @@ namespace Azure.Provisioning.Kusto;
 /// </summary>
 public partial class KustoCalloutPolicy : ProvisionableConstruct
 {
+    /// <summary>
+    /// Regular expression or FQDN pattern for the callout URI.
+    /// </summary>
+    public BicepValue<string> CalloutUriRegex 
+    {
+        get { Initialize(); return _calloutUriRegex!; }
+        set { Initialize(); _calloutUriRegex!.Assign(value); }
+    }
+    private BicepValue<string>? _calloutUriRegex;
+
+    /// <summary>
+    /// Type of the callout service, specifying the kind of external resource
+    /// or service being accessed.
+    /// </summary>
+    public BicepValue<KustoCalloutPolicyCalloutType> CalloutType 
+    {
+        get { Initialize(); return _calloutType!; }
+        set { Initialize(); _calloutType!.Assign(value); }
+    }
+    private BicepValue<KustoCalloutPolicyCalloutType>? _calloutType;
+
+    /// <summary>
+    /// Indicates whether outbound access is permitted for the specified URI
+    /// pattern.
+    /// </summary>
+    public BicepValue<KustoCalloutPolicyOutboundAccess> OutboundAccess 
+    {
+        get { Initialize(); return _outboundAccess!; }
+        set { Initialize(); _outboundAccess!.Assign(value); }
+    }
+    private BicepValue<KustoCalloutPolicyOutboundAccess>? _outboundAccess;
+
+    /// <summary>
+    /// Unique identifier for the callout configuration.
+    /// </summary>
+    public BicepValue<string> CalloutId 
+    {
+        get { Initialize(); return _calloutId!; }
+    }
+    private BicepValue<string>? _calloutId;
+
     /// <summary>
     /// Creates a new KustoCalloutPolicy.
     /// </summary>
@@ -28,5 +70,9 @@ public partial class KustoCalloutPolicy : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _calloutUriRegex = DefineProperty<string>("CalloutUriRegex", ["calloutUriRegex"]);
+        _calloutType = DefineProperty<KustoCalloutPolicyCalloutType>("CalloutType", ["calloutType"]);
+        _outboundAccess = DefineProperty<KustoCalloutPolicyOutboundAccess>("OutboundAccess", ["outboundAccess"]);
+        _calloutId = DefineProperty<string>("CalloutId", ["calloutId"], isOutput: true);
     }
 }

@@ -6,6 +6,7 @@
 #nullable enable
 
 using Azure.Provisioning.Primitives;
+using System;
 
 namespace Azure.Provisioning.Kusto;
 
@@ -14,6 +15,47 @@ namespace Azure.Provisioning.Kusto;
 /// </summary>
 public partial class KustoClusterVirtualNetworkConfiguration : ProvisionableConstruct
 {
+    /// <summary>
+    /// The subnet resource id.
+    /// </summary>
+    public BicepValue<string> SubnetId 
+    {
+        get { Initialize(); return _subnetId!; }
+        set { Initialize(); _subnetId!.Assign(value); }
+    }
+    private BicepValue<string>? _subnetId;
+
+    /// <summary>
+    /// Engine service&apos;s public IP address resource id.
+    /// </summary>
+    public BicepValue<string> EnginePublicIPId 
+    {
+        get { Initialize(); return _enginePublicIPId!; }
+        set { Initialize(); _enginePublicIPId!.Assign(value); }
+    }
+    private BicepValue<string>? _enginePublicIPId;
+
+    /// <summary>
+    /// Data management&apos;s service public IP address resource id.
+    /// </summary>
+    public BicepValue<string> DataManagementPublicIPId 
+    {
+        get { Initialize(); return _dataManagementPublicIPId!; }
+        set { Initialize(); _dataManagementPublicIPId!.Assign(value); }
+    }
+    private BicepValue<string>? _dataManagementPublicIPId;
+
+    /// <summary>
+    /// When enabled, the cluster is deployed into the configured subnet, when
+    /// disabled it will be removed from the subnet.
+    /// </summary>
+    public BicepValue<KustoClusterVnetState> State 
+    {
+        get { Initialize(); return _state!; }
+        set { Initialize(); _state!.Assign(value); }
+    }
+    private BicepValue<KustoClusterVnetState>? _state;
+
     /// <summary>
     /// Creates a new KustoClusterVirtualNetworkConfiguration.
     /// </summary>
@@ -28,5 +70,9 @@ public partial class KustoClusterVirtualNetworkConfiguration : ProvisionableCons
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _subnetId = DefineProperty<string>("SubnetId", ["subnetId"]);
+        _enginePublicIPId = DefineProperty<string>("EnginePublicIPId", ["enginePublicIpId"]);
+        _dataManagementPublicIPId = DefineProperty<string>("DataManagementPublicIPId", ["dataManagementPublicIpId"]);
+        _state = DefineProperty<KustoClusterVnetState>("State", ["state"]);
     }
 }

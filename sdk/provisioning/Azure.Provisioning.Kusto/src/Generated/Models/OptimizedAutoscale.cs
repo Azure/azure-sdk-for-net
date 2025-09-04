@@ -6,6 +6,7 @@
 #nullable enable
 
 using Azure.Provisioning.Primitives;
+using System;
 
 namespace Azure.Provisioning.Kusto;
 
@@ -14,6 +15,47 @@ namespace Azure.Provisioning.Kusto;
 /// </summary>
 public partial class OptimizedAutoscale : ProvisionableConstruct
 {
+    /// <summary>
+    /// The version of the template defined, for instance 1.
+    /// </summary>
+    public BicepValue<int> Version 
+    {
+        get { Initialize(); return _version!; }
+        set { Initialize(); _version!.Assign(value); }
+    }
+    private BicepValue<int>? _version;
+
+    /// <summary>
+    /// A boolean value that indicate if the optimized autoscale feature is
+    /// enabled or not.
+    /// </summary>
+    public BicepValue<bool> IsEnabled 
+    {
+        get { Initialize(); return _isEnabled!; }
+        set { Initialize(); _isEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isEnabled;
+
+    /// <summary>
+    /// Minimum allowed instances count.
+    /// </summary>
+    public BicepValue<int> Minimum 
+    {
+        get { Initialize(); return _minimum!; }
+        set { Initialize(); _minimum!.Assign(value); }
+    }
+    private BicepValue<int>? _minimum;
+
+    /// <summary>
+    /// Maximum allowed instances count.
+    /// </summary>
+    public BicepValue<int> Maximum 
+    {
+        get { Initialize(); return _maximum!; }
+        set { Initialize(); _maximum!.Assign(value); }
+    }
+    private BicepValue<int>? _maximum;
+
     /// <summary>
     /// Creates a new OptimizedAutoscale.
     /// </summary>
@@ -27,5 +69,9 @@ public partial class OptimizedAutoscale : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _version = DefineProperty<int>("Version", ["version"]);
+        _isEnabled = DefineProperty<bool>("IsEnabled", ["isEnabled"]);
+        _minimum = DefineProperty<int>("Minimum", ["minimum"]);
+        _maximum = DefineProperty<int>("Maximum", ["maximum"]);
     }
 }

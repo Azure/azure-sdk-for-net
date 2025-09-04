@@ -26,6 +26,60 @@ public partial class SandboxCustomImage : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
+    /// The base image name on which the custom image is built on top of. It
+    /// can be one of the LanguageExtensionImageName (e.g.:
+    /// &apos;Python3_10_8&apos;, &apos;Python3_10_8_DL&apos;) or the name of
+    /// an existing custom image. Either this property or languageVersion
+    /// should be specified.
+    /// </summary>
+    public BicepValue<string> BaseImageName 
+    {
+        get { Initialize(); return _baseImageName!; }
+        set { Initialize(); _baseImageName!.Assign(value); }
+    }
+    private BicepValue<string>? _baseImageName;
+
+    /// <summary>
+    /// The language name, for example Python.
+    /// </summary>
+    public BicepValue<SandboxCustomImageLanguage> Language 
+    {
+        get { Initialize(); return _language!; }
+        set { Initialize(); _language!.Assign(value); }
+    }
+    private BicepValue<SandboxCustomImageLanguage>? _language;
+
+    /// <summary>
+    /// The version of the language. Either this property or baseImageName
+    /// should be specified.
+    /// </summary>
+    public BicepValue<string> LanguageVersion 
+    {
+        get { Initialize(); return _languageVersion!; }
+        set { Initialize(); _languageVersion!.Assign(value); }
+    }
+    private BicepValue<string>? _languageVersion;
+
+    /// <summary>
+    /// The requirements file content.
+    /// </summary>
+    public BicepValue<string> RequirementsFileContent 
+    {
+        get { Initialize(); return _requirementsFileContent!; }
+        set { Initialize(); _requirementsFileContent!.Assign(value); }
+    }
+    private BicepValue<string>? _requirementsFileContent;
+
+    /// <summary>
+    /// The provisioned state of the resource.
+    /// </summary>
+    public BicepValue<KustoProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<KustoProvisioningState>? _provisioningState;
+
+    /// <summary>
     /// Gets or sets a reference to the parent KustoCluster.
     /// </summary>
     public KustoCluster? Parent
@@ -57,6 +111,11 @@ public partial class SandboxCustomImage : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _baseImageName = DefineProperty<string>("BaseImageName", ["properties", "baseImageName"]);
+        _language = DefineProperty<SandboxCustomImageLanguage>("Language", ["properties", "language"]);
+        _languageVersion = DefineProperty<string>("LanguageVersion", ["properties", "languageVersion"]);
+        _requirementsFileContent = DefineProperty<string>("RequirementsFileContent", ["properties", "requirementsFileContent"]);
+        _provisioningState = DefineProperty<KustoProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _parent = DefineResource<KustoCluster>("Parent", ["parent"], isRequired: true);
     }
 

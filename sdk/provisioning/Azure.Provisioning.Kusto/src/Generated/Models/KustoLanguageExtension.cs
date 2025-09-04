@@ -6,6 +6,7 @@
 #nullable enable
 
 using Azure.Provisioning.Primitives;
+using System;
 
 namespace Azure.Provisioning.Kusto;
 
@@ -14,6 +15,36 @@ namespace Azure.Provisioning.Kusto;
 /// </summary>
 public partial class KustoLanguageExtension : ProvisionableConstruct
 {
+    /// <summary>
+    /// The language extension name.
+    /// </summary>
+    public BicepValue<KustoLanguageExtensionName> LanguageExtensionName 
+    {
+        get { Initialize(); return _languageExtensionName!; }
+        set { Initialize(); _languageExtensionName!.Assign(value); }
+    }
+    private BicepValue<KustoLanguageExtensionName>? _languageExtensionName;
+
+    /// <summary>
+    /// The language extension image name.
+    /// </summary>
+    public BicepValue<KustoLanguageExtensionImageName> LanguageExtensionImageName 
+    {
+        get { Initialize(); return _languageExtensionImageName!; }
+        set { Initialize(); _languageExtensionImageName!.Assign(value); }
+    }
+    private BicepValue<KustoLanguageExtensionImageName>? _languageExtensionImageName;
+
+    /// <summary>
+    /// The language extension custom image name.
+    /// </summary>
+    public BicepValue<string> LanguageExtensionCustomImageName 
+    {
+        get { Initialize(); return _languageExtensionCustomImageName!; }
+        set { Initialize(); _languageExtensionCustomImageName!.Assign(value); }
+    }
+    private BicepValue<string>? _languageExtensionCustomImageName;
+
     /// <summary>
     /// Creates a new KustoLanguageExtension.
     /// </summary>
@@ -27,5 +58,8 @@ public partial class KustoLanguageExtension : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _languageExtensionName = DefineProperty<KustoLanguageExtensionName>("LanguageExtensionName", ["languageExtensionName"]);
+        _languageExtensionImageName = DefineProperty<KustoLanguageExtensionImageName>("LanguageExtensionImageName", ["languageExtensionImageName"]);
+        _languageExtensionCustomImageName = DefineProperty<string>("LanguageExtensionCustomImageName", ["languageExtensionCustomImageName"]);
     }
 }

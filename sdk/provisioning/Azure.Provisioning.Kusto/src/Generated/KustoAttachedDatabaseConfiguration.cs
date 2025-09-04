@@ -5,6 +5,8 @@
 
 #nullable enable
 
+using Azure.Core;
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
 
@@ -24,6 +26,100 @@ public partial class KustoAttachedDatabaseConfiguration : ProvisionableResource
         set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
+
+    /// <summary>
+    /// The resource id of the cluster where the databases you would like to
+    /// attach reside.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> ClusterResourceId 
+    {
+        get { Initialize(); return _clusterResourceId!; }
+        set { Initialize(); _clusterResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _clusterResourceId;
+
+    /// <summary>
+    /// The name of the database which you would like to attach, use * if you
+    /// want to follow all current and future databases.
+    /// </summary>
+    public BicepValue<string> DatabaseName 
+    {
+        get { Initialize(); return _databaseName!; }
+        set { Initialize(); _databaseName!.Assign(value); }
+    }
+    private BicepValue<string>? _databaseName;
+
+    /// <summary>
+    /// Overrides the original database name. Relevant only when attaching to a
+    /// specific database.
+    /// </summary>
+    public BicepValue<string> DatabaseNameOverride 
+    {
+        get { Initialize(); return _databaseNameOverride!; }
+        set { Initialize(); _databaseNameOverride!.Assign(value); }
+    }
+    private BicepValue<string>? _databaseNameOverride;
+
+    /// <summary>
+    /// Adds a prefix to the attached databases name. When following an entire
+    /// cluster, that prefix would be added to all of the databases original
+    /// names from leader cluster.
+    /// </summary>
+    public BicepValue<string> DatabaseNamePrefix 
+    {
+        get { Initialize(); return _databaseNamePrefix!; }
+        set { Initialize(); _databaseNamePrefix!.Assign(value); }
+    }
+    private BicepValue<string>? _databaseNamePrefix;
+
+    /// <summary>
+    /// The default principals modification kind.
+    /// </summary>
+    public BicepValue<KustoDatabaseDefaultPrincipalsModificationKind> DefaultPrincipalsModificationKind 
+    {
+        get { Initialize(); return _defaultPrincipalsModificationKind!; }
+        set { Initialize(); _defaultPrincipalsModificationKind!.Assign(value); }
+    }
+    private BicepValue<KustoDatabaseDefaultPrincipalsModificationKind>? _defaultPrincipalsModificationKind;
+
+    /// <summary>
+    /// Resource location.
+    /// </summary>
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
+
+    /// <summary>
+    /// Table level sharing specifications.
+    /// </summary>
+    public KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties 
+    {
+        get { Initialize(); return _tableLevelSharingProperties!; }
+        set { Initialize(); AssignOrReplace(ref _tableLevelSharingProperties, value); }
+    }
+    private KustoDatabaseTableLevelSharingProperties? _tableLevelSharingProperties;
+
+    /// <summary>
+    /// The list of databases from the clusterResourceId which are currently
+    /// attached to the cluster.
+    /// </summary>
+    public BicepList<string> AttachedDatabaseNames 
+    {
+        get { Initialize(); return _attachedDatabaseNames!; }
+    }
+    private BicepList<string>? _attachedDatabaseNames;
+
+    /// <summary>
+    /// The provisioned state of the resource.
+    /// </summary>
+    public BicepValue<KustoProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<KustoProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets or sets a reference to the parent KustoCluster.
@@ -58,6 +154,15 @@ public partial class KustoAttachedDatabaseConfiguration : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _clusterResourceId = DefineProperty<ResourceIdentifier>("ClusterResourceId", ["properties", "clusterResourceId"]);
+        _databaseName = DefineProperty<string>("DatabaseName", ["properties", "databaseName"]);
+        _databaseNameOverride = DefineProperty<string>("DatabaseNameOverride", ["properties", "databaseNameOverride"]);
+        _databaseNamePrefix = DefineProperty<string>("DatabaseNamePrefix", ["properties", "databaseNamePrefix"]);
+        _defaultPrincipalsModificationKind = DefineProperty<KustoDatabaseDefaultPrincipalsModificationKind>("DefaultPrincipalsModificationKind", ["properties", "defaultPrincipalsModificationKind"]);
+        _location = DefineProperty<AzureLocation>("Location", ["location"]);
+        _tableLevelSharingProperties = DefineModelProperty<KustoDatabaseTableLevelSharingProperties>("TableLevelSharingProperties", ["properties", "tableLevelSharingProperties"]);
+        _attachedDatabaseNames = DefineListProperty<string>("AttachedDatabaseNames", ["properties", "attachedDatabaseNames"], isOutput: true);
+        _provisioningState = DefineProperty<KustoProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _parent = DefineResource<KustoCluster>("Parent", ["parent"], isRequired: true);
     }
 
