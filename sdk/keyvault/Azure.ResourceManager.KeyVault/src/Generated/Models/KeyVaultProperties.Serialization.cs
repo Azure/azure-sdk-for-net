@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             KeyVaultCreateMode? createMode = default;
             bool? enablePurgeProtection = default;
             KeyVaultNetworkRuleSet networkAcls = default;
-            VaultProvisioningState? provisioningState = default;
+            KeyVaultProvisioningState? provisioningState = default;
             IReadOnlyList<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections = default;
             string publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    provisioningState = new VaultProvisioningState(property.Value.GetString());
+                    provisioningState = new KeyVaultProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnections"u8))

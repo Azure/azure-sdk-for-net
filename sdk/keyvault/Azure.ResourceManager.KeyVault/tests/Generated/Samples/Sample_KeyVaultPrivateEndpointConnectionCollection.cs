@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
                 ETag = new ETag(""),
                 ConnectionState = new KeyVaultPrivateLinkServiceConnectionState
                 {
-                    Status = ManagedHsmPrivateEndpointServiceConnectionStatus.Approved,
+                    Status = KeyVaultPrivateEndpointServiceConnectionStatus.Approved,
                     Description = "My name is Joe and I'm approving this.",
                 },
             };

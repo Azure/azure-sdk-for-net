@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            IReadOnlyList<ManagedHsmPrivateLinkResource> value = default;
+            IReadOnlyList<ManagedHsmPrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    List<ManagedHsmPrivateLinkResource> array = new List<ManagedHsmPrivateLinkResource>();
+                    List<ManagedHsmPrivateLinkResourceData> array = new List<ManagedHsmPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmPrivateLinkResource.DeserializeManagedHsmPrivateLinkResource(item, options));
+                        array.Add(ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedHsmPrivateLinkResourceListResult(value ?? new ChangeTrackingList<ManagedHsmPrivateLinkResource>(), serializedAdditionalRawData);
+            return new ManagedHsmPrivateLinkResourceListResult(value ?? new ChangeTrackingList<ManagedHsmPrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

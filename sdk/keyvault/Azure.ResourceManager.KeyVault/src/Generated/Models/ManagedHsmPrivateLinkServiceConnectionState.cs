@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="description"> The reason for approval or rejection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmPrivateLinkServiceConnectionState(ManagedHsmPrivateEndpointServiceConnectionStatus? status, string description, KeyVaultActionsRequiredMessage? actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedHsmPrivateLinkServiceConnectionState(ManagedHsmPrivateEndpointServiceConnectionStatus? status, string description, ManagedHsmActionsRequiredMessage? actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Description = description;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string Description { get; set; }
         /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>
         [WirePath("actionsRequired")]
-        public KeyVaultActionsRequiredMessage? ActionsRequired { get; set; }
+        public ManagedHsmActionsRequiredMessage? ActionsRequired { get; set; }
     }
 }

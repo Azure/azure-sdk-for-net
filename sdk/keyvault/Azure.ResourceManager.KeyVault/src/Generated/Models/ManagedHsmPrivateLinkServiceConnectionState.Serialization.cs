@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             ManagedHsmPrivateEndpointServiceConnectionStatus? status = default;
             string description = default;
-            KeyVaultActionsRequiredMessage? actionsRequired = default;
+            ManagedHsmActionsRequiredMessage? actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    actionsRequired = new KeyVaultActionsRequiredMessage(property.Value.GetString());
+                    actionsRequired = new ManagedHsmActionsRequiredMessage(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

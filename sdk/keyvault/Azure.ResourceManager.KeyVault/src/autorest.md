@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: KeyVault
 namespace: Azure.ResourceManager.KeyVault
-require: https://github.com/Azure/azure-rest-api-specs/blob/99d3afca47ed09d60d26e883ec2633ec92693251/specification/keyvault/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/ceb81cf0f16b76604c88ec6b541f0e09d9ca8963/specification/keyvault/resource-manager/readme.md
 #tag: package-2023-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -19,6 +19,9 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 enable-bicep-serialization: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 override-operation-name:
   Vaults_CheckNameAvailability: CheckKeyVaultNameAvailability
@@ -85,7 +88,7 @@ rename-mapping:
   Secret: KeyVaultSecret
   MhsmPrivateEndpointConnectionItem: ManagedHsmPrivateEndpointConnectionItemData
   MhsmPrivateEndpointConnectionItem.id: -|arm-id
-  MHSMPrivateLinkResource: ManagedHsmPrivateLinkResourceData
+  MhsmPrivateLinkResource: ManagedHsmPrivateLinkResourceData
   ActionsRequired: ManagedHsmActionsRequiredMessage
   NetworkRuleAction: ManagedHsmNetworkRuleAction
   NetworkRuleBypassOptions: ManagedHsmNetworkRuleBypassOption
@@ -177,6 +180,7 @@ directive:
       {
           delete $[path];
       }
+  # Delete according to the paths deleted in the keysManagedHsm.json and keys.json files above.
   - from: openapi.json
     where: $.paths
     transform: >
@@ -193,12 +197,12 @@ directive:
       for (var i = 0; i < pathsToDelete.length; i++) {
         delete $[pathsToDelete[i]];
       }
+  # The following content was originally in the managedHsm.json file,
+  # but is not present in the new file, and the references have also changed.
   - from: openapi.json
     where: $.definitions
     transform: >
-      $.Vault.properties.tags['readOnly'] = false;
-      $.Vault.properties.location['readOnly'] = false;
-      $.MHSMPrivateEndpointConnectionProvisioningState= {
+      $.MHSMPrivateEndpointConnectionProvisioningState = {
             "type": "string",
             "readOnly": true,
             "description": "The current provisioning state.",
@@ -242,15 +246,148 @@ directive:
             }
       };
       $.MHSMPrivateEndpointConnectionProperties.properties.provisioningState['$ref'] = '#/definitions/MHSMPrivateEndpointConnectionProvisioningState';
-      $.Reason['x-ms-enum']['name'] = 'KeyVaultNameUnavailableReason';
-      $.Reason['x-ms-enum']['modelAsString'] = false;
-      $.NetworkRuleBypassOptions['x-ms-enum']['name'] = 'KeyVaultNetworkRuleBypassOption';
-      $.NetworkRuleAction['x-ms-enum']['name'] = 'KeyVaultNetworkRuleAction';
-      $.CreateMode['x-ms-enum']['name'] = 'KeyVaultPatchMode';
-      $.CreateMode['x-ms-enum']['name'] = 'KeyVaultCreateMode';
-      $.ActionsRequired['x-ms-enum']['name'] = 'KeyVaultActionsRequiredMessage';
-      $.ProvisioningState['x-ms-enum']['name'] = 'KeyVaultProvisioningState';
+  # Resolve the issue of the missing related Tag methods in the KeyVaultResource class.
+  - from: openapi.json
+    where: $.definitions.Vault.properties
+    transform: >
+      $.tags['readOnly'] = false;
+      $.location['readOnly'] = false;
+  # The directive processing in the above managedHsm.json and keyvault.json files is similar.
+  - from: openapi.json
+    where: $.definitions
+    transform: >
+      $.VaultProvisioningState['x-ms-enum']['name'] = 'KeyVaultProvisioningState';
       $.ProvisioningState['x-ms-enum']['name'] = 'ManagedHsmProvisioningState';
       $.VaultCheckNameAvailabilityParameters.properties.type['x-ms-constant'] = true;
-      $.PrivateEndpointServiceConnectionStatus['x-ms-enum']['name'] = 'ManagedHsmPrivateEndpointServiceConnectionStatus';
+  # The following are all merged from multiple JSON files into one JSON file,
+  # where multiple nodes in the definitions reference the same node (with different original names, but currently the same).
+  - from: openapi.json
+    where: $.definitions
+    transform: >
+      $.PatchMode = {
+          "type": "string",
+          "description": "The vault's create mode to indicate whether the vault need to be recovered or not.",
+          "enum": [
+            "recover",
+            "default"
+          ],
+          "x-ms-enum": {
+            "name": "KeyVaultPatchMode",
+            "modelAsString": false
+          }
+      };
+      $.VaultPatchProperties.properties.createMode['$ref'] = '#/definitions/PatchMode';
+      $.MHSMCreateMode = {
+          "type": "string",
+          "description": "The create mode to indicate whether the resource is being created or is being recovered from a deleted resource.",
+          "enum": [
+            "recover",
+            "default"
+          ],
+          "x-ms-enum": {
+            "name": "ManagedHsmCreateMode",
+            "modelAsString": false,
+            "values": [
+              {
+                "value": "recover",
+                "description": "Recover the managed HSM pool from a soft-deleted resource."
+              },
+              {
+                "value": "default",
+                "description": "Create a new managed HSM pool. This is the default option."
+              }
+            ]
+          },
+          "x-ms-mutability": [
+            "create",
+            "update"
+          ]
+      };
+      $.ManagedHsmProperties.properties.createMode['$ref'] = '#/definitions/MHSMCreateMode';
+      $.CreateMode['x-ms-enum']['name'] = 'KeyVaultCreateMode';
+  - from: openapi.json
+    where: $.definitions
+    transform: >
+      $.MHSMPrivateEndpointServiceConnectionStatus = {
+          "type": "string",
+          "description": "The private endpoint connection status.",
+          "enum": [
+            "Pending",
+            "Approved",
+            "Rejected",
+            "Disconnected"
+          ],
+          "x-ms-enum": {
+            "name": "ManagedHsmPrivateEndpointServiceConnectionStatus",
+            "modelAsString": true
+          }
+      };
+      $.MHSMPrivateLinkServiceConnectionState.properties.status['$ref'] = '#/definitions/MHSMPrivateEndpointServiceConnectionStatus';
+      $.PrivateEndpointServiceConnectionStatus['x-ms-enum']['name'] = 'KeyVaultPrivateEndpointServiceConnectionStatus';
+  - from: openapi.json
+    where: $.definitions
+    transform: >
+      $.MHSMReason = {
+          "readOnly": true,
+          "type": "string",
+          "description": "The reason that a managed hsm name could not be used. The reason element is only returned if NameAvailable is false.",
+          "enum": [
+            "AccountNameInvalid",
+            "AlreadyExists"
+          ],
+          "x-ms-enum": {
+            "name": "ManagedHsmNameUnavailableReason",
+            "modelAsString": true
+          }
+      };
+      $.CheckMhsmNameAvailabilityResult.properties.reason['$ref'] = '#/definitions/MHSMReason';
+      $.Reason['x-ms-enum']['name'] = 'KeyVaultNameUnavailableReason';
+      $.Reason['x-ms-enum']['modelAsString'] = false;
+  - from: openapi.json
+    where: $.definitions
+    transform: >
+      $.MHSMNetworkRuleBypassOptions = {
+          "type": "string",
+          "description": "Tells what traffic can bypass network rules. This can be 'AzureServices' or 'None'.  If not specified the default is 'AzureServices'.",
+          "enum": [
+            "AzureServices",
+            "None"
+          ],
+          "x-ms-enum": {
+            "name": "ManagedHsmNetworkRuleBypassOption",
+            "modelAsString": true
+          }
+      };
+      $.MHSMNetworkRuleSet.properties.bypass['$ref'] = '#/definitions/MHSMNetworkRuleBypassOptions';
+      $.NetworkRuleBypassOptions['x-ms-enum']['name'] = 'KeyVaultNetworkRuleBypassOption';
+      $.MHSMNetworkRuleAction = {
+          "type": "string",
+          "description": "The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated.",
+          "enum": [
+            "Allow",
+            "Deny"
+          ],
+          "x-ms-enum": {
+            "name": "ManagedHsmNetworkRuleAction",
+            "modelAsString": true
+          }
+      };
+      $.MHSMNetworkRuleSet.properties.defaultAction['$ref'] = '#/definitions/MHSMNetworkRuleAction';
+      $.NetworkRuleAction['x-ms-enum']['name'] = 'KeyVaultNetworkRuleAction';
+  - from: openapi.json
+    where: $.definitions
+    transform: >
+      $.MHSMActionsRequired = {
+          "type": "string",
+          "description": "A message indicating if changes on the service provider require any updates on the consumer.",
+          "enum": [
+            "None"
+          ],
+          "x-ms-enum": {
+            "name": "ManagedHsmActionsRequiredMessage",
+            "modelAsString": true
+          }
+      };
+      $.MHSMPrivateLinkServiceConnectionState.properties.actionsRequired['$ref'] = '#/definitions/MHSMActionsRequired';
+      $.ActionsRequired['x-ms-enum']['name'] = 'KeyVaultActionsRequiredMessage';
 ```

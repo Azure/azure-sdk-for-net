@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(Reason.Value.ToSerialString());
+                writer.WriteStringValue(Reason.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(Message))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 return null;
             }
             bool? nameAvailable = default;
-            KeyVaultNameUnavailableReason? reason = default;
+            ManagedHsmNameUnavailableReason? reason = default;
             string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    reason = property.Value.GetString().ToKeyVaultNameUnavailableReason();
+                    reason = new ManagedHsmNameUnavailableReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 if (Optional.IsDefined(Reason))
                 {
                     builder.Append("  reason: ");
-                    builder.AppendLine($"'{Reason.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{Reason.Value.ToString()}'");
                 }
             }
 

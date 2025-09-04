@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            ManagedHsmPrivateEndpointServiceConnectionStatus? status = default;
+            KeyVaultPrivateEndpointServiceConnectionStatus? status = default;
             string description = default;
             KeyVaultActionsRequiredMessage? actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    status = new ManagedHsmPrivateEndpointServiceConnectionStatus(property.Value.GetString());
+                    status = new KeyVaultPrivateEndpointServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"u8))

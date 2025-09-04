@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KeyVault
     [ModelReaderWriterBuildable(typeof(ManagedHsmPrivateEndpointConnectionItemData))]
     [ModelReaderWriterBuildable(typeof(ManagedHsmPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(ManagedHsmPrivateEndpointConnectionsListResult))]
-    [ModelReaderWriterBuildable(typeof(ManagedHsmPrivateLinkResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedHsmPrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(ManagedHsmPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedHsmPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(ManagedHsmProperties))]

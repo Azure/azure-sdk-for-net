@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            KeyVaultNetworkRuleBypassOption? bypass = default;
-            KeyVaultNetworkRuleAction? defaultAction = default;
+            ManagedHsmNetworkRuleBypassOption? bypass = default;
+            ManagedHsmNetworkRuleAction? defaultAction = default;
             IList<ManagedHsmIPRule> ipRules = default;
             IList<ManagedHsmVirtualNetworkRule> virtualNetworkRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    bypass = new KeyVaultNetworkRuleBypassOption(property.Value.GetString());
+                    bypass = new ManagedHsmNetworkRuleBypassOption(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("defaultAction"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    defaultAction = new KeyVaultNetworkRuleAction(property.Value.GetString());
+                    defaultAction = new ManagedHsmNetworkRuleAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipRules"u8))

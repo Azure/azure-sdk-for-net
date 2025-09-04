@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             bool? enableSoftDelete = default;
             int? softDeleteRetentionInDays = default;
             bool? enablePurgeProtection = default;
-            KeyVaultCreateMode? createMode = default;
+            ManagedHsmCreateMode? createMode = default;
             string statusMessage = default;
             ManagedHsmProvisioningState? provisioningState = default;
             ManagedHsmNetworkRuleSet networkAcls = default;
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    createMode = property.Value.GetString().ToKeyVaultCreateMode();
+                    createMode = property.Value.GetString().ToManagedHsmCreateMode();
                     continue;
                 }
                 if (property.NameEquals("statusMessage"u8))

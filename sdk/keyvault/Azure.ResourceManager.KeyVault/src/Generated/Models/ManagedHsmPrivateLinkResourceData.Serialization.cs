@@ -16,11 +16,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class ManagedHsmPrivateLinkResource : IUtf8JsonSerializable, IJsonModel<ManagedHsmPrivateLinkResource>
+    public partial class ManagedHsmPrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<ManagedHsmPrivateLinkResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedHsmPrivateLinkResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedHsmPrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ManagedHsmPrivateLinkResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedHsmPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,33 +31,17 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmPrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedHsmPrivateLinkResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedHsmPrivateLinkResourceData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Identity))
             {
@@ -94,19 +78,19 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteEndObject();
         }
 
-        ManagedHsmPrivateLinkResource IJsonModel<ManagedHsmPrivateLinkResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ManagedHsmPrivateLinkResourceData IJsonModel<ManagedHsmPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmPrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedHsmPrivateLinkResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedHsmPrivateLinkResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedHsmPrivateLinkResource(document.RootElement, options);
+            return DeserializeManagedHsmPrivateLinkResourceData(document.RootElement, options);
         }
 
-        internal static ManagedHsmPrivateLinkResource DeserializeManagedHsmPrivateLinkResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ManagedHsmPrivateLinkResourceData DeserializeManagedHsmPrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -114,30 +98,21 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            AzureLocation? location = default;
             ManagedHsmSku sku = default;
-            IReadOnlyDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
             string groupId = default;
             IReadOnlyList<string> requiredMembers = default;
-            IReadOnlyList<string> requiredZoneNames = default;
+            IList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -145,6 +120,15 @@ namespace Azure.ResourceManager.KeyVault.Models
                         continue;
                     }
                     sku = ManagedHsmSku.DeserializeManagedHsmSku(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerKeyVaultContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -161,13 +145,9 @@ namespace Azure.ResourceManager.KeyVault.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("identity"u8))
+                if (property.NameEquals("location"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerKeyVaultContext.Default);
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -245,17 +225,17 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedHsmPrivateLinkResource(
+            return new ManagedHsmPrivateLinkResourceData(
                 id,
                 name,
                 type,
                 systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 groupId,
                 requiredMembers ?? new ChangeTrackingList<string>(),
                 requiredZoneNames ?? new ChangeTrackingList<string>(),
-                location,
                 sku,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
                 serializedAdditionalRawData);
         }
@@ -302,11 +282,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             else
             {
-                if (Optional.IsDefined(Location))
-                {
-                    builder.Append("  location: ");
-                    builder.AppendLine($"'{Location.Value.ToString()}'");
-                }
+                builder.Append("  location: ");
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
@@ -508,9 +485,9 @@ namespace Azure.ResourceManager.KeyVault.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ManagedHsmPrivateLinkResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ManagedHsmPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmPrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -519,26 +496,26 @@ namespace Azure.ResourceManager.KeyVault.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedHsmPrivateLinkResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedHsmPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ManagedHsmPrivateLinkResource IPersistableModel<ManagedHsmPrivateLinkResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ManagedHsmPrivateLinkResourceData IPersistableModel<ManagedHsmPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmPrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeManagedHsmPrivateLinkResource(document.RootElement, options);
+                        return DeserializeManagedHsmPrivateLinkResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedHsmPrivateLinkResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedHsmPrivateLinkResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ManagedHsmPrivateLinkResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedHsmPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

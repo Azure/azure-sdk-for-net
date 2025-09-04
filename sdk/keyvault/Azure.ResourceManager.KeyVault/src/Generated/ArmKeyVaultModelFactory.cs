@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="reason"> The reason that a managed hsm name could not be used. The reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> An error message explaining the Reason value in more detail. </param>
         /// <returns> A new <see cref="Models.ManagedHsmNameAvailabilityResult"/> instance for mocking. </returns>
-        public static ManagedHsmNameAvailabilityResult ManagedHsmNameAvailabilityResult(bool? isNameAvailable = null, KeyVaultNameUnavailableReason? reason = null, string message = null)
+        public static ManagedHsmNameAvailabilityResult ManagedHsmNameAvailabilityResult(bool? isNameAvailable = null, ManagedHsmNameUnavailableReason? reason = null, string message = null)
         {
             return new ManagedHsmNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="scheduledPurgeOn"> The scheduled purge date in UTC. </param>
         /// <param name="securityDomainProperties"> Managed HSM security domain properties. </param>
         /// <returns> A new <see cref="Models.ManagedHsmProperties"/> instance for mocking. </returns>
-        public static ManagedHsmProperties ManagedHsmProperties(Guid? tenantId = null, IEnumerable<string> initialAdminObjectIds = null, Uri hsmUri = null, bool? enableSoftDelete = null, int? softDeleteRetentionInDays = null, bool? enablePurgeProtection = null, KeyVaultCreateMode? createMode = null, string statusMessage = null, ManagedHsmProvisioningState? provisioningState = null, ManagedHsmNetworkRuleSet networkRuleSet = null, IEnumerable<ManagedHsmGeoReplicatedRegion> regions = null, IEnumerable<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections = null, ManagedHsmPublicNetworkAccess? publicNetworkAccess = null, DateTimeOffset? scheduledPurgeOn = null, ManagedHSMSecurityDomainProperties securityDomainProperties = null)
+        public static ManagedHsmProperties ManagedHsmProperties(Guid? tenantId = null, IEnumerable<string> initialAdminObjectIds = null, Uri hsmUri = null, bool? enableSoftDelete = null, int? softDeleteRetentionInDays = null, bool? enablePurgeProtection = null, ManagedHsmCreateMode? createMode = null, string statusMessage = null, ManagedHsmProvisioningState? provisioningState = null, ManagedHsmNetworkRuleSet networkRuleSet = null, IEnumerable<ManagedHsmGeoReplicatedRegion> regions = null, IEnumerable<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections = null, ManagedHsmPublicNetworkAccess? publicNetworkAccess = null, DateTimeOffset? scheduledPurgeOn = null, ManagedHSMSecurityDomainProperties securityDomainProperties = null)
         {
             initialAdminObjectIds ??= new List<string>();
             regions ??= new List<ManagedHsmGeoReplicatedRegion>();
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the key vault. </param>
         /// <param name="publicNetworkAccess"> Property to specify whether the vault will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </param>
         /// <returns> A new <see cref="Models.KeyVaultProperties"/> instance for mocking. </returns>
-        public static KeyVaultProperties KeyVaultProperties(Guid tenantId = default, KeyVaultSku sku = null, IEnumerable<KeyVaultAccessPolicy> accessPolicies = null, Uri vaultUri = null, string hsmPoolResourceId = null, bool? enabledForDeployment = null, bool? enabledForDiskEncryption = null, bool? enabledForTemplateDeployment = null, bool? enableSoftDelete = null, int? softDeleteRetentionInDays = null, bool? enableRbacAuthorization = null, KeyVaultCreateMode? createMode = null, bool? enablePurgeProtection = null, KeyVaultNetworkRuleSet networkRuleSet = null, VaultProvisioningState? provisioningState = null, IEnumerable<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections = null, string publicNetworkAccess = null)
+        public static KeyVaultProperties KeyVaultProperties(Guid tenantId = default, KeyVaultSku sku = null, IEnumerable<KeyVaultAccessPolicy> accessPolicies = null, Uri vaultUri = null, string hsmPoolResourceId = null, bool? enabledForDeployment = null, bool? enabledForDiskEncryption = null, bool? enabledForTemplateDeployment = null, bool? enableSoftDelete = null, int? softDeleteRetentionInDays = null, bool? enableRbacAuthorization = null, KeyVaultCreateMode? createMode = null, bool? enablePurgeProtection = null, KeyVaultNetworkRuleSet networkRuleSet = null, KeyVaultProvisioningState? provisioningState = null, IEnumerable<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections = null, string publicNetworkAccess = null)
         {
             accessPolicies ??= new List<KeyVaultAccessPolicy>();
             privateEndpointConnections ??= new List<KeyVaultPrivateEndpointConnectionItemData>();
@@ -353,36 +353,36 @@ namespace Azure.ResourceManager.KeyVault.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmPrivateLinkResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="groupId"> Group identifier of private link resource. </param>
         /// <param name="requiredMembers"> Required member names of private link resource. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
-        /// <param name="location"> The supported Azure location where the managed HSM Pool should be created. </param>
         /// <param name="sku"> SKU details. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <returns> A new <see cref="Models.ManagedHsmPrivateLinkResource"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateLinkResource ManagedHsmPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, AzureLocation? location = null, ManagedHsmSku sku = null, IReadOnlyDictionary<string, string> tags = null, ManagedServiceIdentity identity = null)
+        /// <returns> A new <see cref="Models.ManagedHsmPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static ManagedHsmPrivateLinkResourceData ManagedHsmPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null)
         {
+            tags ??= new Dictionary<string, string>();
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
-            tags ??= new Dictionary<string, string>();
 
-            return new ManagedHsmPrivateLinkResource(
+            return new ManagedHsmPrivateLinkResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                tags,
+                location,
                 groupId,
                 requiredMembers?.ToList(),
                 requiredZoneNames?.ToList(),
-                location,
                 sku,
-                tags,
                 identity,
                 serializedAdditionalRawData: null);
         }
@@ -456,13 +456,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> Azure location of the key vault resource. </param>
+        /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <param name="groupId"> Group identifier of private link resource. </param>
         /// <param name="requiredMembers"> Required member names of private link resource. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
         /// <returns> A new <see cref="Models.KeyVaultPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static KeyVaultPrivateLinkResourceData KeyVaultPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        public static KeyVaultPrivateLinkResourceData KeyVaultPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
             tags ??= new Dictionary<string, string>();
             requiredMembers ??= new List<string>();
@@ -473,8 +473,8 @@ namespace Azure.ResourceManager.KeyVault.Models
                 name,
                 resourceType,
                 systemData,
-                tags,
                 location,
+                tags,
                 groupId,
                 requiredMembers?.ToList(),
                 requiredZoneNames?.ToList(),
