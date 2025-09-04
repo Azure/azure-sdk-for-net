@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    [PersistableModelProxy(typeof(UnknownJobDetails))]
+    [PersistableModelProxy(typeof(UnknownDataBoxBasicJobDetails))]
     public partial class DataBoxBasicJobDetails : IUtf8JsonSerializable, IJsonModel<DataBoxBasicJobDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxBasicJobDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     case "DataBoxHeavy": return DataBoxHeavyJobDetails.DeserializeDataBoxHeavyJobDetails(element, options);
                 }
             }
-            return UnknownJobDetails.DeserializeUnknownJobDetails(element, options);
+            return UnknownDataBoxBasicJobDetails.DeserializeUnknownDataBoxBasicJobDetails(element, options);
         }
 
         BinaryData IPersistableModel<DataBoxBasicJobDetails>.Write(ModelReaderWriterOptions options)

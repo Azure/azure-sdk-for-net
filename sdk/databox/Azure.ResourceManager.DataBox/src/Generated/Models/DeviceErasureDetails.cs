@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> Device erasure details with erasure completion status and erasureordestructionlog sas key. </summary>
+    /// <summary> Device erasure details with erasure completion status, secure erasure sas key and erasureordestructionlog sas key. </summary>
     public partial class DeviceErasureDetails
     {
         /// <summary>
@@ -53,11 +53,13 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of <see cref="DeviceErasureDetails"/>. </summary>
         /// <param name="deviceErasureStatus"> Holds the device erasure completion status. </param>
         /// <param name="erasureOrDestructionCertificateSasKey"> Shared access key to download cleanup or destruction certificate for device. </param>
+        /// <param name="secureErasureCertificateSasKey"> Shared access key to download secure erasure certificate for the device. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceErasureDetails(DataBoxStageStatus? deviceErasureStatus, string erasureOrDestructionCertificateSasKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeviceErasureDetails(DataBoxStageStatus? deviceErasureStatus, string erasureOrDestructionCertificateSasKey, string secureErasureCertificateSasKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeviceErasureStatus = deviceErasureStatus;
             ErasureOrDestructionCertificateSasKey = erasureOrDestructionCertificateSasKey;
+            SecureErasureCertificateSasKey = secureErasureCertificateSasKey;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -65,5 +67,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public DataBoxStageStatus? DeviceErasureStatus { get; }
         /// <summary> Shared access key to download cleanup or destruction certificate for device. </summary>
         public string ErasureOrDestructionCertificateSasKey { get; }
+        /// <summary> Shared access key to download secure erasure certificate for the device. </summary>
+        public string SecureErasureCertificateSasKey { get; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownScheduleAvailabilityRequest : IUtf8JsonSerializable, IJsonModel<ScheduleAvailabilityContent>
+    internal partial class UnknownScheduleAvailabilityContent : IUtf8JsonSerializable, IJsonModel<ScheduleAvailabilityContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduleAvailabilityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return DeserializeScheduleAvailabilityContent(document.RootElement, options);
         }
 
-        internal static UnknownScheduleAvailabilityRequest DeserializeUnknownScheduleAvailabilityRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownScheduleAvailabilityContent DeserializeUnknownScheduleAvailabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownScheduleAvailabilityRequest(storageLocation, skuName, country, model, serializedAdditionalRawData);
+            return new UnknownScheduleAvailabilityContent(storageLocation, skuName, country, model, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options)

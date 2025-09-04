@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> The DataBoxAccessProtocol. </summary>
+    /// <summary> Access protocols supported on the device. </summary>
     public enum DataBoxAccessProtocol
     {
         /// <summary> Server Message Block protocol(SMB). </summary>
