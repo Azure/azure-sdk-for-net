@@ -13,16 +13,16 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Voice configuration for LLM (Large Language Model) voices. </summary>
-    public partial class LLMVoice : IJsonModel<LLMVoice>
+    public partial class LlmVoice : IJsonModel<LlmVoice>
     {
-        /// <summary> Initializes a new instance of <see cref="LLMVoice"/> for deserialization. </summary>
-        internal LLMVoice()
+        /// <summary> Initializes a new instance of <see cref="LlmVoice"/> for deserialization. </summary>
+        internal LlmVoice()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LLMVoice>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LlmVoice>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LLMVoice>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LlmVoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LLMVoice)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LlmVoice)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -61,31 +61,31 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LLMVoice IJsonModel<LLMVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LlmVoice IJsonModel<LlmVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LLMVoice JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual LlmVoice JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LLMVoice>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LlmVoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LLMVoice)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LlmVoice)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLLMVoice(document.RootElement, options);
+            return DeserializeLlmVoice(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LLMVoice DeserializeLLMVoice(JsonElement element, ModelReaderWriterOptions options)
+        internal static LlmVoice DeserializeLlmVoice(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string @type = default;
-            LLMVoiceName name = default;
+            LlmVoiceName name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -96,7 +96,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("name"u8))
                 {
-                    name = new LLMVoiceName(prop.Value.GetString());
+                    name = new LlmVoiceName(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,47 +104,47 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LLMVoice(@type, name, additionalBinaryDataProperties);
+            return new LlmVoice(@type, name, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LLMVoice>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LlmVoice>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LLMVoice>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LlmVoice>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LLMVoice)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LlmVoice)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LLMVoice IPersistableModel<LLMVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LlmVoice IPersistableModel<LlmVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LLMVoice PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual LlmVoice PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LLMVoice>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LlmVoice>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeLLMVoice(document.RootElement, options);
+                        return DeserializeLlmVoice(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LLMVoice)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LlmVoice)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LLMVoice>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LlmVoice>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

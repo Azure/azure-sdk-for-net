@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Voice configuration for LLM (Large Language Model) voices. </summary>
-    public partial class LLMVoice
+    public partial class LlmVoice
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LLMVoice"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LlmVoice"/>. </summary>
         /// <param name="name"></param>
-        public LLMVoice(LLMVoiceName name)
+        public LlmVoice(LlmVoiceName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LLMVoice"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LlmVoice"/>. </summary>
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LLMVoice(string @type, LLMVoiceName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LlmVoice(string @type, LlmVoiceName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Name = name;
@@ -38,6 +38,6 @@ namespace Azure.AI.VoiceLive
         public string Type { get; } = "llm";
 
         /// <summary> Gets or sets the Name. </summary>
-        public LLMVoiceName Name { get; set; }
+        public LlmVoiceName Name { get; set; }
     }
 }

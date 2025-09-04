@@ -26,7 +26,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="silenceDurationMs"></param>
         /// <param name="endOfUtteranceDetection"></param>
         /// <param name="autoTruncate"></param>
-        internal ServerVad(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EOUDetection endOfUtteranceDetection, bool? autoTruncate) : base(@type, additionalBinaryDataProperties)
+        internal ServerVad(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, bool? autoTruncate) : base(@type, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             PrefixPaddingMs = prefixPaddingMs;
@@ -45,7 +45,7 @@ namespace Azure.AI.VoiceLive
         public int? SilenceDurationMs { get; set; }
 
         /// <summary> Gets or sets the EndOfUtteranceDetection. </summary>
-        public EOUDetection EndOfUtteranceDetection { get; set; }
+        public EouDetection EndOfUtteranceDetection { get; set; }
 
         /// <summary> Gets or sets the AutoTruncate. </summary>
         public bool? AutoTruncate { get; set; }

@@ -139,10 +139,10 @@ namespace Azure.AI.VoiceLive
         /// <description> <see cref="AzureVoice"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="LLMVoiceName"/>. </description>
+        /// <description> <see cref="LlmVoiceName"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="LLMVoice"/>. </description>
+        /// <description> <see cref="LlmVoice"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

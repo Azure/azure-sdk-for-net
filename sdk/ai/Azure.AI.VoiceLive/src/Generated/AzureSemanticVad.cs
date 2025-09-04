@@ -34,7 +34,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="removeFillerWords"></param>
         /// <param name="languages"></param>
         /// <param name="autoTruncate"></param>
-        internal AzureSemanticVad(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EOUDetection endOfUtteranceDetection, float? negThreshold, int? speechDurationMs, int? windowSize, int? distinctCiPhones, bool? requireVowel, bool? removeFillerWords, IList<string> languages, bool? autoTruncate) : base(@type, additionalBinaryDataProperties)
+        internal AzureSemanticVad(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, float? negThreshold, int? speechDurationMs, int? windowSize, int? distinctCiPhones, bool? requireVowel, bool? removeFillerWords, IList<string> languages, bool? autoTruncate) : base(@type, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             PrefixPaddingMs = prefixPaddingMs;
@@ -60,7 +60,7 @@ namespace Azure.AI.VoiceLive
         public int? SilenceDurationMs { get; set; }
 
         /// <summary> Gets or sets the EndOfUtteranceDetection. </summary>
-        public EOUDetection EndOfUtteranceDetection { get; set; }
+        public EouDetection EndOfUtteranceDetection { get; set; }
 
         /// <summary> Gets or sets the NegThreshold. </summary>
         public float? NegThreshold { get; set; }

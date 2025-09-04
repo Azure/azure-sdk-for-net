@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class UnknownEOUDetection : EOUDetection
+    internal partial class UnknownEouDetection : EouDetection
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownEOUDetection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownEouDetection"/>. </summary>
         /// <param name="model"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEOUDetection(EOUDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(model, additionalBinaryDataProperties)
+        internal UnknownEouDetection(EOUDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(model, additionalBinaryDataProperties)
         {
         }
     }

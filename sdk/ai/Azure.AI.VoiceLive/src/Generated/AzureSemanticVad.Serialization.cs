@@ -136,7 +136,7 @@ namespace Azure.AI.VoiceLive
             float? threshold = default;
             int? prefixPaddingMs = default;
             int? silenceDurationMs = default;
-            EOUDetection endOfUtteranceDetection = default;
+            EouDetection endOfUtteranceDetection = default;
             float? negThreshold = default;
             int? speechDurationMs = default;
             int? windowSize = default;
@@ -185,7 +185,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    endOfUtteranceDetection = EOUDetection.DeserializeEOUDetection(prop.Value, options);
+                    endOfUtteranceDetection = EouDetection.DeserializeEouDetection(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("neg_threshold"u8))

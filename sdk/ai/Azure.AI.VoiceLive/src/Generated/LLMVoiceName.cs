@@ -11,15 +11,15 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Voice identifier for Phi4mm voices. </summary>
-    public readonly partial struct LLMVoiceName : IEquatable<LLMVoiceName>
+    public readonly partial struct LlmVoiceName : IEquatable<LlmVoiceName>
     {
         private readonly string _value;
         private const string CosyvoiceValue = "cosyvoice";
 
-        /// <summary> Initializes a new instance of <see cref="LLMVoiceName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LlmVoiceName"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LLMVoiceName(string value)
+        public LlmVoiceName(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -27,32 +27,32 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Gets the Cosyvoice. </summary>
-        public static LLMVoiceName Cosyvoice { get; } = new LLMVoiceName(CosyvoiceValue);
+        public static LlmVoiceName Cosyvoice { get; } = new LlmVoiceName(CosyvoiceValue);
 
-        /// <summary> Determines if two <see cref="LLMVoiceName"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="LlmVoiceName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(LLMVoiceName left, LLMVoiceName right) => left.Equals(right);
+        public static bool operator ==(LlmVoiceName left, LlmVoiceName right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LLMVoiceName"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="LlmVoiceName"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(LLMVoiceName left, LLMVoiceName right) => !left.Equals(right);
+        public static bool operator !=(LlmVoiceName left, LlmVoiceName right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LLMVoiceName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="LlmVoiceName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LLMVoiceName(string value) => new LLMVoiceName(value);
+        public static implicit operator LlmVoiceName(string value) => new LlmVoiceName(value);
 
-        /// <summary> Converts a string to a <see cref="LLMVoiceName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="LlmVoiceName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LLMVoiceName?(string value) => value == null ? null : new LLMVoiceName(value);
+        public static implicit operator LlmVoiceName?(string value) => value == null ? null : new LlmVoiceName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LLMVoiceName other && Equals(other);
+        public override bool Equals(object obj) => obj is LlmVoiceName other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(LLMVoiceName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LlmVoiceName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

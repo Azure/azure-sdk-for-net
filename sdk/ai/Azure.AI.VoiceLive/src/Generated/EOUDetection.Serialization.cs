@@ -15,17 +15,17 @@ namespace Azure.AI.VoiceLive
     /// Top-level union for end-of-utterance (EOU) semantic detection configuration.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureSemanticDetection"/>, <see cref="AzureSemanticDetectionEn"/>, and <see cref="AzureSemanticDetectionMultilingual"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownEOUDetection))]
-    public abstract partial class EOUDetection : IJsonModel<EOUDetection>
+    [PersistableModelProxy(typeof(UnknownEouDetection))]
+    public abstract partial class EouDetection : IJsonModel<EouDetection>
     {
-        /// <summary> Initializes a new instance of <see cref="EOUDetection"/> for deserialization. </summary>
-        internal EOUDetection()
+        /// <summary> Initializes a new instance of <see cref="EouDetection"/> for deserialization. </summary>
+        internal EouDetection()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EOUDetection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EouDetection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -36,10 +36,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EOUDetection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EouDetection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EOUDetection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EouDetection)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model.ToSerialString());
@@ -62,24 +62,24 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EOUDetection IJsonModel<EOUDetection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EouDetection IJsonModel<EouDetection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EOUDetection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EouDetection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EOUDetection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EouDetection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EOUDetection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EouDetection)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEOUDetection(document.RootElement, options);
+            return DeserializeEouDetection(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EOUDetection DeserializeEOUDetection(JsonElement element, ModelReaderWriterOptions options)
+        internal static EouDetection DeserializeEouDetection(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -97,47 +97,47 @@ namespace Azure.AI.VoiceLive
                         return AzureSemanticDetectionMultilingual.DeserializeAzureSemanticDetectionMultilingual(element, options);
                 }
             }
-            return UnknownEOUDetection.DeserializeUnknownEOUDetection(element, options);
+            return UnknownEouDetection.DeserializeUnknownEouDetection(element, options);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EOUDetection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EouDetection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EOUDetection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EouDetection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EOUDetection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EouDetection)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EOUDetection IPersistableModel<EOUDetection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EouDetection IPersistableModel<EouDetection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EOUDetection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EouDetection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EOUDetection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EouDetection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeEOUDetection(document.RootElement, options);
+                        return DeserializeEouDetection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EOUDetection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EouDetection)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EOUDetection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EouDetection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

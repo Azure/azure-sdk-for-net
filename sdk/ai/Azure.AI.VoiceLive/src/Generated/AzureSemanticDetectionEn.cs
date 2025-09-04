@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Azure semantic end-of-utterance detection (English-optimized). </summary>
-    public partial class AzureSemanticDetectionEn : EOUDetection
+    public partial class AzureSemanticDetectionEn : EouDetection
     {
         /// <summary> Initializes a new instance of <see cref="AzureSemanticDetectionEn"/>. </summary>
         public AzureSemanticDetectionEn() : base(EOUDetectionModel.SemanticDetectionV1En)

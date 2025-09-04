@@ -85,11 +85,11 @@ namespace Azure.AI.VoiceLive
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Modalities))
+            if (Optional.IsCollectionDefined(ModalitiesInternal))
             {
                 writer.WritePropertyName("modalities"u8);
                 writer.WriteStartArray();
-                foreach (ResponseModality item in Modalities)
+                foreach (ResponseModality item in ModalitiesInternal)
                 {
                     writer.WriteStringValue(item.ToSerialString());
                 }
@@ -167,7 +167,7 @@ namespace Azure.AI.VoiceLive
             ResponseTokenStatistics usage = default;
             string conversationId = default;
             BinaryData voiceInternal = default;
-            IList<ResponseModality> modalities = default;
+            IList<ResponseModality> modalitiesInternal = default;
             ResponseOutputAudioFormat? outputAudioFormat = default;
             float? temperature = default;
             BinaryData maxOutputTokens = default;
@@ -250,7 +250,7 @@ namespace Azure.AI.VoiceLive
                     {
                         array.Add(item.GetString().ToResponseModality());
                     }
-                    modalities = array;
+                    modalitiesInternal = array;
                     continue;
                 }
                 if (prop.NameEquals("output_audio_format"u8))
@@ -294,7 +294,7 @@ namespace Azure.AI.VoiceLive
                 usage,
                 conversationId,
                 voiceInternal,
-                modalities ?? new ChangeTrackingList<ResponseModality>(),
+                modalitiesInternal ?? new ChangeTrackingList<ResponseModality>(),
                 outputAudioFormat,
                 temperature,
                 maxOutputTokens,

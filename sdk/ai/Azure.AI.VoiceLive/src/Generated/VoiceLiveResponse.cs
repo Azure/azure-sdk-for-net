@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive
         internal VoiceLiveResponse()
         {
             Output = new ChangeTrackingList<ResponseItem>();
-            Modalities = new ChangeTrackingList<ResponseModality>();
+            ModalitiesInternal = new ChangeTrackingList<ResponseModality>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLiveResponse"/>. </summary>
@@ -56,11 +56,7 @@ namespace Azure.AI.VoiceLive
         ///     Examples:
         ///      BinaryData.FromObjectAsJson("foo").  Creates a payload of "foo".  BinaryData.FromString("\"foo\"").  Creates a payload of "foo".  BinaryData.FromObjectAsJson(new { key = "value" }).  Creates a payload of { "key": "value" }.  BinaryData.FromString("{\"key\": \"value\"}").  Creates a payload of { "key": "value" }.
         /// </param>
-        /// <param name="modalities">
-        /// The set of modalities the model used to respond. If there are multiple modalities,
-        /// the model will pick one, for example if `modalities` is `["text", "audio"]`, the model
-        /// could be responding in either text or audio.
-        /// </param>
+        /// <param name="modalitiesInternal"></param>
         /// <param name="outputAudioFormat"> The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`. </param>
         /// <param name="temperature"> Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8. </param>
         /// <param name="maxOutputTokens">
@@ -68,7 +64,7 @@ namespace Azure.AI.VoiceLive
         /// inclusive of tool calls, that was used in this response.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveResponse(string id, string @object, VoiceLiveResponseStatus? status, ResponseStatusDetails statusDetails, IList<ResponseItem> output, ResponseTokenStatistics usage, string conversationId, BinaryData voiceInternal, IList<ResponseModality> modalities, ResponseOutputAudioFormat? outputAudioFormat, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveResponse(string id, string @object, VoiceLiveResponseStatus? status, ResponseStatusDetails statusDetails, IList<ResponseItem> output, ResponseTokenStatistics usage, string conversationId, BinaryData voiceInternal, IList<ResponseModality> modalitiesInternal, ResponseOutputAudioFormat? outputAudioFormat, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;
@@ -78,7 +74,7 @@ namespace Azure.AI.VoiceLive
             Usage = usage;
             ConversationId = conversationId;
             VoiceInternal = voiceInternal;
-            Modalities = modalities;
+            ModalitiesInternal = modalitiesInternal;
             OutputAudioFormat = outputAudioFormat;
             Temperature = temperature;
             MaxOutputTokens = maxOutputTokens;
@@ -121,13 +117,6 @@ namespace Azure.AI.VoiceLive
         /// the `conversation_id` will be an id like `conv_1234`.
         /// </summary>
         public string ConversationId { get; }
-
-        /// <summary>
-        /// The set of modalities the model used to respond. If there are multiple modalities,
-        /// the model will pick one, for example if `modalities` is `["text", "audio"]`, the model
-        /// could be responding in either text or audio.
-        /// </summary>
-        public IList<ResponseModality> Modalities { get; }
 
         /// <summary> The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`. </summary>
         public ResponseOutputAudioFormat? OutputAudioFormat { get; }

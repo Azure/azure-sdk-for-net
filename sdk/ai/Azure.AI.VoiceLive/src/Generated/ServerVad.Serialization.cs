@@ -91,7 +91,7 @@ namespace Azure.AI.VoiceLive
             float? threshold = default;
             int? prefixPaddingMs = default;
             int? silenceDurationMs = default;
-            EOUDetection endOfUtteranceDetection = default;
+            EouDetection endOfUtteranceDetection = default;
             bool? autoTruncate = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -133,7 +133,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    endOfUtteranceDetection = EOUDetection.DeserializeEOUDetection(prop.Value, options);
+                    endOfUtteranceDetection = EouDetection.DeserializeEouDetection(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("auto_truncate"u8))
