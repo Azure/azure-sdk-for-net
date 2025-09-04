@@ -3,6 +3,7 @@ import "@azure-tools/typespec-client-generator-core";
 import "./PrivateEndpointConnection.tsp";
 import "./foo.tsp";
 import "./bar.tsp";
+import "./baz.tsp";
 import "./zoo.tsp";
 import "./routes.tsp";
 import "./endpoint.tsp";
