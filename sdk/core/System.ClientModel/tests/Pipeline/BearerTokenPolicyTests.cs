@@ -89,7 +89,7 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task BearerTokenPolicyWithPopulatedContextsAndMessagePropertySetTokenCredential()
+    public async Task BearerTokenPolicyWithPopulatedContextsTokenCredential()
     {
         // Arrange
         var tokenProvider = new MockTokenCredential();
@@ -98,6 +98,45 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
             new Dictionary<string, object>
             {
                 { GetTokenOptions.ScopesPropertyName, new string[] { "https://ai.azure.com/.default" } },
+                { "parentRequestId", "parentRequestIdValue" },
+                { "claims", "claimsValue"},
+                { "tenantId", "tenantIdValue" },
+                { "isCaeEnabled", true },
+                { "isProofOfPossessionEnabled", true },
+                { "proofOfPossessionNonce", "proofOfPossessionNonceValue" },
+                { "requestUri", new Uri("https://example.com") },
+                { "requestMethod", "requestMethodValue" }
+            }
+        };
+        var policy = new BearerTokenPolicy(tokenProvider, serviceContexts);
+        var pipeline = CreatePipelineWithPolicy(policy);
+
+        // Act
+        var message = await SendMessageAsync(pipeline);
+
+        // Assert - should use message property, not service-level contexts
+        AssertHasAuthorization(message);
+        AssertTokenProviderCalled(tokenProvider, shouldCallAsync: true);
+        Assert.AreEqual("parentRequestIdValue", tokenProvider.ReceivedRequestContext.ParentRequestId);
+        Assert.AreEqual("claimsValue", tokenProvider.ReceivedRequestContext.Claims);
+        Assert.AreEqual("tenantIdValue", tokenProvider.ReceivedRequestContext.TenantId);
+        Assert.AreEqual(true, tokenProvider.ReceivedRequestContext.IsCaeEnabled);
+        Assert.AreEqual(true, tokenProvider.ReceivedRequestContext.IsProofOfPossessionEnabled);
+        Assert.AreEqual("proofOfPossessionNonceValue", tokenProvider.ReceivedRequestContext.ProofOfPossessionNonce);
+        Assert.AreEqual(new Uri("https://example.com"), tokenProvider.ReceivedRequestContext.ResourceRequestUri);
+        Assert.AreEqual("requestMethodValue", tokenProvider.ReceivedRequestContext.ResourceRequestMethod);
+    }
+
+    [Test]
+    public async Task BearerTokenPolicyWithPopulatedContextsTokenCredentialRomScopes()
+    {
+        // Arrange
+        var tokenProvider = new MockTokenCredential();
+        var serviceContexts = new Dictionary<string, object>[]
+        {
+            new Dictionary<string, object>
+            {
+                { GetTokenOptions.ScopesPropertyName, new ReadOnlyMemory<string>( ["https://ai.azure.com/.default"]) },
                 { "parentRequestId", "parentRequestIdValue" },
                 { "claims", "claimsValue"},
                 { "tenantId", "tenantIdValue" },
