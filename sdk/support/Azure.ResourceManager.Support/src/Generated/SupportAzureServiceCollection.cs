@@ -168,7 +168,8 @@ namespace Azure.ResourceManager.Support
         public virtual AsyncPageable<SupportAzureServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportAzureServiceServicesRestClient.CreateListRequest();
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SupportAzureServiceResource(Client, SupportAzureServiceData.DeserializeSupportAzureServiceData(e)), _supportAzureServiceServicesClientDiagnostics, Pipeline, "SupportAzureServiceCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportAzureServiceServicesRestClient.CreateListNextPageRequest(nextLink);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportAzureServiceResource(Client, SupportAzureServiceData.DeserializeSupportAzureServiceData(e)), _supportAzureServiceServicesClientDiagnostics, Pipeline, "SupportAzureServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -197,7 +198,8 @@ namespace Azure.ResourceManager.Support
         public virtual Pageable<SupportAzureServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportAzureServiceServicesRestClient.CreateListRequest();
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SupportAzureServiceResource(Client, SupportAzureServiceData.DeserializeSupportAzureServiceData(e)), _supportAzureServiceServicesClientDiagnostics, Pipeline, "SupportAzureServiceCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportAzureServiceServicesRestClient.CreateListNextPageRequest(nextLink);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportAzureServiceResource(Client, SupportAzureServiceData.DeserializeSupportAzureServiceData(e)), _supportAzureServiceServicesClientDiagnostics, Pipeline, "SupportAzureServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

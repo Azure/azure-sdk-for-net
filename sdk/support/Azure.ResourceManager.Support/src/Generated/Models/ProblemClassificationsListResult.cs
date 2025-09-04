@@ -52,14 +52,18 @@ namespace Azure.ResourceManager.Support.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProblemClassificationsListResult"/>. </summary>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="value"> List of ProblemClassification resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProblemClassificationsListResult(IReadOnlyList<ProblemClassificationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProblemClassificationsListResult(string nextLink, IReadOnlyList<ProblemClassificationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            NextLink = nextLink;
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The link to the next page of items. </summary>
+        public string NextLink { get; }
         /// <summary> List of ProblemClassification resources. </summary>
         public IReadOnlyList<ProblemClassificationData> Value { get; }
     }

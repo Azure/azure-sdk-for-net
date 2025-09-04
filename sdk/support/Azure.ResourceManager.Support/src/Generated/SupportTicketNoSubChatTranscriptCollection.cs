@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="chatTranscriptName"> ChatTranscript name. </param>
+        /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="chatTranscriptName"> ChatTranscript name. </param>
+        /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="chatTranscriptName"> ChatTranscript name. </param>
+        /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="chatTranscriptName"> ChatTranscript name. </param>
+        /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="chatTranscriptName"> ChatTranscript name. </param>
+        /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="chatTranscriptName"> ChatTranscript name. </param>
+        /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
