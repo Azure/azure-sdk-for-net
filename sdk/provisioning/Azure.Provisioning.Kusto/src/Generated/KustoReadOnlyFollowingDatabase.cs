@@ -142,14 +142,14 @@ public partial class KustoReadOnlyFollowingDatabase : KustoDatabase
     {
         base.DefineProvisionableProperties();
         DefineProperty<string>("kind", ["kind"], defaultValue: "ReadOnlyFollowing");
-        _hotCachePeriod = DefineProperty<TimeSpan>("HotCachePeriod", ["properties", "hotCachePeriod"]);
+        _hotCachePeriod = DefineProperty<TimeSpan>("HotCachePeriod", ["properties", "hotCachePeriod"], format: "P");
         _attachedDatabaseConfigurationName = DefineProperty<string>("AttachedDatabaseConfigurationName", ["properties", "attachedDatabaseConfigurationName"], isOutput: true);
         _databaseShareOrigin = DefineProperty<KustoDatabaseShareOrigin>("DatabaseShareOrigin", ["properties", "databaseShareOrigin"], isOutput: true);
         _leaderClusterResourceId = DefineProperty<string>("LeaderClusterResourceId", ["properties", "leaderClusterResourceId"], isOutput: true);
         _originalDatabaseName = DefineProperty<string>("OriginalDatabaseName", ["properties", "originalDatabaseName"], isOutput: true);
         _principalsModificationKind = DefineProperty<KustoDatabasePrincipalsModificationKind>("PrincipalsModificationKind", ["properties", "principalsModificationKind"], isOutput: true);
         _provisioningState = DefineProperty<KustoProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _softDeletePeriod = DefineProperty<TimeSpan>("SoftDeletePeriod", ["properties", "softDeletePeriod"], isOutput: true);
+        _softDeletePeriod = DefineProperty<TimeSpan>("SoftDeletePeriod", ["properties", "softDeletePeriod"], isOutput: true, format: "P");
         _statisticsSize = DefineProperty<float>("StatisticsSize", ["properties", "statistics", "size"], isOutput: true);
         _suspensionStartOn = DefineProperty<DateTimeOffset>("SuspensionStartOn", ["properties", "suspensionDetails", "suspensionStartDate"], isOutput: true);
         _tableLevelSharingProperties = DefineModelProperty<KustoDatabaseTableLevelSharingProperties>("TableLevelSharingProperties", ["properties", "tableLevelSharingProperties"], isOutput: true);

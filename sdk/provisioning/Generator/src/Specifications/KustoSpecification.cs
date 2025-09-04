@@ -65,6 +65,11 @@ public class KustoSpecification() :
         RemoveProperties<KustoEventGridDataConnection>("Id", "Name", "Location", "SystemData");
         RemoveProperties<KustoEventHubDataConnection>("Id", "Name", "Location", "SystemData");
         RemoveProperties<KustoIotHubDataConnection>("Id", "Name", "Location", "SystemData");
+
+        CustomizePropertyIsoDuration<KustoReadWriteDatabase>("SoftDeletePeriod");
+        CustomizePropertyIsoDuration<KustoReadWriteDatabase>("HotCachePeriod");
+        CustomizePropertyIsoDuration<KustoReadOnlyFollowingDatabase>("SoftDeletePeriod");
+        CustomizePropertyIsoDuration<KustoReadOnlyFollowingDatabase>("HotCachePeriod");
     }
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()

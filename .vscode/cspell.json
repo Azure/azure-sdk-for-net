@@ -1230,8 +1230,11 @@
     {
       "filename": "**/sdk/provisioning/Azure.Provisioning.Kusto/**/*.cs",
       "words": [
-        "openai",
-        "tbps"
+        "tbps",
+        "scsv",
+        "sohsv",
+        "tsve",
+        "Openai"
       ]
     },
     {

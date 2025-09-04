@@ -105,9 +105,9 @@ public partial class KustoReadWriteDatabase : KustoDatabase
     {
         base.DefineProvisionableProperties();
         DefineProperty<string>("kind", ["kind"], defaultValue: "ReadWrite");
-        _hotCachePeriod = DefineProperty<TimeSpan>("HotCachePeriod", ["properties", "hotCachePeriod"]);
+        _hotCachePeriod = DefineProperty<TimeSpan>("HotCachePeriod", ["properties", "hotCachePeriod"], format: "P");
         _keyVaultProperties = DefineModelProperty<KustoKeyVaultProperties>("KeyVaultProperties", ["properties", "keyVaultProperties"]);
-        _softDeletePeriod = DefineProperty<TimeSpan>("SoftDeletePeriod", ["properties", "softDeletePeriod"]);
+        _softDeletePeriod = DefineProperty<TimeSpan>("SoftDeletePeriod", ["properties", "softDeletePeriod"], format: "P");
         _isFollowed = DefineProperty<bool>("IsFollowed", ["properties", "isFollowed"], isOutput: true);
         _provisioningState = DefineProperty<KustoProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _statisticsSize = DefineProperty<float>("StatisticsSize", ["properties", "statistics", "size"], isOutput: true);

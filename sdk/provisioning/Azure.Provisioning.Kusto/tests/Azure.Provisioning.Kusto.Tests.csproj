@@ -5,6 +5,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
     <ProjectReference Include="..\src\Azure.Provisioning.Kusto.csproj" />
+    <PackageReference Include="Azure.Provisioning.CosmosDB" />
     <ProjectReference Include="..\..\Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj" />
   </ItemGroup>
 </Project>
