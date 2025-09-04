@@ -21,29 +21,9 @@ namespace Azure.Generator.Management.Providers.Abstraction
         {
         }
 
-        public override MethodBodyStatement[] CreateMessage(
-            HttpRequestOptionsApi requestOptions,
-            ValueExpression uri,
-            ScopedApi<string> method,
-            ValueExpression responseClassifier,
-            out HttpMessageApi message,
-            out HttpRequestApi request)
+        public override ValueExpression InvokeCreateMessage(HttpRequestOptionsApi requestOptions, ValueExpression responseClassifier)
         {
-            var declareMessage = Declare(
-                "message",
-                Original.Invoke(nameof(HttpPipeline.CreateMessage))
-                    .ToApi<HttpMessageApi>(),
-                out message);
-            var declareRequest = Declare("request", message.Request(), out request);
-            var requestProvider = new HttpRequestProvider(request);
-
-            return
-            [
-                declareMessage,
-                declareRequest,
-                requestProvider.SetUri(uri),
-                requestProvider.SetMethod(method),
-            ];
+            return Original.Invoke(nameof(HttpPipeline.CreateMessage));
         }
 
         /// <inheritdoc/>
