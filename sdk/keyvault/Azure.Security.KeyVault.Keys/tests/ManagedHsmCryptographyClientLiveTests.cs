@@ -12,6 +12,7 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
+        KeyClientOptions.ServiceVersion.V2025_06_01_Preview,
         KeyClientOptions.ServiceVersion.V7_6,
         KeyClientOptions.ServiceVersion.V7_5,
         KeyClientOptions.ServiceVersion.V7_4,
