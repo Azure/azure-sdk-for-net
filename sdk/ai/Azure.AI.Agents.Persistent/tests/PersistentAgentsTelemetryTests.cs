@@ -1164,7 +1164,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             Assert.IsTrue(_traceVerifier.CheckSpanAttributes(listRunStepsSpan, expectedListRunStepsAttributes));
         }
 
-        Assert.Greater(runStepsSpanEvents.Count(), 5, "Deep reasearch typically have more then 5 steps.");
+        Assert.Greater(runStepsSpanEvents.Count(), 5, "Deep research typically have more than 5 steps.");
         List<(string, Dictionary<string, object>)> expectedListRunStepsEvents =
         [
             ("gen_ai.run_step.message_creation", new Dictionary<string, object>
