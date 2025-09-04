@@ -45,7 +45,7 @@ Do the following steps to renew/change/update the generator:
     repo: Azure/azure-rest-api-specs
     emitterPackageJsonPath: <the corresponding file path for the corresponding generator>
     ```
-    After creating the above `tsp-location.yaml` file, find the `autorest.md` file inside the package directory, and rename it to `autorest.md.bak`.
+    After creating the above `tsp-location.yaml` file, find the `autorest.md` file inside the package directory, and delete it.
 4. If in the above step, the `tsp-location.yaml` existed, run the `dotnet build /t:GenerateCode` command in the package directory. Report any errors if they happen.
 If in the above step, the `tsp-location.yaml` did not exist and we just created it, report this in the PR description and emphasize everything inside it are placeholders.
 
