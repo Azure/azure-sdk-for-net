@@ -868,6 +868,52 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
+        public async Task ThrowsCredentialUnavailableWhenIMDSHostDown()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var mockTransport = new MockTransport(req =>
+            {
+                throw new MsalServiceException(MsalError.ManagedIdentityRequestFailed, "Retry failed", new RequestFailedException("Host is down (169.254.169.254:80)"));
+            });
+            var options = new TokenCredentialOptions() { IsChainedCredential = false, Transport = mockTransport };
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
+                new ManagedIdentityClient(
+                    new ManagedIdentityClientOptions() { IsForceRefreshEnabled = true, Options = options, Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true) })
+            ));
+
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            Assert.That(ex.Message, Does.Contain(ManagedIdentityClient.MsiUnavailableError));
+
+            await Task.CompletedTask;
+        }
+
+        [NonParallelizable]
+        [Test]
+        public async Task ThrowsCredentialUnavailableWhenIdentityNotFoundSystemAssigned()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var mockTransport = new MockTransport(req =>
+            {
+                throw new MsalServiceException(MsalError.ManagedIdentityRequestFailed, "Retry failed", new RequestFailedException("Identity not found"));
+            });
+            var options = new TokenCredentialOptions() { IsChainedCredential = false, Transport = mockTransport };
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
+                new ManagedIdentityClient(
+                    new ManagedIdentityClientOptions() { IsForceRefreshEnabled = true, Options = options, Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true), ManagedIdentityId = ManagedIdentityId.SystemAssigned })
+            ));
+
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.That(ex.Message, Does.Contain(ManagedIdentityClient.MsiUnavailableError));
+            await Task.CompletedTask;
+        }
+
+        [NonParallelizable]
+        [Test]
         public async Task VerifyMsiUnavailableOnIMDSGatewayErrorResponse([Values(502, 504)] int statusCode)
         {
             using var server = new TestServer(context =>

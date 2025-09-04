@@ -94,10 +94,9 @@ namespace Azure.Identity
                     await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, cancellationToken).ConfigureAwait(false) :
                     _msalManagedIdentityClient.AcquireTokenForManagedIdentity(context, cancellationToken);
             }
-            // If the IMDS endpoint is not available, we will throw a CredentialUnavailableException.
-            catch (MsalServiceException ex) when (HasInnerExceptionMatching(ex, e => e is RequestFailedException && e.Message.Contains("timed out")))
+            // If the IMDS endpoint appears unavailable, map to CredentialUnavailable so chained credentials can fall through.
+            catch (MsalServiceException ex) when (IsEndpointUnavailable(ex))
             {
-                // If the managed identity is not found, throw a more specific exception.
                 throw new CredentialUnavailableException(MsiUnavailableError, ex);
             }
 
@@ -149,6 +148,26 @@ namespace Azure.Identity
                 current = current.InnerException;
             }
             return false;
+        }
+
+        private static bool ContainsIgnoreCase(string source, string value) => source?.IndexOf(value, StringComparison.OrdinalIgnoreCase) >= 0;
+
+        private bool IsEndpointUnavailable(MsalServiceException ex)
+        {
+            bool timeout = HasInnerExceptionMatching(ex, e => e is RequestFailedException rfe && ContainsIgnoreCase(rfe.Message, "timed out"));
+
+            // Other network/host errors frequently seen locally or in dev boxes when IMDS is not genuinely reachable.
+            bool hostErrors = HasInnerExceptionMatching(ex, e => e is RequestFailedException rfe && (
+                ContainsIgnoreCase(rfe.Message, "host is down") ||
+                ContainsIgnoreCase(rfe.Message, "no route to host") ||
+                ContainsIgnoreCase(rfe.Message, "connection refused") ||
+                ContainsIgnoreCase(rfe.Message, "network is unreachable") ||
+                ContainsIgnoreCase(rfe.Message, "unreachable host") ||
+                ContainsIgnoreCase(rfe.Message, "unreachable network")));
+
+            bool identityNotFound = (ManagedIdentityId?._idType == ManagedIdentityIdType.SystemAssigned) && ContainsIgnoreCase(ex.Message, "Identity not found");
+
+            return timeout || hostErrors || identityNotFound;
         }
     }
 }
