@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -225,7 +226,22 @@ namespace Azure.Identity
         private static void GetFileNameAndArguments(string[] scopes, string tenantId, string claims, out string fileName, out string argument)
         {
             string scopeArgs = string.Join(" ", scopes.Select(scope => $"--scope {scope}"));
-            string claimsArg = string.IsNullOrWhiteSpace(claims) ? string.Empty : $" --claims {claims}";
+            // azd expects the value passed to --claims to be base64 encoded. TokenRequestContext.Claims is a JSON string
+            // so we encode it here (the auth policy will decode it later).
+            string claimsArg = string.Empty;
+            if (!string.IsNullOrWhiteSpace(claims))
+            {
+                try
+                {
+                    string encodedClaims = Convert.ToBase64String(Encoding.UTF8.GetBytes(claims));
+                    claimsArg = $" --claims {encodedClaims}";
+                }
+                catch (Exception)
+                {
+                    // If encoding fails, fall back to omitting claims to mirror the prior behavior of not throwing for formatting issues here.
+                    claimsArg = string.Empty;
+                }
+            }
             string command = tenantId switch
             {
                 null => $"azd auth token --output json --no-prompt {scopeArgs}{claimsArg}",

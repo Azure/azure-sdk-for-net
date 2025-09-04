@@ -134,6 +134,26 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public async Task AzureDeveloperCliCredential_ClaimsChallenge_Base64Encoded()
+        {
+            // Arrange
+            var claimsJson = "{\"access_token\":{\"nbf\":1234567890}}"; // sample JSON claims challenge
+            var base64 = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(claimsJson));
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
+            var testProcess = new TestProcess { Output = processOutput };
+            var credential = InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+
+            // Act
+            var token = await credential.GetTokenAsync(new TokenRequestContext(new[] { Scope }, claims: claimsJson));
+
+            // Assert
+            Assert.AreEqual(expectedToken, token.Token);
+            Assert.AreEqual(expectedExpiresOn, token.ExpiresOn);
+            Assert.That(testProcess.StartInfo.Arguments, Does.Contain($"--claims {base64}"));
+            Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain(claimsJson)); // ensure raw claims not present
+        }
+
+        [Test]
         public void AuthenticateWithCliCredential_InvalidJsonOutput(
             [Values("", "{}", "{\"Some\": false}", "{\"token\": \"token\"}", "{\"expiresOn\" : \"1900-01-01T00:00:00Z\"}")]
             string jsonContent)
