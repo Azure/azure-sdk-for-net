@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Provisioning" />
+    <PackageReference Include="Azure.Provisioning" VersionOverride="1.4.0-beta.1" />
   </ItemGroup>
 
 </Project>
