@@ -1074,3 +1074,21 @@ function Update-ReleaseStatusInReleasePlan($releasePlanWorkItemId, $status, $ver
     $workItem = UpdateWorkItem -id $releasePlanWorkItemId -fields $fields
     Write-Host "Updated release status for [$LanguageShort] in Release Plan [$releasePlanWorkItemId]"
 }
+
+function Update-PullRequestInReleasePlan($releasePlanWorkItemId, $pullRequestUrl, $status, $languageName)
+{
+    $devopsFieldLanguage = Get-LanguageDevOpsName -LanguageShort $languageName
+    if (!$devopsFieldLanguage)
+    {
+        Write-Host "Unsupported language to update release plan, language [$languageName]"
+        return $null
+    }
+
+    $fields = @()
+    $fields += "`"SDKPullRequestFor$($devopsFieldLanguage)=$pullRequestUrl`""
+    $fields += "`"SDKPullRequestStatusFor$($devopsFieldLanguage)=$status`""
+
+    Write-Host "Updating Release Plan [$releasePlanWorkItemId] with Pull Request URL for language [$languageName]."
+    $workItem = UpdateWorkItem -id $releasePlanWorkItemId -fields $fields
+    Write-Host "Updated Pull Request URL [$pullRequestUrl] for [$languageName] in Release Plan [$releasePlanWorkItemId]"
+}
