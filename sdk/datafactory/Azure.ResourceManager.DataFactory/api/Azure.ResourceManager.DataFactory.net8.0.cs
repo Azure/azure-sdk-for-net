@@ -1035,6 +1035,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public AmazonRdsForOracleSource() { }
         public System.BinaryData AdditionalColumns { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> NumberPrecision { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> NumberScale { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> OracleReaderQuery { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> PartitionOption { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AmazonRdsForOraclePartitionSettings PartitionSettings { get { throw null; } set { } }
@@ -6513,6 +6515,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting left, Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HDInsightClusterAuthenticationType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HDInsightClusterAuthenticationType(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType BasicAuth { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType SystemAssignedManagedIdentity { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType UserAssignedManagedIdentity { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType left, Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType left, Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class HDInsightHiveActivity : Azure.ResourceManager.DataFactory.Models.ExecutionActivity, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.HDInsightHiveActivity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.HDInsightHiveActivity>
     {
         public HDInsightHiveActivity(string name) : base (default(string)) { }
@@ -6534,7 +6555,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class HDInsightLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.HDInsightLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.HDInsightLinkedService>
     {
         public HDInsightLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> clusterUri) { }
+        public Azure.ResourceManager.DataFactory.Models.HDInsightClusterAuthenticationType? ClusterAuthType { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ClusterUri { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DataFactoryCredentialReference Credential { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> FileSystem { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference HcatalogLinkedServiceName { get { throw null; } set { } }
@@ -7617,10 +7640,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.JsonWriteSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.JsonWriteSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LakehouseAuthenticationType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LakehouseAuthenticationType(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType ServicePrincipal { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType SystemAssignedManagedIdentity { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType UserAssignedManagedIdentity { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType left, Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType left, Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class LakeHouseLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.LakeHouseLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.LakeHouseLinkedService>
     {
         public LakeHouseLinkedService() { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ArtifactId { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.LakehouseAuthenticationType? AuthenticationType { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DataFactoryCredentialReference Credential { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactorySecret ServicePrincipalCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ServicePrincipalCredentialType { get { throw null; } set { } }
@@ -8991,6 +9035,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public OracleSource() { }
         public System.BinaryData AdditionalColumns { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> NumberPrecision { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> NumberScale { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> OracleReaderQuery { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> PartitionOption { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.OraclePartitionSettings PartitionSettings { get { throw null; } set { } }
@@ -12734,10 +12780,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.WaitActivity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.WaitActivity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WarehouseAuthenticationType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WarehouseAuthenticationType(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType ServicePrincipal { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType SystemAssignedManagedIdentity { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType UserAssignedManagedIdentity { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType left, Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType left, Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class WarehouseLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.WarehouseLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.WarehouseLinkedService>
     {
         public WarehouseLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> artifactId, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> endpoint) { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ArtifactId { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.WarehouseAuthenticationType? AuthenticationType { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DataFactoryCredentialReference Credential { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Endpoint { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactorySecret ServicePrincipalCredential { get { throw null; } set { } }

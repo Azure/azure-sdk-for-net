@@ -6,6 +6,7 @@ using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Generator.Management.Utilities

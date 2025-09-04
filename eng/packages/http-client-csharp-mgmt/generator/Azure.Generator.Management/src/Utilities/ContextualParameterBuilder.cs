@@ -4,8 +4,11 @@
 using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Snippets;
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics;
 
 namespace Azure.Generator.Management.Utilities
@@ -56,6 +59,10 @@ namespace Azure.Generator.Management.Utilities
             {
                 // using the reference name of the last segment as the parameter name, aka resourceGroupName
                 parameterStack.Push(new ContextualParameter(current[^2].Value, current[^1].VariableName, id => id.ResourceGroupName()));
+            }
+            else if (current == RequestPathPattern.Extension)
+            {
+                parameterStack.Push(new ContextualParameter("resourceUri", "resourceUri", id => BuildParentInvocation(parentLayerCount, id)));
             }
             else
             {

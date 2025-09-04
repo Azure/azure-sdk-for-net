@@ -16,16 +16,13 @@ namespace Azure.AI.Projects
 
         internal PipelineMessage CreateGetDeploymentRequest(string name, string clientRequestId, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             if (clientRequestId != null)
             {
                 request.Headers.Set("x-ms-client-request-id", clientRequestId);
@@ -37,10 +34,6 @@ namespace Azure.AI.Projects
 
         internal PipelineMessage CreateGetDeploymentsRequest(string modelPublisher, string modelName, string deploymentType, string clientRequestId, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/deployments", false);
@@ -57,7 +50,8 @@ namespace Azure.AI.Projects
             {
                 uri.AppendQuery("deploymentType", deploymentType, true);
             }
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             if (clientRequestId != null)
             {
                 request.Headers.Set("x-ms-client-request-id", clientRequestId);
@@ -69,13 +63,10 @@ namespace Azure.AI.Projects
 
         internal PipelineMessage CreateNextGetDeploymentsRequest(Uri nextPage, string modelPublisher, string modelName, string deploymentType, string clientRequestId, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(nextPage);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
