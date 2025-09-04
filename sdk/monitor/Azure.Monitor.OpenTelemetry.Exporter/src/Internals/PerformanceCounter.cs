@@ -16,36 +16,45 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly ObservableGauge<double> _processPrivateBytesGauge;
         private readonly Process _process = Process.GetCurrentProcess();
 
-        // state for counter calculations
+        // state for cpu counter calculations
         private DateTimeOffset _cachedCollectedTime = DateTimeOffset.MinValue;
-        private long _cachedCollectedValue = 0;
+        private long _cachedCollectedValueTicks = 0;
+        private double _currentCpuPercentage = 0;
         private readonly int _processorCount = Environment.ProcessorCount;
+
+        // state for telemetry item related counts
+        private long _totalExceptionCount = 0;
+        private long _lastExceptionRateCount = 0;
+        private DateTimeOffset _lastExceptionRateTime = DateTimeOffset.UtcNow;
+        private long _totalRequestCount = 0;
+        private long _lastRequestRateCount = 0;
+        private DateTimeOffset _lastRequestRateTime = DateTimeOffset.UtcNow;
 
         public PerformanceCounter(MeterProvider meterProvider)
         {
             _meterProvider = meterProvider;
             _perfCounterMeter = new Meter(PerfCounterConstants.PerfCounterMeterName);
 
-            // Create observable gauges for each constant
+            // Create observable gauges for perf counter
             _exceptionRateGauge = _perfCounterMeter.CreateObservableGauge(
                 PerfCounterConstants.ExceptionRateGauge,
                 () => GetExceptionRate(),
-                description: "Exception rate gauge");
+                description: "Exception rate gauge (ex/sec)");
 
             _requestRateGauge = _perfCounterMeter.CreateObservableGauge(
                 PerfCounterConstants.RequestRateGauge,
                 () => GetRequestRate(),
-                description: "Request rate gauge");
+                description: "Request rate gauge (req/sec)");
 
             _processCpuGauge = _perfCounterMeter.CreateObservableGauge(
                 PerfCounterConstants.ProcessCpuGauge,
                 () => GetProcessCpu(),
-                description: "Process CPU gauge");
+                description: "Process CPU gauge (percent)");
 
             _processCpuNormalizedGauge = _perfCounterMeter.CreateObservableGauge(
                 PerfCounterConstants.ProcessCpuNormalizedGauge,
                 () => GetProcessCpuNormalized(),
-                description: "Process CPU normalized gauge");
+                description: "Process CPU normalized gauge (percent)");
 
             _processPrivateBytesGauge = _perfCounterMeter.CreateObservableGauge(
                 PerfCounterConstants.ProcessPrivateBytesGauge,
@@ -53,31 +62,87 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 description: "Process private bytes gauge");
         }
 
-        // Placeholder methods for gauge callbacks
-        private double GetExceptionRate() => 0.0;
-        private double GetRequestRate() => 0.0;
-        private double GetProcessCpu()
+        public void IncrementExceptionCount()
         {
-            _process.Refresh();
-            if (TryCalculateProcessCpu(out var calculatedValue))
+            Interlocked.Increment(ref _totalExceptionCount);
+        }
+
+        public void IncrementRequestCount()
+        {
+            Interlocked.Increment(ref _totalRequestCount);
+        }
+
+        // Placeholder methods for gauge callbacks
+        private double GetExceptionRate()
+        {
+            var currentTime = DateTimeOffset.UtcNow;
+            var totalExceptions = Interlocked.Read(ref _totalExceptionCount);
+            var intervalData = totalExceptions - _lastExceptionRateCount;
+            var elapsedSeconds = (currentTime - _lastExceptionRateTime).TotalSeconds;
+
+            double dataPerSec = 0.0;
+            if (elapsedSeconds > 0)
             {
-                return calculatedValue;
+                dataPerSec = intervalData / elapsedSeconds;
             }
 
-            return 0.0;
+            _lastExceptionRateCount = totalExceptions;
+            _lastExceptionRateTime = currentTime;
+
+            return dataPerSec;
         }
-        private double GetProcessCpuNormalized() => 0.0;
+        private double GetRequestRate()
+        {
+            var currentTime = DateTimeOffset.UtcNow;
+            var totalRequests = Interlocked.Read(ref _totalRequestCount);
+            var intervalRequests = totalRequests - _lastRequestRateCount;
+            var elapsedSec = (currentTime - _lastRequestRateTime).TotalSeconds;
+
+            double requestsPerSec = 0.0;
+            if (elapsedSec > 0)
+            {
+                requestsPerSec = intervalRequests / elapsedSec;
+            }
+
+            _lastRequestRateCount = totalRequests;
+            _lastRequestRateTime = currentTime;
+
+            return requestsPerSec;
+        }
+        private double GetProcessCpu()
+        {
+            UpdateCpuValuesIfNeeded();
+            return _currentCpuPercentage;
+        }
+        private double GetProcessCpuNormalized()
+        {
+            UpdateCpuValuesIfNeeded();
+            return _currentCpuPercentage / _processorCount;
+        }
         private double GetProcessPrivateBytes()
         {
             return _process.PrivateMemorySize64;
         }
 
+        private void UpdateCpuValuesIfNeeded()
+        {
+            var now = DateTimeOffset.UtcNow;
+            if ((now - _cachedCollectedTime).TotalSeconds > 59) // the default interval is set to a minute
+            {
+                _process.Refresh();
+                if (TryCalculateProcessCpu(out var cpuValue))
+                {
+                    _currentCpuPercentage = cpuValue;
+                }
+            }
+        }
+
         private bool TryCalculateProcessCpu(out double calculatedValue)
         {
-            var previousCollectedValue = _cachedCollectedValue;
+            var previousCollectedValue = _cachedCollectedValueTicks;
             var previousCollectedTime = _cachedCollectedTime;
 
-            var recentCollectedValue = _cachedCollectedValue = _process.TotalProcessorTime.Ticks;
+            var recentCollectedValue = _cachedCollectedValueTicks = _process.TotalProcessorTime.Ticks;
             var recentCollectedTime = _cachedCollectedTime = DateTimeOffset.UtcNow;
 
             double calculatedValue;
