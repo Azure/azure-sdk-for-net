@@ -485,14 +485,14 @@
 # ServiceOwners:                                                   @Kishp01 @shankarsama @rajeshka
 
 # PRLabel: %Event Hubs
-/sdk/eventhub/                                                     @jsquire @m-redding
+/sdk/eventhub/                                                     @axisc @sjkwak @hmlam @jsquire
 
 # PRLabel: %Event Hubs %Functions
-/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/        @m-redding @jsquire
+/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/        @axisc @sjkwak @hmlam @jsquire
 
 # ServiceLabel: %Event Hubs
 # AzureSdkOwners:                                                  @jsquire
-# ServiceOwners:                                                   @serkantkaraca @sjkwak
+# ServiceOwners:                                                   @axisc @sjkwak @hmlam
 
 # PRLabel: %Extension - WCF
 /sdk/extension-wcf/                                                @mconnew
@@ -787,11 +787,10 @@
 # ServiceOwners:                                                   @derek1ee
 
 # PRLabel: %Schema Registry
-/sdk/schemaregistry/                                               @jsquire @m-redding
+/sdk/schemaregistry/                                               @axisc @sjkwak @hmlam
 
 # ServiceLabel: %Schema Registry
-# AzureSdkOwners:                                                  @m-redding
-# ServiceOwners:                                                   @hmlam
+# ServiceOwners:                                                   @axisc @sjkwak @hmlam
 
 # PRLabel: %Search
 /sdk/search/                                                       @Azure/azure-sdk-write-search @Azure/azsdk-search
@@ -807,14 +806,14 @@
 # ServiceOwners:                                                   @amirkeren
 
 # PRLabel: %Service Bus
-/sdk/servicebus/                                                   @jsquire @m-redding
+/sdk/servicebus/                                                   @skarri-microsoft @EldertGrootenboer @jsquire
 
 # PRLabel: %Service Bus %Functions
-/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/     @m-redding @jsquire
+/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/     @skarri-microsoft @EldertGrootenboer @jsquire
 
 # ServiceLabel: %Service Bus
 # AzureSdkOwners:                                                  @jsquire
-# ServiceOwners:                                                   @shankarsama @EldertGrootenboer
+# ServiceOwners:                                                   @skarri-microsoft @EldertGrootenboer
 
 # PRLabel: %SignalR
 /sdk/signalr/                                                      @chenkennt @vicancy @JialinXin @Y-Sindo

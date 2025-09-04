@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Attached database resource name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The type of resource, for instance Microsoft.Kusto/clusters/attachedDatabaseConfigurations. </summary>
+        [WirePath("type")]
         public AttachedDatabaseType ResourceType { get; }
     }
 }
