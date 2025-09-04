@@ -114,6 +114,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.RedisEnt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.RedisEnterprise.Tests", "Azure.Provisioning.RedisEnterprise\tests\Azure.Provisioning.RedisEnterprise.Tests.csproj", "{CD3A7E8D-6EC8-65A5-E2CF-71242B4177D8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Kusto", "Azure.Provisioning.Kusto\src\Azure.Provisioning.Kusto.csproj", "{2FC8B07C-A47F-21D5-CEC1-3B3F19A2DAA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Kusto.Tests", "Azure.Provisioning.Kusto\tests\Azure.Provisioning.Kusto.Tests.csproj", "{EE219177-1BE0-3E3D-D859-3E6965CD207F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -332,6 +336,14 @@ Global
 		{CD3A7E8D-6EC8-65A5-E2CF-71242B4177D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD3A7E8D-6EC8-65A5-E2CF-71242B4177D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD3A7E8D-6EC8-65A5-E2CF-71242B4177D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FC8B07C-A47F-21D5-CEC1-3B3F19A2DAA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FC8B07C-A47F-21D5-CEC1-3B3F19A2DAA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FC8B07C-A47F-21D5-CEC1-3B3F19A2DAA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FC8B07C-A47F-21D5-CEC1-3B3F19A2DAA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE219177-1BE0-3E3D-D859-3E6965CD207F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE219177-1BE0-3E3D-D859-3E6965CD207F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE219177-1BE0-3E3D-D859-3E6965CD207F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE219177-1BE0-3E3D-D859-3E6965CD207F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
