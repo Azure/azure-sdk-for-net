@@ -158,6 +158,11 @@ namespace Azure.Identity
             {
                 throw scope.FailWrapAndThrow(new CredentialUnavailableException(MsiUnavailableError, e), Troubleshooting);
             }
+            // Preserve CredentialUnavailableException so ChainedTokenCredential can continue to next credential.
+            catch (CredentialUnavailableException)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 // This exception pattern indicates that the MI endpoint is not available after exhausting all retries.
