@@ -44,7 +44,7 @@ ProvisioningParameter kustoDBName = new(nameof(kustoDBName), typeof(string))
 };
 infra.Add(kustoDBName);
 // Create Kusto cluster
-KustoCluster kustoCluster = new("kustoCluster")
+KustoCluster kustoCluster = new("kustoCluster", KustoCluster.ResourceVersions.V2024_04_13)
 {
     Name = kustoClusterName,
     Sku = new KustoSku
@@ -61,7 +61,7 @@ KustoCluster kustoCluster = new("kustoCluster")
 };
 infra.Add(kustoCluster);
 // Create Kusto database
-KustoReadWriteDatabase kustoDatabase = new("kustoDatabase")
+KustoReadWriteDatabase kustoDatabase = new("kustoDatabase", KustoDatabase.ResourceVersions.V2024_04_13)
 {
     Name = kustoDBName,
     Parent = kustoCluster,
@@ -131,7 +131,7 @@ ProvisioningVariable cosmosDataReader = new(nameof(cosmosDataReader), typeof(str
     Value = "00000000-0000-0000-0000-000000000001"
 };
 infra.Add(cosmosDataReader);
-CosmosDBAccount cosmosDbAccount = new(nameof(cosmosDbAccount), CosmosDBAccount.ResourceVersions.V2022_08_15)
+CosmosDBAccount cosmosDbAccount = new(nameof(cosmosDbAccount), CosmosDBAccount.ResourceVersions.V2024_08_15)
 {
     Name = cosmosDbAccountName,
     Kind = CosmosDBAccountKind.GlobalDocumentDB,
@@ -146,7 +146,7 @@ CosmosDBAccount cosmosDbAccount = new(nameof(cosmosDbAccount), CosmosDBAccount.R
     DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard
 };
 infra.Add(cosmosDbAccount);
-CosmosDBSqlDatabase cosmosDbDatabase = new("cosmosDbDatabase")
+CosmosDBSqlDatabase cosmosDbDatabase = new("cosmosDbDatabase", CosmosDBSqlDatabase.ResourceVersions.V2024_08_15)
 {
     Name = cosmosDbDatabaseName,
     Parent = cosmosDbAccount,
@@ -156,7 +156,7 @@ CosmosDBSqlDatabase cosmosDbDatabase = new("cosmosDbDatabase")
     }
 };
 infra.Add(cosmosDbDatabase);
-CosmosDBSqlContainer cosmosDbContainer = new("cosmosDbContainer")
+CosmosDBSqlContainer cosmosDbContainer = new("cosmosDbContainer", CosmosDBSqlContainer.ResourceVersions.V2024_08_15)
 {
     Name = cosmosDbContainerName,
     Parent = cosmosDbDatabase,
@@ -175,7 +175,7 @@ CosmosDBSqlContainer cosmosDbContainer = new("cosmosDbContainer")
     }
 };
 infra.Add(cosmosDbContainer);
-KustoCluster cluster = new(nameof(cluster))
+KustoCluster cluster = new(nameof(cluster), KustoCluster.ResourceVersions.V2024_04_13)
 {
     Name = clusterName,
     Location = location,
@@ -191,7 +191,7 @@ KustoCluster cluster = new(nameof(cluster))
     }
 };
 infra.Add(cluster);
-CosmosDBSqlRoleAssignment cosmosDBSqlRoleAssignment = new("clusterCosmosDbDataAuthorization")
+CosmosDBSqlRoleAssignment cosmosDBSqlRoleAssignment = new("clusterCosmosDbDataAuthorization", CosmosDBSqlRoleAssignment.ResourceVersions.V2024_08_15)
 {
     Parent = cosmosDbAccount,
     PrincipalId = cluster.Identity.PrincipalId,
@@ -199,13 +199,13 @@ CosmosDBSqlRoleAssignment cosmosDBSqlRoleAssignment = new("clusterCosmosDbDataAu
     Scope = cosmosDbAccount.Id
 };
 infra.Add(cosmosDBSqlRoleAssignment);
-KustoDatabase kustoDb = new KustoReadWriteDatabase(nameof(kustoDb))
+KustoDatabase kustoDb = new KustoReadWriteDatabase(nameof(kustoDb), KustoDatabase.ResourceVersions.V2024_04_13)
 {
     Name = kustoDatabaseName,
     Parent = cluster,
 };
 infra.Add(kustoDb);
-KustoScript kustoScript = new("kustoScript")
+KustoScript kustoScript = new("kustoScript", KustoScript.ResourceVersions.V2024_04_13)
 {
     Name = "db-script",
     Parent = kustoDb,
@@ -213,7 +213,7 @@ KustoScript kustoScript = new("kustoScript")
     ShouldContinueOnErrors = false
 };
 infra.Add(kustoScript);
-KustoDataConnection cosmosDbConnection = new KustoCosmosDBDataConnection("cosmosDbConnection")
+KustoDataConnection cosmosDbConnection = new KustoCosmosDBDataConnection("cosmosDbConnection", KustoDataConnection.ResourceVersions.V2024_04_13)
 {
     Name = "cosmosDbConnection",
     Parent = kustoDb,
@@ -318,7 +318,7 @@ ProvisioningParameter eventGridSubscriptionName = new(nameof(eventGridSubscripti
 infra.Add(eventGridSubscriptionName);
 
 // Storage account + container
-StorageAccount storage = new("storage")
+StorageAccount storage = new("storage", StorageAccount.ResourceVersions.V2024_01_01)
 {
     Name = storageAccountName,
     Location = location,
@@ -331,13 +331,13 @@ StorageAccount storage = new("storage")
 };
 infra.Add(storage);
 
-BlobService blobServices = new("blobServices")
+BlobService blobServices = new("blobServices", BlobService.ResourceVersions.V2024_01_01)
 {
     Parent = storage
 };
 infra.Add(blobServices);
 
-BlobContainer landingContainer = new("landingContainer")
+BlobContainer landingContainer = new("landingContainer", BlobContainer.ResourceVersions.V2024_01_01)
 {
     Name = storageContainerName,
     Parent = blobServices,
@@ -346,7 +346,7 @@ BlobContainer landingContainer = new("landingContainer")
 infra.Add(landingContainer);
 
 // Event hub receiving event grid notifications
-EventHubsNamespace eventHubNamespace = new("eventHubNamespace")
+EventHubsNamespace eventHubNamespace = new("eventHubNamespace", EventHubsNamespace.ResourceVersions.V2024_01_01)
 {
     Name = eventHubNamespaceName,
     Location = location,
@@ -359,7 +359,7 @@ EventHubsNamespace eventHubNamespace = new("eventHubNamespace")
 };
 infra.Add(eventHubNamespace);
 
-EventHub eventHub = new("eventHub")
+EventHub eventHub = new("eventHub", EventHub.ResourceVersions.V2024_01_01)
 {
     Name = eventHubName,
     Parent = eventHubNamespace,
@@ -371,7 +371,7 @@ EventHub eventHub = new("eventHub")
 };
 infra.Add(eventHub);
 
-EventHubsConsumerGroup kustoConsumerGroup = new("kustoConsumerGroup")
+EventHubsConsumerGroup kustoConsumerGroup = new("kustoConsumerGroup", EventHubsConsumerGroup.ResourceVersions.V2024_01_01)
 {
     Name = "kustoConsumerGroup",
     Parent = eventHub
@@ -379,7 +379,7 @@ EventHubsConsumerGroup kustoConsumerGroup = new("kustoConsumerGroup")
 infra.Add(kustoConsumerGroup);
 
 // Event grid topic on storage account
-SystemTopic blobTopic = new("blobTopic")
+SystemTopic blobTopic = new("blobTopic", SystemTopic.ResourceVersions.V2025_02_15)
 {
     Name = eventGridTopicName,
     Location = location,
@@ -393,7 +393,7 @@ SystemTopic blobTopic = new("blobTopic")
 infra.Add(blobTopic);
 
 // Event Grid subscription, pushing events to event hub
-SystemTopicEventSubscription newBlobSubscription = new("newBlobSubscription")
+SystemTopicEventSubscription newBlobSubscription = new("newBlobSubscription", SystemTopicEventSubscription.ResourceVersions.V2025_02_15)
 {
     Name = eventGridSubscriptionName,
     Parent = blobTopic,
@@ -424,7 +424,7 @@ SystemTopicEventSubscription newBlobSubscription = new("newBlobSubscription")
 infra.Add(newBlobSubscription);
 
 // Kusto cluster
-KustoCluster cluster = new("cluster")
+KustoCluster cluster = new("cluster", KustoCluster.ResourceVersions.V2024_04_13)
 {
     Name = clusterName,
     Location = location,
@@ -442,7 +442,7 @@ KustoCluster cluster = new("cluster")
 };
 infra.Add(cluster);
 
-KustoReadWriteDatabase kustoDb = new("kustoDb")
+KustoReadWriteDatabase kustoDb = new("kustoDb", KustoDatabase.ResourceVersions.V2024_04_13)
 {
     Name = databaseName,
     Parent = cluster,
@@ -450,7 +450,7 @@ KustoReadWriteDatabase kustoDb = new("kustoDb")
 };
 infra.Add(kustoDb);
 
-KustoScript kustoScript = new("kustoScript")
+KustoScript kustoScript = new("kustoScript", KustoScript.ResourceVersions.V2024_04_13)
 {
     Name = "db-script",
     Parent = kustoDb,
@@ -459,7 +459,7 @@ KustoScript kustoScript = new("kustoScript")
 };
 infra.Add(kustoScript);
 
-KustoEventGridDataConnection eventConnection = new("eventConnection")
+KustoEventGridDataConnection eventConnection = new("eventConnection", KustoDataConnection.ResourceVersions.V2024_04_13)
 {
     Name = "eventConnection",
     Parent = kustoDb,
