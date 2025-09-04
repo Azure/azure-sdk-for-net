@@ -60,23 +60,30 @@ namespace Azure.Core
             // Check if scopes are present and in a valid format
             if (properties.TryGetValue(GetTokenOptions.ScopesPropertyName, out var scopesValue))
             {
+                ReadOnlyMemory<string> scopes = null;
                 if (scopesValue is ReadOnlyMemory<string> readOnlyMemoryScopes)
                 {
-                    return new GetTokenOptions(properties);
+                    scopes = readOnlyMemoryScopes;
+                    if (properties.Count == 1)
+                    {
+                        // We only have scopes and they are already ROM. Just return the options with the existing properties..
+                        return new GetTokenOptions(properties);
+                    }
                 }
                 // Try to convert scopes to ReadOnlyMemory<string>
                 else if (scopesValue is string[] stringArrayScopes)
                 {
-                    ReadOnlyMemory<string> scopes = new ReadOnlyMemory<string>(stringArrayScopes);
-                    // Create new properties dictionary with properly formatted scopes
-                    var formattedProperties = new Dictionary<string, object>();
-                    foreach (var kvp in properties)
-                    {
-                        formattedProperties[kvp.Key] = kvp.Value;
-                    }
-                    formattedProperties[GetTokenOptions.ScopesPropertyName] = scopes;
-                    return new GetTokenOptions(formattedProperties);
+                    scopes = new ReadOnlyMemory<string>(stringArrayScopes);
                 }
+
+                // Create new properties dictionary with properly formatted scopes
+                var formattedProperties = new Dictionary<string, object>();
+                foreach (var kvp in properties)
+                {
+                    formattedProperties[kvp.Key] = kvp.Value;
+                }
+                formattedProperties[GetTokenOptions.ScopesPropertyName] = scopes;
+                return new GetTokenOptions(formattedProperties);
             }
             // No scopes provided - insufficient information to create TokenRequestContext
             return null;

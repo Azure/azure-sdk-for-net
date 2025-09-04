@@ -98,7 +98,14 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
             new Dictionary<string, object>
             {
                 { GetTokenOptions.ScopesPropertyName, new string[] { "https://ai.azure.com/.default" } },
-                { GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" }
+                { "parentRequestId", "parentRequestIdValue" },
+                { "claims", "claimsValue"},
+                { "tenantId", "tenantIdValue" },
+                { "isCaeEnabled", true },
+                { "isProofOfPossessionEnabled", true },
+                { "proofOfPossessionNonce", "proofOfPossessionNonceValue" },
+                { "requestUri", new Uri("https://example.com") },
+                { "requestMethod", "requestMethodValue" }
             }
         };
         var policy = new BearerTokenPolicy(tokenProvider, serviceContexts);
@@ -110,6 +117,14 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
         // Assert - should use message property, not service-level contexts
         AssertHasAuthorization(message);
         AssertTokenProviderCalled(tokenProvider, shouldCallAsync: true);
+        Assert.AreEqual("parentRequestIdValue", tokenProvider.ReceivedRequestContext.ParentRequestId);
+        Assert.AreEqual("claimsValue", tokenProvider.ReceivedRequestContext.Claims);
+        Assert.AreEqual("tenantIdValue", tokenProvider.ReceivedRequestContext.TenantId);
+        Assert.AreEqual(true, tokenProvider.ReceivedRequestContext.IsCaeEnabled);
+        Assert.AreEqual(true, tokenProvider.ReceivedRequestContext.IsProofOfPossessionEnabled);
+        Assert.AreEqual("proofOfPossessionNonceValue", tokenProvider.ReceivedRequestContext.ProofOfPossessionNonce);
+        Assert.AreEqual(new Uri("https://example.com"), tokenProvider.ReceivedRequestContext.ResourceRequestUri);
+        Assert.AreEqual("requestMethodValue", tokenProvider.ReceivedRequestContext.ResourceRequestMethod);
     }
 
     [Test]
@@ -202,6 +217,7 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
         public bool GetTokenCalled { get; private set; }
         public bool GetTokenAsyncCalled { get; private set; }
         public bool CreateTokenOptionsCalled { get; private set; }
+        public TokenRequestContext ReceivedRequestContext { get; private set; }
 
         public MockTokenCredential(bool returnNull = false)
         {
@@ -211,12 +227,14 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
         public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             GetTokenAsyncCalled = true;
+            ReceivedRequestContext = requestContext;
             return new ValueTask<AccessToken>(new AccessToken("mock_token_value", DateTimeOffset.UtcNow.AddHours(1)));
         }
 
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             GetTokenCalled = true;
+            ReceivedRequestContext = requestContext;
             return new AccessToken("mock_token_value", DateTimeOffset.UtcNow.AddHours(1));
         }
     }
