@@ -26,30 +26,6 @@ public partial class KustoCluster : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The ETag of the cluster. Omit this value to always overwrite the
-    /// current cluster. Specify the last-seen ETag value to prevent
-    /// accidentally overwriting concurrent changes.
-    /// </summary>
-    public BicepValue<string> IfMatch 
-    {
-        get { Initialize(); return _ifMatch!; }
-        set { Initialize(); _ifMatch!.Assign(value); }
-    }
-    private BicepValue<string>? _ifMatch;
-
-    /// <summary>
-    /// Set to &apos;*&apos; to allow a new cluster to be created, but to
-    /// prevent updating an existing cluster. Other values will result in a
-    /// 412 Pre-condition Failed response.
-    /// </summary>
-    public BicepValue<string> IfNoneMatch 
-    {
-        get { Initialize(); return _ifNoneMatch!; }
-        set { Initialize(); _ifNoneMatch!.Assign(value); }
-    }
-    private BicepValue<string>? _ifNoneMatch;
-
-    /// <summary>
     /// Creates a new KustoCluster.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -71,8 +47,6 @@ public partial class KustoCluster : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _ifMatch = DefineProperty<string>("IfMatch", ["IfMatch"], isRequired: true);
-        _ifNoneMatch = DefineProperty<string>("IfNoneMatch", ["IfNoneMatch"], isRequired: true);
     }
 
     /// <summary>

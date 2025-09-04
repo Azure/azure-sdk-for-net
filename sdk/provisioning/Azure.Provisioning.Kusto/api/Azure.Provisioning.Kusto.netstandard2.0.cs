@@ -68,8 +68,6 @@ namespace Azure.Provisioning.Kusto
     public partial class KustoCluster : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public KustoCluster(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> IfMatch { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> IfNoneMatch { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Kusto.KustoCluster FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
@@ -180,7 +178,6 @@ namespace Azure.Provisioning.Kusto
     public partial class KustoDatabase : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public KustoDatabase(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.KustoDatabaseCallerRole> CallerRole { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Kusto.KustoCluster? Parent { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }

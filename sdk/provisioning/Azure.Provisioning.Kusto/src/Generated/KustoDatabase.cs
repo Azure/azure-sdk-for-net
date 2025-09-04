@@ -26,16 +26,6 @@ public partial class KustoDatabase : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Gets or sets the CallerRole.
-    /// </summary>
-    public BicepValue<KustoDatabaseCallerRole> CallerRole 
-    {
-        get { Initialize(); return _callerRole!; }
-        set { Initialize(); _callerRole!.Assign(value); }
-    }
-    private BicepValue<KustoDatabaseCallerRole>? _callerRole;
-
-    /// <summary>
     /// Gets or sets a reference to the parent KustoCluster.
     /// </summary>
     public KustoCluster? Parent
@@ -67,7 +57,6 @@ public partial class KustoDatabase : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _callerRole = DefineProperty<KustoDatabaseCallerRole>("CallerRole", ["CallerRole"], isRequired: true);
         _parent = DefineResource<KustoCluster>("Parent", ["parent"], isRequired: true);
     }
 

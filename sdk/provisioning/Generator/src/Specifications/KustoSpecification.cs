@@ -11,5 +11,9 @@ public class KustoSpecification() :
 {
     protected override void Customize()
     {
+        // Remove misfires
+        RemoveProperty<KustoClusterResource>("IfMatch");
+        RemoveProperty<KustoClusterResource>("IfNoneMatch");
+        RemoveProperty<KustoDatabaseResource>("CallerRole");
     }
 }
