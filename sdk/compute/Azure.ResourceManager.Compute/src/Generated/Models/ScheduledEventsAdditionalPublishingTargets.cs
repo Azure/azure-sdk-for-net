@@ -60,17 +60,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The configuration parameters used while creating eventGridAndResourceGraph Scheduled Event setting. </summary>
-        internal EventGridAndResourceGraph EventGridAndResourceGraph { get; set; }
-        /// <summary> Specifies if event grid and resource graph is enabled for Scheduled event related configurations. </summary>
-        public bool? Enable
-        {
-            get => EventGridAndResourceGraph is null ? default : EventGridAndResourceGraph.Enable;
-            set
-            {
-                if (EventGridAndResourceGraph is null)
-                    EventGridAndResourceGraph = new EventGridAndResourceGraph();
-                EventGridAndResourceGraph.Enable = value;
-            }
-        }
+        public EventGridAndResourceGraph EventGridAndResourceGraph { get; set; }
     }
 }
