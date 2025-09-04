@@ -1092,3 +1092,17 @@ function Update-PullRequestInReleasePlan($releasePlanWorkItemId, $pullRequestUrl
     $workItem = UpdateWorkItem -id $releasePlanWorkItemId -fields $fields
     Write-Host "Updated Pull Request URL [$pullRequestUrl] for [$languageName] in Release Plan [$releasePlanWorkItemId]"
 }
+
+function Get-ReleasePlan-Link($releasePlanWorkItemId)
+{
+  $fields = @()
+  $fields += "System.Id"
+  $fields += "System.Title"
+  $fields += "Custom.ReleasePlanLink"
+  $fields += "Custom.ReleasePlanSubmittedby"
+
+  $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
+  $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.Id] = $releasePlanWorkItemId"
+  $workItem = Invoke-Query $fields $query
+  return $workItem["fields"]
+}
