@@ -122,7 +122,7 @@ namespace Azure.AI.Agents.Persistent.Tests.Utilities
                 {
                     return CheckJsonString(expectedStr, actual.ToString());
                 }
-                return expectedStr?.ToString() == actual?.ToString();
+                return expectedStr == actual?.ToString();
             }
             else if (expected is Dictionary<string, object> expectedDict)
             {
