@@ -55,7 +55,7 @@ namespace Azure.Generator.Providers.Abstraction
         {
             var declareMessage = Declare(
                 "message",
-                Original.Invoke(nameof(HttpPipeline.CreateMessage), requestOptions, responseClassifier)
+                InvokeCreateMessage(requestOptions, responseClassifier)
                     .ToApi<HttpMessageApi>(),
                 out message);
             var declareRequest = Declare("request", message.Request(), out request);
@@ -69,6 +69,14 @@ namespace Azure.Generator.Providers.Abstraction
                 requestProvider.SetMethod(method),
             ];
         }
+
+        /// <summary>
+        /// The expression representing the HttpPipeline.CreateMessage invocation.
+        /// </summary>
+        public virtual ValueExpression InvokeCreateMessage(
+            HttpRequestOptionsApi requestOptions,
+            ValueExpression responseClassifier)
+            => Original.Invoke(nameof(HttpPipeline.CreateMessage), requestOptions, responseClassifier);
 
         /// <inheritdoc/>
         public override ClientPipelineApi FromExpression(ValueExpression expression)
