@@ -37,7 +37,7 @@ public class BasicKustoTests
                 };
                 infra.Add(kustoDBName);
                 // Create Kusto cluster
-                KustoCluster kustoCluster = new("kustoCluster")
+                KustoCluster kustoCluster = new("kustoCluster", KustoCluster.ResourceVersions.V2024_04_13)
                 {
                     Name = kustoClusterName,
                     Sku = new KustoSku
@@ -54,7 +54,7 @@ public class BasicKustoTests
                 };
                 infra.Add(kustoCluster);
                 // Create Kusto database
-                KustoReadWriteDatabase kustoDatabase = new("kustoDatabase")
+                KustoReadWriteDatabase kustoDatabase = new("kustoDatabase", KustoDatabase.ResourceVersions.V2024_04_13)
                 {
                     Name = kustoDBName,
                     Parent = kustoCluster,
@@ -170,7 +170,7 @@ public class BasicKustoTests
                     Value = "00000000-0000-0000-0000-000000000001"
                 };
                 infra.Add(cosmosDataReader);
-                CosmosDBAccount cosmosDbAccount = new(nameof(cosmosDbAccount), CosmosDBAccount.ResourceVersions.V2022_08_15)
+                CosmosDBAccount cosmosDbAccount = new(nameof(cosmosDbAccount), CosmosDBAccount.ResourceVersions.V2024_08_15)
                 {
                     Name = cosmosDbAccountName,
                     Kind = CosmosDBAccountKind.GlobalDocumentDB,
@@ -185,7 +185,7 @@ public class BasicKustoTests
                     DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard
                 };
                 infra.Add(cosmosDbAccount);
-                CosmosDBSqlDatabase cosmosDbDatabase = new("cosmosDbDatabase")
+                CosmosDBSqlDatabase cosmosDbDatabase = new("cosmosDbDatabase", CosmosDBSqlDatabase.ResourceVersions.V2024_08_15)
                 {
                     Name = cosmosDbDatabaseName,
                     Parent = cosmosDbAccount,
@@ -195,7 +195,7 @@ public class BasicKustoTests
                     }
                 };
                 infra.Add(cosmosDbDatabase);
-                CosmosDBSqlContainer cosmosDbContainer = new("cosmosDbContainer")
+                CosmosDBSqlContainer cosmosDbContainer = new("cosmosDbContainer", CosmosDBSqlContainer.ResourceVersions.V2024_08_15)
                 {
                     Name = cosmosDbContainerName,
                     Parent = cosmosDbDatabase,
@@ -214,7 +214,7 @@ public class BasicKustoTests
                     }
                 };
                 infra.Add(cosmosDbContainer);
-                KustoCluster cluster = new(nameof(cluster))
+                KustoCluster cluster = new(nameof(cluster), KustoCluster.ResourceVersions.V2024_04_13)
                 {
                     Name = clusterName,
                     Location = location,
@@ -230,7 +230,7 @@ public class BasicKustoTests
                     }
                 };
                 infra.Add(cluster);
-                CosmosDBSqlRoleAssignment cosmosDBSqlRoleAssignment = new("clusterCosmosDbDataAuthorization")
+                CosmosDBSqlRoleAssignment cosmosDBSqlRoleAssignment = new("clusterCosmosDbDataAuthorization", CosmosDBSqlRoleAssignment.ResourceVersions.V2024_08_15)
                 {
                     Parent = cosmosDbAccount,
                     PrincipalId = cluster.Identity.PrincipalId,
@@ -238,13 +238,13 @@ public class BasicKustoTests
                     Scope = cosmosDbAccount.Id
                 };
                 infra.Add(cosmosDBSqlRoleAssignment);
-                KustoDatabase kustoDb = new KustoReadWriteDatabase(nameof(kustoDb))
+                KustoDatabase kustoDb = new KustoReadWriteDatabase(nameof(kustoDb), KustoDatabase.ResourceVersions.V2024_04_13)
                 {
                     Name = kustoDatabaseName,
                     Parent = cluster,
                 };
                 infra.Add(kustoDb);
-                KustoScript kustoScript = new("kustoScript")
+                KustoScript kustoScript = new("kustoScript", KustoScript.ResourceVersions.V2024_04_13)
                 {
                     Name = "db-script",
                     Parent = kustoDb,
@@ -252,7 +252,7 @@ public class BasicKustoTests
                     ShouldContinueOnErrors = false
                 };
                 infra.Add(kustoScript);
-                KustoDataConnection cosmosDbConnection = new KustoCosmosDBDataConnection("cosmosDbConnection")
+                KustoDataConnection cosmosDbConnection = new KustoCosmosDBDataConnection("cosmosDbConnection", KustoDataConnection.ResourceVersions.V2024_04_13)
                 {
                     Name = "cosmosDbConnection",
                     Parent = kustoDb,
@@ -308,7 +308,7 @@ public class BasicKustoTests
 
             var cosmosDataReader = '00000000-0000-0000-0000-000000000001'
 
-            resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2022-08-15' = {
+            resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
               name: cosmosDbAccountName
               location: location
               properties: {
@@ -499,7 +499,7 @@ public class BasicKustoTests
                 infra.Add(eventGridSubscriptionName);
 
                 // Storage account + container
-                StorageAccount storage = new("storage")
+                StorageAccount storage = new("storage", StorageAccount.ResourceVersions.V2024_01_01)
                 {
                     Name = storageAccountName,
                     Location = location,
@@ -512,13 +512,13 @@ public class BasicKustoTests
                 };
                 infra.Add(storage);
 
-                BlobService blobServices = new("blobServices")
+                BlobService blobServices = new("blobServices", BlobService.ResourceVersions.V2024_01_01)
                 {
                     Parent = storage
                 };
                 infra.Add(blobServices);
 
-                BlobContainer landingContainer = new("landingContainer")
+                BlobContainer landingContainer = new("landingContainer", BlobContainer.ResourceVersions.V2024_01_01)
                 {
                     Name = storageContainerName,
                     Parent = blobServices,
@@ -527,7 +527,7 @@ public class BasicKustoTests
                 infra.Add(landingContainer);
 
                 // Event hub receiving event grid notifications
-                EventHubsNamespace eventHubNamespace = new("eventHubNamespace")
+                EventHubsNamespace eventHubNamespace = new("eventHubNamespace", EventHubsNamespace.ResourceVersions.V2024_01_01)
                 {
                     Name = eventHubNamespaceName,
                     Location = location,
@@ -540,7 +540,7 @@ public class BasicKustoTests
                 };
                 infra.Add(eventHubNamespace);
 
-                EventHub eventHub = new("eventHub")
+                EventHub eventHub = new("eventHub", EventHub.ResourceVersions.V2024_01_01)
                 {
                     Name = eventHubName,
                     Parent = eventHubNamespace,
@@ -552,7 +552,7 @@ public class BasicKustoTests
                 };
                 infra.Add(eventHub);
 
-                EventHubsConsumerGroup kustoConsumerGroup = new("kustoConsumerGroup")
+                EventHubsConsumerGroup kustoConsumerGroup = new("kustoConsumerGroup", EventHubsConsumerGroup.ResourceVersions.V2024_01_01)
                 {
                     Name = "kustoConsumerGroup",
                     Parent = eventHub
@@ -560,7 +560,7 @@ public class BasicKustoTests
                 infra.Add(kustoConsumerGroup);
 
                 // Event grid topic on storage account
-                SystemTopic blobTopic = new("blobTopic")
+                SystemTopic blobTopic = new("blobTopic", SystemTopic.ResourceVersions.V2025_02_15)
                 {
                     Name = eventGridTopicName,
                     Location = location,
@@ -574,7 +574,7 @@ public class BasicKustoTests
                 infra.Add(blobTopic);
 
                 // Event Grid subscription, pushing events to event hub
-                SystemTopicEventSubscription newBlobSubscription = new("newBlobSubscription")
+                SystemTopicEventSubscription newBlobSubscription = new("newBlobSubscription", SystemTopicEventSubscription.ResourceVersions.V2025_02_15)
                 {
                     Name = eventGridSubscriptionName,
                     Parent = blobTopic,
@@ -605,7 +605,7 @@ public class BasicKustoTests
                 infra.Add(newBlobSubscription);
 
                 // Kusto cluster
-                KustoCluster cluster = new("cluster")
+                KustoCluster cluster = new("cluster", KustoCluster.ResourceVersions.V2024_04_13)
                 {
                     Name = clusterName,
                     Location = location,
@@ -623,7 +623,7 @@ public class BasicKustoTests
                 };
                 infra.Add(cluster);
 
-                KustoReadWriteDatabase kustoDb = new("kustoDb")
+                KustoReadWriteDatabase kustoDb = new("kustoDb", KustoDatabase.ResourceVersions.V2024_04_13)
                 {
                     Name = databaseName,
                     Parent = cluster,
@@ -631,7 +631,7 @@ public class BasicKustoTests
                 };
                 infra.Add(kustoDb);
 
-                KustoScript kustoScript = new("kustoScript")
+                KustoScript kustoScript = new("kustoScript", KustoScript.ResourceVersions.V2024_04_13)
                 {
                     Name = "db-script",
                     Parent = kustoDb,
@@ -640,7 +640,7 @@ public class BasicKustoTests
                 };
                 infra.Add(kustoScript);
 
-                KustoEventGridDataConnection eventConnection = new("eventConnection")
+                KustoEventGridDataConnection eventConnection = new("eventConnection", KustoDataConnection.ResourceVersions.V2024_04_13)
                 {
                     Name = "eventConnection",
                     Parent = kustoDb,
