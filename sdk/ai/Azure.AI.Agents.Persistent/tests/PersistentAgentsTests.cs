@@ -2070,7 +2070,12 @@ namespace Azure.AI.Agents.Persistent.Tests
         }
 
         [RecordedTest]
-        public async Task TestMcpTool()
+        [TestCase(null, false, true)]
+        [TestCase("always", false, true)]
+        [TestCase("never", false, false)]
+        [TestCase("always", true, true)]
+        [TestCase("never", true, false)]
+        public async Task TestMcpTool(string trust, bool isPerTool, bool shouldApprove)
         {
             PersistentAgentsClient client = GetClient();
             MCPToolDefinition mcpTool = new("github", "https://gitmcp.io/Azure/azure-rest-api-specs");
@@ -2090,6 +2095,26 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             MCPToolResource mcpToolResource = new("github");
             mcpToolResource.UpdateHeader("SuperSecret", "123456");
+            if (trust is not null)
+            {
+                MCPApproval trustMode;
+                if (isPerTool)
+                {
+                    MCPApprovalPerTool perTool = new()
+                    {
+                        Never = new MCPToolList(
+                            string.Equals(trust, "never") ? ["search_azure_rest_api_code"] : []),
+                        Always = new MCPToolList(
+                            string.Equals(trust, "always") ? ["search_azure_rest_api_code"] : []),
+                    };
+                    trustMode = new(perToolApproval: perTool);
+                }
+                else
+                {
+                    trustMode = new(trust);
+                }
+                mcpToolResource.RequireApproval = trustMode;
+            }
             ToolResources toolResources = mcpToolResource.ToToolResources();
 
             // Run the agent with MCP tool resources
@@ -2126,7 +2151,9 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
             }
             Assert.AreEqual(RunStatus.Completed, run.Status, run.LastError?.Message);
-            Assert.IsTrue(isApprovalRequested, "The approval was not requested.");
+            Assert.AreEqual(shouldApprove, isApprovalRequested,
+                isApprovalRequested ? $"The approval was requested, but it was not expected: trust: {trust}, isPerTool: {isPerTool}, shouldApprove: {shouldApprove}." : $"The approval was not requested, but it was expected: trust: {trust}, isPerTool: {isPerTool}, shouldApprove: {shouldApprove}."
+            );
             Assert.Greater((await client.Messages.GetMessagesAsync(thread.Id).ToListAsync()).Count, 1);
             AsyncPageable<RunStep> steps = client.Runs.GetRunStepsAsync(thread.Id, run.Id);
             bool isRunStepMCPPresent = false;
