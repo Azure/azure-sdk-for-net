@@ -13,6 +13,7 @@
 
 - Fixed `AzureDeveloperCliCredential` hanging when the `AZD_DEBUG` environment variable is set by adding the `--no-prompt` flag to prevent interactive prompts ([#52005](https://github.com/Azure/azure-sdk-for-net/issues/52005)).
 - `BrokerCredential` is now included in the chain when `AZURE_TOKEN_CREDENTIALS` is set to `dev` and the `Azure.Identity.Broker` package is installed.
+- `ManagedIdentityCredential` now correctly surfaces common IMDS unavailability/network errors (timeouts, "Host is down", "No route to host", system-assigned "Identity not found") as `CredentialUnavailableException` instead of `AuthenticationFailedException`, allowing `ChainedTokenCredential` to continue to the next credential in local/dev environments.
 
 ### Other Changes
 
