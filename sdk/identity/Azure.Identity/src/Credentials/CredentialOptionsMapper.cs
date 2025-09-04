@@ -9,33 +9,15 @@ namespace Azure.Identity.Credentials;
 internal class CredentialOptionsMapper
 {
     /// <summary>
-    /// Attempts to get broker options and returns them if available, along with a flag indicating success.
+    /// Creates broker <see cref="InteractiveBrowserCredentialOptions"/> from the provided credential options if the broker package is available.
     /// </summary>
-    /// <param name="fileSystem">The file system service to use for reading authentication records.</param>
-    /// <param name="isBrokerEnabled">Output parameter indicating whether broker options are available.</param>
-    /// <returns>The broker options if available, null otherwise.</returns>
-    internal static InteractiveBrowserCredentialOptions TryGetBrokerOptions(out bool isBrokerEnabled, IFileSystemService fileSystem = null)
-    {
-        isBrokerEnabled = DefaultAzureCredentialFactory.TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions options);
-
-        if (isBrokerEnabled && options != null)
-        {
-            if (fileSystem is not null)
-                options.AuthenticationRecord = GetAuthenticationRecord(fileSystem);
-            return options;
-        }
-
-        return null;
-    }
-
-    /// <summary>
-    /// Get the broker options from the provided credential options.
-    /// </summary>
-    /// <param name="credentialOptions">The credential options to extract broker options from.</param>
-    /// <param name="isBrokerEnabled"> Indicates whether the broker package is present or not.</param>
-    /// <param name="fileSystem"> The file system service to use for reading authentication records. </param>
-    /// <returns> The broker options extracted from the credential options, or null if the broker package is not enabled.</returns>
-    internal static InteractiveBrowserCredentialOptions GetBrokerOptionsWithCredentialOptions(TokenCredentialOptions credentialOptions, out bool isBrokerEnabled, IFileSystemService fileSystem = null)
+    /// <param name="isBrokerEnabled">Set to <c>true</c> when broker support is available; otherwise <c>false</c>.</param>
+    /// <param name="credentialOptions">Optional credential options whose shared properties (tenant id, allowed tenants, authority host, logging flags, chain marker) are copied onto the returned broker options.</param>
+    /// <param name="fileSystem">Optional file system service used to attempt loading an <see cref="AuthenticationRecord"/> from the VS Code Azure Resource Groups extension cache (authRecord.json).</param>
+    /// <returns>
+    /// A fully populated <see cref="InteractiveBrowserCredentialOptions"/> configured for broker authentication when the broker package is enabled; otherwise <c>null</c>.
+    /// </returns>
+    internal static InteractiveBrowserCredentialOptions GetBrokerOptions(out bool isBrokerEnabled, TokenCredentialOptions credentialOptions = null, IFileSystemService fileSystem = null)
     {
         isBrokerEnabled = DefaultAzureCredentialFactory.TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions options);
 
@@ -51,9 +33,7 @@ internal class CredentialOptionsMapper
             }
 
             if (fileSystem is not null)
-            {
                 options.AuthenticationRecord = GetAuthenticationRecord(fileSystem);
-            }
 
             return options;
         }
@@ -61,6 +41,17 @@ internal class CredentialOptionsMapper
         return null;
     }
 
+    /// <summary>
+    /// Attempts to locate and deserialize a persisted <see cref="AuthenticationRecord"/> written by the
+    /// VS Code Azure Resource Groups extension. Both lowercase (".azure") and mixed case (".Azure")
+    /// user profile directories are probed for the file:
+    /// <c>%USERPROFILE%/.azure/ms-azuretools.vscode-azureresourcegroups/authRecord.json</c>.
+    /// </summary>
+    /// <param name="_fileSystem">File system abstraction used to test for file existence and open the file stream.</param>
+    /// <returns>
+    /// A valid <see cref="AuthenticationRecord"/> when the file exists and contains the minimum required
+    /// identifiers (TenantId and HomeAccountId); otherwise <c>null</c>. Any I/O or deserialization errors are swallowed.
+    /// </returns>
     internal static AuthenticationRecord GetAuthenticationRecord(IFileSystemService _fileSystem)
         {
             var homeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
@@ -90,21 +81,11 @@ internal class CredentialOptionsMapper
         }
 
     /// <summary>
-    /// Creates fallback options when broker options are not available.
-    /// This prevents the constructor from failing and defers the error to GetToken.
+    /// Creates non-broker (interactive browser) fallback options from the provided credential options when broker options are not available.
     /// </summary>
-    /// <returns>A minimal InteractiveBrowserCredentialOptions instance.</returns>
-    internal static InteractiveBrowserCredentialOptions CreateFallbackOptions()
-    {
-        return new InteractiveBrowserCredentialOptions();
-    }
-
-    /// <summary>
-    /// Creates fallback options from the provided credential options when broker options are not available.
-    /// </summary>
-    /// <param name="credentialOptions"> The credential options to copy properties from.</param>
-    /// <returns> A minimal InteractiveBrowserCredentialOptions instance with properties copied from the provided credential options.</returns>
-    internal static InteractiveBrowserCredentialOptions CreateFallbackOptionsFromCredentialOptions(TokenCredentialOptions credentialOptions)
+    /// <param name="credentialOptions">Optional credential options to copy common properties from.</param>
+    /// <returns>A minimal <see cref="InteractiveBrowserCredentialOptions"/> instance with shared properties copied; no broker specific configuration or authentication record is attached.</returns>
+    internal static InteractiveBrowserCredentialOptions CreateFallbackOptions(TokenCredentialOptions credentialOptions = null)
     {
         var fallbackOptions = new InteractiveBrowserCredentialOptions();
 

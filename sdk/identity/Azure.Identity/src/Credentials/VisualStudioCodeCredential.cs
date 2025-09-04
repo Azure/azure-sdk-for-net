@@ -33,7 +33,7 @@ namespace Azure.Identity
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/>.
         /// </summary>
-        public VisualStudioCodeCredential() : base(CredentialOptionsMapper.TryGetBrokerOptions(out bool isBrokerEnabled, FileSystemService.Default) ?? CredentialOptionsMapper.CreateFallbackOptions())
+        public VisualStudioCodeCredential() : base(CredentialOptionsMapper.GetBrokerOptions(out bool isBrokerEnabled, fileSystem: FileSystemService.Default) ?? CredentialOptionsMapper.CreateFallbackOptions())
         {
             _isBrokerOptionsEnabled = isBrokerEnabled;
         }
@@ -42,7 +42,7 @@ namespace Azure.Identity
         /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/>.
         /// </summary>
         public VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options)
-            : base(CredentialOptionsMapper.GetBrokerOptionsWithCredentialOptions(options, out bool isBrokerEnabled, FileSystemService.Default) ?? CredentialOptionsMapper.CreateFallbackOptionsFromCredentialOptions(options))
+            : base(CredentialOptionsMapper.GetBrokerOptions(out bool isBrokerEnabled, options, FileSystemService.Default) ?? CredentialOptionsMapper.CreateFallbackOptions(options))
         {
             _isBrokerOptionsEnabled = isBrokerEnabled;
         }

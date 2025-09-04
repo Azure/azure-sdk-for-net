@@ -277,14 +277,14 @@ namespace Azure.Identity.Tests
         }
 
         // this is a list of ISupports* interfaces that are explicitly supported by TokenCredentialOptions.Clone<T>()
-        // do not add any ISupportS types to this list without first adding support to TokenCredentialOptions.Clone<T>()
+        // do not add any ISupports* types to this list without first adding support to TokenCredentialOptions.Clone<T>()
         // and adding corresponding validation to VerifyClone and VerifyCloneHandlesISupportsForAllTypes
         private static Type[] s_KnownISupportsInterfaces = new Type[]
         {
             typeof(ISupportsAdditionallyAllowedTenants),
             typeof(ISupportsDisableInstanceDiscovery),
             typeof(ISupportsTokenCachePersistenceOptions),
-            typeof(ISupportsTenantId) // added
+            typeof(ISupportsTenantId)
         };
 
         public static IEnumerable<TestCaseData> CredentialOptionsCloneTypeTestMatrix()

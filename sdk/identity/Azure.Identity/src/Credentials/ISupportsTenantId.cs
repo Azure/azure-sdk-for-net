@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Azure.Identity.Credentials
+namespace Azure.Identity
 {
     internal interface ISupportsTenantId
     {

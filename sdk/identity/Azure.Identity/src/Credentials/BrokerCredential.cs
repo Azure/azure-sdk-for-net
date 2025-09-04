@@ -16,7 +16,7 @@ namespace Azure.Identity.Credentials
         private readonly bool _isBrokerOptionsEnabled;
 
         public BrokerCredential(DevelopmentBrokerOptions options)
-            : base(CredentialOptionsMapper.GetBrokerOptionsWithCredentialOptions(options, out bool isBrokerEnabled) ?? CredentialOptionsMapper.CreateFallbackOptionsFromCredentialOptions(options))
+            : base(CredentialOptionsMapper.GetBrokerOptions(out bool isBrokerEnabled, options) ?? CredentialOptionsMapper.CreateFallbackOptions(options))
         {
             _isBrokerOptionsEnabled = isBrokerEnabled;
         }
