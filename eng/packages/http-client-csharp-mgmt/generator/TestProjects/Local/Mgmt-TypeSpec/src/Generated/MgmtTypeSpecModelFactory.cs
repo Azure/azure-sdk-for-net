@@ -112,9 +112,13 @@ namespace MgmtTypeSpec.Models
         /// <param name="stringArray"></param>
         /// <param name="propertyLeft"> enabled. </param>
         /// <param name="anotherPropertyLeft"> enabled. </param>
-        /// <param name="flattenedNestedPropertyLeft"> enabled. </param>
+        /// <param name="flattenedNestedProperty"></param>
+        /// <param name="innerProp1"> Gets or sets the InnerProp1. </param>
+        /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
+        /// <param name="prop1"> Gets or sets the Prop1. </param>
+        /// <param name="prop2"> Gets or sets the Prop2. </param>
         /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsResourceData"/> instance for mocking. </returns>
-        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, int? flattenedNestedPropertyLeft = default)
+        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, BarNestedQuotaProperties flattenedNestedProperty = default, int? innerProp1 = default, string innerProp2 = default, string prop1 = default, int? prop2 = default)
         {
             stringArray ??= new ChangeTrackingList<string>();
 
@@ -128,7 +132,11 @@ namespace MgmtTypeSpec.Models
                 stringArray.ToList(),
                 propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, new Dictionary<string, BinaryData>()),
                 anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, new Dictionary<string, BinaryData>()),
-                flattenedNestedPropertyLeft is null ? default : new BarQuotaProperties(flattenedNestedPropertyLeft.Value, new Dictionary<string, BinaryData>()));
+                flattenedNestedProperty,
+                innerProp1,
+                innerProp2,
+                prop1,
+                prop2);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

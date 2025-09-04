@@ -70,6 +70,14 @@ namespace MgmtTypeSpec
             writer.WriteObjectValue(AnotherProperty, options);
             writer.WritePropertyName("flattenedNestedProperty"u8);
             writer.WriteObjectValue(FlattenedNestedProperty, options);
+            writer.WritePropertyName("innerProp1"u8);
+            writer.WriteNumberValue(InnerProp1.Value);
+            writer.WritePropertyName("innerProp2"u8);
+            writer.WriteStringValue(InnerProp2);
+            writer.WritePropertyName("prop1"u8);
+            writer.WriteStringValue(Prop1);
+            writer.WritePropertyName("prop2"u8);
+            writer.WriteNumberValue(Prop2.Value);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -106,7 +114,11 @@ namespace MgmtTypeSpec
             IList<string> stringArray = default;
             BarQuotaProperties @property = default;
             BarQuotaProperties anotherProperty = default;
-            BarQuotaProperties flattenedNestedProperty = default;
+            BarNestedQuotaProperties flattenedNestedProperty = default;
+            int? innerProp1 = default;
+            string innerProp2 = default;
+            string prop1 = default;
+            int? prop2 = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -183,7 +195,27 @@ namespace MgmtTypeSpec
                 }
                 if (prop.NameEquals("flattenedNestedProperty"u8))
                 {
-                    flattenedNestedProperty = BarQuotaProperties.DeserializeBarQuotaProperties(prop.Value, options);
+                    flattenedNestedProperty = BarNestedQuotaProperties.DeserializeBarNestedQuotaProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("innerProp1"u8))
+                {
+                    innerProp1 = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("innerProp2"u8))
+                {
+                    innerProp2 = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("prop1"u8))
+                {
+                    prop1 = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("prop2"u8))
+                {
+                    prop2 = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -201,7 +233,11 @@ namespace MgmtTypeSpec
                 stringArray ?? new ChangeTrackingList<string>(),
                 @property,
                 anotherProperty,
-                flattenedNestedProperty);
+                flattenedNestedProperty,
+                innerProp1,
+                innerProp2,
+                prop1,
+                prop2);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

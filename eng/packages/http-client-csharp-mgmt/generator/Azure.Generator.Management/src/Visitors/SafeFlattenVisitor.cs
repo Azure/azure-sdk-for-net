@@ -4,6 +4,7 @@
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -149,7 +150,7 @@ namespace Azure.Generator.Management.Visitors
                     var flattenPropertyName = PropertyHelpers.GetCombinedPropertyName(innerProperty, property); // TODO: handle name conflicts
                     var flattenPropertyBody = new MethodPropertyBody(
                         PropertyHelpers.BuildGetter(includeGetterNullCheck, property, modelProvider, innerProperty),
-                        isFlattenedPropertyReadOnly ? null : PropertyHelpers.BuildSetter(includeSetterNullCheck, modelProvider, property, innerProperty)
+                        isFlattenedPropertyReadOnly ? null : PropertyHelpers.BuildSetterForSafeFlatten(includeSetterNullCheck, modelProvider, property, innerProperty)
                     );
 
                     // If the inner property is a value type, we need to ensure that we handle the nullability correctly.

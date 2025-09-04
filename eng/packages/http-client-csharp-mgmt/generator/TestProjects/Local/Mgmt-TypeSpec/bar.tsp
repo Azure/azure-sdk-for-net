@@ -50,7 +50,7 @@ model BarSettingsResource is ProxyResource<BarSettingsProperties> {
   stringArray?: string[];
   property: BarQuotaProperties;
   anotherProperty: BarQuotaProperties;
-  flattenedNestedProperty: BarQuotaProperties;
+  flattenedNestedProperty: BarNestedQuotaProperties;
 }
 
 @parentResource(Bar)
@@ -58,8 +58,9 @@ model BarQuotaResource is ProxyResource<BarQuotaProperties> {
   ...ResourceNameParameter<BarQuotaResource, SegmentName = "quotas", Type = QuotaName>;
 }
 
-model BarNestedQuotaProperties extends BarQuotaProperties {
-  nestedProperty: BarQuotaProperties;
+model BarNestedQuotaProperties extends BarDeeplyNestedQuotaProperties {
+  innerProp1: int32;
+  innerProp2: string;
 }
 
 model BarDeeplyNestedQuotaProperties {
