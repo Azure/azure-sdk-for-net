@@ -121,8 +121,8 @@ namespace Azure.Messaging.ServiceBus.Administration
         {
             return other is not null
                    && string.Equals(Name, other.Name, StringComparison.OrdinalIgnoreCase)
-                   && (Filter == null || Filter.Equals(other.Filter))
-                   && (Action == null || Action.Equals(other.Action));
+                   && Filter?.Equals(other.Filter) != false
+                   && Action?.Equals(other.Action) != false;
         }
 
         /// <summary>Compares two <see cref="CreateRuleOptions"/> values for equality.</summary>
