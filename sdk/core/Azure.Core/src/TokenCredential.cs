@@ -57,27 +57,10 @@ namespace Azure.Core
         /// <inheritdoc />
         public override GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties)
         {
-            // Check if scopes are present and in a valid format
+            // Check if scopes are present
             if (properties.TryGetValue(GetTokenOptions.ScopesPropertyName, out var scopesValue))
             {
-                if (scopesValue is ReadOnlyMemory<string> readOnlyMemoryScopes)
-                {
-                    // We only have scopes and they are already ROM. Just return the options with the existing properties..
-                    return new GetTokenOptions(properties);
-                }
-                // Try to convert scopes to ReadOnlyMemory<string>
-                else if (scopesValue is string[] stringArrayScopes)
-                {
-                    var scopes = new ReadOnlyMemory<string>(stringArrayScopes);
-                    // Create new properties dictionary with properly formatted scopes
-                    var formattedProperties = new Dictionary<string, object>();
-                    foreach (var kvp in properties)
-                    {
-                        formattedProperties[kvp.Key] = kvp.Value;
-                    }
-                    formattedProperties[GetTokenOptions.ScopesPropertyName] = scopes;
-                    return new GetTokenOptions(formattedProperties);
-                }
+                return new GetTokenOptions(properties);
             }
             // No scopes provided - insufficient information to create TokenRequestContext
             return null;
