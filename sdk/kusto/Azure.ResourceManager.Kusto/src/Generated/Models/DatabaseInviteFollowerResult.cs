@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The generated invitation token. </summary>
+        [WirePath("generatedInvitation")]
         public string GeneratedInvitation { get; }
     }
 }

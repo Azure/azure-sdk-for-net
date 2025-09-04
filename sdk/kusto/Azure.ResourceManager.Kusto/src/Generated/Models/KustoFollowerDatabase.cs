@@ -69,14 +69,19 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Resource id of the cluster that follows a database owned by this cluster. </summary>
+        [WirePath("properties.clusterResourceId")]
         public ResourceIdentifier ClusterResourceId { get; }
         /// <summary> Resource name of the attached database configuration in the follower cluster. </summary>
+        [WirePath("properties.attachedDatabaseConfigurationName")]
         public string AttachedDatabaseConfigurationName { get; }
         /// <summary> The database name owned by this cluster that was followed. * in case following all databases. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName { get; }
         /// <summary> Table level sharing specifications. </summary>
+        [WirePath("properties.tableLevelSharingProperties")]
         public KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get; }
         /// <summary> The origin of the following setup. </summary>
+        [WirePath("properties.databaseShareOrigin")]
         public KustoDatabaseShareOrigin? DatabaseShareOrigin { get; }
     }
 }
