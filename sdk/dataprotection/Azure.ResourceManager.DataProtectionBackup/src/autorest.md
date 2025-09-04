@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: DataProtectionBackup
 namespace: Azure.ResourceManager.DataProtectionBackup
-require: https://github.com/Azure/azure-rest-api-specs/blob/b690e1f36c59d1b9c619205b6876c046ea00b7cb/specification/dataprotection/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/3214c8b906eafa31063e3180d88b8f201d205409/specification/dataprotection/resource-manager/readme.md
 #tag: package-2025-07-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -385,33 +385,4 @@ directive:
     where: $.parameters
     transform: >
       delete $.SubscriptionIdParameter.format;
-# TODO: fix TypeSpec convert issue, remove after fix
-  - from: dataprotection.json
-    where: $.definitions
-    transform: >
-      $.BackupVaultResource.properties.identity = {
-          "$ref": "#/definitions/DppIdentityDetails",
-          "description": "Input Managed Identity Details"
-        };
-      $.BackupVaultResource.properties.eTag =  {
-          "description": "Optional ETag.",
-          "type": "string"
-        };
-  - from: dataprotection.json
-    where: $.definitions
-    transform: >
-      $.BackupInstanceResource.properties.tags = {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Proxy Resource tags.",
-          "type": "object"
-        };
-  - from: dataprotection.json
-    where: $.definitions
-    transform: >
-      $.ResourceGuardResource.properties.eTag =  {
-          "description": "Optional ETag.",
-          "type": "string"
-        };
 ```
