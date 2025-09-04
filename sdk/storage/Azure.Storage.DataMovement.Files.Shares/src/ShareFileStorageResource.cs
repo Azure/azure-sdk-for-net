@@ -66,7 +66,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         internal async Task CreateAsync(
             bool overwrite,
             long maxSize,
-            StorageResourceItemProperties properties,
+            StorageResourceItemProperties sourceProperties,
             CancellationToken cancellationToken)
         {
             if (!overwrite)
@@ -80,14 +80,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     throw Errors.ShareFileAlreadyExists(ShareFileClient.Path);
                 }
             }
-            ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(properties?.RawProperties);
-            IDictionary<string, string> metadata = _options?.GetFileMetadata(properties?.RawProperties);
-            string filePermission = _options?.GetFilePermission(properties);
-            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(properties, _destinationPermissionKey);
-            FilePosixProperties posixProperties = _options?.GetFilePosixProperties(properties);
+            ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(sourceProperties?.RawProperties);
+            IDictionary<string, string> metadata = _options?.GetFileMetadata(sourceProperties?.RawProperties);
+            string filePermission = _options?.GetFilePermission(sourceProperties);
+            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties, _destinationPermissionKey);
+            FilePosixProperties posixProperties = _options?.GetFilePosixProperties(sourceProperties);
 
             // if transfer is not empty and File Attribute contains ReadOnly, we should not set it before creating the file.
-            if ((properties == null || properties.ResourceLength > 0) && IsReadOnlySet(smbProperties.FileAttributes))
+            if ((sourceProperties == null || sourceProperties.ResourceLength > 0) && IsReadOnlySet(smbProperties.FileAttributes))
             {
                 smbProperties.FileAttributes = default;
             }
@@ -257,6 +257,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ResourceProperties = response.Value.ToStorageResourceItemProperties();
             }
+            ResourceProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ShareProtocol, _options?.ShareProtocol ?? ShareProtocol.Smb);
             _isResourcePropertiesFullySet = true;
             return ResourceProperties;
         }
@@ -397,10 +398,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ShareProtocol sourceProtocol = sourceShareFileResource._options?.ShareProtocol ?? ShareProtocol.Smb;
                 ShareProtocol destinationProtocol = _options?.ShareProtocol ?? ShareProtocol.Smb;
-                // Ensure the transfer is supported (NFS -> NFS and SMB -> SMB)
-                if (destinationProtocol != sourceProtocol)
+                bool destinationFilePermissions = _options?.FilePermissions ?? false;
+                // if NFS <-> SMB and attempting to preserve permissions
+                if (destinationProtocol != sourceProtocol && destinationFilePermissions)
                 {
-                    throw Errors.ShareTransferNotSupported();
+                    throw Errors.HeterogenousTransferPermissionPreservationNotSupported();
                 }
 
                 // Validate the source protocol
@@ -441,8 +443,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             => new UnauthorizedAccessException($"Authorization failure on the {endpoint} when validating the Protocol. " +
                 $"To skip this validation, please enable SkipProtocolValidation.", ex);
 
-        public static NotSupportedException ShareTransferNotSupported()
-            => new NotSupportedException("This Share transfer is not supported. " +
-                "Currently only NFS -> NFS and SMB -> SMB Share transfers are supported");
+        public static NotSupportedException HeterogenousTransferPermissionPreservationNotSupported()
+            => new NotSupportedException("Permission preservation is not supported in NFS -> SMB or SMB -> NFS transfers");
     }
 }

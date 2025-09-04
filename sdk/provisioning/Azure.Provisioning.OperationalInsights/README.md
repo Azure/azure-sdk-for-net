@@ -32,7 +32,7 @@ This example demonstrates how to create a Log Analytics workspace with system-as
 Infrastructure infra = new();
 
 OperationalInsightsWorkspace workspace =
-    new(nameof(workspace))
+    new(nameof(workspace), OperationalInsightsWorkspace.ResourceVersions.V2023_09_01)
     {
         Sku = new OperationalInsightsWorkspaceSku
         {
