@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary>
-    /// Parameters for Backup Datasource
-    /// Please note <see cref="BackupDataSourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AdlsBlobBackupDataSourceSettings"/>, <see cref="BlobBackupDataSourceSettings"/> and <see cref="KubernetesClusterBackupDataSourceSettings"/>.
-    /// </summary>
-    public abstract partial class BackupDataSourceSettings
+    /// <summary> Validate for modify backup request. </summary>
+    public partial class ValidateForModifyBackupContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +43,33 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BackupDataSourceSettings"/>. </summary>
-        protected BackupDataSourceSettings()
+        /// <summary> Initializes a new instance of <see cref="ValidateForModifyBackupContent"/>. </summary>
+        /// <param name="backupInstance"> Backup Instance. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupInstance"/> is null. </exception>
+        public ValidateForModifyBackupContent(DataProtectionBackupInstanceProperties backupInstance)
         {
+            Argument.AssertNotNull(backupInstance, nameof(backupInstance));
+
+            BackupInstance = backupInstance;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupDataSourceSettings"/>. </summary>
-        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <summary> Initializes a new instance of <see cref="ValidateForModifyBackupContent"/>. </summary>
+        /// <param name="backupInstance"> Backup Instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupDataSourceSettings(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ValidateForModifyBackupContent(DataProtectionBackupInstanceProperties backupInstance, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ObjectType = objectType;
+            BackupInstance = backupInstance;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Type of the specific object - used for deserializing. </summary>
-        internal string ObjectType { get; set; }
+        /// <summary> Initializes a new instance of <see cref="ValidateForModifyBackupContent"/> for deserialization. </summary>
+        internal ValidateForModifyBackupContent()
+        {
+        }
+
+        /// <summary> Backup Instance. </summary>
+        public DataProtectionBackupInstanceProperties BackupInstance { get; }
     }
 }
