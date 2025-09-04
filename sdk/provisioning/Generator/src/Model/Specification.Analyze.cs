@@ -347,29 +347,28 @@ public abstract partial class Specification
         var attributes = property.GetCustomAttributes();
         string? path = attributes.Where(a => a.GetType().Name == "WirePathAttribute").FirstOrDefault()?.ToString();
 
-        // ignore those properties without path
-        if (ignorePropertyWithoutPath && path is null)
+        // Patch up the well known id/systemData property paths
+        if (path is null)
         {
-            return null;
+            path = (prop.Name, prop.PropertyType?.Name) switch
+            {
+                ("Name", "String") => "name",
+                ("Location", "AzureLocation") => "location",
+                ("Id", "ResourceIdentifier") => "id",
+                ("SystemData", "SystemData") => "systemData",
+                ("Tags", "IDictionary<String,String>") => "tags",
+                _ => null
+            };
         }
 
         if (path is not null)
         {
             prop.Path = path.Split('.');
         }
-
-        // Patch up the well known id/systemData property paths
-        if (path is null)
+        else if (ignorePropertyWithoutPath)
         {
-            prop.Path = (prop.Name, prop.PropertyType?.Name) switch
-            {
-                ("Name", "String") => ["name"],
-                ("Location", "AzureLocation") => ["location"],
-                ("Id", "ResourceIdentifier") => ["id"],
-                ("SystemData", "SystemData") => ["systemData"],
-                ("Tags", "IDictionary<String,String>") => ["tags"],
-                _ => null
-            };
+            // ignore those properties without path
+            return null;
         }
 
         // if the property has `EditorBrowsable` attribute, we should add the same attribute to it as well
