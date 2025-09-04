@@ -1228,6 +1228,13 @@
       ]
     },
     {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Kusto/**/*.cs",
+      "words": [
+        "openai",
+        "tbps"
+      ]
+    },
+    {
       "filename": "**/sdk/provisioning/Azure.Provisioning.PostgreSql/**/*.cs",
       "words": [
         "awsec"
