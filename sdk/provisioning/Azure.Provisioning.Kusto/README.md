@@ -233,6 +233,251 @@ KustoDataConnection cosmosDbConnection = new KustoCosmosDBDataConnection("cosmos
 infra.Add(cosmosDbConnection);
 ```
 
+### Deploy Azure Data Explorer db with Event Grid connection
+
+This template allows you deploy a cluster with System Assigned Identity, a database, an Azure Storage Account, an Event hub, an Event Grid notification publishing notifications to Event Hubs and a data connection between the Azure Storage and the database (using the system assigned identity).
+
+```C# Snippet:KustoEventGrid
+Infrastructure infra = new();
+
+ProvisioningParameter location = new(nameof(location), typeof(string))
+{
+    Description = "Location for all resources",
+    Value = BicepFunction.GetResourceGroup().Location
+};
+infra.Add(location);
+
+ProvisioningParameter clusterName = new(nameof(clusterName), typeof(string))
+{
+    Description = "Name of the cluster",
+    Value = BicepFunction.Interpolate($"kusto{BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id)}")
+};
+infra.Add(clusterName);
+
+ProvisioningParameter skuName = new(nameof(skuName), typeof(string))
+{
+    Description = "Name of the sku",
+    Value = "Standard_D12_v2"
+};
+infra.Add(skuName);
+
+ProvisioningParameter skuCapacity = new(nameof(skuCapacity), typeof(int))
+{
+    Description = "# of nodes",
+    Value = 2
+};
+infra.Add(skuCapacity);
+
+ProvisioningParameter databaseName = new(nameof(databaseName), typeof(string))
+{
+    Description = "Name of the database",
+    Value = "kustodb"
+};
+infra.Add(databaseName);
+
+ProvisioningParameter storageAccountName = new(nameof(storageAccountName), typeof(string))
+{
+    Description = "Name of storage account",
+    Value = BicepFunction.Interpolate($"storage{BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id)}")
+};
+infra.Add(storageAccountName);
+
+ProvisioningParameter storageContainerName = new(nameof(storageContainerName), typeof(string))
+{
+    Description = "Name of storage account",
+    Value = "landing"
+};
+infra.Add(storageContainerName);
+
+ProvisioningParameter eventGridTopicName = new(nameof(eventGridTopicName), typeof(string))
+{
+    Description = "Name of Event Grid topic",
+    Value = "main-topic"
+};
+infra.Add(eventGridTopicName);
+
+ProvisioningParameter eventHubNamespaceName = new(nameof(eventHubNamespaceName), typeof(string))
+{
+    Description = "Name of Event Hub's namespace",
+    Value = BicepFunction.Interpolate($"eventHub{BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id)}")
+};
+infra.Add(eventHubNamespaceName);
+
+ProvisioningParameter eventHubName = new(nameof(eventHubName), typeof(string))
+{
+    Description = "Name of Event Hub",
+    Value = "storageHub"
+};
+infra.Add(eventHubName);
+
+ProvisioningParameter eventGridSubscriptionName = new(nameof(eventGridSubscriptionName), typeof(string))
+{
+    Description = "Name of Event Grid subscription",
+    Value = "toEventHub"
+};
+infra.Add(eventGridSubscriptionName);
+
+// Storage account + container
+StorageAccount storage = new("storage")
+{
+    Name = storageAccountName,
+    Location = location,
+    Sku = new StorageSku
+    {
+        Name = StorageSkuName.StandardLrs
+    },
+    Kind = StorageKind.StorageV2,
+    IsHnsEnabled = true
+};
+infra.Add(storage);
+
+BlobService blobServices = new("blobServices")
+{
+    Parent = storage
+};
+infra.Add(blobServices);
+
+BlobContainer landingContainer = new("landingContainer")
+{
+    Name = storageContainerName,
+    Parent = blobServices,
+    PublicAccess = StoragePublicAccessType.None
+};
+infra.Add(landingContainer);
+
+// Event hub receiving event grid notifications
+EventHubsNamespace eventHubNamespace = new("eventHubNamespace")
+{
+    Name = eventHubNamespaceName,
+    Location = location,
+    Sku = new EventHubsSku
+    {
+        Capacity = 1,
+        Name = EventHubsSkuName.Standard,
+        Tier = EventHubsSkuTier.Standard
+    }
+};
+infra.Add(eventHubNamespace);
+
+EventHub eventHub = new("eventHub")
+{
+    Name = eventHubName,
+    Parent = eventHubNamespace,
+    RetentionDescription = new RetentionDescription
+    {
+        RetentionTimeInHours = 48  // 2 days * 24 hours
+    },
+    PartitionCount = 2
+};
+infra.Add(eventHub);
+
+EventHubsConsumerGroup kustoConsumerGroup = new("kustoConsumerGroup")
+{
+    Name = "kustoConsumerGroup",
+    Parent = eventHub
+};
+infra.Add(kustoConsumerGroup);
+
+// Event grid topic on storage account
+SystemTopic blobTopic = new("blobTopic")
+{
+    Name = eventGridTopicName,
+    Location = location,
+    Identity = new ManagedServiceIdentity
+    {
+        ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned
+    },
+    Source = storage.Id,
+    TopicType = "Microsoft.Storage.StorageAccounts"
+};
+infra.Add(blobTopic);
+
+// Event Grid subscription, pushing events to event hub
+SystemTopicEventSubscription newBlobSubscription = new("newBlobSubscription")
+{
+    Name = eventGridSubscriptionName,
+    Parent = blobTopic,
+    DeliveryWithResourceIdentity = new DeliveryWithResourceIdentity
+    {
+        Destination = new EventHubEventSubscriptionDestination
+        {
+            ResourceId = eventHub.Id
+        },
+        Identity = new EventSubscriptionIdentity
+        {
+            IdentityType = EventSubscriptionIdentityType.SystemAssigned
+        }
+    },
+    EventDeliverySchema = EventDeliverySchema.EventGridSchema,
+    Filter = new EventSubscriptionFilter
+    {
+        SubjectBeginsWith = BicepFunction.Interpolate($"/blobServices/default/containers/{storageContainerName}"),
+        IncludedEventTypes = { "Microsoft.Storage.BlobCreated" },
+        IsAdvancedFilteringOnArraysEnabled = true
+    },
+    RetryPolicy = new EventSubscriptionRetryPolicy
+    {
+        MaxDeliveryAttempts = 30,
+        EventTimeToLiveInMinutes = 1440
+    }
+};
+infra.Add(newBlobSubscription);
+
+// Kusto cluster
+KustoCluster cluster = new("cluster")
+{
+    Name = clusterName,
+    Location = location,
+    Sku = new KustoSku
+    {
+        Name = KustoSkuName.StandardD12V2,
+        Tier = KustoSkuTier.Standard,
+        Capacity = skuCapacity
+    },
+    Identity = new ManagedServiceIdentity
+    {
+        ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned
+    },
+    IsStreamingIngestEnabled = true
+};
+infra.Add(cluster);
+
+KustoReadWriteDatabase kustoDb = new("kustoDb")
+{
+    Name = databaseName,
+    Parent = cluster,
+    Location = location
+};
+infra.Add(kustoDb);
+
+KustoScript kustoScript = new("kustoScript")
+{
+    Name = "db-script",
+    Parent = kustoDb,
+    ScriptContent = new FunctionCallExpression(new IdentifierExpression("loadTextContent"), new StringLiteralExpression("script.kql")),
+    ShouldContinueOnErrors = false
+};
+infra.Add(kustoScript);
+
+KustoEventGridDataConnection eventConnection = new("eventConnection")
+{
+    Name = "eventConnection",
+    Parent = kustoDb,
+    Location = location,
+    DependsOn = { kustoScript },
+    BlobStorageEventType = BlobStorageEventType.MicrosoftStorageBlobCreated,
+    ConsumerGroup = kustoConsumerGroup.Name,
+    DataFormat = KustoEventGridDataFormat.Csv,
+    EventGridResourceId = newBlobSubscription.Id,
+    EventHubResourceId = eventHub.Id,
+    IsFirstRecordIgnored = true,
+    ManagedIdentityResourceId = cluster.Id,
+    StorageAccountResourceId = storage.Id,
+    TableName = "People"
+};
+infra.Add(eventConnection);
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
