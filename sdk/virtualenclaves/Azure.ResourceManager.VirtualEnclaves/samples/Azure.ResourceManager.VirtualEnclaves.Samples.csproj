@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <StartupObject>Azure.ResourceManager.VirtualEnclaves.Samples.Sample01_CreateCommunity</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.VirtualEnclaves.csproj" />
+    <PackageReference Include="Azure.Identity" />
+  </ItemGroup>
+</Project>
