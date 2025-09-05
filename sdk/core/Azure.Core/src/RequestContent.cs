@@ -256,7 +256,11 @@ namespace Azure.Core
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
+#if NET6_0_OR_GREATER
+                stream.Write(_bytes.AsSpan(_contentStart, _contentLength));
+#else
                 stream.Write(_bytes, _contentStart, _contentLength);
+#endif
             }
 
             public override bool TryComputeLength(out long length)
@@ -267,9 +271,11 @@ namespace Azure.Core
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
-#pragma warning disable CA1835 // WriteAsync(Memory<>) overload is not available in all targets
+#if NET6_0_OR_GREATER
+                await stream.WriteAsync(_bytes.AsMemory(), cancellation).ConfigureAwait(false);
+#else
                 await stream.WriteAsync(_bytes, _contentStart, _contentLength, cancellation).ConfigureAwait(false);
-#pragma warning restore // WriteAsync(Memory<>) overload is not available in all targets
+#endif
             }
         }
 
