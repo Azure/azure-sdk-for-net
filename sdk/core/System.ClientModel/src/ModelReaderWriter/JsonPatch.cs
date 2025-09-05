@@ -2,13 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Buffers;
-using System.Buffers.Text;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Text.Json;
 
 namespace System.ClientModel.Primitives;
 
@@ -1334,7 +1331,7 @@ public partial struct JsonPatch
     /// </summary>
     /// <param name="format">The format to return 'J' for application/json or 'JP' for application/json-patch+json.</param>
     /// <returns>A string that represents the object, formatted according to the specified format.</returns>
-    public  string ToString(string format)
+    public string ToString(string format)
     {
         ThrowIfNull(format, nameof(format));
 

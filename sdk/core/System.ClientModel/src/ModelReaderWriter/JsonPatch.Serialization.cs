@@ -55,29 +55,6 @@ public partial struct JsonPatch
         }
     }
 
-    ///// <summary>
-    ///// Writes the JSON representation of the specified array to the specified Utf8JsonWriter.
-    ///// Writes in standard JSON format.
-    ///// </summary>
-    ///// <param name="writer">The Utf8JsonWriter to write to.</param>
-    ///// <param name="arrayPath">The JSON path of the array to write.</param>
-    //[EditorBrowsable(EditorBrowsableState.Never)]
-    //public void WriteArrayTo(Utf8JsonWriter writer, ReadOnlySpan<byte> arrayPath)
-    //{
-    //    if (_properties == null)
-    //        return;
-
-    //    if (!_properties.TryGetValue(arrayPath, out var value))
-    //        return;
-
-    //    if (value.Kind == ValueKind.Removed)
-    //        return;
-
-    //    value.Kind |= ValueKind.Written;
-    //    _properties.Set(arrayPath, value);
-    //    writer.WriteRawValue(value.Value.Span.Slice(1, value.Value.Length - 2));
-    //}
-
     /// <summary>
     /// Writes the JSON representation of the JsonPatch to the specified Utf8JsonWriter.
     /// </summary>

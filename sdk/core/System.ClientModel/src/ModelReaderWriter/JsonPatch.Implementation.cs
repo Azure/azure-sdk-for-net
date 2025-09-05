@@ -5,7 +5,6 @@ using System.Buffers;
 using System.Buffers.Text;
 using System.ClientModel.Internal;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
@@ -19,6 +18,7 @@ public partial struct JsonPatch
 {
     // Dictionary-based storage using UTF8 byte arrays as keys and encoded byte arrays as values
     private SpanDictionary? _properties;
+    private readonly EncodedValue _rawJson;
 
     private PropagatorSetter? _propagatorSetter;
     private PropagatorGetter? _propagatorGetter;
@@ -26,22 +26,9 @@ public partial struct JsonPatch
 
     // Singleton arrays for common values
     private static readonly EncodedValue s_removedValueArray = new(ValueKind.Removed, Array.Empty<byte>());
-    private static readonly EncodedValue s_nullValueArray;
-    private static readonly EncodedValue s_trueBooleanArray;
-    private static readonly EncodedValue s_falseBooleanArray;
-
-    private readonly EncodedValue _rawJson;
-
-    // Static constructor to initialize singleton arrays
-    static JsonPatch()
-    {
-        // Initialize null value array
-        s_nullValueArray = new(ValueKind.Null, "null"u8.ToArray());
-        // Initialize true boolean array
-        s_trueBooleanArray = new(ValueKind.BooleanTrue, "true"u8.ToArray());
-        // Initialize false boolean array
-        s_falseBooleanArray = new(ValueKind.BooleanFalse, "false"u8.ToArray());
-    }
+    private static readonly EncodedValue s_nullValueArray = new(ValueKind.Null, "null"u8.ToArray());
+    private static readonly EncodedValue s_trueBooleanArray = new(ValueKind.BooleanTrue, "true"u8.ToArray());
+    private static readonly EncodedValue s_falseBooleanArray = new(ValueKind.BooleanFalse, "false"u8.ToArray());
 
     private ReadOnlyMemory<byte> GetEncodedValue(ReadOnlySpan<byte> jsonPath)
     {
@@ -53,7 +40,7 @@ public partial struct JsonPatch
         return ThrowPropertyNotFoundException(jsonPath);
     }
 
-    private bool TryDecodeValue(EncodedValue encodedValue, out bool value)
+    private static bool TryDecodeValue(EncodedValue encodedValue, out bool value)
     {
         if (Utf8Parser.TryParse(encodedValue.Value.Span, out bool result, out _))
         {
@@ -65,7 +52,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private bool TryDecodeValue(EncodedValue encodedValue, out byte value)
+    private static bool TryDecodeValue(EncodedValue encodedValue, out byte value)
     {
         if (Utf8Parser.TryParse(encodedValue.Value.Span, out byte result, out _))
         {
@@ -77,7 +64,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private bool TryDecodeValue(EncodedValue encodedValue, out DateTime value, StandardFormat format = default)
+    private static bool TryDecodeValue(EncodedValue encodedValue, out DateTime value, StandardFormat format = default)
     {
         if (Utf8Parser.TryParse(encodedValue.Value.Span, out DateTime result, out _, format.Symbol))
         {
@@ -89,7 +76,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private bool TryDecodeValue(EncodedValue encodedValue, out DateTimeOffset value, StandardFormat format = default)
+    private static bool TryDecodeValue(EncodedValue encodedValue, out DateTimeOffset value, StandardFormat format = default)
     {
         if (Utf8Parser.TryParse(encodedValue.Value.Span, out DateTimeOffset result, out _, format.Symbol))
         {
@@ -101,7 +88,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private bool TryDecodeValue(EncodedValue encodedValue, out decimal value)
+    private static bool TryDecodeValue(EncodedValue encodedValue, out decimal value)
     {
         if (Utf8Parser.TryParse(encodedValue.Value.Span, out decimal result, out _))
         {
@@ -113,7 +100,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private bool TryDecodeValue(EncodedValue encodedValue, out double value)
+    private static bool TryDecodeValue(EncodedValue encodedValue, out double value)
     {
         if (Utf8Parser.TryParse(encodedValue.Value.Span, out double result, out _))
         {
@@ -125,7 +112,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private bool TryDecodeValue(EncodedValue encodedValue, out float value)
+    private static bool TryDecodeValue(EncodedValue encodedValue, out float value)
     {
         if (Utf8Parser.TryParse(encodedValue.Value.Span, out float result, out _))
         {
@@ -137,7 +124,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private bool TryDecodeValue(EncodedValue encodedValue, out Guid value)
+    private static bool TryDecodeValue(EncodedValue encodedValue, out Guid value)
     {
         if (Utf8Parser.TryParse(encodedValue.Value.Span, out Guid result, out _))
         {
@@ -149,7 +136,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private bool TryDecodeValue(EncodedValue encodedValue, out int value)
+    private static bool TryDecodeValue(EncodedValue encodedValue, out int value)
     {
         if (Utf8Parser.TryParse(encodedValue.Value.Span, out int result, out _))
         {
@@ -161,7 +148,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private bool TryDecodeValue(EncodedValue encodedValue, out long value)
+    private static bool TryDecodeValue(EncodedValue encodedValue, out long value)
     {
         if (Utf8Parser.TryParse(encodedValue.Value.Span, out long result, out _))
         {
@@ -173,7 +160,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private bool TryDecodeValue(EncodedValue encodedValue, out sbyte value)
+    private static bool TryDecodeValue(EncodedValue encodedValue, out sbyte value)
     {
         if (Utf8Parser.TryParse(encodedValue.Value.Span, out sbyte result, out _))
         {
@@ -185,7 +172,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private bool TryDecodeValue(EncodedValue encodedValue, out short value)
+    private static bool TryDecodeValue(EncodedValue encodedValue, out short value)
     {
         if (Utf8Parser.TryParse(encodedValue.Value.Span, out short result, out _))
         {
@@ -197,7 +184,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private bool TryDecodeValue(EncodedValue encodedValue, out TimeSpan value, StandardFormat format = default)
+    private static bool TryDecodeValue(EncodedValue encodedValue, out TimeSpan value, StandardFormat format = default)
     {
         if (Utf8Parser.TryParse(encodedValue.Value.Span, out TimeSpan result, out _, format.Symbol))
         {
@@ -209,7 +196,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private bool TryDecodeValue(EncodedValue encodedValue, out uint value)
+    private static bool TryDecodeValue(EncodedValue encodedValue, out uint value)
     {
         if (Utf8Parser.TryParse(encodedValue.Value.Span, out uint result, out _))
         {
@@ -221,7 +208,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private bool TryDecodeValue(EncodedValue encodedValue, out ulong value)
+    private static bool TryDecodeValue(EncodedValue encodedValue, out ulong value)
     {
         if (Utf8Parser.TryParse(encodedValue.Value.Span, out ulong result, out _))
         {
@@ -233,7 +220,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private bool TryDecodeValue(EncodedValue encodedValue, out ushort value)
+    private static bool TryDecodeValue(EncodedValue encodedValue, out ushort value)
     {
         if (Utf8Parser.TryParse(encodedValue.Value.Span, out ushort result, out _))
         {
@@ -245,7 +232,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private bool TryDecodeNullableValue<T>(EncodedValue encodedValue, out T? value, out bool supportedType)
+    private static bool TryDecodeNullableValue<T>(EncodedValue encodedValue, out T? value, out bool supportedType)
         where T : struct
     {
         value = default;
@@ -500,7 +487,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private void AdjustJsonPath(int newIndex, ref int indexLength, Span<byte> buffer, ref int length)
+    private static void AdjustJsonPath(int newIndex, ref int indexLength, Span<byte> buffer, ref int length)
     {
         Utf8Formatter.TryFormat(newIndex, buffer, out var bytesWritten);
         int shift = indexLength - bytesWritten;
@@ -661,19 +648,6 @@ public partial struct JsonPatch
         }
 
         return false;
-    }
-
-    private static bool IsAnonymousType(object obj)
-    {
-        if (obj == null)
-            return false;
-        var type = obj.GetType();
-
-        return Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
-            && type.IsGenericType
-            && type.Name.Contains("AnonymousType")
-            && (type.Name.StartsWith("<>", StringComparison.Ordinal) || type.Name.StartsWith("VB$", StringComparison.Ordinal))
-            && (type.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
     }
 
     #region Encode Value
@@ -1059,7 +1033,7 @@ public partial struct JsonPatch
         subPath = subPath.Slice(0, bytesWritten);
     }
 
-    private ReadOnlyMemory<byte> ModifyJson(EncodedValue currentValue, ReadOnlySpan<byte> jsonPath, EncodedValue encodedValue)
+    private static ReadOnlyMemory<byte> ModifyJson(EncodedValue currentValue, ReadOnlySpan<byte> jsonPath, EncodedValue encodedValue)
     {
         if (!currentValue.Kind.HasFlag(ValueKind.Json) && !currentValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
         {
@@ -1106,7 +1080,7 @@ public partial struct JsonPatch
         }
     }
 
-    private ReadOnlyMemory<byte> GetNewJson(ReadOnlySpan<byte> jsonPath, EncodedValue encodedValue)
+    private static ReadOnlyMemory<byte> GetNewJson(ReadOnlySpan<byte> jsonPath, EncodedValue encodedValue)
     {
         if (encodedValue.Kind == ValueKind.Removed)
         {
@@ -1137,7 +1111,7 @@ public partial struct JsonPatch
         return (kind & stringKinds) > 0 && kind.HasFlag(ValueKind.ArrayItemAppend);
     }
 
-    private ReadOnlyMemory<byte> GetNonRootNewJson(ref JsonPathReader reader, bool isParentRoot, bool isArrayIndex, EncodedValue encodedValue)
+    private static ReadOnlyMemory<byte> GetNonRootNewJson(ref JsonPathReader reader, bool isParentRoot, bool isArrayIndex, EncodedValue encodedValue)
     {
         using var buffer = new UnsafeBufferSequence();
         using var writer = new Utf8JsonWriter(buffer);
@@ -1165,7 +1139,7 @@ public partial struct JsonPatch
         return bufferReader.ToBinaryData().ToMemory();
     }
 
-    private void ProjectJson(Utf8JsonWriter writer, ref JsonPathReader pathReader, EncodedValue encodedValue, bool inArray)
+    private static void ProjectJson(Utf8JsonWriter writer, ref JsonPathReader pathReader, EncodedValue encodedValue, bool inArray)
     {
         while (pathReader.Read())
         {
