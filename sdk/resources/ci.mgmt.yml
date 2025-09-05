@@ -12,6 +12,7 @@ pr:
     include:
     - sdk/resources/ci.mgmt.yml
     - sdk/resources/Azure.ResourceManager.Resources/
+    - sdk/resources/Azure.ResourceManager.Resources.Bicep/
     - sdk/resources/Azure.ResourceManager.Resources.Deployments/
     - sdk/resources/Azure.ResourceManager.Resources.DeploymentStacks/
 
@@ -23,6 +24,8 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Resources
       safeName: AzureResourceManagerResources
+    - name: Azure.ResourceManager.Resources.Bicep
+      safeName: AzureResourceManagerResourcesBicep
     - name: Azure.ResourceManager.Resources.Deployments
       safeName: AzureResourceManagerResourcesDeployments
     - name: Azure.ResourceManager.Resources.DeploymentStacks
