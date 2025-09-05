@@ -1228,6 +1228,17 @@
       ]
     },
     {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Kusto/**/*.cs",
+      "words": [
+        "tbps",
+        "scsv",
+        "sohsv",
+        "tsve",
+        "Openai",
+        "APACHEAVRO"
+      ]
+    },
+    {
       "filename": "**/sdk/provisioning/Azure.Provisioning.PostgreSql/**/*.cs",
       "words": [
         "awsec"
