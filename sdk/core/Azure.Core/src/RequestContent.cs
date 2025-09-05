@@ -221,13 +221,8 @@ namespace Azure.Core
 
             public override bool TryComputeLength(out long length)
             {
-                if (_stream.CanSeek)
-                {
-                    length = _stream.Length - _origin;
-                    return true;
-                }
-                length = 0;
-                return false;
+                length = _stream.Length - _origin;
+                return true;
             }
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
