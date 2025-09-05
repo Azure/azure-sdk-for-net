@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Relay.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Relay.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesListResult"/>. </summary>
-        internal PrivateLinkResourcesListResult()
+        /// <param name="value"> A collection of private link resources. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal PrivateLinkResourcesListResult(IEnumerable<RelayPrivateLinkResourceData> value)
         {
-            Value = new ChangeTrackingList<RelayPrivateLinkResourceData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesListResult"/>. </summary>
         /// <param name="value"> A collection of private link resources. </param>
         /// <param name="nextLink"> A link for the next page of private link resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkResourcesListResult(IReadOnlyList<RelayPrivateLinkResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateLinkResourcesListResult(IReadOnlyList<RelayPrivateLinkResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesListResult"/> for deserialization. </summary>
+        internal PrivateLinkResourcesListResult()
+        {
+        }
+
         /// <summary> A collection of private link resources. </summary>
         public IReadOnlyList<RelayPrivateLinkResourceData> Value { get; }
         /// <summary> A link for the next page of private link resources. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

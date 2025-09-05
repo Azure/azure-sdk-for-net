@@ -35,6 +35,18 @@ namespace Azure.ResourceManager.Relay.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="RelayNamespaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RelayNamespaceResource.CreateResourceIdentifier" /> to create a <see cref="RelayNamespaceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RelayNamespaceResource"/> object. </returns>
+        public virtual RelayNamespaceResource GetRelayNamespaceResource(ResourceIdentifier id)
+        {
+            RelayNamespaceResource.ValidateResourceId(id);
+            return new RelayNamespaceResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="RelayNamespaceAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RelayNamespaceAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="RelayNamespaceAuthorizationRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -71,18 +83,6 @@ namespace Azure.ResourceManager.Relay.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RelayNamespaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RelayNamespaceResource.CreateResourceIdentifier" /> to create a <see cref="RelayNamespaceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RelayNamespaceResource"/> object. </returns>
-        public virtual RelayNamespaceResource GetRelayNamespaceResource(ResourceIdentifier id)
-        {
-            RelayNamespaceResource.ValidateResourceId(id);
-            return new RelayNamespaceResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="RelayNetworkRuleSetResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RelayNetworkRuleSetResource.CreateResourceIdentifier" /> to create a <see cref="RelayNetworkRuleSetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -107,18 +107,6 @@ namespace Azure.ResourceManager.Relay.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WcfRelayResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WcfRelayResource.CreateResourceIdentifier" /> to create a <see cref="WcfRelayResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WcfRelayResource"/> object. </returns>
-        public virtual WcfRelayResource GetWcfRelayResource(ResourceIdentifier id)
-        {
-            WcfRelayResource.ValidateResourceId(id);
-            return new WcfRelayResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="RelayPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RelayPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RelayPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -140,6 +128,18 @@ namespace Azure.ResourceManager.Relay.Mocking
         {
             RelayPrivateLinkResource.ValidateResourceId(id);
             return new RelayPrivateLinkResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WcfRelayResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WcfRelayResource.CreateResourceIdentifier" /> to create a <see cref="WcfRelayResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WcfRelayResource"/> object. </returns>
+        public virtual WcfRelayResource GetWcfRelayResource(ResourceIdentifier id)
+        {
+            WcfRelayResource.ValidateResourceId(id);
+            return new WcfRelayResource(Client, id);
         }
     }
 }

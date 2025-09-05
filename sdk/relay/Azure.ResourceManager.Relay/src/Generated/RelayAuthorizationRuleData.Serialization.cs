@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.Relay
                 name,
                 type,
                 systemData,
-                rights ?? new ChangeTrackingList<RelayAccessRight>(),
                 location,
+                rights ?? new ChangeTrackingList<RelayAccessRight>(),
                 serializedAdditionalRawData);
         }
 

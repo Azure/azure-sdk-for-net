@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Relay.Models
 {
-    /// <summary> The response from the list namespace operation. </summary>
+    /// <summary> The response of a RelayNamespace list operation. </summary>
     internal partial class RelayNamespaceListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Relay.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RelayNamespaceListResult"/>. </summary>
-        internal RelayNamespaceListResult()
+        /// <param name="value"> The RelayNamespace items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal RelayNamespaceListResult(IEnumerable<RelayNamespaceData> value)
         {
-            Value = new ChangeTrackingList<RelayNamespaceData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RelayNamespaceListResult"/>. </summary>
-        /// <param name="value"> Result of the list namespace operation. </param>
-        /// <param name="nextLink"> Link to the next set of results. Not empty if value contains incomplete list of namespaces. </param>
+        /// <param name="value"> The RelayNamespace items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RelayNamespaceListResult(IReadOnlyList<RelayNamespaceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RelayNamespaceListResult(IReadOnlyList<RelayNamespaceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Result of the list namespace operation. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayNamespaceListResult"/> for deserialization. </summary>
+        internal RelayNamespaceListResult()
+        {
+        }
+
+        /// <summary> The RelayNamespace items on this page. </summary>
         public IReadOnlyList<RelayNamespaceData> Value { get; }
-        /// <summary> Link to the next set of results. Not empty if value contains incomplete list of namespaces. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

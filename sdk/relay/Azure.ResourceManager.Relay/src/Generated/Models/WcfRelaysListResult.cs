@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Relay.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Relay.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WcfRelaysListResult"/>. </summary>
-        internal WcfRelaysListResult()
+        /// <param name="value"> The WcfRelay items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal WcfRelaysListResult(IEnumerable<WcfRelayData> value)
         {
-            Value = new ChangeTrackingList<WcfRelayData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="WcfRelaysListResult"/>. </summary>
-        /// <param name="value"> Result of the list WCF relay operation. </param>
-        /// <param name="nextLink"> Link to the next set of results. Not empty if value contains incomplete list of WCF relays. </param>
+        /// <param name="value"> The WcfRelay items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WcfRelaysListResult(IReadOnlyList<WcfRelayData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WcfRelaysListResult(IReadOnlyList<WcfRelayData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Result of the list WCF relay operation. </summary>
+        /// <summary> Initializes a new instance of <see cref="WcfRelaysListResult"/> for deserialization. </summary>
+        internal WcfRelaysListResult()
+        {
+        }
+
+        /// <summary> The WcfRelay items on this page. </summary>
         public IReadOnlyList<WcfRelayData> Value { get; }
-        /// <summary> Link to the next set of results. Not empty if value contains incomplete list of WCF relays. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

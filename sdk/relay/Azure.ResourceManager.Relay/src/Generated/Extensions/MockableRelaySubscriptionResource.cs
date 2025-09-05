@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Parameters to check availability of the specified namespace name. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<RelayNameAvailabilityResult>> CheckRelayNamespaceNameAvailabilityAsync(RelayNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Parameters to check availability of the specified namespace name. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<RelayNameAvailabilityResult> CheckRelayNamespaceNameAvailability(RelayNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -233,75 +233,6 @@ namespace Azure.ResourceManager.Relay
         public virtual Response<RelayHybridConnectionResource> GetRelayHybridConnection(string hybridConnectionName, CancellationToken cancellationToken = default)
         {
             return GetRelayHybridConnections().Get(hybridConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of WcfRelayResources in the RelayNamespace. </summary>
-        /// <returns> An object representing collection of WcfRelayResources and their operations over a WcfRelayResource. </returns>
-        public virtual WcfRelayCollection GetWcfRelays()
-        {
-            return GetCachedClient(client => new WcfRelayCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns the description for the specified WCF relay.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WCFRelays_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WcfRelayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="relayName"> The relay name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WcfRelayResource>> GetWcfRelayAsync(string relayName, CancellationToken cancellationToken = default)
-        {
-            return await GetWcfRelays().GetAsync(relayName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns the description for the specified WCF relay.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WCFRelays_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WcfRelayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="relayName"> The relay name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<WcfRelayResource> GetWcfRelay(string relayName, CancellationToken cancellationToken = default)
-        {
-            return GetWcfRelays().Get(relayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RelayPrivateEndpointConnectionResources in the RelayNamespace. </summary>
@@ -324,7 +255,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -355,7 +286,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -393,7 +324,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -401,7 +332,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkResourceName"> The PrivateLinkResource name. </param>
+        /// <param name="privateLinkResourceName"> The name of the PrivateLinkResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -424,7 +355,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -432,7 +363,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkResourceName"> The PrivateLinkResource name. </param>
+        /// <param name="privateLinkResourceName"> The name of the PrivateLinkResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -440,6 +371,75 @@ namespace Azure.ResourceManager.Relay
         public virtual Response<RelayPrivateLinkResource> GetRelayPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             return GetRelayPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of WcfRelayResources in the RelayNamespace. </summary>
+        /// <returns> An object representing collection of WcfRelayResources and their operations over a WcfRelayResource. </returns>
+        public virtual WcfRelayCollection GetWcfRelays()
+        {
+            return GetCachedClient(client => new WcfRelayCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Returns the description for the specified WCF relay.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WCFRelays_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WcfRelayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="relayName"> The relay name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WcfRelayResource>> GetWcfRelayAsync(string relayName, CancellationToken cancellationToken = default)
+        {
+            return await GetWcfRelays().GetAsync(relayName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the description for the specified WCF relay.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WCFRelays_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WcfRelayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="relayName"> The relay name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WcfRelayResource> GetWcfRelay(string relayName, CancellationToken cancellationToken = default)
+        {
+            return GetWcfRelays().Get(relayName, cancellationToken);
         }
 
         /// <summary>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -941,7 +941,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1001,7 +1001,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
