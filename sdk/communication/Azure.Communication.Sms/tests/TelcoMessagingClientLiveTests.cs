@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #region Snippet:Azure_Communication_Sms_Tests_UsingStatements
@@ -186,7 +186,7 @@ namespace Azure.Communication.Sms.Tests
             Response<SmsSendResult> response = await client.Sms.SendAsync(
                from: TestEnvironment.FromPhoneNumber,
                to: TestEnvironment.ToPhoneNumber,
-               message: "Hello ?? from TelcoMessagingClient ??");
+               message: "Hello 👋 from TelcoMessagingClient 😎");
             SmsSendResult result = response.Value;
             Console.WriteLine($"Sms id: {result.MessageId}");
             AssertSmsSendingHappyPath(result);
