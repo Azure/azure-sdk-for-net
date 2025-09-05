@@ -4,6 +4,7 @@
 using System.Buffers;
 using System.Buffers.Text;
 using System.ClientModel.Internal;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -353,22 +354,9 @@ public partial struct JsonPatch
         EncodedValue encodedValue;
 
         // if root is overridden we should not propagate.
-        if (jsonPath.SequenceEqual("$"u8))
+        if (jsonPath.IsRoot())
         {
-            if (_properties is not null && _properties.TryGetValue(jsonPath, out encodedValue))
-            {
-                if (encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
-                {
-                    value = new(encodedValue.Kind, GetCombinedArray(jsonPath, encodedValue));
-                }
-                else
-                {
-                    value = encodedValue;
-                }
-                return true;
-            }
-
-            return false;
+            return TryGetExactMatch(jsonPath, out value);
         }
 
         if (_propagatorGetter is not null && _propagatorGetter(jsonPath, out value))
@@ -386,16 +374,8 @@ public partial struct JsonPatch
             return false;
         }
 
-        if (_properties.TryGetValue(jsonPath, out encodedValue))
+        if (TryGetExactMatch(jsonPath, out value))
         {
-            if (encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
-            {
-                value = new(ValueKind.Json, GetCombinedArray(jsonPath, encodedValue));
-            }
-            else
-            {
-                value = encodedValue;
-            }
             return true;
         }
 
@@ -420,20 +400,17 @@ public partial struct JsonPatch
             ReadOnlySpan<byte> arrayPath = reader.GetNextArray();
             if (arrayPath.IsEmpty)
             {
-                // no array in path
+                // no array in sub path
                 GetSubPath(parentPath, jsonPath, ref childPath);
                 value = new(encodedValue.Kind, encodedValue.Value.GetJson(childPath));
                 return true;
             }
 
             // see if the requested index exist in root first
-            // collect adjust indexes in a new path as I go
+            // collect and adjust indexes in a new path as I go
             Span<byte> adjustedJsonPath = stackalloc byte[jsonPath.Length];
             jsonPath.CopyTo(adjustedJsonPath);
-            int adjustLength = jsonPath.Length;
-            int indexLength = reader.Current.ValueSpan.Length;
-            int indexStart = reader.Current.TokenStartIndex;
-            int indexRequested = 0;
+            int adjustedLength = jsonPath.Length;
             ReadOnlySpan<byte> lastArrayPath;
 
             Span<byte> normalizedPrefixBuffer = stackalloc byte[jsonPath.Length];
@@ -441,45 +418,24 @@ public partial struct JsonPatch
             while (!arrayPath.IsEmpty)
             {
                 lastArrayPath = arrayPath;
-                indexLength = reader.Current.ValueSpan.Length;
-                indexStart = reader.Current.TokenStartIndex;
 
-                if (TryGetArrayItemFromRoot(arrayPath, reader, out indexRequested, out var length, out var arrayItem))
+                if (TryGetArrayItemFromRoot(arrayPath, reader, out var indexRequested, out var length, out var arrayItem))
                 {
                     GetSubPath(arrayPath, jsonPath, ref childPath);
                     value = new(ValueKind.Json, GetCombinedArray(jsonPath, arrayItem.GetJson(childPath), EncodedValue.Empty));
                     return true;
                 }
 
-                // subtract by max sibling index $[4]
-                int maxSibling = -1;
-                JsonPathComparer.Default.Normalize(arrayPath.GetParent(), normalizedPrefixBuffer, out var bytesWritten);
-                var normalizedPrefix = normalizedPrefixBuffer.Slice(0, bytesWritten);
-
-                foreach (var kvp in _properties)
-                {
-                    if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.Written))
-                        continue;
-
-                    ReadOnlySpan<byte> keySpan = kvp.Key;
-                    if (!keySpan.StartsWith(normalizedPrefix))
-                        continue;
-
-                    keySpan = keySpan.Slice(normalizedPrefix.Length);
-
-                    if (keySpan.Length < 2 || keySpan[0] != (byte)'[' || keySpan[keySpan.Length - 1] != (byte)']')
-                        continue;
-
-                    if (Utf8Parser.TryParse(keySpan.Slice(1, keySpan.Length - 2), out int index, out _))
-                        maxSibling = Math.Max(maxSibling, index);
-                }
-
-                AdjustJsonPath(indexRequested - Math.Max(length, (maxSibling + 1)), ref indexLength, adjustedJsonPath.Slice(indexStart, indexLength), ref adjustLength);
+                AdjustJsonPath(
+                    indexRequested - Math.Max(length, GetMaxSibling(arrayPath, normalizedPrefixBuffer) + 1),
+                    reader.Current.ValueSpan.Length,
+                    adjustedJsonPath.Slice(reader.Current.TokenStartIndex, reader.Current.ValueSpan.Length),
+                    ref adjustedLength);
 
                 arrayPath = reader.GetNextArray();
             }
 
-            GetSubPath(parentPath, adjustedJsonPath.Slice(0, adjustLength), ref childPath);
+            GetSubPath(parentPath, adjustedJsonPath.Slice(0, adjustedLength), ref childPath);
             value = new(encodedValue.Kind, encodedValue.Value.GetJson(childPath));
             return true;
         }
@@ -487,7 +443,56 @@ public partial struct JsonPatch
         return false;
     }
 
-    private static void AdjustJsonPath(int newIndex, ref int indexLength, Span<byte> buffer, ref int length)
+    private readonly int GetMaxSibling(ReadOnlySpan<byte> arrayPath, Span<byte> normalizedPrefixBuffer)
+    {
+        Debug.Assert(_properties is not null, "GetMaxSibling should only be called when _properties is not null.");
+
+        int maxSibling = -1;
+        JsonPathComparer.Default.Normalize(arrayPath.GetParent(), normalizedPrefixBuffer, out var bytesWritten);
+        var normalizedPrefix = normalizedPrefixBuffer.Slice(0, bytesWritten);
+
+        foreach (var kvp in _properties!)
+        {
+            if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.Written))
+                continue;
+
+            ReadOnlySpan<byte> keySpan = kvp.Key;
+            if (!keySpan.StartsWith(normalizedPrefix))
+                continue;
+
+            keySpan = keySpan.Slice(normalizedPrefix.Length);
+
+            if (!keySpan.IsArrayWrapped())
+                continue;
+
+            if (Utf8Parser.TryParse(keySpan.Slice(1, keySpan.Length - 2), out int index, out _))
+                maxSibling = Math.Max(maxSibling, index);
+        }
+
+        return maxSibling;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private bool TryGetExactMatch(ReadOnlySpan<byte> jsonPath, out EncodedValue value)
+    {
+        if (_properties is not null && _properties.TryGetValue(jsonPath, out var currentValue))
+        {
+            if (currentValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
+            {
+                value = new(currentValue.Kind, GetCombinedArray(jsonPath, currentValue));
+            }
+            else
+            {
+                value = currentValue;
+            }
+            return true;
+        }
+
+        value = EncodedValue.Empty;
+        return false;
+    }
+
+    private static void AdjustJsonPath(int newIndex, int indexLength, Span<byte> buffer, ref int length)
     {
         Utf8Formatter.TryFormat(newIndex, buffer, out var bytesWritten);
         int shift = indexLength - bytesWritten;
@@ -915,10 +920,9 @@ public partial struct JsonPatch
                         jsonReader = new(_rawJson.Value.Span);
                         int length = jsonReader.GetArrayLength(parsedPath.GetParent());
                         Utf8Parser.TryParse(pathReader.Current.ValueSpan, out int index, out _);
-                        int indexLength = pathReader.Current.ValueSpan.Length;
                         int newLength = parsedPath.Length;
                         parsedPath.CopyTo(adjustedPath);
-                        AdjustJsonPath(index - length, ref indexLength, adjustedPath.AsSpan(pathReader.Current.TokenStartIndex), ref newLength);
+                        AdjustJsonPath(index - length, pathReader.Current.ValueSpan.Length, adjustedPath.AsSpan(pathReader.Current.TokenStartIndex), ref newLength);
                         var remainingPath = jsonPath.Slice(pathReader.Current.TokenStartIndex + 2);
                         remainingPath.CopyTo(adjustedPath.AsSpan(newLength));
                         localPath = adjustedPath.AsSpan(0, newLength + remainingPath.Length);
@@ -1215,7 +1219,7 @@ public partial struct JsonPatch
                     }
                     break;
                 default:
-                    throw new Exception($"Unexpected token type: {pathReader.Current.TokenType}");
+                    throw new InvalidOperationException($"Unexpected token type: {pathReader.Current.TokenType}");
             }
         }
     }

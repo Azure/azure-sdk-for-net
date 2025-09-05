@@ -326,9 +326,12 @@ internal static class JsonPathReaderExtensions
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static bool IsArrayWrapped(this ReadOnlyMemory<byte> json)
+        => IsArrayWrapped(json.Span);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static bool IsArrayWrapped(this ReadOnlySpan<byte> json)
     {
-        ReadOnlySpan<byte> jsonSpan = json.Span;
-        return jsonSpan.Length >= 2 && jsonSpan[0] == (byte)'[' && jsonSpan[jsonSpan.Length - 1] == (byte)']';
+        return json.Length >= 2 && json[0] == (byte)'[' && json[json.Length - 1] == (byte)']';
     }
 
     private static ReadOnlyMemory<byte> FillAt(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> arrayPath)
