@@ -144,7 +144,7 @@ namespace Azure.Search.Documents.Indexes
             await DeleteKnowledgeAgentAsync(agentName, null, false, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Deletes an existing agent. </summary>
-        /// <param name="knowledgeAgent"> The definition of the agent to create or update. </param>
+        /// <param name="knowledgeAgent"> The definition of the agent to delete. </param>
         /// <param name="onlyIfUnchanged">
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="KnowledgeAgent.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
@@ -164,7 +164,7 @@ namespace Azure.Search.Documents.Indexes
         }
 
         /// <summary> Deletes an existing agent. </summary>
-        /// <param name="knowledgeAgent"> The definition of the agent to create or update. </param>
+        /// <param name="knowledgeAgent"> The definition of the agent to delete. </param>
         /// <param name="onlyIfUnchanged">
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="KnowledgeAgent.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.

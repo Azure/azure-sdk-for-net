@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Agents.Models
 {
-    /// <summary> The query details for the retrieval activity. </summary>
-    public partial class KnowledgeAgentSearchActivityRecordQuery
+    /// <summary> Represents the arguments the azure blob retrieval activity was run with. </summary>
+    public partial class KnowledgeAgentAzureBlobActivityArguments
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,21 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeAgentSearchActivityRecordQuery"/>. </summary>
-        internal KnowledgeAgentSearchActivityRecordQuery()
+        /// <summary> Initializes a new instance of <see cref="KnowledgeAgentAzureBlobActivityArguments"/>. </summary>
+        internal KnowledgeAgentAzureBlobActivityArguments()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeAgentSearchActivityRecordQuery"/>. </summary>
-        /// <param name="search"> The search string. </param>
-        /// <param name="filter"> The filter string. </param>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeAgentAzureBlobActivityArguments"/>. </summary>
+        /// <param name="search"> The search string used to query blob contents. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeAgentSearchActivityRecordQuery(string search, string filter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KnowledgeAgentAzureBlobActivityArguments(string search, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Search = search;
-            Filter = filter;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The search string. </summary>
+        /// <summary> The search string used to query blob contents. </summary>
         public string Search { get; }
-        /// <summary> The filter string. </summary>
-        public string Filter { get; }
     }
 }

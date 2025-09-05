@@ -41,11 +41,11 @@ namespace Azure.Search.Documents.Agents.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(TargetIndexParams))
+            if (Optional.IsCollectionDefined(KnowledgeSourceParams))
             {
-                writer.WritePropertyName("targetIndexParams"u8);
+                writer.WritePropertyName("knowledgeSourceParams"u8);
                 writer.WriteStartArray();
-                foreach (var item in TargetIndexParams)
+                foreach (var item in KnowledgeSourceParams)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -89,7 +89,7 @@ namespace Azure.Search.Documents.Agents.Models
                 return null;
             }
             IList<KnowledgeAgentMessage> messages = default;
-            IList<KnowledgeAgentIndexParams> targetIndexParams = default;
+            IList<KnowledgeSourceParams> knowledgeSourceParams = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,18 +104,18 @@ namespace Azure.Search.Documents.Agents.Models
                     messages = array;
                     continue;
                 }
-                if (property.NameEquals("targetIndexParams"u8))
+                if (property.NameEquals("knowledgeSourceParams"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<KnowledgeAgentIndexParams> array = new List<KnowledgeAgentIndexParams>();
+                    List<KnowledgeSourceParams> array = new List<KnowledgeSourceParams>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgeAgentIndexParams.DeserializeKnowledgeAgentIndexParams(item, options));
+                        array.Add(Models.KnowledgeSourceParams.DeserializeKnowledgeSourceParams(item, options));
                     }
-                    targetIndexParams = array;
+                    knowledgeSourceParams = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -124,7 +124,7 @@ namespace Azure.Search.Documents.Agents.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new KnowledgeAgentRetrievalRequest(messages, targetIndexParams ?? new ChangeTrackingList<KnowledgeAgentIndexParams>(), serializedAdditionalRawData);
+            return new KnowledgeAgentRetrievalRequest(messages, knowledgeSourceParams ?? new ChangeTrackingList<KnowledgeSourceParams>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KnowledgeAgentRetrievalRequest>.Write(ModelReaderWriterOptions options)

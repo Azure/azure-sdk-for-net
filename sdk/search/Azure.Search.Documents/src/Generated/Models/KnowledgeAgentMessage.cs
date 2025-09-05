@@ -47,18 +47,15 @@ namespace Azure.Search.Documents.Agents.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeAgentMessage"/>. </summary>
-        /// <param name="role"> The role of the tool response. </param>
         /// <param name="content">
         /// Please note <see cref="KnowledgeAgentMessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="KnowledgeAgentMessageImageContent"/> and <see cref="KnowledgeAgentMessageTextContent"/>.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="role"/> or <paramref name="content"/> is null. </exception>
-        public KnowledgeAgentMessage(string role, IEnumerable<KnowledgeAgentMessageContent> content)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public KnowledgeAgentMessage(IEnumerable<KnowledgeAgentMessageContent> content)
         {
-            Argument.AssertNotNull(role, nameof(role));
             Argument.AssertNotNull(content, nameof(content));
 
-            Role = role;
             Content = content.ToList();
         }
 

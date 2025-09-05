@@ -7,15 +7,15 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Tests
 {
-    public class KnowledgeAgentTargetIndexComparer : IEqualityComparer<KnowledgeAgentTargetIndex>
+    public class KnowledgeSourceReferenceComparer : IEqualityComparer<KnowledgeSourceReference>
     {
-        public static KnowledgeAgentTargetIndexComparer Instance { get; } = new KnowledgeAgentTargetIndexComparer();
+        public static KnowledgeSourceReferenceComparer Instance { get; } = new KnowledgeSourceReferenceComparer();
 
-        private KnowledgeAgentTargetIndexComparer()
+        private KnowledgeSourceReferenceComparer()
         {
         }
 
-        public bool Equals(KnowledgeAgentTargetIndex x, KnowledgeAgentTargetIndex y)
+        public bool Equals(KnowledgeSourceReference x, KnowledgeSourceReference y)
         {
             if (ReferenceEquals(x, y))
             {
@@ -26,10 +26,10 @@ namespace Azure.Search.Documents.Tests
                 return false;
             }
 
-            return x.IndexName == y.IndexName;
+            return x.Name == y.Name;
         }
 
-        public int GetHashCode(KnowledgeAgentTargetIndex obj)
+        public int GetHashCode(KnowledgeSourceReference obj)
         {
             if (obj is null)
             {
@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Tests
             }
 
             HashCodeBuilder builder = new HashCodeBuilder();
-            builder.Add(obj.IndexName);
+            builder.Add(obj.Name);
 
             return builder.ToHashCode();
         }
