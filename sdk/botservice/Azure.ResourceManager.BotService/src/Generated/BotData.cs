@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.BotService
         /// <param name="etag"> Entity Tag. </param>
         /// <param name="zones"> Entity zones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BotProperties properties, BotServiceSku sku, BotServiceKind? kind, ETag? etag, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal BotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BotProperties properties, BotServiceSku sku, BotServiceKind? kind, string etag, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Sku = sku;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.BotService
         /// <summary> Required. Gets or sets the Kind of the resource. </summary>
         public BotServiceKind? Kind { get; set; }
         /// <summary> Entity Tag. </summary>
-        public ETag? ETag { get; set; }
+        public string ETag { get; set; }
         /// <summary> Entity zones. </summary>
         public IReadOnlyList<string> Zones { get; }
     }
