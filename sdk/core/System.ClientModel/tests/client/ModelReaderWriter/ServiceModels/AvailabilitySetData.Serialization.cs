@@ -65,10 +65,10 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 #if NET8_0_OR_GREATER
                     int bytesWritten = Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
                     bool patchContains = bytesWritten == 256
-                        ? Patch.ContainsChildOf("$.tags"u8, Encoding.UTF8.GetBytes(item.Key))
-                        : Patch.ContainsChildOf("$.tags"u8, buffer.Slice(0, bytesWritten));
+                        ? Patch.Contains("$.tags"u8, Encoding.UTF8.GetBytes(item.Key))
+                        : Patch.Contains("$.tags"u8, buffer.Slice(0, bytesWritten));
 #else
-                    bool patchContains = Patch.ContainsChildOf("$.tags"u8, Encoding.UTF8.GetBytes(item.Key));
+                    bool patchContains = Patch.Contains("$.tags"u8, Encoding.UTF8.GetBytes(item.Key));
 #endif
                     if (!patchContains)
                     {

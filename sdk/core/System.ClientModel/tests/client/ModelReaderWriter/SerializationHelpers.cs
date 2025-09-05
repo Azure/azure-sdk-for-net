@@ -103,10 +103,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 #if NET8_0_OR_GREATER
                 int bytesWritten = Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
                 bool patchContains = bytesWritten == s_maxPropertyNameLength
-                    ? patch.ContainsChildOf(prefix, Encoding.UTF8.GetBytes(item.Key))
-                    : patch.ContainsChildOf(prefix, buffer.Slice(0, bytesWritten));
+                    ? patch.Contains(prefix, Encoding.UTF8.GetBytes(item.Key))
+                    : patch.Contains(prefix, buffer.Slice(0, bytesWritten));
 #else
-                bool patchContains = patch.ContainsChildOf(prefix, Encoding.UTF8.GetBytes(item.Key));
+                bool patchContains = patch.Contains(prefix, Encoding.UTF8.GetBytes(item.Key));
 #endif
                 if (!patchContains)
                 {

@@ -1297,11 +1297,12 @@ public partial struct JsonPatch
 
     /// <summary>
     /// Checks if there is a child property of the given prefix that matches the given property name.
+    /// Allows the caller to avoid concatenating the prefix and property name to check for existence.
     /// </summary>
     /// <param name="prefix">The prefix JSON path.</param>
     /// <param name="property">The property name.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public bool ContainsChildOf(ReadOnlySpan<byte> prefix, ReadOnlySpan<byte> property)
+    public bool Contains(ReadOnlySpan<byte> prefix, ReadOnlySpan<byte> property)
     {
         if (_properties == null)
             return false;

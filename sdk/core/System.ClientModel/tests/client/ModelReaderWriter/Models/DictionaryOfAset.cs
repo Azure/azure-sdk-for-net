@@ -88,10 +88,10 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 #if NET8_0_OR_GREATER
                 int bytesWritten = Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
                 bool patchContains = bytesWritten == 256
-                    ? Patch.ContainsChildOf("$"u8, Encoding.UTF8.GetBytes(item.Key))
-                    : Patch.ContainsChildOf("$"u8, buffer.Slice(0, bytesWritten));
+                    ? Patch.Contains("$"u8, Encoding.UTF8.GetBytes(item.Key))
+                    : Patch.Contains("$"u8, buffer.Slice(0, bytesWritten));
 #else
-                bool patchContains = Patch.ContainsChildOf("$"u8, Encoding.UTF8.GetBytes(item.Key));
+                bool patchContains = Patch.Contains("$"u8, Encoding.UTF8.GetBytes(item.Key));
 #endif
                 if (!patchContains)
                 {
