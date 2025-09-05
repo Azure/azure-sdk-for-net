@@ -1,6 +1,6 @@
 # Microsoft Azure ComputeRecommender management client library for .NET
 
-**[Describe the service briefly first.]**
+The Microsoft Azure ComputeRecommender service provides intelligent recommendations to optimize your Azure compute resources. It analyzes compute availability and usage patterns to suggest improvements for performance and reliability, helping you make informed decisions about your virtual machines and other compute workloads.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
