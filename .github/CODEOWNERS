@@ -1159,7 +1159,7 @@
 # PRLabel: %Migration Assessment
 /sdk/migrationassessment/Azure.ResourceManager.*/                  @srilipta-swain
 
-# ServiceLabel: %%Migration Assessment %Mgmt
+# ServiceLabel: %Migration Assessment %Mgmt
 # ServiceOwners:                                                   @srilipta-swain
 
 # ServiceLabel: %Virtual Enclaves %Mgmt
