@@ -322,8 +322,16 @@ namespace Azure.Core
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
+#if NET6_0_OR_GREATER
+                foreach (var memory in _bytes)
+                {
+                    stream.Write(memory.Span);
+                }
+#else
+
                 byte[] buffer = _bytes.ToArray();
                 stream.Write(buffer, 0, buffer.Length);
+#endif
             }
 
             public override bool TryComputeLength(out long length)
