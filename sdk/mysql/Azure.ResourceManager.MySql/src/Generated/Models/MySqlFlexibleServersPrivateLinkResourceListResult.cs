@@ -10,7 +10,15 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> A list of private link resources. </summary>
+    /// <summary>
+    /// A list of private link resources for versions before v6.
+    ///
+    /// This model represents the standard `PrivateLinkResourceListResult` envelope for versions v3, v4, and v5. It has been deprecated for v6 and beyond.
+    ///
+    /// Note: This is only intended for use with versions before v6. Do not use this if you are already on CommonTypes.Version.v6 or beyond.
+    ///
+    /// If you are migrating to v6 or above, use `PrivateLinkResourceListResult` directly.
+    /// </summary>
     internal partial class MySqlFlexibleServersPrivateLinkResourceListResult
     {
         /// <summary>
@@ -48,19 +56,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServersPrivateLinkResourceListResult"/>. </summary>
         internal MySqlFlexibleServersPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<MySqlFlexibleServersPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<MySqlFlexibleServersPrivateLinkResourceDataData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServersPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServersPrivateLinkResourceListResult(IReadOnlyList<MySqlFlexibleServersPrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MySqlFlexibleServersPrivateLinkResourceListResult(IReadOnlyList<MySqlFlexibleServersPrivateLinkResourceDataData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private link resources. </summary>
-        public IReadOnlyList<MySqlFlexibleServersPrivateLinkResourceData> Value { get; }
+        public IReadOnlyList<MySqlFlexibleServersPrivateLinkResourceDataData> Value { get; }
     }
 }

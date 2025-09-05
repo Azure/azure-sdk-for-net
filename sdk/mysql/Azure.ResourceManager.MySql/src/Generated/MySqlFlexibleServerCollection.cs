@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_Create</description>
+        /// <description>Server_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_Create</description>
+        /// <description>Server_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_Get</description>
+        /// <description>Server_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_Get</description>
+        /// <description>Server_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_ListByResourceGroup</description>
+        /// <description>Server_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_ListByResourceGroup</description>
+        /// <description>Server_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_Get</description>
+        /// <description>Server_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_Get</description>
+        /// <description>Server_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_Get</description>
+        /// <description>Server_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_Get</description>
+        /// <description>Server_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

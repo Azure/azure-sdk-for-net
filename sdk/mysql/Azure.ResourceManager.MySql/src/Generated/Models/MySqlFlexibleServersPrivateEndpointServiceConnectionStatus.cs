@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Pending. </summary>
+        /// <summary> Connection waiting for approval or rejection. </summary>
         public static MySqlFlexibleServersPrivateEndpointServiceConnectionStatus Pending { get; } = new MySqlFlexibleServersPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+        /// <summary> Connection approved. </summary>
         public static MySqlFlexibleServersPrivateEndpointServiceConnectionStatus Approved { get; } = new MySqlFlexibleServersPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+        /// <summary> Connection Rejected. </summary>
         public static MySqlFlexibleServersPrivateEndpointServiceConnectionStatus Rejected { get; } = new MySqlFlexibleServersPrivateEndpointServiceConnectionStatus(RejectedValue);
         /// <summary> Determines if two <see cref="MySqlFlexibleServersPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(MySqlFlexibleServersPrivateEndpointServiceConnectionStatus left, MySqlFlexibleServersPrivateEndpointServiceConnectionStatus right) => left.Equals(right);

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupAndExportResult"/>. </summary>
-        public MySqlFlexibleServerBackupAndExportResult()
+        internal MySqlFlexibleServerBackupAndExportResult()
         {
         }
 
@@ -57,43 +57,43 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
+        /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
+        /// <param name="backupMetadata"> Metadata related to backup to be stored for restoring resource in key-value pairs. </param>
         /// <param name="error"> The error object. </param>
         /// <param name="status"> The operation status. </param>
         /// <param name="startOn"> Start time. </param>
         /// <param name="endOn"> End time. </param>
         /// <param name="percentComplete"> Operation progress (0-100). </param>
-        /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
-        /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
-        /// <param name="backupMetadata"> Metadata related to backup to be stored for restoring resource in key-value pairs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResponseError error, MySqlFlexibleServerBackupAndExportOperationStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupMetadata, ResponseError error, MySqlFlexibleServerBackupAndExportOperationStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            DatasourceSizeInBytes = datasourceSizeInBytes;
+            DataTransferredInBytes = dataTransferredInBytes;
+            BackupMetadata = backupMetadata;
             Error = error;
             Status = status;
             StartOn = startOn;
             EndOn = endOn;
             PercentComplete = percentComplete;
-            DatasourceSizeInBytes = datasourceSizeInBytes;
-            DataTransferredInBytes = dataTransferredInBytes;
-            BackupMetadata = backupMetadata;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The error object. </summary>
-        public ResponseError Error { get; set; }
-        /// <summary> The operation status. </summary>
-        public MySqlFlexibleServerBackupAndExportOperationStatus? Status { get; set; }
-        /// <summary> Start time. </summary>
-        public DateTimeOffset? StartOn { get; set; }
-        /// <summary> End time. </summary>
-        public DateTimeOffset? EndOn { get; set; }
-        /// <summary> Operation progress (0-100). </summary>
-        public double? PercentComplete { get; set; }
         /// <summary> Size of datasource in bytes. </summary>
-        public long? DatasourceSizeInBytes { get; set; }
+        public long? DatasourceSizeInBytes { get; }
         /// <summary> Data transferred in bytes. </summary>
-        public long? DataTransferredInBytes { get; set; }
+        public long? DataTransferredInBytes { get; }
         /// <summary> Metadata related to backup to be stored for restoring resource in key-value pairs. </summary>
-        public string BackupMetadata { get; set; }
+        public string BackupMetadata { get; }
+        /// <summary> The error object. </summary>
+        public ResponseError Error { get; }
+        /// <summary> The operation status. </summary>
+        public MySqlFlexibleServerBackupAndExportOperationStatus? Status { get; }
+        /// <summary> Start time. </summary>
+        public DateTimeOffset? StartOn { get; }
+        /// <summary> End time. </summary>
+        public DateTimeOffset? EndOn { get; }
+        /// <summary> Operation progress (0-100). </summary>
+        public double? PercentComplete { get; }
     }
 }

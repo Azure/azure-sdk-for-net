@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WritePropertyName("sourceServerResourceId"u8);
                 writer.WriteStringValue(SourceServerResourceId);
             }
-            if (Optional.IsDefined(RestorePointInTime))
+            if (Optional.IsDefined(RestorePointInOn))
             {
                 writer.WritePropertyName("restorePointInTime"u8);
-                writer.WriteStringValue(RestorePointInTime.Value, "O");
+                writer.WriteStringValue(RestorePointInOn.Value, "O");
             }
             if (Optional.IsDefined(ReplicationRole))
             {
@@ -491,8 +491,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                identity,
-                sku,
                 administratorLogin,
                 administratorLoginPassword,
                 version,
@@ -515,6 +513,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 maintenancePolicy,
                 maintenanceWindow,
                 importSourceProperties,
+                identity,
+                sku,
                 serializedAdditionalRawData);
         }
 

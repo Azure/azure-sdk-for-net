@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LongRunningBackups_Get</description>
+        /// <description>ServerBackupV2_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LongRunningBackups_Get</description>
+        /// <description>ServerBackupV2_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LongRunningBackup_Create</description>
+        /// <description>ServerBackupV2_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LongRunningBackup_Create</description>
+        /// <description>ServerBackupV2_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

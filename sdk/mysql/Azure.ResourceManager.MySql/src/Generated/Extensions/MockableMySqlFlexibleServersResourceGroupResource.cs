@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_Get</description>
+        /// <description>Server_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_Get</description>
+        /// <description>Server_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

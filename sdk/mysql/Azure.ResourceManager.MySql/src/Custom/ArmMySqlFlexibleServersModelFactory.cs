@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             modelGroupIds.Add(gid);
                     }
                     model.PrivateEndpoint = item.PrivateEndpoint;
-                    model.ConnectionState = item.ConnectionState;
+                    model.PrivateLinkServiceConnectionState = item.ConnectionState;
                     list.Add(model);
                 }
             }
@@ -73,8 +73,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 systemData,
                 tags,
                 location,
-                identity,
-                sku,
                 administratorLogin,
                 administratorLoginPassword,
                 version,
@@ -97,7 +95,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 null,
                 maintenanceWindow,
                 importSourceProperties,
-                serializedAdditionalRawData: null);
+                identity,
+                sku,
+                null);
         }
 
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServersCapabilityData"/>. </summary>

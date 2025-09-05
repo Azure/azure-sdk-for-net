@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurations)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Values))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (var item in Values)
+                foreach (var item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }

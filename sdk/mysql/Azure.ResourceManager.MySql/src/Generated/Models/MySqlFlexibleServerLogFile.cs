@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerLogFile"/>. </summary>
-        public MySqlFlexibleServerLogFile()
+        internal MySqlFlexibleServerLogFile()
         {
         }
 
@@ -59,29 +59,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="sizeInKB"> The size in kb of the logFile. </param>
         /// <param name="createdOn"> Creation timestamp of the log file. </param>
-        /// <param name="typePropertiesType"> Type of the log file. </param>
         /// <param name="lastModifiedOn"> Last modified timestamp of the log file. </param>
         /// <param name="uri"> The url to download the log file from. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? sizeInKB, DateTimeOffset? createdOn, string typePropertiesType, DateTimeOffset? lastModifiedOn, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServerLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? sizeInKB, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SizeInKB = sizeInKB;
             CreatedOn = createdOn;
-            TypePropertiesType = typePropertiesType;
             LastModifiedOn = lastModifiedOn;
             Uri = uri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The size in kb of the logFile. </summary>
-        public long? SizeInKB { get; set; }
+        public long? SizeInKB { get; }
         /// <summary> Creation timestamp of the log file. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> Type of the log file. </summary>
-        public string TypePropertiesType { get; set; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> Last modified timestamp of the log file. </summary>
-        public DateTimeOffset? LastModifiedOn { get; set; }
+        public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> The url to download the log file from. </summary>
-        public Uri Uri { get; set; }
+        public Uri Uri { get; }
     }
 }

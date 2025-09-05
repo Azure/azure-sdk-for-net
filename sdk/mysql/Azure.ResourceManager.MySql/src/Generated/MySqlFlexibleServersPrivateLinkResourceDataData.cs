@@ -9,14 +9,15 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
-    /// A class representing the MySqlFlexibleServersPrivateLinkResource data model.
+    /// A class representing the MySqlFlexibleServersPrivateLinkResourceData data model.
     /// A private link resource.
     /// </summary>
-    public partial class MySqlFlexibleServersPrivateLinkResourceData : ResourceData
+    public partial class MySqlFlexibleServersPrivateLinkResourceDataData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,35 +51,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServersPrivateLinkResourceData"/>. </summary>
-        public MySqlFlexibleServersPrivateLinkResourceData()
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServersPrivateLinkResourceDataData"/>. </summary>
+        internal MySqlFlexibleServersPrivateLinkResourceDataData()
         {
-            RequiredMembers = new ChangeTrackingList<string>();
-            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServersPrivateLinkResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServersPrivateLinkResourceDataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServersPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServersPrivateLinkResourceDataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MySqlFlexibleServersPrivateLinkResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            GroupId = groupId;
-            RequiredMembers = requiredMembers;
-            RequiredZoneNames = requiredZoneNames;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The private link resource group id. </summary>
-        public string GroupId { get; }
-        /// <summary> The private link resource required member names. </summary>
-        public IReadOnlyList<string> RequiredMembers { get; }
-        /// <summary> The private link resource private link DNS zone name. </summary>
-        public IList<string> RequiredZoneNames { get; }
+        /// <summary> Resource properties. </summary>
+        public MySqlFlexibleServersPrivateLinkResourceProperties Properties { get; }
     }
 }

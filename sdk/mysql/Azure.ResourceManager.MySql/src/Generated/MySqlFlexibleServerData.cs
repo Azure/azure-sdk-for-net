@@ -65,8 +65,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The cmk identity for the server. Current supported identity types: UserAssigned. </param>
-        /// <param name="sku"> The SKU (pricing tier) of the server. </param>
         /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
         /// <param name="administratorLoginPassword"> The password of the administrator login (required for server creation). </param>
         /// <param name="version"> Major version of MySQL. 8.0.21 stands for MySQL 8.0, 5.7.44 stands for MySQL 5.7. </param>
@@ -74,7 +72,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="availabilityZone"> availability Zone information of the server. </param>
         /// <param name="createMode"> The mode to create a new MySQL server. </param>
         /// <param name="sourceServerResourceId"> The source MySQL server id. </param>
-        /// <param name="restorePointInTime"> Restore point creation time (ISO8601 format), specifying the time to restore from. </param>
+        /// <param name="restorePointInOn"> Restore point creation time (ISO8601 format), specifying the time to restore from. </param>
         /// <param name="replicationRole"> The replication role. </param>
         /// <param name="replicaCapacity"> The maximum number of replicas that a primary server can have. </param>
         /// <param name="dataEncryption"> The Data Encryption for CMK. </param>
@@ -89,11 +87,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="maintenancePolicy"> Maintenance policy of a server. </param>
         /// <param name="maintenanceWindow"> Maintenance window of a server. Known issue: cannot be set during server creation or updated with other properties during server update; must be updated separately. </param>
         /// <param name="importSourceProperties"> Source properties for import from storage. </param>
+        /// <param name="identity"> The cmk identity for the server. Current supported identity types: UserAssigned. </param>
+        /// <param name="sku"> The SKU (pricing tier) of the server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MySqlFlexibleServerSku sku, string administratorLogin, string administratorLoginPassword, MySqlFlexibleServerVersion? version, string fullVersion, string availabilityZone, MySqlFlexibleServerCreateMode? createMode, ResourceIdentifier sourceServerResourceId, DateTimeOffset? restorePointInTime, MySqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerState? state, string fullyQualifiedDomainName, int? databasePort, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MySqlFlexibleServerNetwork network, IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnectionData> serverPrivateEndpointConnections, MaintenancePolicy maintenancePolicy, MySqlFlexibleServerMaintenanceWindow maintenanceWindow, ImportSourceProperties importSourceProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal MySqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string administratorLogin, string administratorLoginPassword, MySqlFlexibleServerVersion? version, string fullVersion, string availabilityZone, MySqlFlexibleServerCreateMode? createMode, ResourceIdentifier sourceServerResourceId, DateTimeOffset? restorePointInOn, MySqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerState? state, string fullyQualifiedDomainName, int? databasePort, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MySqlFlexibleServerNetwork network, IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnectionData> serverPrivateEndpointConnections, MaintenancePolicy maintenancePolicy, MySqlFlexibleServerMaintenanceWindow maintenanceWindow, ImportSourceProperties importSourceProperties, ManagedServiceIdentity identity, MySqlFlexibleServerSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Identity = identity;
-            Sku = sku;
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
             Version = version;
@@ -101,7 +99,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             AvailabilityZone = availabilityZone;
             CreateMode = createMode;
             SourceServerResourceId = sourceServerResourceId;
-            RestorePointInTime = restorePointInTime;
+            RestorePointInOn = restorePointInOn;
             ReplicationRole = replicationRole;
             ReplicaCapacity = replicaCapacity;
             DataEncryption = dataEncryption;
@@ -116,6 +114,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             MaintenancePolicy = maintenancePolicy;
             MaintenanceWindow = maintenanceWindow;
             ImportSourceProperties = importSourceProperties;
+            Identity = identity;
+            Sku = sku;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -124,10 +124,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
         }
 
-        /// <summary> The cmk identity for the server. Current supported identity types: UserAssigned. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The SKU (pricing tier) of the server. </summary>
-        public MySqlFlexibleServerSku Sku { get; set; }
         /// <summary> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
         public string AdministratorLogin { get; set; }
         /// <summary> The password of the administrator login (required for server creation). </summary>
@@ -143,7 +139,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <summary> The source MySQL server id. </summary>
         public ResourceIdentifier SourceServerResourceId { get; set; }
         /// <summary> Restore point creation time (ISO8601 format), specifying the time to restore from. </summary>
-        public DateTimeOffset? RestorePointInTime { get; set; }
+        public DateTimeOffset? RestorePointInOn { get; set; }
         /// <summary> The replication role. </summary>
         public MySqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
         /// <summary> The maximum number of replicas that a primary server can have. </summary>
@@ -184,5 +180,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public MySqlFlexibleServerMaintenanceWindow MaintenanceWindow { get; set; }
         /// <summary> Source properties for import from storage. </summary>
         public ImportSourceProperties ImportSourceProperties { get; set; }
+        /// <summary> The cmk identity for the server. Current supported identity types: UserAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> The SKU (pricing tier) of the server. </summary>
+        public MySqlFlexibleServerSku Sku { get; set; }
     }
 }

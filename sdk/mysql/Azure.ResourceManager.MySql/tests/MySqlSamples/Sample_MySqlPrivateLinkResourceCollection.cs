@@ -11,40 +11,40 @@ using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.MySql.Samples
+namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 {
-    public partial class Sample_MySqlPrivateLinkResourceCollection
+    public partial class Sample_MySqlFlexibleServersPrivateLinkResourceDataCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAPrivateLinkResourceForMySQL()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2018-06-01/examples/PrivateLinkResourcesGet.json
-            // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-01-preview/PrivateLinkResourcesGet.json
+            // this example is just showing the usage of "PrivateLinkResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlServerResource created on azure
-            // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "Default";
             string serverName = "test-svr";
-            ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
-            // get the collection of this MySqlPrivateLinkResource
-            MySqlPrivateLinkResourceCollection collection = mySqlServer.GetMySqlPrivateLinkResources();
+            // get the collection of this MySqlFlexibleServersPrivateLinkResourceDataResource
+            MySqlFlexibleServersPrivateLinkResourceDataCollection collection = mySqlFlexibleServer.GetAllMySqlFlexibleServersPrivateLinkResourceData();
 
             // invoke the operation
             string groupName = "plr";
-            MySqlPrivateLinkResource result = await collection.GetAsync(groupName);
+            MySqlFlexibleServersPrivateLinkResourceDataResource result = await collection.GetAsync(groupName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MySqlPrivateLinkResourceData resourceData = result.Data;
+            MySqlFlexibleServersPrivateLinkResourceDataData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -53,31 +53,31 @@ namespace Azure.ResourceManager.MySql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetsPrivateLinkResourcesForMySQL()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2018-06-01/examples/PrivateLinkResourcesList.json
-            // this example is just showing the usage of "PrivateLinkResources_ListByServer" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-01-preview/PrivateLinkResourcesList.json
+            // this example is just showing the usage of "PrivateLinkResource_ListByServer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlServerResource created on azure
-            // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "Default";
             string serverName = "test-svr";
-            ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
-            // get the collection of this MySqlPrivateLinkResource
-            MySqlPrivateLinkResourceCollection collection = mySqlServer.GetMySqlPrivateLinkResources();
+            // get the collection of this MySqlFlexibleServersPrivateLinkResourceDataResource
+            MySqlFlexibleServersPrivateLinkResourceDataCollection collection = mySqlFlexibleServer.GetAllMySqlFlexibleServersPrivateLinkResourceData();
 
             // invoke the operation and iterate over the result
-            await foreach (MySqlPrivateLinkResource item in collection.GetAllAsync())
+            await foreach (MySqlFlexibleServersPrivateLinkResourceDataResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MySqlPrivateLinkResourceData resourceData = item.Data;
+                MySqlFlexibleServersPrivateLinkResourceDataData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -89,24 +89,24 @@ namespace Azure.ResourceManager.MySql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsAPrivateLinkResourceForMySQL()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2018-06-01/examples/PrivateLinkResourcesGet.json
-            // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-01-preview/PrivateLinkResourcesGet.json
+            // this example is just showing the usage of "PrivateLinkResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlServerResource created on azure
-            // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "Default";
             string serverName = "test-svr";
-            ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
-            // get the collection of this MySqlPrivateLinkResource
-            MySqlPrivateLinkResourceCollection collection = mySqlServer.GetMySqlPrivateLinkResources();
+            // get the collection of this MySqlFlexibleServersPrivateLinkResourceDataResource
+            MySqlFlexibleServersPrivateLinkResourceDataCollection collection = mySqlFlexibleServer.GetAllMySqlFlexibleServersPrivateLinkResourceData();
 
             // invoke the operation
             string groupName = "plr";
@@ -119,29 +119,29 @@ namespace Azure.ResourceManager.MySql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsAPrivateLinkResourceForMySQL()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2018-06-01/examples/PrivateLinkResourcesGet.json
-            // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-01-preview/PrivateLinkResourcesGet.json
+            // this example is just showing the usage of "PrivateLinkResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlServerResource created on azure
-            // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "Default";
             string serverName = "test-svr";
-            ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
-            // get the collection of this MySqlPrivateLinkResource
-            MySqlPrivateLinkResourceCollection collection = mySqlServer.GetMySqlPrivateLinkResources();
+            // get the collection of this MySqlFlexibleServersPrivateLinkResourceDataResource
+            MySqlFlexibleServersPrivateLinkResourceDataCollection collection = mySqlFlexibleServer.GetAllMySqlFlexibleServersPrivateLinkResourceData();
 
             // invoke the operation
             string groupName = "plr";
-            NullableResponse<MySqlPrivateLinkResource> response = await collection.GetIfExistsAsync(groupName);
-            MySqlPrivateLinkResource result = response.HasValue ? response.Value : null;
+            NullableResponse<MySqlFlexibleServersPrivateLinkResourceDataResource> response = await collection.GetIfExistsAsync(groupName);
+            MySqlFlexibleServersPrivateLinkResourceDataResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MySql.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MySqlPrivateLinkResourceData resourceData = result.Data;
+                MySqlFlexibleServersPrivateLinkResourceDataData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

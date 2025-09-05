@@ -55,7 +55,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerPatch"/>. </summary>
         /// <param name="identity"> The cmk identity for the server. Current supported identity types: UserAssigned. </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
-        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
         /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
         /// <param name="version"> Server version. </param>
         /// <param name="storage"> Storage related properties of a server. </param>
@@ -66,12 +65,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="replicationRole"> The replication role of the server. </param>
         /// <param name="dataEncryption"> The Data Encryption for CMK. </param>
         /// <param name="network"> Network related properties of a server. </param>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerPatch(ManagedServiceIdentity identity, MySqlFlexibleServerSku sku, IDictionary<string, string> tags, string administratorLoginPassword, MySqlFlexibleServerVersion? version, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MaintenancePolicy maintenancePolicy, MySqlFlexibleServerMaintenanceWindow maintenanceWindow, MySqlFlexibleServerReplicationRole? replicationRole, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerNetwork network, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MySqlFlexibleServerPatch(ManagedServiceIdentity identity, MySqlFlexibleServerSku sku, string administratorLoginPassword, MySqlFlexibleServerVersion? version, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MaintenancePolicy maintenancePolicy, MySqlFlexibleServerMaintenanceWindow maintenanceWindow, MySqlFlexibleServerReplicationRole? replicationRole, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerNetwork network, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             Sku = sku;
-            Tags = tags;
             AdministratorLoginPassword = administratorLoginPassword;
             Version = version;
             Storage = storage;
@@ -82,6 +81,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             ReplicationRole = replicationRole;
             DataEncryption = dataEncryption;
             Network = network;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -89,8 +89,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (pricing tier) of the server. </summary>
         public MySqlFlexibleServerSku Sku { get; set; }
-        /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> The password of the administrator login. </summary>
         public string AdministratorLoginPassword { get; set; }
         /// <summary> Server version. </summary>
@@ -123,5 +121,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public MySqlFlexibleServerDataEncryption DataEncryption { get; set; }
         /// <summary> Network related properties of a server. </summary>
         public MySqlFlexibleServerNetwork Network { get; set; }
+        /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

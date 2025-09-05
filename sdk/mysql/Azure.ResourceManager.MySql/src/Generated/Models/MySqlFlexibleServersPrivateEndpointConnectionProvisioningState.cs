@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Connection has been provisioned. </summary>
         public static MySqlFlexibleServersPrivateEndpointConnectionProvisioningState Succeeded { get; } = new MySqlFlexibleServersPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary> Creating. </summary>
+        /// <summary> Connection is being created. </summary>
         public static MySqlFlexibleServersPrivateEndpointConnectionProvisioningState Creating { get; } = new MySqlFlexibleServersPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary> Connection is being deleted. </summary>
         public static MySqlFlexibleServersPrivateEndpointConnectionProvisioningState Deleting { get; } = new MySqlFlexibleServersPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Connection provisioning has failed. </summary>
         public static MySqlFlexibleServersPrivateEndpointConnectionProvisioningState Failed { get; } = new MySqlFlexibleServersPrivateEndpointConnectionProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="MySqlFlexibleServersPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MySqlFlexibleServersPrivateEndpointConnectionProvisioningState left, MySqlFlexibleServersPrivateEndpointConnectionProvisioningState right) => left.Equals(right);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
     /// A class representing the MySqlFlexibleServersPrivateEndpointConnection data model.
-    /// The private endpoint connection resource.
+    /// A private endpoint connection resource
     /// </summary>
     public partial class MySqlFlexibleServersPrivateEndpointConnectionData : ResourceData
     {
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="systemData"> The systemData. </param>
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
         /// <param name="privateEndpoint"> The private endpoint resource. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServersPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> groupIds, SubResource privateEndpoint, MySqlFlexibleServersPrivateLinkServiceConnectionState connectionState, MySqlFlexibleServersPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServersPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> groupIds, SubResource privateEndpoint, MySqlFlexibleServersPrivateLinkServiceConnectionState privateLinkServiceConnectionState, MySqlFlexibleServersPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupIds = groupIds;
             PrivateEndpoint = privateEndpoint;
-            ConnectionState = connectionState;
+            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public MySqlFlexibleServersPrivateLinkServiceConnectionState ConnectionState { get; set; }
+        public MySqlFlexibleServersPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         public MySqlFlexibleServersPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
