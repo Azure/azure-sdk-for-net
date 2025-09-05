@@ -21,5 +21,7 @@ extends:
     ServiceDirectory: azurestackhci
     LimitForPullRequest: true
     Artifacts:
+    - name: Azure.ResourceManager.Hci
+      safeName: AzureResourceManagerHci
     - name: Azure.ResourceManager.Hci.Vm
       safeName: AzureResourceManagerHciVm
