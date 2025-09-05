@@ -8,8 +8,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
-using Newtonsoft.Json.Linq;
-using NuGet.Protocol.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +17,21 @@ namespace Azure.Generator.Management.Utilities
 {
     internal class PropertyHelpers
     {
+        public static IReadOnlyList<PropertyProvider> GetInnerProperties(ModelProvider propertyModelProvider)
+        {
+            var result = new List<PropertyProvider>();
+            var baseType = propertyModelProvider.BaseModelProvider;
+
+            // Recursively get properties from base types
+            while (baseType is not null)
+            {
+                result.AddRange(baseType.Properties);
+                baseType = baseType.BaseModelProvider;
+            }
+            result.AddRange(propertyModelProvider.Properties);
+            return result;
+        }
+
         public static (bool IsReadOnly, bool? IncludeGetterNullCheck, bool IncludeSetterNullCheck) GetFlags(PropertyProvider property, PropertyProvider innerProperty)
         {
             var isInnerPropertyReadOnly = !innerProperty.Body.HasSetter;

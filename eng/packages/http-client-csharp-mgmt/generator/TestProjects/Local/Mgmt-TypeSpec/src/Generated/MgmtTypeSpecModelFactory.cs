@@ -112,13 +112,13 @@ namespace MgmtTypeSpec.Models
         /// <param name="stringArray"></param>
         /// <param name="propertyLeft"> enabled. </param>
         /// <param name="anotherPropertyLeft"> enabled. </param>
-        /// <param name="flattenedNestedProperty"></param>
-        /// <param name="innerProp1"> Gets or sets the InnerProp1. </param>
-        /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
-        /// <param name="prop1"> Gets or sets the Prop1. </param>
-        /// <param name="prop2"> Gets or sets the Prop2. </param>
+        /// <param name="flattenedNestedPropertyProp1"> Gets or sets the Prop1. </param>
+        /// <param name="flattenedNestedPropertyProp2"> Gets or sets the Prop2. </param>
+        /// <param name="flattenedNestedPropertyInnerProp1"> Gets or sets the InnerProp1. </param>
+        /// <param name="flattenedNestedPropertyInnerProp2"> Gets or sets the InnerProp2. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="flattenedNestedPropertyProp1"/> or <paramref name="flattenedNestedPropertyInnerProp2"/> is null. </exception>
         /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsResourceData"/> instance for mocking. </returns>
-        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, BarNestedQuotaProperties flattenedNestedProperty = default, int? innerProp1 = default, string innerProp2 = default, string prop1 = default, int? prop2 = default)
+        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, string flattenedNestedPropertyProp1 = default, int? flattenedNestedPropertyProp2 = default, int? flattenedNestedPropertyInnerProp1 = default, string flattenedNestedPropertyInnerProp2 = default)
         {
             stringArray ??= new ChangeTrackingList<string>();
 
@@ -132,11 +132,7 @@ namespace MgmtTypeSpec.Models
                 stringArray.ToList(),
                 propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, new Dictionary<string, BinaryData>()),
                 anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, new Dictionary<string, BinaryData>()),
-                flattenedNestedProperty,
-                innerProp1,
-                innerProp2,
-                prop1,
-                prop2);
+                flattenedNestedPropertyProp1 is null || flattenedNestedPropertyProp2 is null || flattenedNestedPropertyInnerProp1 is null || flattenedNestedPropertyInnerProp2 is null ? default : new BarNestedQuotaProperties(flattenedNestedPropertyProp1, flattenedNestedPropertyProp2.Value, flattenedNestedPropertyInnerProp1.Value, flattenedNestedPropertyInnerProp2));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

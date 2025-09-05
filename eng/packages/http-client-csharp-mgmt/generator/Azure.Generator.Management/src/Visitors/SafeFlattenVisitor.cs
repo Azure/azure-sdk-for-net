@@ -139,9 +139,15 @@ namespace Azure.Generator.Management.Visitors
             foreach (var property in model.Properties)
             {
                 if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(property.Type, out var typeProvider)
-                    && typeProvider is ModelProvider modelProvider
-                    && modelProvider.Properties.Count == 1)
+                    && typeProvider is ModelProvider modelProvider)
                 {
+                    var innerProperties = PropertyHelpers.GetInnerProperties(modelProvider);
+                    // only safe flatten single property
+                    if (innerProperties.Count != 1)
+                    {
+                        continue;
+                    }
+
                     var innerProperty = modelProvider.Properties.Single();
                     isFlattened = true;
 
