@@ -29,6 +29,7 @@ namespace Azure.Storage.DataMovement
         public LocalDirectoryStorageResourceContainer(string path)
         {
             Argument.AssertNotNullOrWhiteSpace(path, nameof(path));
+            path = path.TrimEnd(Path.DirectorySeparatorChar);
             _uri = PathScanner.GetEncodedUriFromPath(path);
         }
 
