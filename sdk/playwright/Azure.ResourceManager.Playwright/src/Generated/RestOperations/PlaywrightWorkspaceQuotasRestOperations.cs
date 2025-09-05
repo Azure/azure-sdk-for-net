@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Playwright
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-07-01-preview";
+            _apiVersion = apiVersion ?? "2025-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Playwright
             return message;
         }
 
-        /// <summary> Get Playwright workspace quota resource by name. </summary>
+        /// <summary> Gets a Playwright workspace quota resource by name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> Get Playwright workspace quota resource by name. </summary>
+        /// <summary> Gets a Playwright workspace quota resource by name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Playwright
             return message;
         }
 
-        /// <summary> List quota resources for a given Playwright workspace resource. </summary>
+        /// <summary> Lists quota resources for a given Playwright workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> List quota resources for a given Playwright workspace resource. </summary>
+        /// <summary> Lists quota resources for a given Playwright workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Playwright
             return message;
         }
 
-        /// <summary> List quota resources for a given Playwright workspace resource. </summary>
+        /// <summary> Lists quota resources for a given Playwright workspace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> List quota resources for a given Playwright workspace resource. </summary>
+        /// <summary> Lists quota resources for a given Playwright workspace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
