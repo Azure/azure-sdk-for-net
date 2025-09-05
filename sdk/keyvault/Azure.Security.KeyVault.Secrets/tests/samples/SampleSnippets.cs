@@ -231,7 +231,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 KeyVaultSecret secret = await client.GetSecretAsync("secret-name");
 
                 // Get a specific secret value.
-                KeyVaultSecret secretVersion = await client.GetSecretAsync("secret-name", "e43af03a7cbc47d4a4e9f11540186048");
+                KeyVaultSecret secretVersion = await client.GetSecretAsync("secret-name", "e43af03a7cbc47d4a4e9f11540186048", null);
                 #endregion Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_GetSecret
             }
 
@@ -256,13 +256,13 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 // List all secrets asynchronously.
                 await foreach (SecretProperties item in client.GetPropertiesOfSecretVersionsAsync("secret-name"))
                 {
-                    KeyVaultSecret secret = await client.GetSecretAsync(item.Name, item.Version);
+                    KeyVaultSecret secret = await client.GetSecretAsync(item.Name, item.Version, null);
                 }
 
                 // List all secrets synchronously.
                 foreach (SecretProperties item in client.GetPropertiesOfSecretVersions("secret-name"))
                 {
-                    KeyVaultSecret secret = client.GetSecret(item.Name, item.Version);
+                    KeyVaultSecret secret = client.GetSecret(item.Name, item.Version, null);
                 }
                 #endregion Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_ListSecretVersions
             }

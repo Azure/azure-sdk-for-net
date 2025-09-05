@@ -144,7 +144,7 @@ Now in `Azure.Security.KeyVault.Secrets`, you get a secret value in the Key Vaul
 KeyVaultSecret secret = await client.GetSecretAsync("secret-name");
 
 // Get a specific secret value.
-KeyVaultSecret secretVersion = await client.GetSecretAsync("secret-name", "e43af03a7cbc47d4a4e9f11540186048");
+KeyVaultSecret secretVersion = await client.GetSecretAsync("secret-name", "e43af03a7cbc47d4a4e9f11540186048", null);
 ```
 
 Synchronous methods are also available on `SecretClient`, though we recommend you use asynchronous methods throughout your projects when possible for better performing applications.
@@ -217,13 +217,13 @@ Now in `Azure.Security.KeyVault.Secrets`, you list secret versions' properties i
 // List all secrets asynchronously.
 await foreach (SecretProperties item in client.GetPropertiesOfSecretVersionsAsync("secret-name"))
 {
-    KeyVaultSecret secret = await client.GetSecretAsync(item.Name, item.Version);
+    KeyVaultSecret secret = await client.GetSecretAsync(item.Name, item.Version, null);
 }
 
 // List all secrets synchronously.
 foreach (SecretProperties item in client.GetPropertiesOfSecretVersions("secret-name"))
 {
-    KeyVaultSecret secret = client.GetSecret(item.Name, item.Version);
+    KeyVaultSecret secret = client.GetSecret(item.Name, item.Version, null);
 }
 ```
 

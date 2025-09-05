@@ -16,6 +16,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
     /// Base class for recorded Administration tests.
     /// </summary>
     [ClientTestFixture(
+        KeyVaultAdministrationClientOptions.ServiceVersion.V2025_06_01_Preview,
         KeyVaultAdministrationClientOptions.ServiceVersion.V7_6,
         KeyVaultAdministrationClientOptions.ServiceVersion.V7_5,
         KeyVaultAdministrationClientOptions.ServiceVersion.V7_4,
