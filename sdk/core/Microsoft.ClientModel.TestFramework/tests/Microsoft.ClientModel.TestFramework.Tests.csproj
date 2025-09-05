@@ -3,6 +3,9 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="EndToEndTests\LibraryClient\LibraryClientOptions.cs" />
+  </ItemGroup>
 
   <!-- Reference the Client Library -->
   <ItemGroup>
@@ -30,5 +33,9 @@
       <_Parameter1>SourcePath</_Parameter1>
       <_Parameter2>$(MSBuildProjectDirectory)</_Parameter2>
     </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="EndToEndTests\SessionRecords\" />
   </ItemGroup>
 </Project>

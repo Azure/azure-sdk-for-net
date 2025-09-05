@@ -10,7 +10,7 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.ClientModel.TestFramework.Tests.MockClient;
+namespace Microsoft.ClientModel.TestFramework.Tests.LibraryClient;
 
 internal partial class MultiPartFormDataBinaryContent : BinaryContent
 {

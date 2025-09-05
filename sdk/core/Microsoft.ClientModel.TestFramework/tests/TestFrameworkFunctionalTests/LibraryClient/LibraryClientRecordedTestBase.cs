@@ -5,11 +5,11 @@ using System;
 using System.ClientModel.Primitives;
 using Microsoft.ClientModel.TestFramework.Tests.MockClient;
 
-namespace Microsoft.ClientModel.TestFramework.Tests;
+namespace Microsoft.ClientModel.TestFramework.Tests.LibraryClient.Tests;
 
-public class FakeFileRecordedTestBase : RecordedTestBase<FakeFileTestEnvironment>
+public class LibraryClientRecordedTestBase : RecordedTestBase<LibraryClientTestEnvironment>
 {
-    public FakeFileRecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
+    public LibraryClientRecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
     {
         SanitizedHeaders.Add("X-Request-ID");
     }
@@ -17,7 +17,7 @@ public class FakeFileRecordedTestBase : RecordedTestBase<FakeFileTestEnvironment
     /// <summary>
     /// Creates a proxied FakeFileClient that will work with the test recording framework
     /// </summary>
-    internal FakeFileClient GetProxiedFakeFileClient()
+    internal LibraryClient GetProxiedFakeFileClient()
     {
         Uri endpoint = new Uri("https://api.fakefiles.test/");
 
@@ -26,10 +26,10 @@ public class FakeFileRecordedTestBase : RecordedTestBase<FakeFileTestEnvironment
         var proxiedOptions = InstrumentClientOptions(options);
 
         // Create the client with the appropriate endpoint
-        var client = new FakeFileClient(endpoint, proxiedOptions);
+        var client = new LibraryClient(endpoint, proxiedOptions);
 
         // Proxy the client to enable recording/playback
-        FakeFileClient proxiedClient = CreateProxyFromClient<FakeFileClient>(client, null);
+        LibraryClient proxiedClient = CreateProxyFromClient<LibraryClient>(client, null);
         return proxiedClient;
     }
 }

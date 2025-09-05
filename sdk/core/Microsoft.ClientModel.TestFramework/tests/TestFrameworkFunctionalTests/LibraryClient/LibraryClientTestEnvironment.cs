@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Microsoft.ClientModel.TestFramework.Tests;
 
-public class FakeFileTestEnvironment : TestEnvironment
+public class LibraryClientTestEnvironment : TestEnvironment
 {
-    static FakeFileTestEnvironment()
+    static LibraryClientTestEnvironment()
     {
         DevCertPath = Path.Combine(
                 RepositoryRoot,
