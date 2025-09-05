@@ -393,46 +393,46 @@ public partial struct JsonPatch
 
         if (TryGetParentMatch(jsonPath, true, out var parentPath, out encodedValue))
         {
-            // if the jsonPath has arrays I need to check if they exist in the root first then patch
+            // normalize jsonPath once to avoid multiple Normalize calls in GetMaxSibling
+            Span<byte> normalizedJsonPathBuffer = stackalloc byte[jsonPath.Length];
+            JsonPathComparer.Default.Normalize(jsonPath, normalizedJsonPathBuffer, out var bytesWritten);
+            ReadOnlySpan<byte> normalizedJsonPath = normalizedJsonPathBuffer.Slice(0, bytesWritten);
 
-            JsonPathReader reader = new(jsonPath);
+            // if the jsonPath has arrays I need to check if they exist in the root first then patch
+            JsonPathReader reader = new(normalizedJsonPath);
             reader.Advance(parentPath);
-            ReadOnlySpan<byte> arrayPath = reader.GetNextArray();
-            if (arrayPath.IsEmpty)
+            ReadOnlySpan<byte> normalizedArrayPath = reader.GetNextArray();
+            if (normalizedArrayPath.IsEmpty)
             {
                 // no array in sub path
-                GetSubPath(parentPath, jsonPath, ref childPath);
+                GetSubPath(parentPath, normalizedJsonPath, ref childPath);
                 value = new(encodedValue.Kind, encodedValue.Value.GetJson(childPath));
                 return true;
             }
 
             // see if the requested index exist in root first
             // collect and adjust indexes in a new path as I go
-            Span<byte> adjustedJsonPath = stackalloc byte[jsonPath.Length];
-            jsonPath.CopyTo(adjustedJsonPath);
-            int adjustedLength = jsonPath.Length;
-            ReadOnlySpan<byte> lastArrayPath;
+            // indexes will only get smaller so jsonPath.Length is safe
+            Span<byte> adjustedJsonPath = stackalloc byte[normalizedJsonPath.Length];
+            normalizedJsonPath.CopyTo(adjustedJsonPath);
+            int adjustedLength = normalizedJsonPath.Length;
 
-            Span<byte> normalizedPrefixBuffer = stackalloc byte[jsonPath.Length];
-
-            while (!arrayPath.IsEmpty)
+            while (!normalizedArrayPath.IsEmpty)
             {
-                lastArrayPath = arrayPath;
-
-                if (TryGetArrayItemFromRoot(arrayPath, reader, out var indexRequested, out var length, out var arrayItem))
+                if (TryGetArrayItemFromRoot(normalizedArrayPath, reader, out var indexRequested, out var length, out var arrayItem))
                 {
-                    GetSubPath(arrayPath, jsonPath, ref childPath);
+                    GetSubPath(normalizedArrayPath, jsonPath, ref childPath);
                     value = new(ValueKind.Json, GetCombinedArray(jsonPath, arrayItem.GetJson(childPath), EncodedValue.Empty));
                     return true;
                 }
 
                 AdjustJsonPath(
-                    indexRequested - Math.Max(length, GetMaxSibling(arrayPath, normalizedPrefixBuffer) + 1),
+                    indexRequested - Math.Max(length, GetMaxSibling(normalizedArrayPath) + 1),
                     reader.Current.ValueSpan.Length,
                     adjustedJsonPath.Slice(reader.Current.TokenStartIndex, reader.Current.ValueSpan.Length),
                     ref adjustedLength);
 
-                arrayPath = reader.GetNextArray();
+                normalizedArrayPath = reader.GetNextArray();
             }
 
             GetSubPath(parentPath, adjustedJsonPath.Slice(0, adjustedLength), ref childPath);
@@ -443,13 +443,12 @@ public partial struct JsonPatch
         return false;
     }
 
-    private readonly int GetMaxSibling(ReadOnlySpan<byte> arrayPath, Span<byte> normalizedPrefixBuffer)
+    private readonly int GetMaxSibling(ReadOnlySpan<byte> normalizedArrayPath)
     {
         Debug.Assert(_properties is not null, "GetMaxSibling should only be called when _properties is not null.");
 
         int maxSibling = -1;
-        JsonPathComparer.Default.Normalize(arrayPath.GetParent(), normalizedPrefixBuffer, out var bytesWritten);
-        var normalizedPrefix = normalizedPrefixBuffer.Slice(0, bytesWritten);
+        var normalizedPrefix = normalizedArrayPath.GetParent();
 
         foreach (var kvp in _properties!)
         {
