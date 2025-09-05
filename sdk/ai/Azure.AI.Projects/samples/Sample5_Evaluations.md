@@ -10,7 +10,7 @@ In this example, we will demonstrate creating, listing and retrieving evaluation
   - `DATASET_NAME`: The name of the dataset to use as input data.
 
 ## Synchronous sample:
-```C# Snippet:AI_Projects_EvaluationsExampleSync
+```C#
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
@@ -54,7 +54,7 @@ foreach (var eval in projectClient.Evaluations.GetAll())
 ```
 
 ## Asynchronous sample:
-```C# Snippet:AI_Projects_EvaluationsExampleAsync
+```C#
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
