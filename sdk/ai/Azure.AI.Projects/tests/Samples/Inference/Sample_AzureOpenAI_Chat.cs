@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System;
 using System.ClientModel.Primitives;
@@ -45,7 +45,7 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
 
         ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
 
-        if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
+        if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
         {
             throw new InvalidOperationException("Invalid URI.");
         }
@@ -88,7 +88,7 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
 
         ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
 
-        if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
+        if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
         {
             throw new InvalidOperationException("Invalid URI.");
         }
