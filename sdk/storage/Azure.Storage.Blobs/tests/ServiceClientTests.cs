@@ -453,6 +453,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [PlaybackOnly("Enabling static website is not allowed on Network Security Perimeter enabled accounts.")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
         [NonParallelizable]
         public async Task ListContainersSegmentAsync_System()
@@ -621,6 +622,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [PlaybackOnly("Enabling static website is not allowed on Network Security Perimeter enabled accounts.")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         [NonParallelizable]
         public async Task SetPropertiesAsync_StaticWebsite()
