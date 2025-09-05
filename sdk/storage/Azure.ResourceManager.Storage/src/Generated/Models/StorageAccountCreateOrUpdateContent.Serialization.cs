@@ -48,6 +48,21 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("extendedLocation"u8);
                 ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                writer.WritePropertyName("zones"u8);
+                writer.WriteStartArray();
+                foreach (var item in Zones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Placement))
+            {
+                writer.WritePropertyName("placement"u8);
+                writer.WriteObjectValue(Placement, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -146,6 +161,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("routingPreference"u8);
                 writer.WriteObjectValue(RoutingPreference, options);
             }
+            if (Optional.IsDefined(DualStackEndpointPreference))
+            {
+                writer.WritePropertyName("dualStackEndpointPreference"u8);
+                writer.WriteObjectValue(DualStackEndpointPreference, options);
+            }
             if (Optional.IsDefined(AllowBlobPublicAccess))
             {
                 writer.WritePropertyName("allowBlobPublicAccess"u8);
@@ -228,6 +248,8 @@ namespace Azure.ResourceManager.Storage.Models
             StorageKind kind = default;
             AzureLocation location = default;
             ExtendedLocation extendedLocation = default;
+            IList<string> zones = default;
+            Placement placement = default;
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
             AllowedCopyScope? allowedCopyScope = default;
@@ -246,6 +268,7 @@ namespace Azure.ResourceManager.Storage.Models
             bool? isHnsEnabled = default;
             LargeFileSharesState? largeFileSharesState = default;
             StorageRoutingPreference routingPreference = default;
+            DualStackEndpointPreference dualStackEndpointPreference = default;
             bool? allowBlobPublicAccess = default;
             StorageMinimumTlsVersion? minimumTlsVersion = default;
             bool? allowSharedKeyAccess = default;
@@ -280,6 +303,29 @@ namespace Azure.ResourceManager.Storage.Models
                         continue;
                     }
                     extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerStorageContext.Default);
+                    continue;
+                }
+                if (property.NameEquals("zones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    zones = array;
+                    continue;
+                }
+                if (property.NameEquals("placement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    placement = Placement.DeserializePlacement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -458,6 +504,15 @@ namespace Azure.ResourceManager.Storage.Models
                             routingPreference = StorageRoutingPreference.DeserializeStorageRoutingPreference(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("dualStackEndpointPreference"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dualStackEndpointPreference = DualStackEndpointPreference.DeserializeDualStackEndpointPreference(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("allowBlobPublicAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -544,6 +599,8 @@ namespace Azure.ResourceManager.Storage.Models
                 kind,
                 location,
                 extendedLocation,
+                zones ?? new ChangeTrackingList<string>(),
+                placement,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
                 allowedCopyScope,
@@ -562,6 +619,7 @@ namespace Azure.ResourceManager.Storage.Models
                 isHnsEnabled,
                 largeFileSharesState,
                 routingPreference,
+                dualStackEndpointPreference,
                 allowBlobPublicAccess,
                 minimumTlsVersion,
                 allowSharedKeyAccess,

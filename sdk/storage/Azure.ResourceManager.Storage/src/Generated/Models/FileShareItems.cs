@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.Storage.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FileShareItems"/>. </summary>
-        internal FileShareItems()
+        /// <param name="value"> The FileShareItem items on this page. </param>
+        internal FileShareItems(IEnumerable<FileShareData> value)
         {
-            Value = new ChangeTrackingList<FileShareData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="FileShareItems"/>. </summary>
-        /// <param name="value"> List of file shares returned. </param>
-        /// <param name="nextLink"> Request URL that can be used to query next page of shares. Returned when total number of requested shares exceed maximum page size. </param>
+        /// <param name="value"> The FileShareItem items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareItems(IReadOnlyList<FileShareData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FileShareItems(IReadOnlyList<FileShareData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of file shares returned. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareItems"/> for deserialization. </summary>
+        internal FileShareItems()
+        {
+        }
+
+        /// <summary> The FileShareItem items on this page. </summary>
         public IReadOnlyList<FileShareData> Value { get; }
-        /// <summary> Request URL that can be used to query next page of shares. Returned when total number of requested shares exceed maximum page size. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Resource Etag. </param>
         /// <param name="lastModifiedOn"> Returns the date and time the share was last modified. </param>
         /// <param name="metadata"> A name-value pair to associate with the share as metadata. </param>
         /// <param name="shareQuota"> The provisioned size of the share, in gibibytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. For file shares created under Files Provisioned v2 account type, please refer to the GetFileServiceUsage API response for the minimum and maximum allowed provisioned storage size. </param>
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="signedIdentifiers"> List of stored access policies specified on the share. </param>
         /// <param name="snapshotOn"> Creation time of share snapshot returned in the response of list shares with expand param "snapshots". </param>
         /// <param name="fileSharePaidBursting"> File Share Paid Bursting properties. </param>
-        /// <param name="etag"> Resource Etag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, int? provisionedIops, int? provisionedBandwidthMibps, int? includedBurstIops, long? maxBurstCreditsForIops, DateTimeOffset? nextAllowedQuotaDowngradeOn, DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IList<StorageSignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, FileSharePropertiesFileSharePaidBursting fileSharePaidBursting, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, int? provisionedIops, int? provisionedBandwidthMibps, int? includedBurstIops, long? maxBurstCreditsForIops, DateTimeOffset? nextAllowedQuotaDowngradeOn, DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IList<StorageSignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, FileSharePropertiesFileSharePaidBursting fileSharePaidBursting, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ETag = etag;
             LastModifiedOn = lastModifiedOn;
             Metadata = metadata;
             ShareQuota = shareQuota;
@@ -119,10 +120,12 @@ namespace Azure.ResourceManager.Storage
             SignedIdentifiers = signedIdentifiers;
             SnapshotOn = snapshotOn;
             FileSharePaidBursting = fileSharePaidBursting;
-            ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Resource Etag. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; }
         /// <summary> Returns the date and time the share was last modified. </summary>
         [WirePath("properties.lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn { get; }
@@ -201,8 +204,5 @@ namespace Azure.ResourceManager.Storage
         /// <summary> File Share Paid Bursting properties. </summary>
         [WirePath("properties.fileSharePaidBursting")]
         public FileSharePropertiesFileSharePaidBursting FileSharePaidBursting { get; set; }
-        /// <summary> Resource Etag. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
     }
 }

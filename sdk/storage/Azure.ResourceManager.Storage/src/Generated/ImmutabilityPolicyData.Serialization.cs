@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.Storage
                 name,
                 type,
                 systemData,
+                etag,
                 immutabilityPeriodSinceCreationInDays,
                 state,
                 allowProtectedAppendWrites,
                 allowProtectedAppendWritesAll,
-                etag,
                 serializedAdditionalRawData);
         }
 

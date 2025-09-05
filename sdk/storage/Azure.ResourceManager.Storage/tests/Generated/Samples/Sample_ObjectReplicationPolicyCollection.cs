@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountCreateObjectReplicationPolicyOnDestination()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountCreateObjectReplicationPolicyOnDestination.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/StorageAccountCreateObjectReplicationPolicyOnDestination.json
             // this example is just showing the usage of "ObjectReplicationPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res7687";
             string accountName = "dst112";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -68,7 +68,7 @@ PrefixMatch = {"blobA", "blobB"},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountCreateObjectReplicationPolicyOnSource()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountCreateObjectReplicationPolicyOnSource.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/StorageAccountCreateObjectReplicationPolicyOnSource.json
             // this example is just showing the usage of "ObjectReplicationPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ PrefixMatch = {"blobA", "blobB"},
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res7687";
             string accountName = "src1122";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -118,7 +118,7 @@ MinCreationTime = "2020-02-19T16:05:00Z",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountUpdateObjectReplicationPolicyOnDestination()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountUpdateObjectReplicationPolicyOnDestination.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/StorageAccountUpdateObjectReplicationPolicyOnDestination.json
             // this example is just showing the usage of "ObjectReplicationPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -128,7 +128,7 @@ MinCreationTime = "2020-02-19T16:05:00Z",
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res7687";
             string accountName = "dst112";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -167,7 +167,7 @@ PrefixMatch = {"blobA", "blobB"},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountUpdateObjectReplicationPolicyOnSource()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountUpdateObjectReplicationPolicyOnSource.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/StorageAccountUpdateObjectReplicationPolicyOnSource.json
             // this example is just showing the usage of "ObjectReplicationPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -177,7 +177,7 @@ PrefixMatch = {"blobA", "blobB"},
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res7687";
             string accountName = "src1122";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -219,7 +219,7 @@ RuleId = "cfbb4bc2-8b60-429f-b05a-d1e0942b33b2",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageAccountGetObjectReplicationPolicies()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountGetObjectReplicationPolicy.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/StorageAccountGetObjectReplicationPolicy.json
             // this example is just showing the usage of "ObjectReplicationPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -229,7 +229,7 @@ RuleId = "cfbb4bc2-8b60-429f-b05a-d1e0942b33b2",
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -253,7 +253,7 @@ RuleId = "cfbb4bc2-8b60-429f-b05a-d1e0942b33b2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_StorageAccountListObjectReplicationPolicies()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountListObjectReplicationPolicies.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/StorageAccountListObjectReplicationPolicies.json
             // this example is just showing the usage of "ObjectReplicationPolicies_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -263,7 +263,7 @@ RuleId = "cfbb4bc2-8b60-429f-b05a-d1e0942b33b2",
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -289,7 +289,7 @@ RuleId = "cfbb4bc2-8b60-429f-b05a-d1e0942b33b2",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_StorageAccountGetObjectReplicationPolicies()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountGetObjectReplicationPolicy.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/StorageAccountGetObjectReplicationPolicy.json
             // this example is just showing the usage of "ObjectReplicationPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -299,7 +299,7 @@ RuleId = "cfbb4bc2-8b60-429f-b05a-d1e0942b33b2",
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -319,7 +319,7 @@ RuleId = "cfbb4bc2-8b60-429f-b05a-d1e0942b33b2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_StorageAccountGetObjectReplicationPolicies()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/StorageAccountGetObjectReplicationPolicy.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/StorageAccountGetObjectReplicationPolicy.json
             // this example is just showing the usage of "ObjectReplicationPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -329,7 +329,7 @@ RuleId = "cfbb4bc2-8b60-429f-b05a-d1e0942b33b2",
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

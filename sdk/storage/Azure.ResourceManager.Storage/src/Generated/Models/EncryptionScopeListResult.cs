@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> List of encryption scopes requested, and if paging is required, a URL to the next page of encryption scopes. </summary>
+    /// <summary> The response of a EncryptionScope list operation. </summary>
     internal partial class EncryptionScopeListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Storage.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EncryptionScopeListResult"/>. </summary>
-        internal EncryptionScopeListResult()
+        /// <param name="value"> The EncryptionScope items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal EncryptionScopeListResult(IEnumerable<EncryptionScopeData> value)
         {
-            Value = new ChangeTrackingList<EncryptionScopeData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="EncryptionScopeListResult"/>. </summary>
-        /// <param name="value"> List of encryption scopes requested. </param>
-        /// <param name="nextLink"> Request URL that can be used to query next page of encryption scopes. Returned when total number of requested encryption scopes exceeds the maximum page size. </param>
+        /// <param name="value"> The EncryptionScope items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionScopeListResult(IReadOnlyList<EncryptionScopeData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EncryptionScopeListResult(IReadOnlyList<EncryptionScopeData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of encryption scopes requested. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionScopeListResult"/> for deserialization. </summary>
+        internal EncryptionScopeListResult()
+        {
+        }
+
+        /// <summary> The EncryptionScope items on this page. </summary>
         public IReadOnlyList<EncryptionScopeData> Value { get; }
-        /// <summary> Request URL that can be used to query next page of encryption scopes. Returned when total number of requested encryption scopes exceeds the maximum page size. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

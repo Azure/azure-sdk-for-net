@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetLocalUser()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/LocalUserGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/LocalUserGet.json
             // this example is just showing the usage of "LocalUsers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountLocalUserResource created on azure
             // for more information of creating StorageAccountLocalUserResource, please refer to the document of StorageAccountLocalUserResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string username = "user1";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteLocalUser()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/LocalUserDelete.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/LocalUserDelete.json
             // this example is just showing the usage of "LocalUsers_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountLocalUserResource created on azure
             // for more information of creating StorageAccountLocalUserResource, please refer to the document of StorageAccountLocalUserResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string username = "user1";
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateLocalUser()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/LocalUserCreate.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/LocalUserCreate.json
             // this example is just showing the usage of "LocalUsers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountLocalUserResource created on azure
             // for more information of creating StorageAccountLocalUserResource, please refer to the document of StorageAccountLocalUserResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string username = "user1";
@@ -123,7 +123,7 @@ Key = "ssh-rsa keykeykeykeykey=",
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateNFSv3EnabledLocalUser()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/LocalUserCreateNFSv3Enabled.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/LocalUserCreateNFSv3Enabled.json
             // this example is just showing the usage of "LocalUsers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,7 +133,7 @@ Key = "ssh-rsa keykeykeykeykey=",
 
             // this example assumes you already have this StorageAccountLocalUserResource created on azure
             // for more information of creating StorageAccountLocalUserResource, please refer to the document of StorageAccountLocalUserResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string username = "user1";
@@ -160,7 +160,7 @@ Key = "ssh-rsa keykeykeykeykey=",
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateLocalUser()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/LocalUserUpdate.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/LocalUserUpdate.json
             // this example is just showing the usage of "LocalUsers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,7 +170,7 @@ Key = "ssh-rsa keykeykeykeykey=",
 
             // this example assumes you already have this StorageAccountLocalUserResource created on azure
             // for more information of creating StorageAccountLocalUserResource, please refer to the document of StorageAccountLocalUserResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string username = "user1";
@@ -203,7 +203,7 @@ Key = "ssh-rsa keykeykeykeykey=",
         [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_ListLocalUserKeys()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/LocalUserListKeys.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/LocalUserListKeys.json
             // this example is just showing the usage of "LocalUsers_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -213,7 +213,7 @@ Key = "ssh-rsa keykeykeykeykey=",
 
             // this example assumes you already have this StorageAccountLocalUserResource created on azure
             // for more information of creating StorageAccountLocalUserResource, please refer to the document of StorageAccountLocalUserResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string username = "user1";
@@ -230,7 +230,7 @@ Key = "ssh-rsa keykeykeykeykey=",
         [Ignore("Only validating compilation of examples")]
         public async Task RegeneratePassword_RegenerateLocalUserPassword()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/LocalUserRegeneratePassword.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2025-01-01/examples/LocalUserRegeneratePassword.json
             // this example is just showing the usage of "LocalUsers_RegeneratePassword" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -240,7 +240,7 @@ Key = "ssh-rsa keykeykeykeykey=",
 
             // this example assumes you already have this StorageAccountLocalUserResource created on azure
             // for more information of creating StorageAccountLocalUserResource, please refer to the document of StorageAccountLocalUserResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string username = "user1";

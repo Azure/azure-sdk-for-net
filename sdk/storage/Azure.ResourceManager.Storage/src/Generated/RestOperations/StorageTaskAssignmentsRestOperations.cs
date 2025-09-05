@@ -32,8 +32,216 @@ namespace Azure.ResourceManager.Storage
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-01-01";
+            _apiVersion = apiVersion ?? "2025-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string accountName, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/storageTaskAssignments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string accountName, int? maxpagesize)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/storageTaskAssignments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> List all the storage task assignments in an account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment Ids to be included in the list response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<StorageTaskAssignmentsList>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, maxpagesize);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StorageTaskAssignmentsList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = StorageTaskAssignmentsList.DeserializeStorageTaskAssignmentsList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> List all the storage task assignments in an account. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment Ids to be included in the list response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<StorageTaskAssignmentsList> List(string subscriptionId, string resourceGroupName, string accountName, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, maxpagesize);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StorageTaskAssignmentsList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = StorageTaskAssignmentsList.DeserializeStorageTaskAssignmentsList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/storageTaskAssignments/", false);
+            uri.AppendPath(storageTaskAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/storageTaskAssignments/", false);
+            uri.AppendPath(storageTaskAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get the storage task assignment properties. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="storageTaskAssignmentName"> The name of the storage task assignment within the specified resource group. Storage task assignment names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageTaskAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageTaskAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<StorageTaskAssignmentData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageTaskAssignmentName, nameof(storageTaskAssignmentName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, storageTaskAssignmentName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StorageTaskAssignmentData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = StorageTaskAssignmentData.DeserializeStorageTaskAssignmentData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((StorageTaskAssignmentData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get the storage task assignment properties. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="storageTaskAssignmentName"> The name of the storage task assignment within the specified resource group. Storage task assignment names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageTaskAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageTaskAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<StorageTaskAssignmentData> Get(string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageTaskAssignmentName, nameof(storageTaskAssignmentName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, storageTaskAssignmentName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StorageTaskAssignmentData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = StorageTaskAssignmentData.DeserializeStorageTaskAssignmentData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((StorageTaskAssignmentData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, StorageTaskAssignmentData data)
@@ -79,7 +287,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Asynchronously creates a new storage task assignment sub-resource with the specified parameters. If a storage task assignment is already created and a subsequent create request is issued with different properties, the storage task assignment properties will be updated. If a storage task assignment is already created and a subsequent create or update request is issued with the exact same set of properties, the request will succeed. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="storageTaskAssignmentName"> The name of the storage task assignment within the specified resource group. Storage task assignment names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -109,7 +317,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Asynchronously creates a new storage task assignment sub-resource with the specified parameters. If a storage task assignment is already created and a subsequent create request is issued with different properties, the storage task assignment properties will be updated. If a storage task assignment is already created and a subsequent create or update request is issued with the exact same set of properties, the request will succeed. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="storageTaskAssignmentName"> The name of the storage task assignment within the specified resource group. Storage task assignment names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -181,7 +389,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Update storage task assignment properties. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="storageTaskAssignmentName"> The name of the storage task assignment within the specified resource group. Storage task assignment names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -210,7 +418,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Update storage task assignment properties. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="storageTaskAssignmentName"> The name of the storage task assignment within the specified resource group. Storage task assignment names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -233,110 +441,6 @@ namespace Azure.ResourceManager.Storage
                 case 200:
                 case 202:
                     return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
-            uri.AppendPath(accountName, true);
-            uri.AppendPath("/storageTaskAssignments/", false);
-            uri.AppendPath(storageTaskAssignmentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
-            uri.AppendPath(accountName, true);
-            uri.AppendPath("/storageTaskAssignments/", false);
-            uri.AppendPath(storageTaskAssignmentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get the storage task assignment properties. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="storageTaskAssignmentName"> The name of the storage task assignment within the specified resource group. Storage task assignment names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageTaskAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageTaskAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageTaskAssignmentData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(storageTaskAssignmentName, nameof(storageTaskAssignmentName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, storageTaskAssignmentName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        StorageTaskAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = StorageTaskAssignmentData.DeserializeStorageTaskAssignmentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((StorageTaskAssignmentData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the storage task assignment properties. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="storageTaskAssignmentName"> The name of the storage task assignment within the specified resource group. Storage task assignment names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageTaskAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageTaskAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageTaskAssignmentData> Get(string subscriptionId, string resourceGroupName, string accountName, string storageTaskAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(storageTaskAssignmentName, nameof(storageTaskAssignmentName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, storageTaskAssignmentName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        StorageTaskAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = StorageTaskAssignmentData.DeserializeStorageTaskAssignmentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((StorageTaskAssignmentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -381,7 +485,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Delete the storage task assignment sub-resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="storageTaskAssignmentName"> The name of the storage task assignment within the specified resource group. Storage task assignment names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -408,7 +512,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Delete the storage task assignment sub-resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="storageTaskAssignmentName"> The name of the storage task assignment within the specified resource group. Storage task assignment names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -429,110 +533,6 @@ namespace Azure.ResourceManager.Storage
                 case 202:
                 case 204:
                     return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string accountName, int? maxpagesize)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
-            uri.AppendPath(accountName, true);
-            uri.AppendPath("/storageTaskAssignments", false);
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string accountName, int? maxpagesize)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
-            uri.AppendPath(accountName, true);
-            uri.AppendPath("/storageTaskAssignments", false);
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List all the storage task assignments in an account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment Ids to be included in the list response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageTaskAssignmentsList>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, maxpagesize);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        StorageTaskAssignmentsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = StorageTaskAssignmentsList.DeserializeStorageTaskAssignmentsList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List all the storage task assignments in an account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment Ids to be included in the list response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageTaskAssignmentsList> List(string subscriptionId, string resourceGroupName, string accountName, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, maxpagesize);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        StorageTaskAssignmentsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = StorageTaskAssignmentsList.DeserializeStorageTaskAssignmentsList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> List all the storage task assignments in an account. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment Ids to be included in the list response. </param>
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> List all the storage task assignments in an account. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of storage task assignment Ids to be included in the list response. </param>

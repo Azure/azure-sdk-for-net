@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FileServiceUsageProperties"/>. </summary>
-        internal FileServiceUsageProperties()
+        public FileServiceUsageProperties()
         {
         }
 

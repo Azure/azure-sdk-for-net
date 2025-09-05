@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> File service usage in storage account including account limits, file share limits and constants used in recommendations and bursting formula. </summary>
         [WirePath("properties")]
-        public FileServiceUsageProperties Properties { get; }
+        public FileServiceUsageProperties Properties { get; set; }
     }
 }

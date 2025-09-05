@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> The response from the List Deleted Accounts operation. </summary>
+    /// <summary> The response of a DeletedAccount list operation. </summary>
     internal partial class DeletedAccountListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Storage.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeletedAccountListResult"/>. </summary>
-        internal DeletedAccountListResult()
+        /// <param name="value"> The DeletedAccount items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal DeletedAccountListResult(IEnumerable<DeletedAccountData> value)
         {
-            Value = new ChangeTrackingList<DeletedAccountData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeletedAccountListResult"/>. </summary>
-        /// <param name="value"> Gets the list of deleted accounts and their properties. </param>
-        /// <param name="nextLink"> Request URL that can be used to query next page of deleted accounts. Returned when total number of requested deleted accounts exceed maximum page size. </param>
+        /// <param name="value"> The DeletedAccount items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedAccountListResult(IReadOnlyList<DeletedAccountData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeletedAccountListResult(IReadOnlyList<DeletedAccountData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the list of deleted accounts and their properties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedAccountListResult"/> for deserialization. </summary>
+        internal DeletedAccountListResult()
+        {
+        }
+
+        /// <summary> The DeletedAccount items on this page. </summary>
         public IReadOnlyList<DeletedAccountData> Value { get; }
-        /// <summary> Request URL that can be used to query next page of deleted accounts. Returned when total number of requested deleted accounts exceed maximum page size. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

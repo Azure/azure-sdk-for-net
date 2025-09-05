@@ -99,27 +99,6 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a BlobServiceResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
-        /// <returns> Returns a <see cref="BlobServiceResource"/> object. </returns>
-        public virtual BlobServiceResource GetBlobService()
-        {
-            return new BlobServiceResource(Client, Id.AppendChildResource("blobServices", "default"));
-        }
-
-        /// <summary> Gets an object representing a FileServiceResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
-        /// <returns> Returns a <see cref="FileServiceResource"/> object. </returns>
-        public virtual FileServiceResource GetFileService()
-        {
-            return new FileServiceResource(Client, Id.AppendChildResource("fileServices", "default"));
-        }
-
-        /// <summary> Gets an object representing a QueueServiceResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
-        /// <returns> Returns a <see cref="QueueServiceResource"/> object. </returns>
-        public virtual QueueServiceResource GetQueueService()
-        {
-            return new QueueServiceResource(Client, Id.AppendChildResource("queueServices", "default"));
-        }
-
         /// <summary> Gets a collection of StorageAccountMigrationResources in the StorageAccount. </summary>
         /// <returns> An object representing collection of StorageAccountMigrationResources and their operations over a StorageAccountMigrationResource. </returns>
         public virtual StorageAccountMigrationCollection GetStorageAccountMigrations()
@@ -140,7 +119,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -169,7 +148,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -185,225 +164,11 @@ namespace Azure.ResourceManager.Storage
             return GetStorageAccountMigrations().Get(migrationName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a StorageAccountManagementPolicyResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
-        /// <returns> Returns a <see cref="StorageAccountManagementPolicyResource"/> object. </returns>
-        public virtual StorageAccountManagementPolicyResource GetStorageAccountManagementPolicy()
+        /// <summary> Gets an object representing a BlobServiceResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
+        /// <returns> Returns a <see cref="BlobServiceResource"/> object. </returns>
+        public virtual BlobServiceResource GetBlobService()
         {
-            return new StorageAccountManagementPolicyResource(Client, Id.AppendChildResource("managementPolicies", "default"));
-        }
-
-        /// <summary> Gets an object representing a BlobInventoryPolicyResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
-        /// <returns> Returns a <see cref="BlobInventoryPolicyResource"/> object. </returns>
-        public virtual BlobInventoryPolicyResource GetBlobInventoryPolicy()
-        {
-            return new BlobInventoryPolicyResource(Client, Id.AppendChildResource("inventoryPolicies", "default"));
-        }
-
-        /// <summary> Gets a collection of StoragePrivateEndpointConnectionResources in the StorageAccount. </summary>
-        /// <returns> An object representing collection of StoragePrivateEndpointConnectionResources and their operations over a StoragePrivateEndpointConnectionResource. </returns>
-        public virtual StoragePrivateEndpointConnectionCollection GetStoragePrivateEndpointConnections()
-        {
-            return GetCachedClient(client => new StoragePrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified private endpoint connection associated with the storage account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StoragePrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<StoragePrivateEndpointConnectionResource>> GetStoragePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetStoragePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified private endpoint connection associated with the storage account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StoragePrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<StoragePrivateEndpointConnectionResource> GetStoragePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            return GetStoragePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ObjectReplicationPolicyResources in the StorageAccount. </summary>
-        /// <returns> An object representing collection of ObjectReplicationPolicyResources and their operations over a ObjectReplicationPolicyResource. </returns>
-        public virtual ObjectReplicationPolicyCollection GetObjectReplicationPolicies()
-        {
-            return GetCachedClient(client => new ObjectReplicationPolicyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the object replication policy of the storage account by policy ID.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ObjectReplicationPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value 'default'. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="objectReplicationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ObjectReplicationPolicyResource>> GetObjectReplicationPolicyAsync(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
-        {
-            return await GetObjectReplicationPolicies().GetAsync(objectReplicationPolicyId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the object replication policy of the storage account by policy ID.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ObjectReplicationPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value 'default'. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="objectReplicationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ObjectReplicationPolicyResource> GetObjectReplicationPolicy(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
-        {
-            return GetObjectReplicationPolicies().Get(objectReplicationPolicyId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of StorageAccountLocalUserResources in the StorageAccount. </summary>
-        /// <returns> An object representing collection of StorageAccountLocalUserResources and their operations over a StorageAccountLocalUserResource. </returns>
-        public virtual StorageAccountLocalUserCollection GetStorageAccountLocalUsers()
-        {
-            return GetCachedClient(client => new StorageAccountLocalUserCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the local user of the storage account by username.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocalUsers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountLocalUserResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<StorageAccountLocalUserResource>> GetStorageAccountLocalUserAsync(string username, CancellationToken cancellationToken = default)
-        {
-            return await GetStorageAccountLocalUsers().GetAsync(username, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the local user of the storage account by username.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocalUsers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountLocalUserResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<StorageAccountLocalUserResource> GetStorageAccountLocalUser(string username, CancellationToken cancellationToken = default)
-        {
-            return GetStorageAccountLocalUsers().Get(username, cancellationToken);
+            return new BlobServiceResource(Client, Id.AppendChildResource("blobServices", "default"));
         }
 
         /// <summary> Gets a collection of EncryptionScopeResources in the StorageAccount. </summary>
@@ -426,7 +191,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -457,7 +222,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -475,11 +240,94 @@ namespace Azure.ResourceManager.Storage
             return GetEncryptionScopes().Get(encryptionScopeName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a TableServiceResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
-        /// <returns> Returns a <see cref="TableServiceResource"/> object. </returns>
-        public virtual TableServiceResource GetTableService()
+        /// <summary> Gets an object representing a FileServiceResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
+        /// <returns> Returns a <see cref="FileServiceResource"/> object. </returns>
+        public virtual FileServiceResource GetFileService()
         {
-            return new TableServiceResource(Client, Id.AppendChildResource("tableServices", "default"));
+            return new FileServiceResource(Client, Id.AppendChildResource("fileServices", "default"));
+        }
+
+        /// <summary> Gets an object representing a BlobInventoryPolicyResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
+        /// <returns> Returns a <see cref="BlobInventoryPolicyResource"/> object. </returns>
+        public virtual BlobInventoryPolicyResource GetBlobInventoryPolicy()
+        {
+            return new BlobInventoryPolicyResource(Client, Id.AppendChildResource("inventoryPolicies", "default"));
+        }
+
+        /// <summary> Gets a collection of StorageAccountLocalUserResources in the StorageAccount. </summary>
+        /// <returns> An object representing collection of StorageAccountLocalUserResources and their operations over a StorageAccountLocalUserResource. </returns>
+        public virtual StorageAccountLocalUserCollection GetStorageAccountLocalUsers()
+        {
+            return GetCachedClient(client => new StorageAccountLocalUserCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the local user of the storage account by username.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalUsers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageAccountLocalUserResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StorageAccountLocalUserResource>> GetStorageAccountLocalUserAsync(string username, CancellationToken cancellationToken = default)
+        {
+            return await GetStorageAccountLocalUsers().GetAsync(username, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the local user of the storage account by username.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalUsers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageAccountLocalUserResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StorageAccountLocalUserResource> GetStorageAccountLocalUser(string username, CancellationToken cancellationToken = default)
+        {
+            return GetStorageAccountLocalUsers().Get(username, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a StorageAccountManagementPolicyResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
+        /// <returns> Returns a <see cref="StorageAccountManagementPolicyResource"/> object. </returns>
+        public virtual StorageAccountManagementPolicyResource GetStorageAccountManagementPolicy()
+        {
+            return new StorageAccountManagementPolicyResource(Client, Id.AppendChildResource("managementPolicies", "default"));
         }
 
         /// <summary> Gets a collection of NetworkSecurityPerimeterConfigurationResources in the StorageAccount. </summary>
@@ -502,7 +350,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -533,7 +381,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -549,6 +397,151 @@ namespace Azure.ResourceManager.Storage
         public virtual Response<NetworkSecurityPerimeterConfigurationResource> GetNetworkSecurityPerimeterConfiguration(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
         {
             return GetNetworkSecurityPerimeterConfigurations().Get(networkSecurityPerimeterConfigurationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ObjectReplicationPolicyResources in the StorageAccount. </summary>
+        /// <returns> An object representing collection of ObjectReplicationPolicyResources and their operations over a ObjectReplicationPolicyResource. </returns>
+        public virtual ObjectReplicationPolicyCollection GetObjectReplicationPolicies()
+        {
+            return GetCachedClient(client => new ObjectReplicationPolicyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the object replication policy of the storage account by policy ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ObjectReplicationPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value 'default'. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="objectReplicationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ObjectReplicationPolicyResource>> GetObjectReplicationPolicyAsync(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
+        {
+            return await GetObjectReplicationPolicies().GetAsync(objectReplicationPolicyId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the object replication policy of the storage account by policy ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ObjectReplicationPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="objectReplicationPolicyId"> For the destination account, provide the value 'default'. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="objectReplicationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ObjectReplicationPolicyResource> GetObjectReplicationPolicy(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
+        {
+            return GetObjectReplicationPolicies().Get(objectReplicationPolicyId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of StoragePrivateEndpointConnectionResources in the StorageAccount. </summary>
+        /// <returns> An object representing collection of StoragePrivateEndpointConnectionResources and their operations over a StoragePrivateEndpointConnectionResource. </returns>
+        public virtual StoragePrivateEndpointConnectionCollection GetStoragePrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new StoragePrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified private endpoint connection associated with the storage account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StoragePrivateEndpointConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StoragePrivateEndpointConnectionResource>> GetStoragePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetStoragePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified private endpoint connection associated with the storage account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StoragePrivateEndpointConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StoragePrivateEndpointConnectionResource> GetStoragePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetStoragePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a QueueServiceResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
+        /// <returns> Returns a <see cref="QueueServiceResource"/> object. </returns>
+        public virtual QueueServiceResource GetQueueService()
+        {
+            return new QueueServiceResource(Client, Id.AppendChildResource("queueServices", "default"));
         }
 
         /// <summary> Gets a collection of StorageTaskAssignmentResources in the StorageAccount. </summary>
@@ -571,7 +564,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -602,7 +595,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -620,6 +613,13 @@ namespace Azure.ResourceManager.Storage
             return GetStorageTaskAssignments().Get(storageTaskAssignmentName, cancellationToken);
         }
 
+        /// <summary> Gets an object representing a TableServiceResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
+        /// <returns> Returns a <see cref="TableServiceResource"/> object. </returns>
+        public virtual TableServiceResource GetTableService()
+        {
+            return new TableServiceResource(Client, Id.AppendChildResource("tableServices", "default"));
+        }
+
         /// <summary>
         /// Returns the properties for the specified storage account including but not limited to name, SKU name, location, and account status. The ListKeys operation should be used to retrieve storage keys.
         /// <list type="bullet">
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -875,19 +875,19 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Lists the access keys or Kerberos keys (if active directory enabled) for the specified storage account.
+        /// Abort live Migration of storage account to enable Hns
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listKeys</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/aborthnsonmigration</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAccounts_ListKeys</description>
+        /// <description>StorageAccounts_AbortHierarchicalNamespaceMigration</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -895,145 +895,19 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageAccountKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageAccountKey> GetKeysAsync(StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> AbortHierarchicalNamespaceMigrationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => StorageAccountKey.DeserializeStorageAccountKey(e), _storageAccountClientDiagnostics, Pipeline, "StorageAccountResource.GetKeys", "keys", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the access keys or Kerberos keys (if active directory enabled) for the specified storage account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccounts_ListKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageAccountKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageAccountKey> GetKeys(StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => StorageAccountKey.DeserializeStorageAccountKey(e), _storageAccountClientDiagnostics, Pipeline, "StorageAccountResource.GetKeys", "keys", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Regenerates one of the access keys or Kerberos keys for the specified storage account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/regenerateKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccounts_RegenerateKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="StorageAccountKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageAccountKey> RegenerateKeyAsync(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => StorageAccountKey.DeserializeStorageAccountKey(e), _storageAccountClientDiagnostics, Pipeline, "StorageAccountResource.RegenerateKey", "keys", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Regenerates one of the access keys or Kerberos keys for the specified storage account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/regenerateKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccounts_RegenerateKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="StorageAccountKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageAccountKey> RegenerateKey(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => StorageAccountKey.DeserializeStorageAccountKey(e), _storageAccountClientDiagnostics, Pipeline, "StorageAccountResource.RegenerateKey", "keys", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// List SAS credentials of a storage account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListAccountSas</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccounts_ListAccountSas</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The parameters to provide to list SAS credentials for the storage account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<GetAccountSasResult>> GetAccountSasAsync(AccountSasContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetAccountSas");
+            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.AbortHierarchicalNamespaceMigration");
             scope.Start();
             try
             {
-                var response = await _storageAccountRestClient.ListAccountSasAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return response;
+                var response = await _storageAccountRestClient.AbortHierarchicalNamespaceMigrationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageArmOperation(_storageAccountClientDiagnostics, Pipeline, _storageAccountRestClient.CreateAbortHierarchicalNamespaceMigrationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -1043,19 +917,19 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// List SAS credentials of a storage account.
+        /// Abort live Migration of storage account to enable Hns
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListAccountSas</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/aborthnsonmigration</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAccounts_ListAccountSas</description>
+        /// <description>StorageAccounts_AbortHierarchicalNamespaceMigration</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1063,103 +937,19 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The parameters to provide to list SAS credentials for the storage account. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<GetAccountSasResult> GetAccountSas(AccountSasContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation AbortHierarchicalNamespaceMigration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetAccountSas");
+            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.AbortHierarchicalNamespaceMigration");
             scope.Start();
             try
             {
-                var response = _storageAccountRestClient.ListAccountSas(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List service SAS credentials of a specific resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListServiceSas</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccounts_ListServiceSas</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The parameters to provide to list service SAS credentials. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<GetServiceSasResult>> GetServiceSasAsync(ServiceSasContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetServiceSas");
-            scope.Start();
-            try
-            {
-                var response = await _storageAccountRestClient.ListServiceSasAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List service SAS credentials of a specific resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListServiceSas</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccounts_ListServiceSas</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The parameters to provide to list service SAS credentials. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<GetServiceSasResult> GetServiceSas(ServiceSasContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetServiceSas");
-            scope.Start();
-            try
-            {
-                var response = _storageAccountRestClient.ListServiceSas(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                return response;
+                var response = _storageAccountRestClient.AbortHierarchicalNamespaceMigration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new StorageArmOperation(_storageAccountClientDiagnostics, Pipeline, _storageAccountRestClient.CreateAbortHierarchicalNamespaceMigrationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -1181,7 +971,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1224,7 +1014,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1259,7 +1049,7 @@ namespace Azure.ResourceManager.Storage
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/hnsonmigration</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/hnsonmigration</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -1267,7 +1057,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1305,7 +1095,7 @@ namespace Azure.ResourceManager.Storage
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/hnsonmigration</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/hnsonmigration</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -1313,7 +1103,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1347,19 +1137,19 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Abort live Migration of storage account to enable Hns
+        /// List SAS credentials of a storage account.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/aborthnsonmigration</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listAccountSas</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAccounts_AbortHierarchicalNamespaceMigration</description>
+        /// <description>StorageAccounts_ListAccountSas</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1367,19 +1157,19 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The parameters to provide to list SAS credentials for the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> AbortHierarchicalNamespaceMigrationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<GetAccountSasResult>> GetAccountSasAsync(AccountSasContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.AbortHierarchicalNamespaceMigration");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetAccountSas");
             scope.Start();
             try
             {
-                var response = await _storageAccountRestClient.AbortHierarchicalNamespaceMigrationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation(_storageAccountClientDiagnostics, Pipeline, _storageAccountRestClient.CreateAbortHierarchicalNamespaceMigrationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
+                var response = await _storageAccountRestClient.ListAccountSasAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -1389,19 +1179,19 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Abort live Migration of storage account to enable Hns
+        /// List SAS credentials of a storage account.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/aborthnsonmigration</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listAccountSas</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAccounts_AbortHierarchicalNamespaceMigration</description>
+        /// <description>StorageAccounts_ListAccountSas</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1409,19 +1199,305 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The parameters to provide to list SAS credentials for the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation AbortHierarchicalNamespaceMigration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<GetAccountSasResult> GetAccountSas(AccountSasContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.AbortHierarchicalNamespaceMigration");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetAccountSas");
             scope.Start();
             try
             {
-                var response = _storageAccountRestClient.AbortHierarchicalNamespaceMigration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StorageArmOperation(_storageAccountClientDiagnostics, Pipeline, _storageAccountRestClient.CreateAbortHierarchicalNamespaceMigrationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
+                var response = _storageAccountRestClient.ListAccountSas(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists the access keys or Kerberos keys (if active directory enabled) for the specified storage account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_ListKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="StorageAccountKey"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageAccountKey> GetKeysAsync(StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => StorageAccountKey.DeserializeStorageAccountKey(e), _storageAccountClientDiagnostics, Pipeline, "StorageAccountResource.GetKeys", "keys", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the access keys or Kerberos keys (if active directory enabled) for the specified storage account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_ListKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StorageAccountKey"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageAccountKey> GetKeys(StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => StorageAccountKey.DeserializeStorageAccountKey(e), _storageAccountClientDiagnostics, Pipeline, "StorageAccountResource.GetKeys", "keys", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// List service SAS credentials of a specific resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listServiceSas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_ListServiceSas</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The parameters to provide to list service SAS credentials. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<GetServiceSasResult>> GetServiceSasAsync(ServiceSasContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetServiceSas");
+            scope.Start();
+            try
+            {
+                var response = await _storageAccountRestClient.ListServiceSasAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List service SAS credentials of a specific resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listServiceSas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_ListServiceSas</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The parameters to provide to list service SAS credentials. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<GetServiceSasResult> GetServiceSas(ServiceSasContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetServiceSas");
+            scope.Start();
+            try
+            {
+                var response = _storageAccountRestClient.ListServiceSas(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerates one of the access keys or Kerberos keys for the specified storage account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/regenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_RegenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> An async collection of <see cref="StorageAccountKey"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageAccountKey> RegenerateKeyAsync(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => StorageAccountKey.DeserializeStorageAccountKey(e), _storageAccountClientDiagnostics, Pipeline, "StorageAccountResource.RegenerateKey", "keys", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Regenerates one of the access keys or Kerberos keys for the specified storage account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/regenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_RegenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="StorageAccountKey"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageAccountKey> RegenerateKey(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => StorageAccountKey.DeserializeStorageAccountKey(e), _storageAccountClientDiagnostics, Pipeline, "StorageAccountResource.RegenerateKey", "keys", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Revoke user delegation keys.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/revokeUserDelegationKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_RevokeUserDelegationKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> RevokeUserDelegationKeysAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RevokeUserDelegationKeys");
+            scope.Start();
+            try
+            {
+                var response = await _storageAccountRestClient.RevokeUserDelegationKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Revoke user delegation keys.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/revokeUserDelegationKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_RevokeUserDelegationKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response RevokeUserDelegationKeys(CancellationToken cancellationToken = default)
+        {
+            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RevokeUserDelegationKeys");
+            scope.Start();
+            try
+            {
+                var response = _storageAccountRestClient.RevokeUserDelegationKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -1443,7 +1519,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1489,7 +1565,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1523,82 +1599,6 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Revoke user delegation keys.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/revokeUserDelegationKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccounts_RevokeUserDelegationKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RevokeUserDelegationKeysAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RevokeUserDelegationKeys");
-            scope.Start();
-            try
-            {
-                var response = await _storageAccountRestClient.RevokeUserDelegationKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Revoke user delegation keys.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/revokeUserDelegationKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccounts_RevokeUserDelegationKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RevokeUserDelegationKeys(CancellationToken cancellationToken = default)
-        {
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RevokeUserDelegationKeys");
-            scope.Start();
-            try
-            {
-                var response = _storageAccountRestClient.RevokeUserDelegationKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Gets the private link resources that need to be created for a storage account.
         /// <list type="bullet">
         /// <item>
@@ -1611,7 +1611,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1636,7 +1636,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1661,7 +1661,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1689,7 +1689,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1717,7 +1717,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1779,7 +1779,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1841,7 +1841,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1898,7 +1898,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1955,7 +1955,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2015,7 +2015,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

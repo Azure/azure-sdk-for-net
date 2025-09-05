@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-01-01";
+            _apiVersion = apiVersion ?? "2025-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the managementpolicy associated with the specified storage account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="managementPolicyName"> The name of the Storage Account Management Policy. It should always be 'default'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the managementpolicy associated with the specified storage account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="managementPolicyName"> The name of the Storage Account Management Policy. It should always be 'default'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -181,8 +181,8 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Sets the managementpolicy to the specified storage account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="managementPolicyName"> The name of the Storage Account Management Policy. It should always be 'default'. </param>
         /// <param name="data"> The ManagementPolicy set to a storage account. </param>
@@ -213,8 +213,8 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Sets the managementpolicy to the specified storage account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="managementPolicyName"> The name of the Storage Account Management Policy. It should always be 'default'. </param>
         /// <param name="data"> The ManagementPolicy set to a storage account. </param>
@@ -277,13 +277,14 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(managementPolicyName.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Deletes the managementpolicy associated with the specified storage account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="managementPolicyName"> The name of the Storage Account Management Policy. It should always be 'default'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -308,8 +309,8 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Deletes the managementpolicy associated with the specified storage account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="managementPolicyName"> The name of the Storage Account Management Policy. It should always be 'default'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
