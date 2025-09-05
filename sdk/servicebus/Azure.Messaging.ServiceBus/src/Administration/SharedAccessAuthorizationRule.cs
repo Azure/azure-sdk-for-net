@@ -209,12 +209,11 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>true if the specified object is equal to the current object; otherwise, false.</returns>
         public override bool Equals(AuthorizationRule other)
         {
-            if (!(other is SharedAccessAuthorizationRule))
+            if (other is not SharedAccessAuthorizationRule comparand)
             {
                 return false;
             }
 
-            SharedAccessAuthorizationRule comparand = (SharedAccessAuthorizationRule)other;
             if (!string.Equals(KeyName, comparand.KeyName, StringComparison.OrdinalIgnoreCase) ||
                 !string.Equals(PrimaryKey, comparand.PrimaryKey, StringComparison.Ordinal) ||
                 !string.Equals(SecondaryKey, comparand.SecondaryKey, StringComparison.Ordinal))

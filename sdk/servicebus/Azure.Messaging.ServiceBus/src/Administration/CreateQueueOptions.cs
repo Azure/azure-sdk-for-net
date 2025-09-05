@@ -324,32 +324,27 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
         public bool Equals(CreateQueueOptions other)
         {
-            if (other is CreateQueueOptions otherOptions
-                && Name.Equals(otherOptions.Name, StringComparison.OrdinalIgnoreCase)
-                && AutoDeleteOnIdle.Equals(otherOptions.AutoDeleteOnIdle)
-                && DefaultMessageTimeToLive.Equals(otherOptions.DefaultMessageTimeToLive)
-                && (!RequiresDuplicateDetection || DuplicateDetectionHistoryTimeWindow.Equals(otherOptions.DuplicateDetectionHistoryTimeWindow))
-                && EnableBatchedOperations == otherOptions.EnableBatchedOperations
-                && DeadLetteringOnMessageExpiration == otherOptions.DeadLetteringOnMessageExpiration
-                && EnablePartitioning == otherOptions.EnablePartitioning
-                && string.Equals(ForwardDeadLetteredMessagesTo, otherOptions.ForwardDeadLetteredMessagesTo, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(ForwardTo, otherOptions.ForwardTo, StringComparison.OrdinalIgnoreCase)
-                && LockDuration.Equals(otherOptions.LockDuration)
-                && MaxDeliveryCount == otherOptions.MaxDeliveryCount
-                && MaxSizeInMegabytes == otherOptions.MaxSizeInMegabytes
-                && RequiresDuplicateDetection.Equals(otherOptions.RequiresDuplicateDetection)
-                && RequiresSession.Equals(otherOptions.RequiresSession)
-                && Status.Equals(otherOptions.Status)
-                && string.Equals(_userMetadata, otherOptions._userMetadata, StringComparison.OrdinalIgnoreCase)
-                && (AuthorizationRules != null && otherOptions.AuthorizationRules != null
-                    || AuthorizationRules == null && otherOptions.AuthorizationRules == null)
-                && (AuthorizationRules == null || AuthorizationRules.Equals(otherOptions.AuthorizationRules))
-                && MaxMessageSizeInKilobytes.Equals(other.MaxMessageSizeInKilobytes))
-            {
-                return true;
-            }
-
-            return false;
+            return other is not null
+                   && Name.Equals(other.Name, StringComparison.OrdinalIgnoreCase)
+                   && AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
+                   && DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
+                   && (!RequiresDuplicateDetection || DuplicateDetectionHistoryTimeWindow.Equals(other.DuplicateDetectionHistoryTimeWindow))
+                   && EnableBatchedOperations == other.EnableBatchedOperations
+                   && DeadLetteringOnMessageExpiration == other.DeadLetteringOnMessageExpiration
+                   && EnablePartitioning == other.EnablePartitioning
+                   && string.Equals(ForwardDeadLetteredMessagesTo, other.ForwardDeadLetteredMessagesTo, StringComparison.OrdinalIgnoreCase)
+                   && string.Equals(ForwardTo, other.ForwardTo, StringComparison.OrdinalIgnoreCase)
+                   && LockDuration.Equals(other.LockDuration)
+                   && MaxDeliveryCount == other.MaxDeliveryCount
+                   && MaxSizeInMegabytes == other.MaxSizeInMegabytes
+                   && RequiresDuplicateDetection.Equals(other.RequiresDuplicateDetection)
+                   && RequiresSession.Equals(other.RequiresSession)
+                   && Status.Equals(other.Status)
+                   && string.Equals(_userMetadata, other._userMetadata, StringComparison.OrdinalIgnoreCase)
+                   && (AuthorizationRules != null && other.AuthorizationRules != null
+                       || AuthorizationRules == null && other.AuthorizationRules == null)
+                   && (AuthorizationRules == null || AuthorizationRules.Equals(other.AuthorizationRules))
+                   && MaxMessageSizeInKilobytes.Equals(other.MaxMessageSizeInKilobytes);
         }
 
         /// <summary></summary>
