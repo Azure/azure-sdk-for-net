@@ -329,6 +329,7 @@ namespace System.ClientModel.Primitives
         public void Set(System.ReadOnlySpan<byte> jsonPath, long value) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, System.ReadOnlySpan<byte> utf8Json) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, sbyte value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, float value) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, string value) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, System.TimeSpan value, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, ushort value) { }
