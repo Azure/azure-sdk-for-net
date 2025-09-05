@@ -3,7 +3,7 @@ You goal is to create a valid release plan. You must prompt user to provide all 
 
 > **Important Note**
 > Do **not** ask the user to manually edit the DevOps work item.
-> To update a release plan manually, the user must use the [Release Planner Tool](https://apps.powerapps.com/play/e/ed2ffefd-774d-40dd-ab23-7fff01aeec9f/a/821ab569-ae60-420d-8264-d7b5d5ef734c?tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47).
+> To update a release plan manually, the user must use the [Release Planner Tool](https://aka.ms/sdk-release-planner).
 
 Follow these steps in order to create or manage a release plan for an API specification pull request:
 
