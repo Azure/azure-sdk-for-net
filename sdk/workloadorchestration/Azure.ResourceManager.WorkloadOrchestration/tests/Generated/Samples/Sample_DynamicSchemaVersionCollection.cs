@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DynamicSchemaVersionsCreateOrUpdateMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/DynamicSchemaVersions_CreateOrUpdate_MaximumSet_Gen.json
-            // this example is just showing the usage of "DynamicSchemaVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/DynamicSchemaVersions_CreateOrUpdate_MaximumSet_Gen.json
+            // this example is just showing the usage of "DynamicSchemaVersion_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             DynamicSchemaVersionCollection collection = dynamicSchema.GetDynamicSchemaVersions();
 
             // invoke the operation
-            string schemaVersionName = "1.0.0";
+            string dynamicSchemaVersionName = "1.0.0";
             DynamicSchemaVersionData data = new DynamicSchemaVersionData
             {
                 Properties = new SchemaVersionProperties("uiaqdwsi"),
             };
-            ArmOperation<DynamicSchemaVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, schemaVersionName, data);
+            ArmOperation<DynamicSchemaVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dynamicSchemaVersionName, data);
             DynamicSchemaVersionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DynamicSchemaVersionsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/DynamicSchemaVersions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "DynamicSchemaVersions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/DynamicSchemaVersions_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "DynamicSchemaVersion_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             DynamicSchemaVersionCollection collection = dynamicSchema.GetDynamicSchemaVersions();
 
             // invoke the operation
-            string schemaVersionName = "1.0.0";
-            DynamicSchemaVersionResource result = await collection.GetAsync(schemaVersionName);
+            string dynamicSchemaVersionName = "1.0.0";
+            DynamicSchemaVersionResource result = await collection.GetAsync(dynamicSchemaVersionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_DynamicSchemaVersionsListByDynamicSchemaMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/DynamicSchemaVersions_ListByDynamicSchema_MaximumSet_Gen.json
-            // this example is just showing the usage of "DynamicSchemaVersions_ListByDynamicSchema" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/DynamicSchemaVersions_ListByDynamicSchema_MaximumSet_Gen.json
+            // this example is just showing the usage of "DynamicSchemaVersion_ListByDynamicSchema" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_DynamicSchemaVersionsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/DynamicSchemaVersions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "DynamicSchemaVersions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/DynamicSchemaVersions_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "DynamicSchemaVersion_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             DynamicSchemaVersionCollection collection = dynamicSchema.GetDynamicSchemaVersions();
 
             // invoke the operation
-            string schemaVersionName = "1.0.0";
-            bool result = await collection.ExistsAsync(schemaVersionName);
+            string dynamicSchemaVersionName = "1.0.0";
+            bool result = await collection.ExistsAsync(dynamicSchemaVersionName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -163,8 +163,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_DynamicSchemaVersionsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/DynamicSchemaVersions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "DynamicSchemaVersions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/DynamicSchemaVersions_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "DynamicSchemaVersion_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -184,8 +184,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             DynamicSchemaVersionCollection collection = dynamicSchema.GetDynamicSchemaVersions();
 
             // invoke the operation
-            string schemaVersionName = "1.0.0";
-            NullableResponse<DynamicSchemaVersionResource> response = await collection.GetIfExistsAsync(schemaVersionName);
+            string dynamicSchemaVersionName = "1.0.0";
+            NullableResponse<DynamicSchemaVersionResource> response = await collection.GetIfExistsAsync(dynamicSchemaVersionName);
             DynamicSchemaVersionResource result = response.HasValue ? response.Value : null;
 
             if (result == null)

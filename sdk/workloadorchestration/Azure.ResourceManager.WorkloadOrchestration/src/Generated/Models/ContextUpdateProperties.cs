@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> The complex type of the extended location. </summary>
-    public partial class AzureResourceManagerCommonTypesExtendedLocation
+    /// <summary> The updatable properties of the Context. </summary>
+    public partial class ContextUpdateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +45,27 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AzureResourceManagerCommonTypesExtendedLocation"/>. </summary>
-        /// <param name="name"> The name of the extended location. </param>
-        /// <param name="extendedLocationType"> The type of the extended location. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public AzureResourceManagerCommonTypesExtendedLocation(string name, ExtendedLocationType extendedLocationType)
+        /// <summary> Initializes a new instance of <see cref="ContextUpdateProperties"/>. </summary>
+        public ContextUpdateProperties()
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
-            ExtendedLocationType = extendedLocationType;
+            Capabilities = new ChangeTrackingList<Capability>();
+            Hierarchies = new ChangeTrackingList<Hierarchy>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureResourceManagerCommonTypesExtendedLocation"/>. </summary>
-        /// <param name="name"> The name of the extended location. </param>
-        /// <param name="extendedLocationType"> The type of the extended location. </param>
+        /// <summary> Initializes a new instance of <see cref="ContextUpdateProperties"/>. </summary>
+        /// <param name="capabilities"> List of Capabilities. </param>
+        /// <param name="hierarchies"> List of Hierarchies. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureResourceManagerCommonTypesExtendedLocation(string name, ExtendedLocationType extendedLocationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContextUpdateProperties(IList<Capability> capabilities, IList<Hierarchy> hierarchies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            ExtendedLocationType = extendedLocationType;
+            Capabilities = capabilities;
+            Hierarchies = hierarchies;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureResourceManagerCommonTypesExtendedLocation"/> for deserialization. </summary>
-        internal AzureResourceManagerCommonTypesExtendedLocation()
-        {
-        }
-
-        /// <summary> The name of the extended location. </summary>
-        public string Name { get; set; }
-        /// <summary> The type of the extended location. </summary>
-        public ExtendedLocationType ExtendedLocationType { get; set; }
+        /// <summary> List of Capabilities. </summary>
+        public IList<Capability> Capabilities { get; }
+        /// <summary> List of Hierarchies. </summary>
+        public IList<Hierarchy> Hierarchies { get; }
     }
 }

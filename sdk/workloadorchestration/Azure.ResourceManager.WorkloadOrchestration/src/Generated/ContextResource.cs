@@ -90,75 +90,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SiteReferenceResources in the Context. </summary>
-        /// <returns> An object representing collection of SiteReferenceResources and their operations over a SiteReferenceResource. </returns>
-        public virtual SiteReferenceCollection GetSiteReferences()
-        {
-            return GetCachedClient(client => new SiteReferenceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get Site Reference Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteReferences_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteReferenceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="siteReferenceName"> The name of the SiteReference. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteReferenceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SiteReferenceResource>> GetSiteReferenceAsync(string siteReferenceName, CancellationToken cancellationToken = default)
-        {
-            return await GetSiteReferences().GetAsync(siteReferenceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get Site Reference Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteReferences_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteReferenceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="siteReferenceName"> The name of the SiteReference. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteReferenceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SiteReferenceResource> GetSiteReference(string siteReferenceName, CancellationToken cancellationToken = default)
-        {
-            return GetSiteReferences().Get(siteReferenceName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of WorkflowResources in the Context. </summary>
         /// <returns> An object representing collection of WorkflowResources and their operations over a WorkflowResource. </returns>
         public virtual WorkflowCollection GetWorkflows()
@@ -175,7 +106,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workflows_Get</description>
+        /// <description>Workflow_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -206,7 +137,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workflows_Get</description>
+        /// <description>Workflow_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -228,6 +159,75 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return GetWorkflows().Get(workflowName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of SiteReferenceResources in the Context. </summary>
+        /// <returns> An object representing collection of SiteReferenceResources and their operations over a SiteReferenceResource. </returns>
+        public virtual SiteReferenceCollection GetSiteReferences()
+        {
+            return GetCachedClient(client => new SiteReferenceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get Site Reference Resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SiteReference_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteReferenceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="siteReferenceName"> The name of the SiteReference. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteReferenceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SiteReferenceResource>> GetSiteReferenceAsync(string siteReferenceName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteReferences().GetAsync(siteReferenceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Site Reference Resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SiteReference_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteReferenceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="siteReferenceName"> The name of the SiteReference. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteReferenceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SiteReferenceResource> GetSiteReference(string siteReferenceName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteReferences().Get(siteReferenceName, cancellationToken);
+        }
+
         /// <summary>
         /// Get Context Resource
         /// <list type="bullet">
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Contexts_Get</description>
+        /// <description>Context_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Contexts_Get</description>
+        /// <description>Context_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Contexts_Delete</description>
+        /// <description>Context_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Contexts_Delete</description>
+        /// <description>Context_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Contexts_Update</description>
+        /// <description>Context_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Contexts_Update</description>
+        /// <description>Context_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Contexts_Get</description>
+        /// <description>Context_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Contexts_Get</description>
+        /// <description>Context_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Contexts_Get</description>
+        /// <description>Context_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Contexts_Get</description>
+        /// <description>Context_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Contexts_Get</description>
+        /// <description>Context_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Contexts_Get</description>
+        /// <description>Context_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

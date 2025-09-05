@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>Job_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>Job_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_ListByTarget</description>
+        /// <description>Job_ListByTarget</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_ListByTarget</description>
+        /// <description>Job_ListByTarget</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>Job_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>Job_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>Job_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>Job_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

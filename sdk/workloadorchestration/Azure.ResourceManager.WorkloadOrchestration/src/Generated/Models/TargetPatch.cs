@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Target Resource. Represents a resource to be deployed on the edge. </summary>
-    public partial class TargetPatch : ResourceData
+    /// <summary> The type used for update operations of the Target. </summary>
+    public partial class TargetPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -54,23 +52,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TargetPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TargetPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetPropertiesUpdate properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal TargetPatch(IDictionary<string, string> tags, TargetUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
             Tags = tags;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public TargetPropertiesUpdate Properties { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public TargetUpdateProperties Properties { get; set; }
     }
 }

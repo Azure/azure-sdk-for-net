@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="InstanceHistoryProperties"/>. </summary>
         /// <param name="solutionVersion"> Solution version of instance. </param>
         /// <param name="target"> Target of instance. </param>
-        public InstanceHistoryProperties(SolutionVersionSnapshot solutionVersion, TargetSnapshot target)
+        internal InstanceHistoryProperties(SolutionVersionSnapshot solutionVersion, TargetSnapshot target)
         {
             SolutionVersion = solutionVersion;
             Target = target;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Scope of instance. </summary>
         public string SolutionScope { get; }
         /// <summary> State of instance. </summary>
-        public ActiveState? ActiveState { get; set; }
+        public ActiveState? ActiveState { get; }
         /// <summary> Reconciliation policy of instance. </summary>
         public ReconciliationPolicyProperties ReconciliationPolicy { get; }
         /// <summary> Deployment Status of instance. </summary>

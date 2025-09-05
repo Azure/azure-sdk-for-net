@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    public partial class SolutionTemplatePropertiesUpdate : IUtf8JsonSerializable, IJsonModel<SolutionTemplatePropertiesUpdate>
+    public partial class SolutionTemplateUpdateProperties : IUtf8JsonSerializable, IJsonModel<SolutionTemplateUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SolutionTemplatePropertiesUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SolutionTemplateUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SolutionTemplatePropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SolutionTemplateUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SolutionTemplatePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SolutionTemplateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SolutionTemplatePropertiesUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionTemplateUpdateProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Description))
@@ -76,19 +76,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
-        SolutionTemplatePropertiesUpdate IJsonModel<SolutionTemplatePropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SolutionTemplateUpdateProperties IJsonModel<SolutionTemplateUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SolutionTemplatePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SolutionTemplateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SolutionTemplatePropertiesUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionTemplateUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSolutionTemplatePropertiesUpdate(document.RootElement, options);
+            return DeserializeSolutionTemplateUpdateProperties(document.RootElement, options);
         }
 
-        internal static SolutionTemplatePropertiesUpdate DeserializeSolutionTemplatePropertiesUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SolutionTemplateUpdateProperties DeserializeSolutionTemplateUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -147,38 +147,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SolutionTemplatePropertiesUpdate(description, capabilities ?? new ChangeTrackingList<string>(), state, enableExternalValidation, serializedAdditionalRawData);
+            return new SolutionTemplateUpdateProperties(description, capabilities ?? new ChangeTrackingList<string>(), state, enableExternalValidation, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SolutionTemplatePropertiesUpdate>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SolutionTemplateUpdateProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SolutionTemplatePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SolutionTemplateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SolutionTemplatePropertiesUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionTemplateUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SolutionTemplatePropertiesUpdate IPersistableModel<SolutionTemplatePropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SolutionTemplateUpdateProperties IPersistableModel<SolutionTemplateUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SolutionTemplatePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SolutionTemplateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSolutionTemplatePropertiesUpdate(document.RootElement, options);
+                        return DeserializeSolutionTemplateUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SolutionTemplatePropertiesUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionTemplateUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SolutionTemplatePropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SolutionTemplateUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

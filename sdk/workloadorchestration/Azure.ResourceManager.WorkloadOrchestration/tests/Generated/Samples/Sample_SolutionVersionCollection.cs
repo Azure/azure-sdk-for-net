@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WorkloadOrchestration.Models;
 using NUnit.Framework;
 
@@ -21,8 +22,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SolutionVersionsCreateOrUpdateMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionVersions_CreateOrUpdate_MaximumSet_Gen.json
-            // this example is just showing the usage of "SolutionVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/SolutionVersions_CreateOrUpdate_MaximumSet_Gen.json
+            // this example is just showing the usage of "SolutionVersion_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -46,7 +47,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             SolutionVersionData data = new SolutionVersionData
             {
                 Properties = new SolutionVersionProperties(new Dictionary<string, BinaryData>()),
-                ExtendedLocation = new AzureResourceManagerCommonTypesExtendedLocation("szjrwimeqyiue", ExtendedLocationType.EdgeZone),
+                ExtendedLocation = new ExtendedLocation
+                {
+                    Name = "szjrwimeqyiue",
+                },
             };
             ArmOperation<SolutionVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, solutionVersionName, data);
             SolutionVersionResource result = lro.Value;
@@ -62,8 +66,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SolutionVersionsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionVersions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "SolutionVersions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/SolutionVersions_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "SolutionVersion_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -97,8 +101,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SolutionVersionsListBySolutionMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionVersions_ListBySolution_MaximumSet_Gen.json
-            // this example is just showing the usage of "SolutionVersions_ListBySolution" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/SolutionVersions_ListBySolution_MaximumSet_Gen.json
+            // this example is just showing the usage of "SolutionVersion_ListBySolution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -134,8 +138,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_SolutionVersionsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionVersions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "SolutionVersions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/SolutionVersions_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "SolutionVersion_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -165,8 +169,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SolutionVersionsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionVersions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "SolutionVersions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/SolutionVersions_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "SolutionVersion_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

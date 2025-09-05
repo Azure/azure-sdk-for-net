@@ -37,11 +37,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.ToString());
-            }
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
@@ -120,7 +117,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             DateTimeOffset? endTime = default;
             string message = default;
             JobStepStatisticsBase statistics = default;
-            IList<JobStep> steps = default;
+            IReadOnlyList<JobStep> steps = default;
             ResponseError errorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();

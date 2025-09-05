@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="name"> Name of the step. </param>
         /// <param name="status"> Status of the step. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public JobStep(string name, JobStatus status)
+        internal JobStep(string name, JobStatus status)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="steps"> Nested substeps for this step. </param>
         /// <param name="errorDetails"> Error Details if any failure is there. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JobStep(string name, JobStatus status, DateTimeOffset? startOn, DateTimeOffset? endOn, string message, JobStepStatisticsBase statistics, IList<JobStep> steps, ResponseError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal JobStep(string name, JobStatus status, DateTimeOffset? startOn, DateTimeOffset? endOn, string message, JobStepStatisticsBase statistics, IReadOnlyList<JobStep> steps, ResponseError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Status = status;
@@ -91,23 +91,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Name of the step. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> Status of the step. </summary>
         public JobStatus Status { get; }
         /// <summary> Start time of the step (ISO8601). </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> End time of the step (ISO8601). </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndOn { get; }
         /// <summary> Message for the step. </summary>
-        public string Message { get; set; }
+        public string Message { get; }
         /// <summary>
         /// Statistics for the step
         /// Please note <see cref="JobStepStatisticsBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeployJobStepStatistics"/>.
         /// </summary>
-        public JobStepStatisticsBase Statistics { get; set; }
+        public JobStepStatisticsBase Statistics { get; }
         /// <summary> Nested substeps for this step. </summary>
-        public IList<JobStep> Steps { get; }
+        public IReadOnlyList<JobStep> Steps { get; }
         /// <summary> Error Details if any failure is there. </summary>
         public ResponseError ErrorDetails { get; }
     }

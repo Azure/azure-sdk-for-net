@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    public partial class ContextPropertiesUpdate : IUtf8JsonSerializable, IJsonModel<ContextPropertiesUpdate>
+    public partial class ContextUpdateProperties : IUtf8JsonSerializable, IJsonModel<ContextUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContextPropertiesUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContextUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ContextPropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContextUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContextPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContextUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContextPropertiesUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContextUpdateProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Capabilities))
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
-        ContextPropertiesUpdate IJsonModel<ContextPropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContextUpdateProperties IJsonModel<ContextUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContextPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContextUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContextPropertiesUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContextUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContextPropertiesUpdate(document.RootElement, options);
+            return DeserializeContextUpdateProperties(document.RootElement, options);
         }
 
-        internal static ContextPropertiesUpdate DeserializeContextPropertiesUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContextUpdateProperties DeserializeContextUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -131,38 +131,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContextPropertiesUpdate(capabilities ?? new ChangeTrackingList<Capability>(), hierarchies ?? new ChangeTrackingList<Hierarchy>(), serializedAdditionalRawData);
+            return new ContextUpdateProperties(capabilities ?? new ChangeTrackingList<Capability>(), hierarchies ?? new ChangeTrackingList<Hierarchy>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ContextPropertiesUpdate>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContextUpdateProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContextPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContextUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ContextPropertiesUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContextUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ContextPropertiesUpdate IPersistableModel<ContextPropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContextUpdateProperties IPersistableModel<ContextUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContextPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContextUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeContextPropertiesUpdate(document.RootElement, options);
+                        return DeserializeContextUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContextPropertiesUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContextUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ContextPropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContextUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

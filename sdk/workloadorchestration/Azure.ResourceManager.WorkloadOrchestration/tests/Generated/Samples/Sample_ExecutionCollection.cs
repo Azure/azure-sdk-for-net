@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WorkloadOrchestration.Models;
 using NUnit.Framework;
 
@@ -20,8 +21,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ExecutionsCreateOrUpdateMaximumSetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Executions_CreateOrUpdate_MaximumSet_Gen.json
-            // this example is just showing the usage of "Executions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/Executions_CreateOrUpdate_MaximumSet_Gen.json
+            // this example is just showing the usage of "Execution_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -49,7 +50,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
                 {
                     Specification = { },
                 },
-                ExtendedLocation = new AzureResourceManagerCommonTypesExtendedLocation("ugf", ExtendedLocationType.EdgeZone),
+                ExtendedLocation = new ExtendedLocation
+                {
+                    Name = "ugf",
+                },
             };
             ArmOperation<ExecutionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, executionName, data);
             ExecutionResource result = lro.Value;
@@ -65,8 +69,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ExecutionsGetMaximumSetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Executions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Executions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/Executions_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Execution_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -101,8 +105,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ExecutionsListByWorkflowVersionMaximumSetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Executions_ListByWorkflowVersion_MaximumSet_Gen.json
-            // this example is just showing the usage of "Executions_ListByWorkflowVersion" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/Executions_ListByWorkflowVersion_MaximumSet_Gen.json
+            // this example is just showing the usage of "Execution_ListByWorkflowVersion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -139,8 +143,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ExecutionsGetMaximumSetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Executions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Executions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/Executions_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Execution_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -171,8 +175,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ExecutionsGetMaximumSetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Executions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Executions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/Executions_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Execution_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

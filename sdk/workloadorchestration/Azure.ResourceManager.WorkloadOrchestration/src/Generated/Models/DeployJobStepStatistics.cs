@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public partial class DeployJobStepStatistics : JobStepStatisticsBase
     {
         /// <summary> Initializes a new instance of <see cref="DeployJobStepStatistics"/>. </summary>
-        public DeployJobStepStatistics()
+        internal DeployJobStepStatistics()
         {
             StatisticsType = JobType.Deploy;
         }
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Total count of items processed in this step. </summary>
-        public int? TotalCount { get; set; }
+        public int? TotalCount { get; }
         /// <summary> Count of successful items in this step. </summary>
-        public int? SuccessCount { get; set; }
+        public int? SuccessCount { get; }
         /// <summary> Count of failed items in this step. </summary>
-        public int? FailedCount { get; set; }
+        public int? FailedCount { get; }
     }
 }

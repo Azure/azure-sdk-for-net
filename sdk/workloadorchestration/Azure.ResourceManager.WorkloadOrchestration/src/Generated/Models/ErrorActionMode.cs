@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Error action mode. </summary>
+    /// <summary> Error Action Mode. </summary>
     public readonly partial struct ErrorActionMode : IEquatable<ErrorActionMode>
     {
         private readonly string _value;

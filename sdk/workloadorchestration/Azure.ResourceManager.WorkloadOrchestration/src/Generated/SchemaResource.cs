@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemas_Get</description>
+        /// <description>DynamicSchema_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemas_Get</description>
+        /// <description>DynamicSchema_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaVersions_Get</description>
+        /// <description>SchemaVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaVersions_Get</description>
+        /// <description>SchemaVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schemas_Get</description>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schemas_Get</description>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schemas_Delete</description>
+        /// <description>Schema_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schemas_Delete</description>
+        /// <description>Schema_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schemas_Update</description>
+        /// <description>Schema_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schemas_Update</description>
+        /// <description>Schema_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schemas_Get</description>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schemas_Get</description>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schemas_Get</description>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schemas_Get</description>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schemas_Get</description>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schemas_Get</description>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

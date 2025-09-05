@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public partial class DeployJobContent : JobParameterBase
     {
         /// <summary> Initializes a new instance of <see cref="DeployJobContent"/>. </summary>
-        public DeployJobContent()
+        internal DeployJobContent()
         {
             JobType = JobType.Deploy;
         }
@@ -22,20 +22,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="DeployJobContent"/>. </summary>
         /// <param name="jobType"> Job type discriminator value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="parameter"> Install Solution Parameter. </param>
+        /// <param name="parameter"></param>
         internal DeployJobContent(JobType jobType, IDictionary<string, BinaryData> serializedAdditionalRawData, InstallSolutionContent parameter) : base(jobType, serializedAdditionalRawData)
         {
             Parameter = parameter;
             JobType = jobType;
         }
 
-        /// <summary> Install Solution Parameter. </summary>
-        internal InstallSolutionContent Parameter { get; set; }
+        /// <summary> Gets the parameter. </summary>
+        internal InstallSolutionContent Parameter { get; }
         /// <summary> Solution Version ARM Id. </summary>
         public string ParameterSolutionVersionId
         {
-            get => Parameter is null ? default : Parameter.SolutionVersionId;
-            set => Parameter = new InstallSolutionContent(value);
+            get => Parameter?.SolutionVersionId;
         }
     }
 }

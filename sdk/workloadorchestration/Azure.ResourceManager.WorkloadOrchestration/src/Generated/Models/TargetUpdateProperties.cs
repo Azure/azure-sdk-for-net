@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Solution Version Properties. </summary>
-    internal partial class SolutionVersionPropertiesUpdate
+    /// <summary> The updatable properties of the Target. </summary>
+    public partial class TargetUpdateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,23 +46,44 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SolutionVersionPropertiesUpdate"/>. </summary>
-        public SolutionVersionPropertiesUpdate()
+        /// <summary> Initializes a new instance of <see cref="TargetUpdateProperties"/>. </summary>
+        public TargetUpdateProperties()
         {
-            Specification = new ChangeTrackingDictionary<string, BinaryData>();
+            TargetSpecification = new ChangeTrackingDictionary<string, BinaryData>();
+            Capabilities = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SolutionVersionPropertiesUpdate"/>. </summary>
-        /// <param name="specification"> App components spec. </param>
+        /// <summary> Initializes a new instance of <see cref="TargetUpdateProperties"/>. </summary>
+        /// <param name="description"> Description of target. </param>
+        /// <param name="displayName"> Display name of target. </param>
+        /// <param name="contextId"> ArmId of Context. </param>
+        /// <param name="targetSpecification"> target spec. </param>
+        /// <param name="capabilities"> List of capabilities. </param>
+        /// <param name="hierarchyLevel"> Hierarchy Level. </param>
+        /// <param name="solutionScope"> Scope of the target resource. </param>
+        /// <param name="state"> State of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionVersionPropertiesUpdate(IDictionary<string, BinaryData> specification, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TargetUpdateProperties(string description, string displayName, ResourceIdentifier contextId, IDictionary<string, BinaryData> targetSpecification, IList<string> capabilities, string hierarchyLevel, string solutionScope, ResourceState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Specification = specification;
+            Description = description;
+            DisplayName = displayName;
+            ContextId = contextId;
+            TargetSpecification = targetSpecification;
+            Capabilities = capabilities;
+            HierarchyLevel = hierarchyLevel;
+            SolutionScope = solutionScope;
+            State = state;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Description of target. </summary>
+        public string Description { get; set; }
+        /// <summary> Display name of target. </summary>
+        public string DisplayName { get; set; }
+        /// <summary> ArmId of Context. </summary>
+        public ResourceIdentifier ContextId { get; set; }
         /// <summary>
-        /// App components spec
+        /// target spec
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -90,6 +112,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Specification { get; }
+        public IDictionary<string, BinaryData> TargetSpecification { get; }
+        /// <summary> List of capabilities. </summary>
+        public IList<string> Capabilities { get; }
+        /// <summary> Hierarchy Level. </summary>
+        public string HierarchyLevel { get; set; }
+        /// <summary> Scope of the target resource. </summary>
+        public string SolutionScope { get; set; }
+        /// <summary> State of resource. </summary>
+        public ResourceState? State { get; set; }
     }
 }

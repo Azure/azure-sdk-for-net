@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solutions_Get</description>
+        /// <description>Solution_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solutions_Get</description>
+        /// <description>Solution_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_Get</description>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_Get</description>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_Delete</description>
+        /// <description>Target_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_Delete</description>
+        /// <description>Target_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_Update</description>
+        /// <description>Target_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_Update</description>
+        /// <description>Target_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -510,15 +510,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         }
 
         /// <summary>
-        /// Post request to publish
+        /// Post request to uninstall
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/publishSolutionVersion</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/uninstallSolution</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_PublishSolutionVersion</description>
+        /// <description>Targets_UninstallSolution</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -534,18 +534,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SolutionVersionResource>> PublishSolutionVersionAsync(WaitUntil waitUntil, SolutionVersionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UninstallSolutionAsync(WaitUntil waitUntil, UninstallSolutionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _targetClientDiagnostics.CreateScope("TargetResource.PublishSolutionVersion");
+            using var scope = _targetClientDiagnostics.CreateScope("TargetResource.UninstallSolution");
             scope.Start();
             try
             {
-                var response = await _targetRestClient.PublishSolutionVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<SolutionVersionResource>(new SolutionVersionOperationSource(Client), _targetClientDiagnostics, Pipeline, _targetRestClient.CreatePublishSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _targetRestClient.UninstallSolutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadOrchestrationArmOperation(_targetClientDiagnostics, Pipeline, _targetRestClient.CreateUninstallSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -556,15 +556,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         }
 
         /// <summary>
-        /// Post request to publish
+        /// Post request to uninstall
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/publishSolutionVersion</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/uninstallSolution</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_PublishSolutionVersion</description>
+        /// <description>Targets_UninstallSolution</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -580,18 +580,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SolutionVersionResource> PublishSolutionVersion(WaitUntil waitUntil, SolutionVersionContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation UninstallSolution(WaitUntil waitUntil, UninstallSolutionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _targetClientDiagnostics.CreateScope("TargetResource.PublishSolutionVersion");
+            using var scope = _targetClientDiagnostics.CreateScope("TargetResource.UninstallSolution");
             scope.Start();
             try
             {
-                var response = _targetRestClient.PublishSolutionVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<SolutionVersionResource>(new SolutionVersionOperationSource(Client), _targetClientDiagnostics, Pipeline, _targetRestClient.CreatePublishSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _targetRestClient.UninstallSolution(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new WorkloadOrchestrationArmOperation(_targetClientDiagnostics, Pipeline, _targetRestClient.CreateUninstallSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -878,15 +878,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         }
 
         /// <summary>
-        /// Post request to uninstall
+        /// Post request to publish
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/uninstallSolution</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/publishSolutionVersion</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_UninstallSolution</description>
+        /// <description>Targets_PublishSolutionVersion</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -902,18 +902,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> UninstallSolutionAsync(WaitUntil waitUntil, UninstallSolutionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SolutionVersionResource>> PublishSolutionVersionAsync(WaitUntil waitUntil, SolutionVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _targetClientDiagnostics.CreateScope("TargetResource.UninstallSolution");
+            using var scope = _targetClientDiagnostics.CreateScope("TargetResource.PublishSolutionVersion");
             scope.Start();
             try
             {
-                var response = await _targetRestClient.UninstallSolutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation(_targetClientDiagnostics, Pipeline, _targetRestClient.CreateUninstallSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _targetRestClient.PublishSolutionVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadOrchestrationArmOperation<SolutionVersionResource>(new SolutionVersionOperationSource(Client), _targetClientDiagnostics, Pipeline, _targetRestClient.CreatePublishSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -924,15 +924,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         }
 
         /// <summary>
-        /// Post request to uninstall
+        /// Post request to publish
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/uninstallSolution</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/publishSolutionVersion</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_UninstallSolution</description>
+        /// <description>Targets_PublishSolutionVersion</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -948,18 +948,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation UninstallSolution(WaitUntil waitUntil, UninstallSolutionContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SolutionVersionResource> PublishSolutionVersion(WaitUntil waitUntil, SolutionVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _targetClientDiagnostics.CreateScope("TargetResource.UninstallSolution");
+            using var scope = _targetClientDiagnostics.CreateScope("TargetResource.PublishSolutionVersion");
             scope.Start();
             try
             {
-                var response = _targetRestClient.UninstallSolution(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation(_targetClientDiagnostics, Pipeline, _targetRestClient.CreateUninstallSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _targetRestClient.PublishSolutionVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new WorkloadOrchestrationArmOperation<SolutionVersionResource>(new SolutionVersionOperationSource(Client), _targetClientDiagnostics, Pipeline, _targetRestClient.CreatePublishSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -1070,7 +1070,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_Get</description>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1132,7 +1132,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_Get</description>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1194,7 +1194,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_Get</description>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1251,7 +1251,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_Get</description>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1308,7 +1308,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_Get</description>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1368,7 +1368,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_Get</description>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

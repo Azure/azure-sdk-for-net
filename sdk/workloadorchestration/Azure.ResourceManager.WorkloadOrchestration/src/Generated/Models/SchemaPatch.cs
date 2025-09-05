@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Schema Resource. </summary>
-    public partial class SchemaPatch : ResourceData
+    /// <summary> The type used for update operations of the Schema. </summary>
+    public partial class SchemaPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -54,14 +52,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SchemaPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SchemaPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SchemaProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SchemaPatch(SchemaUpdateProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             Tags = tags;
@@ -69,7 +63,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public SchemaProperties Properties { get; set; }
+        public SchemaUpdateProperties Properties { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

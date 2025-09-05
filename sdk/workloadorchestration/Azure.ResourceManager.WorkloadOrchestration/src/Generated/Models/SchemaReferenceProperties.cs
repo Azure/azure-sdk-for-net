@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="SchemaReferenceProperties"/>. </summary>
         /// <param name="schemaId"> Schema Id of schema reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
-        public SchemaReferenceProperties(string schemaId)
+        internal SchemaReferenceProperties(string schemaId)
         {
             Argument.AssertNotNull(schemaId, nameof(schemaId));
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Schema Id of schema reference. </summary>
-        public string SchemaId { get; set; }
+        public string SchemaId { get; }
         /// <summary> Provisioning state of resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

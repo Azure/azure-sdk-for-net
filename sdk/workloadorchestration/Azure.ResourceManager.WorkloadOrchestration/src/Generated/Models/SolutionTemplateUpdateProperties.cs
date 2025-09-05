@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Instance Properties. </summary>
-    public partial class InstancePropertiesUpdate
+    /// <summary> The updatable properties of the SolutionTemplate. </summary>
+    public partial class SolutionTemplateUpdateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +45,34 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="InstancePropertiesUpdate"/>. </summary>
-        public InstancePropertiesUpdate()
+        /// <summary> Initializes a new instance of <see cref="SolutionTemplateUpdateProperties"/>. </summary>
+        public SolutionTemplateUpdateProperties()
         {
+            Capabilities = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InstancePropertiesUpdate"/>. </summary>
-        /// <param name="solutionVersionId"> Solution version of instance. </param>
-        /// <param name="targetId"> Target of instance. </param>
-        /// <param name="activeState"> State of instance. </param>
-        /// <param name="reconciliationPolicy"> Reconciliation policy of instance. </param>
-        /// <param name="solutionScope"> Scope of instance. </param>
+        /// <summary> Initializes a new instance of <see cref="SolutionTemplateUpdateProperties"/>. </summary>
+        /// <param name="description"> Description of Solution template. </param>
+        /// <param name="capabilities"> List of capabilities. </param>
+        /// <param name="state"> State of resource. </param>
+        /// <param name="enableExternalValidation"> Flag to enable external validation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstancePropertiesUpdate(string solutionVersionId, string targetId, ActiveState? activeState, ReconciliationPolicyPropertiesUpdate reconciliationPolicy, string solutionScope, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SolutionTemplateUpdateProperties(string description, IList<string> capabilities, ResourceState? state, bool? enableExternalValidation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SolutionVersionId = solutionVersionId;
-            TargetId = targetId;
-            ActiveState = activeState;
-            ReconciliationPolicy = reconciliationPolicy;
-            SolutionScope = solutionScope;
+            Description = description;
+            Capabilities = capabilities;
+            State = state;
+            EnableExternalValidation = enableExternalValidation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Solution version of instance. </summary>
-        public string SolutionVersionId { get; set; }
-        /// <summary> Target of instance. </summary>
-        public string TargetId { get; set; }
-        /// <summary> State of instance. </summary>
-        public ActiveState? ActiveState { get; set; }
-        /// <summary> Reconciliation policy of instance. </summary>
-        public ReconciliationPolicyPropertiesUpdate ReconciliationPolicy { get; set; }
-        /// <summary> Scope of instance. </summary>
-        public string SolutionScope { get; set; }
+        /// <summary> Description of Solution template. </summary>
+        public string Description { get; set; }
+        /// <summary> List of capabilities. </summary>
+        public IList<string> Capabilities { get; }
+        /// <summary> State of resource. </summary>
+        public ResourceState? State { get; set; }
+        /// <summary> Flag to enable external validation. </summary>
+        public bool? EnableExternalValidation { get; set; }
     }
 }

@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Config Template Resource. Contains configuration expressions using the predefined expression language. </summary>
-    public partial class ConfigTemplatePatch : ResourceData
+    /// <summary> The type used for update operations of the ConfigTemplate. </summary>
+    public partial class ConfigTemplatePatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -54,35 +52,30 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfigTemplatePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigTemplatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConfigTemplatePropertiesUpdate properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConfigTemplatePatch(IDictionary<string, string> tags, ConfigTemplateUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
             Tags = tags;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal ConfigTemplatePropertiesUpdate Properties { get; set; }
+        internal ConfigTemplateUpdateProperties Properties { get; set; }
         /// <summary> Description of config template. </summary>
-        public string ConfigTemplatePropertiesUpdateDescription
+        public string ConfigTemplateUpdateDescription
         {
             get => Properties is null ? default : Properties.Description;
             set
             {
                 if (Properties is null)
-                    Properties = new ConfigTemplatePropertiesUpdate();
+                    Properties = new ConfigTemplateUpdateProperties();
                 Properties.Description = value;
             }
         }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
     }
 }

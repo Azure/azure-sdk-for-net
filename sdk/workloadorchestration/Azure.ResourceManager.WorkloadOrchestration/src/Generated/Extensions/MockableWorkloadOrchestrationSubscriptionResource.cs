@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableWorkloadOrchestrationSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _configTemplateClientDiagnostics;
-        private ConfigTemplatesRestOperations _configTemplateRestClient;
-        private ClientDiagnostics _contextClientDiagnostics;
-        private ContextsRestOperations _contextRestClient;
-        private ClientDiagnostics _diagnosticClientDiagnostics;
-        private DiagnosticsRestOperations _diagnosticRestClient;
         private ClientDiagnostics _schemaClientDiagnostics;
         private SchemasRestOperations _schemaRestClient;
-        private ClientDiagnostics _solutionTemplateClientDiagnostics;
-        private SolutionTemplatesRestOperations _solutionTemplateRestClient;
         private ClientDiagnostics _targetClientDiagnostics;
         private TargetsRestOperations _targetRestClient;
+        private ClientDiagnostics _solutionTemplateClientDiagnostics;
+        private SolutionTemplatesRestOperations _solutionTemplateRestClient;
+        private ClientDiagnostics _configTemplateClientDiagnostics;
+        private ConfigTemplatesRestOperations _configTemplateRestClient;
+        private ClientDiagnostics _diagnosticClientDiagnostics;
+        private DiagnosticsRestOperations _diagnosticRestClient;
+        private ClientDiagnostics _contextClientDiagnostics;
+        private ContextsRestOperations _contextRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableWorkloadOrchestrationSubscriptionResource"/> class for mocking. </summary>
         protected MockableWorkloadOrchestrationSubscriptionResource()
@@ -40,18 +40,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         {
         }
 
-        private ClientDiagnostics ConfigTemplateClientDiagnostics => _configTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ConfigTemplateResource.ResourceType.Namespace, Diagnostics);
-        private ConfigTemplatesRestOperations ConfigTemplateRestClient => _configTemplateRestClient ??= new ConfigTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConfigTemplateResource.ResourceType));
-        private ClientDiagnostics ContextClientDiagnostics => _contextClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ContextResource.ResourceType.Namespace, Diagnostics);
-        private ContextsRestOperations ContextRestClient => _contextRestClient ??= new ContextsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContextResource.ResourceType));
-        private ClientDiagnostics DiagnosticClientDiagnostics => _diagnosticClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", DiagnosticResource.ResourceType.Namespace, Diagnostics);
-        private DiagnosticsRestOperations DiagnosticRestClient => _diagnosticRestClient ??= new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DiagnosticResource.ResourceType));
         private ClientDiagnostics SchemaClientDiagnostics => _schemaClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", SchemaResource.ResourceType.Namespace, Diagnostics);
         private SchemasRestOperations SchemaRestClient => _schemaRestClient ??= new SchemasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SchemaResource.ResourceType));
-        private ClientDiagnostics SolutionTemplateClientDiagnostics => _solutionTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", SolutionTemplateResource.ResourceType.Namespace, Diagnostics);
-        private SolutionTemplatesRestOperations SolutionTemplateRestClient => _solutionTemplateRestClient ??= new SolutionTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SolutionTemplateResource.ResourceType));
         private ClientDiagnostics TargetClientDiagnostics => _targetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", TargetResource.ResourceType.Namespace, Diagnostics);
         private TargetsRestOperations TargetRestClient => _targetRestClient ??= new TargetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TargetResource.ResourceType));
+        private ClientDiagnostics SolutionTemplateClientDiagnostics => _solutionTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", SolutionTemplateResource.ResourceType.Namespace, Diagnostics);
+        private SolutionTemplatesRestOperations SolutionTemplateRestClient => _solutionTemplateRestClient ??= new SolutionTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SolutionTemplateResource.ResourceType));
+        private ClientDiagnostics ConfigTemplateClientDiagnostics => _configTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ConfigTemplateResource.ResourceType.Namespace, Diagnostics);
+        private ConfigTemplatesRestOperations ConfigTemplateRestClient => _configTemplateRestClient ??= new ConfigTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConfigTemplateResource.ResourceType));
+        private ClientDiagnostics DiagnosticClientDiagnostics => _diagnosticClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", DiagnosticResource.ResourceType.Namespace, Diagnostics);
+        private DiagnosticsRestOperations DiagnosticRestClient => _diagnosticRestClient ??= new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DiagnosticResource.ResourceType));
+        private ClientDiagnostics ContextClientDiagnostics => _contextClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ContextResource.ResourceType.Namespace, Diagnostics);
+        private ContextsRestOperations ContextRestClient => _contextRestClient ??= new ContextsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContextResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -64,191 +64,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/configTemplates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigTemplates_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConfigTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfigTemplateResource> GetConfigTemplatesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfigTemplateResource(Client, ConfigTemplateData.DeserializeConfigTemplateData(e)), ConfigTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetConfigTemplates", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/configTemplates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigTemplates_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConfigTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfigTemplateResource> GetConfigTemplates(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfigTemplateResource(Client, ConfigTemplateData.DeserializeConfigTemplateData(e)), ConfigTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetConfigTemplates", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/contexts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Contexts_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContextResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContextResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContextResource> GetContextsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ContextRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContextRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContextResource(Client, ContextData.DeserializeContextData(e)), ContextClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetContexts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/contexts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Contexts_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContextResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContextResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContextResource> GetContexts(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ContextRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContextRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContextResource(Client, ContextData.DeserializeContextData(e)), ContextClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetContexts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists Diagnostics resources within an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/diagnostics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DiagnosticResource> GetDiagnosticsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiagnosticRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiagnosticRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiagnosticResource(Client, DiagnosticData.DeserializeDiagnosticData(e)), DiagnosticClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetDiagnostics", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists Diagnostics resources within an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/diagnostics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DiagnosticResource> GetDiagnostics(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiagnosticRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiagnosticRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiagnosticResource(Client, DiagnosticData.DeserializeDiagnosticData(e)), DiagnosticClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetDiagnostics", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/schemas</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schemas_ListBySubscription</description>
+        /// <description>Schema_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -278,7 +98,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schemas_ListBySubscription</description>
+        /// <description>Schema_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -304,71 +124,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/solutionTemplates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTemplates_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SolutionTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SolutionTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SolutionTemplateResource> GetSolutionTemplatesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SolutionTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SolutionTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SolutionTemplateResource(Client, SolutionTemplateData.DeserializeSolutionTemplateData(e)), SolutionTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetSolutionTemplates", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/solutionTemplates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTemplates_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SolutionTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SolutionTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SolutionTemplateResource> GetSolutionTemplates(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SolutionTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SolutionTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SolutionTemplateResource(Client, SolutionTemplateData.DeserializeSolutionTemplateData(e)), SolutionTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetSolutionTemplates", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/targets</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_ListBySubscription</description>
+        /// <description>Target_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -398,7 +158,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Targets_ListBySubscription</description>
+        /// <description>Target_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -417,6 +177,246 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => TargetRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TargetRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TargetResource(Client, TargetData.DeserializeTargetData(e)), TargetClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetTargets", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List by subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/solutionTemplates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SolutionTemplate_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SolutionTemplateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SolutionTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SolutionTemplateResource> GetSolutionTemplatesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SolutionTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SolutionTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SolutionTemplateResource(Client, SolutionTemplateData.DeserializeSolutionTemplateData(e)), SolutionTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetSolutionTemplates", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List by subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/solutionTemplates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SolutionTemplate_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SolutionTemplateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SolutionTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SolutionTemplateResource> GetSolutionTemplates(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SolutionTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SolutionTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SolutionTemplateResource(Client, SolutionTemplateData.DeserializeSolutionTemplateData(e)), SolutionTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetSolutionTemplates", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List by subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/configTemplates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigTemplate_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfigTemplateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ConfigTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConfigTemplateResource> GetConfigTemplatesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfigTemplateResource(Client, ConfigTemplateData.DeserializeConfigTemplateData(e)), ConfigTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetConfigTemplates", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List by subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/configTemplates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigTemplate_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfigTemplateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConfigTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConfigTemplateResource> GetConfigTemplates(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfigTemplateResource(Client, ConfigTemplateData.DeserializeConfigTemplateData(e)), ConfigTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetConfigTemplates", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists Diagnostics resources within an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/diagnostics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostic_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiagnosticResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiagnosticResource> GetDiagnosticsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DiagnosticRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiagnosticRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiagnosticResource(Client, DiagnosticData.DeserializeDiagnosticData(e)), DiagnosticClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetDiagnostics", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists Diagnostics resources within an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/diagnostics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostic_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiagnosticResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiagnosticResource> GetDiagnostics(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DiagnosticRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiagnosticRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiagnosticResource(Client, DiagnosticData.DeserializeDiagnosticData(e)), DiagnosticClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetDiagnostics", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List by subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/contexts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Context_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContextResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContextResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContextResource> GetContextsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContextRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContextRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContextResource(Client, ContextData.DeserializeContextData(e)), ContextClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetContexts", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List by subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/contexts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Context_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContextResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContextResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContextResource> GetContexts(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContextRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContextRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContextResource(Client, ContextData.DeserializeContextData(e)), ContextClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetContexts", "value", "nextLink", cancellationToken);
         }
     }
 }

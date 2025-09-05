@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WorkloadOrchestration.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation, options);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
         }
 
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             }
             TargetProperties properties = default;
             string etag = default;
-            AzureResourceManagerCommonTypesExtendedLocation extendedLocation = default;
+            ExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         continue;
                     }
-                    extendedLocation = AzureResourceManagerCommonTypesExtendedLocation.DeserializeAzureResourceManagerCommonTypesExtendedLocation(property.Value, options);
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerWorkloadOrchestrationContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

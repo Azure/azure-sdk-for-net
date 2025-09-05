@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="JobProperties"/>. </summary>
         /// <param name="jobType"> The type of job. </param>
         /// <param name="status"> Status of the job. </param>
-        public JobProperties(JobType jobType, JobStatus status)
+        internal JobProperties(JobType jobType, JobStatus status)
         {
             JobType = jobType;
             Status = status;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="errorDetails"> Error Details if any failure is there. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JobProperties(JobType jobType, DateTimeOffset? startOn, DateTimeOffset? endOn, JobStatus status, JobParameterBase jobParameter, string correlationId, IList<JobStep> steps, string triggeredBy, ProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal JobProperties(JobType jobType, DateTimeOffset? startOn, DateTimeOffset? endOn, JobStatus status, JobParameterBase jobParameter, string correlationId, IReadOnlyList<JobStep> steps, string triggeredBy, ProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobType = jobType;
             StartOn = startOn;
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> The type of job. </summary>
-        public JobType JobType { get; set; }
+        public JobType JobType { get; }
         /// <summary> Start time of the job (ISO8601). </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> End time of the job (ISO8601). </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndOn { get; }
         /// <summary> Status of the job. </summary>
         public JobStatus Status { get; }
         /// <summary>
@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// Please note <see cref="JobParameterBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeployJobContent"/>.
         /// </summary>
-        public JobParameterBase JobParameter { get; set; }
+        public JobParameterBase JobParameter { get; }
         /// <summary> Correlation ID for tracking. </summary>
-        public string CorrelationId { get; set; }
+        public string CorrelationId { get; }
         /// <summary> Steps and substatuses for the job. </summary>
-        public IList<JobStep> Steps { get; }
+        public IReadOnlyList<JobStep> Steps { get; }
         /// <summary> The OID or identity that triggered the job. </summary>
-        public string TriggeredBy { get; set; }
+        public string TriggeredBy { get; }
         /// <summary> Provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Error Details if any failure is there. </summary>

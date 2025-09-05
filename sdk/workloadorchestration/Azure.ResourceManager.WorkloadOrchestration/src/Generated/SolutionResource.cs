@@ -89,75 +89,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of InstanceResources in the Solution. </summary>
-        /// <returns> An object representing collection of InstanceResources and their operations over a InstanceResource. </returns>
-        public virtual InstanceCollection GetInstances()
-        {
-            return GetCachedClient(client => new InstanceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get Instance Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="instanceName"> Name of the instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<InstanceResource>> GetInstanceAsync(string instanceName, CancellationToken cancellationToken = default)
-        {
-            return await GetInstances().GetAsync(instanceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get Instance Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="instanceName"> Name of the instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<InstanceResource> GetInstance(string instanceName, CancellationToken cancellationToken = default)
-        {
-            return GetInstances().Get(instanceName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of SolutionVersionResources in the Solution. </summary>
         /// <returns> An object representing collection of SolutionVersionResources and their operations over a SolutionVersionResource. </returns>
         public virtual SolutionVersionCollection GetSolutionVersions()
@@ -174,7 +105,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionVersions_Get</description>
+        /// <description>SolutionVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -205,7 +136,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionVersions_Get</description>
+        /// <description>SolutionVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -227,6 +158,75 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return GetSolutionVersions().Get(solutionVersionName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of InstanceResources in the Solution. </summary>
+        /// <returns> An object representing collection of InstanceResources and their operations over a InstanceResource. </returns>
+        public virtual InstanceCollection GetInstances()
+        {
+            return GetCachedClient(client => new InstanceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get Instance Resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Instance_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="instanceName"> Name of the instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<InstanceResource>> GetInstanceAsync(string instanceName, CancellationToken cancellationToken = default)
+        {
+            return await GetInstances().GetAsync(instanceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Instance Resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Instance_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="instanceName"> Name of the instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<InstanceResource> GetInstance(string instanceName, CancellationToken cancellationToken = default)
+        {
+            return GetInstances().Get(instanceName, cancellationToken);
+        }
+
         /// <summary>
         /// Get a Solution resource
         /// <list type="bullet">
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solutions_Get</description>
+        /// <description>Solution_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solutions_Get</description>
+        /// <description>Solution_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solutions_Delete</description>
+        /// <description>Solution_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solutions_Delete</description>
+        /// <description>Solution_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solutions_Update</description>
+        /// <description>Solution_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solutions_Update</description>
+        /// <description>Solution_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

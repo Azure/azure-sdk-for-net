@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_InstancesGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Instances_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Instances_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/Instances_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Instance_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_InstancesDeleteMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Instances_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "Instances_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/Instances_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "Instance_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_InstancesUpdateMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Instances_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "Instances_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/Instances_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "Instance_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -99,22 +99,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             InstanceResource instance = client.GetInstanceResource(instanceResourceId);
 
             // invoke the operation
-            InstancePatch patch = new InstancePatch
+            InstanceData data = new InstanceData
             {
-                Properties = new InstancePropertiesUpdate
+                Properties = new InstanceProperties("vrpzlamkvanqibtjarpxit", "tqkdvc")
                 {
-                    SolutionVersionId = "vrpzlamkvanqibtjarpxit",
-                    TargetId = "tqkdvc",
                     ActiveState = ActiveState.Active,
-                    ReconciliationPolicy = new ReconciliationPolicyPropertiesUpdate
-                    {
-                        State = ReconciliationState.Inactive,
-                        Interval = "cmzlrjwnlshnkgv",
-                    },
+                    ReconciliationPolicy = new ReconciliationPolicyProperties(ReconciliationState.Inactive, "cmzlrjwnlshnkgv"),
                     SolutionScope = "testname",
                 },
             };
-            ArmOperation<InstanceResource> lro = await instance.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<InstanceResource> lro = await instance.UpdateAsync(WaitUntil.Completed, data);
             InstanceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

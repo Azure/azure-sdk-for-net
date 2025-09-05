@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Site Reference Properties. </summary>
-    internal partial class SiteReferencePropertiesUpdate
+    /// <summary> The updatable properties of the Diagnostic. </summary>
+    public partial class DiagnosticUpdateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SiteReferencePropertiesUpdate"/>. </summary>
-        public SiteReferencePropertiesUpdate()
+        /// <summary> Initializes a new instance of <see cref="DiagnosticUpdateProperties"/>. </summary>
+        public DiagnosticUpdateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SiteReferencePropertiesUpdate"/>. </summary>
-        /// <param name="siteId"> Azure Resource ID for Site. </param>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticUpdateProperties"/>. </summary>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteReferencePropertiesUpdate(string siteId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiagnosticUpdateProperties(IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SiteId = siteId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Azure Resource ID for Site. </summary>
-        public string SiteId { get; set; }
     }
 }

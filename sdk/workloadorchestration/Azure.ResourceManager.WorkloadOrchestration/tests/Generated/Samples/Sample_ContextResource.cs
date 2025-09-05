@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ContextsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Contexts_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Contexts_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/Contexts_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Context_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ContextsDeleteMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Contexts_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "Contexts_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/Contexts_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "Context_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ContextsUpdateMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Contexts_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "Contexts_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/Contexts_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "Context_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -95,7 +95,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             // invoke the operation
             ContextPatch patch = new ContextPatch
             {
-                Properties = new ContextPropertiesUpdate
+                Tags =
+{
+["key9545"] = "dhxykbzgliyqxxizttbjhuruhhv"
+},
+                Properties = new ContextUpdateProperties
                 {
                     Capabilities = {new Capability("tpylinjcmlnycfpofpxjtqmt", "banbenutsngwytoqh")
 {
@@ -103,10 +107,6 @@ State = ResourceState.Active,
 }},
                     Hierarchies = { new Hierarchy("upqe", "vg") },
                 },
-                Tags =
-{
-["key9545"] = "dhxykbzgliyqxxizttbjhuruhhv"
-},
             };
             ArmOperation<ContextResource> lro = await context.UpdateAsync(WaitUntil.Completed, patch);
             ContextResource result = lro.Value;

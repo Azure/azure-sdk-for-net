@@ -11,7 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.WorkloadOrchestration.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
@@ -28,10 +27,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="schemaName"> The schemaName. </param>
         /// <param name="dynamicSchemaName"> The dynamicSchemaName. </param>
-        /// <param name="schemaVersionName"> The schemaVersionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, string schemaVersionName)
+        /// <param name="dynamicSchemaVersionName"> The dynamicSchemaVersionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, string dynamicSchemaVersionName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{schemaVersionName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{dynamicSchemaVersionName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -95,11 +94,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{schemaVersionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{dynamicSchemaVersionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersions_Get</description>
+        /// <description>DynamicSchemaVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -135,11 +134,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{schemaVersionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{dynamicSchemaVersionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersions_Get</description>
+        /// <description>DynamicSchemaVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -175,11 +174,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{schemaVersionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{dynamicSchemaVersionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersions_Delete</description>
+        /// <description>DynamicSchemaVersion_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -217,11 +216,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{schemaVersionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{dynamicSchemaVersionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersions_Delete</description>
+        /// <description>DynamicSchemaVersion_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -259,11 +258,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{schemaVersionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{dynamicSchemaVersionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersions_Update</description>
+        /// <description>DynamicSchemaVersion_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -275,18 +274,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<DynamicSchemaVersionResource>> UpdateAsync(DynamicSchemaVersionPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<DynamicSchemaVersionResource>> UpdateAsync(DynamicSchemaVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dynamicSchemaVersionClientDiagnostics.CreateScope("DynamicSchemaVersionResource.Update");
             scope.Start();
             try
             {
-                var response = await _dynamicSchemaVersionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var response = await _dynamicSchemaVersionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DynamicSchemaVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,11 +300,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{schemaVersionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{dynamicSchemaVersionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersions_Update</description>
+        /// <description>DynamicSchemaVersion_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -317,18 +316,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<DynamicSchemaVersionResource> Update(DynamicSchemaVersionPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<DynamicSchemaVersionResource> Update(DynamicSchemaVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dynamicSchemaVersionClientDiagnostics.CreateScope("DynamicSchemaVersionResource.Update");
             scope.Start();
             try
             {
-                var response = _dynamicSchemaVersionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var response = _dynamicSchemaVersionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new DynamicSchemaVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

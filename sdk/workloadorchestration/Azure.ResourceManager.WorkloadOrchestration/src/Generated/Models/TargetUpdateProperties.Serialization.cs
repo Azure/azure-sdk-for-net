@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    public partial class TargetPropertiesUpdate : IUtf8JsonSerializable, IJsonModel<TargetPropertiesUpdate>
+    public partial class TargetUpdateProperties : IUtf8JsonSerializable, IJsonModel<TargetUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetPropertiesUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TargetPropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TargetUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TargetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetPropertiesUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetUpdateProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Description))
@@ -114,19 +114,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
-        TargetPropertiesUpdate IJsonModel<TargetPropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TargetUpdateProperties IJsonModel<TargetUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TargetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetPropertiesUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTargetPropertiesUpdate(document.RootElement, options);
+            return DeserializeTargetUpdateProperties(document.RootElement, options);
         }
 
-        internal static TargetPropertiesUpdate DeserializeTargetPropertiesUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TargetUpdateProperties DeserializeTargetUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TargetPropertiesUpdate(
+            return new TargetUpdateProperties(
                 description,
                 displayName,
                 contextId,
@@ -237,35 +237,35 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<TargetPropertiesUpdate>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TargetUpdateProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TargetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TargetPropertiesUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TargetPropertiesUpdate IPersistableModel<TargetPropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TargetUpdateProperties IPersistableModel<TargetUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TargetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTargetPropertiesUpdate(document.RootElement, options);
+                        return DeserializeTargetUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TargetPropertiesUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TargetPropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TargetUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

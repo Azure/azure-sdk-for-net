@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkflowVersionsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/WorkflowVersions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "WorkflowVersions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/WorkflowVersions_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "WorkflowVersion_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_WorkflowVersionsDeleteMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/WorkflowVersions_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "WorkflowVersions_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/WorkflowVersions_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "WorkflowVersion_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_WorkflowVersionsUpdateMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/WorkflowVersions_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "WorkflowVersions_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/WorkflowVersions_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "WorkflowVersion_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             WorkflowVersionResource workflowVersion = client.GetWorkflowVersionResource(workflowVersionResourceId);
 
             // invoke the operation
-            WorkflowVersionPatch patch = new WorkflowVersionPatch
+            WorkflowVersionData data = new WorkflowVersionData
             {
-                Properties = new WorkflowVersionPropertiesUpdate
-                {
-                    StageSpec = {new StageSpec("amrbjd")
+                Properties = new WorkflowVersionProperties(new StageSpec[]
+            {
+new StageSpec("amrbjd")
 {
 Specification = {},
 Tasks = {new TaskSpec("xxmeyvmgydbcwxqwjhadjxjod", new Dictionary<string, BinaryData>())
@@ -120,11 +120,13 @@ Mode = ErrorActionMode.StopOnAnyFailure,
 MaxToleratedFailures = 0,
 },
 },
-}},
+}
+            })
+                {
                     Specification = { },
                 },
             };
-            ArmOperation<WorkflowVersionResource> lro = await workflowVersion.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<WorkflowVersionResource> lro = await workflowVersion.UpdateAsync(WaitUntil.Completed, data);
             WorkflowVersionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

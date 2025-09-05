@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    internal partial class SchemaVersionPropertiesUpdate : IUtf8JsonSerializable, IJsonModel<SchemaVersionPropertiesUpdate>
+    internal partial class ConfigTemplateUpdateProperties : IUtf8JsonSerializable, IJsonModel<ConfigTemplateUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SchemaVersionPropertiesUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigTemplateUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SchemaVersionPropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConfigTemplateUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchemaVersionPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigTemplateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchemaVersionPropertiesUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigTemplateUpdateProperties)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Value))
+            if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
-        SchemaVersionPropertiesUpdate IJsonModel<SchemaVersionPropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConfigTemplateUpdateProperties IJsonModel<ConfigTemplateUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchemaVersionPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigTemplateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchemaVersionPropertiesUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigTemplateUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSchemaVersionPropertiesUpdate(document.RootElement, options);
+            return DeserializeConfigTemplateUpdateProperties(document.RootElement, options);
         }
 
-        internal static SchemaVersionPropertiesUpdate DeserializeSchemaVersionPropertiesUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ConfigTemplateUpdateProperties DeserializeConfigTemplateUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 return null;
             }
-            string value = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"u8))
+                if (property.NameEquals("description"u8))
                 {
-                    value = property.Value.GetString();
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -92,38 +92,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SchemaVersionPropertiesUpdate(value, serializedAdditionalRawData);
+            return new ConfigTemplateUpdateProperties(description, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SchemaVersionPropertiesUpdate>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ConfigTemplateUpdateProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchemaVersionPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigTemplateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SchemaVersionPropertiesUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigTemplateUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SchemaVersionPropertiesUpdate IPersistableModel<SchemaVersionPropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ConfigTemplateUpdateProperties IPersistableModel<ConfigTemplateUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchemaVersionPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigTemplateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSchemaVersionPropertiesUpdate(document.RootElement, options);
+                        return DeserializeConfigTemplateUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SchemaVersionPropertiesUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigTemplateUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SchemaVersionPropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConfigTemplateUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

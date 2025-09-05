@@ -11,7 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.WorkloadOrchestration.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
@@ -101,11 +100,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{schemaVersionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{dynamicSchemaVersionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersions_Get</description>
+        /// <description>DynamicSchemaVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -117,14 +116,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="schemaVersionName"> The name of the SchemaVersion. </param>
+        /// <param name="dynamicSchemaVersionName"> The name of the DynamicSchemaVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaVersionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dynamicSchemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DynamicSchemaVersionResource>> GetDynamicSchemaVersionAsync(string schemaVersionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DynamicSchemaVersionResource>> GetDynamicSchemaVersionAsync(string dynamicSchemaVersionName, CancellationToken cancellationToken = default)
         {
-            return await GetDynamicSchemaVersions().GetAsync(schemaVersionName, cancellationToken).ConfigureAwait(false);
+            return await GetDynamicSchemaVersions().GetAsync(dynamicSchemaVersionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -132,11 +131,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{schemaVersionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}/versions/{dynamicSchemaVersionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersions_Get</description>
+        /// <description>DynamicSchemaVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -148,14 +147,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="schemaVersionName"> The name of the SchemaVersion. </param>
+        /// <param name="dynamicSchemaVersionName"> The name of the DynamicSchemaVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaVersionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dynamicSchemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DynamicSchemaVersionResource> GetDynamicSchemaVersion(string schemaVersionName, CancellationToken cancellationToken = default)
+        public virtual Response<DynamicSchemaVersionResource> GetDynamicSchemaVersion(string dynamicSchemaVersionName, CancellationToken cancellationToken = default)
         {
-            return GetDynamicSchemaVersions().Get(schemaVersionName, cancellationToken);
+            return GetDynamicSchemaVersions().Get(dynamicSchemaVersionName, cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemas_Get</description>
+        /// <description>DynamicSchema_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -207,7 +206,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemas_Get</description>
+        /// <description>DynamicSchema_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -247,7 +246,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemas_Delete</description>
+        /// <description>DynamicSchema_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -289,7 +288,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemas_Delete</description>
+        /// <description>DynamicSchema_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -331,7 +330,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemas_Update</description>
+        /// <description>DynamicSchema_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -343,18 +342,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<DynamicSchemaResource>> UpdateAsync(DynamicSchemaPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<DynamicSchemaResource>> UpdateAsync(DynamicSchemaData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dynamicSchemaClientDiagnostics.CreateScope("DynamicSchemaResource.Update");
             scope.Start();
             try
             {
-                var response = await _dynamicSchemaRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var response = await _dynamicSchemaRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DynamicSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -373,7 +372,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemas_Update</description>
+        /// <description>DynamicSchema_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -385,18 +384,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<DynamicSchemaResource> Update(DynamicSchemaPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<DynamicSchemaResource> Update(DynamicSchemaData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dynamicSchemaClientDiagnostics.CreateScope("DynamicSchemaResource.Update");
             scope.Start();
             try
             {
-                var response = _dynamicSchemaRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var response = _dynamicSchemaRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new DynamicSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

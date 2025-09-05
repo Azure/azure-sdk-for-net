@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DynamicSchemaVersionsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/DynamicSchemaVersions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "DynamicSchemaVersions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/DynamicSchemaVersions_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "DynamicSchemaVersion_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             string resourceGroupName = "rgconfigurationmanager";
             string schemaName = "testname";
             string dynamicSchemaName = "testname";
-            string schemaVersionName = "1.0.0";
-            ResourceIdentifier dynamicSchemaVersionResourceId = DynamicSchemaVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, schemaName, dynamicSchemaName, schemaVersionName);
+            string dynamicSchemaVersionName = "1.0.0";
+            ResourceIdentifier dynamicSchemaVersionResourceId = DynamicSchemaVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, schemaName, dynamicSchemaName, dynamicSchemaVersionName);
             DynamicSchemaVersionResource dynamicSchemaVersion = client.GetDynamicSchemaVersionResource(dynamicSchemaVersionResourceId);
 
             // invoke the operation
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DynamicSchemaVersionsDeleteMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/DynamicSchemaVersions_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "DynamicSchemaVersions_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/DynamicSchemaVersions_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "DynamicSchemaVersion_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             string resourceGroupName = "rgconfigurationmanager";
             string schemaName = "testname";
             string dynamicSchemaName = "testname";
-            string schemaVersionName = "1.0.0";
-            ResourceIdentifier dynamicSchemaVersionResourceId = DynamicSchemaVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, schemaName, dynamicSchemaName, schemaVersionName);
+            string dynamicSchemaVersionName = "1.0.0";
+            ResourceIdentifier dynamicSchemaVersionResourceId = DynamicSchemaVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, schemaName, dynamicSchemaName, dynamicSchemaVersionName);
             DynamicSchemaVersionResource dynamicSchemaVersion = client.GetDynamicSchemaVersionResource(dynamicSchemaVersionResourceId);
 
             // invoke the operation
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_DynamicSchemaVersionsUpdateMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/DynamicSchemaVersions_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "DynamicSchemaVersions_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/DynamicSchemaVersions_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "DynamicSchemaVersion_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -94,16 +94,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             string resourceGroupName = "rgconfigurationmanager";
             string schemaName = "testname";
             string dynamicSchemaName = "testname";
-            string schemaVersionName = "1.0.0";
-            ResourceIdentifier dynamicSchemaVersionResourceId = DynamicSchemaVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, schemaName, dynamicSchemaName, schemaVersionName);
+            string dynamicSchemaVersionName = "1.0.0";
+            ResourceIdentifier dynamicSchemaVersionResourceId = DynamicSchemaVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, schemaName, dynamicSchemaName, dynamicSchemaVersionName);
             DynamicSchemaVersionResource dynamicSchemaVersion = client.GetDynamicSchemaVersionResource(dynamicSchemaVersionResourceId);
 
             // invoke the operation
-            DynamicSchemaVersionPatch patch = new DynamicSchemaVersionPatch
+            DynamicSchemaVersionData data = new DynamicSchemaVersionData
             {
-                SchemaVersionPropertiesUpdateValue = "muezi",
+                Properties = new SchemaVersionProperties("muezi"),
             };
-            DynamicSchemaVersionResource result = await dynamicSchemaVersion.UpdateAsync(patch);
+            DynamicSchemaVersionResource result = await dynamicSchemaVersion.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>Job_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>Job_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaReferences_Get</description>
+        /// <description>SchemaReference_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaReferences_Get</description>
+        /// <description>SchemaReference_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -182,63 +182,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="JobResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobResource.CreateResourceIdentifier" /> to create a <see cref="JobResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DynamicSchemaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DynamicSchemaResource.CreateResourceIdentifier" /> to create a <see cref="DynamicSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobResource"/> object. </returns>
-        public virtual JobResource GetJobResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DynamicSchemaResource"/> object. </returns>
+        public virtual DynamicSchemaResource GetDynamicSchemaResource(ResourceIdentifier id)
         {
-            JobResource.ValidateResourceId(id);
-            return new JobResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SchemaReferenceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SchemaReferenceResource.CreateResourceIdentifier" /> to create a <see cref="SchemaReferenceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SchemaReferenceResource"/> object. </returns>
-        public virtual SchemaReferenceResource GetSchemaReferenceResource(ResourceIdentifier id)
-        {
-            SchemaReferenceResource.ValidateResourceId(id);
-            return new SchemaReferenceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ConfigTemplateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigTemplateResource.CreateResourceIdentifier" /> to create a <see cref="ConfigTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigTemplateResource"/> object. </returns>
-        public virtual ConfigTemplateResource GetConfigTemplateResource(ResourceIdentifier id)
-        {
-            ConfigTemplateResource.ValidateResourceId(id);
-            return new ConfigTemplateResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContextResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContextResource.CreateResourceIdentifier" /> to create a <see cref="ContextResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContextResource"/> object. </returns>
-        public virtual ContextResource GetContextResource(ResourceIdentifier id)
-        {
-            ContextResource.ValidateResourceId(id);
-            return new ContextResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public virtual DiagnosticResource GetDiagnosticResource(ResourceIdentifier id)
-        {
-            DiagnosticResource.ValidateResourceId(id);
-            return new DiagnosticResource(Client, id);
+            DynamicSchemaResource.ValidateResourceId(id);
+            return new DynamicSchemaResource(Client, id);
         }
 
         /// <summary>
@@ -254,15 +206,39 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SolutionTemplateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SolutionTemplateResource.CreateResourceIdentifier" /> to create a <see cref="SolutionTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SchemaVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SchemaVersionResource.CreateResourceIdentifier" /> to create a <see cref="SchemaVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SolutionTemplateResource"/> object. </returns>
-        public virtual SolutionTemplateResource GetSolutionTemplateResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SchemaVersionResource"/> object. </returns>
+        public virtual SchemaVersionResource GetSchemaVersionResource(ResourceIdentifier id)
         {
-            SolutionTemplateResource.ValidateResourceId(id);
-            return new SolutionTemplateResource(Client, id);
+            SchemaVersionResource.ValidateResourceId(id);
+            return new SchemaVersionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SolutionVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SolutionVersionResource.CreateResourceIdentifier" /> to create a <see cref="SolutionVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SolutionVersionResource"/> object. </returns>
+        public virtual SolutionVersionResource GetSolutionVersionResource(ResourceIdentifier id)
+        {
+            SolutionVersionResource.ValidateResourceId(id);
+            return new SolutionVersionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="JobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobResource.CreateResourceIdentifier" /> to create a <see cref="JobResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JobResource"/> object. </returns>
+        public virtual JobResource GetJobResource(ResourceIdentifier id)
+        {
+            JobResource.ValidateResourceId(id);
+            return new JobResource(Client, id);
         }
 
         /// <summary>
@@ -278,6 +254,102 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="DynamicSchemaVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DynamicSchemaVersionResource.CreateResourceIdentifier" /> to create a <see cref="DynamicSchemaVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DynamicSchemaVersionResource"/> object. </returns>
+        public virtual DynamicSchemaVersionResource GetDynamicSchemaVersionResource(ResourceIdentifier id)
+        {
+            DynamicSchemaVersionResource.ValidateResourceId(id);
+            return new DynamicSchemaVersionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SchemaReferenceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SchemaReferenceResource.CreateResourceIdentifier" /> to create a <see cref="SchemaReferenceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SchemaReferenceResource"/> object. </returns>
+        public virtual SchemaReferenceResource GetSchemaReferenceResource(ResourceIdentifier id)
+        {
+            SchemaReferenceResource.ValidateResourceId(id);
+            return new SchemaReferenceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SolutionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SolutionResource.CreateResourceIdentifier" /> to create a <see cref="SolutionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SolutionResource"/> object. </returns>
+        public virtual SolutionResource GetSolutionResource(ResourceIdentifier id)
+        {
+            SolutionResource.ValidateResourceId(id);
+            return new SolutionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SolutionTemplateVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SolutionTemplateVersionResource.CreateResourceIdentifier" /> to create a <see cref="SolutionTemplateVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SolutionTemplateVersionResource"/> object. </returns>
+        public virtual SolutionTemplateVersionResource GetSolutionTemplateVersionResource(ResourceIdentifier id)
+        {
+            SolutionTemplateVersionResource.ValidateResourceId(id);
+            return new SolutionTemplateVersionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SolutionTemplateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SolutionTemplateResource.CreateResourceIdentifier" /> to create a <see cref="SolutionTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SolutionTemplateResource"/> object. </returns>
+        public virtual SolutionTemplateResource GetSolutionTemplateResource(ResourceIdentifier id)
+        {
+            SolutionTemplateResource.ValidateResourceId(id);
+            return new SolutionTemplateResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="InstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InstanceResource.CreateResourceIdentifier" /> to create an <see cref="InstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="InstanceResource"/> object. </returns>
+        public virtual InstanceResource GetInstanceResource(ResourceIdentifier id)
+        {
+            InstanceResource.ValidateResourceId(id);
+            return new InstanceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="InstanceHistoryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InstanceHistoryResource.CreateResourceIdentifier" /> to create an <see cref="InstanceHistoryResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="InstanceHistoryResource"/> object. </returns>
+        public virtual InstanceHistoryResource GetInstanceHistoryResource(ResourceIdentifier id)
+        {
+            InstanceHistoryResource.ValidateResourceId(id);
+            return new InstanceHistoryResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ConfigTemplateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConfigTemplateResource.CreateResourceIdentifier" /> to create a <see cref="ConfigTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ConfigTemplateResource"/> object. </returns>
+        public virtual ConfigTemplateResource GetConfigTemplateResource(ResourceIdentifier id)
+        {
+            ConfigTemplateResource.ValidateResourceId(id);
+            return new ConfigTemplateResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ConfigTemplateVersionResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ConfigTemplateVersionResource.CreateResourceIdentifier" /> to create a <see cref="ConfigTemplateVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -287,18 +359,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         {
             ConfigTemplateVersionResource.ValidateResourceId(id);
             return new ConfigTemplateVersionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteReferenceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteReferenceResource.CreateResourceIdentifier" /> to create a <see cref="SiteReferenceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteReferenceResource"/> object. </returns>
-        public virtual SiteReferenceResource GetSiteReferenceResource(ResourceIdentifier id)
-        {
-            SiteReferenceResource.ValidateResourceId(id);
-            return new SiteReferenceResource(Client, id);
         }
 
         /// <summary>
@@ -338,99 +398,39 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DynamicSchemaResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DynamicSchemaResource.CreateResourceIdentifier" /> to create a <see cref="DynamicSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DynamicSchemaResource"/> object. </returns>
-        public virtual DynamicSchemaResource GetDynamicSchemaResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
+        public virtual DiagnosticResource GetDiagnosticResource(ResourceIdentifier id)
         {
-            DynamicSchemaResource.ValidateResourceId(id);
-            return new DynamicSchemaResource(Client, id);
+            DiagnosticResource.ValidateResourceId(id);
+            return new DiagnosticResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DynamicSchemaVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DynamicSchemaVersionResource.CreateResourceIdentifier" /> to create a <see cref="DynamicSchemaVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ContextResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContextResource.CreateResourceIdentifier" /> to create a <see cref="ContextResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DynamicSchemaVersionResource"/> object. </returns>
-        public virtual DynamicSchemaVersionResource GetDynamicSchemaVersionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContextResource"/> object. </returns>
+        public virtual ContextResource GetContextResource(ResourceIdentifier id)
         {
-            DynamicSchemaVersionResource.ValidateResourceId(id);
-            return new DynamicSchemaVersionResource(Client, id);
+            ContextResource.ValidateResourceId(id);
+            return new ContextResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SchemaVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SchemaVersionResource.CreateResourceIdentifier" /> to create a <see cref="SchemaVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SiteReferenceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteReferenceResource.CreateResourceIdentifier" /> to create a <see cref="SiteReferenceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SchemaVersionResource"/> object. </returns>
-        public virtual SchemaVersionResource GetSchemaVersionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteReferenceResource"/> object. </returns>
+        public virtual SiteReferenceResource GetSiteReferenceResource(ResourceIdentifier id)
         {
-            SchemaVersionResource.ValidateResourceId(id);
-            return new SchemaVersionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SolutionTemplateVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SolutionTemplateVersionResource.CreateResourceIdentifier" /> to create a <see cref="SolutionTemplateVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SolutionTemplateVersionResource"/> object. </returns>
-        public virtual SolutionTemplateVersionResource GetSolutionTemplateVersionResource(ResourceIdentifier id)
-        {
-            SolutionTemplateVersionResource.ValidateResourceId(id);
-            return new SolutionTemplateVersionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SolutionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SolutionResource.CreateResourceIdentifier" /> to create a <see cref="SolutionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SolutionResource"/> object. </returns>
-        public virtual SolutionResource GetSolutionResource(ResourceIdentifier id)
-        {
-            SolutionResource.ValidateResourceId(id);
-            return new SolutionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="InstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InstanceResource.CreateResourceIdentifier" /> to create an <see cref="InstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InstanceResource"/> object. </returns>
-        public virtual InstanceResource GetInstanceResource(ResourceIdentifier id)
-        {
-            InstanceResource.ValidateResourceId(id);
-            return new InstanceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="InstanceHistoryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InstanceHistoryResource.CreateResourceIdentifier" /> to create an <see cref="InstanceHistoryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InstanceHistoryResource"/> object. </returns>
-        public virtual InstanceHistoryResource GetInstanceHistoryResource(ResourceIdentifier id)
-        {
-            InstanceHistoryResource.ValidateResourceId(id);
-            return new InstanceHistoryResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SolutionVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SolutionVersionResource.CreateResourceIdentifier" /> to create a <see cref="SolutionVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SolutionVersionResource"/> object. </returns>
-        public virtual SolutionVersionResource GetSolutionVersionResource(ResourceIdentifier id)
-        {
-            SolutionVersionResource.ValidateResourceId(id);
-            return new SolutionVersionResource(Client, id);
+            SiteReferenceResource.ValidateResourceId(id);
+            return new SiteReferenceResource(Client, id);
         }
     }
 }

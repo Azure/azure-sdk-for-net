@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Capability, to match in Solution Templates &amp; Targets. </summary>
+    /// <summary> Capability, to match in Solution Templates and Targets. </summary>
     public partial class Capability
     {
         /// <summary>

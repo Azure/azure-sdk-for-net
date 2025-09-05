@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Solution Template Resource. Contains capabilities and operations for creating versions. </summary>
-    public partial class SolutionTemplatePatch : ResourceData
+    /// <summary> The type used for update operations of the SolutionTemplate. </summary>
+    public partial class SolutionTemplatePatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -54,23 +52,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SolutionTemplatePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionTemplatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SolutionTemplatePropertiesUpdate properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SolutionTemplatePatch(IDictionary<string, string> tags, SolutionTemplateUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
             Tags = tags;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public SolutionTemplatePropertiesUpdate Properties { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public SolutionTemplateUpdateProperties Properties { get; set; }
     }
 }

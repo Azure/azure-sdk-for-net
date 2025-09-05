@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> A Diagnostic resource. </summary>
-    public partial class DiagnosticPatch : ResourceData
+    /// <summary> The type used for update operations of the Diagnostic. </summary>
+    public partial class DiagnosticPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -54,14 +52,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DiagnosticProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DiagnosticPatch(DiagnosticUpdateProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             Tags = tags;
@@ -69,13 +63,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal DiagnosticProperties Properties { get; set; }
-        /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? DiagnosticProvisioningState
-        {
-            get => Properties is null ? default : Properties.ProvisioningState;
-        }
-
+        public DiagnosticUpdateProperties Properties { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

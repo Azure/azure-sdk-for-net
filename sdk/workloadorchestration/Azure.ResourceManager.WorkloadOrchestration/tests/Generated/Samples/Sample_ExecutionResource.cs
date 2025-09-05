@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ExecutionsGetMaximumSetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Executions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Executions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/Executions_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Execution_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ExecutionsDeleteMaximumSetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Executions_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "Executions_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/Executions_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "Execution_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ExecutionsUpdateMaximumSetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Executions_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "Executions_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01/Executions_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "Execution_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -102,15 +102,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             ExecutionResource execution = client.GetExecutionResource(executionResourceId);
 
             // invoke the operation
-            ExecutionPatch patch = new ExecutionPatch
+            ExecutionData data = new ExecutionData
             {
-                Properties = new ExecutionPropertiesUpdate
+                Properties = new ExecutionProperties("xjsxzbfltzvbuvn")
                 {
-                    WorkflowVersionId = "xjsxzbfltzvbuvn",
                     Specification = { },
                 },
             };
-            ArmOperation<ExecutionResource> lro = await execution.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<ExecutionResource> lro = await execution.UpdateAsync(WaitUntil.Completed, data);
             ExecutionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

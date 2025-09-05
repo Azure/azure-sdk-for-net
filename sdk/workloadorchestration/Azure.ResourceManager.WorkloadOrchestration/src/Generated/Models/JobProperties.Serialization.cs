@@ -47,11 +47,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.ToString());
-            }
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
             if (Optional.IsDefined(JobParameter))
             {
                 writer.WritePropertyName("jobParameter"u8);
@@ -130,7 +127,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             JobStatus status = default;
             JobParameterBase jobParameter = default;
             string correlationId = default;
-            IList<JobStep> steps = default;
+            IReadOnlyList<JobStep> steps = default;
             string triggeredBy = default;
             ProvisioningState? provisioningState = default;
             ResponseError errorDetails = default;

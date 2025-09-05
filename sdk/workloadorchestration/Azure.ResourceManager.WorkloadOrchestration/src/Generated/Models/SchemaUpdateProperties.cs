@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Instance Resource. Represents a deployment object. </summary>
-    public partial class InstancePatch : ResourceData
+    /// <summary> The updatable properties of the Schema. </summary>
+    public partial class SchemaUpdateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,25 +45,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="InstancePatch"/>. </summary>
-        public InstancePatch()
+        /// <summary> Initializes a new instance of <see cref="SchemaUpdateProperties"/>. </summary>
+        public SchemaUpdateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InstancePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="SchemaUpdateProperties"/>. </summary>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstancePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, InstancePropertiesUpdate properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SchemaUpdateProperties(IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public InstancePropertiesUpdate Properties { get; set; }
     }
 }

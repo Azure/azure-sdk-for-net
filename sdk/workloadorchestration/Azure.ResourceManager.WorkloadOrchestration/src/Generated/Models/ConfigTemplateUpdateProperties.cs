@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Site Reference Resource. </summary>
-    public partial class SiteReferencePatch : ResourceData
+    /// <summary> The updatable properties of the ConfigTemplate. </summary>
+    internal partial class ConfigTemplateUpdateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,36 +45,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SiteReferencePatch"/>. </summary>
-        public SiteReferencePatch()
+        /// <summary> Initializes a new instance of <see cref="ConfigTemplateUpdateProperties"/>. </summary>
+        public ConfigTemplateUpdateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SiteReferencePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="ConfigTemplateUpdateProperties"/>. </summary>
+        /// <param name="description"> Description of config template. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteReferencePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteReferencePropertiesUpdate properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConfigTemplateUpdateProperties(string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            Description = description;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        internal SiteReferencePropertiesUpdate Properties { get; set; }
-        /// <summary> Azure Resource ID for Site. </summary>
-        public string SiteId
-        {
-            get => Properties is null ? default : Properties.SiteId;
-            set
-            {
-                if (Properties is null)
-                    Properties = new SiteReferencePropertiesUpdate();
-                Properties.SiteId = value;
-            }
-        }
+        /// <summary> Description of config template. </summary>
+        public string Description { get; set; }
     }
 }
