@@ -87,11 +87,26 @@ namespace Azure.AI.VoiceLive
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AudioInputTranscriptionSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AudioInputTranscriptionSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum AudioInputTranscriptionSettingsModel
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AudioInputTranscriptionSettingsModel : System.IEquatable<Azure.AI.VoiceLive.AudioInputTranscriptionSettingsModel>
     {
-        Whisper1 = 0,
-        AzureFastTranscription = 1,
-        S2sIngraph = 2,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AudioInputTranscriptionSettingsModel(string value) { throw null; }
+        public static Azure.AI.VoiceLive.AudioInputTranscriptionSettingsModel AzureFastTranscription { get { throw null; } }
+        public static Azure.AI.VoiceLive.AudioInputTranscriptionSettingsModel AzureSpeech { get { throw null; } }
+        public static Azure.AI.VoiceLive.AudioInputTranscriptionSettingsModel S2sIngraph { get { throw null; } }
+        public static Azure.AI.VoiceLive.AudioInputTranscriptionSettingsModel Whisper1 { get { throw null; } }
+        public bool Equals(Azure.AI.VoiceLive.AudioInputTranscriptionSettingsModel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.VoiceLive.AudioInputTranscriptionSettingsModel left, Azure.AI.VoiceLive.AudioInputTranscriptionSettingsModel right) { throw null; }
+        public static implicit operator Azure.AI.VoiceLive.AudioInputTranscriptionSettingsModel (string value) { throw null; }
+        public static implicit operator Azure.AI.VoiceLive.AudioInputTranscriptionSettingsModel? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.VoiceLive.AudioInputTranscriptionSettingsModel left, Azure.AI.VoiceLive.AudioInputTranscriptionSettingsModel right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AudioNoiseReduction : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.AudioNoiseReduction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AudioNoiseReduction>
     {
@@ -1976,7 +1991,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.AnimationOptions AnimationOptions(string modelName = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.AnimationOutputType> outputs = null, int? emotionDetectionIntervalMs = default(int?)) { throw null; }
         public static Azure.AI.VoiceLive.AssistantMessageItem AssistantMessageItem(string id = null, Azure.AI.VoiceLive.ItemParamStatus? status = default(Azure.AI.VoiceLive.ItemParamStatus?), System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.OutputTextContentPart> content = null) { throw null; }
         public static Azure.AI.VoiceLive.AudioEchoCancellation AudioEchoCancellation(string type = null) { throw null; }
-        public static Azure.AI.VoiceLive.AudioInputTranscriptionSettings AudioInputTranscriptionSettings(Azure.AI.VoiceLive.AudioInputTranscriptionSettingsModel model = Azure.AI.VoiceLive.AudioInputTranscriptionSettingsModel.Whisper1, string language = null, bool enabled = false, bool customModel = false) { throw null; }
+        public static Azure.AI.VoiceLive.AudioInputTranscriptionSettings AudioInputTranscriptionSettings(Azure.AI.VoiceLive.AudioInputTranscriptionSettingsModel model = default(Azure.AI.VoiceLive.AudioInputTranscriptionSettingsModel), string language = null, bool enabled = false, bool customModel = false) { throw null; }
         public static Azure.AI.VoiceLive.AudioNoiseReduction AudioNoiseReduction(string type = null) { throw null; }
         public static Azure.AI.VoiceLive.AvatarConfig AvatarConfig(System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.IceServer> iceServers = null, string character = null, string style = null, bool customized = false, Azure.AI.VoiceLive.VideoParams video = null) { throw null; }
         public static Azure.AI.VoiceLive.AzureCustomVoice AzureCustomVoice(string name = null, string endpointId = null, float? temperature = default(float?), string customLexiconUri = null, System.Collections.Generic.IEnumerable<string> preferLocales = null, string locale = null, string style = null, string pitch = null, string rate = null, string volume = null) { throw null; }

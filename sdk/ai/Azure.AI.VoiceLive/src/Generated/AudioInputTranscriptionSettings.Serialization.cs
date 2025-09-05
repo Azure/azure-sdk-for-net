@@ -39,7 +39,7 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(AudioInputTranscriptionSettings)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("model"u8);
-            writer.WriteStringValue(Model.ToSerialString());
+            writer.WriteStringValue(Model.ToString());
             if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
@@ -100,7 +100,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("model"u8))
                 {
-                    model = prop.Value.GetString().ToAudioInputTranscriptionSettingsModel();
+                    model = new AudioInputTranscriptionSettingsModel(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("language"u8))
