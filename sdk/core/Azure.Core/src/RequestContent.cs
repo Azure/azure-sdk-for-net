@@ -328,7 +328,6 @@ namespace Azure.Core
                     stream.Write(memory.Span);
                 }
 #else
-
                 byte[] buffer = _bytes.ToArray();
                 stream.Write(buffer, 0, buffer.Length);
 #endif
