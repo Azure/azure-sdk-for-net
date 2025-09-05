@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.Identity.Credentials;
 
 namespace Azure.Identity
 {

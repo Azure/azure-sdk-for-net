@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Azure.Identity.Credentials;
 
 namespace Azure.Identity
 {
