@@ -9,13 +9,13 @@ trim_trailing_whitespace = true
 # Default settings:
 # A newline ending every file
 # Use 4 spaces as indentation
-[sdk/*/{Azure.*,System.*}/**]
+[sdk/*/{Azure.*,System.*,Microsoft.ClientModel.*}/**]
 insert_final_newline = true
 indent_style = space
 indent_size = 4
 
 # C# files
-[sdk/*/{Azure.*,System.*}/**.cs]
+[sdk/*/{Azure.*,System.*,Microsoft.ClientModel.*}/**.cs]
 # New line preferences
 csharp_new_line_before_open_brace = all # vs-default: any
 csharp_new_line_before_else = true # vs-default: true
@@ -164,6 +164,11 @@ dotnet_style_require_accessibility_modifiers = for_non_interface_members:suggest
 
 # Analyzers
 dotnet_code_quality.ca1802.api_surface = private, internal
+
+# Microsoft.ClientModel.TestFramework specific settings
+[sdk/core/Microsoft.ClientModel.TestFramework/**/*.cs]
+# Ensure NUnit analyzers are enabled
+dotnet_analyzer_diagnostic.category-nunit.severity = default
 
 # Xml project files
 [*.{csproj,vcxproj,vcxproj.filters,proj,nativeproj,locproj}]
