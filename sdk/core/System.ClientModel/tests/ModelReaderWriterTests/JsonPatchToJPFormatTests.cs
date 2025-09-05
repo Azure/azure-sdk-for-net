@@ -97,5 +97,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             Assert.AreEqual("[{\"op\":\"replace\",\"path\":\"/x/0/y\",\"value\":\"value2\"}]", jp.ToString());
         }
+
+        [Test]
+        public void SetValueButNoChange()
+        {
+            JsonPatch jp = new("{\"x\":[{\"y\":\"value\"}]}"u8.ToArray());
+
+            jp.Set("$.x[0].y"u8, "value");
+
+            Assert.AreEqual("[]", jp.ToString());
+        }
     }
 }

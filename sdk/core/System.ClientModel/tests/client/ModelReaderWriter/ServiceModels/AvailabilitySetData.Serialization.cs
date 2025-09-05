@@ -21,7 +21,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<AvailabilitySetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilitySetData)} does not support writing '{format}' format.");
+                    throw new FormatException($"The model {nameof(AvailabilitySetData)} does not support writing '{format}' format.");
             }
             Serialize(writer, options);
         }
@@ -108,7 +108,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                 {
                     writer.WritePropertyName("virtualMachines"u8);
                     writer.WriteStartArray();
-                    for (int i=0; i< VirtualMachines.Count; i++)
+                    for (int i = 0; i < VirtualMachines.Count; i++)
                     {
                         if (VirtualMachines[i].Patch.IsRemoved("$"u8))
                             continue;

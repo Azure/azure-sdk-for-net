@@ -13,6 +13,7 @@ public partial struct JsonPatch
 {
     /// <summary>
     /// Writes the JSON representation of the JsonPatch to the specified Utf8JsonWriter for the specified JSON path.
+    /// Writes in standard JSON format.
     /// </summary>
     /// <param name="writer">The Utf8JsonWriter to write to.</param>
     /// <param name="jsonPath">The JSON path to write.</param>
@@ -43,6 +44,7 @@ public partial struct JsonPatch
 
     /// <summary>
     /// Writes the JSON representation of the specified array to the specified Utf8JsonWriter.
+    /// Writes in standard JSON format.
     /// </summary>
     /// <param name="writer">The Utf8JsonWriter to write to.</param>
     /// <param name="arrayPath">The JSON path of the array to write.</param>
@@ -238,39 +240,46 @@ public partial struct JsonPatch
 
     private void WriteAsJsonPatchTo(Utf8JsonWriter writer)
     {
-        writer.WriteStartArray();
-
         if (_properties is null)
-        {
-            writer.WriteEndObject();
             return;
-        }
 
         bool isSeeded = !_rawJson.Value.IsEmpty;
         ReadOnlyMemory<byte> rawJson = _rawJson.Value;
+
         // need to add extra space for append characters and escape characters.
         Span<byte> jsonPointerBuffer = stackalloc byte[_properties.MaxKeyLength << 1];
-        // TODO: need to get all patches that were propagated
+
+        // if we are attached to a model then we need to always write out the patch even if the values are the same as the original
+        // raw json because we don't know if the clr property was updated
+        bool isAttachedToModel = _propagatorGetter is not null || _propagatorSetter is not null || _propagatorIsFlattened is not null;
+
         foreach (var kvp in _properties)
         {
-            writer.WriteStartObject();
-            writer.WritePropertyName("op"u8);
+            ReadOnlySpan<byte> opType;
             bool isArrayItemAppend = kvp.Value.Kind.HasFlag(ValueKind.ArrayItemAppend);
             if (kvp.Value.Kind == ValueKind.Removed)
             {
-                writer.WriteStringValue("remove");
+                opType = "remove"u8;
             }
             else
             {
-                if (isArrayItemAppend || !isSeeded || !rawJson.TryGetJson(kvp.Key, out _))
+                if (isArrayItemAppend || !isSeeded || !rawJson.TryGetJson(kvp.Key, out var currentValue))
                 {
-                    writer.WriteStringValue("add");
+                    opType = "add"u8;
                 }
                 else
                 {
-                    writer.WriteStringValue("replace");
+                    if (!isAttachedToModel && kvp.Value.Value.Span.SequenceEqual(currentValue.Span))
+                    {
+                        // same value we can skip
+                        continue;
+                    }
+                    opType = "replace"u8;
                 }
             }
+            writer.WriteStartObject();
+            writer.WritePropertyName("op"u8);
+            writer.WriteStringValue(opType);
             writer.WritePropertyName("path"u8);
             int bytesWritten = kvp.Key.ConvertToJsonPointer(jsonPointerBuffer, isArrayItemAppend);
             writer.WriteStringValue(jsonPointerBuffer.Slice(0, bytesWritten));
@@ -288,8 +297,6 @@ public partial struct JsonPatch
             }
             writer.WriteEndObject();
         }
-
-        writer.WriteEndArray();
     }
 
     private string SerializeToJson()
@@ -309,7 +316,9 @@ public partial struct JsonPatch
     {
         using UnsafeBufferSequence buffer = new();
         using Utf8JsonWriter writer = new(buffer);
+        writer.WriteStartArray();
         WriteAsJsonPatchTo(writer);
+        writer.WriteEndArray();
         writer.Flush();
 #if NET6_0_OR_GREATER
         return Encoding.UTF8.GetString(buffer.ExtractReader().ToBinaryData().ToMemory().Span);
