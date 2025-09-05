@@ -7,7 +7,18 @@ Your goal is to guide the user through the process of generating SDKs from TypeS
 
 Wait for the user to respond with a confirmation before proceeding to Step 1. Use the provided tools to perform actions and gather information as needed.
 
-## Step 1: Identify TypeSpec Project
+## Step 0: Choose Scenario
+**Actions**:
+1. Prompt user: "What do you want to do?"
+    - Option A: "Generate SDK locally for development/testing"
+    - Option B: "Generate SDK for release purposes"
+2. Based on user selection, proceed to the appropriate step:
+    - If Option A: **IMMEDIATELY** refer to #file:local-sdk-workflow.instructions.md and **STOP HERE**
+    - If Option B: Continue to Step 1 for full release workflow
+
+**Important**: Do not continue to Step 1 if user selected local generation!
+
+## Step 1: Identify TypeSpec Project (Release Workflow Only)
 **Goal**: Locate the TypeSpec project root path
 **Actions**:
 1. Check if `tspconfig.yaml` or `main.tsp` files are open in editor
@@ -53,29 +64,18 @@ Wait for the user to respond with a confirmation before proceeding to Step 1. Us
     - Run `git push -u origin <current-branch-name>`
 **Success Criteria**: Changes committed and pushed to remote branch
 
-## Step 5: Choose SDK Generation Method
-**Goal**: Determine how to generate SDKs
-**Actions**:
-1. Present options: "How would you like to generate SDKs?"
-    - Option A: "Generate SDK locally". This is currently supported only for Python. Do not recommend this for other languages.
-    - Option B: "Use SDK generation pipeline"
-2. Based on selection:
-    - If Option A: Refer to #file:local-sdk-workflow.instructions.md and then proceed to Step 6
-    - If Option B: Continue to Step 6
-**Success Criteria**: SDK generation method selected
-
-## Step 6: Create Specification Pull Request
+## Step 5: Create Specification Pull Request
 **Goal**: Create PR for TypeSpec changes if not already created
 **Actions**:
 1. Check if spec PR already exists using `azsdk_get_pull_request_link_for_current_branch`
-2. If PR exists, display PR details and proceed to Step 7
+2. If PR exists, display PR details and proceed to Step 6
 3. If no PR exists:
     - Refer to #file:create-spec-pullrequest.instructions.md
     - Wait for PR creation confirmation
     - Display created PR details
 **Success Criteria**: Specification pull request exists
 
-## Step 7: Generate SDKs via Pipeline
+## Step 6: Generate SDKs via Pipeline
 **Goal**: Create release plan and generate SDKs
 **Actions**:
 1. Refer to #file:create-release-plan.instructions.md
@@ -87,12 +87,12 @@ Wait for the user to respond with a confirmation before proceeding to Step 1. Us
 7. Display generated SDK PR links when available
 **Success Criteria**: SDK generation pipeline initiated and SDKs generated
 
-## Step 8: Show Generated SDK PRs
+## Step 7: Show Generated SDK PRs
 **Goal**: Display all created SDK pull requests
 **Actions**:
 1. Run `azsdk_get_sdk_pull_request_link` to fetch generated SDK PR info.
 
-## Step 9: Validate Label and Codeowners
+## Step 8: Validate Label and Codeowners
 **Goal**: Validate the label and all codeowners for a service. Create new label and codeowner entry if none exist.
 **Actions**:
 1. To validate a service label refer to #file:./validate-service-label.instructions.md
@@ -102,19 +102,19 @@ Wait for the user to respond with a confirmation before proceeding to Step 1. Us
    - **If new label or codeowner entries were created**: Display details of the label and codeowners PR if they were created, then prompt user "The following PRs have been created for your service configuration: [list PRs]. Would you like to make any additional modifications to these entries?"
 **Success Criteria**: Service label exists and codeowners are properly configured with at least 2 valid owners. For created entries, showcase all PR's.
 
-## Step 10: Create release plan
+## Step 9: Create release plan
 **Goal**: Create a release plan for the generated SDKs
 **Actions**:
 1. Refer to #file:create-release-plan.instructions.md to create a release plan using the spec pull request.
 2. If the release plan already exists, display the existing plan details.
 
-## Step 11: Mark Spec PR as Ready for Review
+## Step 10: Mark Spec PR as Ready for Review
 **Goal**: Update spec PR to ready for review status
 **Actions**:
 1. Prompt user to change spec PR to ready for review: "Please change the spec pull request to ready for review status"
 2. Get approval and merge the spec PR
 
-## Step 12: Release SDK Package
+## Step 11: Release SDK Package
 **Goal**: Release the SDK package using the release plan
 **Actions**:
 1. Run `ReleaseSdkPackage` to release the SDK package.
