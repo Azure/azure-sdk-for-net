@@ -163,9 +163,10 @@ You can update the `connectionName` with one of the connections in your Foundry 
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
+
 Console.WriteLine("Create the Azure OpenAI chat client");
 var credential = new DefaultAzureCredential();
-AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
+AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
 ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
 

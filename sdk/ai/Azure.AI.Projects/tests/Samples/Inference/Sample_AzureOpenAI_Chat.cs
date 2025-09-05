@@ -38,9 +38,10 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
         }
 
 #endif
+
         Console.WriteLine("Create the Azure OpenAI chat client");
         var credential = new DefaultAzureCredential();
-        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
+        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
         ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
 
@@ -83,7 +84,7 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
 #endif
         Console.WriteLine("Create the Azure OpenAI chat client");
         var credential = new DefaultAzureCredential();
-        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
+        AIProjectClient projectClient = new(new Uri(endpoint), credential);
 
         ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
 
