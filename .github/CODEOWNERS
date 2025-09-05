@@ -1156,12 +1156,6 @@
 # ServiceLabel: %SiteManager %Mgmt
 # ServiceOwners:                                                   @bsomeshekar
 
-# PRLabel: %Migration Assessment
-/sdk/migrationassessment/Azure.ResourceManager.*/                  @srilipta-swain
-
-# ServiceLabel: %Migration Assessment %Mgmt
-# ServiceOwners:                                                   @srilipta-swain
-
 # ServiceLabel: %Virtual Enclaves %Mgmt
 # ServiceOwners:                                                   @jchavaherrera @Azure/azure-virtual-enclaves
 
