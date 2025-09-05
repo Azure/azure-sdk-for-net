@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveADeletedVault()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2024-11-01/examples/getDeletedVault.json
+            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/getDeletedVault.json
             // this example is just showing the usage of "Vaults_GetDeleted" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task PurgeDeleted_PurgeADeletedVault()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2024-11-01/examples/purgeDeletedVault.json
+            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/purgeDeletedVault.json
             // this example is just showing the usage of "Vaults_PurgeDeleted" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
