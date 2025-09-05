@@ -11,104 +11,22 @@ using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
-using System.Net;
 
 namespace Azure.Provisioning.Network;
 
 /// <summary>
-/// BackendAddressPool.
+/// ProbeResource.
 /// </summary>
-public partial class BackendAddressPool : ProvisionableResource
+public partial class ProbeResource : ProvisionableResource
 {
     /// <summary>
-    /// The name of the backend address pool.
+    /// Resource name.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
-        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
-
-    /// <summary>
-    /// Amount of seconds Load Balancer waits for before sending RESET to
-    /// client and backend address.
-    /// </summary>
-    public BicepValue<int> DrainPeriodInSeconds 
-    {
-        get { Initialize(); return _drainPeriodInSeconds!; }
-        set { Initialize(); _drainPeriodInSeconds!.Assign(value); }
-    }
-    private BicepValue<int>? _drainPeriodInSeconds;
-
-    /// <summary>
-    /// Resource ID.
-    /// </summary>
-    public BicepValue<ResourceIdentifier> Id 
-    {
-        get { Initialize(); return _id!; }
-        set { Initialize(); _id!.Assign(value); }
-    }
-    private BicepValue<ResourceIdentifier>? _id;
-
-    /// <summary>
-    /// An array of backend addresses.
-    /// </summary>
-    public BicepList<LoadBalancerBackendAddress> LoadBalancerBackendAddresses 
-    {
-        get { Initialize(); return _loadBalancerBackendAddresses!; }
-        set { Initialize(); _loadBalancerBackendAddresses!.Assign(value); }
-    }
-    private BicepList<LoadBalancerBackendAddress>? _loadBalancerBackendAddresses;
-
-    /// <summary>
-    /// The location of the backend address pool.
-    /// </summary>
-    public BicepValue<AzureLocation> Location 
-    {
-        get { Initialize(); return _location!; }
-        set { Initialize(); _location!.Assign(value); }
-    }
-    private BicepValue<AzureLocation>? _location;
-
-    /// <summary>
-    /// Backend address synchronous mode for the backend pool.
-    /// </summary>
-    public BicepValue<BackendAddressSyncMode> SyncMode 
-    {
-        get { Initialize(); return _syncMode!; }
-        set { Initialize(); _syncMode!.Assign(value); }
-    }
-    private BicepValue<BackendAddressSyncMode>? _syncMode;
-
-    /// <summary>
-    /// An array of gateway load balancer tunnel interfaces.
-    /// </summary>
-    public BicepList<GatewayLoadBalancerTunnelInterface> TunnelInterfaces 
-    {
-        get { Initialize(); return _tunnelInterfaces!; }
-        set { Initialize(); _tunnelInterfaces!.Assign(value); }
-    }
-    private BicepList<GatewayLoadBalancerTunnelInterface>? _tunnelInterfaces;
-
-    /// <summary>
-    /// Gets or sets Id.
-    /// </summary>
-    public BicepValue<ResourceIdentifier> VirtualNetworkId 
-    {
-        get { Initialize(); return _virtualNetworkId!; }
-        set { Initialize(); _virtualNetworkId!.Assign(value); }
-    }
-    private BicepValue<ResourceIdentifier>? _virtualNetworkId;
-
-    /// <summary>
-    /// An array of references to IP addresses defined in network interfaces.
-    /// </summary>
-    public BicepList<NetworkInterfaceIPConfiguration> BackendIPConfigurations 
-    {
-        get { Initialize(); return _backendIPConfigurations!; }
-    }
-    private BicepList<NetworkInterfaceIPConfiguration>? _backendIPConfigurations;
 
     /// <summary>
     /// A unique read-only string that changes whenever the resource is updated.
@@ -120,18 +38,29 @@ public partial class BackendAddressPool : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
-    /// An array of references to inbound NAT rules that use this backend
-    /// address pool.
+    /// Resource ID.
     /// </summary>
-    public BicepList<WritableSubResource> InboundNatRules 
+    public BicepValue<ResourceIdentifier> Id 
     {
-        get { Initialize(); return _inboundNatRules!; }
+        get { Initialize(); return _id!; }
     }
-    private BicepList<WritableSubResource>? _inboundNatRules;
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// An array of references to load balancing rules that use this backend
-    /// address pool.
+    /// The interval, in seconds, for how frequently to probe the endpoint for
+    /// health status. Typically, the interval is slightly less than half the
+    /// allocated timeout period (in seconds) which allows two full probes
+    /// before taking the instance out of rotation. The default value is 15,
+    /// the minimum value is 5.
+    /// </summary>
+    public BicepValue<int> IntervalInSeconds 
+    {
+        get { Initialize(); return _intervalInSeconds!; }
+    }
+    private BicepValue<int>? _intervalInSeconds;
+
+    /// <summary>
+    /// The load balancer rules that use this probe.
     /// </summary>
     public BicepList<WritableSubResource> LoadBalancingRules 
     {
@@ -140,32 +69,81 @@ public partial class BackendAddressPool : ProvisionableResource
     private BicepList<WritableSubResource>? _loadBalancingRules;
 
     /// <summary>
-    /// Gets or sets Id.
+    /// Determines how new connections are handled by the load balancer when
+    /// all backend instances are probed down.
     /// </summary>
-    public BicepValue<ResourceIdentifier> OutboundRuleId 
+    public BicepValue<ProbeNoHealthyBackendsBehavior> NoHealthyBackendsBehavior 
     {
-        get { Initialize(); return _outboundRuleId!; }
+        get { Initialize(); return _noHealthyBackendsBehavior!; }
     }
-    private BicepValue<ResourceIdentifier>? _outboundRuleId;
+    private BicepValue<ProbeNoHealthyBackendsBehavior>? _noHealthyBackendsBehavior;
 
     /// <summary>
-    /// An array of references to outbound rules that use this backend address
-    /// pool.
+    /// The number of probes where if no response, will result in stopping
+    /// further traffic from being delivered to the endpoint. This values
+    /// allows endpoints to be taken out of rotation faster or slower than the
+    /// typical times used in Azure.
     /// </summary>
-    public BicepList<WritableSubResource> OutboundRules 
+    public BicepValue<int> NumberOfProbes 
     {
-        get { Initialize(); return _outboundRules!; }
+        get { Initialize(); return _numberOfProbes!; }
     }
-    private BicepList<WritableSubResource>? _outboundRules;
+    private BicepValue<int>? _numberOfProbes;
 
     /// <summary>
-    /// The provisioning state of the backend address pool resource.
+    /// The port for communicating the probe. Possible values range from 1 to
+    /// 65535, inclusive.
+    /// </summary>
+    public BicepValue<int> Port 
+    {
+        get { Initialize(); return _port!; }
+    }
+    private BicepValue<int>? _port;
+
+    /// <summary>
+    /// The number of consecutive successful or failed probes in order to allow
+    /// or deny traffic from being delivered to this endpoint. After failing
+    /// the number of consecutive probes equal to this value, the endpoint
+    /// will be taken out of rotation and require the same number of
+    /// successful consecutive probes to be placed back in rotation.
+    /// </summary>
+    public BicepValue<int> ProbeThreshold 
+    {
+        get { Initialize(); return _probeThreshold!; }
+    }
+    private BicepValue<int>? _probeThreshold;
+
+    /// <summary>
+    /// The protocol of the end point. If &apos;Tcp&apos; is specified, a
+    /// received ACK is required for the probe to be successful. If
+    /// &apos;Http&apos; or &apos;Https&apos; is specified, a 200 OK response
+    /// from the specifies URI is required for the probe to be successful.
+    /// </summary>
+    public BicepValue<ProbeProtocol> Protocol 
+    {
+        get { Initialize(); return _protocol!; }
+    }
+    private BicepValue<ProbeProtocol>? _protocol;
+
+    /// <summary>
+    /// The provisioning state of the probe resource.
     /// </summary>
     public BicepValue<NetworkProvisioningState> ProvisioningState 
     {
         get { Initialize(); return _provisioningState!; }
     }
     private BicepValue<NetworkProvisioningState>? _provisioningState;
+
+    /// <summary>
+    /// The URI used for requesting health status from the VM. Path is required
+    /// if a protocol is set to http. Otherwise, it is not allowed. There is
+    /// no default value.
+    /// </summary>
+    public BicepValue<string> RequestPath 
+    {
+        get { Initialize(); return _requestPath!; }
+    }
+    private BicepValue<string>? _requestPath;
 
     /// <summary>
     /// Gets or sets a reference to the parent LoadBalancer.
@@ -178,46 +156,43 @@ public partial class BackendAddressPool : ProvisionableResource
     private ResourceReference<LoadBalancer>? _parent;
 
     /// <summary>
-    /// Creates a new BackendAddressPool.
+    /// Creates a new ProbeResource.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the BackendAddressPool resource.  This
-    /// can be used to refer to the resource in expressions, but is not the
-    /// Azure name of the resource.  This value can contain letters, numbers,
-    /// and underscores.
+    /// The the Bicep identifier name of the ProbeResource resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the BackendAddressPool.</param>
-    public BackendAddressPool(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/loadBalancers/backendAddressPools", resourceVersion ?? "2025-01-01")
+    /// <param name="resourceVersion">Version of the ProbeResource.</param>
+    public ProbeResource(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Network/loadBalancers/probes", resourceVersion ?? "2025-01-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of BackendAddressPool.
+    /// Define all the provisionable properties of ProbeResource.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _drainPeriodInSeconds = DefineProperty<int>("DrainPeriodInSeconds", ["properties", "drainPeriodInSeconds"]);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
-        _loadBalancerBackendAddresses = DefineListProperty<LoadBalancerBackendAddress>("LoadBalancerBackendAddresses", ["properties", "loadBalancerBackendAddresses"]);
-        _location = DefineProperty<AzureLocation>("Location", ["properties", "location"]);
-        _syncMode = DefineProperty<BackendAddressSyncMode>("SyncMode", ["properties", "syncMode"]);
-        _tunnelInterfaces = DefineListProperty<GatewayLoadBalancerTunnelInterface>("TunnelInterfaces", ["properties", "tunnelInterfaces"]);
-        _virtualNetworkId = DefineProperty<ResourceIdentifier>("VirtualNetworkId", ["properties", "virtualNetwork", "id"]);
-        _backendIPConfigurations = DefineListProperty<NetworkInterfaceIPConfiguration>("BackendIPConfigurations", ["properties", "backendIPConfigurations"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
-        _inboundNatRules = DefineListProperty<WritableSubResource>("InboundNatRules", ["properties", "inboundNatRules"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _intervalInSeconds = DefineProperty<int>("IntervalInSeconds", ["properties", "intervalInSeconds"], isOutput: true);
         _loadBalancingRules = DefineListProperty<WritableSubResource>("LoadBalancingRules", ["properties", "loadBalancingRules"], isOutput: true);
-        _outboundRuleId = DefineProperty<ResourceIdentifier>("OutboundRuleId", ["properties", "outboundRule", "id"], isOutput: true);
-        _outboundRules = DefineListProperty<WritableSubResource>("OutboundRules", ["properties", "outboundRules"], isOutput: true);
+        _noHealthyBackendsBehavior = DefineProperty<ProbeNoHealthyBackendsBehavior>("NoHealthyBackendsBehavior", ["properties", "noHealthyBackendsBehavior"], isOutput: true);
+        _numberOfProbes = DefineProperty<int>("NumberOfProbes", ["properties", "numberOfProbes"], isOutput: true);
+        _port = DefineProperty<int>("Port", ["properties", "port"], isOutput: true);
+        _probeThreshold = DefineProperty<int>("ProbeThreshold", ["properties", "probeThreshold"], isOutput: true);
+        _protocol = DefineProperty<ProbeProtocol>("Protocol", ["properties", "protocol"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _requestPath = DefineProperty<string>("RequestPath", ["properties", "requestPath"], isOutput: true);
         _parent = DefineResource<LoadBalancer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
-    /// Supported BackendAddressPool resource versions.
+    /// Supported ProbeResource resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -563,16 +538,16 @@ public partial class BackendAddressPool : ProvisionableResource
     }
 
     /// <summary>
-    /// Creates a reference to an existing BackendAddressPool.
+    /// Creates a reference to an existing ProbeResource.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the BackendAddressPool resource.  This
-    /// can be used to refer to the resource in expressions, but is not the
-    /// Azure name of the resource.  This value can contain letters, numbers,
-    /// and underscores.
+    /// The the Bicep identifier name of the ProbeResource resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the BackendAddressPool.</param>
-    /// <returns>The existing BackendAddressPool resource.</returns>
-    public static BackendAddressPool FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the ProbeResource.</param>
+    /// <returns>The existing ProbeResource resource.</returns>
+    public static ProbeResource FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

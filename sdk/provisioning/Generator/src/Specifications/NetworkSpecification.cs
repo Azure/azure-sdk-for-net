@@ -18,6 +18,7 @@ public class NetworkSpecification() :
         // Patch models
         CustomizeResource<RouteResource>(r => r.Name = "RouteResource");
         CustomizeResource<SubnetResource>(r => r.Name = "SubnetResource");
+        CustomizeResource<ProbeResource>(r => r.Name = "ProbeResource");
         RemoveProperty<VirtualNetworkPeeringResource>("SyncRemoteAddressSpace");
 
         // Naming requirements
@@ -29,7 +30,7 @@ public class NetworkSpecification() :
         //AddNameRequirements<ExpressRouteCircuitResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<FirewallPolicyResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         //AddNameRequirements<FirewallPolicyRuleCollectionGroupDraftResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        //AddNameRequirements<LoadBalancerResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
+        AddNameRequirements<LoadBalancerResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<InboundNatRuleResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         //AddNameRequirements<LocalNetworkGatewayResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<NetworkInterfaceResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
@@ -91,6 +92,10 @@ public class NetworkSpecification() :
         typeof(SecurityRuleResource),
         typeof(PrivateEndpointResource),
         typeof(FirewallPolicyResource),
+        typeof(LoadBalancerResource),
+        typeof(LoadBalancingRuleResource),
+        typeof(ProbeResource),
+        typeof(OutboundRuleResource),
     };
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
@@ -109,6 +114,9 @@ public class NetworkSpecification() :
         // NetworkInterfaceIPConfigurationResource does not have a creator method, we need to add it here manually.
         resources.Add(typeof(NetworkInterfaceIPConfigurationResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateNetworkInterfaceIPConfiguration), BindingFlags.NonPublic | BindingFlags.Static)!);
         resources.Add(typeof(FrontendIPConfigurationResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateFrontendIPConfiguration), BindingFlags.NonPublic | BindingFlags.Static)!);
+        resources.Add(typeof(ProbeResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateProbeResource), BindingFlags.NonPublic | BindingFlags.Static)!);
+        resources.Add(typeof(LoadBalancingRuleResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateLoadBalancingRuleResource), BindingFlags.NonPublic | BindingFlags.Static)!);
+        resources.Add(typeof(OutboundRuleResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateOutboundRuleResource), BindingFlags.NonPublic | BindingFlags.Static)!);
 
         return resources;
     }
@@ -116,4 +124,7 @@ public class NetworkSpecification() :
     // These methods are here as a workaround to generate those resources without a createOrUpdate method.
     private static ArmOperation<NetworkInterfaceIPConfigurationResource> CreateOrUpdateNetworkInterfaceIPConfiguration() { return null!; }
     private static ArmOperation<FrontendIPConfigurationResource> CreateOrUpdateFrontendIPConfiguration() { return null!; }
+    private static ArmOperation<ProbeResource> CreateOrUpdateProbeResource() { return null!; }
+    private static ArmOperation<LoadBalancingRuleResource> CreateOrUpdateLoadBalancingRuleResource() { return null!; }
+    private static ArmOperation<OutboundRuleResource> CreateOrUpdateOutboundRuleResource() { return null!; }
 }

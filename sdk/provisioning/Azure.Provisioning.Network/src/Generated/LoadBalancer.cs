@@ -11,17 +11,18 @@ using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
+using System.ComponentModel;
 using System.Net;
 
 namespace Azure.Provisioning.Network;
 
 /// <summary>
-/// BackendAddressPool.
+/// LoadBalancer.
 /// </summary>
-public partial class BackendAddressPool : ProvisionableResource
+public partial class LoadBalancer : ProvisionableResource
 {
     /// <summary>
-    /// The name of the backend address pool.
+    /// The name of the load balancer.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -31,15 +32,34 @@ public partial class BackendAddressPool : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Amount of seconds Load Balancer waits for before sending RESET to
-    /// client and backend address.
+    /// Collection of backend address pools used by a load balancer.
     /// </summary>
-    public BicepValue<int> DrainPeriodInSeconds 
+    public BicepList<BackendAddressPool> BackendAddressPools 
     {
-        get { Initialize(); return _drainPeriodInSeconds!; }
-        set { Initialize(); _drainPeriodInSeconds!.Assign(value); }
+        get { Initialize(); return _backendAddressPools!; }
+        set { Initialize(); _backendAddressPools!.Assign(value); }
     }
-    private BicepValue<int>? _drainPeriodInSeconds;
+    private BicepList<BackendAddressPool>? _backendAddressPools;
+
+    /// <summary>
+    /// The extended location of the load balancer.
+    /// </summary>
+    public ExtendedAzureLocation ExtendedLocation 
+    {
+        get { Initialize(); return _extendedLocation!; }
+        set { Initialize(); AssignOrReplace(ref _extendedLocation, value); }
+    }
+    private ExtendedAzureLocation? _extendedLocation;
+
+    /// <summary>
+    /// Object representing the frontend IPs to be used for the load balancer.
+    /// </summary>
+    public BicepList<FrontendIPConfiguration> FrontendIPConfigurations 
+    {
+        get { Initialize(); return _frontendIPConfigurations!; }
+        set { Initialize(); _frontendIPConfigurations!.Assign(value); }
+    }
+    private BicepList<FrontendIPConfiguration>? _frontendIPConfigurations;
 
     /// <summary>
     /// Resource ID.
@@ -52,17 +72,51 @@ public partial class BackendAddressPool : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// An array of backend addresses.
+    /// Defines an external port range for inbound NAT to a single backend port
+    /// on NICs associated with a load balancer. Inbound NAT rules are created
+    /// automatically for each NIC associated with the Load Balancer using an
+    /// external port from this range. Defining an Inbound NAT pool on your
+    /// Load Balancer is mutually exclusive with defining inbound NAT rules.
+    /// Inbound NAT pools are referenced from virtual machine scale sets. NICs
+    /// that are associated with individual virtual machines cannot reference
+    /// an inbound NAT pool. They have to reference individual inbound NAT
+    /// rules.
     /// </summary>
-    public BicepList<LoadBalancerBackendAddress> LoadBalancerBackendAddresses 
+    public BicepList<LoadBalancerInboundNatPool> InboundNatPools 
     {
-        get { Initialize(); return _loadBalancerBackendAddresses!; }
-        set { Initialize(); _loadBalancerBackendAddresses!.Assign(value); }
+        get { Initialize(); return _inboundNatPools!; }
+        set { Initialize(); _inboundNatPools!.Assign(value); }
     }
-    private BicepList<LoadBalancerBackendAddress>? _loadBalancerBackendAddresses;
+    private BicepList<LoadBalancerInboundNatPool>? _inboundNatPools;
 
     /// <summary>
-    /// The location of the backend address pool.
+    /// Collection of inbound NAT Rules used by a load balancer. Defining
+    /// inbound NAT rules on your load balancer is mutually exclusive with
+    /// defining an inbound NAT pool. Inbound NAT pools are referenced from
+    /// virtual machine scale sets. NICs that are associated with individual
+    /// virtual machines cannot reference an Inbound NAT pool. They have to
+    /// reference individual inbound NAT rules.
+    /// </summary>
+    public BicepList<InboundNatRule> InboundNatRules 
+    {
+        get { Initialize(); return _inboundNatRules!; }
+        set { Initialize(); _inboundNatRules!.Assign(value); }
+    }
+    private BicepList<InboundNatRule>? _inboundNatRules;
+
+    /// <summary>
+    /// Object collection representing the load balancing rules Gets the
+    /// provisioning.
+    /// </summary>
+    public BicepList<LoadBalancingRule> LoadBalancingRules 
+    {
+        get { Initialize(); return _loadBalancingRules!; }
+        set { Initialize(); _loadBalancingRules!.Assign(value); }
+    }
+    private BicepList<LoadBalancingRule>? _loadBalancingRules;
+
+    /// <summary>
+    /// Resource location.
     /// </summary>
     public BicepValue<AzureLocation> Location 
     {
@@ -72,43 +126,44 @@ public partial class BackendAddressPool : ProvisionableResource
     private BicepValue<AzureLocation>? _location;
 
     /// <summary>
-    /// Backend address synchronous mode for the backend pool.
+    /// The outbound rules.
     /// </summary>
-    public BicepValue<BackendAddressSyncMode> SyncMode 
+    public BicepList<OutboundRule> OutboundRules 
     {
-        get { Initialize(); return _syncMode!; }
-        set { Initialize(); _syncMode!.Assign(value); }
+        get { Initialize(); return _outboundRules!; }
+        set { Initialize(); _outboundRules!.Assign(value); }
     }
-    private BicepValue<BackendAddressSyncMode>? _syncMode;
+    private BicepList<OutboundRule>? _outboundRules;
 
     /// <summary>
-    /// An array of gateway load balancer tunnel interfaces.
+    /// Collection of probe objects used in the load balancer.
     /// </summary>
-    public BicepList<GatewayLoadBalancerTunnelInterface> TunnelInterfaces 
+    public BicepList<ProbeResource> Probes 
     {
-        get { Initialize(); return _tunnelInterfaces!; }
-        set { Initialize(); _tunnelInterfaces!.Assign(value); }
+        get { Initialize(); return _probes!; }
+        set { Initialize(); _probes!.Assign(value); }
     }
-    private BicepList<GatewayLoadBalancerTunnelInterface>? _tunnelInterfaces;
+    private BicepList<ProbeResource>? _probes;
 
     /// <summary>
-    /// Gets or sets Id.
+    /// The load balancer SKU.
     /// </summary>
-    public BicepValue<ResourceIdentifier> VirtualNetworkId 
+    public LoadBalancerSku Sku 
     {
-        get { Initialize(); return _virtualNetworkId!; }
-        set { Initialize(); _virtualNetworkId!.Assign(value); }
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
     }
-    private BicepValue<ResourceIdentifier>? _virtualNetworkId;
+    private LoadBalancerSku? _sku;
 
     /// <summary>
-    /// An array of references to IP addresses defined in network interfaces.
+    /// Resource tags.
     /// </summary>
-    public BicepList<NetworkInterfaceIPConfiguration> BackendIPConfigurations 
+    public BicepDictionary<string> Tags 
     {
-        get { Initialize(); return _backendIPConfigurations!; }
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
     }
-    private BicepList<NetworkInterfaceIPConfiguration>? _backendIPConfigurations;
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// A unique read-only string that changes whenever the resource is updated.
@@ -120,46 +175,7 @@ public partial class BackendAddressPool : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
-    /// An array of references to inbound NAT rules that use this backend
-    /// address pool.
-    /// </summary>
-    public BicepList<WritableSubResource> InboundNatRules 
-    {
-        get { Initialize(); return _inboundNatRules!; }
-    }
-    private BicepList<WritableSubResource>? _inboundNatRules;
-
-    /// <summary>
-    /// An array of references to load balancing rules that use this backend
-    /// address pool.
-    /// </summary>
-    public BicepList<WritableSubResource> LoadBalancingRules 
-    {
-        get { Initialize(); return _loadBalancingRules!; }
-    }
-    private BicepList<WritableSubResource>? _loadBalancingRules;
-
-    /// <summary>
-    /// Gets or sets Id.
-    /// </summary>
-    public BicepValue<ResourceIdentifier> OutboundRuleId 
-    {
-        get { Initialize(); return _outboundRuleId!; }
-    }
-    private BicepValue<ResourceIdentifier>? _outboundRuleId;
-
-    /// <summary>
-    /// An array of references to outbound rules that use this backend address
-    /// pool.
-    /// </summary>
-    public BicepList<WritableSubResource> OutboundRules 
-    {
-        get { Initialize(); return _outboundRules!; }
-    }
-    private BicepList<WritableSubResource>? _outboundRules;
-
-    /// <summary>
-    /// The provisioning state of the backend address pool resource.
+    /// The provisioning state of the load balancer resource.
     /// </summary>
     public BicepValue<NetworkProvisioningState> ProvisioningState 
     {
@@ -168,56 +184,55 @@ public partial class BackendAddressPool : ProvisionableResource
     private BicepValue<NetworkProvisioningState>? _provisioningState;
 
     /// <summary>
-    /// Gets or sets a reference to the parent LoadBalancer.
+    /// The resource GUID property of the load balancer resource.
     /// </summary>
-    public LoadBalancer? Parent
+    public BicepValue<Guid> ResourceGuid 
     {
-        get { Initialize(); return _parent!.Value; }
-        set { Initialize(); _parent!.Value = value; }
+        get { Initialize(); return _resourceGuid!; }
     }
-    private ResourceReference<LoadBalancer>? _parent;
+    private BicepValue<Guid>? _resourceGuid;
 
     /// <summary>
-    /// Creates a new BackendAddressPool.
+    /// Creates a new LoadBalancer.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the BackendAddressPool resource.  This
-    /// can be used to refer to the resource in expressions, but is not the
-    /// Azure name of the resource.  This value can contain letters, numbers,
-    /// and underscores.
+    /// The the Bicep identifier name of the LoadBalancer resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the BackendAddressPool.</param>
-    public BackendAddressPool(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/loadBalancers/backendAddressPools", resourceVersion ?? "2025-01-01")
+    /// <param name="resourceVersion">Version of the LoadBalancer.</param>
+    public LoadBalancer(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Network/loadBalancers", resourceVersion ?? "2025-01-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of BackendAddressPool.
+    /// Define all the provisionable properties of LoadBalancer.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _drainPeriodInSeconds = DefineProperty<int>("DrainPeriodInSeconds", ["properties", "drainPeriodInSeconds"]);
+        _backendAddressPools = DefineListProperty<BackendAddressPool>("BackendAddressPools", ["properties", "backendAddressPools"]);
+        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
+        _frontendIPConfigurations = DefineListProperty<FrontendIPConfiguration>("FrontendIPConfigurations", ["properties", "frontendIPConfigurations"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
-        _loadBalancerBackendAddresses = DefineListProperty<LoadBalancerBackendAddress>("LoadBalancerBackendAddresses", ["properties", "loadBalancerBackendAddresses"]);
-        _location = DefineProperty<AzureLocation>("Location", ["properties", "location"]);
-        _syncMode = DefineProperty<BackendAddressSyncMode>("SyncMode", ["properties", "syncMode"]);
-        _tunnelInterfaces = DefineListProperty<GatewayLoadBalancerTunnelInterface>("TunnelInterfaces", ["properties", "tunnelInterfaces"]);
-        _virtualNetworkId = DefineProperty<ResourceIdentifier>("VirtualNetworkId", ["properties", "virtualNetwork", "id"]);
-        _backendIPConfigurations = DefineListProperty<NetworkInterfaceIPConfiguration>("BackendIPConfigurations", ["properties", "backendIPConfigurations"], isOutput: true);
+        _inboundNatPools = DefineListProperty<LoadBalancerInboundNatPool>("InboundNatPools", ["properties", "inboundNatPools"]);
+        _inboundNatRules = DefineListProperty<InboundNatRule>("InboundNatRules", ["properties", "inboundNatRules"]);
+        _loadBalancingRules = DefineListProperty<LoadBalancingRule>("LoadBalancingRules", ["properties", "loadBalancingRules"]);
+        _location = DefineProperty<AzureLocation>("Location", ["location"]);
+        _outboundRules = DefineListProperty<OutboundRule>("OutboundRules", ["properties", "outboundRules"]);
+        _probes = DefineListProperty<ProbeResource>("Probes", ["properties", "probes"]);
+        _sku = DefineModelProperty<LoadBalancerSku>("Sku", ["sku"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
-        _inboundNatRules = DefineListProperty<WritableSubResource>("InboundNatRules", ["properties", "inboundNatRules"], isOutput: true);
-        _loadBalancingRules = DefineListProperty<WritableSubResource>("LoadBalancingRules", ["properties", "loadBalancingRules"], isOutput: true);
-        _outboundRuleId = DefineProperty<ResourceIdentifier>("OutboundRuleId", ["properties", "outboundRule", "id"], isOutput: true);
-        _outboundRules = DefineListProperty<WritableSubResource>("OutboundRules", ["properties", "outboundRules"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _parent = DefineResource<LoadBalancer>("Parent", ["parent"], isRequired: true);
+        _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
     }
 
     /// <summary>
-    /// Supported BackendAddressPool resource versions.
+    /// Supported LoadBalancer resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -563,16 +578,24 @@ public partial class BackendAddressPool : ProvisionableResource
     }
 
     /// <summary>
-    /// Creates a reference to an existing BackendAddressPool.
+    /// Creates a reference to an existing LoadBalancer.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the BackendAddressPool resource.  This
-    /// can be used to refer to the resource in expressions, but is not the
-    /// Azure name of the resource.  This value can contain letters, numbers,
-    /// and underscores.
+    /// The the Bicep identifier name of the LoadBalancer resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the BackendAddressPool.</param>
-    /// <returns>The existing BackendAddressPool resource.</returns>
-    public static BackendAddressPool FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the LoadBalancer.</param>
+    /// <returns>The existing LoadBalancer resource.</returns>
+    public static LoadBalancer FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
+
+    /// <summary>
+    /// Get the requirements for naming this LoadBalancer resource.
+    /// </summary>
+    /// <returns>Naming requirements.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ResourceNameRequirements GetResourceNameRequirements() =>
+        new(minLength: 1, maxLength: 80, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period);
 }
