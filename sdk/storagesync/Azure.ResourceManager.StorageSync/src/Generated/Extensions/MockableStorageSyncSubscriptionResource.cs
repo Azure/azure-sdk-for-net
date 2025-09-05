@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// </list>
         /// </summary>
         /// <param name="locationName"> The desired region for the name check. </param>
-        /// <param name="content"> Parameters to check availability of the given namespace name. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// </list>
         /// </summary>
         /// <param name="locationName"> The desired region for the name check. </param>
-        /// <param name="content"> Parameters to check availability of the given namespace name. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
@@ -158,7 +158,8 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         public virtual AsyncPageable<StorageSyncServiceResource> GetStorageSyncServicesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageSyncServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncServiceResource(Client, StorageSyncServiceData.DeserializeStorageSyncServiceData(e)), StorageSyncServiceClientDiagnostics, Pipeline, "MockableStorageSyncSubscriptionResource.GetStorageSyncServices", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageSyncServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageSyncServiceResource(Client, StorageSyncServiceData.DeserializeStorageSyncServiceData(e)), StorageSyncServiceClientDiagnostics, Pipeline, "MockableStorageSyncSubscriptionResource.GetStorageSyncServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -187,7 +188,8 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         public virtual Pageable<StorageSyncServiceResource> GetStorageSyncServices(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageSyncServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncServiceResource(Client, StorageSyncServiceData.DeserializeStorageSyncServiceData(e)), StorageSyncServiceClientDiagnostics, Pipeline, "MockableStorageSyncSubscriptionResource.GetStorageSyncServices", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageSyncServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageSyncServiceResource(Client, StorageSyncServiceData.DeserializeStorageSyncServiceData(e)), StorageSyncServiceClientDiagnostics, Pipeline, "MockableStorageSyncSubscriptionResource.GetStorageSyncServices", "value", "nextLink", cancellationToken);
         }
     }
 }

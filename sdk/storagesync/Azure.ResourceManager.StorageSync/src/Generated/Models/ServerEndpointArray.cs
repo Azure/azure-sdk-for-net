@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Initializes a new instance of <see cref="ServerEndpointArray"/>. </summary>
         /// <param name="value"> Collection of ServerEndpoint. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerEndpointArray(IReadOnlyList<StorageSyncServerEndpointData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServerEndpointArray(IReadOnlyList<StorageSyncServerEndpointData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Collection of ServerEndpoint. </summary>
         public IReadOnlyList<StorageSyncServerEndpointData> Value { get; }
+        /// <summary> The URL to get the next set of results. </summary>
+        public string NextLink { get; }
     }
 }

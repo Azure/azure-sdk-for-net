@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageSync
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointCreateOrUpdateContent content)
+        internal RequestUriBuilder CreateListBySyncGroupRequestUri(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -48,17 +48,16 @@ namespace Azure.ResourceManager.StorageSync
             uri.AppendPath(storageSyncServiceName, true);
             uri.AppendPath("/syncGroups/", false);
             uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/cloudEndpoints/", false);
-            uri.AppendPath(cloudEndpointName, true);
+            uri.AppendPath("/cloudEndpoints", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointCreateOrUpdateContent content)
+        internal HttpMessage CreateListBySyncGroupRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Put;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -69,76 +68,71 @@ namespace Azure.ResourceManager.StorageSync
             uri.AppendPath(storageSyncServiceName, true);
             uri.AppendPath("/syncGroups/", false);
             uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/cloudEndpoints/", false);
-            uri.AppendPath(cloudEndpointName, true);
+            uri.AppendPath("/cloudEndpoints", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Create a new CloudEndpoint. </summary>
+        /// <summary> Get a CloudEndpoint List. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
-        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
-        /// <param name="content"> Body of Cloud Endpoint resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CloudEndpointArray>> ListBySyncGroupAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
             Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
-            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, content);
+            using var message = CreateListBySyncGroupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
-                    return message.Response;
+                    {
+                        CloudEndpointArray value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = CloudEndpointArray.DeserializeCloudEndpointArray(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Create a new CloudEndpoint. </summary>
+        /// <summary> Get a CloudEndpoint List. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
-        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
-        /// <param name="content"> Body of Cloud Endpoint resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CloudEndpointArray> ListBySyncGroup(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
             Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
-            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, content);
+            using var message = CreateListBySyncGroupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
-                    return message.Response;
+                    {
+                        CloudEndpointArray value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = CloudEndpointArray.DeserializeCloudEndpointArray(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -256,6 +250,114 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageSync/storageSyncServices/", false);
+            uri.AppendPath(storageSyncServiceName, true);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/cloudEndpoints/", false);
+            uri.AppendPath(cloudEndpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointCreateOrUpdateContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageSync/storageSyncServices/", false);
+            uri.AppendPath(storageSyncServiceName, true);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/cloudEndpoints/", false);
+            uri.AppendPath(cloudEndpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Create a new CloudEndpoint. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
+        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
+        /// <param name="content"> Body of Cloud Endpoint resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Create a new CloudEndpoint. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
+        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
+        /// <param name="content"> Body of Cloud Endpoint resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Create(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName)
         {
             var uri = new RawRequestUriBuilder();
@@ -358,7 +460,7 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-        internal RequestUriBuilder CreateListBySyncGroupRequestUri(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName)
+        internal RequestUriBuilder CreateAfsShareMetadataCertificatePublicKeysRequestUri(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -370,12 +472,14 @@ namespace Azure.ResourceManager.StorageSync
             uri.AppendPath(storageSyncServiceName, true);
             uri.AppendPath("/syncGroups/", false);
             uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/cloudEndpoints", false);
+            uri.AppendPath("/cloudEndpoints/", false);
+            uri.AppendPath(cloudEndpointName, true);
+            uri.AppendPath("/afsShareMetadataCertificatePublicKeys", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListBySyncGroupRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName)
+        internal HttpMessage CreateAfsShareMetadataCertificatePublicKeysRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -390,7 +494,9 @@ namespace Azure.ResourceManager.StorageSync
             uri.AppendPath(storageSyncServiceName, true);
             uri.AppendPath("/syncGroups/", false);
             uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/cloudEndpoints", false);
+            uri.AppendPath("/cloudEndpoints/", false);
+            uri.AppendPath(cloudEndpointName, true);
+            uri.AppendPath("/afsShareMetadataCertificatePublicKeys", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -398,30 +504,32 @@ namespace Azure.ResourceManager.StorageSync
             return message;
         }
 
-        /// <summary> Get a CloudEndpoint List. </summary>
+        /// <summary> Get the AFS file share metadata signing certificate public keys. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
+        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CloudEndpointArray>> ListBySyncGroupAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CloudEndpointAfsShareMetadataCertificatePublicKeys>> AfsShareMetadataCertificatePublicKeysAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
             Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
 
-            using var message = CreateListBySyncGroupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName);
+            using var message = CreateAfsShareMetadataCertificatePublicKeysRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CloudEndpointArray value = default;
+                        CloudEndpointAfsShareMetadataCertificatePublicKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CloudEndpointArray.DeserializeCloudEndpointArray(document.RootElement);
+                        value = CloudEndpointAfsShareMetadataCertificatePublicKeys.DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -429,142 +537,34 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-        /// <summary> Get a CloudEndpoint List. </summary>
+        /// <summary> Get the AFS file share metadata signing certificate public keys. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
+        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CloudEndpointArray> ListBySyncGroup(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CloudEndpointAfsShareMetadataCertificatePublicKeys> AfsShareMetadataCertificatePublicKeys(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
             Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
 
-            using var message = CreateListBySyncGroupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName);
+            using var message = CreateAfsShareMetadataCertificatePublicKeysRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CloudEndpointArray value = default;
+                        CloudEndpointAfsShareMetadataCertificatePublicKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CloudEndpointArray.DeserializeCloudEndpointArray(document.RootElement);
+                        value = CloudEndpointAfsShareMetadataCertificatePublicKeys.DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreatePreBackupRequestUri(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointBackupContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.StorageSync/storageSyncServices/", false);
-            uri.AppendPath(storageSyncServiceName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/cloudEndpoints/", false);
-            uri.AppendPath(cloudEndpointName, true);
-            uri.AppendPath("/prebackup", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreatePreBackupRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointBackupContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.StorageSync/storageSyncServices/", false);
-            uri.AppendPath(storageSyncServiceName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/cloudEndpoints/", false);
-            uri.AppendPath(cloudEndpointName, true);
-            uri.AppendPath("/prebackup", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Pre Backup a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
-        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
-        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
-        /// <param name="content"> Body of Backup request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PreBackupAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointBackupContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreatePreBackupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Pre Backup a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
-        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
-        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
-        /// <param name="content"> Body of Backup request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response PreBackup(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointBackupContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreatePreBackupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -669,6 +669,226 @@ namespace Azure.ResourceManager.StorageSync
             Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreatePostBackupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreatePostRestoreRequestUri(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, PostRestoreContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageSync/storageSyncServices/", false);
+            uri.AppendPath(storageSyncServiceName, true);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/cloudEndpoints/", false);
+            uri.AppendPath(cloudEndpointName, true);
+            uri.AppendPath("/postrestore", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreatePostRestoreRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, PostRestoreContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageSync/storageSyncServices/", false);
+            uri.AppendPath(storageSyncServiceName, true);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/cloudEndpoints/", false);
+            uri.AppendPath(cloudEndpointName, true);
+            uri.AppendPath("/postrestore", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Post Restore a given CloudEndpoint. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
+        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
+        /// <param name="content"> Body of Cloud Endpoint object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> PostRestoreAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, PostRestoreContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreatePostRestoreRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Post Restore a given CloudEndpoint. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
+        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
+        /// <param name="content"> Body of Cloud Endpoint object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response PostRestore(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, PostRestoreContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreatePostRestoreRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreatePreBackupRequestUri(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointBackupContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageSync/storageSyncServices/", false);
+            uri.AppendPath(storageSyncServiceName, true);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/cloudEndpoints/", false);
+            uri.AppendPath(cloudEndpointName, true);
+            uri.AppendPath("/prebackup", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreatePreBackupRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointBackupContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageSync/storageSyncServices/", false);
+            uri.AppendPath(storageSyncServiceName, true);
+            uri.AppendPath("/syncGroups/", false);
+            uri.AppendPath(syncGroupName, true);
+            uri.AppendPath("/cloudEndpoints/", false);
+            uri.AppendPath(cloudEndpointName, true);
+            uri.AppendPath("/prebackup", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Pre Backup a given CloudEndpoint. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
+        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
+        /// <param name="content"> Body of Backup request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> PreBackupAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointBackupContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreatePreBackupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Pre Backup a given CloudEndpoint. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
+        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
+        /// <param name="content"> Body of Backup request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response PreBackup(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointBackupContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreatePreBackupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -890,116 +1110,6 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-        internal RequestUriBuilder CreatePostRestoreRequestUri(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, PostRestoreContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.StorageSync/storageSyncServices/", false);
-            uri.AppendPath(storageSyncServiceName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/cloudEndpoints/", false);
-            uri.AppendPath(cloudEndpointName, true);
-            uri.AppendPath("/postrestore", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreatePostRestoreRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, PostRestoreContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.StorageSync/storageSyncServices/", false);
-            uri.AppendPath(storageSyncServiceName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/cloudEndpoints/", false);
-            uri.AppendPath(cloudEndpointName, true);
-            uri.AppendPath("/postrestore", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Post Restore a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
-        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
-        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
-        /// <param name="content"> Body of Cloud Endpoint object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PostRestoreAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, PostRestoreContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreatePostRestoreRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Post Restore a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
-        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
-        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
-        /// <param name="content"> Body of Cloud Endpoint object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/>, <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response PostRestore(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, PostRestoreContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
-            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreatePostRestoreRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal RequestUriBuilder CreateTriggerChangeDetectionRequestUri(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, TriggerChangeDetectionContent content)
         {
             var uri = new RawRequestUriBuilder();
@@ -1110,76 +1220,54 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-        internal RequestUriBuilder CreateAfsShareMetadataCertificatePublicKeysRequestUri(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName)
+        internal RequestUriBuilder CreateListBySyncGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.StorageSync/storageSyncServices/", false);
-            uri.AppendPath(storageSyncServiceName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/cloudEndpoints/", false);
-            uri.AppendPath(cloudEndpointName, true);
-            uri.AppendPath("/afsShareMetadataCertificatePublicKeys", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendRawNextLink(nextLink, false);
             return uri;
         }
 
-        internal HttpMessage CreateAfsShareMetadataCertificatePublicKeysRequest(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName)
+        internal HttpMessage CreateListBySyncGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.StorageSync/storageSyncServices/", false);
-            uri.AppendPath(storageSyncServiceName, true);
-            uri.AppendPath("/syncGroups/", false);
-            uri.AppendPath(syncGroupName, true);
-            uri.AppendPath("/cloudEndpoints/", false);
-            uri.AppendPath(cloudEndpointName, true);
-            uri.AppendPath("/afsShareMetadataCertificatePublicKeys", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Get the AFS file share metadata signing certificate public keys. </summary>
+        /// <summary> Get a CloudEndpoint List. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
-        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CloudEndpointAfsShareMetadataCertificatePublicKeys>> AfsShareMetadataCertificatePublicKeysAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CloudEndpointArray>> ListBySyncGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
             Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
 
-            using var message = CreateAfsShareMetadataCertificatePublicKeysRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName);
+            using var message = CreateListBySyncGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CloudEndpointAfsShareMetadataCertificatePublicKeys value = default;
+                        CloudEndpointArray value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CloudEndpointAfsShareMetadataCertificatePublicKeys.DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(document.RootElement);
+                        value = CloudEndpointArray.DeserializeCloudEndpointArray(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1187,32 +1275,32 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-        /// <summary> Get the AFS file share metadata signing certificate public keys. </summary>
+        /// <summary> Get a CloudEndpoint List. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
-        /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CloudEndpointAfsShareMetadataCertificatePublicKeys> AfsShareMetadataCertificatePublicKeys(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CloudEndpointArray> ListBySyncGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
             Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
-            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
 
-            using var message = CreateAfsShareMetadataCertificatePublicKeysRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName);
+            using var message = CreateListBySyncGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CloudEndpointAfsShareMetadataCertificatePublicKeys value = default;
+                        CloudEndpointArray value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CloudEndpointAfsShareMetadataCertificatePublicKeys.DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(document.RootElement);
+                        value = CloudEndpointArray.DeserializeCloudEndpointArray(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

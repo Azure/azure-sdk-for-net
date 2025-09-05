@@ -72,6 +72,25 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="StorageSyncRegisteredServerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageSyncRegisteredServerResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncRegisteredServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageSyncArmClient.GetStorageSyncRegisteredServerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StorageSyncRegisteredServerResource"/> object. </returns>
+        public static StorageSyncRegisteredServerResource GetStorageSyncRegisteredServerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableStorageSyncArmClient(client).GetStorageSyncRegisteredServerResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="StorageSyncGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageSyncGroupResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -126,25 +145,6 @@ namespace Azure.ResourceManager.StorageSync
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageSyncArmClient(client).GetStorageSyncServerEndpointResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageSyncRegisteredServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageSyncRegisteredServerResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncRegisteredServerResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableStorageSyncArmClient.GetStorageSyncRegisteredServerResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StorageSyncRegisteredServerResource"/> object. </returns>
-        public static StorageSyncRegisteredServerResource GetStorageSyncRegisteredServerResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableStorageSyncArmClient(client).GetStorageSyncRegisteredServerResource(id);
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The desired region for the name check. </param>
-        /// <param name="content"> Parameters to check availability of the given namespace name. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The desired region for the name check. </param>
-        /// <param name="content"> Parameters to check availability of the given namespace name. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>

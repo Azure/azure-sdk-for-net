@@ -266,7 +266,8 @@ namespace Azure.ResourceManager.StorageSync
         public virtual AsyncPageable<CloudEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudEndpointRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CloudEndpointResource(Client, CloudEndpointData.DeserializeCloudEndpointData(e)), _cloudEndpointClientDiagnostics, Pipeline, "CloudEndpointCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudEndpointRestClient.CreateListBySyncGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudEndpointResource(Client, CloudEndpointData.DeserializeCloudEndpointData(e)), _cloudEndpointClientDiagnostics, Pipeline, "CloudEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -295,7 +296,8 @@ namespace Azure.ResourceManager.StorageSync
         public virtual Pageable<CloudEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudEndpointRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CloudEndpointResource(Client, CloudEndpointData.DeserializeCloudEndpointData(e)), _cloudEndpointClientDiagnostics, Pipeline, "CloudEndpointCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudEndpointRestClient.CreateListBySyncGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudEndpointResource(Client, CloudEndpointData.DeserializeCloudEndpointData(e)), _cloudEndpointClientDiagnostics, Pipeline, "CloudEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

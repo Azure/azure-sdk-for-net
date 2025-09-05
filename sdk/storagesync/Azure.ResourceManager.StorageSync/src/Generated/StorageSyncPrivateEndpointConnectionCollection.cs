@@ -265,7 +265,8 @@ namespace Azure.ResourceManager.StorageSync
         public virtual AsyncPageable<StorageSyncPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncPrivateEndpointConnectionResource(Client, StorageSyncPrivateEndpointConnectionData.DeserializeStorageSyncPrivateEndpointConnectionData(e)), _storageSyncPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "StorageSyncPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageSyncPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByStorageSyncServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageSyncPrivateEndpointConnectionResource(Client, StorageSyncPrivateEndpointConnectionData.DeserializeStorageSyncPrivateEndpointConnectionData(e)), _storageSyncPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "StorageSyncPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -294,7 +295,8 @@ namespace Azure.ResourceManager.StorageSync
         public virtual Pageable<StorageSyncPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncPrivateEndpointConnectionResource(Client, StorageSyncPrivateEndpointConnectionData.DeserializeStorageSyncPrivateEndpointConnectionData(e)), _storageSyncPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "StorageSyncPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageSyncPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByStorageSyncServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageSyncPrivateEndpointConnectionResource(Client, StorageSyncPrivateEndpointConnectionData.DeserializeStorageSyncPrivateEndpointConnectionData(e)), _storageSyncPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "StorageSyncPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

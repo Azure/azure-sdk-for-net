@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Initializes a new instance of <see cref="SyncGroupArray"/>. </summary>
         /// <param name="value"> Collection of SyncGroup. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SyncGroupArray(IReadOnlyList<StorageSyncGroupData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SyncGroupArray(IReadOnlyList<StorageSyncGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Collection of SyncGroup. </summary>
         public IReadOnlyList<StorageSyncGroupData> Value { get; }
+        /// <summary> The URL to get the next set of results. </summary>
+        public string NextLink { get; }
     }
 }

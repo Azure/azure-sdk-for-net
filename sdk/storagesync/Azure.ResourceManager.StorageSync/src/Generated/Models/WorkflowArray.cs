@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkflowArray"/>. </summary>
         /// <param name="value"> Collection of workflow items. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowArray(IReadOnlyList<StorageSyncWorkflowData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkflowArray(IReadOnlyList<StorageSyncWorkflowData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Collection of workflow items. </summary>
         public IReadOnlyList<StorageSyncWorkflowData> Value { get; }
+        /// <summary> The URL to get the next set of results. </summary>
+        public string NextLink { get; }
     }
 }
