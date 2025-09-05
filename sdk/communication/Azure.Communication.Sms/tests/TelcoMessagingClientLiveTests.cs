@@ -319,50 +319,22 @@ namespace Azure.Communication.Sms.Tests
         }
 
         [RecordedTest]
-        public async Task GetDeliveryReportAsync_WithMultipleMessageIds()
+        [SyncOnly]
+        [TestCase("non-existent-sync-message")]
+        [TestCase("sync-missing-id-456")]
+        public void GetDeliveryReport_WithNonExistentMessageId_ShouldReturn404_Sync(string nonExistentMessageId)
         {
             TelcoMessagingClient client = CreateTelcoMessagingClient();
 
-            // Send multiple messages with delivery reports enabled
-            var messageIds = new List<string>();
+            // Getting delivery report for non-existent message should always result in 404 error (sync version)
+            RequestFailedException? exception = Assert.Throws<RequestFailedException>(() =>
+                client.DeliveryReports.Get(nonExistentMessageId));
 
-            for (int i = 0; i < 3; i++)
-            {
-                SmsSendOptions smsOptions = new SmsSendOptions(enableDeliveryReport: true)
-                {
-                    Tag = $"delivery-report-multiple-test-{i}",
-                };
-
-                Response<SmsSendResult> sendResponse = await client.Sms.SendAsync(
-                   from: TestEnvironment.FromPhoneNumber,
-                   to: TestEnvironment.ToPhoneNumber,
-                   message: $"Test message {i + 1} for delivery report",
-                   options: smsOptions);
-
-                messageIds.Add(sendResponse.Value.MessageId);
-                Console.WriteLine($"Sent SMS {i + 1} with message ID: {sendResponse.Value.MessageId}");
-            }
-
-            // Wait for delivery reports to be available
-            await Task.Delay(TimeSpan.FromSeconds(10));
-
-            // Get delivery reports for all messages
-            foreach (string messageId in messageIds)
-            {
-                try
-                {
-                    Response<DeliveryReport> deliveryResponse = await client.DeliveryReports.GetAsync(messageId);
-                    DeliveryReport deliveryReport = deliveryResponse.Value;
-
-                    AssertDeliveryReportHappyPath(deliveryReport, messageId);
-                    Console.WriteLine($"Successfully retrieved delivery report for message: {messageId}");
-                }
-                catch (RequestFailedException ex) when (ex.Status >= 400 && ex.Status < 500)
-                {
-                    // Some delivery reports might not be available yet, this is acceptable
-                    Console.WriteLine($"Delivery report not yet available for message {messageId}: {ex.Message}");
-                }
-            }
+            // Verify the error is a 404 Not Found
+            Assert.NotNull(exception, "Exception should not be null");
+            Assert.AreEqual(404, exception!.Status, $"Expected 404 Not Found for non-existent message ID '{nonExistentMessageId}', but got {exception.Status}");
+            Assert.IsNotEmpty(exception.Message, "Exception message should not be empty");
+            Console.WriteLine($"Confirmed 404 error for non-existent message ID '{nonExistentMessageId}': {exception.Message}");
         }
 
         #endregion
