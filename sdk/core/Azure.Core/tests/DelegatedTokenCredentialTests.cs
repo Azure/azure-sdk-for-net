@@ -78,24 +78,6 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CreateTokenOptionsWithStringArrayScopesThrowsException()
-        {
-            // Test with string[] scopes - should now throw an exception
-            var scopesArray = new string[] { "scope1", "scope2" };
-            var properties = new Dictionary<string, object>
-            {
-                [GetTokenOptions.ScopesPropertyName] = scopesArray,
-                ["additionalProperty"] = "value"
-            };
-
-            var credential = DelegatedTokenCredential.Create(getToken);
-
-            var exception = Assert.Throws<ArgumentException>(() => credential.CreateTokenOptions(properties));
-            Assert.That(exception.Message, Does.Contain("scopes"));
-            Assert.That(exception.Message, Does.Contain("ReadOnlyMemory<string>"));
-        }
-
-        [Test]
         public void CreateTokenOptionsWithoutScopes()
         {
             // Test without scopes property
@@ -108,23 +90,6 @@ namespace Azure.Core.Tests
             var result = credential.CreateTokenOptions(properties);
 
             Assert.IsNull(result);
-        }
-
-        [Test]
-        public void CreateTokenOptionsWithInvalidScopesThrowsException()
-        {
-            // Test with invalid scopes type - should throw an exception
-            var properties = new Dictionary<string, object>
-            {
-                [GetTokenOptions.ScopesPropertyName] = "invalid_scopes_type",
-                ["additionalProperty"] = "value"
-            };
-
-            var credential = DelegatedTokenCredential.Create(getToken);
-
-            var exception = Assert.Throws<ArgumentException>(() => credential.CreateTokenOptions(properties));
-            Assert.That(exception.Message, Does.Contain("scopes"));
-            Assert.That(exception.Message, Does.Contain("ReadOnlyMemory<string>"));
         }
 
         [Test]
