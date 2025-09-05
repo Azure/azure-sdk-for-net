@@ -114,6 +114,41 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(BranchId))
+            {
+                writer.WritePropertyName("branchId"u8);
+                writer.WriteStringValue(BranchId);
+            }
+            if (Optional.IsDefined(Branch))
+            {
+                writer.WritePropertyName("branch"u8);
+                writer.WriteStringValue(Branch);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataSize))
+            {
+                writer.WritePropertyName("dataSize"u8);
+                writer.WriteStringValue(DataSize);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastActive))
+            {
+                writer.WritePropertyName("lastActive"u8);
+                writer.WriteStringValue(LastActive);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ComputeHours))
+            {
+                writer.WritePropertyName("computeHours"u8);
+                writer.WriteStringValue(ComputeHours);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Protected))
+            {
+                writer.WritePropertyName("protected"u8);
+                writer.WriteBooleanValue(Protected.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsDefault))
+            {
+                writer.WritePropertyName("isDefault"u8);
+                writer.WriteBooleanValue(IsDefault.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -163,6 +198,13 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             IList<NeonRoleProperties> roles = default;
             IList<NeonDatabaseProperties> databases = default;
             IList<NeonEndpointProperties> endpoints = default;
+            string branchId = default;
+            string branch = default;
+            string dataSize = default;
+            string lastActive = default;
+            string computeHours = default;
+            bool? @protected = default;
+            bool? isDefault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,6 +309,49 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                     endpoints = array;
                     continue;
                 }
+                if (property.NameEquals("branchId"u8))
+                {
+                    branchId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("branch"u8))
+                {
+                    branch = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dataSize"u8))
+                {
+                    dataSize = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("lastActive"u8))
+                {
+                    lastActive = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("computeHours"u8))
+                {
+                    computeHours = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("protected"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @protected = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("isDefault"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isDefault = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -286,6 +371,13 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 roles ?? new ChangeTrackingList<NeonRoleProperties>(),
                 databases ?? new ChangeTrackingList<NeonDatabaseProperties>(),
                 endpoints ?? new ChangeTrackingList<NeonEndpointProperties>(),
+                branchId,
+                branch,
+                dataSize,
+                lastActive,
+                computeHours,
+                @protected,
+                isDefault,
                 serializedAdditionalRawData);
         }
 

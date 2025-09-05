@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
-    /// <summary> The Neon compute endpoint resource type. </summary>
-    public partial class NeonEndpoint : ResourceData
+    /// <summary> Result of the pre-deletion validation operation. </summary>
+    public partial class PreflightCheckResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,25 +45,32 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NeonEndpoint"/>. </summary>
-        public NeonEndpoint()
+        /// <summary> Initializes a new instance of <see cref="PreflightCheckResult"/>. </summary>
+        /// <param name="isValid"> Indicates whether action is allowed. </param>
+        internal PreflightCheckResult(bool isValid)
         {
+            IsValid = isValid;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NeonEndpoint"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="PreflightCheckResult"/>. </summary>
+        /// <param name="isValid"> Indicates whether action is allowed. </param>
+        /// <param name="reason"> Optional message in case action is not allowed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonEndpoint(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NeonEndpointProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PreflightCheckResult(bool isValid, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            IsValid = isValid;
+            Reason = reason;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public NeonEndpointProperties Properties { get; set; }
+        /// <summary> Initializes a new instance of <see cref="PreflightCheckResult"/> for deserialization. </summary>
+        internal PreflightCheckResult()
+        {
+        }
+
+        /// <summary> Indicates whether action is allowed. </summary>
+        public bool IsValid { get; }
+        /// <summary> Optional message in case action is not allowed. </summary>
+        public string Reason { get; }
     }
 }

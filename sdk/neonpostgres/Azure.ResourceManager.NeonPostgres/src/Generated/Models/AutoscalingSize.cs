@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
-    /// <summary> The Neon compute endpoint resource type. </summary>
-    public partial class NeonEndpoint : ResourceData
+    /// <summary> Represents the compute units size range for autoscaling. </summary>
+    public partial class AutoscalingSize
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,25 +45,34 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NeonEndpoint"/>. </summary>
-        public NeonEndpoint()
+        /// <summary> Initializes a new instance of <see cref="AutoscalingSize"/>. </summary>
+        /// <param name="autoscalingLimitMinCu"> The minimum compute units for autoscaling. </param>
+        /// <param name="autoscalingLimitMaxCu"> The maximum compute units for autoscaling. </param>
+        public AutoscalingSize(float autoscalingLimitMinCu, float autoscalingLimitMaxCu)
         {
+            AutoscalingLimitMinCu = autoscalingLimitMinCu;
+            AutoscalingLimitMaxCu = autoscalingLimitMaxCu;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NeonEndpoint"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="AutoscalingSize"/>. </summary>
+        /// <param name="autoscalingLimitMinCu"> The minimum compute units for autoscaling. </param>
+        /// <param name="autoscalingLimitMaxCu"> The maximum compute units for autoscaling. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonEndpoint(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NeonEndpointProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AutoscalingSize(float autoscalingLimitMinCu, float autoscalingLimitMaxCu, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            AutoscalingLimitMinCu = autoscalingLimitMinCu;
+            AutoscalingLimitMaxCu = autoscalingLimitMaxCu;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public NeonEndpointProperties Properties { get; set; }
+        /// <summary> Initializes a new instance of <see cref="AutoscalingSize"/> for deserialization. </summary>
+        internal AutoscalingSize()
+        {
+        }
+
+        /// <summary> The minimum compute units for autoscaling. </summary>
+        public float AutoscalingLimitMinCu { get; set; }
+        /// <summary> The maximum compute units for autoscaling. </summary>
+        public float AutoscalingLimitMaxCu { get; set; }
     }
 }
