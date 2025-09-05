@@ -1814,6 +1814,13 @@
         "Acks",
         "acks"
       ]
+    },
+    {
+      "filename": "**/sdk/workloadorchestration/**/*.cs",
+      "words": [
+        "Inprogress",
+        "Undeployed"
+      ]
     }
   ],
   "allowCompoundWords": true
