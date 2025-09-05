@@ -107,9 +107,6 @@ namespace Azure.Generator.Management.Visitors
                                         BuildConditionExpression(value),
                                         Default,
                                         New.Instance(variable.Type, BuildConstructorParameters(value))));
-                                    foreach (var (isOverriddenValueType, flattenedProperty) in value)
-                                    {
-                                    }
                                 }
                                 else
                                 {
