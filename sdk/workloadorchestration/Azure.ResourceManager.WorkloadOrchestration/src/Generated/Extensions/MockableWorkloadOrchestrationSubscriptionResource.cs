@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableWorkloadOrchestrationSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _schemaClientDiagnostics;
-        private SchemasRestOperations _schemaRestClient;
-        private ClientDiagnostics _targetClientDiagnostics;
-        private TargetsRestOperations _targetRestClient;
-        private ClientDiagnostics _solutionTemplateClientDiagnostics;
-        private SolutionTemplatesRestOperations _solutionTemplateRestClient;
-        private ClientDiagnostics _configTemplateClientDiagnostics;
-        private ConfigTemplatesRestOperations _configTemplateRestClient;
-        private ClientDiagnostics _diagnosticClientDiagnostics;
-        private DiagnosticsRestOperations _diagnosticRestClient;
-        private ClientDiagnostics _contextClientDiagnostics;
-        private ContextsRestOperations _contextRestClient;
+        private ClientDiagnostics _edgeSchemaSchemasClientDiagnostics;
+        private SchemasRestOperations _edgeSchemaSchemasRestClient;
+        private ClientDiagnostics _edgeTargetTargetsClientDiagnostics;
+        private TargetsRestOperations _edgeTargetTargetsRestClient;
+        private ClientDiagnostics _edgeSolutionTemplateSolutionTemplatesClientDiagnostics;
+        private SolutionTemplatesRestOperations _edgeSolutionTemplateSolutionTemplatesRestClient;
+        private ClientDiagnostics _edgeConfigTemplateConfigTemplatesClientDiagnostics;
+        private ConfigTemplatesRestOperations _edgeConfigTemplateConfigTemplatesRestClient;
+        private ClientDiagnostics _edgeDiagnosticDiagnosticsClientDiagnostics;
+        private DiagnosticsRestOperations _edgeDiagnosticDiagnosticsRestClient;
+        private ClientDiagnostics _edgeContextContextsClientDiagnostics;
+        private ContextsRestOperations _edgeContextContextsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableWorkloadOrchestrationSubscriptionResource"/> class for mocking. </summary>
         protected MockableWorkloadOrchestrationSubscriptionResource()
@@ -40,18 +40,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         {
         }
 
-        private ClientDiagnostics SchemaClientDiagnostics => _schemaClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", SchemaResource.ResourceType.Namespace, Diagnostics);
-        private SchemasRestOperations SchemaRestClient => _schemaRestClient ??= new SchemasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SchemaResource.ResourceType));
-        private ClientDiagnostics TargetClientDiagnostics => _targetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", TargetResource.ResourceType.Namespace, Diagnostics);
-        private TargetsRestOperations TargetRestClient => _targetRestClient ??= new TargetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TargetResource.ResourceType));
-        private ClientDiagnostics SolutionTemplateClientDiagnostics => _solutionTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", SolutionTemplateResource.ResourceType.Namespace, Diagnostics);
-        private SolutionTemplatesRestOperations SolutionTemplateRestClient => _solutionTemplateRestClient ??= new SolutionTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SolutionTemplateResource.ResourceType));
-        private ClientDiagnostics ConfigTemplateClientDiagnostics => _configTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ConfigTemplateResource.ResourceType.Namespace, Diagnostics);
-        private ConfigTemplatesRestOperations ConfigTemplateRestClient => _configTemplateRestClient ??= new ConfigTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConfigTemplateResource.ResourceType));
-        private ClientDiagnostics DiagnosticClientDiagnostics => _diagnosticClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", DiagnosticResource.ResourceType.Namespace, Diagnostics);
-        private DiagnosticsRestOperations DiagnosticRestClient => _diagnosticRestClient ??= new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DiagnosticResource.ResourceType));
-        private ClientDiagnostics ContextClientDiagnostics => _contextClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ContextResource.ResourceType.Namespace, Diagnostics);
-        private ContextsRestOperations ContextRestClient => _contextRestClient ??= new ContextsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContextResource.ResourceType));
+        private ClientDiagnostics EdgeSchemaSchemasClientDiagnostics => _edgeSchemaSchemasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSchemaResource.ResourceType.Namespace, Diagnostics);
+        private SchemasRestOperations EdgeSchemaSchemasRestClient => _edgeSchemaSchemasRestClient ??= new SchemasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EdgeSchemaResource.ResourceType));
+        private ClientDiagnostics EdgeTargetTargetsClientDiagnostics => _edgeTargetTargetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeTargetResource.ResourceType.Namespace, Diagnostics);
+        private TargetsRestOperations EdgeTargetTargetsRestClient => _edgeTargetTargetsRestClient ??= new TargetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EdgeTargetResource.ResourceType));
+        private ClientDiagnostics EdgeSolutionTemplateSolutionTemplatesClientDiagnostics => _edgeSolutionTemplateSolutionTemplatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSolutionTemplateResource.ResourceType.Namespace, Diagnostics);
+        private SolutionTemplatesRestOperations EdgeSolutionTemplateSolutionTemplatesRestClient => _edgeSolutionTemplateSolutionTemplatesRestClient ??= new SolutionTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EdgeSolutionTemplateResource.ResourceType));
+        private ClientDiagnostics EdgeConfigTemplateConfigTemplatesClientDiagnostics => _edgeConfigTemplateConfigTemplatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeConfigTemplateResource.ResourceType.Namespace, Diagnostics);
+        private ConfigTemplatesRestOperations EdgeConfigTemplateConfigTemplatesRestClient => _edgeConfigTemplateConfigTemplatesRestClient ??= new ConfigTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EdgeConfigTemplateResource.ResourceType));
+        private ClientDiagnostics EdgeDiagnosticDiagnosticsClientDiagnostics => _edgeDiagnosticDiagnosticsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeDiagnosticResource.ResourceType.Namespace, Diagnostics);
+        private DiagnosticsRestOperations EdgeDiagnosticDiagnosticsRestClient => _edgeDiagnosticDiagnosticsRestClient ??= new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EdgeDiagnosticResource.ResourceType));
+        private ClientDiagnostics EdgeContextContextsClientDiagnostics => _edgeContextContextsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeContextResource.ResourceType.Namespace, Diagnostics);
+        private ContextsRestOperations EdgeContextContextsRestClient => _edgeContextContextsRestClient ??= new ContextsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EdgeContextResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -76,17 +76,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SchemaResource"/></description>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SchemaResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SchemaResource> GetSchemasAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EdgeSchemaResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EdgeSchemaResource> GetEdgeSchemasAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SchemaRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SchemaRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SchemaResource(Client, SchemaData.DeserializeSchemaData(e)), SchemaClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetSchemas", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeSchemaSchemasRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeSchemaSchemasRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeSchemaResource(Client, EdgeSchemaData.DeserializeEdgeSchemaData(e)), EdgeSchemaSchemasClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeSchemas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -106,17 +106,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SchemaResource"/></description>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SchemaResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SchemaResource> GetSchemas(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EdgeSchemaResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EdgeSchemaResource> GetEdgeSchemas(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SchemaRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SchemaRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SchemaResource(Client, SchemaData.DeserializeSchemaData(e)), SchemaClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetSchemas", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeSchemaSchemasRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeSchemaSchemasRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeSchemaResource(Client, EdgeSchemaData.DeserializeEdgeSchemaData(e)), EdgeSchemaSchemasClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeSchemas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -136,17 +136,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TargetResource"/></description>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TargetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TargetResource> GetTargetsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EdgeTargetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EdgeTargetResource> GetEdgeTargetsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => TargetRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TargetRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TargetResource(Client, TargetData.DeserializeTargetData(e)), TargetClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetTargets", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeTargetTargetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeTargetTargetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeTargetResource(Client, EdgeTargetData.DeserializeEdgeTargetData(e)), EdgeTargetTargetsClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeTargets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -166,17 +166,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TargetResource"/></description>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TargetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TargetResource> GetTargets(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EdgeTargetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EdgeTargetResource> GetEdgeTargets(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => TargetRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TargetRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TargetResource(Client, TargetData.DeserializeTargetData(e)), TargetClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetTargets", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeTargetTargetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeTargetTargetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeTargetResource(Client, EdgeTargetData.DeserializeEdgeTargetData(e)), EdgeTargetTargetsClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeTargets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -196,17 +196,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SolutionTemplateResource"/></description>
+        /// <description><see cref="EdgeSolutionTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SolutionTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SolutionTemplateResource> GetSolutionTemplatesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EdgeSolutionTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EdgeSolutionTemplateResource> GetEdgeSolutionTemplatesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SolutionTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SolutionTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SolutionTemplateResource(Client, SolutionTemplateData.DeserializeSolutionTemplateData(e)), SolutionTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetSolutionTemplates", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeSolutionTemplateSolutionTemplatesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeSolutionTemplateSolutionTemplatesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeSolutionTemplateResource(Client, EdgeSolutionTemplateData.DeserializeEdgeSolutionTemplateData(e)), EdgeSolutionTemplateSolutionTemplatesClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeSolutionTemplates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -226,17 +226,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SolutionTemplateResource"/></description>
+        /// <description><see cref="EdgeSolutionTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SolutionTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SolutionTemplateResource> GetSolutionTemplates(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EdgeSolutionTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EdgeSolutionTemplateResource> GetEdgeSolutionTemplates(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SolutionTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SolutionTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SolutionTemplateResource(Client, SolutionTemplateData.DeserializeSolutionTemplateData(e)), SolutionTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetSolutionTemplates", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeSolutionTemplateSolutionTemplatesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeSolutionTemplateSolutionTemplatesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeSolutionTemplateResource(Client, EdgeSolutionTemplateData.DeserializeEdgeSolutionTemplateData(e)), EdgeSolutionTemplateSolutionTemplatesClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeSolutionTemplates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,17 +256,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ConfigTemplateResource"/></description>
+        /// <description><see cref="EdgeConfigTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfigTemplateResource> GetConfigTemplatesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EdgeConfigTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EdgeConfigTemplateResource> GetEdgeConfigTemplatesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfigTemplateResource(Client, ConfigTemplateData.DeserializeConfigTemplateData(e)), ConfigTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetConfigTemplates", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeConfigTemplateConfigTemplatesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeConfigTemplateConfigTemplatesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeConfigTemplateResource(Client, EdgeConfigTemplateData.DeserializeEdgeConfigTemplateData(e)), EdgeConfigTemplateConfigTemplatesClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeConfigTemplates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ConfigTemplateResource"/></description>
+        /// <description><see cref="EdgeConfigTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfigTemplateResource> GetConfigTemplates(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EdgeConfigTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EdgeConfigTemplateResource> GetEdgeConfigTemplates(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfigTemplateResource(Client, ConfigTemplateData.DeserializeConfigTemplateData(e)), ConfigTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetConfigTemplates", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeConfigTemplateConfigTemplatesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeConfigTemplateConfigTemplatesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeConfigTemplateResource(Client, EdgeConfigTemplateData.DeserializeEdgeConfigTemplateData(e)), EdgeConfigTemplateConfigTemplatesClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeConfigTemplates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -316,17 +316,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DiagnosticResource"/></description>
+        /// <description><see cref="EdgeDiagnosticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DiagnosticResource> GetDiagnosticsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EdgeDiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EdgeDiagnosticResource> GetEdgeDiagnosticsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiagnosticRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiagnosticRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiagnosticResource(Client, DiagnosticData.DeserializeDiagnosticData(e)), DiagnosticClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetDiagnostics", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeDiagnosticDiagnosticsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeDiagnosticDiagnosticsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeDiagnosticResource(Client, EdgeDiagnosticData.DeserializeEdgeDiagnosticData(e)), EdgeDiagnosticDiagnosticsClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeDiagnostics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -346,17 +346,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DiagnosticResource"/></description>
+        /// <description><see cref="EdgeDiagnosticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DiagnosticResource> GetDiagnostics(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EdgeDiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EdgeDiagnosticResource> GetEdgeDiagnostics(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiagnosticRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiagnosticRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiagnosticResource(Client, DiagnosticData.DeserializeDiagnosticData(e)), DiagnosticClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetDiagnostics", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeDiagnosticDiagnosticsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeDiagnosticDiagnosticsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeDiagnosticResource(Client, EdgeDiagnosticData.DeserializeEdgeDiagnosticData(e)), EdgeDiagnosticDiagnosticsClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeDiagnostics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -376,17 +376,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContextResource"/></description>
+        /// <description><see cref="EdgeContextResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContextResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContextResource> GetContextsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EdgeContextResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EdgeContextResource> GetEdgeContextsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ContextRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContextRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContextResource(Client, ContextData.DeserializeContextData(e)), ContextClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetContexts", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeContextContextsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeContextContextsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeContextResource(Client, EdgeContextData.DeserializeEdgeContextData(e)), EdgeContextContextsClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeContexts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -406,17 +406,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContextResource"/></description>
+        /// <description><see cref="EdgeContextResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContextResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContextResource> GetContexts(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EdgeContextResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EdgeContextResource> GetEdgeContexts(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ContextRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContextRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContextResource(Client, ContextData.DeserializeContextData(e)), ContextClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetContexts", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeContextContextsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeContextContextsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeContextResource(Client, EdgeContextData.DeserializeEdgeContextData(e)), EdgeContextContextsClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeContexts", "value", "nextLink", cancellationToken);
         }
     }
 }

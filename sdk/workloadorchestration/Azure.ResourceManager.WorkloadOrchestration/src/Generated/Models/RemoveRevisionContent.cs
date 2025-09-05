@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="solutionTemplateId"> Solution Template ARM Id. </param>
         /// <param name="solutionVersion"> Solution Version Name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionTemplateId"/> or <paramref name="solutionVersion"/> is null. </exception>
-        public RemoveRevisionContent(string solutionTemplateId, string solutionVersion)
+        public RemoveRevisionContent(ResourceIdentifier solutionTemplateId, string solutionVersion)
         {
             Argument.AssertNotNull(solutionTemplateId, nameof(solutionTemplateId));
             Argument.AssertNotNull(solutionVersion, nameof(solutionVersion));
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="solutionTemplateId"> Solution Template ARM Id. </param>
         /// <param name="solutionVersion"> Solution Version Name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemoveRevisionContent(string solutionTemplateId, string solutionVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RemoveRevisionContent(ResourceIdentifier solutionTemplateId, string solutionVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionTemplateId = solutionTemplateId;
             SolutionVersion = solutionVersion;
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Solution Template ARM Id. </summary>
-        public string SolutionTemplateId { get; }
+        public ResourceIdentifier SolutionTemplateId { get; }
         /// <summary> Solution Version Name. </summary>
         public string SolutionVersion { get; }
     }

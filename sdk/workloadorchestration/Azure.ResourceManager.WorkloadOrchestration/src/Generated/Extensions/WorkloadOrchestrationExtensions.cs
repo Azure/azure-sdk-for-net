@@ -33,21 +33,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         }
 
         /// <summary>
-        /// Gets a collection of JobResources in the ArmClient.
+        /// Gets a collection of EdgeJobResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetJobs(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeJobs(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> An object representing collection of JobResources and their operations over a JobResource. </returns>
-        public static JobCollection GetJobs(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> An object representing collection of EdgeJobResources and their operations over a EdgeJobResource. </returns>
+        public static EdgeJobCollection GetEdgeJobs(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetJobs(scope);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeJobs(scope);
         }
 
         /// <summary>
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="EdgeJobResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetJobAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeJobAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<JobResource>> GetJobAsync(this ArmClient client, ResourceIdentifier scope, string jobName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EdgeJobResource>> GetEdgeJobAsync(this ArmClient client, ResourceIdentifier scope, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableWorkloadOrchestrationArmClient(client).GetJobAsync(scope, jobName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWorkloadOrchestrationArmClient(client).GetEdgeJobAsync(scope, jobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="EdgeJobResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetJob(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeJob(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -121,29 +121,29 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<JobResource> GetJob(this ArmClient client, ResourceIdentifier scope, string jobName, CancellationToken cancellationToken = default)
+        public static Response<EdgeJobResource> GetEdgeJob(this ArmClient client, ResourceIdentifier scope, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetJob(scope, jobName, cancellationToken);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeJob(scope, jobName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of SchemaReferenceResources in the ArmClient.
+        /// Gets a collection of EdgeSchemaReferenceResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSchemaReferences(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeSchemaReferences(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> An object representing collection of SchemaReferenceResources and their operations over a SchemaReferenceResource. </returns>
-        public static SchemaReferenceCollection GetSchemaReferences(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> An object representing collection of EdgeSchemaReferenceResources and their operations over a EdgeSchemaReferenceResource. </returns>
+        public static EdgeSchemaReferenceCollection GetEdgeSchemaReferences(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetSchemaReferences(scope);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeSchemaReferences(scope);
         }
 
         /// <summary>
@@ -163,12 +163,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SchemaReferenceResource"/></description>
+        /// <description><see cref="EdgeSchemaReferenceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSchemaReferenceAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeSchemaReferenceAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="schemaReferenceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SchemaReferenceResource>> GetSchemaReferenceAsync(this ArmClient client, ResourceIdentifier scope, string schemaReferenceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EdgeSchemaReferenceResource>> GetEdgeSchemaReferenceAsync(this ArmClient client, ResourceIdentifier scope, string schemaReferenceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableWorkloadOrchestrationArmClient(client).GetSchemaReferenceAsync(scope, schemaReferenceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWorkloadOrchestrationArmClient(client).GetEdgeSchemaReferenceAsync(scope, schemaReferenceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -202,12 +202,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SchemaReferenceResource"/></description>
+        /// <description><see cref="EdgeSchemaReferenceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSchemaReference(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeSchemaReference(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -217,427 +217,427 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="schemaReferenceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<SchemaReferenceResource> GetSchemaReference(this ArmClient client, ResourceIdentifier scope, string schemaReferenceName, CancellationToken cancellationToken = default)
+        public static Response<EdgeSchemaReferenceResource> GetEdgeSchemaReference(this ArmClient client, ResourceIdentifier scope, string schemaReferenceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetSchemaReference(scope, schemaReferenceName, cancellationToken);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeSchemaReference(scope, schemaReferenceName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DynamicSchemaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DynamicSchemaResource.CreateResourceIdentifier" /> to create a <see cref="DynamicSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeDynamicSchemaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeDynamicSchemaResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDynamicSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetDynamicSchemaResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeDynamicSchemaResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DynamicSchemaResource"/> object. </returns>
-        public static DynamicSchemaResource GetDynamicSchemaResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeDynamicSchemaResource"/> object. </returns>
+        public static EdgeDynamicSchemaResource GetEdgeDynamicSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetDynamicSchemaResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeDynamicSchemaResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SchemaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SchemaResource.CreateResourceIdentifier" /> to create a <see cref="SchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeSchemaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeSchemaResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSchemaResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeSchemaResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SchemaResource"/> object. </returns>
-        public static SchemaResource GetSchemaResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeSchemaResource"/> object. </returns>
+        public static EdgeSchemaResource GetEdgeSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetSchemaResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeSchemaResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SchemaVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SchemaVersionResource.CreateResourceIdentifier" /> to create a <see cref="SchemaVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeSchemaVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeSchemaVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSchemaVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSchemaVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeSchemaVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SchemaVersionResource"/> object. </returns>
-        public static SchemaVersionResource GetSchemaVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeSchemaVersionResource"/> object. </returns>
+        public static EdgeSchemaVersionResource GetEdgeSchemaVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetSchemaVersionResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeSchemaVersionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SolutionVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SolutionVersionResource.CreateResourceIdentifier" /> to create a <see cref="SolutionVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeSolutionVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeSolutionVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSolutionVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSolutionVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeSolutionVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SolutionVersionResource"/> object. </returns>
-        public static SolutionVersionResource GetSolutionVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeSolutionVersionResource"/> object. </returns>
+        public static EdgeSolutionVersionResource GetEdgeSolutionVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetSolutionVersionResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeSolutionVersionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="JobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobResource.CreateResourceIdentifier" /> to create a <see cref="JobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeJobResource.CreateResourceIdentifier" /> to create an <see cref="EdgeJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetJobResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeJobResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="JobResource"/> object. </returns>
-        public static JobResource GetJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeJobResource"/> object. </returns>
+        public static EdgeJobResource GetEdgeJobResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetJobResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeJobResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TargetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TargetResource.CreateResourceIdentifier" /> to create a <see cref="TargetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeTargetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeTargetResource.CreateResourceIdentifier" /> to create an <see cref="EdgeTargetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetTargetResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeTargetResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TargetResource"/> object. </returns>
-        public static TargetResource GetTargetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeTargetResource"/> object. </returns>
+        public static EdgeTargetResource GetEdgeTargetResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetTargetResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeTargetResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DynamicSchemaVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DynamicSchemaVersionResource.CreateResourceIdentifier" /> to create a <see cref="DynamicSchemaVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeDynamicSchemaVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeDynamicSchemaVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDynamicSchemaVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetDynamicSchemaVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeDynamicSchemaVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DynamicSchemaVersionResource"/> object. </returns>
-        public static DynamicSchemaVersionResource GetDynamicSchemaVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeDynamicSchemaVersionResource"/> object. </returns>
+        public static EdgeDynamicSchemaVersionResource GetEdgeDynamicSchemaVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetDynamicSchemaVersionResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeDynamicSchemaVersionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SchemaReferenceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SchemaReferenceResource.CreateResourceIdentifier" /> to create a <see cref="SchemaReferenceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeSchemaReferenceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeSchemaReferenceResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSchemaReferenceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSchemaReferenceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeSchemaReferenceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SchemaReferenceResource"/> object. </returns>
-        public static SchemaReferenceResource GetSchemaReferenceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeSchemaReferenceResource"/> object. </returns>
+        public static EdgeSchemaReferenceResource GetEdgeSchemaReferenceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetSchemaReferenceResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeSchemaReferenceResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SolutionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SolutionResource.CreateResourceIdentifier" /> to create a <see cref="SolutionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeSolutionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeSolutionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSolutionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSolutionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeSolutionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SolutionResource"/> object. </returns>
-        public static SolutionResource GetSolutionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeSolutionResource"/> object. </returns>
+        public static EdgeSolutionResource GetEdgeSolutionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetSolutionResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeSolutionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SolutionTemplateVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SolutionTemplateVersionResource.CreateResourceIdentifier" /> to create a <see cref="SolutionTemplateVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeSolutionTemplateVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeSolutionTemplateVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSolutionTemplateVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSolutionTemplateVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeSolutionTemplateVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SolutionTemplateVersionResource"/> object. </returns>
-        public static SolutionTemplateVersionResource GetSolutionTemplateVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeSolutionTemplateVersionResource"/> object. </returns>
+        public static EdgeSolutionTemplateVersionResource GetEdgeSolutionTemplateVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetSolutionTemplateVersionResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeSolutionTemplateVersionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SolutionTemplateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SolutionTemplateResource.CreateResourceIdentifier" /> to create a <see cref="SolutionTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeSolutionTemplateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeSolutionTemplateResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSolutionTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSolutionTemplateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeSolutionTemplateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SolutionTemplateResource"/> object. </returns>
-        public static SolutionTemplateResource GetSolutionTemplateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeSolutionTemplateResource"/> object. </returns>
+        public static EdgeSolutionTemplateResource GetEdgeSolutionTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetSolutionTemplateResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeSolutionTemplateResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="InstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InstanceResource.CreateResourceIdentifier" /> to create an <see cref="InstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeDeploymentInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeDeploymentInstanceResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDeploymentInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeDeploymentInstanceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="InstanceResource"/> object. </returns>
-        public static InstanceResource GetInstanceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeDeploymentInstanceResource"/> object. </returns>
+        public static EdgeDeploymentInstanceResource GetEdgeDeploymentInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetInstanceResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeDeploymentInstanceResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="InstanceHistoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InstanceHistoryResource.CreateResourceIdentifier" /> to create an <see cref="InstanceHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeDeploymentInstanceHistoryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeDeploymentInstanceHistoryResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDeploymentInstanceHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetInstanceHistoryResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeDeploymentInstanceHistoryResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="InstanceHistoryResource"/> object. </returns>
-        public static InstanceHistoryResource GetInstanceHistoryResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeDeploymentInstanceHistoryResource"/> object. </returns>
+        public static EdgeDeploymentInstanceHistoryResource GetEdgeDeploymentInstanceHistoryResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetInstanceHistoryResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeDeploymentInstanceHistoryResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConfigTemplateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigTemplateResource.CreateResourceIdentifier" /> to create a <see cref="ConfigTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeConfigTemplateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeConfigTemplateResource.CreateResourceIdentifier" /> to create an <see cref="EdgeConfigTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetConfigTemplateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeConfigTemplateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ConfigTemplateResource"/> object. </returns>
-        public static ConfigTemplateResource GetConfigTemplateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeConfigTemplateResource"/> object. </returns>
+        public static EdgeConfigTemplateResource GetEdgeConfigTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetConfigTemplateResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeConfigTemplateResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConfigTemplateVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigTemplateVersionResource.CreateResourceIdentifier" /> to create a <see cref="ConfigTemplateVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeConfigTemplateVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeConfigTemplateVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeConfigTemplateVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetConfigTemplateVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeConfigTemplateVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ConfigTemplateVersionResource"/> object. </returns>
-        public static ConfigTemplateVersionResource GetConfigTemplateVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeConfigTemplateVersionResource"/> object. </returns>
+        public static EdgeConfigTemplateVersionResource GetEdgeConfigTemplateVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetConfigTemplateVersionResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeConfigTemplateVersionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkflowResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeWorkflowResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeWorkflowResource.CreateResourceIdentifier" /> to create an <see cref="EdgeWorkflowResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetWorkflowResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeWorkflowResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WorkflowResource"/> object. </returns>
-        public static WorkflowResource GetWorkflowResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeWorkflowResource"/> object. </returns>
+        public static EdgeWorkflowResource GetEdgeWorkflowResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetWorkflowResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeWorkflowResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkflowVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowVersionResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeWorkflowVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeWorkflowVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeWorkflowVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetWorkflowVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeWorkflowVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WorkflowVersionResource"/> object. </returns>
-        public static WorkflowVersionResource GetWorkflowVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeWorkflowVersionResource"/> object. </returns>
+        public static EdgeWorkflowVersionResource GetEdgeWorkflowVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetWorkflowVersionResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeWorkflowVersionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ExecutionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExecutionResource.CreateResourceIdentifier" /> to create an <see cref="ExecutionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeExecutionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeExecutionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeExecutionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetExecutionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeExecutionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ExecutionResource"/> object. </returns>
-        public static ExecutionResource GetExecutionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeExecutionResource"/> object. </returns>
+        public static EdgeExecutionResource GetEdgeExecutionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetExecutionResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeExecutionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeDiagnosticResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeDiagnosticResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetDiagnosticResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeDiagnosticResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public static DiagnosticResource GetDiagnosticResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeDiagnosticResource"/> object. </returns>
+        public static EdgeDiagnosticResource GetEdgeDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetDiagnosticResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeDiagnosticResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ContextResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContextResource.CreateResourceIdentifier" /> to create a <see cref="ContextResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeContextResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeContextResource.CreateResourceIdentifier" /> to create an <see cref="EdgeContextResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetContextResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeContextResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContextResource"/> object. </returns>
-        public static ContextResource GetContextResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeContextResource"/> object. </returns>
+        public static EdgeContextResource GetEdgeContextResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetContextResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeContextResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteReferenceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteReferenceResource.CreateResourceIdentifier" /> to create a <see cref="SiteReferenceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EdgeSiteReferenceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeSiteReferenceResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSiteReferenceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetSiteReferenceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationArmClient.GetEdgeSiteReferenceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteReferenceResource"/> object. </returns>
-        public static SiteReferenceResource GetSiteReferenceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeSiteReferenceResource"/> object. </returns>
+        public static EdgeSiteReferenceResource GetEdgeSiteReferenceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWorkloadOrchestrationArmClient(client).GetSiteReferenceResource(id);
+            return GetMockableWorkloadOrchestrationArmClient(client).GetEdgeSiteReferenceResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of SchemaResources in the ResourceGroupResource.
+        /// Gets a collection of EdgeSchemaResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetSchemas()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeSchemas()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of SchemaResources and their operations over a SchemaResource. </returns>
-        public static SchemaCollection GetSchemas(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of EdgeSchemaResources and their operations over a EdgeSchemaResource. </returns>
+        public static EdgeSchemaCollection GetEdgeSchemas(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetSchemas();
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeSchemas();
         }
 
         /// <summary>
@@ -657,12 +657,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SchemaResource"/></description>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetSchemaAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeSchemaAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -671,11 +671,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="schemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SchemaResource>> GetSchemaAsync(this ResourceGroupResource resourceGroupResource, string schemaName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EdgeSchemaResource>> GetEdgeSchemaAsync(this ResourceGroupResource resourceGroupResource, string schemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetSchemaAsync(schemaName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeSchemaAsync(schemaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -695,12 +695,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SchemaResource"/></description>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetSchema(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeSchema(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -709,28 +709,28 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="schemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<SchemaResource> GetSchema(this ResourceGroupResource resourceGroupResource, string schemaName, CancellationToken cancellationToken = default)
+        public static Response<EdgeSchemaResource> GetEdgeSchema(this ResourceGroupResource resourceGroupResource, string schemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetSchema(schemaName, cancellationToken);
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeSchema(schemaName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of TargetResources in the ResourceGroupResource.
+        /// Gets a collection of EdgeTargetResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetTargets()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeTargets()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of TargetResources and their operations over a TargetResource. </returns>
-        public static TargetCollection GetTargets(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of EdgeTargetResources and their operations over a EdgeTargetResource. </returns>
+        public static EdgeTargetCollection GetEdgeTargets(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetTargets();
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeTargets();
         }
 
         /// <summary>
@@ -750,12 +750,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TargetResource"/></description>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetTargetAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeTargetAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -764,11 +764,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="targetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<TargetResource>> GetTargetAsync(this ResourceGroupResource resourceGroupResource, string targetName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EdgeTargetResource>> GetEdgeTargetAsync(this ResourceGroupResource resourceGroupResource, string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetTargetAsync(targetName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeTargetAsync(targetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -788,12 +788,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TargetResource"/></description>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetTarget(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeTarget(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -802,28 +802,28 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="targetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<TargetResource> GetTarget(this ResourceGroupResource resourceGroupResource, string targetName, CancellationToken cancellationToken = default)
+        public static Response<EdgeTargetResource> GetEdgeTarget(this ResourceGroupResource resourceGroupResource, string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetTarget(targetName, cancellationToken);
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeTarget(targetName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of SolutionTemplateResources in the ResourceGroupResource.
+        /// Gets a collection of EdgeSolutionTemplateResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetSolutionTemplates()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeSolutionTemplates()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of SolutionTemplateResources and their operations over a SolutionTemplateResource. </returns>
-        public static SolutionTemplateCollection GetSolutionTemplates(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of EdgeSolutionTemplateResources and their operations over a EdgeSolutionTemplateResource. </returns>
+        public static EdgeSolutionTemplateCollection GetEdgeSolutionTemplates(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetSolutionTemplates();
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeSolutionTemplates();
         }
 
         /// <summary>
@@ -843,12 +843,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SolutionTemplateResource"/></description>
+        /// <description><see cref="EdgeSolutionTemplateResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetSolutionTemplateAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeSolutionTemplateAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -857,11 +857,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="solutionTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SolutionTemplateResource>> GetSolutionTemplateAsync(this ResourceGroupResource resourceGroupResource, string solutionTemplateName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EdgeSolutionTemplateResource>> GetEdgeSolutionTemplateAsync(this ResourceGroupResource resourceGroupResource, string solutionTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetSolutionTemplateAsync(solutionTemplateName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeSolutionTemplateAsync(solutionTemplateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -881,12 +881,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SolutionTemplateResource"/></description>
+        /// <description><see cref="EdgeSolutionTemplateResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetSolutionTemplate(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeSolutionTemplate(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -895,28 +895,28 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="solutionTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<SolutionTemplateResource> GetSolutionTemplate(this ResourceGroupResource resourceGroupResource, string solutionTemplateName, CancellationToken cancellationToken = default)
+        public static Response<EdgeSolutionTemplateResource> GetEdgeSolutionTemplate(this ResourceGroupResource resourceGroupResource, string solutionTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetSolutionTemplate(solutionTemplateName, cancellationToken);
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeSolutionTemplate(solutionTemplateName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of ConfigTemplateResources in the ResourceGroupResource.
+        /// Gets a collection of EdgeConfigTemplateResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetConfigTemplates()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeConfigTemplates()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ConfigTemplateResources and their operations over a ConfigTemplateResource. </returns>
-        public static ConfigTemplateCollection GetConfigTemplates(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of EdgeConfigTemplateResources and their operations over a EdgeConfigTemplateResource. </returns>
+        public static EdgeConfigTemplateCollection GetEdgeConfigTemplates(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetConfigTemplates();
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeConfigTemplates();
         }
 
         /// <summary>
@@ -936,12 +936,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ConfigTemplateResource"/></description>
+        /// <description><see cref="EdgeConfigTemplateResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetConfigTemplateAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeConfigTemplateAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -950,11 +950,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="configTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ConfigTemplateResource>> GetConfigTemplateAsync(this ResourceGroupResource resourceGroupResource, string configTemplateName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EdgeConfigTemplateResource>> GetEdgeConfigTemplateAsync(this ResourceGroupResource resourceGroupResource, string configTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetConfigTemplateAsync(configTemplateName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeConfigTemplateAsync(configTemplateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -974,12 +974,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ConfigTemplateResource"/></description>
+        /// <description><see cref="EdgeConfigTemplateResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetConfigTemplate(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeConfigTemplate(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -988,28 +988,28 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="configTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<ConfigTemplateResource> GetConfigTemplate(this ResourceGroupResource resourceGroupResource, string configTemplateName, CancellationToken cancellationToken = default)
+        public static Response<EdgeConfigTemplateResource> GetEdgeConfigTemplate(this ResourceGroupResource resourceGroupResource, string configTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetConfigTemplate(configTemplateName, cancellationToken);
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeConfigTemplate(configTemplateName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of DiagnosticResources in the ResourceGroupResource.
+        /// Gets a collection of EdgeDiagnosticResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetDiagnostics()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeDiagnostics()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DiagnosticResources and their operations over a DiagnosticResource. </returns>
-        public static DiagnosticCollection GetDiagnostics(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of EdgeDiagnosticResources and their operations over a EdgeDiagnosticResource. </returns>
+        public static EdgeDiagnosticCollection GetEdgeDiagnostics(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetDiagnostics();
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeDiagnostics();
         }
 
         /// <summary>
@@ -1029,12 +1029,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DiagnosticResource"/></description>
+        /// <description><see cref="EdgeDiagnosticResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetDiagnosticAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeDiagnosticAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1043,11 +1043,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="diagnosticName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DiagnosticResource>> GetDiagnosticAsync(this ResourceGroupResource resourceGroupResource, string diagnosticName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EdgeDiagnosticResource>> GetEdgeDiagnosticAsync(this ResourceGroupResource resourceGroupResource, string diagnosticName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetDiagnosticAsync(diagnosticName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeDiagnosticAsync(diagnosticName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1067,12 +1067,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DiagnosticResource"/></description>
+        /// <description><see cref="EdgeDiagnosticResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetDiagnostic(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeDiagnostic(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1081,28 +1081,28 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="diagnosticName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<DiagnosticResource> GetDiagnostic(this ResourceGroupResource resourceGroupResource, string diagnosticName, CancellationToken cancellationToken = default)
+        public static Response<EdgeDiagnosticResource> GetEdgeDiagnostic(this ResourceGroupResource resourceGroupResource, string diagnosticName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetDiagnostic(diagnosticName, cancellationToken);
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeDiagnostic(diagnosticName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of ContextResources in the ResourceGroupResource.
+        /// Gets a collection of EdgeContextResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetContexts()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeContexts()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ContextResources and their operations over a ContextResource. </returns>
-        public static ContextCollection GetContexts(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of EdgeContextResources and their operations over a EdgeContextResource. </returns>
+        public static EdgeContextCollection GetEdgeContexts(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetContexts();
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeContexts();
         }
 
         /// <summary>
@@ -1122,12 +1122,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContextResource"/></description>
+        /// <description><see cref="EdgeContextResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetContextAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeContextAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1136,11 +1136,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="contextName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="contextName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ContextResource>> GetContextAsync(this ResourceGroupResource resourceGroupResource, string contextName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EdgeContextResource>> GetEdgeContextAsync(this ResourceGroupResource resourceGroupResource, string contextName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetContextAsync(contextName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeContextAsync(contextName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1160,12 +1160,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContextResource"/></description>
+        /// <description><see cref="EdgeContextResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetContext(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationResourceGroupResource.GetEdgeContext(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1174,11 +1174,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="contextName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="contextName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<ContextResource> GetContext(this ResourceGroupResource resourceGroupResource, string contextName, CancellationToken cancellationToken = default)
+        public static Response<EdgeContextResource> GetEdgeContext(this ResourceGroupResource resourceGroupResource, string contextName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetContext(contextName, cancellationToken);
+            return GetMockableWorkloadOrchestrationResourceGroupResource(resourceGroupResource).GetEdgeContext(contextName, cancellationToken);
         }
 
         /// <summary>
@@ -1198,23 +1198,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SchemaResource"/></description>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetSchemas(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetEdgeSchemas(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SchemaResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SchemaResource> GetSchemasAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EdgeSchemaResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EdgeSchemaResource> GetEdgeSchemasAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetSchemasAsync(cancellationToken);
+            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetEdgeSchemasAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1234,23 +1234,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SchemaResource"/></description>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetSchemas(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetEdgeSchemas(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SchemaResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SchemaResource> GetSchemas(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EdgeSchemaResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EdgeSchemaResource> GetEdgeSchemas(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetSchemas(cancellationToken);
+            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetEdgeSchemas(cancellationToken);
         }
 
         /// <summary>
@@ -1270,23 +1270,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TargetResource"/></description>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetTargets(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetEdgeTargets(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="TargetResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<TargetResource> GetTargetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EdgeTargetResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EdgeTargetResource> GetEdgeTargetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetTargetsAsync(cancellationToken);
+            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetEdgeTargetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1306,23 +1306,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TargetResource"/></description>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetTargets(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetEdgeTargets(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="TargetResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<TargetResource> GetTargets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EdgeTargetResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EdgeTargetResource> GetEdgeTargets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetTargets(cancellationToken);
+            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetEdgeTargets(cancellationToken);
         }
 
         /// <summary>
@@ -1342,23 +1342,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SolutionTemplateResource"/></description>
+        /// <description><see cref="EdgeSolutionTemplateResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetSolutionTemplates(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetEdgeSolutionTemplates(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SolutionTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SolutionTemplateResource> GetSolutionTemplatesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EdgeSolutionTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EdgeSolutionTemplateResource> GetEdgeSolutionTemplatesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetSolutionTemplatesAsync(cancellationToken);
+            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetEdgeSolutionTemplatesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1378,23 +1378,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SolutionTemplateResource"/></description>
+        /// <description><see cref="EdgeSolutionTemplateResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetSolutionTemplates(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetEdgeSolutionTemplates(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SolutionTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SolutionTemplateResource> GetSolutionTemplates(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EdgeSolutionTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EdgeSolutionTemplateResource> GetEdgeSolutionTemplates(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetSolutionTemplates(cancellationToken);
+            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetEdgeSolutionTemplates(cancellationToken);
         }
 
         /// <summary>
@@ -1414,23 +1414,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ConfigTemplateResource"/></description>
+        /// <description><see cref="EdgeConfigTemplateResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetConfigTemplates(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetEdgeConfigTemplates(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ConfigTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfigTemplateResource> GetConfigTemplatesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EdgeConfigTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EdgeConfigTemplateResource> GetEdgeConfigTemplatesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetConfigTemplatesAsync(cancellationToken);
+            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetEdgeConfigTemplatesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1450,23 +1450,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ConfigTemplateResource"/></description>
+        /// <description><see cref="EdgeConfigTemplateResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetConfigTemplates(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetEdgeConfigTemplates(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ConfigTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfigTemplateResource> GetConfigTemplates(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EdgeConfigTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EdgeConfigTemplateResource> GetEdgeConfigTemplates(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetConfigTemplates(cancellationToken);
+            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetEdgeConfigTemplates(cancellationToken);
         }
 
         /// <summary>
@@ -1486,23 +1486,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DiagnosticResource"/></description>
+        /// <description><see cref="EdgeDiagnosticResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetDiagnostics(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetEdgeDiagnostics(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DiagnosticResource> GetDiagnosticsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EdgeDiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EdgeDiagnosticResource> GetEdgeDiagnosticsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetDiagnosticsAsync(cancellationToken);
+            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetEdgeDiagnosticsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1522,23 +1522,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DiagnosticResource"/></description>
+        /// <description><see cref="EdgeDiagnosticResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetDiagnostics(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetEdgeDiagnostics(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DiagnosticResource> GetDiagnostics(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EdgeDiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EdgeDiagnosticResource> GetEdgeDiagnostics(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetDiagnostics(cancellationToken);
+            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetEdgeDiagnostics(cancellationToken);
         }
 
         /// <summary>
@@ -1558,23 +1558,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContextResource"/></description>
+        /// <description><see cref="EdgeContextResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetContexts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetEdgeContexts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ContextResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ContextResource> GetContextsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EdgeContextResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EdgeContextResource> GetEdgeContextsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetContextsAsync(cancellationToken);
+            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetEdgeContextsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1594,23 +1594,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContextResource"/></description>
+        /// <description><see cref="EdgeContextResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetContexts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadOrchestrationSubscriptionResource.GetEdgeContexts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ContextResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ContextResource> GetContexts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EdgeContextResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EdgeContextResource> GetEdgeContexts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetContexts(cancellationToken);
+            return GetMockableWorkloadOrchestrationSubscriptionResource(subscriptionResource).GetEdgeContexts(cancellationToken);
         }
     }
 }

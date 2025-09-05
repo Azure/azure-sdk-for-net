@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
             string description = default;
             IList<string> capabilities = default;
-            ResourceState? state = default;
+            EdgeResourceState? state = default;
             bool? enableExternalValidation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    state = new ResourceState(property.Value.GetString());
+                    state = new EdgeResourceState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enableExternalValidation"u8))

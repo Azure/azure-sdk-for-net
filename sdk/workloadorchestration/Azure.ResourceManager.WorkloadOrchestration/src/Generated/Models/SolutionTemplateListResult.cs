@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="SolutionTemplateListResult"/>. </summary>
         /// <param name="value"> The SolutionTemplate items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SolutionTemplateListResult(IEnumerable<SolutionTemplateData> value)
+        internal SolutionTemplateListResult(IEnumerable<EdgeSolutionTemplateData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="value"> The SolutionTemplate items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionTemplateListResult(IReadOnlyList<SolutionTemplateData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SolutionTemplateListResult(IReadOnlyList<EdgeSolutionTemplateData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> The SolutionTemplate items on this page. </summary>
-        public IReadOnlyList<SolutionTemplateData> Value { get; }
+        public IReadOnlyList<EdgeSolutionTemplateData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

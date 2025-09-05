@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="tasks"> List of tasks in the stage. </param>
         /// <param name="taskOption"> Task option for the stage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StageSpec(string name, IDictionary<string, BinaryData> specification, IList<TaskSpec> tasks, TaskConfig taskOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StageSpec(string name, IDictionary<string, BinaryData> specification, IList<TaskSpec> tasks, EdgeTaskConfig taskOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Specification = specification;
@@ -113,6 +113,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> List of tasks in the stage. </summary>
         public IList<TaskSpec> Tasks { get; }
         /// <summary> Task option for the stage. </summary>
-        public TaskConfig TaskOption { get; set; }
+        public EdgeTaskConfig TaskOption { get; set; }
     }
 }

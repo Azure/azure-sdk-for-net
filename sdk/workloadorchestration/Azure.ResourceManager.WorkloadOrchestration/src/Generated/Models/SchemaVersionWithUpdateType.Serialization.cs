@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
             UpdateType? updateType = default;
             string version = default;
-            SchemaVersionData schemaVersion = default;
+            EdgeSchemaVersionData schemaVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (property.NameEquals("schemaVersion"u8))
                 {
-                    schemaVersion = SchemaVersionData.DeserializeSchemaVersionData(property.Value, options);
+                    schemaVersion = EdgeSchemaVersionData.DeserializeEdgeSchemaVersionData(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

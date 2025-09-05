@@ -7,8 +7,6 @@ Project("{37EC73CA-DB1F-4107-9A04-A1FF61478D2F}") = "Azure.ResourceManager.Workl
 EndProject
 Project("{37EC73CA-DB1F-4107-9A04-A1FF61478D2F}") = "Azure.ResourceManager.WorkloadOrchestration.Tests", "tests\Azure.ResourceManager.WorkloadOrchestration.Tests.csproj", "{11A3487A-228C-4C10-8942-4E70684B9775}"
 EndProject
-Project("{37EC73CA-DB1F-4107-9A04-A1FF61478D2F}") = "Azure.ResourceManager.WorkloadOrchestration.Samples", "samples\Azure.ResourceManager.WorkloadOrchestration.Samples.csproj", "{B9FE62D3-7CB9-4FA9-BF23-E45BC4B6A711}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

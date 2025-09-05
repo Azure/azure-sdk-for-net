@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetSchemas_SchemasListBySubscriptionMaximumSet()
+        public async Task GetEdgeSchemas_SchemasListBySubscriptionMaximumSet()
         {
             // Generated from example definition: 2025-06-01/Schemas_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "Schema_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (SchemaResource item in subscriptionResource.GetSchemasAsync())
+            await foreach (EdgeSchemaResource item in subscriptionResource.GetEdgeSchemasAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SchemaData resourceData = item.Data;
+                EdgeSchemaData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetTargets_TargetsListBySubscriptionMaximumSet()
+        public async Task GetEdgeTargets_TargetsListBySubscriptionMaximumSet()
         {
             // Generated from example definition: 2025-06-01/Targets_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "Target_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (TargetResource item in subscriptionResource.GetTargetsAsync())
+            await foreach (EdgeTargetResource item in subscriptionResource.GetEdgeTargetsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                TargetData resourceData = item.Data;
+                EdgeTargetData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetSolutionTemplates_SolutionTemplatesListBySubscriptionMaximumSet()
+        public async Task GetEdgeSolutionTemplates_SolutionTemplatesListBySubscriptionMaximumSet()
         {
             // Generated from example definition: 2025-06-01/SolutionTemplates_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "SolutionTemplate_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (SolutionTemplateResource item in subscriptionResource.GetSolutionTemplatesAsync())
+            await foreach (EdgeSolutionTemplateResource item in subscriptionResource.GetEdgeSolutionTemplatesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SolutionTemplateData resourceData = item.Data;
+                EdgeSolutionTemplateData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetConfigTemplates_ConfigTemplatesListBySubscriptionMaximumSet()
+        public async Task GetEdgeConfigTemplates_ConfigTemplatesListBySubscriptionMaximumSet()
         {
             // Generated from example definition: 2025-06-01/ConfigTemplates_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "ConfigTemplate_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ConfigTemplateResource item in subscriptionResource.GetConfigTemplatesAsync())
+            await foreach (EdgeConfigTemplateResource item in subscriptionResource.GetEdgeConfigTemplatesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ConfigTemplateData resourceData = item.Data;
+                EdgeConfigTemplateData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetDiagnostics_DiagnosticsListBySubscriptionMaximumSet()
+        public async Task GetEdgeDiagnostics_DiagnosticsListBySubscriptionMaximumSet()
         {
             // Generated from example definition: 2025-06-01/Diagnostics_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "Diagnostic_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DiagnosticResource item in subscriptionResource.GetDiagnosticsAsync())
+            await foreach (EdgeDiagnosticResource item in subscriptionResource.GetEdgeDiagnosticsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                DiagnosticData resourceData = item.Data;
+                EdgeDiagnosticData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetContexts_ContextsListBySubscriptionMaximumSet()
+        public async Task GetEdgeContexts_ContextsListBySubscriptionMaximumSet()
         {
             // Generated from example definition: 2025-06-01/Contexts_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "Context_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ContextResource item in subscriptionResource.GetContextsAsync())
+            await foreach (EdgeContextResource item in subscriptionResource.GetEdgeContextsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ContextData resourceData = item.Data;
+                EdgeContextData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

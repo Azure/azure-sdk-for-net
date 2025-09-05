@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             IList<string> capabilities = default;
             string hierarchyLevel = default;
             string solutionScope = default;
-            ResourceState? state = default;
+            EdgeResourceState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    state = new ResourceState(property.Value.GetString());
+                    state = new EdgeResourceState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

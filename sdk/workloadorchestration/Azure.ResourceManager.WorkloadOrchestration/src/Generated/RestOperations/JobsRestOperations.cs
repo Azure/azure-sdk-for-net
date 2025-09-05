@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobData>> GetAsync(string resourceUri, string jobName, CancellationToken cancellationToken = default)
+        public async Task<Response<EdgeJobData>> GetAsync(string resourceUri, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 case 200:
                     {
-                        JobData value = default;
+                        EdgeJobData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = JobData.DeserializeJobData(document.RootElement);
+                        value = EdgeJobData.DeserializeEdgeJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((JobData)null, message.Response);
+                    return Response.FromValue((EdgeJobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobData> Get(string resourceUri, string jobName, CancellationToken cancellationToken = default)
+        public Response<EdgeJobData> Get(string resourceUri, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
@@ -112,13 +112,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 case 200:
                     {
-                        JobData value = default;
+                        EdgeJobData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = JobData.DeserializeJobData(document.RootElement);
+                        value = EdgeJobData.DeserializeEdgeJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((JobData)null, message.Response);
+                    return Response.FromValue((EdgeJobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

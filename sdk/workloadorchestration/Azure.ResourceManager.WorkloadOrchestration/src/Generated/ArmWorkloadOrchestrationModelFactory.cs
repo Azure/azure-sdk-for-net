@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmWorkloadOrchestrationModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.DynamicSchemaData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeDynamicSchemaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.DynamicSchemaData"/> instance for mocking. </returns>
-        public static DynamicSchemaData DynamicSchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DynamicSchemaProperties properties = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeDynamicSchemaData"/> instance for mocking. </returns>
+        public static EdgeDynamicSchemaData EdgeDynamicSchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeDynamicSchemaProperties properties = null, ETag? etag = null)
         {
-            return new DynamicSchemaData(
+            return new EdgeDynamicSchemaData(
                 id,
                 name,
                 resourceType,
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DynamicSchemaProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeDynamicSchemaProperties"/>. </summary>
         /// <param name="configurationType"> Type of configuration. </param>
         /// <param name="configurationModel"> Type of configuration model. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.DynamicSchemaProperties"/> instance for mocking. </returns>
-        public static DynamicSchemaProperties DynamicSchemaProperties(ConfigurationType? configurationType = null, ConfigurationModel? configurationModel = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeDynamicSchemaProperties"/> instance for mocking. </returns>
+        public static EdgeDynamicSchemaProperties EdgeDynamicSchemaProperties(EdgeSchemaConfigurationType? configurationType = null, EdgeSchemaConfigurationModelType? configurationModel = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
-            return new DynamicSchemaProperties(configurationType, configurationModel, provisioningState, serializedAdditionalRawData: null);
+            return new EdgeDynamicSchemaProperties(configurationType, configurationModel, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.SchemaData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeSchemaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.SchemaData"/> instance for mocking. </returns>
-        public static SchemaData SchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SchemaProperties properties = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeSchemaData"/> instance for mocking. </returns>
+        public static EdgeSchemaData EdgeSchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EdgeSchemaProperties properties = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SchemaData(
+            return new EdgeSchemaData(
                 id,
                 name,
                 resourceType,
@@ -73,13 +73,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SchemaProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeSchemaProperties"/>. </summary>
         /// <param name="currentVersion"> Current Version of schema. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.SchemaProperties"/> instance for mocking. </returns>
-        public static SchemaProperties SchemaProperties(string currentVersion = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeSchemaProperties"/> instance for mocking. </returns>
+        public static EdgeSchemaProperties EdgeSchemaProperties(string currentVersion = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
-            return new SchemaProperties(currentVersion, provisioningState, serializedAdditionalRawData: null);
+            return new EdgeSchemaProperties(currentVersion, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SchemaVersionWithUpdateType"/>. </summary>
@@ -87,22 +87,22 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="version"> Version to create. </param>
         /// <param name="schemaVersion"> Schema Version. </param>
         /// <returns> A new <see cref="Models.SchemaVersionWithUpdateType"/> instance for mocking. </returns>
-        public static SchemaVersionWithUpdateType SchemaVersionWithUpdateType(UpdateType? updateType = null, string version = null, SchemaVersionData schemaVersion = null)
+        public static SchemaVersionWithUpdateType SchemaVersionWithUpdateType(UpdateType? updateType = null, string version = null, EdgeSchemaVersionData schemaVersion = null)
         {
             return new SchemaVersionWithUpdateType(updateType, version, schemaVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.SchemaVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeSchemaVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.SchemaVersionData"/> instance for mocking. </returns>
-        public static SchemaVersionData SchemaVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SchemaVersionProperties properties = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeSchemaVersionData"/> instance for mocking. </returns>
+        public static EdgeSchemaVersionData EdgeSchemaVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeSchemaVersionProperties properties = null, ETag? etag = null)
         {
-            return new SchemaVersionData(
+            return new EdgeSchemaVersionData(
                 id,
                 name,
                 resourceType,
@@ -112,13 +112,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SchemaVersionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeSchemaVersionProperties"/>. </summary>
         /// <param name="value"> Value of schema version. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.SchemaVersionProperties"/> instance for mocking. </returns>
-        public static SchemaVersionProperties SchemaVersionProperties(string value = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeSchemaVersionProperties"/> instance for mocking. </returns>
+        public static EdgeSchemaVersionProperties EdgeSchemaVersionProperties(string value = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
-            return new SchemaVersionProperties(value, provisioningState, serializedAdditionalRawData: null);
+            return new EdgeSchemaVersionProperties(value, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RemoveVersionResult"/>. </summary>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new RemoveVersionResult(status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.SolutionVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeSolutionVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.SolutionVersionData"/> instance for mocking. </returns>
-        public static SolutionVersionData SolutionVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SolutionVersionProperties properties = null, ExtendedLocation extendedLocation = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeSolutionVersionData"/> instance for mocking. </returns>
+        public static EdgeSolutionVersionData EdgeSolutionVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeSolutionVersionProperties properties = null, ExtendedLocation extendedLocation = null, ETag? etag = null)
         {
-            return new SolutionVersionData(
+            return new EdgeSolutionVersionData(
                 id,
                 name,
                 resourceType,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SolutionVersionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeSolutionVersionProperties"/>. </summary>
         /// <param name="solutionTemplateVersionId"> Solution Template Version Id. </param>
         /// <param name="revision"> Revision number of resolved config for this solution version. </param>
         /// <param name="targetDisplayName"> Name of applicable target's display name. </param>
@@ -167,13 +167,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="latestActionTrackingUri"> The URI for tracking the latest action performed on this solution version. </param>
         /// <param name="actionType"> The type of the latest action performed on this solution version. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.SolutionVersionProperties"/> instance for mocking. </returns>
-        public static SolutionVersionProperties SolutionVersionProperties(string solutionTemplateVersionId = null, int? revision = null, string targetDisplayName = null, string configuration = null, string targetLevelConfiguration = null, IDictionary<string, BinaryData> specification = null, string reviewId = null, string externalValidationId = null, State? state = null, string solutionInstanceName = null, IEnumerable<SolutionDependency> solutionDependencies = null, ResponseError errorDetails = null, string latestActionTrackingUri = null, JobType? actionType = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeSolutionVersionProperties"/> instance for mocking. </returns>
+        public static EdgeSolutionVersionProperties EdgeSolutionVersionProperties(string solutionTemplateVersionId = null, int? revision = null, string targetDisplayName = null, string configuration = null, string targetLevelConfiguration = null, IDictionary<string, BinaryData> specification = null, string reviewId = null, string externalValidationId = null, State? state = null, string solutionInstanceName = null, IEnumerable<EdgeSolutionDependency> solutionDependencies = null, ResponseError errorDetails = null, string latestActionTrackingUri = null, EdgeJobType? actionType = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
             specification ??= new Dictionary<string, BinaryData>();
-            solutionDependencies ??= new List<SolutionDependency>();
+            solutionDependencies ??= new List<EdgeSolutionDependency>();
 
-            return new SolutionVersionProperties(
+            return new EdgeSolutionVersionProperties(
                 solutionTemplateVersionId,
                 revision,
                 targetDisplayName,
@@ -192,18 +192,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SolutionDependency"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeSolutionDependency"/>. </summary>
         /// <param name="solutionVersionId"> Solution Version Id. </param>
         /// <param name="solutionInstanceName"> Solution Instance Name. </param>
         /// <param name="solutionTemplateVersionId"> Solution Template Version Id. </param>
         /// <param name="targetId"> Target Id. </param>
         /// <param name="dependencies"> Solution dependencies. </param>
-        /// <returns> A new <see cref="Models.SolutionDependency"/> instance for mocking. </returns>
-        public static SolutionDependency SolutionDependency(string solutionVersionId = null, string solutionInstanceName = null, string solutionTemplateVersionId = null, string targetId = null, IEnumerable<SolutionDependency> dependencies = null)
+        /// <returns> A new <see cref="Models.EdgeSolutionDependency"/> instance for mocking. </returns>
+        public static EdgeSolutionDependency EdgeSolutionDependency(ResourceIdentifier solutionVersionId = null, string solutionInstanceName = null, ResourceIdentifier solutionTemplateVersionId = null, ResourceIdentifier targetId = null, IEnumerable<EdgeSolutionDependency> dependencies = null)
         {
-            dependencies ??= new List<SolutionDependency>();
+            dependencies ??= new List<EdgeSolutionDependency>();
 
-            return new SolutionDependency(
+            return new EdgeSolutionDependency(
                 solutionVersionId,
                 solutionInstanceName,
                 solutionTemplateVersionId,
@@ -212,17 +212,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.JobData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.JobData"/> instance for mocking. </returns>
-        public static JobData JobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, JobProperties properties = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeJobData"/> instance for mocking. </returns>
+        public static EdgeJobData EdgeJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeJobProperties properties = null, ETag? etag = null)
         {
-            return new JobData(
+            return new EdgeJobData(
                 id,
                 name,
                 resourceType,
@@ -232,14 +232,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.JobProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeJobProperties"/>. </summary>
         /// <param name="jobType"> The type of job. </param>
         /// <param name="startOn"> Start time of the job (ISO8601). </param>
         /// <param name="endOn"> End time of the job (ISO8601). </param>
         /// <param name="status"> Status of the job. </param>
         /// <param name="jobParameter">
         /// Parameters for the job.
-        /// Please note <see cref="JobParameterBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="EdgeJobContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.DeployJobContent"/>.
         /// </param>
         /// <param name="correlationId"> Correlation ID for tracking. </param>
@@ -247,12 +247,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="triggeredBy"> The OID or identity that triggered the job. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="errorDetails"> Error Details if any failure is there. </param>
-        /// <returns> A new <see cref="Models.JobProperties"/> instance for mocking. </returns>
-        public static JobProperties JobProperties(JobType jobType = default, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, JobStatus status = default, JobParameterBase jobParameter = null, string correlationId = null, IEnumerable<JobStep> steps = null, string triggeredBy = null, ProvisioningState? provisioningState = null, ResponseError errorDetails = null)
+        /// <returns> A new <see cref="Models.EdgeJobProperties"/> instance for mocking. </returns>
+        public static EdgeJobProperties EdgeJobProperties(EdgeJobType jobType = default, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, EdgeJobStatus status = default, EdgeJobContent jobParameter = null, string correlationId = null, IEnumerable<EdgeJobStep> steps = null, string triggeredBy = null, WorkloadOrchestrationProvisioningState? provisioningState = null, ResponseError errorDetails = null)
         {
-            steps ??= new List<JobStep>();
+            steps ??= new List<EdgeJobStep>();
 
-            return new JobProperties(
+            return new EdgeJobProperties(
                 jobType,
                 startOn,
                 endOn,
@@ -269,12 +269,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="Models.DeployJobContent"/>. </summary>
         /// <param name="parameterSolutionVersionId"></param>
         /// <returns> A new <see cref="Models.DeployJobContent"/> instance for mocking. </returns>
-        public static DeployJobContent DeployJobContent(string parameterSolutionVersionId = null)
+        public static DeployJobContent DeployJobContent(ResourceIdentifier parameterSolutionVersionId = null)
         {
-            return new DeployJobContent(JobType.Deploy, serializedAdditionalRawData: null, parameterSolutionVersionId != null ? new InstallSolutionContent(parameterSolutionVersionId, serializedAdditionalRawData: null) : null);
+            return new DeployJobContent(EdgeJobType.Deploy, serializedAdditionalRawData: null, parameterSolutionVersionId != null ? new InstallSolutionContent(parameterSolutionVersionId, serializedAdditionalRawData: null) : null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.JobStep"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeJobStep"/>. </summary>
         /// <param name="name"> Name of the step. </param>
         /// <param name="status"> Status of the step. </param>
         /// <param name="startOn"> Start time of the step (ISO8601). </param>
@@ -282,17 +282,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="message"> Message for the step. </param>
         /// <param name="statistics">
         /// Statistics for the step
-        /// Please note <see cref="JobStepStatisticsBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="EdgeJobStepStatistics"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.DeployJobStepStatistics"/>.
         /// </param>
         /// <param name="steps"> Nested substeps for this step. </param>
         /// <param name="errorDetails"> Error Details if any failure is there. </param>
-        /// <returns> A new <see cref="Models.JobStep"/> instance for mocking. </returns>
-        public static JobStep JobStep(string name = null, JobStatus status = default, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string message = null, JobStepStatisticsBase statistics = null, IEnumerable<JobStep> steps = null, ResponseError errorDetails = null)
+        /// <returns> A new <see cref="Models.EdgeJobStep"/> instance for mocking. </returns>
+        public static EdgeJobStep EdgeJobStep(string name = null, EdgeJobStatus status = default, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string message = null, EdgeJobStepStatistics statistics = null, IEnumerable<EdgeJobStep> steps = null, ResponseError errorDetails = null)
         {
-            steps ??= new List<JobStep>();
+            steps ??= new List<EdgeJobStep>();
 
-            return new JobStep(
+            return new EdgeJobStep(
                 name,
                 status,
                 startOn,
@@ -311,10 +311,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <returns> A new <see cref="Models.DeployJobStepStatistics"/> instance for mocking. </returns>
         public static DeployJobStepStatistics DeployJobStepStatistics(int? totalCount = null, int? successCount = null, int? failedCount = null)
         {
-            return new DeployJobStepStatistics(JobType.Deploy, serializedAdditionalRawData: null, totalCount, successCount, failedCount);
+            return new DeployJobStepStatistics(EdgeJobType.Deploy, serializedAdditionalRawData: null, totalCount, successCount, failedCount);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.TargetData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeTargetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -324,12 +324,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="extendedLocation"></param>
-        /// <returns> A new <see cref="WorkloadOrchestration.TargetData"/> instance for mocking. </returns>
-        public static TargetData TargetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, TargetProperties properties = null, string etag = null, ExtendedLocation extendedLocation = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeTargetData"/> instance for mocking. </returns>
+        public static EdgeTargetData EdgeTargetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EdgeTargetProperties properties = null, ETag? etag = null, ExtendedLocation extendedLocation = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new TargetData(
+            return new EdgeTargetData(
                 id,
                 name,
                 resourceType,
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TargetProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeTargetProperties"/>. </summary>
         /// <param name="description"> Description of target. </param>
         /// <param name="displayName"> Display name of target. </param>
         /// <param name="contextId"> ArmId of Context. </param>
@@ -353,13 +353,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="solutionScope"> Scope of the target resource. </param>
         /// <param name="state"> State of resource. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.TargetProperties"/> instance for mocking. </returns>
-        public static TargetProperties TargetProperties(string description = null, string displayName = null, ResourceIdentifier contextId = null, IDictionary<string, BinaryData> targetSpecification = null, IEnumerable<string> capabilities = null, string hierarchyLevel = null, DeploymentStatus status = null, string solutionScope = null, ResourceState? state = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeTargetProperties"/> instance for mocking. </returns>
+        public static EdgeTargetProperties EdgeTargetProperties(string description = null, string displayName = null, ResourceIdentifier contextId = null, IDictionary<string, BinaryData> targetSpecification = null, IEnumerable<string> capabilities = null, string hierarchyLevel = null, EdgeDeploymentStatus status = null, string solutionScope = null, EdgeResourceState? state = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
             targetSpecification ??= new Dictionary<string, BinaryData>();
             capabilities ??= new List<string>();
 
-            return new TargetProperties(
+            return new EdgeTargetProperties(
                 description,
                 displayName,
                 contextId,
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeploymentStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeDeploymentStatus"/>. </summary>
         /// <param name="lastModified"> The lastModified of the Status. </param>
         /// <param name="deployed"> Indicates if Instance is deployed. </param>
         /// <param name="expectedRunningJobId"> The expected running job id. </param>
@@ -382,12 +382,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="statusDetails"> Status details. </param>
         /// <param name="generation"> Deployment Generation. </param>
         /// <param name="targetStatuses"> Target resource statuses. </param>
-        /// <returns> A new <see cref="Models.DeploymentStatus"/> instance for mocking. </returns>
-        public static DeploymentStatus DeploymentStatus(DateTimeOffset? lastModified = null, int? deployed = null, int? expectedRunningJobId = null, int? runningJobId = null, string status = null, string statusDetails = null, int? generation = null, IEnumerable<TargetStatus> targetStatuses = null)
+        /// <returns> A new <see cref="Models.EdgeDeploymentStatus"/> instance for mocking. </returns>
+        public static EdgeDeploymentStatus EdgeDeploymentStatus(DateTimeOffset? lastModified = null, int? deployed = null, int? expectedRunningJobId = null, int? runningJobId = null, string status = null, string statusDetails = null, int? generation = null, IEnumerable<TargetStatus> targetStatuses = null)
         {
             targetStatuses ??= new List<TargetStatus>();
 
-            return new DeploymentStatus(
+            return new EdgeDeploymentStatus(
                 lastModified,
                 deployed,
                 expectedRunningJobId,
@@ -404,20 +404,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="status"> Target status. </param>
         /// <param name="componentStatuses"> Component statuses. </param>
         /// <returns> A new <see cref="Models.TargetStatus"/> instance for mocking. </returns>
-        public static TargetStatus TargetStatus(string name = null, string status = null, IEnumerable<ComponentStatus> componentStatuses = null)
+        public static TargetStatus TargetStatus(string name = null, string status = null, IEnumerable<TargetComponentStatus> componentStatuses = null)
         {
-            componentStatuses ??= new List<ComponentStatus>();
+            componentStatuses ??= new List<TargetComponentStatus>();
 
             return new TargetStatus(name, status, componentStatuses?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ComponentStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TargetComponentStatus"/>. </summary>
         /// <param name="name"> Component name. </param>
         /// <param name="status"> Component status. </param>
-        /// <returns> A new <see cref="Models.ComponentStatus"/> instance for mocking. </returns>
-        public static ComponentStatus ComponentStatus(string name = null, string status = null)
+        /// <returns> A new <see cref="Models.TargetComponentStatus"/> instance for mocking. </returns>
+        public static TargetComponentStatus TargetComponentStatus(string name = null, string status = null)
         {
-            return new ComponentStatus(name, status, serializedAdditionalRawData: null);
+            return new TargetComponentStatus(name, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UninstallSolutionContent"/>. </summary>
@@ -429,16 +429,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new UninstallSolutionContent(solutionTemplateId, solutionInstanceName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SolutionTemplateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeSolutionTemplateContent"/>. </summary>
         /// <param name="solutionTemplateVersionId"> Solution Template Version ARM Id. </param>
         /// <param name="solutionInstanceName"> Solution Instance Name. </param>
         /// <param name="solutionDependencies"> Solution Dependencies. </param>
-        /// <returns> A new <see cref="Models.SolutionTemplateContent"/> instance for mocking. </returns>
-        public static SolutionTemplateContent SolutionTemplateContent(string solutionTemplateVersionId = null, string solutionInstanceName = null, IEnumerable<SolutionDependencyContent> solutionDependencies = null)
+        /// <returns> A new <see cref="Models.EdgeSolutionTemplateContent"/> instance for mocking. </returns>
+        public static EdgeSolutionTemplateContent EdgeSolutionTemplateContent(ResourceIdentifier solutionTemplateVersionId = null, string solutionInstanceName = null, IEnumerable<EdgeSolutionDependencyContent> solutionDependencies = null)
         {
-            solutionDependencies ??= new List<SolutionDependencyContent>();
+            solutionDependencies ??= new List<EdgeSolutionDependencyContent>();
 
-            return new SolutionTemplateContent(solutionTemplateVersionId, solutionInstanceName, solutionDependencies?.ToList(), serializedAdditionalRawData: null);
+            return new EdgeSolutionTemplateContent(solutionTemplateVersionId, solutionInstanceName, solutionDependencies?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResolvedConfiguration"/>. </summary>
@@ -460,17 +460,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new UpdateExternalValidationStatusContent(solutionVersionId, errorDetails, externalValidationId, validationStatus, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.DynamicSchemaVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeDynamicSchemaVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.DynamicSchemaVersionData"/> instance for mocking. </returns>
-        public static DynamicSchemaVersionData DynamicSchemaVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SchemaVersionProperties properties = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeDynamicSchemaVersionData"/> instance for mocking. </returns>
+        public static EdgeDynamicSchemaVersionData EdgeDynamicSchemaVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeSchemaVersionProperties properties = null, ETag? etag = null)
         {
-            return new DynamicSchemaVersionData(
+            return new EdgeDynamicSchemaVersionData(
                 id,
                 name,
                 resourceType,
@@ -480,17 +480,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.SchemaReferenceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeSchemaReferenceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.SchemaReferenceData"/> instance for mocking. </returns>
-        public static SchemaReferenceData SchemaReferenceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SchemaReferenceProperties properties = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeSchemaReferenceData"/> instance for mocking. </returns>
+        public static EdgeSchemaReferenceData EdgeSchemaReferenceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeSchemaReferenceProperties properties = null, ETag? etag = null)
         {
-            return new SchemaReferenceData(
+            return new EdgeSchemaReferenceData(
                 id,
                 name,
                 resourceType,
@@ -500,16 +500,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SchemaReferenceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeSchemaReferenceProperties"/>. </summary>
         /// <param name="schemaId"> Schema Id of schema reference. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.SchemaReferenceProperties"/> instance for mocking. </returns>
-        public static SchemaReferenceProperties SchemaReferenceProperties(string schemaId = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeSchemaReferenceProperties"/> instance for mocking. </returns>
+        public static EdgeSchemaReferenceProperties EdgeSchemaReferenceProperties(string schemaId = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
-            return new SchemaReferenceProperties(schemaId, provisioningState, serializedAdditionalRawData: null);
+            return new EdgeSchemaReferenceProperties(schemaId, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.SolutionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeSolutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -517,10 +517,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.SolutionData"/> instance for mocking. </returns>
-        public static SolutionData SolutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SolutionProperties properties = null, ExtendedLocation extendedLocation = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeSolutionData"/> instance for mocking. </returns>
+        public static EdgeSolutionData EdgeSolutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeSolutionProperties properties = null, ExtendedLocation extendedLocation = null, ETag? etag = null)
         {
-            return new SolutionData(
+            return new EdgeSolutionData(
                 id,
                 name,
                 resourceType,
@@ -531,16 +531,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SolutionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeSolutionProperties"/>. </summary>
         /// <param name="solutionTemplateId"> Solution template Id. </param>
         /// <param name="availableSolutionTemplateVersions"> List of latest revisions for available solution template versions. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.SolutionProperties"/> instance for mocking. </returns>
-        public static SolutionProperties SolutionProperties(string solutionTemplateId = null, IEnumerable<AvailableSolutionTemplateVersion> availableSolutionTemplateVersions = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeSolutionProperties"/> instance for mocking. </returns>
+        public static EdgeSolutionProperties EdgeSolutionProperties(string solutionTemplateId = null, IEnumerable<AvailableSolutionTemplateVersion> availableSolutionTemplateVersions = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
             availableSolutionTemplateVersions ??= new List<AvailableSolutionTemplateVersion>();
 
-            return new SolutionProperties(solutionTemplateId, availableSolutionTemplateVersions?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new EdgeSolutionProperties(solutionTemplateId, availableSolutionTemplateVersions?.ToList(), provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailableSolutionTemplateVersion"/>. </summary>
@@ -553,17 +553,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new AvailableSolutionTemplateVersion(solutionTemplateVersion, latestConfigRevision, isConfigured, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.SolutionTemplateVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeSolutionTemplateVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.SolutionTemplateVersionData"/> instance for mocking. </returns>
-        public static SolutionTemplateVersionData SolutionTemplateVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SolutionTemplateVersionProperties properties = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeSolutionTemplateVersionData"/> instance for mocking. </returns>
+        public static EdgeSolutionTemplateVersionData EdgeSolutionTemplateVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeSolutionTemplateVersionProperties properties = null, ETag? etag = null)
         {
-            return new SolutionTemplateVersionData(
+            return new EdgeSolutionTemplateVersionData(
                 id,
                 name,
                 resourceType,
@@ -573,17 +573,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SolutionTemplateVersionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeSolutionTemplateVersionProperties"/>. </summary>
         /// <param name="configurations"> Config expressions for this solution version. </param>
         /// <param name="specification"> App components spec. </param>
         /// <param name="orchestratorType"> Orchestrator type. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.SolutionTemplateVersionProperties"/> instance for mocking. </returns>
-        public static SolutionTemplateVersionProperties SolutionTemplateVersionProperties(string configurations = null, IDictionary<string, BinaryData> specification = null, OrchestratorType? orchestratorType = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeSolutionTemplateVersionProperties"/> instance for mocking. </returns>
+        public static EdgeSolutionTemplateVersionProperties EdgeSolutionTemplateVersionProperties(string configurations = null, IDictionary<string, BinaryData> specification = null, SolutionVersionOrchestratorType? orchestratorType = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
             specification ??= new Dictionary<string, BinaryData>();
 
-            return new SolutionTemplateVersionProperties(configurations, specification, orchestratorType, provisioningState, serializedAdditionalRawData: null);
+            return new EdgeSolutionTemplateVersionProperties(configurations, specification, orchestratorType, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BulkPublishTargetDetails"/>. </summary>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new BulkPublishTargetDetails(targetId, solutionInstanceName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.SolutionTemplateData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeSolutionTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -604,12 +604,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.SolutionTemplateData"/> instance for mocking. </returns>
-        public static SolutionTemplateData SolutionTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SolutionTemplateProperties properties = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeSolutionTemplateData"/> instance for mocking. </returns>
+        public static EdgeSolutionTemplateData EdgeSolutionTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EdgeSolutionTemplateProperties properties = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SolutionTemplateData(
+            return new EdgeSolutionTemplateData(
                 id,
                 name,
                 resourceType,
@@ -621,19 +621,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SolutionTemplateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeSolutionTemplateProperties"/>. </summary>
         /// <param name="description"> Description of Solution template. </param>
         /// <param name="capabilities"> List of capabilities. </param>
         /// <param name="latestVersion"> Latest solution template version. </param>
         /// <param name="state"> State of resource. </param>
         /// <param name="enableExternalValidation"> Flag to enable external validation. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.SolutionTemplateProperties"/> instance for mocking. </returns>
-        public static SolutionTemplateProperties SolutionTemplateProperties(string description = null, IEnumerable<string> capabilities = null, string latestVersion = null, ResourceState? state = null, bool? enableExternalValidation = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeSolutionTemplateProperties"/> instance for mocking. </returns>
+        public static EdgeSolutionTemplateProperties EdgeSolutionTemplateProperties(string description = null, IEnumerable<string> capabilities = null, string latestVersion = null, EdgeResourceState? state = null, bool? enableExternalValidation = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
             capabilities ??= new List<string>();
 
-            return new SolutionTemplateProperties(
+            return new EdgeSolutionTemplateProperties(
                 description,
                 capabilities?.ToList(),
                 latestVersion,
@@ -648,12 +648,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="version"> Version to create. </param>
         /// <param name="solutionTemplateVersion"> Solution Template Version. </param>
         /// <returns> A new <see cref="Models.SolutionTemplateVersionWithUpdateType"/> instance for mocking. </returns>
-        public static SolutionTemplateVersionWithUpdateType SolutionTemplateVersionWithUpdateType(UpdateType? updateType = null, string version = null, SolutionTemplateVersionData solutionTemplateVersion = null)
+        public static SolutionTemplateVersionWithUpdateType SolutionTemplateVersionWithUpdateType(UpdateType? updateType = null, string version = null, EdgeSolutionTemplateVersionData solutionTemplateVersion = null)
         {
             return new SolutionTemplateVersionWithUpdateType(updateType, version, solutionTemplateVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.InstanceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeDeploymentInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -661,10 +661,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.InstanceData"/> instance for mocking. </returns>
-        public static InstanceData InstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, InstanceProperties properties = null, ExtendedLocation extendedLocation = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeDeploymentInstanceData"/> instance for mocking. </returns>
+        public static EdgeDeploymentInstanceData EdgeDeploymentInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeDeploymentInstanceProperties properties = null, ExtendedLocation extendedLocation = null, ETag? etag = null)
         {
-            return new InstanceData(
+            return new EdgeDeploymentInstanceData(
                 id,
                 name,
                 resourceType,
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.InstanceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeDeploymentInstanceProperties"/>. </summary>
         /// <param name="solutionVersionId"> Solution version of instance. </param>
         /// <param name="targetId"> Target of instance. </param>
         /// <param name="activeState"> State of instance. </param>
@@ -684,10 +684,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="status"> Status of instance. </param>
         /// <param name="deploymentTimestampEpoch"> Deployment timestamp of instance. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.InstanceProperties"/> instance for mocking. </returns>
-        public static InstanceProperties InstanceProperties(string solutionVersionId = null, string targetId = null, ActiveState? activeState = null, ReconciliationPolicyProperties reconciliationPolicy = null, string solutionScope = null, DeploymentStatus status = null, long? deploymentTimestampEpoch = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeDeploymentInstanceProperties"/> instance for mocking. </returns>
+        public static EdgeDeploymentInstanceProperties EdgeDeploymentInstanceProperties(string solutionVersionId = null, string targetId = null, InstanceActiveState? activeState = null, InstanceReconciliationPolicy reconciliationPolicy = null, string solutionScope = null, EdgeDeploymentStatus status = null, long? deploymentTimestampEpoch = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
-            return new InstanceProperties(
+            return new EdgeDeploymentInstanceProperties(
                 solutionVersionId,
                 targetId,
                 activeState,
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.InstanceHistoryData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeDeploymentInstanceHistoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -707,10 +707,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.InstanceHistoryData"/> instance for mocking. </returns>
-        public static InstanceHistoryData InstanceHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, InstanceHistoryProperties properties = null, ExtendedLocation extendedLocation = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeDeploymentInstanceHistoryData"/> instance for mocking. </returns>
+        public static EdgeDeploymentInstanceHistoryData EdgeDeploymentInstanceHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeDeploymentInstanceHistoryProperties properties = null, ExtendedLocation extendedLocation = null, ETag? etag = null)
         {
-            return new InstanceHistoryData(
+            return new EdgeDeploymentInstanceHistoryData(
                 id,
                 name,
                 resourceType,
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.InstanceHistoryProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeDeploymentInstanceHistoryProperties"/>. </summary>
         /// <param name="solutionVersion"> Solution version of instance. </param>
         /// <param name="target"> Target of instance. </param>
         /// <param name="solutionScope"> Scope of instance. </param>
@@ -729,10 +729,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="reconciliationPolicy"> Reconciliation policy of instance. </param>
         /// <param name="status"> Deployment Status of instance. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.InstanceHistoryProperties"/> instance for mocking. </returns>
-        public static InstanceHistoryProperties InstanceHistoryProperties(SolutionVersionSnapshot solutionVersion = null, TargetSnapshot target = null, string solutionScope = null, ActiveState? activeState = null, ReconciliationPolicyProperties reconciliationPolicy = null, DeploymentStatus status = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeDeploymentInstanceHistoryProperties"/> instance for mocking. </returns>
+        public static EdgeDeploymentInstanceHistoryProperties EdgeDeploymentInstanceHistoryProperties(SolutionVersionSnapshot solutionVersion = null, TargetSnapshot target = null, string solutionScope = null, InstanceActiveState? activeState = null, InstanceReconciliationPolicy reconciliationPolicy = null, EdgeDeploymentStatus status = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
-            return new InstanceHistoryProperties(
+            return new EdgeDeploymentInstanceHistoryProperties(
                 solutionVersion,
                 target,
                 solutionScope,
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new TargetSnapshot(targetId, targetSpecification, solutionScope, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.ConfigTemplateData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeConfigTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -775,12 +775,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.ConfigTemplateData"/> instance for mocking. </returns>
-        public static ConfigTemplateData ConfigTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ConfigTemplateProperties properties = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeConfigTemplateData"/> instance for mocking. </returns>
+        public static EdgeConfigTemplateData EdgeConfigTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EdgeConfigTemplateProperties properties = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConfigTemplateData(
+            return new EdgeConfigTemplateData(
                 id,
                 name,
                 resourceType,
@@ -792,14 +792,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConfigTemplateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeConfigTemplateProperties"/>. </summary>
         /// <param name="description"> Description of config template. </param>
         /// <param name="latestVersion"> Latest config template version. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.ConfigTemplateProperties"/> instance for mocking. </returns>
-        public static ConfigTemplateProperties ConfigTemplateProperties(string description = null, string latestVersion = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeConfigTemplateProperties"/> instance for mocking. </returns>
+        public static EdgeConfigTemplateProperties EdgeConfigTemplateProperties(string description = null, string latestVersion = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
-            return new ConfigTemplateProperties(description, latestVersion, provisioningState, serializedAdditionalRawData: null);
+            return new EdgeConfigTemplateProperties(description, latestVersion, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfigTemplateVersionWithUpdateType"/>. </summary>
@@ -807,22 +807,22 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="version"> Version to create. </param>
         /// <param name="configTemplateVersion"> Config Template Version. </param>
         /// <returns> A new <see cref="Models.ConfigTemplateVersionWithUpdateType"/> instance for mocking. </returns>
-        public static ConfigTemplateVersionWithUpdateType ConfigTemplateVersionWithUpdateType(UpdateType? updateType = null, string version = null, ConfigTemplateVersionData configTemplateVersion = null)
+        public static ConfigTemplateVersionWithUpdateType ConfigTemplateVersionWithUpdateType(UpdateType? updateType = null, string version = null, EdgeConfigTemplateVersionData configTemplateVersion = null)
         {
             return new ConfigTemplateVersionWithUpdateType(updateType, version, configTemplateVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.ConfigTemplateVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeConfigTemplateVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.ConfigTemplateVersionData"/> instance for mocking. </returns>
-        public static ConfigTemplateVersionData ConfigTemplateVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ConfigTemplateVersionProperties properties = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeConfigTemplateVersionData"/> instance for mocking. </returns>
+        public static EdgeConfigTemplateVersionData EdgeConfigTemplateVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeConfigTemplateVersionProperties properties = null, ETag? etag = null)
         {
-            return new ConfigTemplateVersionData(
+            return new EdgeConfigTemplateVersionData(
                 id,
                 name,
                 resourceType,
@@ -832,16 +832,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConfigTemplateVersionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeConfigTemplateVersionProperties"/>. </summary>
         /// <param name="configurations"> Configuration values. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.ConfigTemplateVersionProperties"/> instance for mocking. </returns>
-        public static ConfigTemplateVersionProperties ConfigTemplateVersionProperties(string configurations = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeConfigTemplateVersionProperties"/> instance for mocking. </returns>
+        public static EdgeConfigTemplateVersionProperties EdgeConfigTemplateVersionProperties(string configurations = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
-            return new ConfigTemplateVersionProperties(configurations, provisioningState, serializedAdditionalRawData: null);
+            return new EdgeConfigTemplateVersionProperties(configurations, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.WorkflowData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeWorkflowData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -849,10 +849,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.WorkflowData"/> instance for mocking. </returns>
-        public static WorkflowData WorkflowData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkflowProperties properties = null, ExtendedLocation extendedLocation = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeWorkflowData"/> instance for mocking. </returns>
+        public static EdgeWorkflowData EdgeWorkflowData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeWorkflowProperties properties = null, ExtendedLocation extendedLocation = null, ETag? etag = null)
         {
-            return new WorkflowData(
+            return new EdgeWorkflowData(
                 id,
                 name,
                 resourceType,
@@ -863,16 +863,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WorkflowProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeWorkflowProperties"/>. </summary>
         /// <param name="workflowTemplateId"> Workflow template Id. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.WorkflowProperties"/> instance for mocking. </returns>
-        public static WorkflowProperties WorkflowProperties(string workflowTemplateId = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeWorkflowProperties"/> instance for mocking. </returns>
+        public static EdgeWorkflowProperties EdgeWorkflowProperties(string workflowTemplateId = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
-            return new WorkflowProperties(workflowTemplateId, provisioningState, serializedAdditionalRawData: null);
+            return new EdgeWorkflowProperties(workflowTemplateId, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.WorkflowVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeWorkflowVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -880,10 +880,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.WorkflowVersionData"/> instance for mocking. </returns>
-        public static WorkflowVersionData WorkflowVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkflowVersionProperties properties = null, ExtendedLocation extendedLocation = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeWorkflowVersionData"/> instance for mocking. </returns>
+        public static EdgeWorkflowVersionData EdgeWorkflowVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeWorkflowVersionProperties properties = null, ExtendedLocation extendedLocation = null, ETag? etag = null)
         {
-            return new WorkflowVersionData(
+            return new EdgeWorkflowVersionData(
                 id,
                 name,
                 resourceType,
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WorkflowVersionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeWorkflowVersionProperties"/>. </summary>
         /// <param name="revision"> Revision number of resolved config for this workflow version. </param>
         /// <param name="configuration"> Resolved configuration values. </param>
         /// <param name="stageSpec"> A list of stage specs. </param>
@@ -902,13 +902,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="state"> State of workflow version. </param>
         /// <param name="specification"> Execution specification. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.WorkflowVersionProperties"/> instance for mocking. </returns>
-        public static WorkflowVersionProperties WorkflowVersionProperties(int? revision = null, string configuration = null, IEnumerable<StageSpec> stageSpec = null, string reviewId = null, State? state = null, IDictionary<string, BinaryData> specification = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeWorkflowVersionProperties"/> instance for mocking. </returns>
+        public static EdgeWorkflowVersionProperties EdgeWorkflowVersionProperties(int? revision = null, string configuration = null, IEnumerable<StageSpec> stageSpec = null, string reviewId = null, State? state = null, IDictionary<string, BinaryData> specification = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
             stageSpec ??= new List<StageSpec>();
             specification ??= new Dictionary<string, BinaryData>();
 
-            return new WorkflowVersionProperties(
+            return new EdgeWorkflowVersionProperties(
                 revision,
                 configuration,
                 stageSpec?.ToList(),
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.ExecutionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeExecutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -927,10 +927,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.ExecutionData"/> instance for mocking. </returns>
-        public static ExecutionData ExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExecutionProperties properties = null, ExtendedLocation extendedLocation = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeExecutionData"/> instance for mocking. </returns>
+        public static EdgeExecutionData EdgeExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeExecutionProperties properties = null, ExtendedLocation extendedLocation = null, ETag? etag = null)
         {
-            return new ExecutionData(
+            return new EdgeExecutionData(
                 id,
                 name,
                 resourceType,
@@ -941,30 +941,30 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExecutionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeExecutionProperties"/>. </summary>
         /// <param name="workflowVersionId"> Workflow version of execution. </param>
         /// <param name="specification"> Execution specification. </param>
         /// <param name="status"> Status of Execution. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.ExecutionProperties"/> instance for mocking. </returns>
-        public static ExecutionProperties ExecutionProperties(string workflowVersionId = null, IDictionary<string, BinaryData> specification = null, ExecutionStatus status = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeExecutionProperties"/> instance for mocking. </returns>
+        public static EdgeExecutionProperties EdgeExecutionProperties(string workflowVersionId = null, IDictionary<string, BinaryData> specification = null, EdgeExecutionStatus status = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
             specification ??= new Dictionary<string, BinaryData>();
 
-            return new ExecutionProperties(workflowVersionId, specification, status, provisioningState, serializedAdditionalRawData: null);
+            return new EdgeExecutionProperties(workflowVersionId, specification, status, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExecutionStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeExecutionStatus"/>. </summary>
         /// <param name="updateOn"> The lastModified timestamp of the Status. </param>
         /// <param name="status"> Deployment status. </param>
         /// <param name="statusMessage"> status details. </param>
         /// <param name="stageHistory"> target resource statuses. </param>
-        /// <returns> A new <see cref="Models.ExecutionStatus"/> instance for mocking. </returns>
-        public static ExecutionStatus ExecutionStatus(DateTimeOffset? updateOn = null, int? status = null, string statusMessage = null, IEnumerable<StageStatus> stageHistory = null)
+        /// <returns> A new <see cref="Models.EdgeExecutionStatus"/> instance for mocking. </returns>
+        public static EdgeExecutionStatus EdgeExecutionStatus(DateTimeOffset? updateOn = null, int? status = null, string statusMessage = null, IEnumerable<StageStatus> stageHistory = null)
         {
             stageHistory ??= new List<StageStatus>();
 
-            return new ExecutionStatus(updateOn, status, statusMessage, stageHistory?.ToList(), serializedAdditionalRawData: null);
+            return new EdgeExecutionStatus(updateOn, status, statusMessage, stageHistory?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StageStatus"/>. </summary>
@@ -977,7 +977,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="inputs"> The inputs of the StageHistory, Inputs holds a key-value map of user-defined parameters for the initial stage. </param>
         /// <param name="outputs"> The outputs of the StageHistory, it is different as the different input stages. </param>
         /// <returns> A new <see cref="Models.StageStatus"/> instance for mocking. </returns>
-        public static StageStatus StageStatus(int? status = null, string statusMessage = null, string stage = null, string nextstage = null, string errorMessage = null, ActiveState? isActive = null, IReadOnlyDictionary<string, BinaryData> inputs = null, IReadOnlyDictionary<string, BinaryData> outputs = null)
+        public static StageStatus StageStatus(int? status = null, string statusMessage = null, string stage = null, string nextstage = null, string errorMessage = null, InstanceActiveState? isActive = null, IReadOnlyDictionary<string, BinaryData> inputs = null, IReadOnlyDictionary<string, BinaryData> outputs = null)
         {
             inputs ??= new Dictionary<string, BinaryData>();
             outputs ??= new Dictionary<string, BinaryData>();
@@ -994,35 +994,35 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.DiagnosticData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeDiagnosticData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="diagnosticProvisioningState"> The resource-specific properties for this resource. </param>
+        /// <param name="edgeDiagnosticProvisioningState"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.DiagnosticData"/> instance for mocking. </returns>
-        public static DiagnosticData DiagnosticData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningState? diagnosticProvisioningState = null, ExtendedLocation extendedLocation = null, string etag = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeDiagnosticData"/> instance for mocking. </returns>
+        public static EdgeDiagnosticData EdgeDiagnosticData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WorkloadOrchestrationProvisioningState? edgeDiagnosticProvisioningState = null, ExtendedLocation extendedLocation = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DiagnosticData(
+            return new EdgeDiagnosticData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 tags,
                 location,
-                diagnosticProvisioningState != null ? new DiagnosticProperties(diagnosticProvisioningState, serializedAdditionalRawData: null) : null,
+                edgeDiagnosticProvisioningState != null ? new EdgeDiagnosticProperties(edgeDiagnosticProvisioningState, serializedAdditionalRawData: null) : null,
                 extendedLocation,
                 etag,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.ContextData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeContextData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1030,12 +1030,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.ContextData"/> instance for mocking. </returns>
-        public static ContextData ContextData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ContextProperties properties = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeContextData"/> instance for mocking. </returns>
+        public static EdgeContextData EdgeContextData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EdgeContextProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ContextData(
+            return new EdgeContextData(
                 id,
                 name,
                 resourceType,
@@ -1046,29 +1046,29 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ContextProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeContextProperties"/>. </summary>
         /// <param name="capabilities"> List of Capabilities. </param>
         /// <param name="hierarchies"> List of Hierarchies. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.ContextProperties"/> instance for mocking. </returns>
-        public static ContextProperties ContextProperties(IEnumerable<Capability> capabilities = null, IEnumerable<Hierarchy> hierarchies = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeContextProperties"/> instance for mocking. </returns>
+        public static EdgeContextProperties EdgeContextProperties(IEnumerable<ContextCapability> capabilities = null, IEnumerable<ContextHierarchy> hierarchies = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
-            capabilities ??= new List<Capability>();
-            hierarchies ??= new List<Hierarchy>();
+            capabilities ??= new List<ContextCapability>();
+            hierarchies ??= new List<ContextHierarchy>();
 
-            return new ContextProperties(capabilities?.ToList(), hierarchies?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new EdgeContextProperties(capabilities?.ToList(), hierarchies?.ToList(), provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.SiteReferenceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeSiteReferenceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.SiteReferenceData"/> instance for mocking. </returns>
-        public static SiteReferenceData SiteReferenceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteReferenceProperties properties = null)
+        /// <returns> A new <see cref="WorkloadOrchestration.EdgeSiteReferenceData"/> instance for mocking. </returns>
+        public static EdgeSiteReferenceData EdgeSiteReferenceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeSiteReferenceProperties properties = null)
         {
-            return new SiteReferenceData(
+            return new EdgeSiteReferenceData(
                 id,
                 name,
                 resourceType,
@@ -1077,13 +1077,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SiteReferenceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeSiteReferenceProperties"/>. </summary>
         /// <param name="siteId"> Azure Resource ID for Site. </param>
         /// <param name="provisioningState"> Provisioning State. </param>
-        /// <returns> A new <see cref="Models.SiteReferenceProperties"/> instance for mocking. </returns>
-        public static SiteReferenceProperties SiteReferenceProperties(string siteId = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeSiteReferenceProperties"/> instance for mocking. </returns>
+        public static EdgeSiteReferenceProperties EdgeSiteReferenceProperties(string siteId = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
-            return new SiteReferenceProperties(siteId, provisioningState, serializedAdditionalRawData: null);
+            return new EdgeSiteReferenceProperties(siteId, provisioningState, serializedAdditionalRawData: null);
         }
     }
 }

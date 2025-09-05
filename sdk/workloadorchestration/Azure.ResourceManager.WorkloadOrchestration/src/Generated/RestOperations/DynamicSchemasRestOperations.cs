@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/> or <paramref name="dynamicSchemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/> or <paramref name="dynamicSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DynamicSchemaData>> GetAsync(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, CancellationToken cancellationToken = default)
+        public async Task<Response<EdgeDynamicSchemaData>> GetAsync(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 case 200:
                     {
-                        DynamicSchemaData value = default;
+                        EdgeDynamicSchemaData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DynamicSchemaData.DeserializeDynamicSchemaData(document.RootElement);
+                        value = EdgeDynamicSchemaData.DeserializeEdgeDynamicSchemaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DynamicSchemaData)null, message.Response);
+                    return Response.FromValue((EdgeDynamicSchemaData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/> or <paramref name="dynamicSchemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/> or <paramref name="dynamicSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DynamicSchemaData> Get(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, CancellationToken cancellationToken = default)
+        public Response<EdgeDynamicSchemaData> Get(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,19 +128,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 case 200:
                     {
-                        DynamicSchemaData value = default;
+                        EdgeDynamicSchemaData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DynamicSchemaData.DeserializeDynamicSchemaData(document.RootElement);
+                        value = EdgeDynamicSchemaData.DeserializeEdgeDynamicSchemaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DynamicSchemaData)null, message.Response);
+                    return Response.FromValue((EdgeDynamicSchemaData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, DynamicSchemaData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, EdgeDynamicSchemaData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, DynamicSchemaData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, EdgeDynamicSchemaData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/>, <paramref name="dynamicSchemaName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/> or <paramref name="dynamicSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, DynamicSchemaData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, EdgeDynamicSchemaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/>, <paramref name="dynamicSchemaName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/> or <paramref name="dynamicSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, DynamicSchemaData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, EdgeDynamicSchemaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, DynamicSchemaData data)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, EdgeDynamicSchemaData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, DynamicSchemaData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, EdgeDynamicSchemaData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/>, <paramref name="dynamicSchemaName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/> or <paramref name="dynamicSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DynamicSchemaData>> UpdateAsync(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, DynamicSchemaData data, CancellationToken cancellationToken = default)
+        public async Task<Response<EdgeDynamicSchemaData>> UpdateAsync(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, EdgeDynamicSchemaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -305,9 +305,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 case 200:
                     {
-                        DynamicSchemaData value = default;
+                        EdgeDynamicSchemaData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DynamicSchemaData.DeserializeDynamicSchemaData(document.RootElement);
+                        value = EdgeDynamicSchemaData.DeserializeEdgeDynamicSchemaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/>, <paramref name="dynamicSchemaName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/> or <paramref name="dynamicSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DynamicSchemaData> Update(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, DynamicSchemaData data, CancellationToken cancellationToken = default)
+        public Response<EdgeDynamicSchemaData> Update(string subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, EdgeDynamicSchemaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -338,9 +338,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 case 200:
                     {
-                        DynamicSchemaData value = default;
+                        EdgeDynamicSchemaData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DynamicSchemaData.DeserializeDynamicSchemaData(document.RootElement);
+                        value = EdgeDynamicSchemaData.DeserializeEdgeDynamicSchemaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

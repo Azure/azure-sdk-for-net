@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             string stage = default;
             string nextstage = default;
             string errorMessage = default;
-            ActiveState? isActive = default;
+            InstanceActiveState? isActive = default;
             IReadOnlyDictionary<string, BinaryData> inputs = default;
             IReadOnlyDictionary<string, BinaryData> outputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    isActive = new ActiveState(property.Value.GetString());
+                    isActive = new InstanceActiveState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("inputs"u8))

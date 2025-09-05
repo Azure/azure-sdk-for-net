@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="SchemaVersionWithUpdateType"/>. </summary>
         /// <param name="schemaVersion"> Schema Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaVersion"/> is null. </exception>
-        public SchemaVersionWithUpdateType(SchemaVersionData schemaVersion)
+        public SchemaVersionWithUpdateType(EdgeSchemaVersionData schemaVersion)
         {
             Argument.AssertNotNull(schemaVersion, nameof(schemaVersion));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="version"> Version to create. </param>
         /// <param name="schemaVersion"> Schema Version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SchemaVersionWithUpdateType(UpdateType? updateType, string version, SchemaVersionData schemaVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SchemaVersionWithUpdateType(UpdateType? updateType, string version, EdgeSchemaVersionData schemaVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UpdateType = updateType;
             Version = version;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Version to create. </summary>
         public string Version { get; set; }
         /// <summary> Schema Version. </summary>
-        public SchemaVersionData SchemaVersion { get; }
+        public EdgeSchemaVersionData SchemaVersion { get; }
     }
 }

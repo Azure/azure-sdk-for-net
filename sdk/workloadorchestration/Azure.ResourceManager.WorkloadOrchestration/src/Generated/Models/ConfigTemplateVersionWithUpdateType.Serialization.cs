@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
             UpdateType? updateType = default;
             string version = default;
-            ConfigTemplateVersionData configTemplateVersion = default;
+            EdgeConfigTemplateVersionData configTemplateVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (property.NameEquals("configTemplateVersion"u8))
                 {
-                    configTemplateVersion = ConfigTemplateVersionData.DeserializeConfigTemplateVersionData(property.Value, options);
+                    configTemplateVersion = EdgeConfigTemplateVersionData.DeserializeEdgeConfigTemplateVersionData(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="schemaReferenceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SchemaReferenceData>> GetAsync(string resourceUri, string schemaReferenceName, CancellationToken cancellationToken = default)
+        public async Task<Response<EdgeSchemaReferenceData>> GetAsync(string resourceUri, string schemaReferenceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(schemaReferenceName, nameof(schemaReferenceName));
@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 case 200:
                     {
-                        SchemaReferenceData value = default;
+                        EdgeSchemaReferenceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SchemaReferenceData.DeserializeSchemaReferenceData(document.RootElement);
+                        value = EdgeSchemaReferenceData.DeserializeEdgeSchemaReferenceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SchemaReferenceData)null, message.Response);
+                    return Response.FromValue((EdgeSchemaReferenceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="schemaReferenceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SchemaReferenceData> Get(string resourceUri, string schemaReferenceName, CancellationToken cancellationToken = default)
+        public Response<EdgeSchemaReferenceData> Get(string resourceUri, string schemaReferenceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(schemaReferenceName, nameof(schemaReferenceName));
@@ -112,13 +112,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 case 200:
                     {
-                        SchemaReferenceData value = default;
+                        EdgeSchemaReferenceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SchemaReferenceData.DeserializeSchemaReferenceData(document.RootElement);
+                        value = EdgeSchemaReferenceData.DeserializeEdgeSchemaReferenceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SchemaReferenceData)null, message.Response);
+                    return Response.FromValue((EdgeSchemaReferenceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

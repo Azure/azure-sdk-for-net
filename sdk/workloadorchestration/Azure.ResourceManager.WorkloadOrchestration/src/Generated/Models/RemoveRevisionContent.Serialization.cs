@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 return null;
             }
-            string solutionTemplateId = default;
+            ResourceIdentifier solutionTemplateId = default;
             string solutionVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 if (property.NameEquals("solutionTemplateId"u8))
                 {
-                    solutionTemplateId = property.Value.GetString();
+                    solutionTemplateId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("solutionVersion"u8))

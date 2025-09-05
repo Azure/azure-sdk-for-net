@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="ConfigTemplateVersionWithUpdateType"/>. </summary>
         /// <param name="configTemplateVersion"> Config Template Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configTemplateVersion"/> is null. </exception>
-        public ConfigTemplateVersionWithUpdateType(ConfigTemplateVersionData configTemplateVersion)
+        public ConfigTemplateVersionWithUpdateType(EdgeConfigTemplateVersionData configTemplateVersion)
         {
             Argument.AssertNotNull(configTemplateVersion, nameof(configTemplateVersion));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="version"> Version to create. </param>
         /// <param name="configTemplateVersion"> Config Template Version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigTemplateVersionWithUpdateType(UpdateType? updateType, string version, ConfigTemplateVersionData configTemplateVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfigTemplateVersionWithUpdateType(UpdateType? updateType, string version, EdgeConfigTemplateVersionData configTemplateVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UpdateType = updateType;
             Version = version;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Version to create. </summary>
         public string Version { get; set; }
         /// <summary> Config Template Version. </summary>
-        public ConfigTemplateVersionData ConfigTemplateVersion { get; }
+        public EdgeConfigTemplateVersionData ConfigTemplateVersion { get; }
     }
 }

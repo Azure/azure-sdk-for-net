@@ -7,23 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary> Parameters for a deployment job. </summary>
-    public partial class DeployJobContent : JobParameterBase
+    public partial class DeployJobContent : EdgeJobContent
     {
         /// <summary> Initializes a new instance of <see cref="DeployJobContent"/>. </summary>
         internal DeployJobContent()
         {
-            JobType = JobType.Deploy;
+            JobType = EdgeJobType.Deploy;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeployJobContent"/>. </summary>
         /// <param name="jobType"> Job type discriminator value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameter"></param>
-        internal DeployJobContent(JobType jobType, IDictionary<string, BinaryData> serializedAdditionalRawData, InstallSolutionContent parameter) : base(jobType, serializedAdditionalRawData)
+        internal DeployJobContent(EdgeJobType jobType, IDictionary<string, BinaryData> serializedAdditionalRawData, InstallSolutionContent parameter) : base(jobType, serializedAdditionalRawData)
         {
             Parameter = parameter;
             JobType = jobType;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Gets the parameter. </summary>
         internal InstallSolutionContent Parameter { get; }
         /// <summary> Solution Version ARM Id. </summary>
-        public string ParameterSolutionVersionId
+        public ResourceIdentifier ParameterSolutionVersionId
         {
             get => Parameter?.SolutionVersionId;
         }

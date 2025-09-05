@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
             string name = default;
             string status = default;
-            IReadOnlyList<ComponentStatus> componentStatuses = default;
+            IReadOnlyList<TargetComponentStatus> componentStatuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    List<ComponentStatus> array = new List<ComponentStatus>();
+                    List<TargetComponentStatus> array = new List<TargetComponentStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComponentStatus.DeserializeComponentStatus(item, options));
+                        array.Add(TargetComponentStatus.DeserializeTargetComponentStatus(item, options));
                     }
                     componentStatuses = array;
                     continue;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TargetStatus(name, status, componentStatuses ?? new ChangeTrackingList<ComponentStatus>(), serializedAdditionalRawData);
+            return new TargetStatus(name, status, componentStatuses ?? new ChangeTrackingList<TargetComponentStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetStatus>.Write(ModelReaderWriterOptions options)

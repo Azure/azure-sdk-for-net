@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
             IList<BulkPublishTargetDetails> targets = default;
             string solutionInstanceName = default;
-            IList<SolutionDependencyContent> solutionDependencies = default;
+            IList<EdgeSolutionDependencyContent> solutionDependencies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    List<SolutionDependencyContent> array = new List<SolutionDependencyContent>();
+                    List<EdgeSolutionDependencyContent> array = new List<EdgeSolutionDependencyContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SolutionDependencyContent.DeserializeSolutionDependencyContent(item, options));
+                        array.Add(EdgeSolutionDependencyContent.DeserializeEdgeSolutionDependencyContent(item, options));
                     }
                     solutionDependencies = array;
                     continue;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BulkPublishSolutionContent(targets, solutionInstanceName, solutionDependencies ?? new ChangeTrackingList<SolutionDependencyContent>(), serializedAdditionalRawData);
+            return new BulkPublishSolutionContent(targets, solutionInstanceName, solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BulkPublishSolutionContent>.Write(ModelReaderWriterOptions options)

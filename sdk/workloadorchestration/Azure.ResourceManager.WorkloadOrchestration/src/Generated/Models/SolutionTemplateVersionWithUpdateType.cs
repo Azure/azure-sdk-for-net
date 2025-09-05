@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="SolutionTemplateVersionWithUpdateType"/>. </summary>
         /// <param name="solutionTemplateVersion"> Solution Template Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionTemplateVersion"/> is null. </exception>
-        public SolutionTemplateVersionWithUpdateType(SolutionTemplateVersionData solutionTemplateVersion)
+        public SolutionTemplateVersionWithUpdateType(EdgeSolutionTemplateVersionData solutionTemplateVersion)
         {
             Argument.AssertNotNull(solutionTemplateVersion, nameof(solutionTemplateVersion));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="version"> Version to create. </param>
         /// <param name="solutionTemplateVersion"> Solution Template Version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionTemplateVersionWithUpdateType(UpdateType? updateType, string version, SolutionTemplateVersionData solutionTemplateVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SolutionTemplateVersionWithUpdateType(UpdateType? updateType, string version, EdgeSolutionTemplateVersionData solutionTemplateVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UpdateType = updateType;
             Version = version;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Version to create. </summary>
         public string Version { get; set; }
         /// <summary> Solution Template Version. </summary>
-        public SolutionTemplateVersionData SolutionTemplateVersion { get; }
+        public EdgeSolutionTemplateVersionData SolutionTemplateVersion { get; }
     }
 }

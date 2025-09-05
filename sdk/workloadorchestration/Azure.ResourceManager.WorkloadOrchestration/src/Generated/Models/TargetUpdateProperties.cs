@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="solutionScope"> Scope of the target resource. </param>
         /// <param name="state"> State of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TargetUpdateProperties(string description, string displayName, ResourceIdentifier contextId, IDictionary<string, BinaryData> targetSpecification, IList<string> capabilities, string hierarchyLevel, string solutionScope, ResourceState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TargetUpdateProperties(string description, string displayName, ResourceIdentifier contextId, IDictionary<string, BinaryData> targetSpecification, IList<string> capabilities, string hierarchyLevel, string solutionScope, EdgeResourceState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             DisplayName = displayName;
@@ -120,6 +120,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Scope of the target resource. </summary>
         public string SolutionScope { get; set; }
         /// <summary> State of resource. </summary>
-        public ResourceState? State { get; set; }
+        public EdgeResourceState? State { get; set; }
     }
 }

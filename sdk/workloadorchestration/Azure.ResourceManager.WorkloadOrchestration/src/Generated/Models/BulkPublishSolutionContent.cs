@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             Argument.AssertNotNull(targets, nameof(targets));
 
             Targets = targets.ToList();
-            SolutionDependencies = new ChangeTrackingList<SolutionDependencyContent>();
+            SolutionDependencies = new ChangeTrackingList<EdgeSolutionDependencyContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BulkPublishSolutionContent"/>. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="solutionInstanceName"> Name of the solution instance. </param>
         /// <param name="solutionDependencies"> Solution dependencies. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BulkPublishSolutionContent(IList<BulkPublishTargetDetails> targets, string solutionInstanceName, IList<SolutionDependencyContent> solutionDependencies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BulkPublishSolutionContent(IList<BulkPublishTargetDetails> targets, string solutionInstanceName, IList<EdgeSolutionDependencyContent> solutionDependencies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Targets = targets;
             SolutionInstanceName = solutionInstanceName;
@@ -80,6 +80,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Name of the solution instance. </summary>
         public string SolutionInstanceName { get; set; }
         /// <summary> Solution dependencies. </summary>
-        public IList<SolutionDependencyContent> SolutionDependencies { get; }
+        public IList<EdgeSolutionDependencyContent> SolutionDependencies { get; }
     }
 }

@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             string name = default;
             IDictionary<string, BinaryData> specification = default;
             IList<TaskSpec> tasks = default;
-            TaskConfig taskOption = default;
+            EdgeTaskConfig taskOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    taskOption = TaskConfig.DeserializeTaskConfig(property.Value, options);
+                    taskOption = EdgeTaskConfig.DeserializeEdgeTaskConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

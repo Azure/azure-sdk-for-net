@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="state"> State of resource. </param>
         /// <param name="enableExternalValidation"> Flag to enable external validation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionTemplateUpdateProperties(string description, IList<string> capabilities, ResourceState? state, bool? enableExternalValidation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SolutionTemplateUpdateProperties(string description, IList<string> capabilities, EdgeResourceState? state, bool? enableExternalValidation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             Capabilities = capabilities;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> List of capabilities. </summary>
         public IList<string> Capabilities { get; }
         /// <summary> State of resource. </summary>
-        public ResourceState? State { get; set; }
+        public EdgeResourceState? State { get; set; }
         /// <summary> Flag to enable external validation. </summary>
         public bool? EnableExternalValidation { get; set; }
     }

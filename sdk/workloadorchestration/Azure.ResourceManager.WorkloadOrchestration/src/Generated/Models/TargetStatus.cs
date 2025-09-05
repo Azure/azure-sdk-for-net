@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="TargetStatus"/>. </summary>
         internal TargetStatus()
         {
-            ComponentStatuses = new ChangeTrackingList<ComponentStatus>();
+            ComponentStatuses = new ChangeTrackingList<TargetComponentStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TargetStatus"/>. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="status"> Target status. </param>
         /// <param name="componentStatuses"> Component statuses. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TargetStatus(string name, string status, IReadOnlyList<ComponentStatus> componentStatuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TargetStatus(string name, string status, IReadOnlyList<TargetComponentStatus> componentStatuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Status = status;
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Target status. </summary>
         public string Status { get; }
         /// <summary> Component statuses. </summary>
-        public IReadOnlyList<ComponentStatus> ComponentStatuses { get; }
+        public IReadOnlyList<TargetComponentStatus> ComponentStatuses { get; }
     }
 }

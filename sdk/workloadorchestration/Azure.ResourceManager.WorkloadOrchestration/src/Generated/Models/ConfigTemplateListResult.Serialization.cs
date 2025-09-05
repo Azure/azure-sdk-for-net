@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 return null;
             }
-            IReadOnlyList<ConfigTemplateData> value = default;
+            IReadOnlyList<EdgeConfigTemplateData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ConfigTemplateData> array = new List<ConfigTemplateData>();
+                    List<EdgeConfigTemplateData> array = new List<EdgeConfigTemplateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigTemplateData.DeserializeConfigTemplateData(item, options));
+                        array.Add(EdgeConfigTemplateData.DeserializeEdgeConfigTemplateData(item, options));
                     }
                     value = array;
                     continue;

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="DynamicSchemaVersionListResult"/>. </summary>
         /// <param name="value"> The DynamicSchemaVersion items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DynamicSchemaVersionListResult(IEnumerable<DynamicSchemaVersionData> value)
+        internal DynamicSchemaVersionListResult(IEnumerable<EdgeDynamicSchemaVersionData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="value"> The DynamicSchemaVersion items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DynamicSchemaVersionListResult(IReadOnlyList<DynamicSchemaVersionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DynamicSchemaVersionListResult(IReadOnlyList<EdgeDynamicSchemaVersionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> The DynamicSchemaVersion items on this page. </summary>
-        public IReadOnlyList<DynamicSchemaVersionData> Value { get; }
+        public IReadOnlyList<EdgeDynamicSchemaVersionData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

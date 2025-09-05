@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="solutionVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="solutionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SolutionVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, CancellationToken cancellationToken = default)
+        public async Task<Response<EdgeSolutionVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 case 200:
                     {
-                        SolutionVersionData value = default;
+                        EdgeSolutionVersionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SolutionVersionData.DeserializeSolutionVersionData(document.RootElement);
+                        value = EdgeSolutionVersionData.DeserializeEdgeSolutionVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SolutionVersionData)null, message.Response);
+                    return Response.FromValue((EdgeSolutionVersionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="solutionVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="solutionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SolutionVersionData> Get(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, CancellationToken cancellationToken = default)
+        public Response<EdgeSolutionVersionData> Get(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -136,19 +136,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 case 200:
                     {
-                        SolutionVersionData value = default;
+                        EdgeSolutionVersionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SolutionVersionData.DeserializeSolutionVersionData(document.RootElement);
+                        value = EdgeSolutionVersionData.DeserializeEdgeSolutionVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SolutionVersionData)null, message.Response);
+                    return Response.FromValue((EdgeSolutionVersionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, SolutionVersionData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, EdgeSolutionVersionData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, SolutionVersionData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, EdgeSolutionVersionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/>, <paramref name="solutionVersionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="solutionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, SolutionVersionData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, EdgeSolutionVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/>, <paramref name="solutionVersionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="solutionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, SolutionVersionData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, EdgeSolutionVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, SolutionVersionData data)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, EdgeSolutionVersionData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, SolutionVersionData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, EdgeSolutionVersionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/>, <paramref name="solutionVersionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="solutionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, SolutionVersionData data, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, EdgeSolutionVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/>, <paramref name="solutionVersionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="solutionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, SolutionVersionData data, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string solutionVersionName, EdgeSolutionVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

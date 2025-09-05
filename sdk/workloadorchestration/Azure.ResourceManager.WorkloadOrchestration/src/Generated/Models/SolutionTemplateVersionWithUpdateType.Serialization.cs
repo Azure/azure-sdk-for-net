@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
             UpdateType? updateType = default;
             string version = default;
-            SolutionTemplateVersionData solutionTemplateVersion = default;
+            EdgeSolutionTemplateVersionData solutionTemplateVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (property.NameEquals("solutionTemplateVersion"u8))
                 {
-                    solutionTemplateVersion = SolutionTemplateVersionData.DeserializeSolutionTemplateVersionData(property.Value, options);
+                    solutionTemplateVersion = EdgeSolutionTemplateVersionData.DeserializeEdgeSolutionTemplateVersionData(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

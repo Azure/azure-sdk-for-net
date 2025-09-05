@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary> Deploy statistics for a job step, including total, success, and failed counts. </summary>
-    public partial class DeployJobStepStatistics : JobStepStatisticsBase
+    public partial class DeployJobStepStatistics : EdgeJobStepStatistics
     {
         /// <summary> Initializes a new instance of <see cref="DeployJobStepStatistics"/>. </summary>
         internal DeployJobStepStatistics()
         {
-            StatisticsType = JobType.Deploy;
+            StatisticsType = EdgeJobType.Deploy;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeployJobStepStatistics"/>. </summary>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="totalCount"> Total count of items processed in this step. </param>
         /// <param name="successCount"> Count of successful items in this step. </param>
         /// <param name="failedCount"> Count of failed items in this step. </param>
-        internal DeployJobStepStatistics(JobType statisticsType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? totalCount, int? successCount, int? failedCount) : base(statisticsType, serializedAdditionalRawData)
+        internal DeployJobStepStatistics(EdgeJobType statisticsType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? totalCount, int? successCount, int? failedCount) : base(statisticsType, serializedAdditionalRawData)
         {
             TotalCount = totalCount;
             SuccessCount = successCount;

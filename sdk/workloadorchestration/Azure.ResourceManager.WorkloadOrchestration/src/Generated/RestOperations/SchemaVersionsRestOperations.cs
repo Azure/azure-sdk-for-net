@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/> or <paramref name="schemaVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/> or <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SchemaVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, CancellationToken cancellationToken = default)
+        public async Task<Response<EdgeSchemaVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 case 200:
                     {
-                        SchemaVersionData value = default;
+                        EdgeSchemaVersionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SchemaVersionData.DeserializeSchemaVersionData(document.RootElement);
+                        value = EdgeSchemaVersionData.DeserializeEdgeSchemaVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SchemaVersionData)null, message.Response);
+                    return Response.FromValue((EdgeSchemaVersionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/> or <paramref name="schemaVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/> or <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SchemaVersionData> Get(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, CancellationToken cancellationToken = default)
+        public Response<EdgeSchemaVersionData> Get(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,19 +128,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 case 200:
                     {
-                        SchemaVersionData value = default;
+                        EdgeSchemaVersionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SchemaVersionData.DeserializeSchemaVersionData(document.RootElement);
+                        value = EdgeSchemaVersionData.DeserializeEdgeSchemaVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SchemaVersionData)null, message.Response);
+                    return Response.FromValue((EdgeSchemaVersionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, SchemaVersionData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, EdgeSchemaVersionData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, SchemaVersionData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, EdgeSchemaVersionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/>, <paramref name="schemaVersionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/> or <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, SchemaVersionData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, EdgeSchemaVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/>, <paramref name="schemaVersionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/> or <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, SchemaVersionData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, EdgeSchemaVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, SchemaVersionData data)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, EdgeSchemaVersionData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, SchemaVersionData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, EdgeSchemaVersionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/>, <paramref name="schemaVersionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/> or <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SchemaVersionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, SchemaVersionData data, CancellationToken cancellationToken = default)
+        public async Task<Response<EdgeSchemaVersionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, EdgeSchemaVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -305,9 +305,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 case 200:
                     {
-                        SchemaVersionData value = default;
+                        EdgeSchemaVersionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SchemaVersionData.DeserializeSchemaVersionData(document.RootElement);
+                        value = EdgeSchemaVersionData.DeserializeEdgeSchemaVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/>, <paramref name="schemaVersionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schemaName"/> or <paramref name="schemaVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SchemaVersionData> Update(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, SchemaVersionData data, CancellationToken cancellationToken = default)
+        public Response<EdgeSchemaVersionData> Update(string subscriptionId, string resourceGroupName, string schemaName, string schemaVersionName, EdgeSchemaVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -338,9 +338,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 case 200:
                     {
-                        SchemaVersionData value = default;
+                        EdgeSchemaVersionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SchemaVersionData.DeserializeSchemaVersionData(document.RootElement);
+                        value = EdgeSchemaVersionData.DeserializeEdgeSchemaVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

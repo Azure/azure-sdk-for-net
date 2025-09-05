@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="InstallSolutionContent"/>. </summary>
         /// <param name="solutionVersionId"> Solution Version ARM Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionVersionId"/> is null. </exception>
-        public InstallSolutionContent(string solutionVersionId)
+        public InstallSolutionContent(ResourceIdentifier solutionVersionId)
         {
             Argument.AssertNotNull(solutionVersionId, nameof(solutionVersionId));
 
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="InstallSolutionContent"/>. </summary>
         /// <param name="solutionVersionId"> Solution Version ARM Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstallSolutionContent(string solutionVersionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InstallSolutionContent(ResourceIdentifier solutionVersionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionVersionId = solutionVersionId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -70,6 +71,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Solution Version ARM Id. </summary>
-        public string SolutionVersionId { get; set; }
+        public ResourceIdentifier SolutionVersionId { get; set; }
     }
 }

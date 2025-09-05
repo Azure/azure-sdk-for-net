@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 return null;
             }
             InstallSolutionContent parameter = default;
-            JobType jobType = default;
+            EdgeJobType jobType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (property.NameEquals("jobType"u8))
                 {
-                    jobType = new JobType(property.Value.GetString());
+                    jobType = new EdgeJobType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

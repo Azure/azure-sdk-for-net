@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 return null;
             }
-            IReadOnlyList<SiteReferenceData> value = default;
+            IReadOnlyList<EdgeSiteReferenceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<SiteReferenceData> array = new List<SiteReferenceData>();
+                    List<EdgeSiteReferenceData> array = new List<EdgeSiteReferenceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteReferenceData.DeserializeSiteReferenceData(item, options));
+                        array.Add(EdgeSiteReferenceData.DeserializeEdgeSiteReferenceData(item, options));
                     }
                     value = array;
                     continue;

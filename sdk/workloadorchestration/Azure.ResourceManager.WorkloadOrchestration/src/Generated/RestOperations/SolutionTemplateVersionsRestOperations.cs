@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionTemplateName"/> or <paramref name="solutionTemplateVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionTemplateName"/> or <paramref name="solutionTemplateVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SolutionTemplateVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string solutionTemplateName, string solutionTemplateVersionName, CancellationToken cancellationToken = default)
+        public async Task<Response<EdgeSolutionTemplateVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string solutionTemplateName, string solutionTemplateVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 case 200:
                     {
-                        SolutionTemplateVersionData value = default;
+                        EdgeSolutionTemplateVersionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SolutionTemplateVersionData.DeserializeSolutionTemplateVersionData(document.RootElement);
+                        value = EdgeSolutionTemplateVersionData.DeserializeEdgeSolutionTemplateVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SolutionTemplateVersionData)null, message.Response);
+                    return Response.FromValue((EdgeSolutionTemplateVersionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionTemplateName"/> or <paramref name="solutionTemplateVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionTemplateName"/> or <paramref name="solutionTemplateVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SolutionTemplateVersionData> Get(string subscriptionId, string resourceGroupName, string solutionTemplateName, string solutionTemplateVersionName, CancellationToken cancellationToken = default)
+        public Response<EdgeSolutionTemplateVersionData> Get(string subscriptionId, string resourceGroupName, string solutionTemplateName, string solutionTemplateVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,13 +128,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 case 200:
                     {
-                        SolutionTemplateVersionData value = default;
+                        EdgeSolutionTemplateVersionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SolutionTemplateVersionData.DeserializeSolutionTemplateVersionData(document.RootElement);
+                        value = EdgeSolutionTemplateVersionData.DeserializeEdgeSolutionTemplateVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SolutionTemplateVersionData)null, message.Response);
+                    return Response.FromValue((EdgeSolutionTemplateVersionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

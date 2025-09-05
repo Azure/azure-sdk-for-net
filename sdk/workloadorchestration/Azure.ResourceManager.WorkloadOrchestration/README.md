@@ -1,6 +1,6 @@
 # Microsoft Azure Workload Orchestration management client library for .NET
 
-**[Describe the service briefly first.]**
+Workload orchestration for Azure Arc is a comprehensive, cloud-native, cross-platform orchestrator that simplifies the configuration management, deployment, and update of Kubernetes application lifecycle management across edge environments.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

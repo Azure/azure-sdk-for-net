@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="ContextListResult"/>. </summary>
         /// <param name="value"> The Context items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ContextListResult(IEnumerable<ContextData> value)
+        internal ContextListResult(IEnumerable<EdgeContextData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="value"> The Context items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContextListResult(IReadOnlyList<ContextData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContextListResult(IReadOnlyList<EdgeContextData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> The Context items on this page. </summary>
-        public IReadOnlyList<ContextData> Value { get; }
+        public IReadOnlyList<EdgeContextData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="inputs"> The inputs of the StageHistory, Inputs holds a key-value map of user-defined parameters for the initial stage. </param>
         /// <param name="outputs"> The outputs of the StageHistory, it is different as the different input stages. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StageStatus(int? status, string statusMessage, string stage, string nextstage, string errorMessage, ActiveState? isActive, IReadOnlyDictionary<string, BinaryData> inputs, IReadOnlyDictionary<string, BinaryData> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StageStatus(int? status, string statusMessage, string stage, string nextstage, string errorMessage, InstanceActiveState? isActive, IReadOnlyDictionary<string, BinaryData> inputs, IReadOnlyDictionary<string, BinaryData> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             StatusMessage = statusMessage;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Error message. </summary>
         public string ErrorMessage { get; }
         /// <summary> whether this stage is active or inactive. </summary>
-        public ActiveState? IsActive { get; }
+        public InstanceActiveState? IsActive { get; }
         /// <summary>
         /// The inputs of the StageHistory, Inputs holds a key-value map of user-defined parameters for the initial stage
         /// <para>
