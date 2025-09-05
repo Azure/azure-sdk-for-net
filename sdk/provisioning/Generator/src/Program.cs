@@ -31,6 +31,7 @@ List<Specification> rpSpecs =
     new KubernetesSpecification(),
     new KubernetesConfigurationSpecification(),
     new KustoSpecification(),
+    new NetworkSpecification(),
     new OperationalInsightsSpecification(),
     new PostgreSqlSpecification(),
     new RedisSpecification(),

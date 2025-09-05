@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Playwright.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> The feature is Enabled. </summary>
+        /// <summary> The feature is enabled. </summary>
         public static PlaywrightEnablementStatus Enabled { get; } = new PlaywrightEnablementStatus(EnabledValue);
-        /// <summary> The feature is Disabled. </summary>
+        /// <summary> The feature is disabled. </summary>
         public static PlaywrightEnablementStatus Disabled { get; } = new PlaywrightEnablementStatus(DisabledValue);
         /// <summary> Determines if two <see cref="PlaywrightEnablementStatus"/> values are the same. </summary>
         public static bool operator ==(PlaywrightEnablementStatus left, PlaywrightEnablementStatus right) => left.Equals(right);

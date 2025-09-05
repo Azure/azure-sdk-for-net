@@ -976,8 +976,6 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         Assert.IsTrue(_traceVerifier.CheckSpanEvents(listRunStepsSpan, expectedListRunStepsEvents));
     }
 
-    // The uncommenting of this test does not require re-recording.
-    [Ignore("TODO: Uncomment this test when the ADO Work Item 4650610 is resolved.")]
     [RecordedTest]
     public async Task TestDeepResearchToolTracingContentRecordingEnabled()
     {
@@ -1106,9 +1104,11 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         Assert.IsTrue(_traceVerifier.CheckSpanAttributes(getThreadRunSpan, expectedGetThreadRunAttributes));
 
         // Verify list_messages span explicitly
-        var listMessagesSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "list_messages");
-        Assert.IsNotNull(listMessagesSpan);
+        //var listMessagesSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "list_messages");
+        IEnumerable<Activity> spans = _exporter.GetExportedActivities().Where(s => s.DisplayName == "list_messages");
+        Assert.Greater(spans.Count(), 0);
 
+        List<ActivityEvent> events = [];
         var expectedListMessagesAttributes = new Dictionary<string, object>
         {
             { "gen_ai.system", "az.ai.agents" },
@@ -1117,7 +1117,11 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             { "az.namespace", "Microsoft.CognitiveServices" },
             { "gen_ai.thread.id", "*" }
         };
-        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(listMessagesSpan, expectedListMessagesAttributes));
+        foreach (Activity listMessagesSpan in spans)
+        {
+            Assert.IsTrue(_traceVerifier.CheckSpanAttributes(listMessagesSpan, expectedListMessagesAttributes));
+            events.AddRange(listMessagesSpan.Events);
+        }
 
         var expectedListMessagesEvents = new List<(string, Dictionary<string, object>)>
         {
@@ -1135,14 +1139,13 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
                 { "gen_ai.agent.id", "*" },
                 { "gen_ai.thread.run.id", "*" },
                 { "gen_ai.message.id", "*" },
-                { "gen_ai.event.content", "{\"content\":{\"text\":{\"value\":\"*\"}},\"role\":\"assistant\"}" }
+                { "gen_ai.event.content", "{\"content\":{\"text\":{\"value\":\"*\",\"annotations\":\"*\"}},\"role\":\"assistant\"}" }
             })
         };
-        Assert.IsTrue(_traceVerifier.CheckSpanEvents(listMessagesSpan, expectedListMessagesEvents));
+        Assert.IsTrue(_traceVerifier.CheckSpanEvents(events, expectedListMessagesEvents, allowAdditionalEvents: true));
 
         // Verify list_run_steps span
-        var listRunStepsSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "list_run_steps");
-        Assert.IsNotNull(listRunStepsSpan);
+        events = [];
         var expectedListRunStepsAttributes = new Dictionary<string, object>
         {
             { "gen_ai.system", "az.ai.agents" },
@@ -1152,59 +1155,48 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             { "gen_ai.thread.id", "*" },
             { "gen_ai.thread.run.id", "*" }
         };
-        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(listRunStepsSpan, expectedListRunStepsAttributes));
+        spans = _exporter.GetExportedActivities().Where(s => s.DisplayName == "list_run_steps");
+        Assert.Greater(spans.Count(), 0);
+        List<ActivityEvent> runStepsSpanEvents = [];
+        foreach (Activity listRunStepsSpan in spans)
+        {
+            runStepsSpanEvents.AddRange(listRunStepsSpan.Events);
+            Assert.IsTrue(_traceVerifier.CheckSpanAttributes(listRunStepsSpan, expectedListRunStepsAttributes));
+        }
 
-        // Take three first spans and two last, as we may have multiple spans.
-        Assert.Greater(listRunStepsSpan.Events.Count(), 5, "Deep reasearch typically have more then 5 steps.");
-        List<ActivityEvent> shortListRunStepsSpan = [];
-        HashSet<int> eventsMask = [0, 1, 2, listRunStepsSpan.Events.Count() - 2, listRunStepsSpan.Events.Count() - 1];
-        int cnt = 0;
-        foreach (ActivityEvent evt in listRunStepsSpan.Events)
-        {
-            if (eventsMask.Contains(cnt))
-            {
-                shortListRunStepsSpan.Add(evt);
-            }
-            cnt++;
-        }
-        var expectedListRunStepsEvents = new List<(string, Dictionary<string, object>)>();
-        for (int i = 0; i < 4; i++)
-        {
-            expectedListRunStepsEvents.Add(
-                (
-                    "gen_ai.run_step.message_creation",
-                    new Dictionary<string, object>
-                    {
-                        { "gen_ai.system", "az.ai.agents" },
-                        { "gen_ai.thread.id", "*" },
-                        { "gen_ai.message.id", "*" },
-                        { "gen_ai.agent.id", "*" },
-                        { "gen_ai.thread.run.id", "*" },
-                        { "gen_ai.run_step.status", "completed" },
-                        { "gen_ai.run_step.start.timestamp", "*" },
-                        { "gen_ai.run_step.end.timestamp", "*" },
-                        { "gen_ai.usage.input_tokens", 0 },
-                        { "gen_ai.usage.output_tokens", 0 }
-                    }
-                )
-            );
-        }
-        expectedListRunStepsEvents.Add(
+        Assert.Greater(runStepsSpanEvents.Count(), 5, "Deep research typically have more than 5 steps.");
+        List<(string, Dictionary<string, object>)> expectedListRunStepsEvents =
+        [
+            ("gen_ai.run_step.message_creation", new Dictionary<string, object>
+                {
+                    { "gen_ai.system", "az.ai.agents" },
+                    { "gen_ai.thread.id", "*" },
+                    { "gen_ai.message.id", "*" },
+                    { "gen_ai.agent.id", "*" },
+                    { "gen_ai.thread.run.id", "*" },
+                    { "gen_ai.run_step.status", "completed" },
+                    { "gen_ai.run_step.start.timestamp", "*" },
+                    { "gen_ai.run_step.end.timestamp", "*" },
+                    { "gen_ai.usage.input_tokens", "0" },
+                    { "gen_ai.usage.output_tokens", "0" }
+                }
+            ),
             ("gen_ai.run_step.tool_calls", new Dictionary<string, object>
-            {
-                { "gen_ai.system", "az.ai.agents" },
-                { "gen_ai.thread.id", "*" },
-                { "gen_ai.agent.id", "*" },
-                { "gen_ai.thread.run.id", "*" },
-                { "gen_ai.run_step.status", "completed" },
-                { "gen_ai.run_step.start.timestamp", "*" },
-                { "gen_ai.run_step.end.timestamp", "*" },
-                { "gen_ai.usage.input_tokens", "+" },
-                { "gen_ai.usage.output_tokens", "+" },
-                { "gen_ai.event.content", "{\"tool_calls\":[{\"id\":\"*\",\"type\":\"function\",\"function\":{\"name\":\"getCurrentWeatherAtLocation\",\"arguments\":{\"location\":\"Seattle, WA\"}}}]}"}
-            })
-        );
-        Assert.IsTrue(_traceVerifier.CheckSpanEvents(shortListRunStepsSpan, expectedListRunStepsEvents));
+                {
+                    { "gen_ai.system", "az.ai.agents" },
+                    { "gen_ai.thread.id", "*" },
+                    { "gen_ai.agent.id", "*" },
+                    { "gen_ai.thread.run.id", "*" },
+                    { "gen_ai.run_step.status", "completed" },
+                    { "gen_ai.run_step.start.timestamp", "*" },
+                    { "gen_ai.run_step.end.timestamp", "*" },
+                    { "gen_ai.usage.input_tokens", "+" },
+                    { "gen_ai.usage.output_tokens", "+" },
+                    { "gen_ai.event.content", "{\"tool_calls\":[{\"id\":\"*\",\"type\":\"deep_research\",\"details\":{\"input\":\"*\"}}]}"}
+                }
+            )
+        ];
+        Assert.IsTrue(_traceVerifier.CheckSpanEvents(runStepsSpanEvents, expectedListRunStepsEvents, allowAdditionalEvents: true));
     }
 
     [RecordedTest]

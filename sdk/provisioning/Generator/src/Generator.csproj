@@ -37,6 +37,7 @@
     <PackageReference Include="Azure.ResourceManager.KubernetesConfiguration" />
     <PackageReference Include="Azure.ResourceManager.Kusto" />
     <PackageReference Include="Azure.ResourceManager.OperationalInsights" />
+    <PackageReference Include="Azure.ResourceManager.Network" />
     <PackageReference Include="Azure.ResourceManager.PostgreSql" />
     <PackageReference Include="Azure.ResourceManager.Redis" />
     <PackageReference Include="Azure.ResourceManager.RedisEnterprise" />

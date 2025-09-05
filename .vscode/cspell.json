@@ -1257,6 +1257,17 @@
       ]
     },
     {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Network/**/*.cs",
+      "words": [
+        "Snat",
+        "Fqdns",
+        "Vxlan",
+        "Ipam",
+        "Dscp",
+        "Vnets"
+      ]
+    },
+    {
       "filename": "**/sdk/qumulo/**/*",
       "words": [
         "qumulo"
