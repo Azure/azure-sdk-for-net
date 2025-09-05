@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             IDictionary<string, BinaryData> specification = default;
             string reviewId = default;
             string externalValidationId = default;
-            State? state = default;
+            SolutionInstanceState? state = default;
             string solutionInstanceName = default;
             IReadOnlyList<EdgeSolutionDependency> solutionDependencies = default;
             ResponseError errorDetails = default;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    state = new State(property.Value.GetString());
+                    state = new SolutionInstanceState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("solutionInstanceName"u8))

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="EdgeExecutionStatus"/>. </summary>
         internal EdgeExecutionStatus()
         {
-            StageHistory = new ChangeTrackingList<StageStatus>();
+            StageHistory = new ChangeTrackingList<EdgeExecutionStageStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeExecutionStatus"/>. </summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="statusMessage"> status details. </param>
         /// <param name="stageHistory"> target resource statuses. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeExecutionStatus(DateTimeOffset? updateOn, int? status, string statusMessage, IReadOnlyList<StageStatus> stageHistory, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeExecutionStatus(DateTimeOffset? updateOn, int? status, string statusMessage, IReadOnlyList<EdgeExecutionStageStatus> stageHistory, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UpdateOn = updateOn;
             Status = status;
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> status details. </summary>
         public string StatusMessage { get; }
         /// <summary> target resource statuses. </summary>
-        public IReadOnlyList<StageStatus> StageHistory { get; }
+        public IReadOnlyList<EdgeExecutionStageStatus> StageHistory { get; }
     }
 }

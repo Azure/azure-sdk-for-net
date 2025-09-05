@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 {
 ["key8772"] = "vbdujmqklnwiepis"
 },
-                Properties = new SolutionTemplateUpdateProperties
+                Properties = new EdgeSolutionTemplatePatchProperties
                 {
                     Description = "onqlteg",
                     Capabilities = { "relsv" },
                     State = EdgeResourceState.Active,
-                    EnableExternalValidation = true,
+                    IsExternalValidationEnabled = true,
                 },
             };
             EdgeSolutionTemplateResource result = await edgeSolutionTemplate.UpdateAsync(patch);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             EdgeSolutionTemplateResource edgeSolutionTemplate = client.GetEdgeSolutionTemplateResource(edgeSolutionTemplateResourceId);
 
             // invoke the operation
-            SolutionTemplateVersionWithUpdateType body = new SolutionTemplateVersionWithUpdateType(new EdgeSolutionTemplateVersionData
+            EdgeSolutionTemplateVersionWithUpdateType body = new EdgeSolutionTemplateVersionWithUpdateType(new EdgeSolutionTemplateVersionData
             {
                 Properties = new EdgeSolutionTemplateVersionProperties("ofqcsavwmeuwmvtjnqpoybtjvkmrlh", new Dictionary<string, BinaryData>())
                 {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
                 },
             })
             {
-                UpdateType = UpdateType.Major,
+                UpdateType = EdgeUpdateType.Major,
                 Version = "1.0.0",
             };
             ArmOperation<EdgeSolutionTemplateVersionResource> lro = await edgeSolutionTemplate.CreateVersionAsync(WaitUntil.Completed, body);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             EdgeSolutionTemplateResource edgeSolutionTemplate = client.GetEdgeSolutionTemplateResource(edgeSolutionTemplateResourceId);
 
             // invoke the operation
-            VersionContent content = new VersionContent("ghtvdzgmzncaifrnuumg");
+            EdgeVersionContent content = new EdgeVersionContent("ghtvdzgmzncaifrnuumg");
             await edgeSolutionTemplate.RemoveVersionAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");

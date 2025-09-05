@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeSchemaPatch(EdgeSchemaUpdateProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeSchemaPatch(EdgeSchemaPatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             Tags = tags;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public EdgeSchemaUpdateProperties Properties { get; set; }
+        public EdgeSchemaPatchProperties Properties { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

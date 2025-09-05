@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<EdgeSchemaVersionResource>> CreateVersionAsync(WaitUntil waitUntil, SchemaVersionWithUpdateType body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EdgeSchemaVersionResource>> CreateVersionAsync(WaitUntil waitUntil, EdgeSchemaVersionWithUpdateType body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<EdgeSchemaVersionResource> CreateVersion(WaitUntil waitUntil, SchemaVersionWithUpdateType body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EdgeSchemaVersionResource> CreateVersion(WaitUntil waitUntil, EdgeSchemaVersionWithUpdateType body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<RemoveVersionResult>> RemoveVersionAsync(VersionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RemoveVersionResult>> RemoveVersionAsync(EdgeVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<RemoveVersionResult> RemoveVersion(VersionContent content, CancellationToken cancellationToken = default)
+        public virtual Response<RemoveVersionResult> RemoveVersion(EdgeVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

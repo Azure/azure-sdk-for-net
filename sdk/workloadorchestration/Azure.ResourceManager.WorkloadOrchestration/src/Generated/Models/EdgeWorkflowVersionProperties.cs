@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="EdgeWorkflowVersionProperties"/>. </summary>
         /// <param name="stageSpec"> A list of stage specs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="stageSpec"/> is null. </exception>
-        public EdgeWorkflowVersionProperties(IEnumerable<StageSpec> stageSpec)
+        public EdgeWorkflowVersionProperties(IEnumerable<EdgeWorkflowStageSpec> stageSpec)
         {
             Argument.AssertNotNull(stageSpec, nameof(stageSpec));
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="specification"> Execution specification. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeWorkflowVersionProperties(int? revision, string configuration, IList<StageSpec> stageSpec, string reviewId, State? state, IDictionary<string, BinaryData> specification, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeWorkflowVersionProperties(int? revision, string configuration, IList<EdgeWorkflowStageSpec> stageSpec, string reviewId, SolutionInstanceState? state, IDictionary<string, BinaryData> specification, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Revision = revision;
             Configuration = configuration;
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Resolved configuration values. </summary>
         public string Configuration { get; }
         /// <summary> A list of stage specs. </summary>
-        public IList<StageSpec> StageSpec { get; }
+        public IList<EdgeWorkflowStageSpec> StageSpec { get; }
         /// <summary> Review id of resolved config for this workflow version. </summary>
         public string ReviewId { get; }
         /// <summary> State of workflow version. </summary>
-        public State? State { get; }
+        public SolutionInstanceState? State { get; }
         /// <summary>
         /// Execution specification
         /// <para>

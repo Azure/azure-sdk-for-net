@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<EdgeSolutionVersionResource>> PublishSolutionVersionAsync(WaitUntil waitUntil, SolutionVersionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EdgeSolutionVersionResource>> PublishSolutionVersionAsync(WaitUntil waitUntil, EdgeSolutionVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -948,7 +948,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<EdgeSolutionVersionResource> PublishSolutionVersion(WaitUntil waitUntil, SolutionVersionContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EdgeSolutionVersionResource> PublishSolutionVersion(WaitUntil waitUntil, EdgeSolutionVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

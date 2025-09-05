@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             }
         }
 
-        internal RequestUriBuilder CreateCreateVersionRequestUri(string subscriptionId, string resourceGroupName, string solutionTemplateName, SolutionTemplateVersionWithUpdateType body)
+        internal RequestUriBuilder CreateCreateVersionRequestUri(string subscriptionId, string resourceGroupName, string solutionTemplateName, EdgeSolutionTemplateVersionWithUpdateType body)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return uri;
         }
 
-        internal HttpMessage CreateCreateVersionRequest(string subscriptionId, string resourceGroupName, string solutionTemplateName, SolutionTemplateVersionWithUpdateType body)
+        internal HttpMessage CreateCreateVersionRequest(string subscriptionId, string resourceGroupName, string solutionTemplateName, EdgeSolutionTemplateVersionWithUpdateType body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionTemplateName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateVersionAsync(string subscriptionId, string resourceGroupName, string solutionTemplateName, SolutionTemplateVersionWithUpdateType body, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateVersionAsync(string subscriptionId, string resourceGroupName, string solutionTemplateName, EdgeSolutionTemplateVersionWithUpdateType body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionTemplateName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateVersion(string subscriptionId, string resourceGroupName, string solutionTemplateName, SolutionTemplateVersionWithUpdateType body, CancellationToken cancellationToken = default)
+        public Response CreateVersion(string subscriptionId, string resourceGroupName, string solutionTemplateName, EdgeSolutionTemplateVersionWithUpdateType body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             }
         }
 
-        internal RequestUriBuilder CreateRemoveVersionRequestUri(string subscriptionId, string resourceGroupName, string solutionTemplateName, VersionContent content)
+        internal RequestUriBuilder CreateRemoveVersionRequestUri(string subscriptionId, string resourceGroupName, string solutionTemplateName, EdgeVersionContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return uri;
         }
 
-        internal HttpMessage CreateRemoveVersionRequest(string subscriptionId, string resourceGroupName, string solutionTemplateName, VersionContent content)
+        internal HttpMessage CreateRemoveVersionRequest(string subscriptionId, string resourceGroupName, string solutionTemplateName, EdgeVersionContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionTemplateName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RemoveVersionAsync(string subscriptionId, string resourceGroupName, string solutionTemplateName, VersionContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> RemoveVersionAsync(string subscriptionId, string resourceGroupName, string solutionTemplateName, EdgeVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="solutionTemplateName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RemoveVersion(string subscriptionId, string resourceGroupName, string solutionTemplateName, VersionContent content, CancellationToken cancellationToken = default)
+        public Response RemoveVersion(string subscriptionId, string resourceGroupName, string solutionTemplateName, EdgeVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

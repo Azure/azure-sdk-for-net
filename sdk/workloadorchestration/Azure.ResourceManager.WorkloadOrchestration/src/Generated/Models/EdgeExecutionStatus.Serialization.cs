@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             DateTimeOffset? updateTime = default;
             int? status = default;
             string statusMessage = default;
-            IReadOnlyList<StageStatus> stageHistory = default;
+            IReadOnlyList<EdgeExecutionStageStatus> stageHistory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    List<StageStatus> array = new List<StageStatus>();
+                    List<EdgeExecutionStageStatus> array = new List<EdgeExecutionStageStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StageStatus.DeserializeStageStatus(item, options));
+                        array.Add(EdgeExecutionStageStatus.DeserializeEdgeExecutionStageStatus(item, options));
                     }
                     stageHistory = array;
                     continue;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EdgeExecutionStatus(updateTime, status, statusMessage, stageHistory ?? new ChangeTrackingList<StageStatus>(), serializedAdditionalRawData);
+            return new EdgeExecutionStatus(updateTime, status, statusMessage, stageHistory ?? new ChangeTrackingList<EdgeExecutionStageStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeExecutionStatus>.Write(ModelReaderWriterOptions options)

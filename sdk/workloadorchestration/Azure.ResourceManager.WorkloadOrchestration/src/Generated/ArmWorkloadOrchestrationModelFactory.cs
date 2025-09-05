@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new EdgeSchemaProperties(currentVersion, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SchemaVersionWithUpdateType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeSchemaVersionWithUpdateType"/>. </summary>
         /// <param name="updateType"> Update type. </param>
         /// <param name="version"> Version to create. </param>
         /// <param name="schemaVersion"> Schema Version. </param>
-        /// <returns> A new <see cref="Models.SchemaVersionWithUpdateType"/> instance for mocking. </returns>
-        public static SchemaVersionWithUpdateType SchemaVersionWithUpdateType(UpdateType? updateType = null, string version = null, EdgeSchemaVersionData schemaVersion = null)
+        /// <returns> A new <see cref="Models.EdgeSchemaVersionWithUpdateType"/> instance for mocking. </returns>
+        public static EdgeSchemaVersionWithUpdateType EdgeSchemaVersionWithUpdateType(EdgeUpdateType? updateType = null, string version = null, EdgeSchemaVersionData schemaVersion = null)
         {
-            return new SchemaVersionWithUpdateType(updateType, version, schemaVersion, serializedAdditionalRawData: null);
+            return new EdgeSchemaVersionWithUpdateType(updateType, version, schemaVersion, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeSchemaVersionData"/>. </summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="actionType"> The type of the latest action performed on this solution version. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeSolutionVersionProperties"/> instance for mocking. </returns>
-        public static EdgeSolutionVersionProperties EdgeSolutionVersionProperties(string solutionTemplateVersionId = null, int? revision = null, string targetDisplayName = null, string configuration = null, string targetLevelConfiguration = null, IDictionary<string, BinaryData> specification = null, string reviewId = null, string externalValidationId = null, State? state = null, string solutionInstanceName = null, IEnumerable<EdgeSolutionDependency> solutionDependencies = null, ResponseError errorDetails = null, string latestActionTrackingUri = null, EdgeJobType? actionType = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
+        public static EdgeSolutionVersionProperties EdgeSolutionVersionProperties(string solutionTemplateVersionId = null, int? revision = null, string targetDisplayName = null, string configuration = null, string targetLevelConfiguration = null, IDictionary<string, BinaryData> specification = null, string reviewId = null, string externalValidationId = null, SolutionInstanceState? state = null, string solutionInstanceName = null, IEnumerable<EdgeSolutionDependency> solutionDependencies = null, ResponseError errorDetails = null, string latestActionTrackingUri = null, EdgeJobType? actionType = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
             specification ??= new Dictionary<string, BinaryData>();
             solutionDependencies ??= new List<EdgeSolutionDependency>();
@@ -383,9 +383,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="generation"> Deployment Generation. </param>
         /// <param name="targetStatuses"> Target resource statuses. </param>
         /// <returns> A new <see cref="Models.EdgeDeploymentStatus"/> instance for mocking. </returns>
-        public static EdgeDeploymentStatus EdgeDeploymentStatus(DateTimeOffset? lastModified = null, int? deployed = null, int? expectedRunningJobId = null, int? runningJobId = null, string status = null, string statusDetails = null, int? generation = null, IEnumerable<TargetStatus> targetStatuses = null)
+        public static EdgeDeploymentStatus EdgeDeploymentStatus(DateTimeOffset? lastModified = null, int? deployed = null, int? expectedRunningJobId = null, int? runningJobId = null, string status = null, string statusDetails = null, int? generation = null, IEnumerable<EdgeTargetStatus> targetStatuses = null)
         {
-            targetStatuses ??= new List<TargetStatus>();
+            targetStatuses ??= new List<EdgeTargetStatus>();
 
             return new EdgeDeploymentStatus(
                 lastModified,
@@ -399,16 +399,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TargetStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeTargetStatus"/>. </summary>
         /// <param name="name"> Target name. </param>
         /// <param name="status"> Target status. </param>
         /// <param name="componentStatuses"> Component statuses. </param>
-        /// <returns> A new <see cref="Models.TargetStatus"/> instance for mocking. </returns>
-        public static TargetStatus TargetStatus(string name = null, string status = null, IEnumerable<TargetComponentStatus> componentStatuses = null)
+        /// <returns> A new <see cref="Models.EdgeTargetStatus"/> instance for mocking. </returns>
+        public static EdgeTargetStatus EdgeTargetStatus(string name = null, string status = null, IEnumerable<TargetComponentStatus> componentStatuses = null)
         {
             componentStatuses ??= new List<TargetComponentStatus>();
 
-            return new TargetStatus(name, status, componentStatuses?.ToList(), serializedAdditionalRawData: null);
+            return new EdgeTargetStatus(name, status, componentStatuses?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TargetComponentStatus"/>. </summary>
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="solutionTemplateId"> Solution Template ARM Id. </param>
         /// <param name="solutionInstanceName"> Solution Instance Name. </param>
         /// <returns> A new <see cref="Models.UninstallSolutionContent"/> instance for mocking. </returns>
-        public static UninstallSolutionContent UninstallSolutionContent(string solutionTemplateId = null, string solutionInstanceName = null)
+        public static UninstallSolutionContent UninstallSolutionContent(ResourceIdentifier solutionTemplateId = null, string solutionInstanceName = null)
         {
             return new UninstallSolutionContent(solutionTemplateId, solutionInstanceName, serializedAdditionalRawData: null);
         }
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="externalValidationId"> External validation id. </param>
         /// <param name="validationStatus"> Validation Status of external validation. </param>
         /// <returns> A new <see cref="Models.UpdateExternalValidationStatusContent"/> instance for mocking. </returns>
-        public static UpdateExternalValidationStatusContent UpdateExternalValidationStatusContent(string solutionVersionId = null, ResponseError errorDetails = null, string externalValidationId = null, ValidationStatus validationStatus = default)
+        public static UpdateExternalValidationStatusContent UpdateExternalValidationStatusContent(ResourceIdentifier solutionVersionId = null, ResponseError errorDetails = null, string externalValidationId = null, SolutionInstanceValidationStatus validationStatus = default)
         {
             return new UpdateExternalValidationStatusContent(solutionVersionId, errorDetails, externalValidationId, validationStatus, serializedAdditionalRawData: null);
         }
@@ -626,10 +626,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="capabilities"> List of capabilities. </param>
         /// <param name="latestVersion"> Latest solution template version. </param>
         /// <param name="state"> State of resource. </param>
-        /// <param name="enableExternalValidation"> Flag to enable external validation. </param>
+        /// <param name="isExternalValidationEnabled"> Flag to enable external validation. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeSolutionTemplateProperties"/> instance for mocking. </returns>
-        public static EdgeSolutionTemplateProperties EdgeSolutionTemplateProperties(string description = null, IEnumerable<string> capabilities = null, string latestVersion = null, EdgeResourceState? state = null, bool? enableExternalValidation = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
+        public static EdgeSolutionTemplateProperties EdgeSolutionTemplateProperties(string description = null, IEnumerable<string> capabilities = null, string latestVersion = null, EdgeResourceState? state = null, bool? isExternalValidationEnabled = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
             capabilities ??= new List<string>();
 
@@ -638,19 +638,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 capabilities?.ToList(),
                 latestVersion,
                 state,
-                enableExternalValidation,
+                isExternalValidationEnabled,
                 provisioningState,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SolutionTemplateVersionWithUpdateType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeSolutionTemplateVersionWithUpdateType"/>. </summary>
         /// <param name="updateType"> Update type. </param>
         /// <param name="version"> Version to create. </param>
         /// <param name="solutionTemplateVersion"> Solution Template Version. </param>
-        /// <returns> A new <see cref="Models.SolutionTemplateVersionWithUpdateType"/> instance for mocking. </returns>
-        public static SolutionTemplateVersionWithUpdateType SolutionTemplateVersionWithUpdateType(UpdateType? updateType = null, string version = null, EdgeSolutionTemplateVersionData solutionTemplateVersion = null)
+        /// <returns> A new <see cref="Models.EdgeSolutionTemplateVersionWithUpdateType"/> instance for mocking. </returns>
+        public static EdgeSolutionTemplateVersionWithUpdateType EdgeSolutionTemplateVersionWithUpdateType(EdgeUpdateType? updateType = null, string version = null, EdgeSolutionTemplateVersionData solutionTemplateVersion = null)
         {
-            return new SolutionTemplateVersionWithUpdateType(updateType, version, solutionTemplateVersion, serializedAdditionalRawData: null);
+            return new EdgeSolutionTemplateVersionWithUpdateType(updateType, version, solutionTemplateVersion, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeDeploymentInstanceData"/>. </summary>
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="status"> Deployment Status of instance. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeDeploymentInstanceHistoryProperties"/> instance for mocking. </returns>
-        public static EdgeDeploymentInstanceHistoryProperties EdgeDeploymentInstanceHistoryProperties(SolutionVersionSnapshot solutionVersion = null, TargetSnapshot target = null, string solutionScope = null, InstanceActiveState? activeState = null, InstanceReconciliationPolicy reconciliationPolicy = null, EdgeDeploymentStatus status = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
+        public static EdgeDeploymentInstanceHistoryProperties EdgeDeploymentInstanceHistoryProperties(SolutionVersionSnapshot solutionVersion = null, EdgeTargetSnapshot target = null, string solutionScope = null, InstanceActiveState? activeState = null, InstanceReconciliationPolicy reconciliationPolicy = null, EdgeDeploymentStatus status = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
             return new EdgeDeploymentInstanceHistoryProperties(
                 solutionVersion,
@@ -754,16 +754,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new SolutionVersionSnapshot(solutionVersionId, specification, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TargetSnapshot"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeTargetSnapshot"/>. </summary>
         /// <param name="targetId"> Target of instance. </param>
         /// <param name="targetSpecification"> target spec. </param>
         /// <param name="solutionScope"> Scope of the target resource. </param>
-        /// <returns> A new <see cref="Models.TargetSnapshot"/> instance for mocking. </returns>
-        public static TargetSnapshot TargetSnapshot(ResourceIdentifier targetId = null, IReadOnlyDictionary<string, BinaryData> targetSpecification = null, string solutionScope = null)
+        /// <returns> A new <see cref="Models.EdgeTargetSnapshot"/> instance for mocking. </returns>
+        public static EdgeTargetSnapshot EdgeTargetSnapshot(ResourceIdentifier targetId = null, IReadOnlyDictionary<string, BinaryData> targetSpecification = null, string solutionScope = null)
         {
             targetSpecification ??= new Dictionary<string, BinaryData>();
 
-            return new TargetSnapshot(targetId, targetSpecification, solutionScope, serializedAdditionalRawData: null);
+            return new EdgeTargetSnapshot(targetId, targetSpecification, solutionScope, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EdgeConfigTemplateData"/>. </summary>
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="version"> Version to create. </param>
         /// <param name="configTemplateVersion"> Config Template Version. </param>
         /// <returns> A new <see cref="Models.ConfigTemplateVersionWithUpdateType"/> instance for mocking. </returns>
-        public static ConfigTemplateVersionWithUpdateType ConfigTemplateVersionWithUpdateType(UpdateType? updateType = null, string version = null, EdgeConfigTemplateVersionData configTemplateVersion = null)
+        public static ConfigTemplateVersionWithUpdateType ConfigTemplateVersionWithUpdateType(EdgeUpdateType? updateType = null, string version = null, EdgeConfigTemplateVersionData configTemplateVersion = null)
         {
             return new ConfigTemplateVersionWithUpdateType(updateType, version, configTemplateVersion, serializedAdditionalRawData: null);
         }
@@ -903,9 +903,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="specification"> Execution specification. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeWorkflowVersionProperties"/> instance for mocking. </returns>
-        public static EdgeWorkflowVersionProperties EdgeWorkflowVersionProperties(int? revision = null, string configuration = null, IEnumerable<StageSpec> stageSpec = null, string reviewId = null, State? state = null, IDictionary<string, BinaryData> specification = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
+        public static EdgeWorkflowVersionProperties EdgeWorkflowVersionProperties(int? revision = null, string configuration = null, IEnumerable<EdgeWorkflowStageSpec> stageSpec = null, string reviewId = null, SolutionInstanceState? state = null, IDictionary<string, BinaryData> specification = null, WorkloadOrchestrationProvisioningState? provisioningState = null)
         {
-            stageSpec ??= new List<StageSpec>();
+            stageSpec ??= new List<EdgeWorkflowStageSpec>();
             specification ??= new Dictionary<string, BinaryData>();
 
             return new EdgeWorkflowVersionProperties(
@@ -960,14 +960,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="statusMessage"> status details. </param>
         /// <param name="stageHistory"> target resource statuses. </param>
         /// <returns> A new <see cref="Models.EdgeExecutionStatus"/> instance for mocking. </returns>
-        public static EdgeExecutionStatus EdgeExecutionStatus(DateTimeOffset? updateOn = null, int? status = null, string statusMessage = null, IEnumerable<StageStatus> stageHistory = null)
+        public static EdgeExecutionStatus EdgeExecutionStatus(DateTimeOffset? updateOn = null, int? status = null, string statusMessage = null, IEnumerable<EdgeExecutionStageStatus> stageHistory = null)
         {
-            stageHistory ??= new List<StageStatus>();
+            stageHistory ??= new List<EdgeExecutionStageStatus>();
 
             return new EdgeExecutionStatus(updateOn, status, statusMessage, stageHistory?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.StageStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeExecutionStageStatus"/>. </summary>
         /// <param name="status"> Deployment status. </param>
         /// <param name="statusMessage"> Status message. </param>
         /// <param name="stage"> Current stage. </param>
@@ -976,13 +976,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="isActive"> whether this stage is active or inactive. </param>
         /// <param name="inputs"> The inputs of the StageHistory, Inputs holds a key-value map of user-defined parameters for the initial stage. </param>
         /// <param name="outputs"> The outputs of the StageHistory, it is different as the different input stages. </param>
-        /// <returns> A new <see cref="Models.StageStatus"/> instance for mocking. </returns>
-        public static StageStatus StageStatus(int? status = null, string statusMessage = null, string stage = null, string nextstage = null, string errorMessage = null, InstanceActiveState? isActive = null, IReadOnlyDictionary<string, BinaryData> inputs = null, IReadOnlyDictionary<string, BinaryData> outputs = null)
+        /// <returns> A new <see cref="Models.EdgeExecutionStageStatus"/> instance for mocking. </returns>
+        public static EdgeExecutionStageStatus EdgeExecutionStageStatus(int? status = null, string statusMessage = null, string stage = null, string nextstage = null, string errorMessage = null, InstanceActiveState? isActive = null, IReadOnlyDictionary<string, BinaryData> inputs = null, IReadOnlyDictionary<string, BinaryData> outputs = null)
         {
             inputs ??= new Dictionary<string, BinaryData>();
             outputs ??= new Dictionary<string, BinaryData>();
 
-            return new StageStatus(
+            return new EdgeExecutionStageStatus(
                 status,
                 statusMessage,
                 stage,

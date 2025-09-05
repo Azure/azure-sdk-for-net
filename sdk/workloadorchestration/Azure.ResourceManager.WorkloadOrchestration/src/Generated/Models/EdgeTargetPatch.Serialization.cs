@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            TargetUpdateProperties properties = default;
+            EdgeTargetPatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    properties = TargetUpdateProperties.DeserializeTargetUpdateProperties(property.Value, options);
+                    properties = EdgeTargetPatchProperties.DeserializeEdgeTargetPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

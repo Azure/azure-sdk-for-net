@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="externalValidationId"> External validation id. </param>
         /// <param name="validationStatus"> Validation Status of external validation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionVersionId"/> or <paramref name="externalValidationId"/> is null. </exception>
-        public UpdateExternalValidationStatusContent(string solutionVersionId, string externalValidationId, ValidationStatus validationStatus)
+        public UpdateExternalValidationStatusContent(ResourceIdentifier solutionVersionId, string externalValidationId, SolutionInstanceValidationStatus validationStatus)
         {
             Argument.AssertNotNull(solutionVersionId, nameof(solutionVersionId));
             Argument.AssertNotNull(externalValidationId, nameof(externalValidationId));
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="externalValidationId"> External validation id. </param>
         /// <param name="validationStatus"> Validation Status of external validation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateExternalValidationStatusContent(string solutionVersionId, ResponseError errorDetails, string externalValidationId, ValidationStatus validationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UpdateExternalValidationStatusContent(ResourceIdentifier solutionVersionId, ResponseError errorDetails, string externalValidationId, SolutionInstanceValidationStatus validationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionVersionId = solutionVersionId;
             ErrorDetails = errorDetails;
@@ -81,12 +82,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Solution Version Id. </summary>
-        public string SolutionVersionId { get; }
+        public ResourceIdentifier SolutionVersionId { get; }
         /// <summary> Error Details if any failure is there. </summary>
         public ResponseError ErrorDetails { get; set; }
         /// <summary> External validation id. </summary>
         public string ExternalValidationId { get; }
         /// <summary> Validation Status of external validation. </summary>
-        public ValidationStatus ValidationStatus { get; }
+        public SolutionInstanceValidationStatus ValidationStatus { get; }
     }
 }

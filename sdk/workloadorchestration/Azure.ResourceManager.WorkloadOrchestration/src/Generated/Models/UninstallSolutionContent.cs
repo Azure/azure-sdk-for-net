@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="UninstallSolutionContent"/>. </summary>
         /// <param name="solutionTemplateId"> Solution Template ARM Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionTemplateId"/> is null. </exception>
-        public UninstallSolutionContent(string solutionTemplateId)
+        public UninstallSolutionContent(ResourceIdentifier solutionTemplateId)
         {
             Argument.AssertNotNull(solutionTemplateId, nameof(solutionTemplateId));
 
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="solutionTemplateId"> Solution Template ARM Id. </param>
         /// <param name="solutionInstanceName"> Solution Instance Name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UninstallSolutionContent(string solutionTemplateId, string solutionInstanceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UninstallSolutionContent(ResourceIdentifier solutionTemplateId, string solutionInstanceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionTemplateId = solutionTemplateId;
             SolutionInstanceName = solutionInstanceName;
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Solution Template ARM Id. </summary>
-        public string SolutionTemplateId { get; }
+        public ResourceIdentifier SolutionTemplateId { get; }
         /// <summary> Solution Instance Name. </summary>
         public string SolutionInstanceName { get; set; }
     }

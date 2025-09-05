@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 return null;
             }
             SolutionVersionSnapshot solutionVersion = default;
-            TargetSnapshot target = default;
+            EdgeTargetSnapshot target = default;
             string solutionScope = default;
             InstanceActiveState? activeState = default;
             InstanceReconciliationPolicy reconciliationPolicy = default;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (property.NameEquals("target"u8))
                 {
-                    target = TargetSnapshot.DeserializeTargetSnapshot(property.Value, options);
+                    target = EdgeTargetSnapshot.DeserializeEdgeTargetSnapshot(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("solutionScope"u8))

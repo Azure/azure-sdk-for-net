@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
             int? revision = default;
             string configuration = default;
-            IList<StageSpec> stageSpec = default;
+            IList<EdgeWorkflowStageSpec> stageSpec = default;
             string reviewId = default;
-            State? state = default;
+            SolutionInstanceState? state = default;
             IDictionary<string, BinaryData> specification = default;
             WorkloadOrchestrationProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (property.NameEquals("stageSpec"u8))
                 {
-                    List<StageSpec> array = new List<StageSpec>();
+                    List<EdgeWorkflowStageSpec> array = new List<EdgeWorkflowStageSpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.StageSpec.DeserializeStageSpec(item, options));
+                        array.Add(EdgeWorkflowStageSpec.DeserializeEdgeWorkflowStageSpec(item, options));
                     }
                     stageSpec = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    state = new State(property.Value.GetString());
+                    state = new SolutionInstanceState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("specification"u8))

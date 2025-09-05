@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="actionType"> The type of the latest action performed on this solution version. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeSolutionVersionProperties(string solutionTemplateVersionId, int? revision, string targetDisplayName, string configuration, string targetLevelConfiguration, IDictionary<string, BinaryData> specification, string reviewId, string externalValidationId, State? state, string solutionInstanceName, IReadOnlyList<EdgeSolutionDependency> solutionDependencies, ResponseError errorDetails, string latestActionTrackingUri, EdgeJobType? actionType, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeSolutionVersionProperties(string solutionTemplateVersionId, int? revision, string targetDisplayName, string configuration, string targetLevelConfiguration, IDictionary<string, BinaryData> specification, string reviewId, string externalValidationId, SolutionInstanceState? state, string solutionInstanceName, IReadOnlyList<EdgeSolutionDependency> solutionDependencies, ResponseError errorDetails, string latestActionTrackingUri, EdgeJobType? actionType, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionTemplateVersionId = solutionTemplateVersionId;
             Revision = revision;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> External validation id. </summary>
         public string ExternalValidationId { get; }
         /// <summary> State of solution instance. </summary>
-        public State? State { get; }
+        public SolutionInstanceState? State { get; }
         /// <summary> Solution instance name. </summary>
         public string SolutionInstanceName { get; }
         /// <summary> Solution Dependency Context. </summary>

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 {
 ["key8026"] = "yoosplotwgoquvpox"
 },
-                Properties = new TargetUpdateProperties
+                Properties = new EdgeTargetPatchProperties
                 {
                     Description = "yhnhdpznncdvncmnvoeohqjx",
                     DisplayName = "pguujtzjjvixgjitugybrefp",
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             EdgeTargetResource edgeTarget = client.GetEdgeTargetResource(edgeTargetResourceId);
 
             // invoke the operation
-            UninstallSolutionContent content = new UninstallSolutionContent("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}")
+            UninstallSolutionContent content = new UninstallSolutionContent(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"))
             {
                 SolutionInstanceName = "lzihiumrcxbolmkqktvtuqyhg",
             };
@@ -311,7 +311,7 @@ Dependencies = {},
             EdgeTargetResource edgeTarget = client.GetEdgeTargetResource(edgeTargetResourceId);
 
             // invoke the operation
-            SolutionVersionContent content = new SolutionVersionContent("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}");
+            EdgeSolutionVersionContent content = new EdgeSolutionVersionContent(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"));
             ArmOperation<EdgeSolutionVersionResource> lro = await edgeTarget.PublishSolutionVersionAsync(WaitUntil.Completed, content);
             EdgeSolutionVersionResource result = lro.Value;
 
@@ -343,7 +343,7 @@ Dependencies = {},
             EdgeTargetResource edgeTarget = client.GetEdgeTargetResource(edgeTargetResourceId);
 
             // invoke the operation
-            UpdateExternalValidationStatusContent content = new UpdateExternalValidationStatusContent("shntcsuwlmpehmuqkrbf", "ivsjzwy", ValidationStatus.Valid)
+            UpdateExternalValidationStatusContent content = new UpdateExternalValidationStatusContent(new ResourceIdentifier("shntcsuwlmpehmuqkrbf"), "ivsjzwy", SolutionInstanceValidationStatus.Valid)
             {
                 ErrorDetails = new ResponseError(null, null),
             };

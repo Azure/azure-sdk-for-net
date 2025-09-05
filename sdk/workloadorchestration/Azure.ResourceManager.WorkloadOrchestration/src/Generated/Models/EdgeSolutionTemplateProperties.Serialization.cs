@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(EnableExternalValidation))
+            if (Optional.IsDefined(IsExternalValidationEnabled))
             {
                 writer.WritePropertyName("enableExternalValidation"u8);
-                writer.WriteBooleanValue(EnableExternalValidation.Value);
+                writer.WriteBooleanValue(IsExternalValidationEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

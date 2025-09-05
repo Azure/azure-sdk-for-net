@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="EdgeDeploymentStatus"/>. </summary>
         internal EdgeDeploymentStatus()
         {
-            TargetStatuses = new ChangeTrackingList<TargetStatus>();
+            TargetStatuses = new ChangeTrackingList<EdgeTargetStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeDeploymentStatus"/>. </summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="generation"> Deployment Generation. </param>
         /// <param name="targetStatuses"> Target resource statuses. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeDeploymentStatus(DateTimeOffset? lastModified, int? deployed, int? expectedRunningJobId, int? runningJobId, string status, string statusDetails, int? generation, IReadOnlyList<TargetStatus> targetStatuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeDeploymentStatus(DateTimeOffset? lastModified, int? deployed, int? expectedRunningJobId, int? runningJobId, string status, string statusDetails, int? generation, IReadOnlyList<EdgeTargetStatus> targetStatuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LastModified = lastModified;
             Deployed = deployed;
@@ -89,6 +89,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Deployment Generation. </summary>
         public int? Generation { get; }
         /// <summary> Target resource statuses. </summary>
-        public IReadOnlyList<TargetStatus> TargetStatuses { get; }
+        public IReadOnlyList<EdgeTargetStatus> TargetStatuses { get; }
     }
 }

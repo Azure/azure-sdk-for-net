@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="EdgeSolutionPatch"/>. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeSolutionPatch(SolutionUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeSolutionPatch(EdgeSolutionPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public SolutionUpdateProperties Properties { get; set; }
+        public EdgeSolutionPatchProperties Properties { get; set; }
     }
 }

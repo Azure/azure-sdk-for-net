@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 {
 ["key9545"] = "dhxykbzgliyqxxizttbjhuruhhv"
 },
-                Properties = new EdgeContextUpdateProperties
+                Properties = new EdgeContextPatchProperties
                 {
                     Capabilities = {new ContextCapability("tpylinjcmlnycfpofpxjtqmt", "banbenutsngwytoqh")
 {

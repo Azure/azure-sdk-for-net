@@ -1034,7 +1034,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             }
         }
 
-        internal RequestUriBuilder CreatePublishSolutionVersionRequestUri(string subscriptionId, string resourceGroupName, string targetName, SolutionVersionContent content)
+        internal RequestUriBuilder CreatePublishSolutionVersionRequestUri(string subscriptionId, string resourceGroupName, string targetName, EdgeSolutionVersionContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return uri;
         }
 
-        internal HttpMessage CreatePublishSolutionVersionRequest(string subscriptionId, string resourceGroupName, string targetName, SolutionVersionContent content)
+        internal HttpMessage CreatePublishSolutionVersionRequest(string subscriptionId, string resourceGroupName, string targetName, EdgeSolutionVersionContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1082,7 +1082,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PublishSolutionVersionAsync(string subscriptionId, string resourceGroupName, string targetName, SolutionVersionContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> PublishSolutionVersionAsync(string subscriptionId, string resourceGroupName, string targetName, EdgeSolutionVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response PublishSolutionVersion(string subscriptionId, string resourceGroupName, string targetName, SolutionVersionContent content, CancellationToken cancellationToken = default)
+        public Response PublishSolutionVersion(string subscriptionId, string resourceGroupName, string targetName, EdgeSolutionVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

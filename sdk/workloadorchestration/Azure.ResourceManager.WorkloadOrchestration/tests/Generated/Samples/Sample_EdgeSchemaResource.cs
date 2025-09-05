@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             // invoke the operation
             EdgeSchemaPatch patch = new EdgeSchemaPatch
             {
-                Properties = new EdgeSchemaUpdateProperties(),
+                Properties = new EdgeSchemaPatchProperties(),
                 Tags =
 {
 ["key6760"] = "lknwkzihsmzbzkezkartwgsv"
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             EdgeSchemaResource edgeSchema = client.GetEdgeSchemaResource(edgeSchemaResourceId);
 
             // invoke the operation
-            SchemaVersionWithUpdateType body = new SchemaVersionWithUpdateType(new EdgeSchemaVersionData
+            EdgeSchemaVersionWithUpdateType body = new EdgeSchemaVersionWithUpdateType(new EdgeSchemaVersionData
             {
                 Properties = new EdgeSchemaVersionProperties("uiaqdwsi"),
             })
             {
-                UpdateType = UpdateType.Major,
+                UpdateType = EdgeUpdateType.Major,
                 Version = "1.0.0",
             };
             ArmOperation<EdgeSchemaVersionResource> lro = await edgeSchema.CreateVersionAsync(WaitUntil.Completed, body);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             EdgeSchemaResource edgeSchema = client.GetEdgeSchemaResource(edgeSchemaResourceId);
 
             // invoke the operation
-            VersionContent content = new VersionContent("ghtvdzgmzncaifrnuumg");
+            EdgeVersionContent content = new EdgeVersionContent("ghtvdzgmzncaifrnuumg");
             RemoveVersionResult result = await edgeSchema.RemoveVersionAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");

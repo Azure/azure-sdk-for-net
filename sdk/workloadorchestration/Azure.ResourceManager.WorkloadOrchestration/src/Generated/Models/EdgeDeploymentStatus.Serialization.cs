@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             string status = default;
             string statusDetails = default;
             int? generation = default;
-            IReadOnlyList<TargetStatus> targetStatuses = default;
+            IReadOnlyList<EdgeTargetStatus> targetStatuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    List<TargetStatus> array = new List<TargetStatus>();
+                    List<EdgeTargetStatus> array = new List<EdgeTargetStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetStatus.DeserializeTargetStatus(item, options));
+                        array.Add(EdgeTargetStatus.DeserializeEdgeTargetStatus(item, options));
                     }
                     targetStatuses = array;
                     continue;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 status,
                 statusDetails,
                 generation,
-                targetStatuses ?? new ChangeTrackingList<TargetStatus>(),
+                targetStatuses ?? new ChangeTrackingList<EdgeTargetStatus>(),
                 serializedAdditionalRawData);
         }
 

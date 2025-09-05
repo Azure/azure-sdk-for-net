@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             // invoke the operation
             EdgeDiagnosticPatch patch = new EdgeDiagnosticPatch
             {
-                Properties = new EdgeDiagnosticUpdateProperties(),
+                Properties = new EdgeDiagnosticPatchProperties(),
                 Tags =
 {
 ["key1922"] = "efraipifhmdfekwgunngrgvsc"

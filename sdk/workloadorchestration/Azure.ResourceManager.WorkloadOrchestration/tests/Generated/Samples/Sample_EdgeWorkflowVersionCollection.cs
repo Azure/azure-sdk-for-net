@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             string versionName = "testname";
             EdgeWorkflowVersionData data = new EdgeWorkflowVersionData
             {
-                Properties = new EdgeWorkflowVersionProperties(new StageSpec[]
+                Properties = new EdgeWorkflowVersionProperties(new EdgeWorkflowStageSpec[]
             {
-new StageSpec("amrbjd")
+new EdgeWorkflowStageSpec("amrbjd")
 {
 Specification = {},
-Tasks = {new TaskSpec("xxmeyvmgydbcwxqwjhadjxjod", new Dictionary<string, BinaryData>())
+Tasks = {new EdgeWorkflowTaskSpec("xxmeyvmgydbcwxqwjhadjxjod", new Dictionary<string, BinaryData>())
 {
 TargetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"),
 }},
-TaskOption = new EdgeTaskConfig
+TaskOption = new EdgeWorkflowTaskConfig
 {
 Concurrency = 3,
 ErrorAction = new TaskErrorAction

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             // invoke the operation
             EdgeSolutionPatch patch = new EdgeSolutionPatch
             {
-                Properties = new SolutionUpdateProperties(),
+                Properties = new EdgeSolutionPatchProperties(),
             };
             ArmOperation<EdgeSolutionResource> lro = await edgeSolution.UpdateAsync(WaitUntil.Completed, patch);
             EdgeSolutionResource result = lro.Value;

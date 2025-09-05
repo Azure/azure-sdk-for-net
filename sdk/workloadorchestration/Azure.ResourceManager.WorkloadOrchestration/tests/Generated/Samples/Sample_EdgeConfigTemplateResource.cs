@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
                 Properties = new EdgeConfigTemplateVersionProperties("rgricnhvcbqykc"),
             })
             {
-                UpdateType = UpdateType.Major,
+                UpdateType = EdgeUpdateType.Major,
                 Version = "1.0.0",
             };
             ArmOperation<EdgeConfigTemplateVersionResource> lro = await edgeConfigTemplate.CreateVersionAsync(WaitUntil.Completed, body);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             EdgeConfigTemplateResource edgeConfigTemplate = client.GetEdgeConfigTemplateResource(edgeConfigTemplateResourceId);
 
             // invoke the operation
-            VersionContent content = new VersionContent("ghtvdzgmzncaifrnuumg");
+            EdgeVersionContent content = new EdgeVersionContent("ghtvdzgmzncaifrnuumg");
             RemoveVersionResult result = await edgeConfigTemplate.RemoveVersionAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");

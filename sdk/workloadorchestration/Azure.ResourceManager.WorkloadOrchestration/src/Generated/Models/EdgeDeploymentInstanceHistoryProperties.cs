@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="EdgeDeploymentInstanceHistoryProperties"/>. </summary>
         /// <param name="solutionVersion"> Solution version of instance. </param>
         /// <param name="target"> Target of instance. </param>
-        internal EdgeDeploymentInstanceHistoryProperties(SolutionVersionSnapshot solutionVersion, TargetSnapshot target)
+        internal EdgeDeploymentInstanceHistoryProperties(SolutionVersionSnapshot solutionVersion, EdgeTargetSnapshot target)
         {
             SolutionVersion = solutionVersion;
             Target = target;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="status"> Deployment Status of instance. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeDeploymentInstanceHistoryProperties(SolutionVersionSnapshot solutionVersion, TargetSnapshot target, string solutionScope, InstanceActiveState? activeState, InstanceReconciliationPolicy reconciliationPolicy, EdgeDeploymentStatus status, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeDeploymentInstanceHistoryProperties(SolutionVersionSnapshot solutionVersion, EdgeTargetSnapshot target, string solutionScope, InstanceActiveState? activeState, InstanceReconciliationPolicy reconciliationPolicy, EdgeDeploymentStatus status, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionVersion = solutionVersion;
             Target = target;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Solution version of instance. </summary>
         public SolutionVersionSnapshot SolutionVersion { get; }
         /// <summary> Target of instance. </summary>
-        public TargetSnapshot Target { get; }
+        public EdgeTargetSnapshot Target { get; }
         /// <summary> Scope of instance. </summary>
         public string SolutionScope { get; }
         /// <summary> State of instance. </summary>

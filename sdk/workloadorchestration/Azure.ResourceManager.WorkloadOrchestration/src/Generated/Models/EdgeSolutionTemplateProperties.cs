@@ -64,16 +64,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="capabilities"> List of capabilities. </param>
         /// <param name="latestVersion"> Latest solution template version. </param>
         /// <param name="state"> State of resource. </param>
-        /// <param name="enableExternalValidation"> Flag to enable external validation. </param>
+        /// <param name="isExternalValidationEnabled"> Flag to enable external validation. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeSolutionTemplateProperties(string description, IList<string> capabilities, string latestVersion, EdgeResourceState? state, bool? enableExternalValidation, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeSolutionTemplateProperties(string description, IList<string> capabilities, string latestVersion, EdgeResourceState? state, bool? isExternalValidationEnabled, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             Capabilities = capabilities;
             LatestVersion = latestVersion;
             State = state;
-            EnableExternalValidation = enableExternalValidation;
+            IsExternalValidationEnabled = isExternalValidationEnabled;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> State of resource. </summary>
         public EdgeResourceState? State { get; set; }
         /// <summary> Flag to enable external validation. </summary>
-        public bool? EnableExternalValidation { get; set; }
+        public bool? IsExternalValidationEnabled { get; set; }
         /// <summary> Provisioning state of resource. </summary>
         public WorkloadOrchestrationProvisioningState? ProvisioningState { get; }
     }

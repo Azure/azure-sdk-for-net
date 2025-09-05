@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
                 Properties = new EdgeSolutionTemplateProperties("psrftehgzngcdlccivhjmwsmiz", new string[] { "dfoyxbbknrhvlunhmuyyt" })
                 {
                     State = EdgeResourceState.Active,
-                    EnableExternalValidation = true,
+                    IsExternalValidationEnabled = true,
                 },
                 Tags =
 {

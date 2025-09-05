@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 return null;
             }
-            EdgeDiagnosticUpdateProperties properties = default;
+            EdgeDiagnosticPatchProperties properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    properties = EdgeDiagnosticUpdateProperties.DeserializeEdgeDiagnosticUpdateProperties(property.Value, options);
+                    properties = EdgeDiagnosticPatchProperties.DeserializeEdgeDiagnosticPatchProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
