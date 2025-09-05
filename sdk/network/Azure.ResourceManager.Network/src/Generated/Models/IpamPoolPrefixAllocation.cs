@@ -66,10 +66,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Number of IP addresses to allocate. </summary>
+        [WirePath("numberOfIpAddresses")]
         public string NumberOfIPAddresses { get; set; }
         /// <summary> List of assigned IP address prefixes in the IpamPool of the associated resource. </summary>
+        [WirePath("allocatedAddressPrefixes")]
         public IReadOnlyList<string> AllocatedAddressPrefixes { get; }
         /// <summary> Resource id of the associated Azure IpamPool resource. </summary>
+        [WirePath("pool.id")]
         public ResourceIdentifier Id { get; set; }
     }
 }

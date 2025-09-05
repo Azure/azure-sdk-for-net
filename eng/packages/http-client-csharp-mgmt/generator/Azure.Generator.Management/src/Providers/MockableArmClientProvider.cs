@@ -2,19 +2,26 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.ResourceManager;
+using Humanizer;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
 {
     internal sealed class MockableArmClientProvider : MockableResourceProvider
     {
-        public MockableArmClientProvider(CSharpType armCoreType, IReadOnlyList<ResourceClientProvider> resources) : base(armCoreType, resources)
+        // TODO -- we also need to put operations here when we want to support scope resources/operations https://github.com/Azure/azure-sdk-for-net/issues/51821
+        public MockableArmClientProvider(IReadOnlyList<ResourceClientProvider> resources)
+            : base(typeof(ArmClient), RequestPathPattern.Tenant, resources, new Dictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>>(), [])
         {
         }
 
@@ -24,7 +31,12 @@ namespace Azure.Generator.Management.Providers
             foreach (var resource in _resources)
             {
                 methods.Add(BuildGetResourceIdMethodForResource(resource));
+                if (resource.IsExtensionResource)
+                {
+                    methods.AddRange(BuildMethodsForExtensionResource(resource));
+                }
             }
+
             return [.. methods];
         }
 
@@ -52,6 +64,71 @@ namespace Azure.Generator.Management.Providers
             };
 
             return new MethodProvider(signature, body, this);
+        }
+
+        //TODO: handle singleton extension resource case when we actually see it
+        private IList<MethodProvider> BuildMethodsForExtensionResource(ResourceClientProvider resource)
+        {
+            var result = new List<MethodProvider>();
+            var scopeParameter = new ParameterProvider("scope", $"The scope of the resource collection to get.", typeof(ResourceIdentifier));
+            var signature = new MethodSignature(
+                $"{resource.FactoryMethodSignature.Name}",
+                $"Gets a collection of {resource.ResourceCollection!.Type:C} objects within the specified scope.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                resource.ResourceCollection!.Type,
+                $"Returns a collection of {resource.Type:C} objects.",
+                [scopeParameter]);
+            var body = new MethodBodyStatement[]
+            {
+                Return(New.Instance(resource.ResourceCollection!.Type,
+                    [
+                        This.As<ArmResource>().Client(),
+                        scopeParameter
+                    ]))
+            };
+            result.Add(new MethodProvider(signature, body, this));
+
+            var collection = resource.ResourceCollection!;
+            var getMethod = collection.Methods.FirstOrDefault(m => m.Signature.Name == "Get");
+            var getAsyncMethod = collection.Methods.FirstOrDefault(m => m.Signature.Name == "GetAsync");
+            if (getMethod is not null)
+            {
+                result.Add(BuildGetMethod(this, getMethod, signature, $"Get{resource.ResourceName}"));
+            }
+            if (getAsyncMethod is not null)
+            {
+                result.Add(BuildGetMethod(this, getAsyncMethod, signature, $"Get{resource.ResourceName}Async"));
+            }
+
+            return result;
+
+            static MethodProvider BuildGetMethod(TypeProvider enclosingType, MethodProvider resourceGetMethod, MethodSignature collectionGetSignature, string methodName)
+            {
+                var parameters = new List<ParameterProvider>(resourceGetMethod.Signature.Parameters);
+                var insertIndex = 0;
+                foreach (var p in collectionGetSignature.Parameters)
+                {
+                    if (!parameters.Any(existing => existing.Name == p.Name))
+                    {
+                        parameters.Insert(insertIndex, p);
+                        insertIndex++;
+                    }
+                }
+
+                var signature = new MethodSignature(
+                    methodName,
+                    resourceGetMethod.Signature.Description,
+                    resourceGetMethod.Signature.Modifiers,
+                    resourceGetMethod.Signature.ReturnType,
+                    resourceGetMethod.Signature.ReturnDescription,
+                    parameters,
+                    Attributes: [new AttributeStatement(typeof(ForwardsClientCallsAttribute))]);
+
+                return new MethodProvider(
+                    signature,
+                    Return(This.Invoke(collectionGetSignature).Invoke(resourceGetMethod.Signature)),
+                    enclosingType);
+            }
         }
     }
 }

@@ -67,10 +67,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Route Set name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> List of different locations from where the routes are learned. </summary>
+        [WirePath("locations")]
         public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> List of different Route Sources. </summary>
+        [WirePath("details")]
         public IReadOnlyDictionary<string, IList<RouteSourceDetails>> Details { get; }
     }
 }

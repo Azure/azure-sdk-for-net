@@ -8,6 +8,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         public bool DisableOfflineStorage { get { throw null; } set { } }
         public bool EnableLiveMetrics { get { throw null; } set { } }
         public float SamplingRatio { get { throw null; } set { } }
+        public double? TracesPerSecond { get { throw null; } set { } }
         public string StorageDirectory { get { throw null; } set { } }
     }
     public static partial class OpenTelemetryBuilderExtensions

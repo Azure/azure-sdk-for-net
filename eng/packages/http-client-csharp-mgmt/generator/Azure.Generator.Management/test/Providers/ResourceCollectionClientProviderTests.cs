@@ -1,11 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
-using Azure.Generator.Tests.Common;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -156,19 +154,19 @@ namespace Azure.Generator.Management.Tests.Providers
         public void Verify_CreateOrUpdateOperationMethod()
         {
             ResourceCollectionClientProvider resourceProvider = GetResourceCollectionClientProvider();
-            var methods = resourceProvider.Methods.Select(m => m.Signature.Name).ToArray();
-            Console.WriteLine($"Available methods: {string.Join(", ", methods)}");
 
             MethodProvider createOrUpdateMethod = GetResourceCollectionClientProviderMethodByName("CreateOrUpdate");
 
             // verify the method signature
             var signature = createOrUpdateMethod.Signature;
             Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual, signature.Modifiers);
-            Assert.AreEqual(3, signature.Parameters.Count);
-            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
-            Assert.IsTrue(signature.Parameters[1].Type.Name.EndsWith("Data"));
-            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[2].Type.FrameworkType);
-            Assert.AreEqual(typeof(Response<>), signature.ReturnType?.FrameworkType);
+            // the createOrUpdate method is a fake LRO, therefore it has 4 parameters
+            Assert.AreEqual(4, signature.Parameters.Count);
+            Assert.AreEqual(typeof(WaitUntil), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(string), signature.Parameters[1].Type.FrameworkType);
+            Assert.IsTrue(signature.Parameters[2].Type.Name.EndsWith("Data"));
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[3].Type.FrameworkType);
+            Assert.AreEqual(typeof(ArmOperation<>), signature.ReturnType?.FrameworkType);
 
             // verify the method body
             var bodyStatements = createOrUpdateMethod.BodyStatements?.ToDisplayString();
@@ -185,11 +183,14 @@ namespace Azure.Generator.Management.Tests.Providers
             // verify the method signature
             var signature = createOrUpdateMethod.Signature;
             Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async, signature.Modifiers);
-            Assert.AreEqual(3, signature.Parameters.Count);
-            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
-            Assert.IsTrue(signature.Parameters[1].Type.Name.EndsWith("Data"));
-            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[2].Type.FrameworkType);
+            // the createOrUpdate method is a fake LRO, therefore it has 4 parameters
+            Assert.AreEqual(4, signature.Parameters.Count);
+            Assert.AreEqual(typeof(WaitUntil), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(string), signature.Parameters[1].Type.FrameworkType);
+            Assert.IsTrue(signature.Parameters[2].Type.Name.EndsWith("Data"));
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[3].Type.FrameworkType);
             Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType);
+            Assert.AreEqual(typeof(ArmOperation<>), signature.ReturnType?.Arguments[0].FrameworkType);
 
             // verify the method body
             var bodyStatements = createOrUpdateMethod.BodyStatements?.ToDisplayString();

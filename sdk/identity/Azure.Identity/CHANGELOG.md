@@ -1,14 +1,44 @@
 # Release History
 
-## 1.15.0-beta.2 (Unreleased)
+## 1.16.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Added a new `DefaultAzureCredential` constructor that accepts a custom environment variable name for credential configuration. This provides flexibility beyond the default `AZURE_TOKEN_CREDENTIALS` environment variable. The constructor accepts any environment variable name and uses the same credential selection logic as the existing `AZURE_TOKEN_CREDENTIALS` processing.
+- Added `DefaultAzureCredential.DefaultEnvironmentVariableName` constant property that returns `"AZURE_TOKEN_CREDENTIALS"` for convenience when referencing the default environment variable name.
+- `AzureCliCredential`, `AzurePowerShellCredential`, and `AzureDeveloperCliCredential` now throw an `AuthenticationFailedException` when the `TokenRequestContext` includes claims, as these credentials do not support claims challenges. The exception message includes guidance for handling such scenarios.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- Fixed `AzureDeveloperCliCredential` hanging when the `AZD_DEBUG` environment variable is set by adding the `--no-prompt` flag to prevent interactive prompts ([#52005](https://github.com/Azure/azure-sdk-for-net/issues/52005)).
+- `BrokerCredential` is now included in the chain when `AZURE_TOKEN_CREDENTIALS` is set to `dev` and the `Azure.Identity.Broker` package is installed.
+- Fixed an issue that prevented ManagedIdentityCredential from utilizing the token cache in Workload Identity Federation environments.
+
 ### Other Changes
+
+## 1.15.0 (2025-08-11)
+
+### Breaking Changes
+
+#### Behavioral Breaking Changes
+
+- Deprecated `SharedTokenCacheCredential`. The supporting credential (`SharedTokenCacheCredential`) was a legacy mechanism for authenticating clients using credentials provided to Visual Studio. For brokered authentication, consider using `InteractiveBrowserCredential` instead. The following changes have been made:
+  - `SharedTokenCacheCredential` class is marked as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`
+  - `SharedTokenCacheCredentialOptions` class is marked as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`
+  - `DefaultAzureCredentialOptions.ExcludeSharedTokenCacheCredential` property is marked as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`
+  - `SharedTokenCacheUsername` property is marked as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`
+  - `SharedTokenCacheCredential` is no longer included in the `DefaultAzureCredential` authentication flow
+
+### Bugs Fixed
+
+- Tenant ID comparisons in credential options are now case-insensitive. This affects `AdditionallyAllowedTenants` values which will now be matched against tenant IDs without case sensitivity, making the authentication more resilient to case differences in tenant IDs returned from WWW-Authenticate challenges ([#51693](https://github.com/Azure/azure-sdk-for-net/issues/51693)).
+
+### Other Changes
+- `BrokerAuthenticationCredential` has been renamed as `BrokerCredential`.
+
+- Added the `EditorBrowsable(Never)` attribute to property `VisualStudioCodeTenantId` as `TenantId` is preferred. The `VisualStudioCodeTenantId` property exists only to provide backwards compatibility.
 
 ## 1.15.0-beta.1 (2025-07-17)
 

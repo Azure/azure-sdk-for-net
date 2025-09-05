@@ -1,4 +1,4 @@
-# Azure.Provisioning.EventGrid client library for .NET
+# Azure Provisioning EventGrid client library for .NET
 
 Azure.Provisioning.EventGrid simplifies declarative resource provisioning in .NET.
 
@@ -21,6 +21,55 @@ dotnet add package Azure.Provisioning.EventGrid
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
+
+## Examples
+
+### Create an Event Grid Topic
+
+This example demonstrates how to create an Event Grid topic for event-driven architectures, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.eventgrid/event-grid-subscription-and-storage/main.bicep).
+
+```C# Snippet:EventGridBasic
+Infrastructure infra = new();
+
+ProvisioningParameter webhookUri = new(nameof(webhookUri), typeof(string));
+infra.Add(webhookUri);
+
+StorageAccount storage =
+    new(nameof(storage), StorageAccount.ResourceVersions.V2024_01_01)
+    {
+        Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+        Kind = StorageKind.StorageV2,
+        AllowBlobPublicAccess = false,
+        AccessTier = StorageAccountAccessTier.Hot,
+        EnableHttpsTrafficOnly = true,
+    };
+infra.Add(storage);
+
+SystemTopic topic =
+    new(nameof(topic), SystemTopic.ResourceVersions.V2022_06_15)
+    {
+        Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
+        Source = storage.Id,
+        TopicType = "Microsoft.Storage.StorageAccounts"
+    };
+infra.Add(topic);
+
+SystemTopicEventSubscription subscription =
+    new(nameof(subscription), SystemTopicEventSubscription.ResourceVersions.V2022_06_15)
+    {
+        Parent = topic,
+        Destination = new WebHookEventSubscriptionDestination { Endpoint = webhookUri },
+        Filter = new EventSubscriptionFilter
+        {
+            IncludedEventTypes =
+            {
+                "Microsoft.Storage.BlobCreated",
+                "Microsoft.Storage.BlobDeleted"
+            }
+        }
+    };
+infra.Add(subscription);
+```
 
 ## Troubleshooting
 

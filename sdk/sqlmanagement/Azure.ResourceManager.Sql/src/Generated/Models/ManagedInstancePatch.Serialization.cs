@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("storageThroughputMBps"u8);
                 writer.WriteNumberValue(StorageThroughputMBps.Value);
             }
-            if (Optional.IsDefined(TotalMemoryInMB))
+            if (Optional.IsDefined(MemorySizeInGB))
             {
-                writer.WritePropertyName("totalMemoryMB"u8);
-                writer.WriteNumberValue(TotalMemoryInMB.Value);
+                writer.WritePropertyName("memorySizeInGB"u8);
+                writer.WriteNumberValue(MemorySizeInGB.Value);
             }
             if (Optional.IsDefined(Collation))
             {
@@ -269,6 +269,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("databaseFormat"u8);
                 writer.WriteStringValue(DatabaseFormat.Value.ToString());
             }
+            if (Optional.IsDefined(RequestedLogicalAvailabilityZone))
+            {
+                writer.WritePropertyName("requestedLogicalAvailabilityZone"u8);
+                writer.WriteStringValue(RequestedLogicalAvailabilityZone.Value.ToString());
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -325,7 +330,7 @@ namespace Azure.ResourceManager.Sql.Models
             int? storageSizeInGB = default;
             int? storageIOps = default;
             int? storageThroughputMBps = default;
-            int? totalMemoryMB = default;
+            int? memorySizeInGB = default;
             string collation = default;
             string dnsZone = default;
             ResourceIdentifier dnsZonePartner = default;
@@ -351,6 +356,7 @@ namespace Azure.ResourceManager.Sql.Models
             DateTimeOffset? createTime = default;
             AuthMetadataLookupMode? authenticationMetadata = default;
             ManagedInstanceDatabaseFormat? databaseFormat = default;
+            SqlAvailabilityZoneType? requestedLogicalAvailabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -515,13 +521,13 @@ namespace Azure.ResourceManager.Sql.Models
                             storageThroughputMBps = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("totalMemoryMB"u8))
+                        if (property0.NameEquals("memorySizeInGB"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            totalMemoryMB = property0.Value.GetInt32();
+                            memorySizeInGB = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("collation"u8))
@@ -738,6 +744,15 @@ namespace Azure.ResourceManager.Sql.Models
                             databaseFormat = new ManagedInstanceDatabaseFormat(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("requestedLogicalAvailabilityZone"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            requestedLogicalAvailabilityZone = new SqlAvailabilityZoneType(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -766,7 +781,7 @@ namespace Azure.ResourceManager.Sql.Models
                 storageSizeInGB,
                 storageIOps,
                 storageThroughputMBps,
-                totalMemoryMB,
+                memorySizeInGB,
                 collation,
                 dnsZone,
                 dnsZonePartner,
@@ -792,6 +807,7 @@ namespace Azure.ResourceManager.Sql.Models
                 createTime,
                 authenticationMetadata,
                 databaseFormat,
+                requestedLogicalAvailabilityZone,
                 serializedAdditionalRawData);
         }
 

@@ -9,14 +9,14 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Property.Nullable
 {
-    [ModelReaderWriterBuildable(typeof(StringProperty))]
     [ModelReaderWriterBuildable(typeof(BytesProperty))]
-    [ModelReaderWriterBuildable(typeof(DatetimeProperty))]
-    [ModelReaderWriterBuildable(typeof(DurationProperty))]
     [ModelReaderWriterBuildable(typeof(CollectionsByteProperty))]
     [ModelReaderWriterBuildable(typeof(CollectionsModelProperty))]
-    [ModelReaderWriterBuildable(typeof(InnerModel))]
     [ModelReaderWriterBuildable(typeof(CollectionsStringProperty))]
+    [ModelReaderWriterBuildable(typeof(DatetimeProperty))]
+    [ModelReaderWriterBuildable(typeof(DurationProperty))]
+    [ModelReaderWriterBuildable(typeof(InnerModel))]
+    [ModelReaderWriterBuildable(typeof(StringProperty))]
     public partial class _TypePropertyNullableContext : ModelReaderWriterContext
     {
     }

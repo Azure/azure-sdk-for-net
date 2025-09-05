@@ -17,7 +17,8 @@ namespace Azure.Generator.Tests.Visitors
         public void RemovesSpecialHeaderParametersFromServiceMethod()
         {
             var visitor = new TestSpecialHeadersVisitor();
-            var parameters = CreateParameters();
+            var parameters = CreateHttpParameters();
+            var methodParameters = CreateMethodParameters();
             var responseModel = InputFactory.Model("foo");
             var operation = InputFactory.Operation(
                 "foo",
@@ -26,24 +27,24 @@ namespace Azure.Generator.Tests.Visitors
             var serviceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
                 operation,
-                parameters: parameters,
+                parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             // Verify initial parameters include special headers
             Assert.AreEqual(3, serviceMethod.Parameters.Count);
-            Assert.IsTrue(serviceMethod.Parameters.Any(p => p.NameInRequest == "return-client-request-id"));
-            Assert.IsTrue(serviceMethod.Parameters.Any(p => p.NameInRequest == "x-ms-client-request-id"));
+            Assert.IsTrue(serviceMethod.Parameters.Any(p => p.SerializedName == "return-client-request-id"));
+            Assert.IsTrue(serviceMethod.Parameters.Any(p => p.SerializedName == "x-ms-client-request-id"));
 
             // Act - this would normally be called by the visitor framework, but we'll test the core logic
             visitor.InvokeRemoveSpecialHeaders(serviceMethod);
 
             // Verify special headers are removed
             Assert.AreEqual(1, serviceMethod.Parameters.Count);
-            Assert.IsFalse(serviceMethod.Parameters.Any(p => p.NameInRequest == "return-client-request-id"));
-            Assert.IsFalse(serviceMethod.Parameters.Any(p => p.NameInRequest == "x-ms-client-request-id"));
-            Assert.IsTrue(serviceMethod.Parameters.Any(p => p.NameInRequest == "some-other-parameter"));
+            Assert.IsFalse(serviceMethod.Parameters.Any(p => p.SerializedName == "return-client-request-id"));
+            Assert.IsFalse(serviceMethod.Parameters.Any(p => p.SerializedName == "x-ms-client-request-id"));
+            Assert.IsTrue(serviceMethod.Parameters.Any(p => p.SerializedName == "some-other-parameter"));
         }
 
         [Test]
@@ -52,10 +53,17 @@ namespace Azure.Generator.Tests.Visitors
             var visitor = new TestSpecialHeadersVisitor();
             var parameters = new List<InputParameter>
             {
-                InputFactory.Parameter(
+                InputFactory.HeaderParameter(
                     "some-parameter",
                     type: InputPrimitiveType.String,
-                    nameInRequest: "some-parameter",
+                    serializedName: "some-parameter")
+            };
+            var methodParameters = new List<InputMethodParameter>
+            {
+                InputFactory.MethodParameter(
+                    "some-parameter",
+                    type: InputPrimitiveType.String,
+                    serializedName: "some-parameter",
                     location: InputRequestLocation.Header)
             };
             var responseModel = InputFactory.Model("foo");
@@ -66,7 +74,7 @@ namespace Azure.Generator.Tests.Visitors
             var serviceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
                 operation,
-                parameters: parameters,
+                parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
 
             // Verify initial state
@@ -81,26 +89,47 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreSame(originalParameter, serviceMethod.Parameters[0]);
         }
 
-        private static List<InputParameter> CreateParameters()
+        private static List<InputMethodParameter> CreateMethodParameters()
         {
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
+                InputFactory.MethodParameter(
                     "return-client-request-id",
                     type: new InputLiteralType("return-client-request-id", "ns", InputPrimitiveType.Boolean, true),
                     defaultValue: new InputConstant(true, InputPrimitiveType.Boolean),
-                    nameInRequest: "return-client-request-id",
+                    serializedName: "return-client-request-id",
                     location: InputRequestLocation.Header),
-                InputFactory.Parameter(
+                InputFactory.MethodParameter(
                     "x-ms-client-request-id",
                     type: InputPrimitiveType.String,
-                    nameInRequest: "x-ms-client-request-id",
+                    serializedName: "x-ms-client-request-id",
                     location: InputRequestLocation.Header),
-                InputFactory.Parameter(
+                InputFactory.MethodParameter(
                     "some-other-parameter",
                     type: InputPrimitiveType.String,
-                    nameInRequest: "some-other-parameter",
+                    serializedName: "some-other-parameter",
                     location: InputRequestLocation.Header)
+            ];
+            return parameters;
+        }
+
+        private static List<InputParameter> CreateHttpParameters()
+        {
+            List<InputParameter> parameters =
+            [
+                InputFactory.HeaderParameter(
+                    "return-client-request-id",
+                    type: new InputLiteralType("return-client-request-id", "ns", InputPrimitiveType.Boolean, true),
+                    defaultValue: new InputConstant(true, InputPrimitiveType.Boolean),
+                    serializedName: "return-client-request-id"),
+                InputFactory.HeaderParameter(
+                    "x-ms-client-request-id",
+                    type: InputPrimitiveType.String,
+                    serializedName: "x-ms-client-request-id"),
+                InputFactory.HeaderParameter(
+                    "some-other-parameter",
+                    type: InputPrimitiveType.String,
+                    serializedName: "some-other-parameter")
             ];
             return parameters;
         }
@@ -111,14 +140,14 @@ namespace Azure.Generator.Tests.Visitors
             {
                 // Simulate the core logic of removing special headers
                 var returnClientRequestIdParameter =
-                    serviceMethod.Parameters.FirstOrDefault(p => p.NameInRequest == "return-client-request-id");
+                    serviceMethod.Parameters.FirstOrDefault(p => p.SerializedName == "return-client-request-id");
                 var xMsClientRequestIdParameter =
-                    serviceMethod.Parameters.FirstOrDefault(p => p.NameInRequest == "x-ms-client-request-id");
+                    serviceMethod.Parameters.FirstOrDefault(p => p.SerializedName == "x-ms-client-request-id");
 
                 if (returnClientRequestIdParameter != null || xMsClientRequestIdParameter != null)
                 {
-                    serviceMethod.Update(parameters: [.. serviceMethod.Parameters.Where(p => p.NameInRequest != "return-client-request-id" && p.NameInRequest != "x-ms-client-request-id")]);
-                    serviceMethod.Operation.Update(parameters: [.. serviceMethod.Operation.Parameters.Where(p => p.NameInRequest != "return-client-request-id" && p.NameInRequest != "x-ms-client-request-id")]);
+                    serviceMethod.Update(parameters: [.. serviceMethod.Parameters.Where(p => p.SerializedName != "return-client-request-id" && p.SerializedName != "x-ms-client-request-id")]);
+                    serviceMethod.Operation.Update(parameters: [.. serviceMethod.Operation.Parameters.Where(p => p.SerializedName != "return-client-request-id" && p.SerializedName != "x-ms-client-request-id")]);
                 }
             }
         }

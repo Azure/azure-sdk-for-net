@@ -17,8 +17,9 @@ var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI chat client");
-AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
+AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
+ChatClient chatClient = azureOpenAIClient.GetChatClient(deploymentName: modelDeploymentName);
 
 Console.WriteLine("Complete a chat");
 ChatCompletion result = chatClient.CompleteChat("List all the rainbow colors");
@@ -29,9 +30,11 @@ Console.WriteLine(result.Content[0].Text);
 ```C# Snippet:AI_Projects_AzureOpenAIChatAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI chat client");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: null, apiVersion: null);
+AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
+ChatClient chatClient = azureOpenAIClient.GetChatClient(deploymentName: modelDeploymentName);
 
 Console.WriteLine("Complete a chat");
 ChatCompletion result = await chatClient.CompleteChatAsync("List all the rainbow colors");

@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class KnowledgeAgentTargetIndex : IUtf8JsonSerializable
+    public partial class KnowledgeAgentTargetIndex : IUtf8JsonSerializable, IJsonModel<KnowledgeAgentTargetIndex>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeAgentTargetIndex>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<KnowledgeAgentTargetIndex>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentTargetIndex>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KnowledgeAgentTargetIndex)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("indexName"u8);
             writer.WriteStringValue(IndexName);
             if (Optional.IsDefined(DefaultRerankerThreshold))
@@ -32,11 +51,39 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("defaultMaxDocsForReranker"u8);
                 writer.WriteNumberValue(DefaultMaxDocsForReranker.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static KnowledgeAgentTargetIndex DeserializeKnowledgeAgentTargetIndex(JsonElement element)
+        KnowledgeAgentTargetIndex IJsonModel<KnowledgeAgentTargetIndex>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentTargetIndex>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KnowledgeAgentTargetIndex)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKnowledgeAgentTargetIndex(document.RootElement, options);
+        }
+
+        internal static KnowledgeAgentTargetIndex DeserializeKnowledgeAgentTargetIndex(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +92,8 @@ namespace Azure.Search.Documents.Indexes.Models
             float? defaultRerankerThreshold = default;
             bool? defaultIncludeReferenceSourceData = default;
             int? defaultMaxDocsForReranker = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("indexName"u8))
@@ -79,9 +128,45 @@ namespace Azure.Search.Documents.Indexes.Models
                     defaultMaxDocsForReranker = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KnowledgeAgentTargetIndex(indexName, defaultRerankerThreshold, defaultIncludeReferenceSourceData, defaultMaxDocsForReranker);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KnowledgeAgentTargetIndex(indexName, defaultRerankerThreshold, defaultIncludeReferenceSourceData, defaultMaxDocsForReranker, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KnowledgeAgentTargetIndex>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentTargetIndex>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeAgentTargetIndex)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KnowledgeAgentTargetIndex IPersistableModel<KnowledgeAgentTargetIndex>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentTargetIndex>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeKnowledgeAgentTargetIndex(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KnowledgeAgentTargetIndex)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KnowledgeAgentTargetIndex>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -95,7 +180,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

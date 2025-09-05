@@ -41,14 +41,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Array of references to application gateway trusted client certificates. </summary>
+        [WirePath("properties.trustedClientCertificates")]
         public IList<WritableSubResource> TrustedClientCertificates { get; }
         /// <summary> SSL policy of the application gateway resource. </summary>
+        [WirePath("properties.sslPolicy")]
         public ApplicationGatewaySslPolicy SslPolicy { get; set; }
         /// <summary> Client authentication configuration of the application gateway resource. </summary>
+        [WirePath("properties.clientAuthConfiguration")]
         public ApplicationGatewayClientAuthConfiguration ClientAuthConfiguration { get; set; }
         /// <summary> The provisioning state of the HTTP listener resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

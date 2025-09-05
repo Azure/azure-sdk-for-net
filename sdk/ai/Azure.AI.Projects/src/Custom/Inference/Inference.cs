@@ -5,14 +5,13 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Identity;
 using Azure.AI.OpenAI;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
+using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -23,52 +22,25 @@ namespace Azure.AI.Projects
         #nullable enable
 
         /// <summary>
-        /// Gets the OpenAI chat client.
+        /// Gets the OpenAI client.
         /// </summary>
         /// <param name="connectionName"></param>
         /// <param name="apiVersion"></param>
-        /// <param name="deploymentName"></param>
         /// <returns></returns>
-        public ChatClient GetAzureOpenAIChatClient(string? connectionName = null, string? apiVersion = null, string? deploymentName = null)
+        public virtual OpenAIClient GetOpenAIClient(string? connectionName = null, string? apiVersion = null)
         {
-            ChatClientKey chatClientKey = new(deploymentName);
             AzureOpenAIClientKey openAIClientKey = new();
 
-            ChatClient chatClient = Subclients.GetClient(chatClientKey, () =>
-            {
-                AzureOpenAIClient aoaiClient = Subclients.GetClient(openAIClientKey, () => CreateAzureOpenAIClient(connectionName, apiVersion));
-                return CreateChatClient(aoaiClient, deploymentName);
-            });
+            AzureOpenAIClient aoaiClient = Subclients.GetClient(openAIClientKey, () => CreateAzureOpenAIClient(connectionName, apiVersion));
 
-            return chatClient;
-        }
-
-        /// <summary>
-        /// Gets the OpenAI embedding client.
-        /// </summary>
-        /// <param name="connectionName"></param>
-        /// <param name="apiVersion"></param>
-        /// <param name="deploymentName"></param>
-        /// <returns></returns>
-        public EmbeddingClient GetAzureOpenAIEmbeddingClient(string? connectionName = null, string? apiVersion = null, string? deploymentName = null)
-        {
-            EmbeddingClientKey embeddingClientKey = new(deploymentName);
-            AzureOpenAIClientKey openAIClientKey = new();
-
-            EmbeddingClient embeddingClient = Subclients.GetClient(embeddingClientKey, () =>
-            {
-                AzureOpenAIClient aoaiClient = Subclients.GetClient(openAIClientKey , () => CreateAzureOpenAIClient(connectionName, apiVersion));
-                return CreateEmbeddingClient(aoaiClient, deploymentName);
-            });
-
-            return embeddingClient;
+            return aoaiClient;
         }
 
         private AzureOpenAIClient CreateAzureOpenAIClient(string? connectionName = null, string? apiVersion = null)
         {
             if (!string.IsNullOrEmpty(connectionName))
             {
-                ConnectionProperties selectedConnection = GetConnectionsClient().Get(connectionName, includeCredentials: true);
+                ConnectionProperties selectedConnection = Connections.GetConnection(connectionName, includeCredentials: true);
                 if (selectedConnection.Type != ConnectionType.AzureOpenAI)
                 {
                     throw new InvalidOperationException($"Connection '{connectionName}' is not of type AzureOpenAI.");
@@ -203,6 +175,6 @@ namespace Azure.AI.Projects
                 return ProcessNextAsync(message, pipeline, index);
             }
         }
-        #nullable disable
+#nullable disable
     }
 }

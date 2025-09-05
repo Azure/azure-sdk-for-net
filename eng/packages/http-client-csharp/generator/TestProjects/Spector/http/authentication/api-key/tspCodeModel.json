@@ -2,27 +2,10 @@
   "name": "Authentication.ApiKey",
   "apiVersions": [],
   "enums": [],
-  "constants": [
-    {
-      "$id": "1",
-      "kind": "constant",
-      "name": "invalidContentType",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "2",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "value": "application/json",
-      "decorators": []
-    }
-  ],
+  "constants": [],
   "models": [
     {
-      "$id": "3",
+      "$id": "1",
       "kind": "model",
       "name": "InvalidAuth",
       "namespace": "Authentication.ApiKey",
@@ -31,12 +14,12 @@
       "decorators": [],
       "properties": [
         {
-          "$id": "4",
+          "$id": "2",
           "kind": "property",
           "name": "error",
           "serializedName": "error",
           "type": {
-            "$id": "5",
+            "$id": "3",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -52,28 +35,29 @@
             "json": {
               "name": "error"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     }
   ],
   "clients": [
     {
-      "$id": "6",
+      "$id": "4",
       "kind": "client",
       "name": "ApiKeyClient",
       "namespace": "Authentication.ApiKey",
       "doc": "Illustrates clients generated with ApiKey authentication.",
       "methods": [
         {
-          "$id": "7",
+          "$id": "5",
           "kind": "basic",
           "name": "valid",
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Check whether client is authenticated",
           "operation": {
-            "$id": "8",
+            "$id": "6",
             "name": "valid",
             "resourceName": "ApiKey",
             "doc": "Check whether client is authenticated",
@@ -105,37 +89,19 @@
           "crossLanguageDefinitionId": "Authentication.ApiKey.valid"
         },
         {
-          "$id": "9",
+          "$id": "7",
           "kind": "basic",
           "name": "invalid",
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Check whether client is authenticated.",
           "operation": {
-            "$id": "10",
+            "$id": "8",
             "name": "invalid",
             "resourceName": "ApiKey",
             "doc": "Check whether client is authenticated.",
             "accessibility": "public",
-            "parameters": [
-              {
-                "$id": "11",
-                "name": "accept",
-                "nameInRequest": "Accept",
-                "type": {
-                  "$ref": "1"
-                },
-                "location": "Header",
-                "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
-                "decorators": [],
-                "skipUrlEncoding": false
-              }
-            ],
+            "parameters": [],
             "responses": [
               {
                 "statusCodes": [
@@ -154,25 +120,7 @@
             "crossLanguageDefinitionId": "Authentication.ApiKey.invalid",
             "decorators": []
           },
-          "parameters": [
-            {
-              "$id": "12",
-              "name": "accept",
-              "nameInRequest": "accept",
-              "type": {
-                "$ref": "1"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
-            }
-          ],
+          "parameters": [],
           "response": {},
           "isOverride": false,
           "generateConvenient": true,
@@ -182,34 +130,34 @@
       ],
       "parameters": [
         {
-          "$id": "13",
+          "$id": "9",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "14",
+            "$id": "10",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
-              "$id": "15",
+              "$id": "11",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
             },
             "value": "http://localhost:3000"
           },
-          "serverUrlTemplate": "{endpoint}"
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Authentication.ApiKey.endpoint"
         }
       ],
       "decorators": [],

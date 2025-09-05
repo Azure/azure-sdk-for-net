@@ -10,15 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.NewKubernetesVersionAvailable event. </summary>
     [JsonConverter(typeof(ContainerServiceNewKubernetesVersionAvailableEventDataConverter))]
-    public partial class ContainerServiceNewKubernetesVersionAvailableEventData : IUtf8JsonSerializable, IJsonModel<ContainerServiceNewKubernetesVersionAvailableEventData>
+    public partial class ContainerServiceNewKubernetesVersionAvailableEventData : IJsonModel<ContainerServiceNewKubernetesVersionAvailableEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceNewKubernetesVersionAvailableEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceNewKubernetesVersionAvailableEventData"/> for deserialization. </summary>
+        internal ContainerServiceNewKubernetesVersionAvailableEventData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerServiceNewKubernetesVersionAvailableEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +35,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNewKubernetesVersionAvailableEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNewKubernetesVersionAvailableEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerServiceNewKubernetesVersionAvailableEventData)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("latestSupportedKubernetesVersion"u8);
             writer.WriteStringValue(LatestSupportedKubernetesVersion);
             writer.WritePropertyName("latestStableKubernetesVersion"u8);
@@ -47,15 +51,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("latestPreviewKubernetesVersion"u8);
                 writer.WriteStringValue(LatestPreviewKubernetesVersion);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -64,22 +68,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        ContainerServiceNewKubernetesVersionAvailableEventData IJsonModel<ContainerServiceNewKubernetesVersionAvailableEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerServiceNewKubernetesVersionAvailableEventData IJsonModel<ContainerServiceNewKubernetesVersionAvailableEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerServiceNewKubernetesVersionAvailableEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNewKubernetesVersionAvailableEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNewKubernetesVersionAvailableEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerServiceNewKubernetesVersionAvailableEventData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContainerServiceNewKubernetesVersionAvailableEventData(document.RootElement, options);
         }
 
-        internal static ContainerServiceNewKubernetesVersionAvailableEventData DeserializeContainerServiceNewKubernetesVersionAvailableEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ContainerServiceNewKubernetesVersionAvailableEventData DeserializeContainerServiceNewKubernetesVersionAvailableEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -88,43 +97,44 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string latestStableKubernetesVersion = default;
             string lowestMinorKubernetesVersion = default;
             string latestPreviewKubernetesVersion = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("latestSupportedKubernetesVersion"u8))
+                if (prop.NameEquals("latestSupportedKubernetesVersion"u8))
                 {
-                    latestSupportedKubernetesVersion = property.Value.GetString();
+                    latestSupportedKubernetesVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("latestStableKubernetesVersion"u8))
+                if (prop.NameEquals("latestStableKubernetesVersion"u8))
                 {
-                    latestStableKubernetesVersion = property.Value.GetString();
+                    latestStableKubernetesVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lowestMinorKubernetesVersion"u8))
+                if (prop.NameEquals("lowestMinorKubernetesVersion"u8))
                 {
-                    lowestMinorKubernetesVersion = property.Value.GetString();
+                    lowestMinorKubernetesVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("latestPreviewKubernetesVersion"u8))
+                if (prop.NameEquals("latestPreviewKubernetesVersion"u8))
                 {
-                    latestPreviewKubernetesVersion = property.Value.GetString();
+                    latestPreviewKubernetesVersion = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerServiceNewKubernetesVersionAvailableEventData(latestSupportedKubernetesVersion, latestStableKubernetesVersion, lowestMinorKubernetesVersion, latestPreviewKubernetesVersion, serializedAdditionalRawData);
+            return new ContainerServiceNewKubernetesVersionAvailableEventData(latestSupportedKubernetesVersion, latestStableKubernetesVersion, lowestMinorKubernetesVersion, latestPreviewKubernetesVersion, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ContainerServiceNewKubernetesVersionAvailableEventData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNewKubernetesVersionAvailableEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerServiceNewKubernetesVersionAvailableEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNewKubernetesVersionAvailableEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -134,15 +144,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        ContainerServiceNewKubernetesVersionAvailableEventData IPersistableModel<ContainerServiceNewKubernetesVersionAvailableEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNewKubernetesVersionAvailableEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerServiceNewKubernetesVersionAvailableEventData IPersistableModel<ContainerServiceNewKubernetesVersionAvailableEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerServiceNewKubernetesVersionAvailableEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNewKubernetesVersionAvailableEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerServiceNewKubernetesVersionAvailableEventData(document.RootElement, options);
                     }
                 default:
@@ -150,35 +165,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ContainerServiceNewKubernetesVersionAvailableEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ContainerServiceNewKubernetesVersionAvailableEventData FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeContainerServiceNewKubernetesVersionAvailableEventData(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         internal partial class ContainerServiceNewKubernetesVersionAvailableEventDataConverter : JsonConverter<ContainerServiceNewKubernetesVersionAvailableEventData>
         {
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, ContainerServiceNewKubernetesVersionAvailableEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<ContainerServiceNewKubernetesVersionAvailableEventData>>(model, ModelSerializationExtensions.WireOptions);
             }
 
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
             public override ContainerServiceNewKubernetesVersionAvailableEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeContainerServiceNewKubernetesVersionAvailableEventData(document.RootElement);
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeContainerServiceNewKubernetesVersionAvailableEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
             }
         }
     }

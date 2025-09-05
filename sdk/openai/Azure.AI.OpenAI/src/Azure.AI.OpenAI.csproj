@@ -9,28 +9,15 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
+    <NoWarn>$(NoWarn);CS1591;AZC0012;AZC0102;CS8002;CS0436;AZC0112;OPENAI001;OPENAI002;AOAI001</NoWarn>
+    <!-- Needs System.ClientModel 1.5.0 in order to add the context and use the new overloads -->
+    <!-- After this https://github.com/Azure/azure-sdk-for-net/issues/49916 we can remove this no warn -->
+    <NoWarn>$(NoWarn);AZC0150</NoWarn>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>preview</LangVersion>
     <Nullable>disable</Nullable>
     <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <NoWarn>
-        $(NoWarn);
-        CS1591;
-        AZC0012;
-        AZC0102;
-        CS8002;
-        CS0436;
-        AZC0112;
-        OPENAI001;
-        OPENAI002;
-        AOAI001;
-        AZC0150;
-        AZC0035; <!-- Missing model factory methods.  #51226-->
-    </NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -53,8 +40,8 @@
     </When>
     <Otherwise>
       <PropertyGroup>
-        <VersionPrefix>2.2.0</VersionPrefix>
-        <VersionSuffix>beta.5</VersionSuffix>
+        <VersionPrefix>2.3.0</VersionPrefix>
+        <VersionSuffix>beta.2</VersionSuffix>
       </PropertyGroup>
     </Otherwise>
   </Choose>

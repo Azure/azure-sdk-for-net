@@ -43,6 +43,8 @@ interface Foos {
   update is ArmCustomPatchAsync<Foo, Foo>;
 
   list is ArmResourceListByParent<Foo>;
+
+  listBySubscription is ArmListBySubscription<Foo>;
 }
 
 @singleton
@@ -71,8 +73,15 @@ interface FooSettingsOperations {
 }
 
 model FooSettingsProperties {
-  accessControlEnabled: boolean;
+  accessControlEnabled?: boolean;
 
   @visibility(Lifecycle.Read)
   provisioningState?: ResourceProvisioningState;
+
+  @visibility(Lifecycle.Read)
+  metaData?: FooSettingsPropertiesMetaData;
+}
+
+model FooSettingsPropertiesMetaData {
+  metaDatas?: string[];
 }

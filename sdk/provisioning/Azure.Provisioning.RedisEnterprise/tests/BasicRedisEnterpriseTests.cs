@@ -7,16 +7,14 @@ using NUnit.Framework;
 
 namespace Azure.Provisioning.RedisEnterprise.Tests;
 
-public class BasicRedisEnterpriseTests(bool async) : ProvisioningTestBase(async)
+public class BasicRedisEnterpriseTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.cache/redis-enterprise-vectordb/main.bicep")]
-    public async Task CreateRedisEnterpriseVectorDB()
+    internal static Trycep CreateRedisEnterpriseVectorDBTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
+                #region Snippet:RedisEnterpriseBasic
                 Infrastructure infra = new();
                 ProvisioningParameter principalId = new ProvisioningParameter("principalId", typeof(string))
                 {
@@ -56,9 +54,17 @@ public class BasicRedisEnterpriseTests(bool async) : ProvisioningTestBase(async)
                         UserObjectId = principalId
                     };
                 infra.Add(accessPolicyAssignment);
+                #endregion
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.cache/redis-enterprise-vectordb/main.bicep")]
+    public async Task CreateRedisEnterpriseVectorDB()
+    {
+        await using Trycep test = CreateRedisEnterpriseVectorDBTest();
+        test.Compare(
             """
             @description('The principal ID of the user assigned identity to use for the Redis Enterprise cluster.')
             param principalId string
@@ -103,8 +109,6 @@ public class BasicRedisEnterpriseTests(bool async) : ProvisioningTestBase(async)
               }
               parent: redisDatabase
             }
-            """)
-        .Lint()
-        .ValidateAsync(); // Just validate...  Deploying takes a hot minute.
+            """);
     }
 }
