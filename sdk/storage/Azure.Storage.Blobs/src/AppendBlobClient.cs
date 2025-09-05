@@ -354,60 +354,6 @@ namespace Azure.Storage.Blobs.Specialized
                 clientConfiguration: newClientConfiguration);
         }
 
-        #region internal static accessors for Azure.Storage.DataMovement.Blobs
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AppendBlobClient"/>
-        /// class with identical configurations but with additional Http Pipeline Policies.
-        /// </summary>
-        /// <param name="client">
-        /// The storage client which to clone the configurations from.
-        /// </param>
-        /// <param name="policies">
-        /// The additional policies and its pipeline position to add to the client.
-        /// </param>
-        /// <returns></returns>
-        protected static AppendBlobClient WithAdditionalPolicies(
-            AppendBlobClient client,
-            params (HttpPipelinePolicy Policy, HttpPipelinePosition Position)[] policies)
-        {
-            Argument.AssertNotNullOrEmpty(policies, nameof(policies));
-
-            // Update the client options with the provided additional policies.
-            BlobClientOptions existingOptions = client?.ClientConfiguration?.ClientOptions;
-            BlobClientOptions options = existingOptions != default ? new(existingOptions) : new BlobClientOptions();
-            foreach ((HttpPipelinePolicy policy, HttpPipelinePosition position) in policies)
-            {
-                options.AddPolicy(policy, position);
-            }
-
-            // Create a deep copy of the BlobBaseClient but with updated client options
-            // and the provided additional pipeline policies.
-            if (client.ClientConfiguration?.TokenCredential != default)
-            {
-                return new AppendBlobClient(
-                    client.Uri,
-                    client.ClientConfiguration.TokenCredential,
-                    options);
-            }
-            else if (client.ClientConfiguration?.SasCredential != default)
-            {
-                return new AppendBlobClient(
-                    client.Uri,
-                    client.ClientConfiguration.SasCredential,
-                    options);
-            }
-            else if (client.ClientConfiguration?.SharedKeyCredential != default)
-            {
-                return new AppendBlobClient(
-                    client.Uri,
-                    client.ClientConfiguration.SharedKeyCredential,
-                    options);
-            }
-
-            return new AppendBlobClient(client.Uri, options);
-        }
-        #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
-
         #region Create
         /// <summary>
         /// The <see cref="Create(AppendBlobCreateOptions, CancellationToken)"/>

@@ -15,6 +15,7 @@ trigger:
     - sdk/provisioning/Azure.Provisioning.CosmosDB
     - sdk/provisioning/Azure.Provisioning.EventHubs
     - sdk/provisioning/Azure.Provisioning.KeyVault
+    - sdk/provisioning/Azure.Provisioning.Kusto
     - sdk/provisioning/Azure.Provisioning.PostgreSql
     - sdk/provisioning/Azure.Provisioning.Redis
     - sdk/provisioning/Azure.Provisioning.RedisEnterprise
@@ -43,6 +44,7 @@ pr:
     - sdk/provisioning/Azure.Provisioning.CosmosDB
     - sdk/provisioning/Azure.Provisioning.EventHubs
     - sdk/provisioning/Azure.Provisioning.KeyVault
+    - sdk/provisioning/Azure.Provisioning.Kusto
     - sdk/provisioning/Azure.Provisioning.PostgreSql
     - sdk/provisioning/Azure.Provisioning.Redis
     - sdk/provisioning/Azure.Provisioning.RedisEnterprise
@@ -78,6 +80,10 @@ parameters:
     default: false
   - name: release_Azure_Provisioning_KeyVault
     displayName: 'Azure.Provisioning.KeyVault'
+    type: boolean
+    default: false
+  - name: release_Azure_Provisioning_Kusto
+    displayName: 'Azure.Provisioning.Kusto'
     type: boolean
     default: false
   - name: release_Azure_Provisioning_PostgreSql
@@ -141,6 +147,9 @@ extends:
     - name: Azure.Provisioning.KeyVault
       safeName: AzureProvisioningKeyVault
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_KeyVault }}
+    - name: Azure.Provisioning.Kusto
+      safeName: AzureProvisioningKusto
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_Kusto }}
     - name: Azure.Provisioning.PostgreSql
       safeName: AzureProvisioningPostgreSql
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_PostgreSql }}

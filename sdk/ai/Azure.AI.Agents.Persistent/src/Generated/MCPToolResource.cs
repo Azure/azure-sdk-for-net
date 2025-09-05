@@ -61,13 +61,13 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="MCPToolResource"/>. </summary>
         /// <param name="serverLabel"> The label for the MCP server. </param>
         /// <param name="headers"> The headers for the MCP server updates. </param>
-        /// <param name="requireApproval"> Does MCP server require approval. </param>
+        /// <param name="requireApprovalInternal"> Does MCP server require approval. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MCPToolResource(string serverLabel, IDictionary<string, string> headers, BinaryData requireApproval, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MCPToolResource(string serverLabel, IDictionary<string, string> headers, BinaryData requireApprovalInternal, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServerLabel = serverLabel;
             Headers = headers;
-            RequireApproval = requireApproval;
+            RequireApprovalInternal = requireApprovalInternal;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -80,53 +80,5 @@ namespace Azure.AI.Agents.Persistent
         public string ServerLabel { get; set; }
         /// <summary> The headers for the MCP server updates. </summary>
         public IDictionary<string, string> Headers { get; }
-        /// <summary>
-        /// Does MCP server require approval
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description><see cref="string"/></description>
-        /// </item>
-        /// <item>
-        /// <description>"never"</description>
-        /// </item>
-        /// <item>
-        /// <description>"always"</description>
-        /// </item>
-        /// <item>
-        /// <description><see cref="MCPApprovalPerTool"/></description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData RequireApproval { get; set; }
     }
 }

@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CveResult"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<CveResult> GetCvesAsync(CancellationToken cancellationToken = default) =>
-            GetCommonVulnerabilitiesAndExposuresAsync(cancellationToken);
+        public virtual AsyncPageable<CveResult> GetCommonVulnerabilitiesAndExposuresAsync(CancellationToken cancellationToken = default) =>
+            GetCvesAsync(cancellationToken);
 
         /// <summary>
         /// Lists CVE analysis results of a firmware.
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CveResult"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<CveResult> GetCves(CancellationToken cancellationToken = default) =>
-            GetCommonVulnerabilitiesAndExposures(cancellationToken);
+        public virtual Pageable<CveResult> GetCommonVulnerabilitiesAndExposures(CancellationToken cancellationToken = default) =>
+            GetCves(cancellationToken);
 
         /// <summary>
         /// The operation to a url for file download.
