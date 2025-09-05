@@ -18,8 +18,7 @@ namespace Azure.AI.Projects
     public partial class AIProjectClient : ClientConnectionProvider
     {
         private const int _defaultMaxCacheSize = 100;
-        private readonly ConnectionCacheManager _cacheManager;
-        private readonly TokenCredential _tokenCredential;
+        private readonly ClientConnectionCacheManager _cacheManager;
         private static readonly string[] AuthorizationScopes = ["https://ai.azure.com/.default"];
 
         /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
@@ -40,39 +39,18 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of AIProjectClient. </summary>
-        /// <param name="endpoint">
-        /// Project endpoint. In the form "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/_project"
-        /// if your Foundry Hub has only one Project, or to use the default Project in your Hub. Or in the form
-        /// "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/&lt;your-project-name&gt;" if you want to explicitly
-        /// specify the Foundry Project name.
-        /// </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public AIProjectClient(Uri endpoint, TokenCredential credential = null) : this(endpoint, credential, new AIProjectClientOptions())
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
+        public AIProjectClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AIProjectClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of AIProjectClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> Service credential. </param>
+        /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public AIProjectClient(Uri endpoint, TokenCredential credential, AIProjectClientOptions options)
-            : base(options.ClientCacheSize)
-        {
-            options ??= new AIProjectClientOptions();
-
-            _endpoint = endpoint;
-            Pipeline = CreatePipeline(credential, options);
-            _apiVersion = options.Version;
-            _tokenCredential = credential;
-
-            _cacheManager = new ConnectionCacheManager(_endpoint, credential);
-        }
-
-        public AIProjectClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AIProjectClientOptions())
-        {
-        }
-
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
         public AIProjectClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AIProjectClientOptions options)
             : base(options.ClientCacheSize)
         {
@@ -85,6 +63,8 @@ namespace Azure.AI.Projects
             _tokenProvider = tokenProvider;
             Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new BearerTokenPolicy(_tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
             _apiVersion = options.Version;
+
+            _cacheManager = new ClientConnectionCacheManager(_endpoint, tokenProvider);
         }
 
         /// <summary>

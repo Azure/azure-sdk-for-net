@@ -42,13 +42,13 @@ public class DeploymentTest : ProjectsClientTestBase
     private void DeploymentTestSync(AIProjectClient projectClient, string modelDeploymentName, string modelPublisher)
     {
         Console.WriteLine("List all deployments:");
-        foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments())
+        foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeployments())
         {
             ValidateDeployment(deployment);
         }
 
         Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-        foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
+        foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
         {
             ValidateDeployment(deployment);
         }
@@ -60,13 +60,13 @@ public class DeploymentTest : ProjectsClientTestBase
     private async Task DeploymentTestAsync(AIProjectClient projectClient, string modelDeploymentName, string modelPublisher)
     {
         Console.WriteLine("List all deployments:");
-        await foreach (AssetDeployment deployment in projectClient.Deployments.GetDeploymentsAsync())
+        await foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeploymentsAsync())
         {
             ValidateDeployment(deployment);
         }
 
         Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-        await foreach (AssetDeployment deployment in projectClient.Deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
+        await foreach (AIProjectDeployment deployment in projectClient.Deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
         {
             ValidateDeployment(deployment);
         }
