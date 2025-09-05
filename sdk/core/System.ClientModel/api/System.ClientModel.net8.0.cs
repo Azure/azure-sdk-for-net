@@ -384,7 +384,6 @@ namespace System.ClientModel.Primitives
     public static partial class JsonPatchExtensions
     {
         public static void Append<T>(this ref System.ClientModel.Primitives.JsonPatch jsonPatch, System.ReadOnlySpan<byte> jsonPath, T value) where T : System.ClientModel.Primitives.IJsonModel<T> { }
-        public static string Serialize(this System.ClientModel.Primitives.JsonPatch patch, string format = "J") { throw null; }
         public static void Set<T>(this ref System.ClientModel.Primitives.JsonPatch jsonPatch, System.ReadOnlySpan<byte> jsonPath, T value) where T : System.ClientModel.Primitives.IJsonModel<T> { }
     }
     public partial class MessageLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy

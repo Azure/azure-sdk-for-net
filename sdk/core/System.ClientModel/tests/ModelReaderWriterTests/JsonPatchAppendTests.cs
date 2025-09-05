@@ -42,7 +42,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("[\"value4\"]", jp.GetJson("$.a.b[2]"u8).ToString());
             Assert.AreEqual("value4", jp.GetString("$.a.b[2][0]"u8));
 
-            Assert.AreEqual("{\"a\":{\"b\":[[\"value1\",\"value3\",\"value6\"],[\"value2\",\"value5\"],[\"value4\"]]}}", jp.Serialize());
+            Assert.AreEqual("{\"a\":{\"b\":[[\"value1\",\"value3\",\"value6\"],[\"value2\",\"value5\"],[\"value4\"]]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("[\"value2\"]", jp.GetJson("$.a.b[1]"u8).ToArray());
             Assert.AreEqual("value2", jp.GetString("$.a.b[1][0]"u8));
 
-            Assert.AreEqual("{\"a\":{\"b\":[[\"value1\",\"value3\"],[\"value2\"]]}}", jp.Serialize());
+            Assert.AreEqual("{\"a\":{\"b\":[[\"value1\",\"value3\"],[\"value2\"]]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("[\"value5\"]", jp.GetJson("$.a.b[4]"u8).ToString());
             Assert.AreEqual("value5", jp.GetString("$.a.b[4][0]"u8));
 
-            Assert.AreEqual("{\"a\":{\"b\":[[\"value1\",\"value1b\"],[\"value2\",\"value2b\"],[\"value3\"],[\"value4\"],[\"value5\"]]}}", jp.Serialize());
+            Assert.AreEqual("{\"a\":{\"b\":[[\"value1\",\"value1b\"],[\"value2\",\"value2b\"],[\"value3\"],[\"value4\"],[\"value5\"]]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -136,7 +136,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("[\"value2\"]", jp.GetJson("$.a.b[1]"u8).ToArray());
             Assert.AreEqual("value2", jp.GetString("$.a.b[1][0]"u8));
 
-            Assert.AreEqual("{\"a\":{\"b\":[[\"value1\"],[\"value2\"]]}}", jp.Serialize());
+            Assert.AreEqual("{\"a\":{\"b\":[[\"value1\"],[\"value2\"]]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -291,7 +291,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"b\":\"value17\"}", jp.GetJson("$.x.y[2][0][0].z.a[1][1]"u8).ToString());
             Assert.AreEqual("value17", jp.GetString("$.x.y[2][0][0].z.a[1][1].b"u8));
 
-            Assert.AreEqual("{\"x\":{\"y\":[[[{\"z\":{\"a\":[[{\"b\":\"value1\"},{\"b\":\"value2\"}],[{\"b\":\"value3\"},{\"b\":\"value4\"}]]}},{\"z\":{\"a\":[[{\"b\":\"value5\"},{\"b\":\"value6\"}]]}}],[{\"z\":{\"a\":[[{\"b\":\"value7\"},{\"b\":\"value8\"}],[{\"b\":\"value9\"},{\"b\":\"value10\"}]]}}]],[[{\"z\":{\"a\":[[{\"b\":\"value11\"}],[{\"b\":\"value15\"}]]}},{\"z\":{\"a\":[[{\"b\":\"value14\"}]]}}],[{\"z\":{\"a\":[[{\"b\":\"value13\"}]]}}]],[[{\"z\":{\"a\":[[{\"b\":\"value12\"}],[{\"b\":\"value16\"},{\"b\":\"value17\"}]]}}]]]}}", jp.Serialize());
+            Assert.AreEqual("{\"x\":{\"y\":[[[{\"z\":{\"a\":[[{\"b\":\"value1\"},{\"b\":\"value2\"}],[{\"b\":\"value3\"},{\"b\":\"value4\"}]]}},{\"z\":{\"a\":[[{\"b\":\"value5\"},{\"b\":\"value6\"}]]}}],[{\"z\":{\"a\":[[{\"b\":\"value7\"},{\"b\":\"value8\"}],[{\"b\":\"value9\"},{\"b\":\"value10\"}]]}}]],[[{\"z\":{\"a\":[[{\"b\":\"value11\"}],[{\"b\":\"value15\"}]]}},{\"z\":{\"a\":[[{\"b\":\"value14\"}]]}}],[{\"z\":{\"a\":[[{\"b\":\"value13\"}]]}}]],[[{\"z\":{\"a\":[[{\"b\":\"value12\"}],[{\"b\":\"value16\"},{\"b\":\"value17\"}]]}}]]]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -513,7 +513,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"b\":\"value11\"}", jp.GetJson("$.x.y[1][0][0].z.a[0][0]"u8).ToString());
             Assert.AreEqual("value11", jp.GetString("$.x.y[1][0][0].z.a[0][0].b"u8));
 
-            Assert.AreEqual("{\"x\":{\"y\":[[[{\"z\":{\"a\":[[{\"b\":\"value1\"},{\"b\":\"value2\"}],[{\"b\":\"value3\"},{\"b\":\"value4\"}]]}},{\"z\":{\"a\":[[{\"b\":\"value5\"},{\"b\":\"value6\"}]]}}],[{\"z\":{\"a\":[[{\"b\":\"value7\"},{\"b\":\"value8\"}],[{\"b\":\"value9\"},{\"b\":\"value10\"}]]}}]],[[{\"z\":{\"a\":[[{\"b\":\"value11\"}]]}}]]]}}", jp.Serialize());
+            Assert.AreEqual("{\"x\":{\"y\":[[[{\"z\":{\"a\":[[{\"b\":\"value1\"},{\"b\":\"value2\"}],[{\"b\":\"value3\"},{\"b\":\"value4\"}]]}},{\"z\":{\"a\":[[{\"b\":\"value5\"},{\"b\":\"value6\"}]]}}],[{\"z\":{\"a\":[[{\"b\":\"value7\"},{\"b\":\"value8\"}],[{\"b\":\"value9\"},{\"b\":\"value10\"}]]}}]],[[{\"z\":{\"a\":[[{\"b\":\"value11\"}]]}}]]]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -600,7 +600,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("[\"value11\"]", jp.GetJson("$.x.y[1][0][0].z.a[0]"u8).ToString());
             Assert.AreEqual("value11", jp.GetString("$.x.y[1][0][0].z.a[0][0]"u8));
 
-            Assert.AreEqual("{\"x\":{\"y\":[[[{\"z\":{\"a\":[[\"value1\",\"value2\"],[\"value3\",\"value4\"]]}},{\"z\":{\"a\":[[\"value5\",\"value6\"]]}}],[{\"z\":{\"a\":[[\"value7\",\"value8\"],[\"value9\",\"value10\"]]}}]],[[{\"z\":{\"a\":[[\"value11\"]]}}]]]}}", jp.Serialize());
+            Assert.AreEqual("{\"x\":{\"y\":[[[{\"z\":{\"a\":[[\"value1\",\"value2\"],[\"value3\",\"value4\"]]}},{\"z\":{\"a\":[[\"value5\",\"value6\"]]}}],[{\"z\":{\"a\":[[\"value7\",\"value8\"],[\"value9\",\"value10\"]]}}]],[[{\"z\":{\"a\":[[\"value11\"]]}}]]]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -662,7 +662,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"a\":\"value9\"}", jp.GetJson("$.x.y[2][0]"u8).ToString());
             Assert.AreEqual("value9", jp.GetString("$.x.y[2][0].a"u8));
 
-            Assert.AreEqual("{\"x\":{\"y\":[[{\"a\":\"value1\"},{\"a\":\"value2\"},{\"a\":\"value5\"},{\"a\":\"value6\"}],[{\"a\":\"value3\"},{\"a\":\"value4\"},{\"a\":\"value7\"},{\"a\":\"value8\"}],[{\"a\":\"value9\"}]]}}", jp.Serialize());
+            Assert.AreEqual("{\"x\":{\"y\":[[{\"a\":\"value1\"},{\"a\":\"value2\"},{\"a\":\"value5\"},{\"a\":\"value6\"}],[{\"a\":\"value3\"},{\"a\":\"value4\"},{\"a\":\"value7\"},{\"a\":\"value8\"}],[{\"a\":\"value9\"}]]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -712,7 +712,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("[\"value9\"]", jp.GetJson("$.x.y[2]"u8).ToString());
             Assert.AreEqual("value9", jp.GetString("$.x.y[2][0]"u8));
 
-            Assert.AreEqual("{\"x\":{\"y\":[[\"value1\",\"value2\",\"value5\",\"value6\"],[\"value3\",\"value4\",\"value7\",\"value8\"],[\"value9\"]]}}", jp.Serialize());
+            Assert.AreEqual("{\"x\":{\"y\":[[\"value1\",\"value2\",\"value5\",\"value6\"],[\"value3\",\"value4\",\"value7\",\"value8\"],[\"value9\"]]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -754,7 +754,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"a\":\"value5\"}", jp.GetJson("$.x.y[2][0]"u8).ToString());
             Assert.AreEqual("value5", jp.GetString("$.x.y[2][0].a"u8));
 
-            Assert.AreEqual("{\"x\":{\"y\":[[{\"a\":\"value1\"},{\"a\":\"value2\"}],[{\"a\":\"value3\"},{\"a\":\"value4\"}],[{\"a\":\"value5\"}]]}}", jp.Serialize());
+            Assert.AreEqual("{\"x\":{\"y\":[[{\"a\":\"value1\"},{\"a\":\"value2\"}],[{\"a\":\"value3\"},{\"a\":\"value4\"}],[{\"a\":\"value5\"}]]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -791,7 +791,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("[\"value5\"]", jp.GetJson("$.x.y[2]"u8).ToString());
             Assert.AreEqual("value5", jp.GetString("$.x.y[2][0]"u8));
 
-            Assert.AreEqual("{\"x\":{\"y\":[[\"value1\",\"value2\"],[\"value3\",\"value4\"],[\"value5\"]]}}", jp.Serialize());
+            Assert.AreEqual("{\"x\":{\"y\":[[\"value1\",\"value2\"],[\"value3\",\"value4\"],[\"value5\"]]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -852,7 +852,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"a\":\"value9\"}", jp.GetJson("$.x[2][0]"u8).ToString());
             Assert.AreEqual("value9", jp.GetString("$.x[2][0].a"u8));
 
-            Assert.AreEqual("{\"x\":[[{\"a\":\"value1\"},{\"a\":\"value2\"},{\"a\":\"value5\"},{\"a\":\"value6\"}],[{\"a\":\"value3\"},{\"a\":\"value4\"},{\"a\":\"value7\"},{\"a\":\"value8\"}],[{\"a\":\"value9\"}]]}", jp.Serialize());
+            Assert.AreEqual("{\"x\":[[{\"a\":\"value1\"},{\"a\":\"value2\"},{\"a\":\"value5\"},{\"a\":\"value6\"}],[{\"a\":\"value3\"},{\"a\":\"value4\"},{\"a\":\"value7\"},{\"a\":\"value8\"}],[{\"a\":\"value9\"}]]}", jp.ToString("J"));
         }
 
         [Test]
@@ -900,7 +900,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("[\"value9\"]", jp.GetJson("$.x[2]"u8).ToString());
             Assert.AreEqual("value9", jp.GetString("$.x[2][0]"u8));
 
-            Assert.AreEqual("{\"x\":[[\"value1\",\"value2\",\"value5\",\"value6\"],[\"value3\",\"value4\",\"value7\",\"value8\"],[\"value9\"]]}", jp.Serialize());
+            Assert.AreEqual("{\"x\":[[\"value1\",\"value2\",\"value5\",\"value6\"],[\"value3\",\"value4\",\"value7\",\"value8\"],[\"value9\"]]}", jp.ToString("J"));
         }
 
         [Test]
@@ -941,7 +941,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"a\":\"value5\"}", jp.GetJson("$.x[2][0]"u8).ToString());
             Assert.AreEqual("value5", jp.GetString("$.x[2][0].a"u8));
 
-            Assert.AreEqual("{\"x\":[[{\"a\":\"value1\"},{\"a\":\"value2\"}],[{\"a\":\"value3\"},{\"a\":\"value4\"}],[{\"a\":\"value5\"}]]}", jp.Serialize());
+            Assert.AreEqual("{\"x\":[[{\"a\":\"value1\"},{\"a\":\"value2\"}],[{\"a\":\"value3\"},{\"a\":\"value4\"}],[{\"a\":\"value5\"}]]}", jp.ToString("J"));
         }
 
         [Test]
@@ -976,7 +976,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("[\"value5\"]", jp.GetJson("$.x[2]"u8).ToString());
             Assert.AreEqual("value5", jp.GetString("$.x[2][0]"u8));
 
-            Assert.AreEqual("{\"x\":[[\"value1\",\"value2\"],[\"value3\",\"value4\"],[\"value5\"]]}", jp.Serialize());
+            Assert.AreEqual("{\"x\":[[\"value1\",\"value2\"],[\"value3\",\"value4\"],[\"value5\"]]}", jp.ToString("J"));
         }
 
         [Test]
@@ -1036,7 +1036,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"a\":\"value9\"}", jp.GetJson("$[2][0]"u8).ToString());
             Assert.AreEqual("value9", jp.GetString("$[2][0].a"u8));
 
-            Assert.AreEqual("[[{\"a\":\"value1\"},{\"a\":\"value2\"},{\"a\":\"value5\"},{\"a\":\"value6\"}],[{\"a\":\"value3\"},{\"a\":\"value4\"},{\"a\":\"value7\"},{\"a\":\"value8\"}],[{\"a\":\"value9\"}]]", jp.Serialize());
+            Assert.AreEqual("[[{\"a\":\"value1\"},{\"a\":\"value2\"},{\"a\":\"value5\"},{\"a\":\"value6\"}],[{\"a\":\"value3\"},{\"a\":\"value4\"},{\"a\":\"value7\"},{\"a\":\"value8\"}],[{\"a\":\"value9\"}]]", jp.ToString("J"));
         }
 
         [Test]
@@ -1083,7 +1083,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("[\"value9\"]", jp.GetJson("$[2]"u8).ToString());
             Assert.AreEqual("value9", jp.GetString("$[2][0]"u8));
 
-            Assert.AreEqual("[[\"value1\",\"value2\",\"value5\",\"value6\"],[\"value3\",\"value4\",\"value7\",\"value8\"],[\"value9\"]]", jp.Serialize());
+            Assert.AreEqual("[[\"value1\",\"value2\",\"value5\",\"value6\"],[\"value3\",\"value4\",\"value7\",\"value8\"],[\"value9\"]]", jp.ToString("J"));
         }
 
         [Test]
@@ -1124,7 +1124,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"a\":\"value5\"}", jp.GetJson("$[2][0]"u8).ToString());
             Assert.AreEqual("value5", jp.GetString("$[2][0].a"u8));
 
-            Assert.AreEqual("[[{\"a\":\"value1\"},{\"a\":\"value2\"}],[{\"a\":\"value3\"},{\"a\":\"value4\"}],[{\"a\":\"value5\"}]]", jp.Serialize());
+            Assert.AreEqual("[[{\"a\":\"value1\"},{\"a\":\"value2\"}],[{\"a\":\"value3\"},{\"a\":\"value4\"}],[{\"a\":\"value5\"}]]", jp.ToString("J"));
         }
 
         [Test]
@@ -1160,7 +1160,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("[\"value5\"]", jp.GetJson("$[2]"u8).ToString());
             Assert.AreEqual("value5", jp.GetString("$[2][0]"u8));
 
-            Assert.AreEqual("[[\"value1\",\"value2\"],[\"value3\",\"value4\"],[\"value5\"]]", jp.Serialize());
+            Assert.AreEqual("[[\"value1\",\"value2\"],[\"value3\",\"value4\"],[\"value5\"]]", jp.ToString("J"));
         }
 
         [Test]
@@ -1233,7 +1233,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"b\":\"value9\"}", jp.GetJson("$.x.y[2].z.a[0]"u8).ToString());
             Assert.AreEqual("value9", jp.GetString("$.x.y[2].z.a[0].b"u8));
 
-            Assert.AreEqual("{\"x\":{\"y\":[{\"z\":{\"a\":[{\"b\":\"value1\"},{\"b\":\"value2\"},{\"b\":\"value5\"},{\"b\":\"value6\"}]}},{\"z\":{\"a\":[{\"b\":\"value3\"},{\"b\":\"value4\"},{\"b\":\"value7\"},{\"b\":\"value8\"}]}},{\"z\":{\"a\":[{\"b\":\"value9\"}]}}]}}", jp.Serialize());
+            Assert.AreEqual("{\"x\":{\"y\":[{\"z\":{\"a\":[{\"b\":\"value1\"},{\"b\":\"value2\"},{\"b\":\"value5\"},{\"b\":\"value6\"}]}},{\"z\":{\"a\":[{\"b\":\"value3\"},{\"b\":\"value4\"},{\"b\":\"value7\"},{\"b\":\"value8\"}]}},{\"z\":{\"a\":[{\"b\":\"value9\"}]}}]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -1293,7 +1293,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("[\"value9\"]", jp.GetJson("$.x.y[2].z.a"u8).ToString());
             Assert.AreEqual("value9", jp.GetString("$.x.y[2].z.a[0]"u8));
 
-            Assert.AreEqual("{\"x\":{\"y\":[{\"z\":{\"a\":[\"value1\",\"value2\",\"value5\",\"value6\"]}},{\"z\":{\"a\":[\"value3\",\"value4\",\"value7\",\"value8\"]}},{\"z\":{\"a\":[\"value9\"]}}]}}", jp.Serialize());
+            Assert.AreEqual("{\"x\":{\"y\":[{\"z\":{\"a\":[\"value1\",\"value2\",\"value5\",\"value6\"]}},{\"z\":{\"a\":[\"value3\",\"value4\",\"value7\",\"value8\"]}},{\"z\":{\"a\":[\"value9\"]}}]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -1341,7 +1341,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"b\":\"value5\"}", jp.GetJson("$.x.y[2].z.a[0]"u8).ToString());
             Assert.AreEqual("value5", jp.GetString("$.x.y[2].z.a[0].b"u8));
 
-            Assert.AreEqual("{\"x\":{\"y\":[{\"z\":{\"a\":[{\"b\":\"value1\"},{\"b\":\"value2\"}]}},{\"z\":{\"a\":[{\"b\":\"value3\"},{\"b\":\"value4\"}]}},{\"z\":{\"a\":[{\"b\":\"value5\"}]}}]}}", jp.Serialize());
+            Assert.AreEqual("{\"x\":{\"y\":[{\"z\":{\"a\":[{\"b\":\"value1\"},{\"b\":\"value2\"}]}},{\"z\":{\"a\":[{\"b\":\"value3\"},{\"b\":\"value4\"}]}},{\"z\":{\"a\":[{\"b\":\"value5\"}]}}]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -1384,7 +1384,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("[\"value5\"]", jp.GetJson("$.x.y[2].z.a"u8).ToString());
             Assert.AreEqual("value5", jp.GetString("$.x.y[2].z.a[0]"u8));
 
-            Assert.AreEqual("{\"x\":{\"y\":[{\"z\":{\"a\":[\"value1\",\"value2\"]}},{\"z\":{\"a\":[\"value3\",\"value4\"]}},{\"z\":{\"a\":[\"value5\"]}}]}}", jp.Serialize());
+            Assert.AreEqual("{\"x\":{\"y\":[{\"z\":{\"a\":[\"value1\",\"value2\"]}},{\"z\":{\"a\":[\"value3\",\"value4\"]}},{\"z\":{\"a\":[\"value5\"]}}]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -1416,7 +1416,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"a\":\"value4\"}", jp.GetJson("$.x.y[3]"u8).ToString());
             Assert.AreEqual("value4", jp.GetString("$.x.y[3].a"u8));
 
-            Assert.AreEqual("{\"x\":{\"y\":[{\"a\":\"value1\"},{\"a\":\"value2\"},{\"a\":\"value3\"},{\"a\":\"value4\"}]}}", jp.Serialize());
+            Assert.AreEqual("{\"x\":{\"y\":[{\"a\":\"value1\"},{\"a\":\"value2\"},{\"a\":\"value3\"},{\"a\":\"value4\"}]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -1442,7 +1442,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("value3", jp.GetString("$.x.y[2]"u8));
             Assert.AreEqual("value4", jp.GetString("$.x.y[3]"u8));
 
-            Assert.AreEqual("{\"x\":{\"y\":[\"value1\",\"value2\",\"value3\",\"value4\"]}}", jp.Serialize());
+            Assert.AreEqual("{\"x\":{\"y\":[\"value1\",\"value2\",\"value3\",\"value4\"]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -1463,7 +1463,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"a\":\"value2\"}", jp.GetJson("$.x.y[1]"u8).ToString());
             Assert.AreEqual("value2", jp.GetString("$.x.y[1].a"u8));
 
-            Assert.AreEqual("{\"x\":{\"y\":[{\"a\":\"value1\"},{\"a\":\"value2\"}]}}", jp.Serialize());
+            Assert.AreEqual("{\"x\":{\"y\":[{\"a\":\"value1\"},{\"a\":\"value2\"}]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -1482,7 +1482,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("value1", jp.GetString("$.x.y[0]"u8));
             Assert.AreEqual("value2", jp.GetString("$.x.y[1]"u8));
 
-            Assert.AreEqual("{\"x\":{\"y\":[\"value1\",\"value2\"]}}", jp.Serialize());
+            Assert.AreEqual("{\"x\":{\"y\":[\"value1\",\"value2\"]}}", jp.ToString("J"));
         }
 
         [Test]
@@ -1553,7 +1553,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"a\":\"value9\"}", jp.GetJson("$.x[2].y.z[0]"u8).ToString());
             Assert.AreEqual("value9", jp.GetString("$.x[2].y.z[0].a"u8));
 
-            Assert.AreEqual("{\"x\":[{\"y\":{\"z\":[{\"a\":\"value1\"},{\"a\":\"value2\"},{\"a\":\"value5\"},{\"a\":\"value6\"}]}},{\"y\":{\"z\":[{\"a\":\"value3\"},{\"a\":\"value4\"},{\"a\":\"value7\"},{\"a\":\"value8\"}]}},{\"y\":{\"z\":[{\"a\":\"value9\"}]}}]}", jp.Serialize());
+            Assert.AreEqual("{\"x\":[{\"y\":{\"z\":[{\"a\":\"value1\"},{\"a\":\"value2\"},{\"a\":\"value5\"},{\"a\":\"value6\"}]}},{\"y\":{\"z\":[{\"a\":\"value3\"},{\"a\":\"value4\"},{\"a\":\"value7\"},{\"a\":\"value8\"}]}},{\"y\":{\"z\":[{\"a\":\"value9\"}]}}]}", jp.ToString("J"));
         }
 
         [Test]
@@ -1611,7 +1611,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("[\"value9\"]", jp.GetJson("$.x[2].y.z"u8).ToString());
             Assert.AreEqual("value9", jp.GetString("$.x[2].y.z[0]"u8));
 
-            Assert.AreEqual("{\"x\":[{\"y\":{\"z\":[\"value1\",\"value2\",\"value5\",\"value6\"]}},{\"y\":{\"z\":[\"value3\",\"value4\",\"value7\",\"value8\"]}},{\"y\":{\"z\":[\"value9\"]}}]}", jp.Serialize());
+            Assert.AreEqual("{\"x\":[{\"y\":{\"z\":[\"value1\",\"value2\",\"value5\",\"value6\"]}},{\"y\":{\"z\":[\"value3\",\"value4\",\"value7\",\"value8\"]}},{\"y\":{\"z\":[\"value9\"]}}]}", jp.ToString("J"));
         }
 
         [Test]
@@ -1658,7 +1658,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"a\":\"value5\"}", jp.GetJson("$.x[2].y.z[0]"u8).ToString());
             Assert.AreEqual("value5", jp.GetString("$.x[2].y.z[0].a"u8));
 
-            Assert.AreEqual("{\"x\":[{\"y\":{\"z\":[{\"a\":\"value1\"},{\"a\":\"value2\"}]}},{\"y\":{\"z\":[{\"a\":\"value3\"},{\"a\":\"value4\"}]}},{\"y\":{\"z\":[{\"a\":\"value5\"}]}}]}", jp.Serialize());
+            Assert.AreEqual("{\"x\":[{\"y\":{\"z\":[{\"a\":\"value1\"},{\"a\":\"value2\"}]}},{\"y\":{\"z\":[{\"a\":\"value3\"},{\"a\":\"value4\"}]}},{\"y\":{\"z\":[{\"a\":\"value5\"}]}}]}", jp.ToString("J"));
         }
 
         [Test]
@@ -1700,7 +1700,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("[\"value5\"]", jp.GetJson("$.x[2].y.z"u8).ToString());
             Assert.AreEqual("value5", jp.GetString("$.x[2].y.z[0]"u8));
 
-            Assert.AreEqual("{\"x\":[{\"y\":{\"z\":[\"value1\",\"value2\"]}},{\"y\":{\"z\":[\"value3\",\"value4\"]}},{\"y\":{\"z\":[\"value5\"]}}]}", jp.Serialize());
+            Assert.AreEqual("{\"x\":[{\"y\":{\"z\":[\"value1\",\"value2\"]}},{\"y\":{\"z\":[\"value3\",\"value4\"]}},{\"y\":{\"z\":[\"value5\"]}}]}", jp.ToString("J"));
         }
 
         [Test]
@@ -1766,7 +1766,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"a\":\"value9\"}", jp.GetJson("$.x[2].y[0]"u8).ToString());
             Assert.AreEqual("value9", jp.GetString("$.x[2].y[0].a"u8));
 
-            Assert.AreEqual("{\"x\":[{\"y\":[{\"a\":\"value1\"},{\"a\":\"value2\"},{\"a\":\"value5\"},{\"a\":\"value6\"}]},{\"y\":[{\"a\":\"value3\"},{\"a\":\"value4\"},{\"a\":\"value7\"},{\"a\":\"value8\"}]},{\"y\":[{\"a\":\"value9\"}]}]}", jp.Serialize());
+            Assert.AreEqual("{\"x\":[{\"y\":[{\"a\":\"value1\"},{\"a\":\"value2\"},{\"a\":\"value5\"},{\"a\":\"value6\"}]},{\"y\":[{\"a\":\"value3\"},{\"a\":\"value4\"},{\"a\":\"value7\"},{\"a\":\"value8\"}]},{\"y\":[{\"a\":\"value9\"}]}]}", jp.ToString("J"));
         }
 
         [Test]
@@ -1819,7 +1819,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("[\"value9\"]", jp.GetJson("$.x[2].y"u8).ToString());
             Assert.AreEqual("value9", jp.GetString("$.x[2].y[0]"u8));
 
-            Assert.AreEqual("{\"x\":[{\"y\":[\"value1\",\"value2\",\"value5\",\"value6\"]},{\"y\":[\"value3\",\"value4\",\"value7\",\"value8\"]},{\"y\":[\"value9\"]}]}", jp.Serialize());
+            Assert.AreEqual("{\"x\":[{\"y\":[\"value1\",\"value2\",\"value5\",\"value6\"]},{\"y\":[\"value3\",\"value4\",\"value7\",\"value8\"]},{\"y\":[\"value9\"]}]}", jp.ToString("J"));
         }
 
         [Test]
@@ -1865,7 +1865,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"a\":\"value6\"}", jp.GetJson("$.x[2].y[1]"u8).ToString());
             Assert.AreEqual("value6", jp.GetString("$.x[2].y[1].a"u8));
 
-            Assert.AreEqual("{\"x\":[{\"y\":[{\"a\":\"value1\"},{\"a\":\"value2\"}]},{\"y\":[{\"a\":\"value3\"},{\"a\":\"value4\"}]},{\"y\":[{\"a\":\"value5\"},{\"a\":\"value6\"}]}]}", jp.Serialize());
+            Assert.AreEqual("{\"x\":[{\"y\":[{\"a\":\"value1\"},{\"a\":\"value2\"}]},{\"y\":[{\"a\":\"value3\"},{\"a\":\"value4\"}]},{\"y\":[{\"a\":\"value5\"},{\"a\":\"value6\"}]}]}", jp.ToString("J"));
         }
 
         [Test]
@@ -1905,7 +1905,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("value5", jp.GetString("$.x[2].y[0]"u8));
             Assert.AreEqual("value6", jp.GetString("$.x[2].y[1]"u8));
 
-            Assert.AreEqual("{\"x\":[{\"y\":[\"value1\",\"value2\"]},{\"y\":[\"value3\",\"value4\"]},{\"y\":[\"value5\",\"value6\"]}]}", jp.Serialize());
+            Assert.AreEqual("{\"x\":[{\"y\":[\"value1\",\"value2\"]},{\"y\":[\"value3\",\"value4\"]},{\"y\":[\"value5\",\"value6\"]}]}", jp.ToString("J"));
         }
 
         [Test]
@@ -1935,7 +1935,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"a\":\"value4\"}", jp.GetJson("$.x[3]"u8).ToString());
             Assert.AreEqual("value4", jp.GetString("$.x[3].a"u8));
 
-            Assert.AreEqual("{\"x\":[{\"a\":\"value1\"},{\"a\":\"value2\"},{\"a\":\"value3\"},{\"a\":\"value4\"}]}", jp.Serialize());
+            Assert.AreEqual("{\"x\":[{\"a\":\"value1\"},{\"a\":\"value2\"},{\"a\":\"value3\"},{\"a\":\"value4\"}]}", jp.ToString("J"));
         }
 
         [Test]
@@ -1959,7 +1959,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("value3", jp.GetString("$.x[2]"u8));
             Assert.AreEqual("value4", jp.GetString("$.x[3]"u8));
 
-            Assert.AreEqual("{\"x\":[\"value1\",\"value2\",\"value3\",\"value4\"]}", jp.Serialize());
+            Assert.AreEqual("{\"x\":[\"value1\",\"value2\",\"value3\",\"value4\"]}", jp.ToString("J"));
         }
 
         [Test]
@@ -1979,7 +1979,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"a\":\"value2\"}", jp.GetJson("$.x[1]"u8).ToString());
             Assert.AreEqual("value2", jp.GetString("$.x[1].a"u8));
 
-            Assert.AreEqual("{\"x\":[{\"a\":\"value1\"},{\"a\":\"value2\"}]}", jp.Serialize());
+            Assert.AreEqual("{\"x\":[{\"a\":\"value1\"},{\"a\":\"value2\"}]}", jp.ToString("J"));
         }
 
         [Test]
@@ -1997,7 +1997,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("value1", jp.GetString("$.x[0]"u8));
             Assert.AreEqual("value2", jp.GetString("$.x[1]"u8));
 
-            Assert.AreEqual("{\"x\":[\"value1\",\"value2\"]}", jp.Serialize());
+            Assert.AreEqual("{\"x\":[\"value1\",\"value2\"]}", jp.ToString("J"));
         }
 
         [Test]
@@ -2026,7 +2026,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"a\":\"value4\"}", jp.GetJson("$[3]"u8).ToString());
             Assert.AreEqual("value4", jp.GetString("$[3].a"u8));
 
-            Assert.AreEqual("[{\"a\":\"value1\"},{\"a\":\"value2\"},{\"a\":\"value3\"},{\"a\":\"value4\"}]", jp.Serialize());
+            Assert.AreEqual("[{\"a\":\"value1\"},{\"a\":\"value2\"},{\"a\":\"value3\"},{\"a\":\"value4\"}]", jp.ToString("J"));
         }
 
         [Test]
@@ -2049,7 +2049,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("value3", jp.GetString("$[2]"u8));
             Assert.AreEqual("value4", jp.GetString("$[3]"u8));
 
-            Assert.AreEqual("[\"value1\",\"value2\",\"value3\",\"value4\"]", jp.Serialize());
+            Assert.AreEqual("[\"value1\",\"value2\",\"value3\",\"value4\"]", jp.ToString("J"));
         }
 
         [Test]
@@ -2069,7 +2069,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"a\":\"value2\"}", jp.GetJson("$[1]"u8).ToString());
             Assert.AreEqual("value2", jp.GetString("$[1].a"u8));
 
-            Assert.AreEqual("[{\"a\":\"value1\"},{\"a\":\"value2\"}]", jp.Serialize());
+            Assert.AreEqual("[{\"a\":\"value1\"},{\"a\":\"value2\"}]", jp.ToString("J"));
         }
 
         [Test]
@@ -2087,7 +2087,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("value1", jp.GetString("$[0]"u8));
             Assert.AreEqual("value2", jp.GetString("$[1]"u8));
 
-            Assert.AreEqual("[\"value1\",\"value2\"]", jp.Serialize());
+            Assert.AreEqual("[\"value1\",\"value2\"]", jp.ToString("J"));
         }
     }
 }

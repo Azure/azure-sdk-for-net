@@ -38,7 +38,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.nullProperty"u8, out bool? nullablePropertyNull));
             Assert.AreEqual(null, nullablePropertyNull);
 
-            Assert.AreEqual("{\"property\":true,\"property2\":false,\"nullProperty\":null}", jp.Serialize());
+            Assert.AreEqual("{\"property\":true,\"property2\":false,\"nullProperty\":null}", jp.ToString("J"));
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.nullProperty"u8, out byte? nullProperty));
             Assert.AreEqual(null, nullProperty);
 
-            Assert.AreEqual("{\"property\":5,\"nullProperty\":null}", jp.Serialize());
+            Assert.AreEqual("{\"property\":5,\"nullProperty\":null}", jp.ToString("J"));
         }
 
         [Test]
@@ -166,7 +166,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.nullProperty"u8, out DateTime? nullProperty));
             Assert.AreEqual(null, nullProperty);
 
-            Assert.AreEqual("{\"property\":\"12/25/2025 06:07:08\",\"nullProperty\":null}", jp.Serialize());
+            Assert.AreEqual("{\"property\":\"12/25/2025 06:07:08\",\"nullProperty\":null}", jp.ToString("J"));
         }
 
         [Test]
@@ -230,7 +230,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.nullProperty"u8, out DateTimeOffset? nullProperty));
             Assert.AreEqual(null, nullProperty);
 
-            Assert.AreEqual("{\"property\":\"12/25/2025 06:07:08 \\u002B02:00\",\"nullProperty\":null}", jp.Serialize());
+            Assert.AreEqual("{\"property\":\"12/25/2025 06:07:08 \\u002B02:00\",\"nullProperty\":null}", jp.ToString("J"));
         }
 
         [Test]
@@ -294,7 +294,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.nullProperty"u8, out decimal? nullProperty));
             Assert.AreEqual(null, nullProperty);
 
-            Assert.AreEqual("{\"property\":24.56,\"nullProperty\":null}", jp.Serialize());
+            Assert.AreEqual("{\"property\":24.56,\"nullProperty\":null}", jp.ToString("J"));
         }
 
         [Test]
@@ -358,7 +358,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.nullProperty"u8, out double? nullProperty));
             Assert.AreEqual(null, nullProperty);
 
-            Assert.AreEqual("{\"property\":24.56,\"nullProperty\":null}", jp.Serialize());
+            Assert.AreEqual("{\"property\":24.56,\"nullProperty\":null}", jp.ToString("J"));
         }
 
         [Test]
@@ -422,7 +422,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.nullProperty"u8, out float? nullProperty));
             Assert.AreEqual(null, nullProperty);
 
-            Assert.AreEqual("{\"property\":24.5,\"nullProperty\":null}", jp.Serialize());
+            Assert.AreEqual("{\"property\":24.5,\"nullProperty\":null}", jp.ToString("J"));
         }
 
         [Test]
@@ -486,7 +486,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.nullProperty"u8, out Guid? nullProperty));
             Assert.AreEqual(null, nullProperty);
 
-            Assert.AreEqual("{\"property\":\"12345678-1234-1234-1234-1234567890ab\",\"nullProperty\":null}", jp.Serialize());
+            Assert.AreEqual("{\"property\":\"12345678-1234-1234-1234-1234567890ab\",\"nullProperty\":null}", jp.ToString("J"));
         }
 
         [Test]
@@ -550,7 +550,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.nullProperty"u8, out int? nullProperty));
             Assert.AreEqual(null, nullProperty);
 
-            Assert.AreEqual("{\"property\":123,\"nullProperty\":null}", jp.Serialize());
+            Assert.AreEqual("{\"property\":123,\"nullProperty\":null}", jp.ToString("J"));
         }
 
         [Test]
@@ -614,7 +614,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.nullProperty"u8, out long? nullProperty));
             Assert.AreEqual(null, nullProperty);
 
-            Assert.AreEqual("{\"property\":2147483648,\"nullProperty\":null}", jp.Serialize());
+            Assert.AreEqual("{\"property\":2147483648,\"nullProperty\":null}", jp.ToString("J"));
         }
 
         [Test]
@@ -678,7 +678,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.nullProperty"u8, out sbyte? nullProperty));
             Assert.AreEqual(null, nullProperty);
 
-            Assert.AreEqual("{\"property\":64,\"nullProperty\":null}", jp.Serialize());
+            Assert.AreEqual("{\"property\":64,\"nullProperty\":null}", jp.ToString("J"));
         }
 
         [Test]
@@ -742,7 +742,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.nullProperty"u8, out short? nullProperty));
             Assert.AreEqual(null, nullProperty);
 
-            Assert.AreEqual("{\"property\":128,\"nullProperty\":null}", jp.Serialize());
+            Assert.AreEqual("{\"property\":128,\"nullProperty\":null}", jp.ToString("J"));
         }
 
         [Test]
@@ -806,7 +806,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.nullProperty"u8, out TimeSpan? nullProperty));
             Assert.AreEqual(null, nullProperty);
 
-            Assert.AreEqual("{\"property\":\"1.01:01:01.0010000\",\"nullProperty\":null}", jp.Serialize());
+            Assert.AreEqual("{\"property\":\"1.01:01:01.0010000\",\"nullProperty\":null}", jp.ToString("J"));
         }
 
         [Test]
@@ -870,7 +870,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.nullProperty"u8, out uint? nullProperty));
             Assert.AreEqual(null, nullProperty);
 
-            Assert.AreEqual("{\"property\":2147483648,\"nullProperty\":null}", jp.Serialize());
+            Assert.AreEqual("{\"property\":2147483648,\"nullProperty\":null}", jp.ToString("J"));
         }
 
         [Test]
@@ -934,7 +934,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.nullProperty"u8, out ulong? nullProperty));
             Assert.AreEqual(null, nullProperty);
 
-            Assert.AreEqual("{\"property\":9223372036854775808,\"nullProperty\":null}", jp.Serialize());
+            Assert.AreEqual("{\"property\":9223372036854775808,\"nullProperty\":null}", jp.ToString("J"));
         }
 
         [Test]
@@ -998,7 +998,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetNullableValue("$.nullProperty"u8, out ushort? nullProperty));
             Assert.AreEqual(null, nullProperty);
 
-            Assert.AreEqual("{\"property\":32768,\"nullProperty\":null}", jp.Serialize());
+            Assert.AreEqual("{\"property\":32768,\"nullProperty\":null}", jp.ToString("J"));
         }
 
         [Test]
@@ -1055,7 +1055,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.TryGetValue("$.property2"u8, out property));
             Assert.AreEqual(null, property);
 
-            Assert.AreEqual("{\"property\":\"value\",\"property2\":null}", jp.Serialize());
+            Assert.AreEqual("{\"property\":\"value\",\"property2\":null}", jp.ToString("J"));
         }
 
         [Test]
