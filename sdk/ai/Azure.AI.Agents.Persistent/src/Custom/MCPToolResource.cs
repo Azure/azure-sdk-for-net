@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
 {
@@ -39,5 +40,13 @@ namespace Azure.AI.Agents.Persistent
             toolResources.Mcp.Add(this);
             return toolResources;
         }
+
+        /// <summary>
+        /// Get or set the MCP approval.
+        /// </summary>
+        public MCPApproval RequireApproval {  get => MCPApproval.FromBinaryData(RequireApprovalInternal); set => RequireApprovalInternal = value?.ToBinaryData(); }
+
+        [CodeGenMember("RequireApproval")]
+        internal BinaryData RequireApprovalInternal { get; set; }
     }
 }
