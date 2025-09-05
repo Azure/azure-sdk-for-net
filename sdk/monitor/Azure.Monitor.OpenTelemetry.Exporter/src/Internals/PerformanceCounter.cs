@@ -3,7 +3,7 @@ using System.Diagnostics.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal sealed class PerformanceCounter
+    internal sealed class PerformanceCounter : IDisposable
     {
         private readonly MeterProvider _meterProvider;
         private readonly Meter _perfCounterMeter;
@@ -23,17 +23,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly int _processorCount = Environment.ProcessorCount;
 
         // state for telemetry item related counts
-        private long _totalExceptionCount = 0;
+        private readonly PerfCounterItemCounts _itemCounts;
         private long _lastExceptionRateCount = 0;
         private DateTimeOffset _lastExceptionRateTime = DateTimeOffset.UtcNow;
-        private long _totalRequestCount = 0;
         private long _lastRequestRateCount = 0;
         private DateTimeOffset _lastRequestRateTime = DateTimeOffset.UtcNow;
 
-        public PerformanceCounter(MeterProvider meterProvider)
+        private bool _disposed;
+
+        public PerformanceCounter(MeterProvider meterProvider, PerfCounterItemCounts itemCounts)
         {
             _meterProvider = meterProvider;
             _perfCounterMeter = new Meter(PerfCounterConstants.PerfCounterMeterName);
+            _itemCounts = itemCounts;
 
             // Create observable gauges for perf counter
             _exceptionRateGauge = _perfCounterMeter.CreateObservableGauge(
@@ -62,21 +64,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 description: "Process private bytes gauge");
         }
 
-        public void IncrementExceptionCount()
-        {
-            Interlocked.Increment(ref _totalExceptionCount);
-        }
-
-        public void IncrementRequestCount()
-        {
-            Interlocked.Increment(ref _totalRequestCount);
-        }
-
         // Placeholder methods for gauge callbacks
         private double GetExceptionRate()
         {
             var currentTime = DateTimeOffset.UtcNow;
-            var totalExceptions = Interlocked.Read(ref _totalExceptionCount);
+            var totalExceptions = _itemCounts.ReadExceptionCount();
             var intervalData = totalExceptions - _lastExceptionRateCount;
             var elapsedSeconds = (currentTime - _lastExceptionRateTime).TotalSeconds;
 
@@ -94,7 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private double GetRequestRate()
         {
             var currentTime = DateTimeOffset.UtcNow;
-            var totalRequests = Interlocked.Read(ref _totalRequestCount);
+            var totalRequests = _itemCounts.ReadRequestCount();
             var intervalRequests = totalRequests - _lastRequestRateCount;
             var elapsedSec = (currentTime - _lastRequestRateTime).TotalSeconds;
 
@@ -173,6 +165,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             period = period != 0 ? period : 1;
             calculatedValue = diff * 100.0 / period;
             return true;
+        }
+
+        public void Dispose()
+        {
+            if (_disposed) return;
+            try
+            {
+                _perfCounterMeter?.Dispose(); // Do NOT dispose _meterProvider (shared elsewhere)
+            }
+            catch { }
+            _disposed = true;
         }
     }
 }

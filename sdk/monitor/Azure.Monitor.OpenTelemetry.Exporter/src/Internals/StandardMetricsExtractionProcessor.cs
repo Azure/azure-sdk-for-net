@@ -19,6 +19,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly Meter _meter;
         private readonly Histogram<double> _requestDuration;
         private readonly Histogram<double> _dependencyDuration;
+        private readonly PerformanceCounter _performanceCounter;
+        private readonly PerfCounterItemCounts _itemCounts;
 
         internal static readonly IReadOnlyDictionary<string, string> s_standardMetricNameMapping = new Dictionary<string, string>()
         {
@@ -28,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal AzureMonitorResource? StandardMetricResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource();
 
-        internal StandardMetricsExtractionProcessor(AzureMonitorMetricExporter metricExporter)
+        internal StandardMetricsExtractionProcessor(AzureMonitorMetricExporter metricExporter, PerfCounterItemCounts itemCounts)
         {
             _meterProvider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(StandardMetricConstants.StandardMetricMeterName)
@@ -37,8 +39,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
             _meter = new Meter(StandardMetricConstants.StandardMetricMeterName);
+            _itemCounts = itemCounts;
+            _performanceCounter = new PerformanceCounter(_meterProvider, _itemCounts);
             _requestDuration = _meter.CreateHistogram<double>(StandardMetricConstants.RequestDurationInstrumentName);
             _dependencyDuration = _meter.CreateHistogram<double>(StandardMetricConstants.DependencyDurationInstrumentName);
+            
         }
 
         public override void OnEnd(Activity activity)
@@ -57,6 +62,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     activity.SetTag("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')");
                     ReportDependencyDurationMetric(activity);
+                }
+            }
+            if (activity.Events != null)
+            {
+                foreach (ref readonly var @event in activity.EnumerateEvents())
+                {
+                    if (@event.Name == SemanticConventions.AttributeExceptionEventName)
+                    {
+                       _itemCounts.IncrementExceptionCount();
+                    }
                 }
             }
         }
@@ -83,6 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             // Report metric
             _requestDuration.Record(activity.Duration.TotalMilliseconds, tags);
+            _itemCounts.IncrementRequestCount();
         }
 
         private void ReportDependencyDurationMetric(Activity activity)
@@ -144,6 +160,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         _meterProvider?.Dispose();
                         _meter?.Dispose();
+                        _performanceCounter?.Dispose();
                     }
                     catch (Exception)
                     {

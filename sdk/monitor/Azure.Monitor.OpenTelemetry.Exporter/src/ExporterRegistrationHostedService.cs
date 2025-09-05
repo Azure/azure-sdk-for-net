@@ -29,7 +29,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     internal sealed class ExporterRegistrationHostedService : IHostedService
     {
         private readonly IServiceProvider _serviceProvider;
-
         public ExporterRegistrationHostedService(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
@@ -49,6 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private static void Initialize(IServiceProvider serviceProvider)
         {
             Debug.Assert(serviceProvider != null, "serviceProvider was null");
+            PerfCounterItemCounts itemCounts = new PerfCounterItemCounts();
 
             var tracerProvider = serviceProvider!.GetService<TracerProvider>();
             if (tracerProvider != null)
@@ -68,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // TODO: Add Ai Sampler.
                 tracerProvider.AddProcessor(new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
                 {
-                    new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions)),
+                    new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions), itemCounts),
                     new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions))
                 }));
             }
@@ -89,13 +89,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                     loggerProvider.AddProcessor(new CompositeProcessor<LogRecord>(new BaseProcessor<LogRecord>[]
                         {
+                                new PerfCounterLogProcessor(itemCounts),
                                 new LiveMetricsLogProcessor(manager),
                                 new BatchLogRecordExportProcessor(exporter)
                         }));
                 }
                 else
                 {
-                    loggerProvider.AddProcessor(new BatchLogRecordExportProcessor(exporter));
+                    loggerProvider.AddProcessor(new CompositeProcessor<LogRecord>(new BaseProcessor<LogRecord>[]
+                    {
+                        new PerfCounterLogProcessor(itemCounts),
+                        new BatchLogRecordExportProcessor(exporter)
+                    }));
                 }
             }
         }
