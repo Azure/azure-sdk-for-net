@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,8 +36,7 @@ namespace Azure.AI.VoiceLive
                     string credentialValue = _credential.Key;
                     clientWebSocket.Options.SetRequestHeader("api-key", $"{credentialValue}");
                 }
-
-                if (_tokenCredential != null)
+                else if (_tokenCredential != null)
                 {
                     var tokenOptions = new TokenRequestContext(new string[] { "https://cognitiveservices.azure.com/.default" });
 
