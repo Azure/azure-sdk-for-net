@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed exception when output variable has a type of array or object.
+
 ### Other Changes
 
 ## 1.4.0-beta.1 (2025-09-03)
