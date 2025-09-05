@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2025-06-10)
+
+### Features Added
+- Upgraded api-version tag from 'package-preview-2023-07' to 'package-2025-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/8600539fa5ba6c774b4454a401d9cd3cf01a36a7/specification/dnsresolver/resource-manager/readme.md.
+- Adds new POST bulk API for large domain list usage.
+
+### Other Changes
+- BlockResponseCode has been removed from the DnsSecurityRule Action type in api-version `2025-05-01` from `2023-07-01-preview`.
 
 ## 1.2.0-beta.1 (2024-10-24)
 

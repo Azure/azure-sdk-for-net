@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Media.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMediaContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MediaJobOutput)} does not support writing '{options.Format}' format.");
             }

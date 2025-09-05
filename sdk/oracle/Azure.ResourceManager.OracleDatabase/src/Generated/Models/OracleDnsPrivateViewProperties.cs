@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -47,36 +46,45 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OracleDnsPrivateViewProperties"/>. </summary>
-        /// <param name="ocid"> The OCID of the view. </param>
+        /// <param name="dnsPrivateViewOcid"> The OCID of the view. </param>
+        /// <param name="displayName"> The display name of the view resource. </param>
         /// <param name="isProtected"> A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed. </param>
+        /// <param name="dnsPrivateViewLifecycleState"> Views lifecycleState. </param>
         /// <param name="self"> The canonical absolute URL of the resource. </param>
         /// <param name="createdOn"> views timeCreated. </param>
         /// <param name="updatedOn"> views timeCreated. </param>
-        public OracleDnsPrivateViewProperties(ResourceIdentifier ocid, bool isProtected, string self, DateTimeOffset createdOn, DateTimeOffset updatedOn)
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsPrivateViewOcid"/>, <paramref name="displayName"/> or <paramref name="self"/> is null. </exception>
+        internal OracleDnsPrivateViewProperties(string dnsPrivateViewOcid, string displayName, bool isProtected, DnsPrivateViewsLifecycleState dnsPrivateViewLifecycleState, string self, DateTimeOffset createdOn, DateTimeOffset updatedOn)
         {
-            Ocid = ocid;
+            Argument.AssertNotNull(dnsPrivateViewOcid, nameof(dnsPrivateViewOcid));
+            Argument.AssertNotNull(displayName, nameof(displayName));
+            Argument.AssertNotNull(self, nameof(self));
+
+            DnsPrivateViewOcid = dnsPrivateViewOcid;
+            DisplayName = displayName;
             IsProtected = isProtected;
+            DnsPrivateViewLifecycleState = dnsPrivateViewLifecycleState;
             Self = self;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="OracleDnsPrivateViewProperties"/>. </summary>
-        /// <param name="ocid"> The OCID of the view. </param>
+        /// <param name="dnsPrivateViewOcid"> The OCID of the view. </param>
         /// <param name="displayName"> The display name of the view resource. </param>
         /// <param name="isProtected"> A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed. </param>
-        /// <param name="lifecycleState"> Views lifecycleState. </param>
+        /// <param name="dnsPrivateViewLifecycleState"> Views lifecycleState. </param>
         /// <param name="self"> The canonical absolute URL of the resource. </param>
         /// <param name="createdOn"> views timeCreated. </param>
         /// <param name="updatedOn"> views timeCreated. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OracleDnsPrivateViewProperties(ResourceIdentifier ocid, string displayName, bool isProtected, DnsPrivateViewsLifecycleState? lifecycleState, string self, DateTimeOffset createdOn, DateTimeOffset updatedOn, OracleDatabaseResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OracleDnsPrivateViewProperties(string dnsPrivateViewOcid, string displayName, bool isProtected, DnsPrivateViewsLifecycleState dnsPrivateViewLifecycleState, string self, DateTimeOffset createdOn, DateTimeOffset updatedOn, OracleDatabaseResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Ocid = ocid;
+            DnsPrivateViewOcid = dnsPrivateViewOcid;
             DisplayName = displayName;
             IsProtected = isProtected;
-            LifecycleState = lifecycleState;
+            DnsPrivateViewLifecycleState = dnsPrivateViewLifecycleState;
             Self = self;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
@@ -90,13 +98,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> The OCID of the view. </summary>
-        public ResourceIdentifier Ocid { get; }
+        public string DnsPrivateViewOcid { get; }
         /// <summary> The display name of the view resource. </summary>
         public string DisplayName { get; }
         /// <summary> A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed. </summary>
         public bool IsProtected { get; }
         /// <summary> Views lifecycleState. </summary>
-        public DnsPrivateViewsLifecycleState? LifecycleState { get; }
+        public DnsPrivateViewsLifecycleState DnsPrivateViewLifecycleState { get; }
         /// <summary> The canonical absolute URL of the resource. </summary>
         public string Self { get; }
         /// <summary> views timeCreated. </summary>

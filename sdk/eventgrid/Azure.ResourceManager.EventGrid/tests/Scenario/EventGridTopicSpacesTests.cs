@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
 
             Assert.AreEqual(EventGridNamespace.Data.Name, namespaceName);
         }
+
         [Test]
         public async Task TopicSpacesCreateGetUpdateDelete()
         {
@@ -86,6 +87,7 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
             Assert.AreEqual("Updated Topic Space Description", updatedTopicSpace.Data.Description);
             await updatedTopicSpace.DeleteAsync(WaitUntil.Completed);
         }
+
         [Test]
         public async Task ListTopicSpaces()
         {
@@ -112,6 +114,34 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
 
             foreach (var topicSpace in topicSpaces)
                 await topicSpace.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Test]
+        public async Task TopicSpaceResourceGetAsync()
+        {
+            // Arrange
+            string topicSpaceName = Recording.GenerateAssetName("topicspace-get-");
+            var topicSpaceData = new TopicSpaceData
+            {
+                Description = "GetAsync Test Topic Space",
+                TopicTemplates = { "Microsoft.Resources.ResourceWriteSuccess" }
+            };
+
+            // Create the topic space
+            var createOperation = await EventGridNamespace.GetTopicSpaces().CreateOrUpdateAsync(WaitUntil.Completed, topicSpaceName, topicSpaceData);
+            var topicSpace = createOperation.Value;
+
+            // Act
+            var getResponse = await topicSpace.GetAsync();
+
+            // Assert
+            Assert.IsNotNull(getResponse);
+            Assert.IsNotNull(getResponse.Value);
+            Assert.IsNotNull(getResponse.Value.Data);
+            Assert.AreEqual(topicSpaceName, getResponse.Value.Data.Name);
+
+            // Cleanup
+            await getResponse.Value.DeleteAsync(WaitUntil.Completed);
         }
 
         [OneTimeTearDown]

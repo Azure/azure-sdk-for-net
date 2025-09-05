@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class RoutingIntentResource : IJsonModel<RoutingIntentData>
     {
+        private static RoutingIntentData s_dataDeserializationInstance;
+        private static RoutingIntentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RoutingIntentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RoutingIntentData>)Data).Write(writer, options);
 
-        RoutingIntentData IJsonModel<RoutingIntentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RoutingIntentData>)Data).Create(ref reader, options);
+        RoutingIntentData IJsonModel<RoutingIntentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RoutingIntentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RoutingIntentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RoutingIntentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RoutingIntentData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        RoutingIntentData IPersistableModel<RoutingIntentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RoutingIntentData>(data, options);
+        RoutingIntentData IPersistableModel<RoutingIntentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RoutingIntentData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<RoutingIntentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RoutingIntentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RoutingIntentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RoutingIntentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

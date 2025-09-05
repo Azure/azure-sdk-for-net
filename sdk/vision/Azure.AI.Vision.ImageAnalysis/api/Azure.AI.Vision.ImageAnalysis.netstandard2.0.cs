@@ -22,6 +22,12 @@ namespace Azure.AI.Vision.ImageAnalysis
         public static Azure.AI.Vision.ImageAnalysis.SmartCropsResult SmartCropsResult(System.Collections.Generic.IEnumerable<Azure.AI.Vision.ImageAnalysis.CropRegion> values = null) { throw null; }
         public static Azure.AI.Vision.ImageAnalysis.TagsResult TagsResult(System.Collections.Generic.IEnumerable<Azure.AI.Vision.ImageAnalysis.DetectedTag> values = null) { throw null; }
     }
+    public partial class AzureAIVisionImageAnalysisContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAIVisionImageAnalysisContext() { }
+        public static Azure.AI.Vision.ImageAnalysis.AzureAIVisionImageAnalysisContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CaptionResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.CaptionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.ImageAnalysis.CaptionResult>
     {
         internal CaptionResult() { }

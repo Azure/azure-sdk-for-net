@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Fabric
 {
     public partial class FabricCapacityResource : IJsonModel<FabricCapacityData>
     {
+        private static FabricCapacityData s_dataDeserializationInstance;
+        private static FabricCapacityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FabricCapacityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FabricCapacityData>)Data).Write(writer, options);
 
-        FabricCapacityData IJsonModel<FabricCapacityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FabricCapacityData>)Data).Create(ref reader, options);
+        FabricCapacityData IJsonModel<FabricCapacityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FabricCapacityData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FabricCapacityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FabricCapacityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FabricCapacityData>(Data, options, AzureResourceManagerFabricContext.Default);
 
-        FabricCapacityData IPersistableModel<FabricCapacityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FabricCapacityData>(data, options);
+        FabricCapacityData IPersistableModel<FabricCapacityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FabricCapacityData>(data, options, AzureResourceManagerFabricContext.Default);
 
-        string IPersistableModel<FabricCapacityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FabricCapacityData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FabricCapacityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FabricCapacityData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

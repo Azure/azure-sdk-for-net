@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class MongoDBCollectionResource : IJsonModel<MongoDBCollectionData>
     {
+        private static MongoDBCollectionData s_dataDeserializationInstance;
+        private static MongoDBCollectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MongoDBCollectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MongoDBCollectionData>)Data).Write(writer, options);
 
-        MongoDBCollectionData IJsonModel<MongoDBCollectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MongoDBCollectionData>)Data).Create(ref reader, options);
+        MongoDBCollectionData IJsonModel<MongoDBCollectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MongoDBCollectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MongoDBCollectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MongoDBCollectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MongoDBCollectionData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        MongoDBCollectionData IPersistableModel<MongoDBCollectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoDBCollectionData>(data, options);
+        MongoDBCollectionData IPersistableModel<MongoDBCollectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoDBCollectionData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<MongoDBCollectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MongoDBCollectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MongoDBCollectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MongoDBCollectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

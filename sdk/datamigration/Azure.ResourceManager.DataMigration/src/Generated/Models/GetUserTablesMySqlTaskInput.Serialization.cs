@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            MySqlConnectionInfo connectionInfo = default;
+            DataMigrationMySqlConnectionInfo connectionInfo = default;
             IList<string> selectedDatabases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("connectionInfo"u8))
                 {
-                    connectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
+                    connectionInfo = DataMigrationMySqlConnectionInfo.DeserializeDataMigrationMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selectedDatabases"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GetUserTablesMySqlTaskInput)} does not support writing '{options.Format}' format.");
             }

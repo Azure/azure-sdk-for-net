@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 return null;
             }
             ElasticSanKeyVaultProperties keyVaultProperties = default;
-            EncryptionIdentity identity = default;
+            ElasticSanEncryptionIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    identity = EncryptionIdentity.DeserializeEncryptionIdentity(property.Value, options);
+                    identity = ElasticSanEncryptionIdentity.DeserializeElasticSanEncryptionIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ElasticSanEncryptionProperties)} does not support writing '{options.Format}' format.");
             }

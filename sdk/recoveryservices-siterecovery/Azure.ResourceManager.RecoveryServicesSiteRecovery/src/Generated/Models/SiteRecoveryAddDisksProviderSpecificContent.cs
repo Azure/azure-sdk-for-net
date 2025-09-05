@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary>
     /// Add Disks provider specific input.
     /// Please note <see cref="SiteRecoveryAddDisksProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="A2AAddDisksContent"/>.
+    /// The available derived classes include <see cref="A2AAddDisksContent"/> and <see cref="InMageRcmAddDisksContent"/>.
     /// </summary>
     public abstract partial class SiteRecoveryAddDisksProviderSpecificContent
     {

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             QueryExecutionResult queryResults = default;
-            ValidationError validationErrors = default;
+            MigrationValidationError validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    validationErrors = ValidationError.DeserializeValidationError(property.Value, options);
+                    validationErrors = MigrationValidationError.DeserializeMigrationValidationError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(QueryAnalysisValidationResult)} does not support writing '{options.Format}' format.");
             }

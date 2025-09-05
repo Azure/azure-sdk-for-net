@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WritePropertyName("databaseName"u8);
             writer.WriteStringValue(DatabaseName);
-            if (Optional.IsDefined(CommitTimeStamp))
+            if (Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("commitTimeStamp"u8);
-                writer.WriteStringValue(CommitTimeStamp.Value, "O");
+                writer.WriteStringValue(CompletedOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrateSyncCompleteCommandInput)} does not support writing '{options.Format}' format.");
             }

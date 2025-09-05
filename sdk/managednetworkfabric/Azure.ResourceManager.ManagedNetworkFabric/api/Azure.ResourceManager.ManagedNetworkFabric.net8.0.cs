@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
+    public partial class AzureResourceManagerManagedNetworkFabricContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerManagedNetworkFabricContext() { }
+        public static Azure.ResourceManager.ManagedNetworkFabric.AzureResourceManagerManagedNetworkFabricContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class ManagedNetworkFabricExtensions
     {
         public static Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceResource> GetNetworkDevice(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string networkDeviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

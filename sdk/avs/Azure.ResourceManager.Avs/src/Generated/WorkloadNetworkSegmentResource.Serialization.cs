@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class WorkloadNetworkSegmentResource : IJsonModel<WorkloadNetworkSegmentData>
     {
+        private static WorkloadNetworkSegmentData s_dataDeserializationInstance;
+        private static WorkloadNetworkSegmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkloadNetworkSegmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkSegmentData>)Data).Write(writer, options);
 
-        WorkloadNetworkSegmentData IJsonModel<WorkloadNetworkSegmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkSegmentData>)Data).Create(ref reader, options);
+        WorkloadNetworkSegmentData IJsonModel<WorkloadNetworkSegmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkSegmentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkloadNetworkSegmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WorkloadNetworkSegmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkSegmentData>(Data, options, AzureResourceManagerAvsContext.Default);
 
-        WorkloadNetworkSegmentData IPersistableModel<WorkloadNetworkSegmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkSegmentData>(data, options);
+        WorkloadNetworkSegmentData IPersistableModel<WorkloadNetworkSegmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkSegmentData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<WorkloadNetworkSegmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkSegmentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkloadNetworkSegmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkSegmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CostManagement
 {
     public partial class CostManagementAlertResource : IJsonModel<CostManagementAlertData>
     {
+        private static CostManagementAlertData s_dataDeserializationInstance;
+        private static CostManagementAlertData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CostManagementAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CostManagementAlertData>)Data).Write(writer, options);
 
-        CostManagementAlertData IJsonModel<CostManagementAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CostManagementAlertData>)Data).Create(ref reader, options);
+        CostManagementAlertData IJsonModel<CostManagementAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CostManagementAlertData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CostManagementAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CostManagementAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CostManagementAlertData>(Data, options, AzureResourceManagerCostManagementContext.Default);
 
-        CostManagementAlertData IPersistableModel<CostManagementAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CostManagementAlertData>(data, options);
+        CostManagementAlertData IPersistableModel<CostManagementAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CostManagementAlertData>(data, options, AzureResourceManagerCostManagementContext.Default);
 
-        string IPersistableModel<CostManagementAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CostManagementAlertData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CostManagementAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CostManagementAlertData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

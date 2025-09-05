@@ -1,12 +1,6 @@
-# Microsoft Azure IotFirmwareDefense management client library for .NET
+# Azure firmware analysis client library for .NET
 
-The Defender for Iot Firmware Analysis SDK is your comprehensive, feature-rich toolkit for firmware analysis.
-
-This SDK is your definitive guide through the amalgamation of firmware SBOM (Software Bill of Materials), the known threat vectors of CVE (Common Vulnerabilities and Exposures) weaknesses, and the last bastion of firmware security: binary hardening. Whether you're wrestling with web apps, desktop applications, or the intricate world of CI/CD pipelines, this dynamic kit has you covered.
-
-This powerhouse SDK also can extract password hashes and perform cryptographic analysis. Think of it as cheat codes for developers, a treasure map to the hidden intricacies of secure firmware analysis.
-
-Be warned, though, this isn't an easy ride. Sometimes the right tool might seem elusive, or the instructions might appear as an IKEA manual penned in ancient hieroglyphs. But, armed with this powerful and versatile SDK, you're ready to brave the uncharted frontiers of firmware analysis for your projects!
+Firmware analysis is a tool that analyzes firmware images and provides an understanding of security vulnerabilities in the firmware images. The analysis results include SBOM (Software Bill of Materials), CVE (Common Vulnerabilities and Exposures), binary hardening, password hashes, and weak or expired certificates.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

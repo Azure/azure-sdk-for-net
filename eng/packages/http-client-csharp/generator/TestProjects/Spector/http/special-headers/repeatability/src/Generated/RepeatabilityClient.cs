@@ -19,7 +19,7 @@ namespace SpecialHeaders.Repeatability
 
         public RepeatabilityClient(Uri endpoint, RepeatabilityClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response ImmediateSuccess(RequestContext context) => throw null;
 

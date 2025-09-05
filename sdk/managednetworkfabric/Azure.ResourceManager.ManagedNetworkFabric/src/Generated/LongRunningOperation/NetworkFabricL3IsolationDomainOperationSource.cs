@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkFabricL3IsolationDomainResource IOperationSource<NetworkFabricL3IsolationDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFabricL3IsolationDomainData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkFabricL3IsolationDomainData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
             return new NetworkFabricL3IsolationDomainResource(_client, data);
         }
 
         async ValueTask<NetworkFabricL3IsolationDomainResource> IOperationSource<NetworkFabricL3IsolationDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFabricL3IsolationDomainData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkFabricL3IsolationDomainData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
             return await Task.FromResult(new NetworkFabricL3IsolationDomainResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -22,5 +22,5 @@ variables:
   AdditionalTestFilters: "Placeholder!=DefaultIgnoreMe"
 
   # Docs publishing variables for repo/owner
-  DocRepoOwner: 'Azure'
+  DocRepoOwner: 'MicrosoftDocs'
   DocRepoName: 'azure-docs-sdk-dotnet'

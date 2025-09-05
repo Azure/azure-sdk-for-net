@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         ExpressRouteCrossConnectionResource IOperationSource<ExpressRouteCrossConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpressRouteCrossConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<ExpressRouteCrossConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new ExpressRouteCrossConnectionResource(_client, data);
         }
 
         async ValueTask<ExpressRouteCrossConnectionResource> IOperationSource<ExpressRouteCrossConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpressRouteCrossConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<ExpressRouteCrossConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new ExpressRouteCrossConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

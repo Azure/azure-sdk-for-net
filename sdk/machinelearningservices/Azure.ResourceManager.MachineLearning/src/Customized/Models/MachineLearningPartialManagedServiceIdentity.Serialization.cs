@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningPartialManagedServiceIdentity)} does not support '{options.Format}' format.");
             }

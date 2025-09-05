@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HDInsight
 
         HDInsightPrivateEndpointConnectionResource IOperationSource<HDInsightPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HDInsightPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<HDInsightPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHDInsightContext.Default);
             return new HDInsightPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<HDInsightPrivateEndpointConnectionResource> IOperationSource<HDInsightPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HDInsightPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<HDInsightPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHDInsightContext.Default);
             return await Task.FromResult(new HDInsightPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

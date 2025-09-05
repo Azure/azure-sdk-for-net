@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Nginx
 {
     public partial class NginxDeploymentApiKeyResource : IJsonModel<NginxDeploymentApiKeyData>
     {
+        private static NginxDeploymentApiKeyData s_dataDeserializationInstance;
+        private static NginxDeploymentApiKeyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NginxDeploymentApiKeyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NginxDeploymentApiKeyData>)Data).Write(writer, options);
 
-        NginxDeploymentApiKeyData IJsonModel<NginxDeploymentApiKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NginxDeploymentApiKeyData>)Data).Create(ref reader, options);
+        NginxDeploymentApiKeyData IJsonModel<NginxDeploymentApiKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NginxDeploymentApiKeyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NginxDeploymentApiKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NginxDeploymentApiKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NginxDeploymentApiKeyData>(Data, options, AzureResourceManagerNginxContext.Default);
 
-        NginxDeploymentApiKeyData IPersistableModel<NginxDeploymentApiKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NginxDeploymentApiKeyData>(data, options);
+        NginxDeploymentApiKeyData IPersistableModel<NginxDeploymentApiKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NginxDeploymentApiKeyData>(data, options, AzureResourceManagerNginxContext.Default);
 
-        string IPersistableModel<NginxDeploymentApiKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NginxDeploymentApiKeyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NginxDeploymentApiKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NginxDeploymentApiKeyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

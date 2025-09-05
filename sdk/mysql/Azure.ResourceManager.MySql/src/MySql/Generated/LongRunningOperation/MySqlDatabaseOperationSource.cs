@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MySql
 
         MySqlDatabaseResource IOperationSource<MySqlDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MySqlDatabaseData>(response.Content);
+            var data = ModelReaderWriter.Read<MySqlDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return new MySqlDatabaseResource(_client, data);
         }
 
         async ValueTask<MySqlDatabaseResource> IOperationSource<MySqlDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MySqlDatabaseData>(response.Content);
+            var data = ModelReaderWriter.Read<MySqlDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return await Task.FromResult(new MySqlDatabaseResource(_client, data)).ConfigureAwait(false);
         }
     }

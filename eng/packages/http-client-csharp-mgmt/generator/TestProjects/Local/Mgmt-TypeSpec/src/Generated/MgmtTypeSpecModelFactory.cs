@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
@@ -16,127 +18,33 @@ namespace MgmtTypeSpec.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class MgmtTypeSpecModelFactory
     {
-
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkResourceData"/> instance for mocking. </returns>
-        public static PrivateLinkResourceData PrivateLinkResourceData(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default, PrivateLinkResourceProperties properties = default, ManagedServiceIdentity identity = default)
+        /// <summary> The FooPreviewAction. </summary>
+        /// <param name="action"> The action to be performed. </param>
+        /// <param name="result"></param>
+        /// <returns> A new <see cref="Models.FooPreviewAction"/> instance for mocking. </returns>
+        public static FooPreviewAction FooPreviewAction(string action = default, string result = default)
         {
-
-            return new PrivateLinkResourceData(
-                id,
-                name,
-                @type,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                identity);
-        }
-
-        /// <summary> Properties of a private link resource. </summary>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static PrivateLinkResourceProperties PrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredZoneNames ??= new ChangeTrackingList<string>();
-
-            return new PrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
-        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of managed identity assigned to this resource. </param>
-        /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
-        /// <returns> A new <see cref="Models.ManagedServiceIdentity"/> instance for mocking. </returns>
-        public static ManagedServiceIdentity ManagedServiceIdentity(Guid? principalId = default, Guid? tenantId = default, ManagedServiceIdentityType @type = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
-
-            return new ManagedServiceIdentity(principalId, tenantId, @type, userAssignedIdentities, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> User assigned identity properties. </summary>
-        /// <param name="clientId"> The client ID of the assigned identity. </param>
-        /// <param name="principalId"> The principal ID of the assigned identity. </param>
-        /// <returns> A new <see cref="Models.UserAssignedIdentity"/> instance for mocking. </returns>
-        public static UserAssignedIdentity UserAssignedIdentity(Guid? clientId = default, Guid? principalId = default)
-        {
-
-            return new UserAssignedIdentity(clientId, principalId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <returns> A new <see cref="Models.ProxyResource"/> instance for mocking. </returns>
-        public static ProxyResource ProxyResource(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default)
-        {
-
-            return new ProxyResource(id, name, @type, systemData, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
-        public static Resource Resource(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default)
-        {
-
-            return new Resource(id, name, @type, systemData, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
-        /// <param name="createdBy"> The identity that created the resource. </param>
-        /// <param name="createdByType"> The type of identity that created the resource. </param>
-        /// <param name="createdAt"> The timestamp of resource creation (UTC). </param>
-        /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
-        /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
-        /// <param name="lastModifiedAt"> The timestamp of resource last modification (UTC). </param>
-        /// <returns> A new <see cref="Models.SystemData"/> instance for mocking. </returns>
-        public static SystemData SystemData(string createdBy = default, CreatedByType? createdByType = default, DateTimeOffset? createdAt = default, string lastModifiedBy = default, CreatedByType? lastModifiedByType = default, DateTimeOffset? lastModifiedAt = default)
-        {
-
-            return new SystemData(
-                createdBy,
-                createdByType,
-                createdAt,
-                lastModifiedBy,
-                lastModifiedByType,
-                lastModifiedAt,
-                additionalBinaryDataProperties: null);
+            return new FooPreviewAction(action, result, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
-        /// <returns> A new <see cref="Models.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, FooProperties properties = default, ExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="MgmtTypeSpec.FooData"/> instance for mocking. </returns>
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, FooProperties properties = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new FooData(
                 id,
                 name,
-                @type,
+                resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
                 tags,
@@ -145,55 +53,194 @@ namespace MgmtTypeSpec.Models
                 extendedLocation);
         }
 
-        /// <summary> The FooProperties. </summary>
-        /// <param name="serviceUrl"> the service url. </param>
-        /// <param name="something"> something. </param>
-        /// <param name="boolValue"> boolean value. </param>
-        /// <param name="floatValue"> float value. </param>
-        /// <param name="doubleValue"> double value. </param>
-        /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
-        public static FooProperties FooProperties(Uri serviceUrl = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default)
-        {
-
-            return new FooProperties(
-                serviceUrl,
-                something,
-                boolValue,
-                floatValue,
-                doubleValue,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The complex type of the extended location. </summary>
-        /// <param name="name"> The name of the extended location. </param>
-        /// <param name="type"> The type of the extended location. </param>
-        /// <returns> A new <see cref="Models.ExtendedLocation"/> instance for mocking. </returns>
-        public static ExtendedLocation ExtendedLocation(string name = default, ExtendedLocationType @type = default)
-        {
-
-            return new ExtendedLocation(name, @type, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.FooSettingsData"/> instance for mocking. </returns>
+        public static FooSettingsData FooSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FooSettingsProperties properties = default)
+        {
+            return new FooSettingsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <param name="accessControlEnabled"></param>
+        /// <param name="provisioningState"></param>
+        /// <param name="metaDatas"> Gets the MetaDatas. </param>
+        /// <returns> A new <see cref="Models.FooSettingsProperties"/> instance for mocking. </returns>
+        public static FooSettingsProperties FooSettingsProperties(bool? accessControlEnabled = default, ResourceProvisioningState? provisioningState = default, IList<string> metaDatas = default)
+        {
+            return new FooSettingsProperties(accessControlEnabled, provisioningState, metaDatas is null ? default : new FooSettingsPropertiesMetaData(metaDatas, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="Models.TrackedResource"/> instance for mocking. </returns>
-        public static TrackedResource TrackedResource(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default)
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.BarData"/> instance for mocking. </returns>
+        public static BarData BarData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, BarProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TrackedResource(
+            return new BarData(
                 id,
                 name,
-                @type,
+                resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
                 tags,
-                location);
+                location,
+                properties);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="isEnabled"> enabled. </param>
+        /// <param name="stringArray"></param>
+        /// <param name="propertyLeft"> enabled. </param>
+        /// <param name="anotherPropertyLeft"> enabled. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsResourceData"/> instance for mocking. </returns>
+        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default)
+        {
+            stringArray ??= new ChangeTrackingList<string>();
+
+            return new BarSettingsResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                isEnabled is null ? default : new BarSettingsProperties(isEnabled, new Dictionary<string, BinaryData>()),
+                stringArray.ToList(),
+                propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, new Dictionary<string, BinaryData>()),
+                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, new Dictionary<string, BinaryData>()));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="barQuotaLeft"> enabled. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.BarQuotaResourceData"/> instance for mocking. </returns>
+        public static BarQuotaResourceData BarQuotaResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? barQuotaLeft = default)
+        {
+            return new BarQuotaResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft.Value, new Dictionary<string, BinaryData>()));
+        }
+
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.BazData"/> instance for mocking. </returns>
+        public static BazData BazData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, BazProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BazData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="zooSomething"> something. </param>
+        /// <param name="extendedLocation"></param>
+        /// <returns> A new <see cref="MgmtTypeSpec.ZooData"/> instance for mocking. </returns>
+        public static ZooData ZooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, string zooSomething = default, ExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ZooData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                zooSomething is null ? default : new ZooProperties(zooSomething, new Dictionary<string, BinaryData>()),
+                extendedLocation);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="zooUpdateSomething"> something. </param>
+        /// <returns> A new <see cref="Models.ZooPatch"/> instance for mocking. </returns>
+        public static ZooPatch ZooPatch(IDictionary<string, string> tags = default, string zooUpdateSomething = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ZooPatch(tags, zooUpdateSomething is null ? default : new ZooUpdateProperties(zooUpdateSomething, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Paged collection of ZooAddress items. </summary>
+        /// <param name="value"> The ZooAddress items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.ZooAddressListListResult"/> instance for mocking. </returns>
+        public static ZooAddressListListResult ZooAddressListListResult(IEnumerable<SubResource> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<SubResource>();
+
+            return new ZooAddressListListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="endpointProp"> Gets or sets the Prop. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointProp"/> is null. </exception>
+        /// <returns> A new <see cref="MgmtTypeSpec.EndpointResourceData"/> instance for mocking. </returns>
+        public static EndpointResourceData EndpointResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string endpointProp = default)
+        {
+            return new EndpointResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                endpointProp is null ? default : new EndpointProperties(endpointProp, new Dictionary<string, BinaryData>()));
+        }
+
+        /// <summary> The ZooRecommendation. </summary>
+        /// <param name="recommendedValue"> The recommended value. </param>
+        /// <param name="reason"> The reason for the recommendation. </param>
+        /// <returns> A new <see cref="Models.ZooRecommendation"/> instance for mocking. </returns>
+        public static ZooRecommendation ZooRecommendation(string recommendedValue = default, string reason = default)
+        {
+            return new ZooRecommendation(recommendedValue, reason, additionalBinaryDataProperties: null);
         }
     }
 }

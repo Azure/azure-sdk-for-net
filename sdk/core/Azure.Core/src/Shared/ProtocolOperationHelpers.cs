@@ -76,6 +76,7 @@ namespace Azure.Core
             public override TTo Value => GetOrCreateValue();
             public override bool HasValue => _operation.HasValue;
             public override bool HasCompleted => _operation.HasCompleted;
+            public override RehydrationToken? GetRehydrationToken() => _operation.GetRehydrationToken();
             public override Response GetRawResponse() => _operation.GetRawResponse();
 
             public override Response UpdateStatus(CancellationToken cancellationToken = default)

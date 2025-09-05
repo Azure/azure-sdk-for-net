@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DevTestLabs
 
         DevTestLabCustomImageResource IOperationSource<DevTestLabCustomImageResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevTestLabCustomImageData>(response.Content);
+            var data = ModelReaderWriter.Read<DevTestLabCustomImageData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
             return new DevTestLabCustomImageResource(_client, data);
         }
 
         async ValueTask<DevTestLabCustomImageResource> IOperationSource<DevTestLabCustomImageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevTestLabCustomImageData>(response.Content);
+            var data = ModelReaderWriter.Read<DevTestLabCustomImageData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
             return await Task.FromResult(new DevTestLabCustomImageResource(_client, data)).ConfigureAwait(false);
         }
     }

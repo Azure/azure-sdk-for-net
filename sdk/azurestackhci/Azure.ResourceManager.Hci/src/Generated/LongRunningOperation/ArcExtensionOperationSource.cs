@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Hci
 
         ArcExtensionResource IOperationSource<ArcExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArcExtensionData>(response.Content);
+            var data = ModelReaderWriter.Read<ArcExtensionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciContext.Default);
             return new ArcExtensionResource(_client, data);
         }
 
         async ValueTask<ArcExtensionResource> IOperationSource<ArcExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArcExtensionData>(response.Content);
+            var data = ModelReaderWriter.Read<ArcExtensionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciContext.Default);
             return await Task.FromResult(new ArcExtensionResource(_client, data)).ConfigureAwait(false);
         }
     }

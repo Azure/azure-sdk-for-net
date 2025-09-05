@@ -48,6 +48,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// The access tier of the destination blob.
         /// </summary>
         public AccessTier? AccessTierValue;
+        public bool IsAccessTierSet;
 
         /// <summary>
         /// The metadata for the destination blob.
@@ -85,6 +86,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 contentDisposition: blobOptions?.ContentDisposition,
                 isCacheControlSet: blobOptions?._isCacheControlSet ?? false,
                 cacheControl: blobOptions?.CacheControl,
+                isAccessTierSet: blobOptions?._isAccessTierSet ?? false,
                 accessTier: blobOptions?.AccessTier,
                 isMetadataSet: blobOptions?._isMetadataSet ?? false,
                 metadata: blobOptions?.Metadata,
@@ -105,6 +107,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string contentDisposition,
             bool isCacheControlSet,
             string cacheControl,
+            bool isAccessTierSet,
             AccessTier? accessTier,
             bool isMetadataSet,
             Metadata metadata,
@@ -115,6 +118,7 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobType = blobType;
             IsBlobTypeSet = isBlobTypeSet;
 
+            IsAccessTierSet = isAccessTierSet;
             AccessTierValue = accessTier;
 
             CacheControl = cacheControl;
@@ -233,6 +237,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             // AccessTier
+            writer.Write(IsAccessTierSet);
             writer.Write((byte)AccessTierValue.ToJobPlanAccessTier());
 
             // Preserve Metadata
@@ -299,7 +304,8 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // Version
             int version = reader.ReadInt32();
-            if (version != DataMovementBlobConstants.DestinationCheckpointDetails.SchemaVersion)
+            if (version < DataMovementBlobConstants.DestinationCheckpointDetails.MinValidSchemaVersion
+                || version > DataMovementBlobConstants.DestinationCheckpointDetails.MaxValidSchemaVersion)
             {
                 throw Errors.UnsupportedJobSchemaVersionHeader(version);
             }
@@ -335,9 +341,18 @@ namespace Azure.Storage.DataMovement.Blobs
             int cacheControlLength = reader.ReadInt32();
 
             // AccessTier
+            bool isAccessTierSet = default;
+            if (version >= DataMovementBlobConstants.DestinationCheckpointDetails.SchemaVersion_4)
+            {
+                isAccessTierSet = reader.ReadBoolean();
+            }
             AccessTier? accessTier = default;
             JobPlanAccessTier jobPlanAccessTier = (JobPlanAccessTier)reader.ReadByte();
-            if (!jobPlanAccessTier.Equals(JobPlanAccessTier.None))
+            if (version < DataMovementBlobConstants.DestinationCheckpointDetails.SchemaVersion_4)
+            {
+                isAccessTierSet = !jobPlanAccessTier.Equals(JobPlanAccessTier.None);
+            }
+            if (isAccessTierSet)
             {
                 accessTier = new AccessTier(jobPlanAccessTier.ToString());
             }
@@ -422,6 +437,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 contentDisposition: contentDisposition,
                 isCacheControlSet: isCacheControlSet,
                 cacheControl: cacheControl,
+                isAccessTierSet: isAccessTierSet,
                 accessTier: accessTier,
                 isMetadataSet: isMetadataSet,
                 metadata: metadataString.ToDictionary(nameof(metadataString)),

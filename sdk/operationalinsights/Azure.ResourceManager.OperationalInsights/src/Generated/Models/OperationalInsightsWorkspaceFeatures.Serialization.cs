@@ -95,6 +95,18 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("disableLocalAuth");
                 }
             }
+            if (options.Format != "W" && Optional.IsDefined(IsUnifiedSentinelBillingOnly))
+            {
+                if (IsUnifiedSentinelBillingOnly != null)
+                {
+                    writer.WritePropertyName("unifiedSentinelBillingOnly"u8);
+                    writer.WriteBooleanValue(IsUnifiedSentinelBillingOnly.Value);
+                }
+                else
+                {
+                    writer.WriteNull("unifiedSentinelBillingOnly");
+                }
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -134,6 +146,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             bool? enableLogAccessUsingOnlyResourcePermissions = default;
             ResourceIdentifier clusterResourceId = default;
             bool? disableLocalAuth = default;
+            bool? unifiedSentinelBillingOnly = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,6 +201,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     disableLocalAuth = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("unifiedSentinelBillingOnly"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        unifiedSentinelBillingOnly = null;
+                        continue;
+                    }
+                    unifiedSentinelBillingOnly = property.Value.GetBoolean();
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
@@ -197,6 +220,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 enableLogAccessUsingOnlyResourcePermissions,
                 clusterResourceId,
                 disableLocalAuth,
+                unifiedSentinelBillingOnly,
                 additionalProperties);
         }
 
@@ -290,6 +314,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsUnifiedSentinelBillingOnly), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  unifiedSentinelBillingOnly: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsUnifiedSentinelBillingOnly))
+                {
+                    builder.Append("  unifiedSentinelBillingOnly: ");
+                    var boolValue = IsUnifiedSentinelBillingOnly.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
@@ -301,7 +341,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

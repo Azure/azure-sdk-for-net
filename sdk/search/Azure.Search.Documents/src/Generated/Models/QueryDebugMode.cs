@@ -26,6 +26,7 @@ namespace Azure.Search.Documents.Models
         private const string SemanticValue = "semantic";
         private const string VectorValue = "vector";
         private const string QueryRewritesValue = "queryRewrites";
+        private const string InnerHitsValue = "innerHits";
         private const string AllValue = "all";
 
         /// <summary> No query debugging information will be returned. </summary>
@@ -36,6 +37,8 @@ namespace Azure.Search.Documents.Models
         public static QueryDebugMode Vector { get; } = new QueryDebugMode(VectorValue);
         /// <summary> Allows the user to explore the list of query rewrites generated for their search request. </summary>
         public static QueryDebugMode QueryRewrites { get; } = new QueryDebugMode(QueryRewritesValue);
+        /// <summary> Allows the user to retrieve scoring information regarding vectors matched within a collection of complex types. </summary>
+        public static QueryDebugMode InnerHits { get; } = new QueryDebugMode(InnerHitsValue);
         /// <summary> Turn on all debug options. </summary>
         public static QueryDebugMode All { get; } = new QueryDebugMode(AllValue);
         /// <summary> Determines if two <see cref="QueryDebugMode"/> values are the same. </summary>

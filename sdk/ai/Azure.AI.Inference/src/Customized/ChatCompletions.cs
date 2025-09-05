@@ -45,7 +45,7 @@ namespace Azure.AI.Inference
         /// </summary>
         /// <returns></returns>
         public override string ToString() => Content != null ? Content
-            : ToolCalls.Count > 0 ? ModelReaderWriter.Write(ToolCalls[0]).ToString()
+            : ToolCalls.Count > 0 ? ModelReaderWriter.Write(ToolCalls[0], ModelReaderWriterOptions.Json, AzureAIInferenceContext.Default).ToString()
             : null;
     }
 }

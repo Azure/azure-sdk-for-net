@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppService
 
         KubeEnvironmentResource IOperationSource<KubeEnvironmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KubeEnvironmentData>(response.Content);
+            var data = ModelReaderWriter.Read<KubeEnvironmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
             return new KubeEnvironmentResource(_client, data);
         }
 
         async ValueTask<KubeEnvironmentResource> IOperationSource<KubeEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KubeEnvironmentData>(response.Content);
+            var data = ModelReaderWriter.Read<KubeEnvironmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
             return await Task.FromResult(new KubeEnvironmentResource(_client, data)).ConfigureAwait(false);
         }
     }

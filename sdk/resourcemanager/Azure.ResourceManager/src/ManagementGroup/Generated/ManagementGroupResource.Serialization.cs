@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagementGroups
 {
     public partial class ManagementGroupResource : IJsonModel<ManagementGroupData>
     {
+        private static ManagementGroupData s_dataDeserializationInstance;
+        private static ManagementGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ManagementGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagementGroupData>)Data).Write(writer, options);
 
-        ManagementGroupData IJsonModel<ManagementGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagementGroupData>)Data).Create(ref reader, options);
+        ManagementGroupData IJsonModel<ManagementGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagementGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagementGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagementGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options, AzureResourceManagerContext.Default);
 
-        ManagementGroupData IPersistableModel<ManagementGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagementGroupData>(data, options);
+        ManagementGroupData IPersistableModel<ManagementGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagementGroupData>(data, options, AzureResourceManagerContext.Default);
 
-        string IPersistableModel<ManagementGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagementGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ManagementGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagementGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -7,12 +7,12 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/177b67dfa65d476ac941b157ca42eec440e98cb0/specification/network/resource-manager/readme.md
-tag: package-2024-06-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/e09cd33f2f497a30aff4d6ca706e4fd01cbb384d/specification/network/resource-manager/readme.md
+#tag: package-2024-07-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
     # Not support generate samples from customized operations
@@ -24,16 +24,15 @@ sample-gen:
     - VirtualMachineScaleSetVMs_ListPublicIPAddresses
     - VirtualMachineScaleSetVMs_ListNetworkInterfaces
     - VirtualMachineScaleSets_GetNetworkInterface
-    - NetworkSecurityPerimeterOperationStatus_Get
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true
 use-model-reader-writer: true
 model-namespace: true
 public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
+enable-bicep-serialization: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -48,7 +47,7 @@ rename-mapping:
   ActiveConfigurationParameter: ActiveConfigurationContent
   ActiveConnectivityConfiguration.commitTime: CommittedOn
   ActiveConnectivityConfiguration.region: -|azure-location
-  AddressSpace: VirtualNetworkAddressSpace 
+  AddressSpace: VirtualNetworkAddressSpace
   AdminRule: NetworkAdminRule
   AdminRuleCollection: AdminRuleGroup
   AdminRuleCollectionListResult: AdminRuleGroupListResult
@@ -136,6 +135,7 @@ rename-mapping:
   IsGlobal: GlobalMeshSupportFlag
   IssueType: ConnectivityIssueType
   IsWorkloadProtected: WorkloadProtectedFlag
+  LoadBalancerHealthPerRulePerBackendAddress.networkInterfaceIPConfigurationId: NetworkInterfaceIPConfigurationResourceId|arm-id
   LoadBalancingRulePropertiesFormat: LoadBalancingRuleProperties
   MigratedPools: MigrateLoadBalancerToIPBasedResult
   NetworkManagerConnection.properties.networkManagerId: -|arm-id
@@ -146,6 +146,7 @@ rename-mapping:
   NextStep: RouteMapNextStepBehavior
   OrderBy: IdpsQueryOrderBy
   Origin: IssueOrigin
+  P2SConnectionConfiguration.properties.configurationPolicyGroupAssociations: ConfigurationPolicyGroups
   PacketCapture.properties.continuousCapture: IsContinuousCapture
   PacketCapture: PacketCaptureInput
   PacketCaptureResult.properties.continuousCapture: IsContinuousCapture
@@ -356,7 +357,7 @@ directive:
   - remove-operation: 'VirtualNetworks_ListDdosProtectionStatus'
   - remove-operation: 'NetworkSecurityPerimeterAssociations_Reconcile'
   - remove-operation: 'NetworkSecurityPerimeterAccessRules_Reconcile'
-  - remove-operation: 'NetworkSecurityPerimeterOperationStatus_Get'
+  - remove-operation: 'NetworkSecurityPerimeterOperationStatuses_Get'
   # This part is for generate partial class in network
   # these operations are renamed because their api-versions are different from others in the same operation group
   # - rename-operation:
@@ -655,7 +656,7 @@ directive:
   #     {
   #         delete $[param];
   #     }
-  
+
   # Remove the format of id which break current type replacement logic, issue https://github.com/Azure/azure-sdk-for-net/issues/47589 opened to track this requirement.
   - from: network.json
     where: $.definitions

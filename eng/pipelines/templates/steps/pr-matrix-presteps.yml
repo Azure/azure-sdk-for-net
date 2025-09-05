@@ -6,18 +6,18 @@ parameters:
   - name: ForceDirect
     type: boolean
     default: false
+  - name: ExcludePaths
+    type: object
+    default: []
 
 steps:
-  - script: |
-      echo "##vso[task.setvariable variable=DISCOVER_DEPENDENT_PACKAGES]1"
-    displayName: Enable AdditionalDependency Calculation
-
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
   - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
     parameters:
       ServiceDirectory: ${{parameters.ServiceDirectory}}
       PackageInfoDirectory: $(Build.ArtifactStagingDirectory)/PackageInfoPublishing
+      ExcludePaths: ${{ parameters.ExcludePaths }}
 
   # when we publish the packageinfo as an artifact, it actually cleans up the original files. Since we need them during matrix generation steps
   # that will execute directly after the pregeneration steps here, we output them to a publishing directory, copy from there into the target PackageInfoDirectory,

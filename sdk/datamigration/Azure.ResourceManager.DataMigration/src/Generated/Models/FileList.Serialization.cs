@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            IReadOnlyList<ProjectFileData> value = default;
+            IReadOnlyList<DataMigrationProjectFileData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ProjectFileData> array = new List<ProjectFileData>();
+                    List<DataMigrationProjectFileData> array = new List<DataMigrationProjectFileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProjectFileData.DeserializeProjectFileData(item, options));
+                        array.Add(DataMigrationProjectFileData.DeserializeDataMigrationProjectFileData(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FileList(value ?? new ChangeTrackingList<ProjectFileData>(), nextLink, serializedAdditionalRawData);
+            return new FileList(value ?? new ChangeTrackingList<DataMigrationProjectFileData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileList>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FileList)} does not support writing '{options.Format}' format.");
             }

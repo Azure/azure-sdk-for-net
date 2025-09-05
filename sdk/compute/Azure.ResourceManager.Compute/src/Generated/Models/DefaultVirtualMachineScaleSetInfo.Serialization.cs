@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(DefaultVirtualMachineScaleSet))
             {
                 writer.WritePropertyName("defaultVirtualMachineScaleSet"u8);
-                JsonSerializer.Serialize(writer, DefaultVirtualMachineScaleSet);
+                ((IJsonModel<WritableSubResource>)DefaultVirtualMachineScaleSet).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    defaultVirtualMachineScaleSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    defaultVirtualMachineScaleSet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DefaultVirtualMachineScaleSetInfo)} does not support writing '{options.Format}' format.");
             }

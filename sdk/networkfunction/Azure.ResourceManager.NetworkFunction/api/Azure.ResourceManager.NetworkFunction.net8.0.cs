@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.NetworkFunction
 {
+    public partial class AzureResourceManagerNetworkFunctionContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerNetworkFunctionContext() { }
+        public static Azure.ResourceManager.NetworkFunction.AzureResourceManagerNetworkFunctionContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class AzureTrafficCollectorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource>, System.Collections.IEnumerable
     {
         protected AzureTrafficCollectorCollection() { }

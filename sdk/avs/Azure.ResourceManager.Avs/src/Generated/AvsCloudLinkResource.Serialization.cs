@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class AvsCloudLinkResource : IJsonModel<AvsCloudLinkData>
     {
+        private static AvsCloudLinkData s_dataDeserializationInstance;
+        private static AvsCloudLinkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AvsCloudLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AvsCloudLinkData>)Data).Write(writer, options);
 
-        AvsCloudLinkData IJsonModel<AvsCloudLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvsCloudLinkData>)Data).Create(ref reader, options);
+        AvsCloudLinkData IJsonModel<AvsCloudLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvsCloudLinkData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AvsCloudLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AvsCloudLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvsCloudLinkData>(Data, options, AzureResourceManagerAvsContext.Default);
 
-        AvsCloudLinkData IPersistableModel<AvsCloudLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvsCloudLinkData>(data, options);
+        AvsCloudLinkData IPersistableModel<AvsCloudLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvsCloudLinkData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<AvsCloudLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvsCloudLinkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AvsCloudLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvsCloudLinkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabPolicyResource : IJsonModel<DevTestLabPolicyData>
     {
+        private static DevTestLabPolicyData s_dataDeserializationInstance;
+        private static DevTestLabPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevTestLabPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabPolicyData>)Data).Write(writer, options);
 
-        DevTestLabPolicyData IJsonModel<DevTestLabPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabPolicyData>)Data).Create(ref reader, options);
+        DevTestLabPolicyData IJsonModel<DevTestLabPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevTestLabPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabPolicyData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        DevTestLabPolicyData IPersistableModel<DevTestLabPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabPolicyData>(data, options);
+        DevTestLabPolicyData IPersistableModel<DevTestLabPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabPolicyData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        string IPersistableModel<DevTestLabPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevTestLabPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

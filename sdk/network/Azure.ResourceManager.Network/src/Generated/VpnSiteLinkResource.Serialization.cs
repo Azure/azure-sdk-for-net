@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VpnSiteLinkResource : IJsonModel<VpnSiteLinkData>
     {
+        private static VpnSiteLinkData s_dataDeserializationInstance;
+        private static VpnSiteLinkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VpnSiteLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VpnSiteLinkData>)Data).Write(writer, options);
 
-        VpnSiteLinkData IJsonModel<VpnSiteLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VpnSiteLinkData>)Data).Create(ref reader, options);
+        VpnSiteLinkData IJsonModel<VpnSiteLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VpnSiteLinkData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VpnSiteLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VpnSiteLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VpnSiteLinkData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        VpnSiteLinkData IPersistableModel<VpnSiteLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VpnSiteLinkData>(data, options);
+        VpnSiteLinkData IPersistableModel<VpnSiteLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VpnSiteLinkData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<VpnSiteLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VpnSiteLinkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VpnSiteLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VpnSiteLinkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

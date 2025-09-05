@@ -2,8 +2,9 @@ parameters:
   Artifacts: []
   TestPipeline: false
   ArtifactName: 'not-specified'
-  # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
-  DevOpsFeedId: '29ec6040-b234-4e31-b139-33dc4287b756/fa8c16a3-dbe0-4de2-a297-03065ec1ba3f'
+  DevFeed: 'public/azure-sdk-for-net'
+  PublicFeed: Nuget.org
+  PublicPublishEnvironment: package-publish
 
 stages:
   - stage: Signing
@@ -98,15 +99,15 @@ stages:
 
             - ${{if ne(artifact.skipPublishPackage, 'true')}}:
               - deployment: PublishPackage
-                displayName: Publish package to Nuget.org and DevOps Feed
+                displayName: Publish package to ${{ parameters.PublicFeed }} and Dev Feed
                 condition: and(succeeded(), ne(variables['Skip.PublishPackage'], 'true'))
-                environment: package-publish
+                environment: ${{ parameters.PublicPublishEnvironment }}
                 dependsOn: TagRepository
 
                 pool:
-                  name: azsdk-pool-mms-ubuntu-2004-general
-                  image: azsdk-pool-mms-ubuntu-2004-1espt
-                  os: linux
+                  name: azsdk-pool
+                  image: windows-2022 # Nuget publish requires .NET framework on windows to handle the auth
+                  os: windows
 
                 templateContext:
                   type: releaseJob  # Required, this indicates this deployment job is a release job
@@ -121,19 +122,22 @@ stages:
                     deploy:
                       steps:
                         - task: 1ES.PublishNuget@1
-                          displayName: Publish ${{artifact.name}} package to NuGet.org
+                          displayName: Publish ${{ artifact.name }} package to ${{ parameters.PublicFeed }}
                           inputs:
                             packageParentPath: '$(Pipeline.Workspace)'
                             packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)//${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
-                            nuGetFeedType: external
-                            publishFeedCredentials: Nuget.org
+                            ${{ if eq(parameters.PublicFeed, 'Nuget.org') }}:
+                              nuGetFeedType: external
+                              publishFeedCredentials: Nuget.org
+                            ${{ if ne(parameters.PublicFeed, 'Nuget.org') }}:
+                              publishVstsFeed: ${{ parameters.PublicFeed }}
 
                         - task: 1ES.PublishNuget@1
-                          displayName: Publish to DevOps Feed
+                          displayName: Publish to Dev Feed
                           inputs:
                             packageParentPath: '$(Pipeline.Workspace)'
                             packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
-                            publishVstsFeed: ${{ parameters.DevOpsFeedID }}
+                            publishVstsFeed: ${{ parameters.DevFeed }}
 
               - ${{if ne(artifact.skipSymbolsUpload, 'true')}}:
                 - job: UploadSymbols
@@ -189,6 +193,11 @@ stages:
                         MarkPackageAsShipped: true
                         ArtifactName: ${{parameters.ArtifactName}}
                         PackageName: ${{artifact.name}}
+                        SourceRootPath: $(sdk-repo-path)
+                    - template: /eng/common/pipelines/templates/steps/mark-release-completion.yml
+                      parameters:
+                        ConfigFileDir: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo'
+                        PackageArtifactName: ${{artifact.name}}
                         SourceRootPath: $(sdk-repo-path)
 
               - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
@@ -281,39 +290,46 @@ stages:
       - template: /eng/pipelines/templates/variables/image.yml
     dependsOn: Signing
     jobs:
-      - job: PublishPackages
+      - deployment: PublishPackages
         condition: and(succeeded(), or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal'))))
         displayName: Publish package to daily feed
+        environment: none
+
         pool:
-          name: $(WINDOWSPOOL)
-          image: $(WINDOWSVMIMAGE)
+          name: azsdk-pool
+          image: windows-2022 # Nuget publish requires .NET framework on windows to handle the auth
           os: windows
+
         templateContext:
-          outputParentDirectory: '$(Pipeline.Workspace)'
-          outputs:
-            - ${{ each artifact in parameters.Artifacts }}:
-              - output: nuget
-                displayName: 'Publish to DevOps Feed'
-                packageParentPath: '$(Pipeline.Workspace)'
-                packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
-                publishVstsFeed: $(DevOpsFeedID)
+          type: releaseJob 
+          isProduction: true
+          inputs: 
+            - input: pipelineArtifact
+              artifactName: ${{parameters.ArtifactName}}-signed
+              targetPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed
 
-        steps:
-          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-          - download: current
-            displayName: Download ${{parameters.ArtifactName}}-signed
-            artifact: ${{parameters.ArtifactName}}-signed
-          - pwsh: |
-              # For safety default to publishing to the private feed.
-              # Publish to https://dev.azure.com/azure-sdk/internal/_packaging?_a=feed&feed=azure-sdk-for-net-pr
-              $devopsFeedId = '590cfd2a-581c-4dcb-a12e-6568ce786175/fa8b2d77-74d9-48d7-bb96-badb2b9c6ca4'
-              if ('$(Build.Repository.Name)' -eq 'Azure/azure-sdk-for-net') {
-                $devopsFeedId = '${{ parameters.DevOpsFeedID }}'
-              }
-              echo "##vso[task.setvariable variable=DevOpsFeedID]$devopsFeedId"
-              echo "Using DevopsFeedId = $devopsFeedId"
-            displayName: Setup DevOpsFeedId
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - pwsh: |
+                    # For safety default to publishing to the private feed.
+                    $devopsFeedId = 'internal/azure-sdk-for-net-pr'
+                    if ('$(Build.Repository.Name)' -eq 'Azure/azure-sdk-for-net') {
+                      $devopsFeedId = '${{ parameters.DevFeed }}'
+                    }
+                    echo "##vso[task.setvariable variable=DevOpsFeedID]$devopsFeedId"
+                    echo "Using DevopsFeedId = $devopsFeedId"
+                  displayName: Setup DevOpsFeedId
 
+                - ${{ each artifact in parameters.Artifacts }}:
+                  - task: 1ES.PublishNuget@1
+                    displayName: 'Publish to DevOps Feed'
+                    inputs:
+                      packageParentPath: '$(Pipeline.Workspace)'
+                      packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
+                      publishVstsFeed: $(DevOpsFeedID)
+                
       - job: PublishDocsToNightlyBranch
         dependsOn: PublishPackages
         condition: and(succeeded(), or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal'))))

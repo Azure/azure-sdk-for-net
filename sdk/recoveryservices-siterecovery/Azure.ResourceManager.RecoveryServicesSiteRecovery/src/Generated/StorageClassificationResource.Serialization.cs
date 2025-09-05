@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     public partial class StorageClassificationResource : IJsonModel<StorageClassificationData>
     {
+        private static StorageClassificationData s_dataDeserializationInstance;
+        private static StorageClassificationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StorageClassificationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageClassificationData>)Data).Write(writer, options);
 
-        StorageClassificationData IJsonModel<StorageClassificationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageClassificationData>)Data).Create(ref reader, options);
+        StorageClassificationData IJsonModel<StorageClassificationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageClassificationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StorageClassificationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StorageClassificationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageClassificationData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        StorageClassificationData IPersistableModel<StorageClassificationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageClassificationData>(data, options);
+        StorageClassificationData IPersistableModel<StorageClassificationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageClassificationData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<StorageClassificationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageClassificationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StorageClassificationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageClassificationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

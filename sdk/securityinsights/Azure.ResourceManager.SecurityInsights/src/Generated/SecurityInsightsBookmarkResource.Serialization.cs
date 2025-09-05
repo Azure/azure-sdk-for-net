@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsBookmarkResource : IJsonModel<SecurityInsightsBookmarkData>
     {
+        private static SecurityInsightsBookmarkData s_dataDeserializationInstance;
+        private static SecurityInsightsBookmarkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityInsightsBookmarkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsBookmarkData>)Data).Write(writer, options);
 
-        SecurityInsightsBookmarkData IJsonModel<SecurityInsightsBookmarkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsBookmarkData>)Data).Create(ref reader, options);
+        SecurityInsightsBookmarkData IJsonModel<SecurityInsightsBookmarkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsBookmarkData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsBookmarkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsBookmarkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsBookmarkData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        SecurityInsightsBookmarkData IPersistableModel<SecurityInsightsBookmarkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsBookmarkData>(data, options);
+        SecurityInsightsBookmarkData IPersistableModel<SecurityInsightsBookmarkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsBookmarkData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsBookmarkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsBookmarkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsBookmarkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsBookmarkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

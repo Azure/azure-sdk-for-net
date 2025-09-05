@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class TenantPolicySetDefinitionResource : IJsonModel<PolicySetDefinitionData>
     {
+        private static PolicySetDefinitionData s_dataDeserializationInstance;
+        private static PolicySetDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PolicySetDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PolicySetDefinitionData>)Data).Write(writer, options);
 
-        PolicySetDefinitionData IJsonModel<PolicySetDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicySetDefinitionData>)Data).Create(ref reader, options);
+        PolicySetDefinitionData IJsonModel<PolicySetDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicySetDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PolicySetDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PolicySetDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options, AzureResourceManagerContext.Default);
 
-        PolicySetDefinitionData IPersistableModel<PolicySetDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicySetDefinitionData>(data, options);
+        PolicySetDefinitionData IPersistableModel<PolicySetDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicySetDefinitionData>(data, options, AzureResourceManagerContext.Default);
 
-        string IPersistableModel<PolicySetDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicySetDefinitionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PolicySetDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicySetDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

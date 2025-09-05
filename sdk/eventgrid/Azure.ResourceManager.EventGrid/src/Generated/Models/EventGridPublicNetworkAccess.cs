@@ -27,11 +27,14 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
+        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> Enabled. </summary>
         public static EventGridPublicNetworkAccess Enabled { get; } = new EventGridPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static EventGridPublicNetworkAccess Disabled { get; } = new EventGridPublicNetworkAccess(DisabledValue);
+        /// <summary> SecuredByPerimeter. </summary>
+        public static EventGridPublicNetworkAccess SecuredByPerimeter { get; } = new EventGridPublicNetworkAccess(SecuredByPerimeterValue);
         /// <summary> Determines if two <see cref="EventGridPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(EventGridPublicNetworkAccess left, EventGridPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventGridPublicNetworkAccess"/> values are not the same. </summary>

@@ -16,24 +16,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionCancelledEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="cmdletId"/> is null. </exception>
         internal AvsScriptExecutionCancelledEventData(string operationId, string cmdletId) : base(operationId, cmdletId)
         {
-            Argument.AssertNotNull(operationId, nameof(operationId));
-            Argument.AssertNotNull(cmdletId, nameof(cmdletId));
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionCancelledEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
         /// <param name="output"> Stdout outputs from the execution, if any. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsScriptExecutionCancelledEventData(string operationId, string cmdletId, IReadOnlyList<string> output, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(operationId, cmdletId, output, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionCancelledEventData"/> for deserialization. </summary>
-        internal AvsScriptExecutionCancelledEventData()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AvsScriptExecutionCancelledEventData(string operationId, string cmdletId, IReadOnlyList<string> output, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(operationId, cmdletId, output, additionalBinaryDataProperties)
         {
         }
     }

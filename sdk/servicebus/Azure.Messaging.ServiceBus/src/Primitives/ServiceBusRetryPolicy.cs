@@ -35,6 +35,9 @@ namespace Azure.Messaging.ServiceBus
         private const int ServerNotBusyState = 0; // default value of serverBusy
         private const int ServerBusyState = 1;
 
+        /// <summary>A generic retriable busy exception to use for delay calculations.</summary>
+        private static readonly ServiceBusException DefaultServiceBusyException = new ServiceBusException(Resources.DefaultServerBusyException, ServiceBusFailureReason.ServiceBusy);
+
         /// <summary>
         /// Determines whether or not the server returned a busy error.
         /// </summary>
@@ -130,17 +133,42 @@ namespace Azure.Messaging.ServiceBus
             bool logTimeoutRetriesAsVerbose = false)
       {
             var failedAttemptCount = 0;
+            var tryTimeout = CalculateTryTimeout(0);
 
-            TimeSpan tryTimeout = CalculateTryTimeout(0);
             if (IsServerBusy && tryTimeout < ServerBusyBaseSleepTime)
             {
-                // We are in a server busy state before we start processing.
-                // Since ServerBusyBaseSleepTime > remaining time for the operation, we don't wait for the entire Sleep time.
-                await Task.Delay(tryTimeout, cancellationToken).ConfigureAwait(false);
-                throw new ServiceBusException(
-                    ServerBusyExceptionMessage,
-                    ServiceBusFailureReason.ServiceBusy);
+                while (IsServerBusy && !cancellationToken.IsCancellationRequested)
+                {
+                    // If we are in a server busy state, we will wait for the try timeout.
+
+                    await Task.Delay(tryTimeout, cancellationToken).ConfigureAwait(false);
+
+                    // If the server is still busy, consider this a retry attempt and wait for the
+                    // calculated retry delay before trying again.
+
+                    if (IsServerBusy)
+                    {
+                        ++failedAttemptCount;
+                        var delay = CalculateRetryDelay(DefaultServiceBusyException, failedAttemptCount);
+
+                        if (delay.HasValue)
+                        {
+                            Logger.RunOperationExceptionEncountered(DefaultServiceBusyException.ToString());
+
+                            await Task.Delay(delay.Value, cancellationToken).ConfigureAwait(false);
+                            tryTimeout = CalculateTryTimeout(failedAttemptCount);
+                        }
+                        else
+                        {
+                            // If there are no retries left, then fail because the server is busy.
+                            throw new ServiceBusException(
+                                ServerBusyExceptionMessage,
+                                ServiceBusFailureReason.ServiceBusy);
+                        }
+                    }
+                }
             }
+
             while (!cancellationToken.IsCancellationRequested)
             {
                 if (IsServerBusy)

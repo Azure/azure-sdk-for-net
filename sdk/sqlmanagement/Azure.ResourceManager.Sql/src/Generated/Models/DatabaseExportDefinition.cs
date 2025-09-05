@@ -46,33 +46,30 @@ namespace Azure.ResourceManager.Sql.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DatabaseExportDefinition"/>. </summary>
-        /// <param name="storageKeyType"> Storage key type. </param>
-        /// <param name="storageKey"> Storage key. </param>
+        /// <param name="storageKeyType"> Storage key type: StorageAccessKey, SharedAccessKey, or ManagedIdentity. </param>
+        /// <param name="storageKey"> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
         /// <param name="storageUri"> Storage Uri. </param>
-        /// <param name="administratorLogin"> Administrator login name. </param>
-        /// <param name="administratorLoginPassword"> Administrator login password. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageKey"/>, <paramref name="storageUri"/>, <paramref name="administratorLogin"/> or <paramref name="administratorLoginPassword"/> is null. </exception>
-        public DatabaseExportDefinition(StorageKeyType storageKeyType, string storageKey, Uri storageUri, string administratorLogin, string administratorLoginPassword)
+        /// <param name="administratorLogin"> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageKey"/>, <paramref name="storageUri"/> or <paramref name="administratorLogin"/> is null. </exception>
+        public DatabaseExportDefinition(StorageKeyType storageKeyType, string storageKey, Uri storageUri, string administratorLogin)
         {
             Argument.AssertNotNull(storageKey, nameof(storageKey));
             Argument.AssertNotNull(storageUri, nameof(storageUri));
             Argument.AssertNotNull(administratorLogin, nameof(administratorLogin));
-            Argument.AssertNotNull(administratorLoginPassword, nameof(administratorLoginPassword));
 
             StorageKeyType = storageKeyType;
             StorageKey = storageKey;
             StorageUri = storageUri;
             AdministratorLogin = administratorLogin;
-            AdministratorLoginPassword = administratorLoginPassword;
         }
 
         /// <summary> Initializes a new instance of <see cref="DatabaseExportDefinition"/>. </summary>
-        /// <param name="storageKeyType"> Storage key type. </param>
-        /// <param name="storageKey"> Storage key. </param>
+        /// <param name="storageKeyType"> Storage key type: StorageAccessKey, SharedAccessKey, or ManagedIdentity. </param>
+        /// <param name="storageKey"> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
         /// <param name="storageUri"> Storage Uri. </param>
-        /// <param name="administratorLogin"> Administrator login name. </param>
-        /// <param name="administratorLoginPassword"> Administrator login password. </param>
-        /// <param name="authenticationType"> Authentication type. </param>
+        /// <param name="administratorLogin"> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
+        /// <param name="administratorLoginPassword"> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </param>
+        /// <param name="authenticationType"> Type of credentials provided for access to the target SQL server: SQL, ADPassword or ManagedIdentity. </param>
         /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DatabaseExportDefinition(StorageKeyType storageKeyType, string storageKey, Uri storageUri, string administratorLogin, string administratorLoginPassword, string authenticationType, NetworkIsolationSettings networkIsolation, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -92,22 +89,22 @@ namespace Azure.ResourceManager.Sql.Models
         {
         }
 
-        /// <summary> Storage key type. </summary>
+        /// <summary> Storage key type: StorageAccessKey, SharedAccessKey, or ManagedIdentity. </summary>
         [WirePath("storageKeyType")]
         public StorageKeyType StorageKeyType { get; }
-        /// <summary> Storage key. </summary>
+        /// <summary> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </summary>
         [WirePath("storageKey")]
         public string StorageKey { get; }
         /// <summary> Storage Uri. </summary>
         [WirePath("storageUri")]
         public Uri StorageUri { get; }
-        /// <summary> Administrator login name. </summary>
+        /// <summary> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </summary>
         [WirePath("administratorLogin")]
         public string AdministratorLogin { get; }
-        /// <summary> Administrator login password. </summary>
+        /// <summary> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </summary>
         [WirePath("administratorLoginPassword")]
-        public string AdministratorLoginPassword { get; }
-        /// <summary> Authentication type. </summary>
+        public string AdministratorLoginPassword { get; set; }
+        /// <summary> Type of credentials provided for access to the target SQL server: SQL, ADPassword or ManagedIdentity. </summary>
         [WirePath("authenticationType")]
         public string AuthenticationType { get; set; }
         /// <summary> Optional resource information to enable network isolation for request. </summary>

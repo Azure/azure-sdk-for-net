@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CassandraClusterResource : IJsonModel<CassandraClusterData>
     {
+        private static CassandraClusterData s_dataDeserializationInstance;
+        private static CassandraClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CassandraClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CassandraClusterData>)Data).Write(writer, options);
 
-        CassandraClusterData IJsonModel<CassandraClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CassandraClusterData>)Data).Create(ref reader, options);
+        CassandraClusterData IJsonModel<CassandraClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CassandraClusterData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CassandraClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CassandraClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CassandraClusterData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        CassandraClusterData IPersistableModel<CassandraClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CassandraClusterData>(data, options);
+        CassandraClusterData IPersistableModel<CassandraClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CassandraClusterData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CassandraClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CassandraClusterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CassandraClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CassandraClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

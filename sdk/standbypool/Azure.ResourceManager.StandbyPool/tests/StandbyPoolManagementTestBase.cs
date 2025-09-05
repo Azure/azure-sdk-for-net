@@ -22,15 +22,17 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         protected SubscriptionResource subscription { get; private set; }
         protected AzureLocation location { get; private set; }
 
-        protected StandbyPoolManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected StandbyPoolManagementTestBase(bool isAsync, RecordedTestMode mode, AzureLocation location)
         : base(isAsync, mode)
         {
+            this.location = location;
             IgnoreNetworkDependencyVersions();
         }
 
-        protected StandbyPoolManagementTestBase(bool isAsync)
+        protected StandbyPoolManagementTestBase(bool isAsync, AzureLocation location)
             : base(isAsync)
         {
+            this.location = location;
             IgnoreNetworkDependencyVersions();
         }
 
@@ -41,7 +43,6 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             _genericResourceCollection = Client.GetGenericResources();
             subscription = await Client.GetDefaultSubscriptionAsync();
-            location = AzureLocation.EastAsia;
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgName, AzureLocation location)

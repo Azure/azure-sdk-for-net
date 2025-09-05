@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppService
 
         StaticSiteUserProvidedFunctionAppResource IOperationSource<StaticSiteUserProvidedFunctionAppResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StaticSiteUserProvidedFunctionAppData>(response.Content);
+            var data = ModelReaderWriter.Read<StaticSiteUserProvidedFunctionAppData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
             return new StaticSiteUserProvidedFunctionAppResource(_client, data);
         }
 
         async ValueTask<StaticSiteUserProvidedFunctionAppResource> IOperationSource<StaticSiteUserProvidedFunctionAppResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StaticSiteUserProvidedFunctionAppData>(response.Content);
+            var data = ModelReaderWriter.Read<StaticSiteUserProvidedFunctionAppData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
             return await Task.FromResult(new StaticSiteUserProvidedFunctionAppResource(_client, data)).ConfigureAwait(false);
         }
     }

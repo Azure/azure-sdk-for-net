@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.IotCe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.IotCentral.Tests", "tests\Azure.ResourceManager.IotCentral.Tests.csproj", "{A4C2E27F-C5CA-4D3E-AF37-CE4F29D05951}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.IotCentral.Samples", "samples\Azure.ResourceManager.IotCentral.Samples.csproj", "{90BFC2ED-E546-4497-8190-8E2971CCDDE3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,18 +41,6 @@ Global
 		{A4C2E27F-C5CA-4D3E-AF37-CE4F29D05951}.Release|x64.Build.0 = Release|Any CPU
 		{A4C2E27F-C5CA-4D3E-AF37-CE4F29D05951}.Release|x86.ActiveCfg = Release|Any CPU
 		{A4C2E27F-C5CA-4D3E-AF37-CE4F29D05951}.Release|x86.Build.0 = Release|Any CPU
-		{90BFC2ED-E546-4497-8190-8E2971CCDDE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90BFC2ED-E546-4497-8190-8E2971CCDDE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90BFC2ED-E546-4497-8190-8E2971CCDDE3}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{90BFC2ED-E546-4497-8190-8E2971CCDDE3}.Debug|x64.Build.0 = Debug|Any CPU
-		{90BFC2ED-E546-4497-8190-8E2971CCDDE3}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{90BFC2ED-E546-4497-8190-8E2971CCDDE3}.Debug|x86.Build.0 = Debug|Any CPU
-		{90BFC2ED-E546-4497-8190-8E2971CCDDE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90BFC2ED-E546-4497-8190-8E2971CCDDE3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90BFC2ED-E546-4497-8190-8E2971CCDDE3}.Release|x64.ActiveCfg = Release|Any CPU
-		{90BFC2ED-E546-4497-8190-8E2971CCDDE3}.Release|x64.Build.0 = Release|Any CPU
-		{90BFC2ED-E546-4497-8190-8E2971CCDDE3}.Release|x86.ActiveCfg = Release|Any CPU
-		{90BFC2ED-E546-4497-8190-8E2971CCDDE3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

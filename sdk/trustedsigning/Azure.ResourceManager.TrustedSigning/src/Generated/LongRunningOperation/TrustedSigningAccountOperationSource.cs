@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.TrustedSigning
 
         TrustedSigningAccountResource IOperationSource<TrustedSigningAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<TrustedSigningAccountData>(response.Content);
+            var data = ModelReaderWriter.Read<TrustedSigningAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerTrustedSigningContext.Default);
             return new TrustedSigningAccountResource(_client, data);
         }
 
         async ValueTask<TrustedSigningAccountResource> IOperationSource<TrustedSigningAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<TrustedSigningAccountData>(response.Content);
+            var data = ModelReaderWriter.Read<TrustedSigningAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerTrustedSigningContext.Default);
             return await Task.FromResult(new TrustedSigningAccountResource(_client, data)).ConfigureAwait(false);
         }
     }

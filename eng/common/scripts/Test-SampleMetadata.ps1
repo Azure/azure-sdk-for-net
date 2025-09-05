@@ -73,7 +73,7 @@ process {
 
                 Write-Error "File '$($file.FullName)' contains invalid product slug: $product" -TargetObject $file `
                     -Category InvalidData -CategoryTargetName $product -CategoryTargetType string `
-                    -RecommendedAction 'Use only product slugs listed at https://review.learn.microsoft.com/help/platform/metadata-taxonomies?branch=main#product'
+                    -RecommendedAction 'Use only product slugs listed at https://taxonomy.learn.microsoft.com/TaxonomyServiceAdminPage/#/taxonomy/'
             }
         }
 
@@ -95,14 +95,11 @@ end {
 }
 
 begin {
-    # https://review.learn.microsoft.com/help/platform/metadata-taxonomies?branch=main#product
+    # https://taxonomy.learn.microsoft.com/TaxonomyServiceAdminPage/#/taxonomy/
     $productSlugs = @(
         "ai-builder",
         "aspnet",
         "aspnet-core",
-        "azure-active-directory",
-        "azure-active-directory-b2c",
-        "azure-active-directory-domain",
         "azure-advisor",
         "azure-ai-content-safety",
         "azure-analysis-services",
@@ -365,6 +362,16 @@ begin {
         "dynamics-talent-onboard",
         "ef-core",
         "ef6",
+        "entra",
+        "entra-external-id",
+        "entra-id",
+        "entra-id-protection",
+        "entra-identity-governance",
+        "entra-internet-access",
+        "entra-permissions-management",
+        "entra-private-access",
+        "entra-verified-id",
+        "entra-workload-identities",
         "expression-studio",
         "language-service",
         "m365-ems",
@@ -509,7 +516,7 @@ Checks sample markdown files' frontmatter for invalid information.
 .DESCRIPTION
 Given a collection of markdown files, their frontmatter - if present - is checked for invalid information, including:
 
-Invalid product slugs, i.e. those not listed in https://review.learn.microsoft.com/help/platform/metadata-taxonomies?branch=main#product.
+Invalid product slugs, i.e. those not listed in https://taxonomy.learn.microsoft.com/TaxonomyServiceAdminPage/#/taxonomy/.
 
 .PARAMETER Path
 Specifies the path to an item to search. Wildcards are permitted.

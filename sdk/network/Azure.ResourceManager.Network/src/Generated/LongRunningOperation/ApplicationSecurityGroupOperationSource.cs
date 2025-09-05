@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         ApplicationSecurityGroupResource IOperationSource<ApplicationSecurityGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApplicationSecurityGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<ApplicationSecurityGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new ApplicationSecurityGroupResource(_client, data);
         }
 
         async ValueTask<ApplicationSecurityGroupResource> IOperationSource<ApplicationSecurityGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApplicationSecurityGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<ApplicationSecurityGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new ApplicationSecurityGroupResource(_client, data)).ConfigureAwait(false);
         }
     }

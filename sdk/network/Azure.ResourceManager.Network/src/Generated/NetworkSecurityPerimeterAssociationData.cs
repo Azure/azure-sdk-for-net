@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the NetworkSecurityPerimeterAssociation data model.
     /// The NSP resource association resource
     /// </summary>
-    public partial class NetworkSecurityPerimeterAssociationData : TrackedResourceData
+    public partial class NetworkSecurityPerimeterAssociationData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -53,8 +53,7 @@ namespace Azure.ResourceManager.Network
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAssociationData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public NetworkSecurityPerimeterAssociationData(AzureLocation location) : base(location)
+        public NetworkSecurityPerimeterAssociationData()
         {
         }
 
@@ -63,15 +62,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> The provisioning state of the resource  association resource. </param>
         /// <param name="privateLinkResource"> The PaaS resource to be associated. </param>
         /// <param name="profile"> Profile id to which the PaaS resource is associated. </param>
         /// <param name="accessMode"> Access mode on the association. </param>
         /// <param name="hasProvisioningIssues"> Specifies if there are provisioning issues. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkSecurityPerimeterProvisioningState? provisioningState, WritableSubResource privateLinkResource, WritableSubResource profile, NetworkSecurityPerimeterAssociationAccessMode? accessMode, string hasProvisioningIssues, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkSecurityPerimeterAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterProvisioningState? provisioningState, WritableSubResource privateLinkResource, WritableSubResource profile, NetworkSecurityPerimeterAssociationAccessMode? accessMode, string hasProvisioningIssues, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PrivateLinkResource = privateLinkResource;
@@ -81,16 +78,13 @@ namespace Azure.ResourceManager.Network
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAssociationData"/> for deserialization. </summary>
-        internal NetworkSecurityPerimeterAssociationData()
-        {
-        }
-
         /// <summary> The provisioning state of the resource  association resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkSecurityPerimeterProvisioningState? ProvisioningState { get; }
         /// <summary> The PaaS resource to be associated. </summary>
         internal WritableSubResource PrivateLinkResource { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.privateLinkResource.id")]
         public ResourceIdentifier PrivateLinkResourceId
         {
             get => PrivateLinkResource is null ? default : PrivateLinkResource.Id;
@@ -105,6 +99,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Profile id to which the PaaS resource is associated. </summary>
         internal WritableSubResource Profile { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.profile.id")]
         public ResourceIdentifier ProfileId
         {
             get => Profile is null ? default : Profile.Id;
@@ -117,8 +112,10 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Access mode on the association. </summary>
+        [WirePath("properties.accessMode")]
         public NetworkSecurityPerimeterAssociationAccessMode? AccessMode { get; set; }
         /// <summary> Specifies if there are provisioning issues. </summary>
+        [WirePath("properties.hasProvisioningIssues")]
         public string HasProvisioningIssues { get; }
     }
 }

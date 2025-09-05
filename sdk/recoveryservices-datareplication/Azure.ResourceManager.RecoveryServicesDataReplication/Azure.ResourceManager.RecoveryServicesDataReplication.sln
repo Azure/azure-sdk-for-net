@@ -7,8 +7,6 @@ Project("{046A2A51-F66F-49DD-83A1-96E02A95B305}") = "Azure.ResourceManager.Recov
 EndProject
 Project("{046A2A51-F66F-49DD-83A1-96E02A95B305}") = "Azure.ResourceManager.RecoveryServicesDataReplication.Tests", "tests\Azure.ResourceManager.RecoveryServicesDataReplication.Tests.csproj", "{FA9B8A69-877B-4424-9FBC-CDDEB362A3ED}"
 EndProject
-Project("{046A2A51-F66F-49DD-83A1-96E02A95B305}") = "Azure.ResourceManager.RecoveryServicesDataReplication.Samples", "samples\Azure.ResourceManager.RecoveryServicesDataReplication.Samples.csproj", "{0429344B-5071-4E16-8FFA-DF84D1E4663E}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,17 +47,5 @@ Global
 		{FA9B8A69-877B-4424-9FBC-CDDEB362A3ED}.Release|x64.Build.0 = Release|Any CPU
 		{FA9B8A69-877B-4424-9FBC-CDDEB362A3ED}.Release|x86.ActiveCfg = Release|Any CPU
 		{FA9B8A69-877B-4424-9FBC-CDDEB362A3ED}.Release|x86.Build.0 = Release|Any CPU
-		{0429344B-5071-4E16-8FFA-DF84D1E4663E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0429344B-5071-4E16-8FFA-DF84D1E4663E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0429344B-5071-4E16-8FFA-DF84D1E4663E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{0429344B-5071-4E16-8FFA-DF84D1E4663E}.Debug|x64.Build.0 = Debug|Any CPU
-		{0429344B-5071-4E16-8FFA-DF84D1E4663E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0429344B-5071-4E16-8FFA-DF84D1E4663E}.Debug|x86.Build.0 = Debug|Any CPU
-		{0429344B-5071-4E16-8FFA-DF84D1E4663E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0429344B-5071-4E16-8FFA-DF84D1E4663E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0429344B-5071-4E16-8FFA-DF84D1E4663E}.Release|x64.ActiveCfg = Release|Any CPU
-		{0429344B-5071-4E16-8FFA-DF84D1E4663E}.Release|x64.Build.0 = Release|Any CPU
-		{0429344B-5071-4E16-8FFA-DF84D1E4663E}.Release|x86.ActiveCfg = Release|Any CPU
-		{0429344B-5071-4E16-8FFA-DF84D1E4663E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

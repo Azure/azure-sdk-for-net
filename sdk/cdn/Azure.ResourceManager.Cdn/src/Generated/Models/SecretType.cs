@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The type of the secret resource. </summary>
+    /// <summary>
+    /// The type of the secret resource.
+    /// Serialized Name: SecretType
+    /// </summary>
     public readonly partial struct SecretType : IEquatable<SecretType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string ManagedCertificateValue = "ManagedCertificate";
         private const string AzureFirstPartyManagedCertificateValue = "AzureFirstPartyManagedCertificate";
 
-        /// <summary> UrlSigningKey. </summary>
+        /// <summary>
+        /// UrlSigningKey
+        /// Serialized Name: SecretType.UrlSigningKey
+        /// </summary>
         public static SecretType UriSigningKey { get; } = new SecretType(UriSigningKeyValue);
-        /// <summary> CustomerCertificate. </summary>
+        /// <summary>
+        /// CustomerCertificate
+        /// Serialized Name: SecretType.CustomerCertificate
+        /// </summary>
         public static SecretType CustomerCertificate { get; } = new SecretType(CustomerCertificateValue);
-        /// <summary> ManagedCertificate. </summary>
+        /// <summary>
+        /// ManagedCertificate
+        /// Serialized Name: SecretType.ManagedCertificate
+        /// </summary>
         public static SecretType ManagedCertificate { get; } = new SecretType(ManagedCertificateValue);
-        /// <summary> AzureFirstPartyManagedCertificate. </summary>
+        /// <summary>
+        /// AzureFirstPartyManagedCertificate
+        /// Serialized Name: SecretType.AzureFirstPartyManagedCertificate
+        /// </summary>
         public static SecretType AzureFirstPartyManagedCertificate { get; } = new SecretType(AzureFirstPartyManagedCertificateValue);
         /// <summary> Determines if two <see cref="SecretType"/> values are the same. </summary>
         public static bool operator ==(SecretType left, SecretType right) => left.Equals(right);

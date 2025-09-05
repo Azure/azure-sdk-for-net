@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HybridCompute
 
         MachineRunCommandResource IOperationSource<MachineRunCommandResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MachineRunCommandData>(response.Content);
+            var data = ModelReaderWriter.Read<MachineRunCommandData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
             return new MachineRunCommandResource(_client, data);
         }
 
         async ValueTask<MachineRunCommandResource> IOperationSource<MachineRunCommandResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MachineRunCommandData>(response.Content);
+            var data = ModelReaderWriter.Read<MachineRunCommandData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
             return await Task.FromResult(new MachineRunCommandResource(_client, data)).ConfigureAwait(false);
         }
     }

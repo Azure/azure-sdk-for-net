@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ParameterType.ToString());
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Avs.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support writing '{options.Format}' format.");
             }

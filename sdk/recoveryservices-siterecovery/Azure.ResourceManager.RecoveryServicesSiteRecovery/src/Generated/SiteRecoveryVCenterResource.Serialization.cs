@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     public partial class SiteRecoveryVCenterResource : IJsonModel<SiteRecoveryVCenterData>
     {
+        private static SiteRecoveryVCenterData s_dataDeserializationInstance;
+        private static SiteRecoveryVCenterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SiteRecoveryVCenterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryVCenterData>)Data).Write(writer, options);
 
-        SiteRecoveryVCenterData IJsonModel<SiteRecoveryVCenterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryVCenterData>)Data).Create(ref reader, options);
+        SiteRecoveryVCenterData IJsonModel<SiteRecoveryVCenterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryVCenterData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SiteRecoveryVCenterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SiteRecoveryVCenterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteRecoveryVCenterData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        SiteRecoveryVCenterData IPersistableModel<SiteRecoveryVCenterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryVCenterData>(data, options);
+        SiteRecoveryVCenterData IPersistableModel<SiteRecoveryVCenterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryVCenterData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<SiteRecoveryVCenterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryVCenterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SiteRecoveryVCenterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryVCenterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

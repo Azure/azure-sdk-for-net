@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MongoDBUserDefinitionCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerJobVersionResource : IJsonModel<SqlServerJobVersionData>
     {
+        private static SqlServerJobVersionData s_dataDeserializationInstance;
+        private static SqlServerJobVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlServerJobVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobVersionData>)Data).Write(writer, options);
 
-        SqlServerJobVersionData IJsonModel<SqlServerJobVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobVersionData>)Data).Create(ref reader, options);
+        SqlServerJobVersionData IJsonModel<SqlServerJobVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerJobVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerJobVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerJobVersionData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerJobVersionData IPersistableModel<SqlServerJobVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobVersionData>(data, options);
+        SqlServerJobVersionData IPersistableModel<SqlServerJobVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobVersionData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerJobVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlServerJobVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

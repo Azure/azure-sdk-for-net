@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerAzureADAdministratorResource : IJsonModel<SqlServerAzureADAdministratorData>
     {
+        private static SqlServerAzureADAdministratorData s_dataDeserializationInstance;
+        private static SqlServerAzureADAdministratorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlServerAzureADAdministratorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerAzureADAdministratorData>)Data).Write(writer, options);
 
-        SqlServerAzureADAdministratorData IJsonModel<SqlServerAzureADAdministratorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerAzureADAdministratorData>)Data).Create(ref reader, options);
+        SqlServerAzureADAdministratorData IJsonModel<SqlServerAzureADAdministratorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerAzureADAdministratorData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerAzureADAdministratorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerAzureADAdministratorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerAzureADAdministratorData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerAzureADAdministratorData IPersistableModel<SqlServerAzureADAdministratorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerAzureADAdministratorData>(data, options);
+        SqlServerAzureADAdministratorData IPersistableModel<SqlServerAzureADAdministratorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerAzureADAdministratorData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerAzureADAdministratorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerAzureADAdministratorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlServerAzureADAdministratorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerAzureADAdministratorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
-    /// <summary> Properties specific to Data Organization resource. </summary>
+    /// <summary> Properties specific to Neon Organization resource. </summary>
     public partial class NeonOrganizationProperties
     {
         /// <summary>
@@ -66,15 +66,17 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="userDetails"> Details of the user. </param>
         /// <param name="companyDetails"> Details of the company. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="partnerOrganizationProperties"> Organization properties. </param>
+        /// <param name="partnerOrganizationProperties"> Neon Organization properties. </param>
+        /// <param name="projectProperties"> Neon Project Properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonOrganizationProperties(NeonMarketplaceDetails marketplaceDetails, NeonUserDetails userDetails, NeonCompanyDetails companyDetails, NeonResourceProvisioningState? provisioningState, PartnerOrganizationProperties partnerOrganizationProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeonOrganizationProperties(NeonMarketplaceDetails marketplaceDetails, NeonUserDetails userDetails, NeonCompanyDetails companyDetails, NeonResourceProvisioningState? provisioningState, PartnerOrganizationProperties partnerOrganizationProperties, NeonProjectProperties projectProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplaceDetails = marketplaceDetails;
             UserDetails = userDetails;
             CompanyDetails = companyDetails;
             ProvisioningState = provisioningState;
             PartnerOrganizationProperties = partnerOrganizationProperties;
+            ProjectProperties = projectProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -91,7 +93,9 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         public NeonCompanyDetails CompanyDetails { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
         public NeonResourceProvisioningState? ProvisioningState { get; }
-        /// <summary> Organization properties. </summary>
+        /// <summary> Neon Organization properties. </summary>
         public PartnerOrganizationProperties PartnerOrganizationProperties { get; set; }
+        /// <summary> Neon Project Properties. </summary>
+        public NeonProjectProperties ProjectProperties { get; set; }
     }
 }

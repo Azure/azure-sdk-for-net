@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Avs
 
         ScriptExecutionResource IOperationSource<ScriptExecutionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ScriptExecutionData>(response.Content);
+            var data = ModelReaderWriter.Read<ScriptExecutionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
             return new ScriptExecutionResource(_client, data);
         }
 
         async ValueTask<ScriptExecutionResource> IOperationSource<ScriptExecutionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ScriptExecutionData>(response.Content);
+            var data = ModelReaderWriter.Read<ScriptExecutionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
             return await Task.FromResult(new ScriptExecutionResource(_client, data)).ConfigureAwait(false);
         }
     }

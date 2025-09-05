@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class AzureWebCategoryResource : IJsonModel<AzureWebCategoryData>
     {
+        private static AzureWebCategoryData s_dataDeserializationInstance;
+        private static AzureWebCategoryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AzureWebCategoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AzureWebCategoryData>)Data).Write(writer, options);
 
-        AzureWebCategoryData IJsonModel<AzureWebCategoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureWebCategoryData>)Data).Create(ref reader, options);
+        AzureWebCategoryData IJsonModel<AzureWebCategoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureWebCategoryData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AzureWebCategoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AzureWebCategoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AzureWebCategoryData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        AzureWebCategoryData IPersistableModel<AzureWebCategoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureWebCategoryData>(data, options);
+        AzureWebCategoryData IPersistableModel<AzureWebCategoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureWebCategoryData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<AzureWebCategoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureWebCategoryData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AzureWebCategoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureWebCategoryData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

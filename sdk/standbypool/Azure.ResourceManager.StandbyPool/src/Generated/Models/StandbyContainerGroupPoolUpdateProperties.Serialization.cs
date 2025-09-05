@@ -44,6 +44,16 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 writer.WritePropertyName("containerGroupProperties"u8);
                 writer.WriteObjectValue(ContainerGroupProperties, options);
             }
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                writer.WritePropertyName("zones"u8);
+                writer.WriteStartArray();
+                foreach (var item in Zones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,6 +93,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             }
             StandbyContainerGroupPoolElasticityProfile elasticityProfile = default;
             StandbyContainerGroupProperties containerGroupProperties = default;
+            IList<string> zones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,13 +116,27 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     containerGroupProperties = StandbyContainerGroupProperties.DeserializeStandbyContainerGroupProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("zones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    zones = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StandbyContainerGroupPoolUpdateProperties(elasticityProfile, containerGroupProperties, serializedAdditionalRawData);
+            return new StandbyContainerGroupPoolUpdateProperties(elasticityProfile, containerGroupProperties, zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StandbyContainerGroupPoolUpdateProperties>.Write(ModelReaderWriterOptions options)
@@ -121,7 +146,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStandbyPoolContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StandbyContainerGroupPoolUpdateProperties)} does not support writing '{options.Format}' format.");
             }

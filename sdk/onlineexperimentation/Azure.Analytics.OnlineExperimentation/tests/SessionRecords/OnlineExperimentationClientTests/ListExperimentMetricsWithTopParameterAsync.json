@@ -1,0 +1,1050 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metric_list_0?api-version=2025-05-31-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "386",
+        "Content-Type": "application/merge-patch+json",
+        "traceparent": "00-c5d0f050ef05420b39d1b9a13f82366f-58aa52f80588cadc-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "lifecycle": "Active",
+        "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
+        "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
+        "categories": [
+          "Test"
+        ],
+        "desiredDirection": "Increase",
+        "definition": {
+          "type": "EventCount",
+          "event": {
+            "eventName": "TestEvent"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "491",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:36:05 GMT",
+        "ETag": "\"hDy8i0gwy1Q=\"",
+        "Last-Modified": "Thu, 01 May 2025 04:36:05 GMT",
+        "mise-correlation-id": "02492a21-444c-4e2c-a9d8-73c799700fa0",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "80d4d14e-63f3-449d-b0f2-8a1d9850dda7",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "lifecycle": "Active",
+        "desiredDirection": "Increase",
+        "id": "test_metric_list_0",
+        "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
+        "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
+        "categories": [
+          "Test"
+        ],
+        "definition": {
+          "event": {
+            "eventName": "TestEvent"
+          },
+          "type": "EventCount"
+        },
+        "eTag": "\"hDy8i0gwy1Q=\"",
+        "lastModifiedAt": "2025-05-01T04:36:05.5930275+00:00"
+      }
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metric_list_1?api-version=2025-05-31-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "386",
+        "Content-Type": "application/merge-patch+json",
+        "traceparent": "00-9ec54fed053ae0c3505c8fc64b0a0c95-4108705ecc8cd904-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "lifecycle": "Active",
+        "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
+        "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
+        "categories": [
+          "Test"
+        ],
+        "desiredDirection": "Increase",
+        "definition": {
+          "type": "EventCount",
+          "event": {
+            "eventName": "TestEvent"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "491",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:36:05 GMT",
+        "ETag": "\"f9UUxi8OjFQ=\"",
+        "Last-Modified": "Thu, 01 May 2025 04:36:05 GMT",
+        "mise-correlation-id": "5bf66d2c-d54e-4adb-9ffa-83d3fed8a3bd",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "60b80d42-080a-4309-8929-eef55db17e6a",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "lifecycle": "Active",
+        "desiredDirection": "Increase",
+        "id": "test_metric_list_1",
+        "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
+        "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
+        "categories": [
+          "Test"
+        ],
+        "definition": {
+          "event": {
+            "eventName": "TestEvent"
+          },
+          "type": "EventCount"
+        },
+        "eTag": "\"f9UUxi8OjFQ=\"",
+        "lastModifiedAt": "2025-05-01T04:36:05.7887799+00:00"
+      }
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metric_list_2?api-version=2025-05-31-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "386",
+        "Content-Type": "application/merge-patch+json",
+        "traceparent": "00-9e5c74c8d4a8a717ea665d6ea412ae01-e60b81d8e4b679ae-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "lifecycle": "Active",
+        "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
+        "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
+        "categories": [
+          "Test"
+        ],
+        "desiredDirection": "Increase",
+        "definition": {
+          "type": "EventCount",
+          "event": {
+            "eventName": "TestEvent"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "491",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:36:05 GMT",
+        "ETag": "\"cHyMCXEFjUA=\"",
+        "Last-Modified": "Thu, 01 May 2025 04:36:05 GMT",
+        "mise-correlation-id": "9dd98910-e4c0-40bf-b509-e5fe31615676",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "a4e8a119-04c8-40fc-aa7b-9af66a56b902",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "lifecycle": "Active",
+        "desiredDirection": "Increase",
+        "id": "test_metric_list_2",
+        "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
+        "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
+        "categories": [
+          "Test"
+        ],
+        "definition": {
+          "event": {
+            "eventName": "TestEvent"
+          },
+          "type": "EventCount"
+        },
+        "eTag": "\"cHyMCXEFjUA=\"",
+        "lastModifiedAt": "2025-05-01T04:36:05.9386032+00:00"
+      }
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metric_list_3?api-version=2025-05-31-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "386",
+        "Content-Type": "application/merge-patch+json",
+        "traceparent": "00-c9925e6b37faec2cc52277ae8b5cbe6c-99523a4458b99e90-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "lifecycle": "Active",
+        "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
+        "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
+        "categories": [
+          "Test"
+        ],
+        "desiredDirection": "Increase",
+        "definition": {
+          "type": "EventCount",
+          "event": {
+            "eventName": "TestEvent"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "491",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:36:06 GMT",
+        "ETag": "\"j2psW0U8l5w=\"",
+        "Last-Modified": "Thu, 01 May 2025 04:36:06 GMT",
+        "mise-correlation-id": "b9c4fa20-5af7-48b2-81cc-7eced6bfaab2",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "de6ad4b8-d345-46c0-9827-9779f4cf7c22",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "lifecycle": "Active",
+        "desiredDirection": "Increase",
+        "id": "test_metric_list_3",
+        "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
+        "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
+        "categories": [
+          "Test"
+        ],
+        "definition": {
+          "event": {
+            "eventName": "TestEvent"
+          },
+          "type": "EventCount"
+        },
+        "eTag": "\"j2psW0U8l5w=\"",
+        "lastModifiedAt": "2025-05-01T04:36:06.1096547+00:00"
+      }
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metric_list_4?api-version=2025-05-31-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "386",
+        "Content-Type": "application/merge-patch+json",
+        "traceparent": "00-40b762b720fcb17a6568717e5208613a-bbc7e2a20785bbe0-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "lifecycle": "Active",
+        "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
+        "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
+        "categories": [
+          "Test"
+        ],
+        "desiredDirection": "Increase",
+        "definition": {
+          "type": "EventCount",
+          "event": {
+            "eventName": "TestEvent"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "491",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:36:06 GMT",
+        "ETag": "\"6ld3jtUKHCw=\"",
+        "Last-Modified": "Thu, 01 May 2025 04:36:06 GMT",
+        "mise-correlation-id": "4873d78a-480b-40e6-8e52-e7d6849ec604",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "35a34624-1605-48b5-93e6-26032c12b060",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "lifecycle": "Active",
+        "desiredDirection": "Increase",
+        "id": "test_metric_list_4",
+        "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
+        "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
+        "categories": [
+          "Test"
+        ],
+        "definition": {
+          "event": {
+            "eventName": "TestEvent"
+          },
+          "type": "EventCount"
+        },
+        "eTag": "\"6ld3jtUKHCw=\"",
+        "lastModifiedAt": "2025-05-01T04:36:06.2534375+00:00"
+      }
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "966",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:36:06 GMT",
+        "mise-correlation-id": "64dd02c7-f60f-4fb7-b99c-dc16a3314e2b",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "d9c58ea6-e859-46a2-9d7b-98c234feebe1",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_create_or_update",
+            "displayName": "New Test Metric",
+            "description": "A metric created for testing purposes",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"qOF7bCW8W7s=\"",
+            "lastModifiedAt": "2025-05-01T02:21:49.158338+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_activate",
+            "displayName": "Test Metric ActivateExperimentMetric",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ActivateExperimentMetric)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"s3lTmA/v+iw=\"",
+            "lastModifiedAt": "2025-05-01T04:35:22.7923878+00:00"
+          }
+        ],
+        "nextLink": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=2"
+      }
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=2",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "1175",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:36:06 GMT",
+        "mise-correlation-id": "b713c036-8da4-4c63-9c20-50f7a42bc3d9",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "1e004610-6a1d-48ba-bfc9-e9fb4bc5f611",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_activate_etag",
+            "displayName": "Test Metric ActivateExperimentMetricWithETag",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ActivateExperimentMetricWithETag)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"4h+lmrlzwCM=\"",
+            "lastModifiedAt": "2025-05-01T04:35:25.7497425+00:00"
+          },
+          {
+            "lifecycle": "Inactive",
+            "desiredDirection": "Increase",
+            "id": "test_metric_activate_etag_fail",
+            "displayName": "Test Metric ActivateExperimentMetricWithETagPreconditionFailed",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ActivateExperimentMetricWithETagPreconditionFailed)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"50eFsl0PJes=\"",
+            "lastModifiedAt": "2025-05-01T04:35:28.7566612+00:00"
+          }
+        ],
+        "nextLink": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=4"
+      }
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=4",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "1150",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:36:06 GMT",
+        "mise-correlation-id": "5be360e2-6687-4953-be5e-942a293e2261",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "f86bb9e9-fabd-4b06-b6a0-145081e5a159",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "lifecycle": "Inactive",
+            "desiredDirection": "Increase",
+            "id": "test_metric_deactivate",
+            "displayName": "Test Metric DeactivateExperimentMetric",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).DeactivateExperimentMetric)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"bt+tkBy2Ajo=\"",
+            "lastModifiedAt": "2025-05-01T04:35:39.6673576+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_deactivate_etag_fail",
+            "displayName": "Test Metric DeactivateExperimentMetricPreconditionFailed",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).DeactivateExperimentMetricPreconditionFailed)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"5hPf3Pdplo8=\"",
+            "lastModifiedAt": "2025-05-01T04:35:42.1693751+00:00"
+          }
+        ],
+        "nextLink": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=6"
+      }
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "1159",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:36:06 GMT",
+        "mise-correlation-id": "1b133afe-b06d-45f2-bda3-853a076ec9d8",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "b7db5574-2637-44bf-9156-ecb5fd0e04ce",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "lifecycle": "Inactive",
+            "desiredDirection": "Increase",
+            "id": "test_metric_deactivate_etag",
+            "displayName": "Test Metric DeactivateExperimentMetricWithETag",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).DeactivateExperimentMetricWithETag)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"2uW29kD3Ewo=\"",
+            "lastModifiedAt": "2025-05-01T04:35:45.2603178+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_delete_etag_fail",
+            "displayName": "Test Metric DeleteExperimentMetricPreconditionFailed",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).DeleteExperimentMetricPreconditionFailed)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"E3QQrEayB0U=\"",
+            "lastModifiedAt": "2025-05-01T04:35:50.4649116+00:00"
+          }
+        ],
+        "nextLink": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=8"
+      }
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=8",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "1113",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:36:07 GMT",
+        "mise-correlation-id": "7abb6839-d766-4088-9f30-f1ae89bc4afb",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "b18c1d6b-a5a5-48d5-a4dd-e8d6a98b4f5e",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_retrieve",
+            "displayName": "Test Metric GetExperimentMetricById",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).GetExperimentMetricById)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"lLKY+G3QglE=\"",
+            "lastModifiedAt": "2025-05-01T04:35:57.0364151+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_list_0",
+            "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"hDy8i0gwy1Q=\"",
+            "lastModifiedAt": "2025-05-01T04:36:05.5930275+00:00"
+          }
+        ],
+        "nextLink": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=10"
+      }
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=10",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "1139",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:36:07 GMT",
+        "mise-correlation-id": "34d895af-aa50-4c9e-88e2-c51d47a21654",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "ad5646e7-98c6-43d3-a7ae-7856f6534d74",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_list_1",
+            "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"f9UUxi8OjFQ=\"",
+            "lastModifiedAt": "2025-05-01T04:36:05.7887799+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_list_2",
+            "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"cHyMCXEFjUA=\"",
+            "lastModifiedAt": "2025-05-01T04:36:05.9386032+00:00"
+          }
+        ],
+        "nextLink": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=12"
+      }
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "849",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:36:07 GMT",
+        "mise-correlation-id": "a5397ac8-5d2d-465a-a3a9-67dd4abd2ec0",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "1da1ace7-57ad-44b8-ba0f-50c97af8f627",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_update_existing",
+            "displayName": "Updated Metric",
+            "description": "This metric has been updated",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"69TxF6wMaWY=\"",
+            "lastModifiedAt": "2025-05-01T04:35:10.1269139+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_conditional_update",
+            "displayName": "Updated With ETag",
+            "description": "This metric has been updated with ETag condition",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"AlhYUb/g3Iw=\"",
+            "lastModifiedAt": "2025-05-01T04:35:12.7608955+00:00"
+          }
+        ],
+        "nextLink": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=14"
+      }
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=14",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "1169",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:36:07 GMT",
+        "mise-correlation-id": "4db68fd4-e762-447a-b89b-f70fdd8955f1",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "cf37e349-f216-4bd9-abab-6c23fc236bf5",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_if_match_fail",
+            "displayName": "Test Metric UpdateExperimentMetricWithETagPreconditionFailed",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(False).UpdateExperimentMetricWithETagPreconditionFailed)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"aO89ZnioWaM=\"",
+            "lastModifiedAt": "2025-05-01T04:35:15.1874465+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_list_3",
+            "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"j2psW0U8l5w=\"",
+            "lastModifiedAt": "2025-05-01T04:36:06.1096547+00:00"
+          }
+        ],
+        "nextLink": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=16"
+      }
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=16",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "974",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:36:07 GMT",
+        "mise-correlation-id": "0d3c684d-606b-461d-9221-85bed1927d16",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "653db3bd-6638-4ea0-89b5-e835e11494bd",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_list_4",
+            "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"6ld3jtUKHCw=\"",
+            "lastModifiedAt": "2025-05-01T04:36:06.2534375+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metri",
+            "displayName": "New Test Metric",
+            "description": "A metric created for testing purposes",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"YG7X7NypAo8=\"",
+            "lastModifiedAt": "2025-05-01T04:35:31.5736411+00:00"
+          }
+        ],
+        "nextLink": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=18"
+      }
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview&top=2&skip=18",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "402",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:36:07 GMT",
+        "mise-correlation-id": "6d45e681-06c1-4650-ad92-be4225d81603",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "0cb6b976-2dd3-4416-9420-293f5624bf82",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_create_if_not_exists",
+            "displayName": "If-None-Match Test Metric",
+            "description": "A metric created with If-None-Match header",
+            "categories": [
+              "Test",
+              "Conditional"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "ConditionalCreateEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"NyoM+7py4jQ=\"",
+            "lastModifiedAt": "2025-05-01T04:35:34.4391386+00:00"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "ENDPOINT": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net",
+    "RandomSeed": "463789196"
+  }
+}

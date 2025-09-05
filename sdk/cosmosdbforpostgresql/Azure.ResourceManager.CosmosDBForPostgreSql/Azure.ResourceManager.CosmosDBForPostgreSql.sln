@@ -7,8 +7,6 @@ Project("{F04FCAFF-7131-4E79-9422-18CAC585E1D8}") = "Azure.ResourceManager.Cosmo
 EndProject
 Project("{F04FCAFF-7131-4E79-9422-18CAC585E1D8}") = "Azure.ResourceManager.CosmosDBForPostgreSql.Tests", "tests\Azure.ResourceManager.CosmosDBForPostgreSql.Tests.csproj", "{9283DAF0-5DF7-4D76-B6A3-1B03776648C2}"
 EndProject
-Project("{F04FCAFF-7131-4E79-9422-18CAC585E1D8}") = "Azure.ResourceManager.CosmosDBForPostgreSql.Samples", "samples\Azure.ResourceManager.CosmosDBForPostgreSql.Samples.csproj", "{E1B86E43-5163-449B-8269-2F9651E8A56C}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,17 +47,5 @@ Global
 		{9283DAF0-5DF7-4D76-B6A3-1B03776648C2}.Release|x64.Build.0 = Release|Any CPU
 		{9283DAF0-5DF7-4D76-B6A3-1B03776648C2}.Release|x86.ActiveCfg = Release|Any CPU
 		{9283DAF0-5DF7-4D76-B6A3-1B03776648C2}.Release|x86.Build.0 = Release|Any CPU
-		{E1B86E43-5163-449B-8269-2F9651E8A56C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E1B86E43-5163-449B-8269-2F9651E8A56C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E1B86E43-5163-449B-8269-2F9651E8A56C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E1B86E43-5163-449B-8269-2F9651E8A56C}.Debug|x64.Build.0 = Debug|Any CPU
-		{E1B86E43-5163-449B-8269-2F9651E8A56C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E1B86E43-5163-449B-8269-2F9651E8A56C}.Debug|x86.Build.0 = Debug|Any CPU
-		{E1B86E43-5163-449B-8269-2F9651E8A56C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E1B86E43-5163-449B-8269-2F9651E8A56C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E1B86E43-5163-449B-8269-2F9651E8A56C}.Release|x64.ActiveCfg = Release|Any CPU
-		{E1B86E43-5163-449B-8269-2F9651E8A56C}.Release|x64.Build.0 = Release|Any CPU
-		{E1B86E43-5163-449B-8269-2F9651E8A56C}.Release|x86.ActiveCfg = Release|Any CPU
-		{E1B86E43-5163-449B-8269-2F9651E8A56C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

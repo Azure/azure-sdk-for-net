@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Azure FirstParty Managed Certificate provided by other first party resource providers to enable HTTPS. </summary>
+    /// <summary>
+    /// Azure FirstParty Managed Certificate provided by other first party resource providers to enable HTTPS.
+    /// Serialized Name: AzureFirstPartyManagedCertificateParameters
+    /// </summary>
     public partial class AzureFirstPartyManagedCertificateProperties : FrontDoorSecretProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureFirstPartyManagedCertificateProperties"/>. </summary>
@@ -23,14 +26,35 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFirstPartyManagedCertificateProperties"/>. </summary>
-        /// <param name="secretType"> The type of the secret resource. </param>
+        /// <param name="secretType">
+        /// The type of the secret resource.
+        /// Serialized Name: SecretParameters.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="secretSource"> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
-        /// <param name="subject"> Subject name in the certificate. </param>
-        /// <param name="expirationDate"> Certificate expiration date. </param>
-        /// <param name="certificateAuthority"> Certificate issuing authority. </param>
-        /// <param name="subjectAlternativeNames"> The list of SANs. </param>
-        /// <param name="thumbprint"> Certificate thumbprint. </param>
+        /// <param name="secretSource">
+        /// Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.secretSource
+        /// </param>
+        /// <param name="subject">
+        /// Subject name in the certificate.
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.subject
+        /// </param>
+        /// <param name="expirationDate">
+        /// Certificate expiration date.
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.expirationDate
+        /// </param>
+        /// <param name="certificateAuthority">
+        /// Certificate issuing authority.
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.certificateAuthority
+        /// </param>
+        /// <param name="subjectAlternativeNames">
+        /// The list of SANs.
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.subjectAlternativeNames
+        /// </param>
+        /// <param name="thumbprint">
+        /// Certificate thumbprint.
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.thumbprint
+        /// </param>
         internal AzureFirstPartyManagedCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource secretSource, string subject, string expirationDate, string certificateAuthority, IList<string> subjectAlternativeNames, string thumbprint) : base(secretType, serializedAdditionalRawData)
         {
             SecretSource = secretSource;
@@ -42,7 +66,10 @@ namespace Azure.ResourceManager.Cdn.Models
             SecretType = secretType;
         }
 
-        /// <summary> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </summary>
+        /// <summary>
+        /// Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.secretSource
+        /// </summary>
         internal WritableSubResource SecretSource { get; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SecretSourceId
@@ -50,15 +77,30 @@ namespace Azure.ResourceManager.Cdn.Models
             get => SecretSource?.Id;
         }
 
-        /// <summary> Subject name in the certificate. </summary>
+        /// <summary>
+        /// Subject name in the certificate.
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.subject
+        /// </summary>
         public string Subject { get; }
-        /// <summary> Certificate expiration date. </summary>
+        /// <summary>
+        /// Certificate expiration date.
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.expirationDate
+        /// </summary>
         public string ExpirationDate { get; }
-        /// <summary> Certificate issuing authority. </summary>
+        /// <summary>
+        /// Certificate issuing authority.
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.certificateAuthority
+        /// </summary>
         public string CertificateAuthority { get; }
-        /// <summary> The list of SANs. </summary>
+        /// <summary>
+        /// The list of SANs.
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.subjectAlternativeNames
+        /// </summary>
         public IList<string> SubjectAlternativeNames { get; }
-        /// <summary> Certificate thumbprint. </summary>
+        /// <summary>
+        /// Certificate thumbprint.
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.thumbprint
+        /// </summary>
         public string Thumbprint { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Caching behavior for the requests. </summary>
+    /// <summary>
+    /// Caching behavior for the requests
+    /// Serialized Name: QueryStringBehavior
+    /// </summary>
     public readonly partial struct QueryStringBehavior : IEquatable<QueryStringBehavior>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string ExcludeValue = "Exclude";
         private const string ExcludeAllValue = "ExcludeAll";
 
-        /// <summary> Include. </summary>
+        /// <summary>
+        /// Include
+        /// Serialized Name: QueryStringBehavior.Include
+        /// </summary>
         public static QueryStringBehavior Include { get; } = new QueryStringBehavior(IncludeValue);
-        /// <summary> IncludeAll. </summary>
+        /// <summary>
+        /// IncludeAll
+        /// Serialized Name: QueryStringBehavior.IncludeAll
+        /// </summary>
         public static QueryStringBehavior IncludeAll { get; } = new QueryStringBehavior(IncludeAllValue);
-        /// <summary> Exclude. </summary>
+        /// <summary>
+        /// Exclude
+        /// Serialized Name: QueryStringBehavior.Exclude
+        /// </summary>
         public static QueryStringBehavior Exclude { get; } = new QueryStringBehavior(ExcludeValue);
-        /// <summary> ExcludeAll. </summary>
+        /// <summary>
+        /// ExcludeAll
+        /// Serialized Name: QueryStringBehavior.ExcludeAll
+        /// </summary>
         public static QueryStringBehavior ExcludeAll { get; } = new QueryStringBehavior(ExcludeAllValue);
         /// <summary> Determines if two <see cref="QueryStringBehavior"/> values are the same. </summary>
         public static bool operator ==(QueryStringBehavior left, QueryStringBehavior right) => left.Equals(right);

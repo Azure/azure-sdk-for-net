@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.WebPubSub
 {
     public partial class WebPubSubSharedPrivateLinkResource : IJsonModel<WebPubSubSharedPrivateLinkData>
     {
+        private static WebPubSubSharedPrivateLinkData s_dataDeserializationInstance;
+        private static WebPubSubSharedPrivateLinkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WebPubSubSharedPrivateLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubSharedPrivateLinkData>)Data).Write(writer, options);
 
-        WebPubSubSharedPrivateLinkData IJsonModel<WebPubSubSharedPrivateLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubSharedPrivateLinkData>)Data).Create(ref reader, options);
+        WebPubSubSharedPrivateLinkData IJsonModel<WebPubSubSharedPrivateLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubSharedPrivateLinkData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WebPubSubSharedPrivateLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WebPubSubSharedPrivateLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WebPubSubSharedPrivateLinkData>(Data, options, AzureResourceManagerWebPubSubContext.Default);
 
-        WebPubSubSharedPrivateLinkData IPersistableModel<WebPubSubSharedPrivateLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebPubSubSharedPrivateLinkData>(data, options);
+        WebPubSubSharedPrivateLinkData IPersistableModel<WebPubSubSharedPrivateLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebPubSubSharedPrivateLinkData>(data, options, AzureResourceManagerWebPubSubContext.Default);
 
-        string IPersistableModel<WebPubSubSharedPrivateLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebPubSubSharedPrivateLinkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WebPubSubSharedPrivateLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebPubSubSharedPrivateLinkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

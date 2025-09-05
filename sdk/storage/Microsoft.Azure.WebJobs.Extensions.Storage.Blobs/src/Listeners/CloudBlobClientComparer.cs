@@ -31,7 +31,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 throw new ArgumentNullException(nameof(obj));
             }
 
-            return obj.AccountName.GetHashCode();
+            // BlobServiceClient.AccountName can be null for vanity domains and
+            // other less common scenarios (including underspecified mocks).
+            return obj.AccountName?.GetHashCode() ?? 0;
         }
     }
 }

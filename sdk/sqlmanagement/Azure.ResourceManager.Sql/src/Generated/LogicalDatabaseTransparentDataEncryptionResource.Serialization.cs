@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class LogicalDatabaseTransparentDataEncryptionResource : IJsonModel<LogicalDatabaseTransparentDataEncryptionData>
     {
+        private static LogicalDatabaseTransparentDataEncryptionData s_dataDeserializationInstance;
+        private static LogicalDatabaseTransparentDataEncryptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<LogicalDatabaseTransparentDataEncryptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LogicalDatabaseTransparentDataEncryptionData>)Data).Write(writer, options);
 
-        LogicalDatabaseTransparentDataEncryptionData IJsonModel<LogicalDatabaseTransparentDataEncryptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogicalDatabaseTransparentDataEncryptionData>)Data).Create(ref reader, options);
+        LogicalDatabaseTransparentDataEncryptionData IJsonModel<LogicalDatabaseTransparentDataEncryptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogicalDatabaseTransparentDataEncryptionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LogicalDatabaseTransparentDataEncryptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LogicalDatabaseTransparentDataEncryptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LogicalDatabaseTransparentDataEncryptionData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        LogicalDatabaseTransparentDataEncryptionData IPersistableModel<LogicalDatabaseTransparentDataEncryptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogicalDatabaseTransparentDataEncryptionData>(data, options);
+        LogicalDatabaseTransparentDataEncryptionData IPersistableModel<LogicalDatabaseTransparentDataEncryptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogicalDatabaseTransparentDataEncryptionData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<LogicalDatabaseTransparentDataEncryptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogicalDatabaseTransparentDataEncryptionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<LogicalDatabaseTransparentDataEncryptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogicalDatabaseTransparentDataEncryptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

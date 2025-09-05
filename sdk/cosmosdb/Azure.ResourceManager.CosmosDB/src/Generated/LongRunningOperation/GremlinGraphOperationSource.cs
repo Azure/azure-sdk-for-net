@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CosmosDB
 
         GremlinGraphResource IOperationSource<GremlinGraphResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GremlinGraphData>(response.Content);
+            var data = ModelReaderWriter.Read<GremlinGraphData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return new GremlinGraphResource(_client, data);
         }
 
         async ValueTask<GremlinGraphResource> IOperationSource<GremlinGraphResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GremlinGraphData>(response.Content);
+            var data = ModelReaderWriter.Read<GremlinGraphData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return await Task.FromResult(new GremlinGraphResource(_client, data)).ConfigureAwait(false);
         }
     }

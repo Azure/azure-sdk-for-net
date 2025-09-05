@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Caching behavior for the requests. </summary>
+    /// <summary>
+    /// Caching behavior for the requests
+    /// Serialized Name: CacheBehavior
+    /// </summary>
     public readonly partial struct CacheBehaviorSetting : IEquatable<CacheBehaviorSetting>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string OverrideValue = "Override";
         private const string SetIfMissingValue = "SetIfMissing";
 
-        /// <summary> BypassCache. </summary>
+        /// <summary>
+        /// BypassCache
+        /// Serialized Name: CacheBehavior.BypassCache
+        /// </summary>
         public static CacheBehaviorSetting BypassCache { get; } = new CacheBehaviorSetting(BypassCacheValue);
-        /// <summary> Override. </summary>
+        /// <summary>
+        /// Override
+        /// Serialized Name: CacheBehavior.Override
+        /// </summary>
         public static CacheBehaviorSetting Override { get; } = new CacheBehaviorSetting(OverrideValue);
-        /// <summary> SetIfMissing. </summary>
+        /// <summary>
+        /// SetIfMissing
+        /// Serialized Name: CacheBehavior.SetIfMissing
+        /// </summary>
         public static CacheBehaviorSetting SetIfMissing { get; } = new CacheBehaviorSetting(SetIfMissingValue);
         /// <summary> Determines if two <see cref="CacheBehaviorSetting"/> values are the same. </summary>
         public static bool operator ==(CacheBehaviorSetting left, CacheBehaviorSetting right) => left.Equals(right);

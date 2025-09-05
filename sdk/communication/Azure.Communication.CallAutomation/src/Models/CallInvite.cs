@@ -51,7 +51,7 @@ namespace Azure.Communication.CallAutomation
         /// Sip Headers are not supported. Voip Headers are supported for Microsoft Teams Apps.
         /// </summary>
         /// <param name="targetIdentity"></param>
-        public CallInvite(MicrosoftTeamsAppIdentifier targetIdentity)
+        public CallInvite(TeamsExtensionUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
             CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());

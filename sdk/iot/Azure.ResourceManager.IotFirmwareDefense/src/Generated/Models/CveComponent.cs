@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Properties of the SBOM component for a CVE. </summary>
+    /// <summary> Legacy component of a CVE result. </summary>
     public partial class CveComponent
     {
         /// <summary>

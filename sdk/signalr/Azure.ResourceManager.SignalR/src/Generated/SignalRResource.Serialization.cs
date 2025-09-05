@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SignalR
 {
     public partial class SignalRResource : IJsonModel<SignalRData>
     {
+        private static SignalRData s_dataDeserializationInstance;
+        private static SignalRData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SignalRData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SignalRData>)Data).Write(writer, options);
 
-        SignalRData IJsonModel<SignalRData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRData>)Data).Create(ref reader, options);
+        SignalRData IJsonModel<SignalRData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SignalRData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SignalRData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SignalRData>(Data, options, AzureResourceManagerSignalRContext.Default);
 
-        SignalRData IPersistableModel<SignalRData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRData>(data, options);
+        SignalRData IPersistableModel<SignalRData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRData>(data, options, AzureResourceManagerSignalRContext.Default);
 
-        string IPersistableModel<SignalRData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SignalRData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

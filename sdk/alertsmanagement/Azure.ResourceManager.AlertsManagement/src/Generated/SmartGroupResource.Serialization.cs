@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AlertsManagement
 {
     public partial class SmartGroupResource : IJsonModel<SmartGroupData>
     {
+        private static SmartGroupData s_dataDeserializationInstance;
+        private static SmartGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SmartGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SmartGroupData>)Data).Write(writer, options);
 
-        SmartGroupData IJsonModel<SmartGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SmartGroupData>)Data).Create(ref reader, options);
+        SmartGroupData IJsonModel<SmartGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SmartGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SmartGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SmartGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SmartGroupData>(Data, options, AzureResourceManagerAlertsManagementContext.Default);
 
-        SmartGroupData IPersistableModel<SmartGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SmartGroupData>(data, options);
+        SmartGroupData IPersistableModel<SmartGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SmartGroupData>(data, options, AzureResourceManagerAlertsManagementContext.Default);
 
-        string IPersistableModel<SmartGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SmartGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SmartGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SmartGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

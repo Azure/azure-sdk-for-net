@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseSqlPoolSchemaResource : IJsonModel<SynapseSqlPoolSchemaData>
     {
+        private static SynapseSqlPoolSchemaData s_dataDeserializationInstance;
+        private static SynapseSqlPoolSchemaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseSqlPoolSchemaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSqlPoolSchemaData>)Data).Write(writer, options);
 
-        SynapseSqlPoolSchemaData IJsonModel<SynapseSqlPoolSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSqlPoolSchemaData>)Data).Create(ref reader, options);
+        SynapseSqlPoolSchemaData IJsonModel<SynapseSqlPoolSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSqlPoolSchemaData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseSqlPoolSchemaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseSqlPoolSchemaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseSqlPoolSchemaData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseSqlPoolSchemaData IPersistableModel<SynapseSqlPoolSchemaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseSqlPoolSchemaData>(data, options);
+        SynapseSqlPoolSchemaData IPersistableModel<SynapseSqlPoolSchemaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseSqlPoolSchemaData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseSqlPoolSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseSqlPoolSchemaData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseSqlPoolSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseSqlPoolSchemaData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningCodeContainerResource : IJsonModel<MachineLearningCodeContainerData>
     {
+        private static MachineLearningCodeContainerData s_dataDeserializationInstance;
+        private static MachineLearningCodeContainerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MachineLearningCodeContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningCodeContainerData>)Data).Write(writer, options);
 
-        MachineLearningCodeContainerData IJsonModel<MachineLearningCodeContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningCodeContainerData>)Data).Create(ref reader, options);
+        MachineLearningCodeContainerData IJsonModel<MachineLearningCodeContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningCodeContainerData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MachineLearningCodeContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MachineLearningCodeContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningCodeContainerData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        MachineLearningCodeContainerData IPersistableModel<MachineLearningCodeContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningCodeContainerData>(data, options);
+        MachineLearningCodeContainerData IPersistableModel<MachineLearningCodeContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningCodeContainerData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningCodeContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningCodeContainerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MachineLearningCodeContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningCodeContainerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

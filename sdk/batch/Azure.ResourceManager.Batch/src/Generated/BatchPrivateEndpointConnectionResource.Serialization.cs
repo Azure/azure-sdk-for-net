@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Batch
 {
     public partial class BatchPrivateEndpointConnectionResource : IJsonModel<BatchPrivateEndpointConnectionData>
     {
+        private static BatchPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static BatchPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BatchPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BatchPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        BatchPrivateEndpointConnectionData IJsonModel<BatchPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BatchPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        BatchPrivateEndpointConnectionData IJsonModel<BatchPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BatchPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BatchPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BatchPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BatchPrivateEndpointConnectionData>(Data, options, AzureResourceManagerBatchContext.Default);
 
-        BatchPrivateEndpointConnectionData IPersistableModel<BatchPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BatchPrivateEndpointConnectionData>(data, options);
+        BatchPrivateEndpointConnectionData IPersistableModel<BatchPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BatchPrivateEndpointConnectionData>(data, options, AzureResourceManagerBatchContext.Default);
 
-        string IPersistableModel<BatchPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BatchPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BatchPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BatchPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

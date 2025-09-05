@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     public partial class PostgreSqlFlexibleServerBackupResource : IJsonModel<PostgreSqlFlexibleServerBackupData>
     {
+        private static PostgreSqlFlexibleServerBackupData s_dataDeserializationInstance;
+        private static PostgreSqlFlexibleServerBackupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PostgreSqlFlexibleServerBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServerBackupData>)Data).Write(writer, options);
 
-        PostgreSqlFlexibleServerBackupData IJsonModel<PostgreSqlFlexibleServerBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServerBackupData>)Data).Create(ref reader, options);
+        PostgreSqlFlexibleServerBackupData IJsonModel<PostgreSqlFlexibleServerBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServerBackupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PostgreSqlFlexibleServerBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlFlexibleServerBackupData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        PostgreSqlFlexibleServerBackupData IPersistableModel<PostgreSqlFlexibleServerBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFlexibleServerBackupData>(data, options);
+        PostgreSqlFlexibleServerBackupData IPersistableModel<PostgreSqlFlexibleServerBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFlexibleServerBackupData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        string IPersistableModel<PostgreSqlFlexibleServerBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlFlexibleServerBackupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PostgreSqlFlexibleServerBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlFlexibleServerBackupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

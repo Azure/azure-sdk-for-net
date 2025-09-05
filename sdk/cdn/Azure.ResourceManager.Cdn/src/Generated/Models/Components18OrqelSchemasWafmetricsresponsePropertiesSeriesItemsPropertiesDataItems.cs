@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems. </summary>
+    /// <summary>
+    /// The Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems.
+    /// Serialized Name: Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems
+    /// </summary>
     public partial class Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems
     {
         /// <summary>
@@ -51,8 +54,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems"/>. </summary>
-        /// <param name="dateOn"></param>
-        /// <param name="value"></param>
+        /// <param name="dateOn"> Serialized Name: Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems.dateTime. </param>
+        /// <param name="value"> Serialized Name: Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems.value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(DateTimeOffset? dateOn, float? value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +64,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the date on. </summary>
+        /// <summary> Serialized Name: Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems.dateTime. </summary>
         public DateTimeOffset? DateOn { get; }
-        /// <summary> Gets the value. </summary>
+        /// <summary> Serialized Name: Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems.value. </summary>
         public float? Value { get; }
     }
 }

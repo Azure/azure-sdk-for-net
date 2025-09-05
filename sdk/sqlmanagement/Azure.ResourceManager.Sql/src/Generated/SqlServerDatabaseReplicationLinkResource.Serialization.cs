@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerDatabaseReplicationLinkResource : IJsonModel<SqlServerDatabaseReplicationLinkData>
     {
+        private static SqlServerDatabaseReplicationLinkData s_dataDeserializationInstance;
+        private static SqlServerDatabaseReplicationLinkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlServerDatabaseReplicationLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDatabaseReplicationLinkData>)Data).Write(writer, options);
 
-        SqlServerDatabaseReplicationLinkData IJsonModel<SqlServerDatabaseReplicationLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDatabaseReplicationLinkData>)Data).Create(ref reader, options);
+        SqlServerDatabaseReplicationLinkData IJsonModel<SqlServerDatabaseReplicationLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDatabaseReplicationLinkData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerDatabaseReplicationLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerDatabaseReplicationLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerDatabaseReplicationLinkData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerDatabaseReplicationLinkData IPersistableModel<SqlServerDatabaseReplicationLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerDatabaseReplicationLinkData>(data, options);
+        SqlServerDatabaseReplicationLinkData IPersistableModel<SqlServerDatabaseReplicationLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerDatabaseReplicationLinkData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerDatabaseReplicationLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerDatabaseReplicationLinkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlServerDatabaseReplicationLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerDatabaseReplicationLinkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

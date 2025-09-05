@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsProductPackageResource : IJsonModel<SecurityInsightsProductPackageData>
     {
+        private static SecurityInsightsProductPackageData s_dataDeserializationInstance;
+        private static SecurityInsightsProductPackageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityInsightsProductPackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsProductPackageData>)Data).Write(writer, options);
 
-        SecurityInsightsProductPackageData IJsonModel<SecurityInsightsProductPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsProductPackageData>)Data).Create(ref reader, options);
+        SecurityInsightsProductPackageData IJsonModel<SecurityInsightsProductPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsProductPackageData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsProductPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsProductPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsProductPackageData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        SecurityInsightsProductPackageData IPersistableModel<SecurityInsightsProductPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsProductPackageData>(data, options);
+        SecurityInsightsProductPackageData IPersistableModel<SecurityInsightsProductPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsProductPackageData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsProductPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsProductPackageData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsProductPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsProductPackageData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

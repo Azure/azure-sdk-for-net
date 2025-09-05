@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Chaos
 
         ChaosExperimentResource IOperationSource<ChaosExperimentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ChaosExperimentData>(response.Content);
+            var data = ModelReaderWriter.Read<ChaosExperimentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerChaosContext.Default);
             return new ChaosExperimentResource(_client, data);
         }
 
         async ValueTask<ChaosExperimentResource> IOperationSource<ChaosExperimentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ChaosExperimentData>(response.Content);
+            var data = ModelReaderWriter.Read<ChaosExperimentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerChaosContext.Default);
             return await Task.FromResult(new ChaosExperimentResource(_client, data)).ConfigureAwait(false);
         }
     }

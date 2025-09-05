@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Redis.Models
                         }
                         else
                         {
-                            array.Add(JsonSerializer.Deserialize<OperationStatusResult>(item.GetRawText()));
+                            array.Add(ModelReaderWriter.Read<OperationStatusResult>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default));
                         }
                     }
                     operations = array;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Redis.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Redis.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkSecurityPerimeterLinkResource : IJsonModel<NetworkSecurityPerimeterLinkData>
     {
+        private static NetworkSecurityPerimeterLinkData s_dataDeserializationInstance;
+        private static NetworkSecurityPerimeterLinkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkSecurityPerimeterLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityPerimeterLinkData>)Data).Write(writer, options);
 
-        NetworkSecurityPerimeterLinkData IJsonModel<NetworkSecurityPerimeterLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityPerimeterLinkData>)Data).Create(ref reader, options);
+        NetworkSecurityPerimeterLinkData IJsonModel<NetworkSecurityPerimeterLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityPerimeterLinkData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkSecurityPerimeterLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkSecurityPerimeterLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkSecurityPerimeterLinkData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        NetworkSecurityPerimeterLinkData IPersistableModel<NetworkSecurityPerimeterLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkSecurityPerimeterLinkData>(data, options);
+        NetworkSecurityPerimeterLinkData IPersistableModel<NetworkSecurityPerimeterLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkSecurityPerimeterLinkData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkSecurityPerimeterLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkSecurityPerimeterLinkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkSecurityPerimeterLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkSecurityPerimeterLinkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class CdnCustomDomainResource : IJsonModel<CdnCustomDomainData>
     {
+        private static CdnCustomDomainData s_dataDeserializationInstance;
+        private static CdnCustomDomainData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CdnCustomDomainData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CdnCustomDomainData>)Data).Write(writer, options);
 
-        CdnCustomDomainData IJsonModel<CdnCustomDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CdnCustomDomainData>)Data).Create(ref reader, options);
+        CdnCustomDomainData IJsonModel<CdnCustomDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CdnCustomDomainData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CdnCustomDomainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CdnCustomDomainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CdnCustomDomainData>(Data, options, AzureResourceManagerCdnContext.Default);
 
-        CdnCustomDomainData IPersistableModel<CdnCustomDomainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CdnCustomDomainData>(data, options);
+        CdnCustomDomainData IPersistableModel<CdnCustomDomainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CdnCustomDomainData>(data, options, AzureResourceManagerCdnContext.Default);
 
-        string IPersistableModel<CdnCustomDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CdnCustomDomainData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CdnCustomDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CdnCustomDomainData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

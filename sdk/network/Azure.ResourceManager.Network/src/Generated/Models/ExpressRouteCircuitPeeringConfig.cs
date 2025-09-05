@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             AdvertisedPublicPrefixes = new ChangeTrackingList<string>();
             AdvertisedCommunities = new ChangeTrackingList<string>();
+            AdvertisedPublicPrefixInfo = new ChangeTrackingList<AdvertisedPublicPrefixProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitPeeringConfig"/>. </summary>
@@ -59,8 +60,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="legacyMode"> The legacy mode of the peering. </param>
         /// <param name="customerASN"> The CustomerASN of the peering. </param>
         /// <param name="routingRegistryName"> The RoutingRegistryName of the configuration. </param>
+        /// <param name="advertisedPublicPrefixInfo"> List of Prefix information required to perform validation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteCircuitPeeringConfig(IList<string> advertisedPublicPrefixes, IList<string> advertisedCommunities, ExpressRouteCircuitPeeringAdvertisedPublicPrefixState? advertisedPublicPrefixesState, int? legacyMode, int? customerASN, string routingRegistryName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExpressRouteCircuitPeeringConfig(IList<string> advertisedPublicPrefixes, IList<string> advertisedCommunities, ExpressRouteCircuitPeeringAdvertisedPublicPrefixState? advertisedPublicPrefixesState, int? legacyMode, int? customerASN, string routingRegistryName, IList<AdvertisedPublicPrefixProperties> advertisedPublicPrefixInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdvertisedPublicPrefixes = advertisedPublicPrefixes;
             AdvertisedCommunities = advertisedCommunities;
@@ -68,20 +70,30 @@ namespace Azure.ResourceManager.Network.Models
             LegacyMode = legacyMode;
             CustomerASN = customerASN;
             RoutingRegistryName = routingRegistryName;
+            AdvertisedPublicPrefixInfo = advertisedPublicPrefixInfo;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The reference to AdvertisedPublicPrefixes. </summary>
+        [WirePath("advertisedPublicPrefixes")]
         public IList<string> AdvertisedPublicPrefixes { get; }
         /// <summary> The communities of bgp peering. Specified for microsoft peering. </summary>
+        [WirePath("advertisedCommunities")]
         public IList<string> AdvertisedCommunities { get; }
         /// <summary> The advertised public prefix state of the Peering resource. </summary>
+        [WirePath("advertisedPublicPrefixesState")]
         public ExpressRouteCircuitPeeringAdvertisedPublicPrefixState? AdvertisedPublicPrefixesState { get; }
         /// <summary> The legacy mode of the peering. </summary>
+        [WirePath("legacyMode")]
         public int? LegacyMode { get; set; }
         /// <summary> The CustomerASN of the peering. </summary>
+        [WirePath("customerASN")]
         public int? CustomerASN { get; set; }
         /// <summary> The RoutingRegistryName of the configuration. </summary>
+        [WirePath("routingRegistryName")]
         public string RoutingRegistryName { get; set; }
+        /// <summary> List of Prefix information required to perform validation. </summary>
+        [WirePath("advertisedPublicPrefixInfo")]
+        public IList<AdvertisedPublicPrefixProperties> AdvertisedPublicPrefixInfo { get; }
     }
 }

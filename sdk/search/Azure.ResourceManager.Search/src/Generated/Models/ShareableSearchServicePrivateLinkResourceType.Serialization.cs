@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Search.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSearchContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

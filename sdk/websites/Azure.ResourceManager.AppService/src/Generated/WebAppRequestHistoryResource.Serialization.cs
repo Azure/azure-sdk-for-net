@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class WebAppRequestHistoryResource : IJsonModel<WebAppRequestHistoryData>
     {
+        private static WebAppRequestHistoryData s_dataDeserializationInstance;
+        private static WebAppRequestHistoryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WebAppRequestHistoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WebAppRequestHistoryData>)Data).Write(writer, options);
 
-        WebAppRequestHistoryData IJsonModel<WebAppRequestHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebAppRequestHistoryData>)Data).Create(ref reader, options);
+        WebAppRequestHistoryData IJsonModel<WebAppRequestHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebAppRequestHistoryData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WebAppRequestHistoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WebAppRequestHistoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WebAppRequestHistoryData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        WebAppRequestHistoryData IPersistableModel<WebAppRequestHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebAppRequestHistoryData>(data, options);
+        WebAppRequestHistoryData IPersistableModel<WebAppRequestHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebAppRequestHistoryData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<WebAppRequestHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebAppRequestHistoryData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WebAppRequestHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebAppRequestHistoryData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

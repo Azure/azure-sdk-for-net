@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 
         CosmosDBForPostgreSqlFirewallRuleResource IOperationSource<CosmosDBForPostgreSqlFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CosmosDBForPostgreSqlFirewallRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<CosmosDBForPostgreSqlFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
             return new CosmosDBForPostgreSqlFirewallRuleResource(_client, data);
         }
 
         async ValueTask<CosmosDBForPostgreSqlFirewallRuleResource> IOperationSource<CosmosDBForPostgreSqlFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CosmosDBForPostgreSqlFirewallRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<CosmosDBForPostgreSqlFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
             return await Task.FromResult(new CosmosDBForPostgreSqlFirewallRuleResource(_client, data)).ConfigureAwait(false);
         }
     }

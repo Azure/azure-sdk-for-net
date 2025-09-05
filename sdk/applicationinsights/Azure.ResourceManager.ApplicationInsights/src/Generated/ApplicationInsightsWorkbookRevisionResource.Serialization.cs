@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApplicationInsights
 {
     public partial class ApplicationInsightsWorkbookRevisionResource : IJsonModel<ApplicationInsightsWorkbookData>
     {
+        private static ApplicationInsightsWorkbookData s_dataDeserializationInstance;
+        private static ApplicationInsightsWorkbookData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApplicationInsightsWorkbookData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationInsightsWorkbookData>)Data).Write(writer, options);
 
-        ApplicationInsightsWorkbookData IJsonModel<ApplicationInsightsWorkbookData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationInsightsWorkbookData>)Data).Create(ref reader, options);
+        ApplicationInsightsWorkbookData IJsonModel<ApplicationInsightsWorkbookData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationInsightsWorkbookData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApplicationInsightsWorkbookData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApplicationInsightsWorkbookData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApplicationInsightsWorkbookData>(Data, options, AzureResourceManagerApplicationInsightsContext.Default);
 
-        ApplicationInsightsWorkbookData IPersistableModel<ApplicationInsightsWorkbookData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationInsightsWorkbookData>(data, options);
+        ApplicationInsightsWorkbookData IPersistableModel<ApplicationInsightsWorkbookData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationInsightsWorkbookData>(data, options, AzureResourceManagerApplicationInsightsContext.Default);
 
-        string IPersistableModel<ApplicationInsightsWorkbookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationInsightsWorkbookData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApplicationInsightsWorkbookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationInsightsWorkbookData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

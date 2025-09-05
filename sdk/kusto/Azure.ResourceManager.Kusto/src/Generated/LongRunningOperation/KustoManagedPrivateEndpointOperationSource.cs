@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Kusto
 
         KustoManagedPrivateEndpointResource IOperationSource<KustoManagedPrivateEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KustoManagedPrivateEndpointData>(response.Content);
+            var data = ModelReaderWriter.Read<KustoManagedPrivateEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
             return new KustoManagedPrivateEndpointResource(_client, data);
         }
 
         async ValueTask<KustoManagedPrivateEndpointResource> IOperationSource<KustoManagedPrivateEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KustoManagedPrivateEndpointData>(response.Content);
+            var data = ModelReaderWriter.Read<KustoManagedPrivateEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
             return await Task.FromResult(new KustoManagedPrivateEndpointResource(_client, data)).ConfigureAwait(false);
         }
     }

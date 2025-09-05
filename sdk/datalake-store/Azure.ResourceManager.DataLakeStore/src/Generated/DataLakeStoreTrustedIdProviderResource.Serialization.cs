@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataLakeStore
 {
     public partial class DataLakeStoreTrustedIdProviderResource : IJsonModel<DataLakeStoreTrustedIdProviderData>
     {
+        private static DataLakeStoreTrustedIdProviderData s_dataDeserializationInstance;
+        private static DataLakeStoreTrustedIdProviderData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataLakeStoreTrustedIdProviderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeStoreTrustedIdProviderData>)Data).Write(writer, options);
 
-        DataLakeStoreTrustedIdProviderData IJsonModel<DataLakeStoreTrustedIdProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeStoreTrustedIdProviderData>)Data).Create(ref reader, options);
+        DataLakeStoreTrustedIdProviderData IJsonModel<DataLakeStoreTrustedIdProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeStoreTrustedIdProviderData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataLakeStoreTrustedIdProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataLakeStoreTrustedIdProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataLakeStoreTrustedIdProviderData>(Data, options, AzureResourceManagerDataLakeStoreContext.Default);
 
-        DataLakeStoreTrustedIdProviderData IPersistableModel<DataLakeStoreTrustedIdProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeStoreTrustedIdProviderData>(data, options);
+        DataLakeStoreTrustedIdProviderData IPersistableModel<DataLakeStoreTrustedIdProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeStoreTrustedIdProviderData>(data, options, AzureResourceManagerDataLakeStoreContext.Default);
 
-        string IPersistableModel<DataLakeStoreTrustedIdProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeStoreTrustedIdProviderData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataLakeStoreTrustedIdProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeStoreTrustedIdProviderData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

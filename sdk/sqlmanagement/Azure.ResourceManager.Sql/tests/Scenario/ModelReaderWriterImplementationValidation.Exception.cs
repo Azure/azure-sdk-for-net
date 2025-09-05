@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.TestFramework
                 "Azure.ResourceManager.Sql.Models.SqlServerJobExecutionCollectionGetAllOptions",
                 "Azure.ResourceManager.Sql.Models.SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions",
                 "Azure.ResourceManager.Sql.Models.SqlServerJobExecutionStepCollectionGetAllOptions",
-                "Azure.ResourceManager.Sql.Models.SqlServerJobExecutionStepTargetCollectionGetAllOptions"
+                "Azure.ResourceManager.Sql.Models.SqlServerJobExecutionStepTargetCollectionGetAllOptions",
+                "Azure.ResourceManager.Sql.Models.ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions",
+                "Azure.ResourceManager.Sql.Models.SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions"
             };
         }
     }

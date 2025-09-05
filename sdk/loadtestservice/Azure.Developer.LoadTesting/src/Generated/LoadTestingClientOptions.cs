@@ -10,16 +10,26 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    /// <summary> Client options for AzureLoadTesting library clients. </summary>
+    /// <summary> Client options for Azure.Developer.LoadTesting library clients. </summary>
     public partial class LoadTestingClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_11_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_12_01_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Service version "2022-11-01". </summary>
             V2022_11_01 = 1,
+            /// <summary> Service version "2023-04-01-preview". </summary>
+            V2023_04_01_Preview = 2,
+            /// <summary> Service version "2024-03-01-preview". </summary>
+            V2024_03_01_Preview = 3,
+            /// <summary> Service version "2024-05-01-preview". </summary>
+            V2024_05_01_Preview = 4,
+            /// <summary> Service version "2024-07-01-preview". </summary>
+            V2024_07_01_Preview = 5,
+            /// <summary> Service version "2024-12-01-preview". </summary>
+            V2024_12_01_Preview = 6,
         }
 
         internal string Version { get; }
@@ -30,6 +40,11 @@ namespace Azure.Developer.LoadTesting
             Version = version switch
             {
                 ServiceVersion.V2022_11_01 => "2022-11-01",
+                ServiceVersion.V2023_04_01_Preview => "2023-04-01-preview",
+                ServiceVersion.V2024_03_01_Preview => "2024-03-01-preview",
+                ServiceVersion.V2024_05_01_Preview => "2024-05-01-preview",
+                ServiceVersion.V2024_07_01_Preview => "2024-07-01-preview",
+                ServiceVersion.V2024_12_01_Preview => "2024-12-01-preview",
                 _ => throw new NotSupportedException()
             };
         }

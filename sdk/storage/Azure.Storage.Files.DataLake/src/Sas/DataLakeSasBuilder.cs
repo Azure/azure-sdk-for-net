@@ -529,6 +529,8 @@ namespace Azure.Storage.Sas
                 PreauthorizedAgentObjectId,
                 AgentObjectId,
                 CorrelationId,
+                null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
+                null, // SignedDelegatedUserObjectId, will be added in future release.
                 IPRange.ToString(),
                 SasExtensions.ToProtocolString(Protocol),
                 Version,

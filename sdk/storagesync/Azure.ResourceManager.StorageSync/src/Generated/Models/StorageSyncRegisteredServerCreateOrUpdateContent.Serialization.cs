@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -90,6 +91,16 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
+            if (Optional.IsDefined(ApplicationId))
+            {
+                writer.WritePropertyName("applicationId"u8);
+                writer.WriteStringValue(ApplicationId.Value);
+            }
+            if (Optional.IsDefined(UseIdentity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteBooleanValue(UseIdentity.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -126,6 +137,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             string clusterName = default;
             Guid? serverId = default;
             string friendlyName = default;
+            Guid? applicationId = default;
+            bool? identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +164,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageSyncContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -220,6 +233,24 @@ namespace Azure.ResourceManager.StorageSync.Models
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("applicationId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            applicationId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("identity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            identity = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -243,6 +274,8 @@ namespace Azure.ResourceManager.StorageSync.Models
                 clusterName,
                 serverId,
                 friendlyName,
+                applicationId,
+                identity,
                 serializedAdditionalRawData);
         }
 
@@ -253,7 +286,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StorageSyncRegisteredServerCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }

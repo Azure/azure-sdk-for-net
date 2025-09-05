@@ -11,13 +11,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Payload.MediaType
+namespace Payload.MediaType._StringBody
 {
     public partial class StringBody
     {
         protected StringBody() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response SendAsText(RequestContent content, RequestContext context = null) => throw null;
 

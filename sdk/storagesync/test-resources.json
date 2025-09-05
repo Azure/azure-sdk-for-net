@@ -1,0 +1,50 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentInference.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "baseName": {
+            "type": "string",
+            "defaultValue": "azsdk20220901",
+            "metadata": {
+                "description": "The base resource name."
+            }
+        },
+        "subscriptionId": {
+            "type": "string",
+            "defaultValue": "e29c162a-d1d4-4cc3-8295-80057c1f4bd9",
+            "metadata": {
+                "description": "The subscription id"
+            }
+        },
+        "tenantId": {
+            "type": "string",
+            "defaultValue": "0483643a-cb2f-462a-bc27-1a270e5bdc0a",
+            "metadata": {
+                "description": "The tenant ID to which the application and resources belong."
+            }
+        },
+        "testApplicationOid": {
+            "type": "string",
+            "defaultValue": "8d1a2f63-15c2-4fe8-a804-213ecbaf4403",
+            "metadata": {
+                "description": "The client OID to grant access to test resources."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "centraluseuap",
+            "metadata": {
+                "description": "The location of the resource. By default, this is the same as the resource group."
+            }
+        }
+    },
+    "variables": {
+       
+    },
+    "resources": [
+        
+    ],
+    "outputs": {
+        
+    }
+}

@@ -16,7 +16,7 @@ namespace Azure.Health.Deidentification.Samples
         [Test]
         public void ListCompletedFiles()
         {
-            const string serviceEndpoint = "https://example.api.cac001.deid.azure.com";
+            string serviceEndpoint = TestEnvironment.Endpoint;
             TokenCredential credential = TestEnvironment.Credential;
 
             DeidentificationClient client = new(
@@ -30,9 +30,9 @@ namespace Azure.Health.Deidentification.Samples
 
             foreach (DeidentificationDocumentDetails file in files)
             {
-                Console.WriteLine($"File Name: {file.Input.Location}");
+                Console.WriteLine($"File Name: {file.InputLocation.Location}");
                 Console.WriteLine($"File Status: {file.Status}");
-                Console.WriteLine($"File Output Path: {file.Output.Location}");
+                Console.WriteLine($"File Output Path: {file.OutputLocation.Location}");
             }
             #endregion
         }

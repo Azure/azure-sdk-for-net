@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> Parameters for a redis enterprise active geo-replication force unlink operation. </summary>
+    /// <summary> Parameters for a Redis Enterprise Active Geo Replication Force Unlink operation. </summary>
     public partial class ForceUnlinkRedisEnterpriseDatabaseContent
     {
         /// <summary>

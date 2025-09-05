@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         AppComplianceReportResource IOperationSource<AppComplianceReportResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppComplianceReportData>(response.Content);
+            var data = ModelReaderWriter.Read<AppComplianceReportData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppComplianceAutomationContext.Default);
             return new AppComplianceReportResource(_client, data);
         }
 
         async ValueTask<AppComplianceReportResource> IOperationSource<AppComplianceReportResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppComplianceReportData>(response.Content);
+            var data = ModelReaderWriter.Read<AppComplianceReportData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppComplianceAutomationContext.Default);
             return await Task.FromResult(new AppComplianceReportResource(_client, data)).ConfigureAwait(false);
         }
     }

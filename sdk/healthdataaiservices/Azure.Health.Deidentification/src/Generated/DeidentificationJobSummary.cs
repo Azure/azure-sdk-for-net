@@ -13,83 +13,53 @@ namespace Azure.Health.Deidentification
     /// <summary> Summary metrics of a job. </summary>
     public partial class DeidentificationJobSummary
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationJobSummary"/>. </summary>
-        /// <param name="successful"> Number of documents that have completed. </param>
-        /// <param name="failed"> Number of documents that have failed. </param>
-        /// <param name="canceled"> Number of documents that have been canceled. </param>
-        /// <param name="total"> Number of documents total. </param>
+        /// <param name="successfulCount"> Number of documents that have completed. </param>
+        /// <param name="failedCount"> Number of documents that have failed. </param>
+        /// <param name="canceledCount"> Number of documents that have been canceled. </param>
+        /// <param name="totalCount"> Number of documents total. </param>
         /// <param name="bytesProcessed"> Number of bytes processed. </param>
-        internal DeidentificationJobSummary(int successful, int failed, int canceled, int total, long bytesProcessed)
+        internal DeidentificationJobSummary(int successfulCount, int failedCount, int canceledCount, int totalCount, long bytesProcessed)
         {
-            Successful = successful;
-            Failed = failed;
-            Canceled = canceled;
-            Total = total;
+            SuccessfulCount = successfulCount;
+            FailedCount = failedCount;
+            CanceledCount = canceledCount;
+            TotalCount = totalCount;
             BytesProcessed = bytesProcessed;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationJobSummary"/>. </summary>
-        /// <param name="successful"> Number of documents that have completed. </param>
-        /// <param name="failed"> Number of documents that have failed. </param>
-        /// <param name="canceled"> Number of documents that have been canceled. </param>
-        /// <param name="total"> Number of documents total. </param>
+        /// <param name="successfulCount"> Number of documents that have completed. </param>
+        /// <param name="failedCount"> Number of documents that have failed. </param>
+        /// <param name="canceledCount"> Number of documents that have been canceled. </param>
+        /// <param name="totalCount"> Number of documents total. </param>
         /// <param name="bytesProcessed"> Number of bytes processed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationJobSummary(int successful, int failed, int canceled, int total, long bytesProcessed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeidentificationJobSummary(int successfulCount, int failedCount, int canceledCount, int totalCount, long bytesProcessed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Successful = successful;
-            Failed = failed;
-            Canceled = canceled;
-            Total = total;
+            SuccessfulCount = successfulCount;
+            FailedCount = failedCount;
+            CanceledCount = canceledCount;
+            TotalCount = totalCount;
             BytesProcessed = bytesProcessed;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeidentificationJobSummary"/> for deserialization. </summary>
-        internal DeidentificationJobSummary()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Number of documents that have completed. </summary>
-        public int Successful { get; }
+        public int SuccessfulCount { get; }
+
         /// <summary> Number of documents that have failed. </summary>
-        public int Failed { get; }
+        public int FailedCount { get; }
+
         /// <summary> Number of documents that have been canceled. </summary>
-        public int Canceled { get; }
+        public int CanceledCount { get; }
+
         /// <summary> Number of documents total. </summary>
-        public int Total { get; }
+        public int TotalCount { get; }
+
         /// <summary> Number of bytes processed. </summary>
         public long BytesProcessed { get; }
     }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Dynatrace
 {
     public partial class DynatraceMonitorResource : IJsonModel<DynatraceMonitorData>
     {
+        private static DynatraceMonitorData s_dataDeserializationInstance;
+        private static DynatraceMonitorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DynatraceMonitorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceMonitorData>)Data).Write(writer, options);
 
-        DynatraceMonitorData IJsonModel<DynatraceMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceMonitorData>)Data).Create(ref reader, options);
+        DynatraceMonitorData IJsonModel<DynatraceMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceMonitorData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DynatraceMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DynatraceMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DynatraceMonitorData>(Data, options, AzureResourceManagerDynatraceContext.Default);
 
-        DynatraceMonitorData IPersistableModel<DynatraceMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DynatraceMonitorData>(data, options);
+        DynatraceMonitorData IPersistableModel<DynatraceMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DynatraceMonitorData>(data, options, AzureResourceManagerDynatraceContext.Default);
 
-        string IPersistableModel<DynatraceMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DynatraceMonitorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DynatraceMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DynatraceMonitorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

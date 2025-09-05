@@ -1,17 +1,7 @@
 trigger: none
 
-# Switch to canary to test canary 1es branch. 1es template validation will set this parameter
-# to canary on run.
-parameters:
-- name: oneESTemplateTag
-  type: string
-  default: release
-  values:
-    - release
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: cloudmachine
     SupportedClouds: 'Public'
-    oneESTemplateTag: ${{ parameters.oneESTemplateTag }}

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HDInsight.Containers
 
         HDInsightClusterPoolResource IOperationSource<HDInsightClusterPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HDInsightClusterPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<HDInsightClusterPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHDInsightContainersContext.Default);
             return new HDInsightClusterPoolResource(_client, data);
         }
 
         async ValueTask<HDInsightClusterPoolResource> IOperationSource<HDInsightClusterPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HDInsightClusterPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<HDInsightClusterPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHDInsightContainersContext.Default);
             return await Task.FromResult(new HDInsightClusterPoolResource(_client, data)).ConfigureAwait(false);
         }
     }

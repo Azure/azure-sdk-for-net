@@ -34,11 +34,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(AutonomousDatabaseNationalCharacterSetProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("characterSet"u8);
-                writer.WriteStringValue(CharacterSet);
-            }
+            writer.WritePropertyName("characterSet"u8);
+            writer.WriteStringValue(CharacterSet);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -102,7 +99,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutonomousDatabaseNationalCharacterSetProperties)} does not support writing '{options.Format}' format.");
             }

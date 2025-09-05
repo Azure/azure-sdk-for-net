@@ -19,10 +19,10 @@ public static class KeyVaultExtensions
     /// <param name="workspace"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static SecretClient GetSecretClient(this ConnectionProvider workspace)
+    public static SecretClient GetSecretClient(this ClientConnectionProvider workspace)
     {
         ClientConnection connection = workspace.GetConnection(typeof(SecretClient).FullName);
-        if (connection.Authentication == ClientAuthenticationMethod.Credential)
+        if (connection.CredentialKind == CredentialKind.TokenCredential)
         {
             if (!connection.TryGetLocatorAsUri(out Uri uri))
             {

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudBareMetalMachineResource IOperationSource<NetworkCloudBareMetalMachineResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudBareMetalMachineData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkCloudBareMetalMachineData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
             return new NetworkCloudBareMetalMachineResource(_client, data);
         }
 
         async ValueTask<NetworkCloudBareMetalMachineResource> IOperationSource<NetworkCloudBareMetalMachineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudBareMetalMachineData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkCloudBareMetalMachineData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
             return await Task.FromResult(new NetworkCloudBareMetalMachineResource(_client, data)).ConfigureAwait(false);
         }
     }

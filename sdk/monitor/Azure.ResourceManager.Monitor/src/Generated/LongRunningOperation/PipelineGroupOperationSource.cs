@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Monitor
 
         PipelineGroupResource IOperationSource<PipelineGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PipelineGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<PipelineGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMonitorContext.Default);
             return new PipelineGroupResource(_client, data);
         }
 
         async ValueTask<PipelineGroupResource> IOperationSource<PipelineGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PipelineGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<PipelineGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMonitorContext.Default);
             return await Task.FromResult(new PipelineGroupResource(_client, data)).ConfigureAwait(false);
         }
     }

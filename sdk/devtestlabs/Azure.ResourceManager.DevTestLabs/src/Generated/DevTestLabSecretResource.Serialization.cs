@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabSecretResource : IJsonModel<DevTestLabSecretData>
     {
+        private static DevTestLabSecretData s_dataDeserializationInstance;
+        private static DevTestLabSecretData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevTestLabSecretData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabSecretData>)Data).Write(writer, options);
 
-        DevTestLabSecretData IJsonModel<DevTestLabSecretData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabSecretData>)Data).Create(ref reader, options);
+        DevTestLabSecretData IJsonModel<DevTestLabSecretData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabSecretData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabSecretData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevTestLabSecretData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabSecretData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        DevTestLabSecretData IPersistableModel<DevTestLabSecretData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabSecretData>(data, options);
+        DevTestLabSecretData IPersistableModel<DevTestLabSecretData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabSecretData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        string IPersistableModel<DevTestLabSecretData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabSecretData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevTestLabSecretData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabSecretData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

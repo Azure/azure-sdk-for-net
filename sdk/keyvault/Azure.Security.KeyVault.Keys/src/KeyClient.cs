@@ -1079,7 +1079,7 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Post, new KeyBackup { Value = backup }, () => new KeyVaultKey(), cancellationToken, KeysPath, "/restore");
+                return _pipeline.SendRequest(RequestMethod.Post, new KeyBackup { Value = backup }, () => new KeyVaultKey(), cancellationToken, KeysPath, "restore");
             }
             catch (Exception e)
             {
@@ -1121,7 +1121,7 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, new KeyBackup { Value = backup }, () => new KeyVaultKey(), cancellationToken, KeysPath, "/restore").ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, new KeyBackup { Value = backup }, () => new KeyVaultKey(), cancellationToken, KeysPath, "restore").ConfigureAwait(false);
             }
             catch (Exception e)
             {

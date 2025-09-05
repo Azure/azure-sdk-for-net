@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NetApp
 
         NetAppAccountResource IOperationSource<NetAppAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetAppAccountData>(response.Content);
+            var data = ModelReaderWriter.Read<NetAppAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return new NetAppAccountResource(_client, data);
         }
 
         async ValueTask<NetAppAccountResource> IOperationSource<NetAppAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetAppAccountData>(response.Content);
+            var data = ModelReaderWriter.Read<NetAppAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return await Task.FromResult(new NetAppAccountResource(_client, data)).ConfigureAwait(false);
         }
     }

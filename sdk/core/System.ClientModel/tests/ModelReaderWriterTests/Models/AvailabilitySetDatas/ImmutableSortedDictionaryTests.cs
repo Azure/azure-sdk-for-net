@@ -54,10 +54,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
                 protected override object CreateInstance() => ImmutableSortedDictionary<string, AvailabilitySetData>.Empty.ToBuilder();
 
-                protected override void AddKeyValuePair(object collection, string key, object item)
+                protected override void AddItemWithKey(object collection, string key, object item)
                     => ((ImmutableSortedDictionary<string, AvailabilitySetData>.Builder)collection).Add(key, (AvailabilitySetData)item);
 
-                protected override object ToCollection(object builder)
+                protected override object ConvertCollectionBuilder(object builder)
                     => ((ImmutableSortedDictionary<string, AvailabilitySetData>.Builder)builder).ToImmutable();
             }
         }

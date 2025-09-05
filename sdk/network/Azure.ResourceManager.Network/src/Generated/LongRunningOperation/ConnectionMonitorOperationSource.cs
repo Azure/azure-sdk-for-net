@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         ConnectionMonitorResource IOperationSource<ConnectionMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectionMonitorData>(response.Content);
+            var data = ModelReaderWriter.Read<ConnectionMonitorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new ConnectionMonitorResource(_client, data);
         }
 
         async ValueTask<ConnectionMonitorResource> IOperationSource<ConnectionMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectionMonitorData>(response.Content);
+            var data = ModelReaderWriter.Read<ConnectionMonitorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new ConnectionMonitorResource(_client, data)).ConfigureAwait(false);
         }
     }

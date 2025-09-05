@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudStorageApplianceResource : IJsonModel<NetworkCloudStorageApplianceData>
     {
+        private static NetworkCloudStorageApplianceData s_dataDeserializationInstance;
+        private static NetworkCloudStorageApplianceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkCloudStorageApplianceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudStorageApplianceData>)Data).Write(writer, options);
 
-        NetworkCloudStorageApplianceData IJsonModel<NetworkCloudStorageApplianceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudStorageApplianceData>)Data).Create(ref reader, options);
+        NetworkCloudStorageApplianceData IJsonModel<NetworkCloudStorageApplianceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudStorageApplianceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkCloudStorageApplianceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkCloudStorageApplianceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudStorageApplianceData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        NetworkCloudStorageApplianceData IPersistableModel<NetworkCloudStorageApplianceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudStorageApplianceData>(data, options);
+        NetworkCloudStorageApplianceData IPersistableModel<NetworkCloudStorageApplianceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudStorageApplianceData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        string IPersistableModel<NetworkCloudStorageApplianceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudStorageApplianceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkCloudStorageApplianceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudStorageApplianceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

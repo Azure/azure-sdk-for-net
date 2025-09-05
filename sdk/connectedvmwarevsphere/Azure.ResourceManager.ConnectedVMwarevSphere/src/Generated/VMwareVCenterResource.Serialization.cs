@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     public partial class VMwareVCenterResource : IJsonModel<VMwareVCenterData>
     {
+        private static VMwareVCenterData s_dataDeserializationInstance;
+        private static VMwareVCenterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VMwareVCenterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VMwareVCenterData>)Data).Write(writer, options);
 
-        VMwareVCenterData IJsonModel<VMwareVCenterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VMwareVCenterData>)Data).Create(ref reader, options);
+        VMwareVCenterData IJsonModel<VMwareVCenterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VMwareVCenterData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VMwareVCenterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VMwareVCenterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VMwareVCenterData>(Data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
-        VMwareVCenterData IPersistableModel<VMwareVCenterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VMwareVCenterData>(data, options);
+        VMwareVCenterData IPersistableModel<VMwareVCenterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VMwareVCenterData>(data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
-        string IPersistableModel<VMwareVCenterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VMwareVCenterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VMwareVCenterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VMwareVCenterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

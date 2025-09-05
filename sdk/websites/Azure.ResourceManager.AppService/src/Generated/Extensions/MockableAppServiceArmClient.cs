@@ -395,6 +395,30 @@ namespace Azure.ResourceManager.AppService.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="SiteCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SiteCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteCertificateResource"/> object. </returns>
+        public virtual SiteCertificateResource GetSiteCertificateResource(ResourceIdentifier id)
+        {
+            SiteCertificateResource.ValidateResourceId(id);
+            return new SiteCertificateResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteSlotCertificateResource"/> object. </returns>
+        public virtual SiteSlotCertificateResource GetSiteSlotCertificateResource(ResourceIdentifier id)
+        {
+            SiteSlotCertificateResource.ValidateResourceId(id);
+            return new SiteSlotCertificateResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="SiteDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SiteDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

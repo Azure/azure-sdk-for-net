@@ -144,6 +144,9 @@ public class StorageResourceContainerFailureWrapper : StorageResourceContainer
         }
     }
 
+    protected internal override Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        => ThrowOrDo(() => _inner.GetPropertiesAsync(cancellationToken));
+
     public override string ToString()
     {
         return base.ToString();

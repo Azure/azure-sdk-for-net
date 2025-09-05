@@ -10,15 +10,14 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Serialization.EncodedName.Json.Models;
 
-namespace Serialization.EncodedName.Json
+namespace Serialization.EncodedName.Json._Property
 {
     public partial class Property
     {
         protected Property() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Send(RequestContent content, RequestContext context = null) => throw null;
 

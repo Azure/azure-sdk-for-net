@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.WebPubSub
 {
     public partial class WebPubSubHubResource : IJsonModel<WebPubSubHubData>
     {
+        private static WebPubSubHubData s_dataDeserializationInstance;
+        private static WebPubSubHubData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WebPubSubHubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubHubData>)Data).Write(writer, options);
 
-        WebPubSubHubData IJsonModel<WebPubSubHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubHubData>)Data).Create(ref reader, options);
+        WebPubSubHubData IJsonModel<WebPubSubHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubHubData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WebPubSubHubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WebPubSubHubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WebPubSubHubData>(Data, options, AzureResourceManagerWebPubSubContext.Default);
 
-        WebPubSubHubData IPersistableModel<WebPubSubHubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebPubSubHubData>(data, options);
+        WebPubSubHubData IPersistableModel<WebPubSubHubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebPubSubHubData>(data, options, AzureResourceManagerWebPubSubContext.Default);
 
-        string IPersistableModel<WebPubSubHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebPubSubHubData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WebPubSubHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebPubSubHubData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

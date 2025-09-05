@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MongoCluster
 
         MongoClusterResource IOperationSource<MongoClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MongoClusterData>(response.Content);
+            var data = ModelReaderWriter.Read<MongoClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMongoClusterContext.Default);
             return new MongoClusterResource(_client, data);
         }
 
         async ValueTask<MongoClusterResource> IOperationSource<MongoClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MongoClusterData>(response.Content);
+            var data = ModelReaderWriter.Read<MongoClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMongoClusterContext.Default);
             return await Task.FromResult(new MongoClusterResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsResolverContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DnsForwardingRulePatch)} does not support writing '{options.Format}' format.");
             }

@@ -25,6 +25,7 @@ This table shows the relationship between SDK versions and supported API version
 |SDK version|Supported API version of service |
 |-------------|---------------|
 |1.0.0 | 2024-04-01|
+|1.1.0 | 2024-10-01|
 
 ### Authenticate the client
 

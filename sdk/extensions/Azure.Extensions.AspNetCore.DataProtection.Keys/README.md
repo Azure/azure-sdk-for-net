@@ -52,9 +52,8 @@ To protect keys using Azure Key Vault Key, configure the system with `ProtectKey
 ```C# Snippet:ProtectKeysWithAzureKeyVault
 public void ConfigureServices(IServiceCollection services)
 {
-    services
-        .AddDataProtection()
-        .ProtectKeysWithAzureKeyVault(new Uri("<Key-ID>"), new DefaultAzureCredential());
+    services.AddDataProtection()
+            .ProtectKeysWithAzureKeyVault(new Uri("<Key-ID>"), new DefaultAzureCredential());
 }
 ```
 

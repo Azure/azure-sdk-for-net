@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementServiceResource : IJsonModel<ApiManagementServiceData>
     {
+        private static ApiManagementServiceData s_dataDeserializationInstance;
+        private static ApiManagementServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiManagementServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementServiceData>)Data).Write(writer, options);
 
-        ApiManagementServiceData IJsonModel<ApiManagementServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementServiceData>)Data).Create(ref reader, options);
+        ApiManagementServiceData IJsonModel<ApiManagementServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementServiceData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiManagementServiceData IPersistableModel<ApiManagementServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementServiceData>(data, options);
+        ApiManagementServiceData IPersistableModel<ApiManagementServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementServiceData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

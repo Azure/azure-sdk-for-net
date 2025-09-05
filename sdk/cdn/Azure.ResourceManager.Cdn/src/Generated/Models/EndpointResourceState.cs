@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Resource status of the endpoint. </summary>
+    /// <summary>
+    /// Resource status of the endpoint.
+    /// Serialized Name: EndpointResourceState
+    /// </summary>
     public readonly partial struct EndpointResourceState : IEquatable<EndpointResourceState>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string StoppedValue = "Stopped";
         private const string StoppingValue = "Stopping";
 
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: EndpointResourceState.Creating
+        /// </summary>
         public static EndpointResourceState Creating { get; } = new EndpointResourceState(CreatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: EndpointResourceState.Deleting
+        /// </summary>
         public static EndpointResourceState Deleting { get; } = new EndpointResourceState(DeletingValue);
-        /// <summary> Running. </summary>
+        /// <summary>
+        /// Running
+        /// Serialized Name: EndpointResourceState.Running
+        /// </summary>
         public static EndpointResourceState Running { get; } = new EndpointResourceState(RunningValue);
-        /// <summary> Starting. </summary>
+        /// <summary>
+        /// Starting
+        /// Serialized Name: EndpointResourceState.Starting
+        /// </summary>
         public static EndpointResourceState Starting { get; } = new EndpointResourceState(StartingValue);
-        /// <summary> Stopped. </summary>
+        /// <summary>
+        /// Stopped
+        /// Serialized Name: EndpointResourceState.Stopped
+        /// </summary>
         public static EndpointResourceState Stopped { get; } = new EndpointResourceState(StoppedValue);
-        /// <summary> Stopping. </summary>
+        /// <summary>
+        /// Stopping
+        /// Serialized Name: EndpointResourceState.Stopping
+        /// </summary>
         public static EndpointResourceState Stopping { get; } = new EndpointResourceState(StoppingValue);
         /// <summary> Determines if two <see cref="EndpointResourceState"/> values are the same. </summary>
         public static bool operator ==(EndpointResourceState left, EndpointResourceState right) => left.Equals(right);

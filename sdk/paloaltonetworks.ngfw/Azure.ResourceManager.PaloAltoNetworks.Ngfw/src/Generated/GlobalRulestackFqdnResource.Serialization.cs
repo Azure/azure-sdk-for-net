@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     public partial class GlobalRulestackFqdnResource : IJsonModel<GlobalRulestackFqdnData>
     {
+        private static GlobalRulestackFqdnData s_dataDeserializationInstance;
+        private static GlobalRulestackFqdnData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GlobalRulestackFqdnData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GlobalRulestackFqdnData>)Data).Write(writer, options);
 
-        GlobalRulestackFqdnData IJsonModel<GlobalRulestackFqdnData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GlobalRulestackFqdnData>)Data).Create(ref reader, options);
+        GlobalRulestackFqdnData IJsonModel<GlobalRulestackFqdnData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GlobalRulestackFqdnData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GlobalRulestackFqdnData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GlobalRulestackFqdnData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GlobalRulestackFqdnData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        GlobalRulestackFqdnData IPersistableModel<GlobalRulestackFqdnData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GlobalRulestackFqdnData>(data, options);
+        GlobalRulestackFqdnData IPersistableModel<GlobalRulestackFqdnData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GlobalRulestackFqdnData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        string IPersistableModel<GlobalRulestackFqdnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GlobalRulestackFqdnData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GlobalRulestackFqdnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GlobalRulestackFqdnData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

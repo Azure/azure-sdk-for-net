@@ -16,7 +16,7 @@ namespace SpecialWords
     {
         protected Operations() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response And(RequestContext context) => throw null;
 

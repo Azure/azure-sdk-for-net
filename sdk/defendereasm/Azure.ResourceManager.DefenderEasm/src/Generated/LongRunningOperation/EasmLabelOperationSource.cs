@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DefenderEasm
 
         EasmLabelResource IOperationSource<EasmLabelResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EasmLabelData>(response.Content);
+            var data = ModelReaderWriter.Read<EasmLabelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDefenderEasmContext.Default);
             return new EasmLabelResource(_client, data);
         }
 
         async ValueTask<EasmLabelResource> IOperationSource<EasmLabelResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EasmLabelData>(response.Content);
+            var data = ModelReaderWriter.Read<EasmLabelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDefenderEasmContext.Default);
             return await Task.FromResult(new EasmLabelResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.MigrationDiscoverySap
 {
+    public partial class AzureResourceManagerMigrationDiscoverySapContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerMigrationDiscoverySapContext() { }
+        public static Azure.ResourceManager.MigrationDiscoverySap.AzureResourceManagerMigrationDiscoverySapContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class MigrationDiscoverySapExtensions
     {
         public static Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceResource GetSapDiscoveryServerInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }

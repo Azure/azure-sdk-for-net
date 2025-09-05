@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SourceCodeRepoAuthInfoUpdateContent)} does not support writing '{options.Format}' format.");
             }

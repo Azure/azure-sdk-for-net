@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ComputeFleet
 {
+    public partial class AzureResourceManagerComputeFleetContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerComputeFleetContext() { }
+        public static Azure.ResourceManager.ComputeFleet.AzureResourceManagerComputeFleetContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ComputeFleetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ComputeFleet.ComputeFleetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeFleet.ComputeFleetResource>, System.Collections.IEnumerable
     {
         protected ComputeFleetCollection() { }

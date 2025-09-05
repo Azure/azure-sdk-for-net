@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class HostingEnvironmentDetectorResource : IJsonModel<AppServiceDetectorData>
     {
+        private static AppServiceDetectorData s_dataDeserializationInstance;
+        private static AppServiceDetectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppServiceDetectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceDetectorData>)Data).Write(writer, options);
 
-        AppServiceDetectorData IJsonModel<AppServiceDetectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceDetectorData>)Data).Create(ref reader, options);
+        AppServiceDetectorData IJsonModel<AppServiceDetectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceDetectorData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppServiceDetectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppServiceDetectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppServiceDetectorData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        AppServiceDetectorData IPersistableModel<AppServiceDetectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceDetectorData>(data, options);
+        AppServiceDetectorData IPersistableModel<AppServiceDetectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceDetectorData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<AppServiceDetectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppServiceDetectorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppServiceDetectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppServiceDetectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

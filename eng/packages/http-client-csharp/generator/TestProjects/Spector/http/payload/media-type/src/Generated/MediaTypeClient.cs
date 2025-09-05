@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core.Pipeline;
+using Payload.MediaType._StringBody;
 
 namespace Payload.MediaType
 {
@@ -16,7 +17,7 @@ namespace Payload.MediaType
 
         public MediaTypeClient(Uri endpoint, MediaTypeClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual StringBody GetStringBodyClient() => throw null;
     }

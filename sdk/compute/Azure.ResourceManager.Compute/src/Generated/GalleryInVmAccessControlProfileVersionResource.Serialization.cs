@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class GalleryInVmAccessControlProfileVersionResource : IJsonModel<GalleryInVmAccessControlProfileVersionData>
     {
+        private static GalleryInVmAccessControlProfileVersionData s_dataDeserializationInstance;
+        private static GalleryInVmAccessControlProfileVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GalleryInVmAccessControlProfileVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GalleryInVmAccessControlProfileVersionData>)Data).Write(writer, options);
 
-        GalleryInVmAccessControlProfileVersionData IJsonModel<GalleryInVmAccessControlProfileVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GalleryInVmAccessControlProfileVersionData>)Data).Create(ref reader, options);
+        GalleryInVmAccessControlProfileVersionData IJsonModel<GalleryInVmAccessControlProfileVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GalleryInVmAccessControlProfileVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GalleryInVmAccessControlProfileVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GalleryInVmAccessControlProfileVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GalleryInVmAccessControlProfileVersionData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        GalleryInVmAccessControlProfileVersionData IPersistableModel<GalleryInVmAccessControlProfileVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryInVmAccessControlProfileVersionData>(data, options);
+        GalleryInVmAccessControlProfileVersionData IPersistableModel<GalleryInVmAccessControlProfileVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryInVmAccessControlProfileVersionData>(data, options, AzureResourceManagerComputeContext.Default);
 
-        string IPersistableModel<GalleryInVmAccessControlProfileVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GalleryInVmAccessControlProfileVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GalleryInVmAccessControlProfileVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GalleryInVmAccessControlProfileVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

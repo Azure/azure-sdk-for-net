@@ -19,38 +19,38 @@ namespace SpecialHeaders.ConditionalRequest
 
         public ConditionalRequestClient(Uri endpoint, ConditionalRequestClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Response PostIfMatch(string ifMatch, RequestContext context) => throw null;
+        public virtual Response PostIfMatch(ETag? ifMatch, RequestContext context) => throw null;
 
-        public virtual Task<Response> PostIfMatchAsync(string ifMatch, RequestContext context) => throw null;
+        public virtual Task<Response> PostIfMatchAsync(ETag? ifMatch, RequestContext context) => throw null;
 
-        public virtual Response PostIfMatch(string ifMatch = null, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response PostIfMatch(ETag? ifMatch = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PostIfMatchAsync(string ifMatch = null, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> PostIfMatchAsync(ETag? ifMatch = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Response PostIfNoneMatch(string ifNoneMatch, RequestContext context) => throw null;
+        public virtual Response PostIfNoneMatch(ETag? ifNoneMatch, RequestContext context) => throw null;
 
-        public virtual Task<Response> PostIfNoneMatchAsync(string ifNoneMatch, RequestContext context) => throw null;
+        public virtual Task<Response> PostIfNoneMatchAsync(ETag? ifNoneMatch, RequestContext context) => throw null;
 
-        public virtual Response PostIfNoneMatch(string ifNoneMatch = null, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response PostIfNoneMatch(ETag? ifNoneMatch = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PostIfNoneMatchAsync(string ifNoneMatch = null, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> PostIfNoneMatchAsync(ETag? ifNoneMatch = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Response HeadIfModifiedSince(DateTimeOffset? ifModifiedSince, RequestContext context) => throw null;
+        public virtual Response HeadIfModifiedSince(RequestConditions requestConditions, RequestContext context) => throw null;
 
-        public virtual Task<Response> HeadIfModifiedSinceAsync(DateTimeOffset? ifModifiedSince, RequestContext context) => throw null;
+        public virtual Task<Response> HeadIfModifiedSinceAsync(RequestConditions requestConditions, RequestContext context) => throw null;
 
-        public virtual Response HeadIfModifiedSince(DateTimeOffset? ifModifiedSince = null, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response HeadIfModifiedSince(RequestConditions requestConditions = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> HeadIfModifiedSinceAsync(DateTimeOffset? ifModifiedSince = null, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> HeadIfModifiedSinceAsync(RequestConditions requestConditions = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Response PostIfUnmodifiedSince(DateTimeOffset? ifUnmodifiedSince, RequestContext context) => throw null;
+        public virtual Response PostIfUnmodifiedSince(RequestConditions requestConditions, RequestContext context) => throw null;
 
-        public virtual Task<Response> PostIfUnmodifiedSinceAsync(DateTimeOffset? ifUnmodifiedSince, RequestContext context) => throw null;
+        public virtual Task<Response> PostIfUnmodifiedSinceAsync(RequestConditions requestConditions, RequestContext context) => throw null;
 
-        public virtual Response PostIfUnmodifiedSince(DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response PostIfUnmodifiedSince(RequestConditions requestConditions = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> PostIfUnmodifiedSinceAsync(DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> PostIfUnmodifiedSinceAsync(RequestConditions requestConditions = default, CancellationToken cancellationToken = default) => throw null;
     }
 }

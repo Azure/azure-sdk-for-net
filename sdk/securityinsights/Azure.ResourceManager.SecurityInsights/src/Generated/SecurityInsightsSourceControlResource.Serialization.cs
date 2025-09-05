@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsSourceControlResource : IJsonModel<SecurityInsightsSourceControlData>
     {
+        private static SecurityInsightsSourceControlData s_dataDeserializationInstance;
+        private static SecurityInsightsSourceControlData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityInsightsSourceControlData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsSourceControlData>)Data).Write(writer, options);
 
-        SecurityInsightsSourceControlData IJsonModel<SecurityInsightsSourceControlData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsSourceControlData>)Data).Create(ref reader, options);
+        SecurityInsightsSourceControlData IJsonModel<SecurityInsightsSourceControlData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsSourceControlData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsSourceControlData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsSourceControlData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsSourceControlData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        SecurityInsightsSourceControlData IPersistableModel<SecurityInsightsSourceControlData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsSourceControlData>(data, options);
+        SecurityInsightsSourceControlData IPersistableModel<SecurityInsightsSourceControlData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsSourceControlData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsSourceControlData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsSourceControlData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsSourceControlData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsSourceControlData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

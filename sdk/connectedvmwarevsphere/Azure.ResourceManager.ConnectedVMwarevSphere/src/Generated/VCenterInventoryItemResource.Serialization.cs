@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     public partial class VCenterInventoryItemResource : IJsonModel<VCenterInventoryItemData>
     {
+        private static VCenterInventoryItemData s_dataDeserializationInstance;
+        private static VCenterInventoryItemData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VCenterInventoryItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VCenterInventoryItemData>)Data).Write(writer, options);
 
-        VCenterInventoryItemData IJsonModel<VCenterInventoryItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VCenterInventoryItemData>)Data).Create(ref reader, options);
+        VCenterInventoryItemData IJsonModel<VCenterInventoryItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VCenterInventoryItemData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VCenterInventoryItemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VCenterInventoryItemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VCenterInventoryItemData>(Data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
-        VCenterInventoryItemData IPersistableModel<VCenterInventoryItemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VCenterInventoryItemData>(data, options);
+        VCenterInventoryItemData IPersistableModel<VCenterInventoryItemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VCenterInventoryItemData>(data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
-        string IPersistableModel<VCenterInventoryItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VCenterInventoryItemData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VCenterInventoryItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VCenterInventoryItemData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

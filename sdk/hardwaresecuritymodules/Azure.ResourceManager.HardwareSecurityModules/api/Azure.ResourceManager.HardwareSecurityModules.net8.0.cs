@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
+    public partial class AzureResourceManagerHardwareSecurityModulesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerHardwareSecurityModulesContext() { }
+        public static Azure.ResourceManager.HardwareSecurityModules.AzureResourceManagerHardwareSecurityModulesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CloudHsmClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterResource>, System.Collections.IEnumerable
     {
         protected CloudHsmClusterCollection() { }
@@ -481,6 +487,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

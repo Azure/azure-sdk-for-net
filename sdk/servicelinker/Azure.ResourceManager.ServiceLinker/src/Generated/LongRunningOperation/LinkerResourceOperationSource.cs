@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ServiceLinker
 
         LinkerResource IOperationSource<LinkerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LinkerResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<LinkerResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceLinkerContext.Default);
             return new LinkerResource(_client, data);
         }
 
         async ValueTask<LinkerResource> IOperationSource<LinkerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LinkerResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<LinkerResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceLinkerContext.Default);
             return await Task.FromResult(new LinkerResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class GalleryResource : IJsonModel<GalleryData>
     {
+        private static GalleryData s_dataDeserializationInstance;
+        private static GalleryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GalleryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GalleryData>)Data).Write(writer, options);
 
-        GalleryData IJsonModel<GalleryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GalleryData>)Data).Create(ref reader, options);
+        GalleryData IJsonModel<GalleryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GalleryData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GalleryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GalleryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GalleryData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        GalleryData IPersistableModel<GalleryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryData>(data, options);
+        GalleryData IPersistableModel<GalleryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryData>(data, options, AzureResourceManagerComputeContext.Default);
 
-        string IPersistableModel<GalleryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GalleryData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GalleryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GalleryData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

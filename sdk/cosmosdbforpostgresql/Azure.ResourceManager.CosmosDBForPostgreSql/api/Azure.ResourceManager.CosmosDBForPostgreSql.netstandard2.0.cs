@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
+    public partial class AzureResourceManagerCosmosDBForPostgreSqlContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerCosmosDBForPostgreSqlContext() { }
+        public static Azure.ResourceManager.CosmosDBForPostgreSql.AzureResourceManagerCosmosDBForPostgreSqlContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CosmosDBForPostgreSqlClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterResource>, System.Collections.IEnumerable
     {
         protected CosmosDBForPostgreSqlClusterCollection() { }

@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string targetDatabaseName = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
-            ValidationStatus? status = default;
+            MigrationValidationStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    status = new ValidationStatus(property.Value.GetString());
+                    status = new MigrationValidationStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrationValidationDatabaseSummaryResult)} does not support writing '{options.Format}' format.");
             }

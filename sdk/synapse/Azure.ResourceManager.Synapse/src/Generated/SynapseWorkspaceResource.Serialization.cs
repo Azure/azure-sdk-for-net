@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseWorkspaceResource : IJsonModel<SynapseWorkspaceData>
     {
+        private static SynapseWorkspaceData s_dataDeserializationInstance;
+        private static SynapseWorkspaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseWorkspaceData>)Data).Write(writer, options);
 
-        SynapseWorkspaceData IJsonModel<SynapseWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseWorkspaceData>)Data).Create(ref reader, options);
+        SynapseWorkspaceData IJsonModel<SynapseWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseWorkspaceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseWorkspaceData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseWorkspaceData IPersistableModel<SynapseWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseWorkspaceData>(data, options);
+        SynapseWorkspaceData IPersistableModel<SynapseWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseWorkspaceData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseWorkspaceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseWorkspaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

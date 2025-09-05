@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         NetworkVirtualApplianceConnectionResource IOperationSource<NetworkVirtualApplianceConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkVirtualApplianceConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkVirtualApplianceConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new NetworkVirtualApplianceConnectionResource(_client, data);
         }
 
         async ValueTask<NetworkVirtualApplianceConnectionResource> IOperationSource<NetworkVirtualApplianceConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkVirtualApplianceConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkVirtualApplianceConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new NetworkVirtualApplianceConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

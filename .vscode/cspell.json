@@ -62,6 +62,7 @@
   "words": [
     "AADDS",
     "AADKERB",
+    "Adls",
     "AOAI",
     "apos",
     "azsdk",
@@ -86,6 +87,7 @@
     "dotnetcli",
     "dtmf",
     "eastus",
+    "Eloqua",
     "entra",
     "epsg",
     "Exfiltration",
@@ -98,10 +100,13 @@
     "getsas",
     "Gmsa",
     "GZRS",
+    "Hana",
+    "Hdfs",
     "hnsw",
     "ienumerable",
     "illumos",
     "imds",
+    "Informix",
     "Inotify",
     "interventional",
     "ints",
@@ -115,12 +120,15 @@
     "kusto",
     "Kustomization",
     "Kustomizations",
+    "Liftr",
     "listsas",
     "lucene",
+    "Magento",
     "mgmt",
     "miscs",
     "msal",
     "Mtls",
+    "Netezza",
     "northcentralus",
     "nunit",
     "odata",
@@ -143,6 +151,7 @@
     "referer",
     "renormalize",
     "retriable",
+    "Serp",
     "Servfail",
     "setsas",
     "signalr",
@@ -151,8 +160,10 @@
     "Somaxconn",
     "southcentralus",
     "structs",
+    "Sybase",
     "Sysctls",
     "SYSLIB",
+    "Teradata",
     "Tswtz",
     "Uefi",
     "uints",
@@ -168,6 +179,7 @@
     "Vectorize",
     "Vectorizer",
     "Vectorizers",
+    "Vertica",
     "vhdx",
     "vmos",
     "vmss",
@@ -178,6 +190,7 @@
     "westcentralus",
     "westus",
     "Wmem",
+    "Xero",
     "xunit"
   ],
   "overrides": [
@@ -197,7 +210,15 @@
     {
       "filename": "**/sdk/ai/**/*.cs",
       "words": [
-        "Ubinary"
+        "Ubinary",
+        "Ansii",
+        "Atbash",
+        "Bleu",
+        "azureai",
+        "bleu",
+        "azureai",
+        "Gleu",
+        "gleu"
       ]
     },
     {
@@ -247,6 +268,12 @@
       "words": [
         "tfvc",
         "updation"
+      ]
+    },
+    {
+      "filename": "**/sdk/arizeaiobservabilityeval/**/*.cs",
+      "words": [
+        "Arize"
       ]
     },
     {
@@ -402,6 +429,14 @@
       ]
     },
     {
+      "filename": "**/sdk/connectedcache/**/*",
+      "words": [
+        "Gbps",
+        "Mbps",
+        "Eflow"
+      ]
+    },
+    {
       "filename": "**/sdk/connectedvmwarevsphere/**/*",
       "words": [
         "Cpus",
@@ -423,6 +458,12 @@
         "dapr",
         "grpc",
         "proto"
+      ]
+    },
+    {
+      "filename": "**/sdk/containerregistry/**/*",
+      "words": [
+        "Abac"
       ]
     },
     {
@@ -903,7 +944,8 @@
         "Apac",
         "Latam",
         "Fips",
-        "Diffie"
+        "Diffie",
+        "Reimage"
       ]
     },
     {
@@ -1091,6 +1133,7 @@
         "dnsprivateviewocid",
         "Ords",
         "Ocid",
+        "Ocids",
         "ncharacter",
         "ocpu",
         "Iorm",
@@ -1101,7 +1144,11 @@
         "Tcps",
         "Ezconnect",
         "Ezconnectplus",
-        "Oltp"
+        "Oltp",
+        "exadb",
+        "Exadb",
+        "Exascale",
+        "exascale"
       ]
     },
     {
@@ -1181,6 +1228,46 @@
       ]
     },
     {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Kusto/**/*.cs",
+      "words": [
+        "tbps",
+        "scsv",
+        "sohsv",
+        "tsve",
+        "Openai",
+        "APACHEAVRO"
+      ]
+    },
+    {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.PostgreSql/**/*.cs",
+      "words": [
+        "awsec"
+      ]
+    },
+    {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Sql/**/*.cs",
+      "words": [
+        "Freemium"
+      ]
+    },
+    {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Storage/**/*.cs",
+      "words": [
+        "Mibps"
+      ]
+    },
+    {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Network/**/*.cs",
+      "words": [
+        "Snat",
+        "Fqdns",
+        "Vxlan",
+        "Ipam",
+        "Dscp",
+        "Vnets"
+      ]
+    },
+    {
       "filename": "**/sdk/qumulo/**/*",
       "words": [
         "qumulo"
@@ -1192,6 +1279,12 @@
         "hana",
         "msrp",
         "unprovisioning"
+      ]
+    },
+    {
+      "filename": "**/sdk/recoveryservices/**/*.cs",
+      "words": [
+        "bcdr",
       ]
     },
     {
@@ -1234,7 +1327,8 @@
         "vcpus",
         "esxi",
         "seleted",
-        "dras"
+        "dras",
+        "fqdns"
       ]
     },
     {
@@ -1373,7 +1467,8 @@
         "Stdev",
         "Unrestorable",
         "Vcores",
-        "Dtcs"
+        "Dtcs",
+        "Freemium"
       ]
     },
     {
@@ -1555,10 +1650,20 @@
       ]
     },
     {
+      "filename": "**/sdk/workloadssapvirtualinstance/**/*.cs",
+      "words": [
+        "acss",
+        "ascs",
+        "hana",
+        "mbps"
+      ]
+    },
+    {
       "filename": "**/sdk/containerinstance/**/*.cs",
       "words": [
-        "Noreuse",
-        "Unsecure"
+        "noreuse",
+        "ngroups",
+        "unsecure"
       ]
     },
     {
@@ -1623,13 +1728,14 @@
     {
       "filename": "**/sdk/iot/Azure.ResourceManager.IotFirmwareDefense/**/*.cs",
       "words": [
-        "RELRO",
-        "Relro",
         "relro",
-        "Rpath",
         "rpath",
         "runpath",
-        "Cves"
+        "cves",
+        "ocsp",
+        "sbom",
+        "diffie",
+        "iotfirmwaredefense"
       ]
     },
     {
@@ -1667,7 +1773,8 @@
       "filename": "**/sdk/openai/**/*.cs",
       "words": [
         "AOAI",
-        "Rerank"
+        "Rerank",
+        "Evals"
       ]
     },
     {
@@ -1680,6 +1787,23 @@
       "filename": "**/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/api/*.cs",
       "words": [
         "prebuilts"
+      ]
+    },
+    {
+      "filename": "**/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/**",
+      "words": [
+        "Ceus",
+        "Tonnis",
+        "Hnpcc",
+        "Ascvd",
+        "Mednax",
+        "Cusick",
+        "Acrad",
+        "Kellgren",
+        "Frax",
+        "Birads",
+        "Agatston",
+        "Tyrer"
       ]
     },
     {

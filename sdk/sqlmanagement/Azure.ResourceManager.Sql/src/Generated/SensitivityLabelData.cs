@@ -71,8 +71,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="informationTypeId"> The information type ID. </param>
         /// <param name="isDisabled"> Is sensitivity recommendation disabled. Applicable for recommended sensitivity label only. Specifies whether the sensitivity recommendation on this column is disabled (dismissed) or not. </param>
         /// <param name="rank"></param>
+        /// <param name="clientClassificationSource"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SensitivityLabelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, string schemaName, string tableName, string columnName, string labelName, string labelId, string informationType, string informationTypeId, bool? isDisabled, SensitivityLabelRank? rank, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SensitivityLabelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, string schemaName, string tableName, string columnName, string labelName, string labelId, string informationType, string informationTypeId, bool? isDisabled, SensitivityLabelRank? rank, ClientClassificationSource? clientClassificationSource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ManagedBy = managedBy;
             SchemaName = schemaName;
@@ -84,6 +85,7 @@ namespace Azure.ResourceManager.Sql
             InformationTypeId = informationTypeId;
             IsDisabled = isDisabled;
             Rank = rank;
+            ClientClassificationSource = clientClassificationSource;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -117,5 +119,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets or sets the rank. </summary>
         [WirePath("properties.rank")]
         public SensitivityLabelRank? Rank { get; set; }
+        /// <summary> Gets or sets the client classification source. </summary>
+        [WirePath("properties.clientClassificationSource")]
+        public ClientClassificationSource? ClientClassificationSource { get; set; }
     }
 }

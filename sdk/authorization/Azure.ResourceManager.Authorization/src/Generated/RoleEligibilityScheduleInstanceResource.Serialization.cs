@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Authorization
 {
     public partial class RoleEligibilityScheduleInstanceResource : IJsonModel<RoleEligibilityScheduleInstanceData>
     {
+        private static RoleEligibilityScheduleInstanceData s_dataDeserializationInstance;
+        private static RoleEligibilityScheduleInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RoleEligibilityScheduleInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RoleEligibilityScheduleInstanceData>)Data).Write(writer, options);
 
-        RoleEligibilityScheduleInstanceData IJsonModel<RoleEligibilityScheduleInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RoleEligibilityScheduleInstanceData>)Data).Create(ref reader, options);
+        RoleEligibilityScheduleInstanceData IJsonModel<RoleEligibilityScheduleInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RoleEligibilityScheduleInstanceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RoleEligibilityScheduleInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RoleEligibilityScheduleInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RoleEligibilityScheduleInstanceData>(Data, options, AzureResourceManagerAuthorizationContext.Default);
 
-        RoleEligibilityScheduleInstanceData IPersistableModel<RoleEligibilityScheduleInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RoleEligibilityScheduleInstanceData>(data, options);
+        RoleEligibilityScheduleInstanceData IPersistableModel<RoleEligibilityScheduleInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RoleEligibilityScheduleInstanceData>(data, options, AzureResourceManagerAuthorizationContext.Default);
 
-        string IPersistableModel<RoleEligibilityScheduleInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RoleEligibilityScheduleInstanceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RoleEligibilityScheduleInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RoleEligibilityScheduleInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

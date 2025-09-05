@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
         DedicatedHsmResource IOperationSource<DedicatedHsmResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DedicatedHsmData>(response.Content);
+            var data = ModelReaderWriter.Read<DedicatedHsmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHardwareSecurityModulesContext.Default);
             return new DedicatedHsmResource(_client, data);
         }
 
         async ValueTask<DedicatedHsmResource> IOperationSource<DedicatedHsmResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DedicatedHsmData>(response.Content);
+            var data = ModelReaderWriter.Read<DedicatedHsmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHardwareSecurityModulesContext.Default);
             return await Task.FromResult(new DedicatedHsmResource(_client, data)).ConfigureAwait(false);
         }
     }

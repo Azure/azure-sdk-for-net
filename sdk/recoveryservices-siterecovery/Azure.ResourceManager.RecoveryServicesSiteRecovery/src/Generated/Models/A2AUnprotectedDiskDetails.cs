@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="A2AUnprotectedDiskDetails"/>. </summary>
-        internal A2AUnprotectedDiskDetails()
+        public A2AUnprotectedDiskDetails()
         {
         }
 
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The source lun Id for the data disk. </summary>
-        public int? DiskLunId { get; }
+        public int? DiskLunId { get; set; }
         /// <summary> A value indicating whether the disk auto protection is enabled. </summary>
-        public AutoProtectionOfDataDisk? DiskAutoProtectionStatus { get; }
+        public AutoProtectionOfDataDisk? DiskAutoProtectionStatus { get; set; }
     }
 }

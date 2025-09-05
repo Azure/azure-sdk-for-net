@@ -86,11 +86,11 @@ To create a share `StorageResource`, use the methods `FromFile` or `FromDirector
 
 ```C# Snippet:ResourceConstruction_Shares
 StorageResource directory = await shares.FromDirectoryAsync(
-    new Uri("http://myaccount.files.core.windows.net/share/path/to/directory"));
+    new Uri("https://myaccount.files.core.windows.net/share/path/to/directory"));
 StorageResource rootDirectory = await shares.FromDirectoryAsync(
-    new Uri("http://myaccount.files.core.windows.net/share"));
+    new Uri("https://myaccount.files.core.windows.net/share"));
 StorageResource file = await shares.FromFileAsync(
-    new Uri("http://myaccount.files.core.windows.net/share/path/to/file.txt"));
+    new Uri("https://myaccount.files.core.windows.net/share/path/to/file.txt"));
 ```
 
 Storage resources can also be initialized with the appropriate client object from Azure.Storage.Files.Shares. Since these resources will use the credential already present in the client object, no credential is required in the provider when using `FromClient()`. **However**, a `ShareFilesStorageResourceProvider` must still have a credential if it is to be used in `TransferManagerOptions` for resuming a transfer.

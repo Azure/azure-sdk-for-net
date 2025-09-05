@@ -8,7 +8,7 @@
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> A more specific error description than was provided by the containing error. </summary>
-    internal partial class InnerError
+    public partial class InnerError
     {
         /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
         public InnerError()

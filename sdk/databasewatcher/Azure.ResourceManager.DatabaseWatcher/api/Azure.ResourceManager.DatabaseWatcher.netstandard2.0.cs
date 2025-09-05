@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.DatabaseWatcher
 {
+    public partial class AzureResourceManagerDatabaseWatcherContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerDatabaseWatcherContext() { }
+        public static Azure.ResourceManager.DatabaseWatcher.AzureResourceManagerDatabaseWatcherContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DatabaseWatcherAlertRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherAlertRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherAlertRuleResource>, System.Collections.IEnumerable
     {
         protected DatabaseWatcherAlertRuleCollection() { }

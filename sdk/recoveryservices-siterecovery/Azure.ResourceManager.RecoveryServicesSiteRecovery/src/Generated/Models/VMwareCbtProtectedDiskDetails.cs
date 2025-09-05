@@ -67,8 +67,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetBlobUri"> The uri of the target blob. </param>
         /// <param name="targetDiskName"> The name for the target managed disk. </param>
         /// <param name="gatewayOperationDetails"> A value indicating the gateway operation details. </param>
+        /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VMwareCbtProtectedDiskDetails(string diskId, string diskName, SiteRecoveryDiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName, GatewayOperationDetails gatewayOperationDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VMwareCbtProtectedDiskDetails(string diskId, string diskName, SiteRecoveryDiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName, GatewayOperationDetails gatewayOperationDetails, int? sectorSizeInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -85,6 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetBlobUri = targetBlobUri;
             TargetDiskName = targetDiskName;
             GatewayOperationDetails = gatewayOperationDetails;
+            SectorSizeInBytes = sectorSizeInBytes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -118,5 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string TargetDiskName { get; }
         /// <summary> A value indicating the gateway operation details. </summary>
         public GatewayOperationDetails GatewayOperationDetails { get; }
+        /// <summary> The logical sector size (in bytes), 512 by default. </summary>
+        public int? SectorSizeInBytes { get; }
     }
 }

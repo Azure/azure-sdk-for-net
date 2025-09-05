@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class StaticSiteBasicAuthPropertyResource : IJsonModel<StaticSiteBasicAuthPropertyData>
     {
+        private static StaticSiteBasicAuthPropertyData s_dataDeserializationInstance;
+        private static StaticSiteBasicAuthPropertyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StaticSiteBasicAuthPropertyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteBasicAuthPropertyData>)Data).Write(writer, options);
 
-        StaticSiteBasicAuthPropertyData IJsonModel<StaticSiteBasicAuthPropertyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteBasicAuthPropertyData>)Data).Create(ref reader, options);
+        StaticSiteBasicAuthPropertyData IJsonModel<StaticSiteBasicAuthPropertyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteBasicAuthPropertyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StaticSiteBasicAuthPropertyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StaticSiteBasicAuthPropertyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteBasicAuthPropertyData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        StaticSiteBasicAuthPropertyData IPersistableModel<StaticSiteBasicAuthPropertyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteBasicAuthPropertyData>(data, options);
+        StaticSiteBasicAuthPropertyData IPersistableModel<StaticSiteBasicAuthPropertyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteBasicAuthPropertyData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<StaticSiteBasicAuthPropertyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteBasicAuthPropertyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StaticSiteBasicAuthPropertyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteBasicAuthPropertyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

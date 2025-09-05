@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Chaos.Tests
 
         public ChaosExperimentCollection ExperimentCollection { get; private set; }
 
-        public ChaosTargetTypeCollection TargetTypeCollection { get; private set; }
+        public ChaosTargetMetadataCollection TargetTypeCollection { get; private set; }
 
         public MockExperimentEntities MockExperimentEntities { get; private set; }
 
@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.Chaos.Tests
         [SetUp]
         public void CreateCommonClient()
         {
+            var options = new ArmClientOptions();
             Client = GetArmClient();
         }
 
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Chaos.Tests
             this.ExperimentCollection = this.ResourceGroupResource.GetChaosExperiments();
             this.ExperimentName = Recording.GenerateAssetName(TestConstants.ExperimentNamePrefix);
             this.MockExperimentEntities = new MockExperimentEntities(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroup, this.VmssName);
-            this.TargetTypeCollection = this.SubscriptionResource.GetChaosTargetTypes(this.Location.Name);
+            this.TargetTypeCollection = this.SubscriptionResource.GetAllChaosTargetMetadata(this.Location.Name);
         }
 
         /// <summary>

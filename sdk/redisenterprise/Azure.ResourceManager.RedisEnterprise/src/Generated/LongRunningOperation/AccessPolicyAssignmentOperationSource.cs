@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         AccessPolicyAssignmentResource IOperationSource<AccessPolicyAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AccessPolicyAssignmentData>(response.Content);
+            var data = ModelReaderWriter.Read<AccessPolicyAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisEnterpriseContext.Default);
             return new AccessPolicyAssignmentResource(_client, data);
         }
 
         async ValueTask<AccessPolicyAssignmentResource> IOperationSource<AccessPolicyAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AccessPolicyAssignmentData>(response.Content);
+            var data = ModelReaderWriter.Read<AccessPolicyAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisEnterpriseContext.Default);
             return await Task.FromResult(new AccessPolicyAssignmentResource(_client, data)).ConfigureAwait(false);
         }
     }

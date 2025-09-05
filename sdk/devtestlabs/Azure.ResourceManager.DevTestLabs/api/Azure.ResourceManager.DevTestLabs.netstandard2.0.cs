@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.DevTestLabs
 {
+    public partial class AzureResourceManagerDevTestLabsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerDevTestLabsContext() { }
+        public static Azure.ResourceManager.DevTestLabs.AzureResourceManagerDevTestLabsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DevTestLabArmTemplateCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource>, System.Collections.IEnumerable
     {
         protected DevTestLabArmTemplateCollection() { }

@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.EnergyServices
 {
+    public partial class AzureResourceManagerEnergyServicesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerEnergyServicesContext() { }
+        public static Azure.ResourceManager.EnergyServices.AzureResourceManagerEnergyServicesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class EnergyServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EnergyServices.EnergyServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EnergyServices.EnergyServiceResource>, System.Collections.IEnumerable
     {
         protected EnergyServiceCollection() { }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsAlertRuleActionResource : IJsonModel<SecurityInsightsAlertRuleActionData>
     {
+        private static SecurityInsightsAlertRuleActionData s_dataDeserializationInstance;
+        private static SecurityInsightsAlertRuleActionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityInsightsAlertRuleActionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsAlertRuleActionData>)Data).Write(writer, options);
 
-        SecurityInsightsAlertRuleActionData IJsonModel<SecurityInsightsAlertRuleActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsAlertRuleActionData>)Data).Create(ref reader, options);
+        SecurityInsightsAlertRuleActionData IJsonModel<SecurityInsightsAlertRuleActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsAlertRuleActionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsAlertRuleActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsAlertRuleActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsAlertRuleActionData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        SecurityInsightsAlertRuleActionData IPersistableModel<SecurityInsightsAlertRuleActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsAlertRuleActionData>(data, options);
+        SecurityInsightsAlertRuleActionData IPersistableModel<SecurityInsightsAlertRuleActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsAlertRuleActionData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsAlertRuleActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsAlertRuleActionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsAlertRuleActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsAlertRuleActionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

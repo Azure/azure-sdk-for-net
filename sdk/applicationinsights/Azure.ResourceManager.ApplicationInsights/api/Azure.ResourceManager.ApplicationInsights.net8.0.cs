@@ -405,6 +405,12 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsWorkbookTemplateResource> Update(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsWorkbookTemplatePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsWorkbookTemplateResource>> UpdateAsync(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsWorkbookTemplatePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class AzureResourceManagerApplicationInsightsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerApplicationInsightsContext() { }
+        public static Azure.ResourceManager.ApplicationInsights.AzureResourceManagerApplicationInsightsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
 }
 namespace Azure.ResourceManager.ApplicationInsights.Mocking
 {

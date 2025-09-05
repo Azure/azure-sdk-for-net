@@ -10,7 +10,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/d3e4c8f48c995bfd0f1e
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   sample: false
 skip-csproj: true
@@ -106,7 +106,7 @@ rename-mapping:
   SoaRecord.minimumTTL: minimumTtlInSeconds
   SoaRecord.refreshTime: refreshTimeInSeconds
   Digest: DSRecordDigest
-  
+
 prepend-rp-prefix:
   - Zone
   - ZoneType

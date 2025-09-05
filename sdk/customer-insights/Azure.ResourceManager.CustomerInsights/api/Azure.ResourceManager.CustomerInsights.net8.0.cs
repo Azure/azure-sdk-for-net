@@ -52,6 +52,12 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class AzureResourceManagerCustomerInsightsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerCustomerInsightsContext() { }
+        public static Azure.ResourceManager.CustomerInsights.AzureResourceManagerCustomerInsightsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ConnectorMappingResourceFormatCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource>, System.Collections.IEnumerable
     {
         protected ConnectorMappingResourceFormatCollection() { }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     public partial class AuthorizationPolicyResourceFormatResource : IJsonModel<AuthorizationPolicyResourceFormatData>
     {
+        private static AuthorizationPolicyResourceFormatData s_dataDeserializationInstance;
+        private static AuthorizationPolicyResourceFormatData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AuthorizationPolicyResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationPolicyResourceFormatData>)Data).Write(writer, options);
 
-        AuthorizationPolicyResourceFormatData IJsonModel<AuthorizationPolicyResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationPolicyResourceFormatData>)Data).Create(ref reader, options);
+        AuthorizationPolicyResourceFormatData IJsonModel<AuthorizationPolicyResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationPolicyResourceFormatData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AuthorizationPolicyResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AuthorizationPolicyResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AuthorizationPolicyResourceFormatData>(Data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
-        AuthorizationPolicyResourceFormatData IPersistableModel<AuthorizationPolicyResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AuthorizationPolicyResourceFormatData>(data, options);
+        AuthorizationPolicyResourceFormatData IPersistableModel<AuthorizationPolicyResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AuthorizationPolicyResourceFormatData>(data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
-        string IPersistableModel<AuthorizationPolicyResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AuthorizationPolicyResourceFormatData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AuthorizationPolicyResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AuthorizationPolicyResourceFormatData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

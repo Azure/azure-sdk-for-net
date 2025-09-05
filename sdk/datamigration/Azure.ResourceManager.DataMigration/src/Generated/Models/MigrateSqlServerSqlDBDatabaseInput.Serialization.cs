@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (Optional.IsDefined(MakeSourceDBReadOnly))
+            if (Optional.IsDefined(ShouldMakeSourceDBReadOnly))
             {
                 writer.WritePropertyName("makeSourceDbReadOnly"u8);
-                writer.WriteBooleanValue(MakeSourceDBReadOnly.Value);
+                writer.WriteBooleanValue(ShouldMakeSourceDBReadOnly.Value);
             }
             if (Optional.IsCollectionDefined(TableMap))
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBDatabaseInput)} does not support writing '{options.Format}' format.");
             }

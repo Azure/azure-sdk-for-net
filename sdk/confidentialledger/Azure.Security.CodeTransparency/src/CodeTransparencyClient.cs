@@ -262,7 +262,7 @@ namespace Azure.Security.CodeTransparency
         /// Calls <!-- see cref="CcfReceiptVerifier.VerifyTransparentStatementReceipt(JsonWebKey, byte[], byte[])"/> for each receipt found in the transparent statement.-->
         /// </summary>
         /// <param name="transparentStatementCoseSign1Bytes">Receipt cbor or Cose_Sign1 (with an embedded receipt) bytes.</param>
-        public void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes)
+        public virtual void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes)
         {
             List<Exception> failures = new List<Exception>();
 

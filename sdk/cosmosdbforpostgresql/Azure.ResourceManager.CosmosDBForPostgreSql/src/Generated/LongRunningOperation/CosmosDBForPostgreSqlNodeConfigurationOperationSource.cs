@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 
         CosmosDBForPostgreSqlNodeConfigurationResource IOperationSource<CosmosDBForPostgreSqlNodeConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CosmosDBForPostgreSqlServerConfigurationData>(response.Content);
+            var data = ModelReaderWriter.Read<CosmosDBForPostgreSqlServerConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
             return new CosmosDBForPostgreSqlNodeConfigurationResource(_client, data);
         }
 
         async ValueTask<CosmosDBForPostgreSqlNodeConfigurationResource> IOperationSource<CosmosDBForPostgreSqlNodeConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CosmosDBForPostgreSqlServerConfigurationData>(response.Content);
+            var data = ModelReaderWriter.Read<CosmosDBForPostgreSqlServerConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
             return await Task.FromResult(new CosmosDBForPostgreSqlNodeConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -106,29 +106,9 @@ using var tokenCredential = new CommunicationTokenCredential(
 
 For scenarios where an Entra user can be used with Communication Services, you need to initialize any implementation of [Azure.Core.TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) and provide it to the ``EntraCommunicationTokenCredentialOptions``.
 Along with this, you must provide the URI of the Azure Communication Services resource and the scopes required for the Entra user token. These scopes determine the permissions granted to the token.
-If the scopes are not provided, by default, it sets the scopes to `https://communication.azure.com/clients/.default`.
-```C# 
-var options = new InteractiveBrowserCredentialOptions
-    {
-        TenantId = "<your-tenant-id>",
-        ClientId = "<your-client-id>",
-        RedirectUri = new Uri("<your-redirect-uri>")
-    };
-var entraTokenCredential = new InteractiveBrowserCredential(options);
 
-var entraTokenCredentialOptions = new EntraCommunicationTokenCredentialOptions(
-    resourceEndpoint: "https://<your-resource>.communication.azure.com",
-    entraTokenCredential: entraTokenCredential)
-    {
-      Scopes = new[] { "https://communication.azure.com/clients/VoIP" }
-    };
-
-var credential = new CommunicationTokenCredential(entraTokenCredentialOptions);
-
-```
-
-The same approach can be used for authorizing an Entra user with a Teams license to use Teams Phone Extensibility features through your Azure Communication Services resource.
-This requires providing the `https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls` scope
+This approach needs to be used for authorizing an Entra user with a Teams license to use Teams Phone Extensibility features through your Azure Communication Services resource.
+This requires providing the `https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls` scope.
 ```C# 
 var options = new InteractiveBrowserCredentialOptions
     {
@@ -144,6 +124,29 @@ var entraTokenCredentialOptions = new EntraCommunicationTokenCredentialOptions(
     )
     {
       Scopes = new[] { "https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls" }
+    };
+
+var credential = new CommunicationTokenCredential(entraTokenCredentialOptions);
+
+```
+
+Other scenarios for Entra users to utilize Azure Communication Services are currently in the **preview stage only and should not be used in production**.
+The scopes for these scenarios follow the format `https://communication.azure.com/clients/<Azure Communication Services Clients API permission>`.
+If specific scopes are not provided, the default scopes will be set to `https://communication.azure.com/clients/.default`.
+```C# 
+var options = new InteractiveBrowserCredentialOptions
+    {
+        TenantId = "<your-tenant-id>",
+        ClientId = "<your-client-id>",
+        RedirectUri = new Uri("<your-redirect-uri>")
+    };
+var entraTokenCredential = new InteractiveBrowserCredential(options);
+
+var entraTokenCredentialOptions = new EntraCommunicationTokenCredentialOptions(
+    resourceEndpoint: "https://<your-resource>.communication.azure.com",
+    entraTokenCredential: entraTokenCredential)
+    {
+      Scopes = new[] { "https://communication.azure.com/clients/VoIP" }
     };
 
 var credential = new CommunicationTokenCredential(entraTokenCredentialOptions);

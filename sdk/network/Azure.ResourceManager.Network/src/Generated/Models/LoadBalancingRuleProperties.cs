@@ -39,9 +39,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
+        /// <param name="enableConnectionTracking"> Defines whether connections between 2 communicating endpoints can be tracked and associated to the same backend VM over its lifetime when using UDP protocol. </param>
         /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal LoadBalancingRuleProperties(WritableSubResource frontendIPConfiguration, WritableSubResource backendAddressPool, IList<WritableSubResource> backendAddressPools, WritableSubResource probe, LoadBalancingTransportProtocol protocol, LoadDistribution? loadDistribution, int frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, bool? disableOutboundSnat, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalProperties)
+        internal LoadBalancingRuleProperties(WritableSubResource frontendIPConfiguration, WritableSubResource backendAddressPool, IList<WritableSubResource> backendAddressPools, WritableSubResource probe, LoadBalancingTransportProtocol protocol, LoadDistribution? loadDistribution, int frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, bool? disableOutboundSnat, bool? enableConnectionTracking, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalProperties)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
             BackendAddressPool = backendAddressPool;
@@ -55,6 +56,7 @@ namespace Azure.ResourceManager.Network.Models
             EnableFloatingIP = enableFloatingIP;
             EnableTcpReset = enableTcpReset;
             DisableOutboundSnat = disableOutboundSnat;
+            EnableConnectionTracking = enableConnectionTracking;
             ProvisioningState = provisioningState;
             AdditionalProperties = additionalProperties;
         }
@@ -67,6 +69,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A reference to frontend IP addresses. </summary>
         internal WritableSubResource FrontendIPConfiguration { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("frontendIPConfiguration.id")]
         public ResourceIdentifier FrontendIPConfigurationId
         {
             get => FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
@@ -81,6 +84,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A reference to a pool of DIPs. Inbound traffic is randomly load balanced across IPs in the backend IPs. </summary>
         internal WritableSubResource BackendAddressPool { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("backendAddressPool.id")]
         public ResourceIdentifier BackendAddressPoolId
         {
             get => BackendAddressPool is null ? default : BackendAddressPool.Id;
@@ -93,10 +97,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> An array of references to pool of DIPs. </summary>
+        [WirePath("backendAddressPools")]
         public IList<WritableSubResource> BackendAddressPools { get; }
         /// <summary> The reference to the load balancer probe used by the load balancing rule. </summary>
         internal WritableSubResource Probe { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("probe.id")]
         public ResourceIdentifier ProbeId
         {
             get => Probe is null ? default : Probe.Id;
@@ -109,22 +115,34 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The reference to the transport protocol used by the load balancing rule. </summary>
+        [WirePath("protocol")]
         public LoadBalancingTransportProtocol Protocol { get; set; }
         /// <summary> The load distribution policy for this rule. </summary>
+        [WirePath("loadDistribution")]
         public LoadDistribution? LoadDistribution { get; set; }
         /// <summary> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port". </summary>
+        [WirePath("frontendPort")]
         public int FrontendPort { get; set; }
         /// <summary> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port". </summary>
+        [WirePath("backendPort")]
         public int? BackendPort { get; set; }
         /// <summary> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </summary>
+        [WirePath("idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </summary>
+        [WirePath("enableFloatingIP")]
         public bool? EnableFloatingIP { get; set; }
         /// <summary> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </summary>
+        [WirePath("enableTcpReset")]
         public bool? EnableTcpReset { get; set; }
         /// <summary> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </summary>
+        [WirePath("disableOutboundSnat")]
         public bool? DisableOutboundSnat { get; set; }
+        /// <summary> Defines whether connections between 2 communicating endpoints can be tracked and associated to the same backend VM over its lifetime when using UDP protocol. </summary>
+        [WirePath("enableConnectionTracking")]
+        public bool? EnableConnectionTracking { get; set; }
         /// <summary> The provisioning state of the load balancing rule resource. </summary>
+        [WirePath("provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// Additional Properties
@@ -156,6 +174,7 @@ namespace Azure.ResourceManager.Network.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

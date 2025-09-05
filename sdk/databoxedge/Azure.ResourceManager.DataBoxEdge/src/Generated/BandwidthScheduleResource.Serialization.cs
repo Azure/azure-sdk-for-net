@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     public partial class BandwidthScheduleResource : IJsonModel<BandwidthScheduleData>
     {
+        private static BandwidthScheduleData s_dataDeserializationInstance;
+        private static BandwidthScheduleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BandwidthScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BandwidthScheduleData>)Data).Write(writer, options);
 
-        BandwidthScheduleData IJsonModel<BandwidthScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BandwidthScheduleData>)Data).Create(ref reader, options);
+        BandwidthScheduleData IJsonModel<BandwidthScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BandwidthScheduleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BandwidthScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BandwidthScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BandwidthScheduleData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        BandwidthScheduleData IPersistableModel<BandwidthScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BandwidthScheduleData>(data, options);
+        BandwidthScheduleData IPersistableModel<BandwidthScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BandwidthScheduleData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        string IPersistableModel<BandwidthScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BandwidthScheduleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BandwidthScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BandwidthScheduleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

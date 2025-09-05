@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Compute
 
         GalleryApplicationVersionResource IOperationSource<GalleryApplicationVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GalleryApplicationVersionData>(response.Content);
+            var data = ModelReaderWriter.Read<GalleryApplicationVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
             return new GalleryApplicationVersionResource(_client, data);
         }
 
         async ValueTask<GalleryApplicationVersionResource> IOperationSource<GalleryApplicationVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GalleryApplicationVersionData>(response.Content);
+            var data = ModelReaderWriter.Read<GalleryApplicationVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
             return await Task.FromResult(new GalleryApplicationVersionResource(_client, data)).ConfigureAwait(false);
         }
     }

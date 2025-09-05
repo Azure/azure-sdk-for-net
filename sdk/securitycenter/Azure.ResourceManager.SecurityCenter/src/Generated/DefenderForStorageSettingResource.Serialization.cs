@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class DefenderForStorageSettingResource : IJsonModel<DefenderForStorageSettingData>
     {
+        private static DefenderForStorageSettingData s_dataDeserializationInstance;
+        private static DefenderForStorageSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DefenderForStorageSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DefenderForStorageSettingData>)Data).Write(writer, options);
 
-        DefenderForStorageSettingData IJsonModel<DefenderForStorageSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DefenderForStorageSettingData>)Data).Create(ref reader, options);
+        DefenderForStorageSettingData IJsonModel<DefenderForStorageSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DefenderForStorageSettingData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DefenderForStorageSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DefenderForStorageSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DefenderForStorageSettingData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        DefenderForStorageSettingData IPersistableModel<DefenderForStorageSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DefenderForStorageSettingData>(data, options);
+        DefenderForStorageSettingData IPersistableModel<DefenderForStorageSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DefenderForStorageSettingData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<DefenderForStorageSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DefenderForStorageSettingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DefenderForStorageSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DefenderForStorageSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

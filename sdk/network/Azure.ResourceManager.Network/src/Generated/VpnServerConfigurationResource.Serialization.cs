@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VpnServerConfigurationResource : IJsonModel<VpnServerConfigurationData>
     {
+        private static VpnServerConfigurationData s_dataDeserializationInstance;
+        private static VpnServerConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VpnServerConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VpnServerConfigurationData>)Data).Write(writer, options);
 
-        VpnServerConfigurationData IJsonModel<VpnServerConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VpnServerConfigurationData>)Data).Create(ref reader, options);
+        VpnServerConfigurationData IJsonModel<VpnServerConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VpnServerConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VpnServerConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VpnServerConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VpnServerConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        VpnServerConfigurationData IPersistableModel<VpnServerConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VpnServerConfigurationData>(data, options);
+        VpnServerConfigurationData IPersistableModel<VpnServerConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VpnServerConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<VpnServerConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VpnServerConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VpnServerConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VpnServerConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

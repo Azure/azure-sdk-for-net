@@ -4,7 +4,6 @@
 using System;
 using System.IO;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 using Azure.Core.Cryptography;
 using Azure.Security.KeyVault.Keys.Cryptography;

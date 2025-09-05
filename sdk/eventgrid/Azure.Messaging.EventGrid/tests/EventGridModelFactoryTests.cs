@@ -317,7 +317,7 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual(RecordingFormatType.Mp3, model.RecordingFormatType);
 
             // empty params
-            model = EventGridModelFactory.AcsRecordingFileStatusUpdatedEventData();
+            model = EventGridModelFactory.AcsRecordingFileStatusUpdatedEventData(contentType: "contentTypeIsRequired");
             Assert.IsNotNull(model);
         }
 

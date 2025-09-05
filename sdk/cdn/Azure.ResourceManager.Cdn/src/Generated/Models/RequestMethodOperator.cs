@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: RequestMethodOperator
+    /// </summary>
     public readonly partial struct RequestMethodOperator : IEquatable<RequestMethodOperator>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string EqualValue = "Equal";
 
-        /// <summary> Equal. </summary>
+        /// <summary>
+        /// Equal
+        /// Serialized Name: RequestMethodOperator.Equal
+        /// </summary>
         public static RequestMethodOperator Equal { get; } = new RequestMethodOperator(EqualValue);
         /// <summary> Determines if two <see cref="RequestMethodOperator"/> values are the same. </summary>
         public static bool operator ==(RequestMethodOperator left, RequestMethodOperator right) => left.Equals(right);

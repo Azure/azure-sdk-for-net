@@ -86,26 +86,37 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Connection monitor location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> Connection monitor tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Describes the source of connection monitor. </summary>
+        [WirePath("properties.source")]
         public ConnectionMonitorSource Source { get; set; }
         /// <summary> Describes the destination of connection monitor. </summary>
+        [WirePath("properties.destination")]
         public ConnectionMonitorDestination Destination { get; set; }
         /// <summary> Determines if the connection monitor will start automatically once created. </summary>
+        [WirePath("properties.autoStart")]
         public bool? AutoStart { get; set; }
         /// <summary> Monitoring interval in seconds. </summary>
+        [WirePath("properties.monitoringIntervalInSeconds")]
         public int? MonitoringIntervalInSeconds { get; set; }
         /// <summary> List of connection monitor endpoints. </summary>
+        [WirePath("properties.endpoints")]
         public IList<ConnectionMonitorEndpoint> Endpoints { get; }
         /// <summary> List of connection monitor test configurations. </summary>
+        [WirePath("properties.testConfigurations")]
         public IList<ConnectionMonitorTestConfiguration> TestConfigurations { get; }
         /// <summary> List of connection monitor test groups. </summary>
+        [WirePath("properties.testGroups")]
         public IList<ConnectionMonitorTestGroup> TestGroups { get; }
         /// <summary> List of connection monitor outputs. </summary>
+        [WirePath("properties.outputs")]
         public IList<ConnectionMonitorOutput> Outputs { get; }
         /// <summary> Optional notes to be associated with the connection monitor. </summary>
+        [WirePath("properties.notes")]
         public string Notes { get; set; }
     }
 }

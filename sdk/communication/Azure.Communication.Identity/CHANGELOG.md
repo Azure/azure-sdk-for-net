@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.1 (2025-06-09)
+
+### Features Added
+
+- Identity Management: Added support for creating identities with an associated customId.
+- Identity Operations: Introduced the get identity operation.
 
 ## 1.3.1 (2024-03-22)
 - Dependency versions updated.

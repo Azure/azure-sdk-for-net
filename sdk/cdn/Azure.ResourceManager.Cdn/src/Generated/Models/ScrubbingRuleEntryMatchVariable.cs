@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The variable to be scrubbed from the logs. </summary>
+    /// <summary>
+    /// The variable to be scrubbed from the logs.
+    /// Serialized Name: ScrubbingRuleEntryMatchVariable
+    /// </summary>
     public readonly partial struct ScrubbingRuleEntryMatchVariable : IEquatable<ScrubbingRuleEntryMatchVariable>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string RequestUriValue = "RequestUri";
         private const string QueryStringArgNamesValue = "QueryStringArgNames";
 
-        /// <summary> RequestIPAddress. </summary>
+        /// <summary>
+        /// RequestIPAddress
+        /// Serialized Name: ScrubbingRuleEntryMatchVariable.RequestIPAddress
+        /// </summary>
         public static ScrubbingRuleEntryMatchVariable RequestIPAddress { get; } = new ScrubbingRuleEntryMatchVariable(RequestIPAddressValue);
-        /// <summary> RequestUri. </summary>
+        /// <summary>
+        /// RequestUri
+        /// Serialized Name: ScrubbingRuleEntryMatchVariable.RequestUri
+        /// </summary>
         public static ScrubbingRuleEntryMatchVariable RequestUri { get; } = new ScrubbingRuleEntryMatchVariable(RequestUriValue);
-        /// <summary> QueryStringArgNames. </summary>
+        /// <summary>
+        /// QueryStringArgNames
+        /// Serialized Name: ScrubbingRuleEntryMatchVariable.QueryStringArgNames
+        /// </summary>
         public static ScrubbingRuleEntryMatchVariable QueryStringArgNames { get; } = new ScrubbingRuleEntryMatchVariable(QueryStringArgNamesValue);
         /// <summary> Determines if two <see cref="ScrubbingRuleEntryMatchVariable"/> values are the same. </summary>
         public static bool operator ==(ScrubbingRuleEntryMatchVariable left, ScrubbingRuleEntryMatchVariable right) => left.Equals(right);

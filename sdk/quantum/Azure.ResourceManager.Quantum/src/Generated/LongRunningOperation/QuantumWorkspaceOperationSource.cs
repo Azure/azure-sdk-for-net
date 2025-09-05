@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Quantum
 
         QuantumWorkspaceResource IOperationSource<QuantumWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<QuantumWorkspaceData>(response.Content);
+            var data = ModelReaderWriter.Read<QuantumWorkspaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuantumContext.Default);
             return new QuantumWorkspaceResource(_client, data);
         }
 
         async ValueTask<QuantumWorkspaceResource> IOperationSource<QuantumWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<QuantumWorkspaceData>(response.Content);
+            var data = ModelReaderWriter.Read<QuantumWorkspaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuantumContext.Default);
             return await Task.FromResult(new QuantumWorkspaceResource(_client, data)).ConfigureAwait(false);
         }
     }

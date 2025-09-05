@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapsePrivateEndpointConnectionResource : IJsonModel<SynapsePrivateEndpointConnectionData>
     {
+        private static SynapsePrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static SynapsePrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapsePrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapsePrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        SynapsePrivateEndpointConnectionData IJsonModel<SynapsePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapsePrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        SynapsePrivateEndpointConnectionData IJsonModel<SynapsePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapsePrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapsePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapsePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapsePrivateEndpointConnectionData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapsePrivateEndpointConnectionData IPersistableModel<SynapsePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapsePrivateEndpointConnectionData>(data, options);
+        SynapsePrivateEndpointConnectionData IPersistableModel<SynapsePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapsePrivateEndpointConnectionData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapsePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapsePrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapsePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapsePrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class FrontDoorSecretResource : IJsonModel<FrontDoorSecretData>
     {
+        private static FrontDoorSecretData s_dataDeserializationInstance;
+        private static FrontDoorSecretData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FrontDoorSecretData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorSecretData>)Data).Write(writer, options);
 
-        FrontDoorSecretData IJsonModel<FrontDoorSecretData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorSecretData>)Data).Create(ref reader, options);
+        FrontDoorSecretData IJsonModel<FrontDoorSecretData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorSecretData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FrontDoorSecretData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FrontDoorSecretData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FrontDoorSecretData>(Data, options, AzureResourceManagerCdnContext.Default);
 
-        FrontDoorSecretData IPersistableModel<FrontDoorSecretData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorSecretData>(data, options);
+        FrontDoorSecretData IPersistableModel<FrontDoorSecretData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorSecretData>(data, options, AzureResourceManagerCdnContext.Default);
 
-        string IPersistableModel<FrontDoorSecretData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorSecretData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FrontDoorSecretData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorSecretData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

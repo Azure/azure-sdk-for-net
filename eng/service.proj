@@ -133,7 +133,20 @@
             Targets="GetPackageInfo"
             BuildInParallel="$(BuildInParallel)"
             SkipNonexistentProjects="false"
-            SkipNonexistentTargets="true" />
+            SkipNonexistentTargets="true">
+      <Output ItemName="PackageInfoLines" TaskParameter="TargetOutputs" />
+    </MSBuild>
+    
+    <!-- Deduplicate package info lines -->
+    <RemoveDuplicates Inputs="@(PackageInfoLines)">
+      <Output TaskParameter="Filtered" ItemName="PackageInfoLinesFiltered"/>
+    </RemoveDuplicates>
+    
+    <!-- Write aggregated package info to file if OutputProjectInfoListFilePath is specified -->
+    <WriteLinesToFile Condition="'$(OutputProjectInfoListFilePath)' != ''" 
+                      File="$(OutputProjectInfoListFilePath)" 
+                      Lines="@(PackageInfoLinesFiltered)" 
+                      Overwrite="true" />
   </Target>
 
   <Target Name="GetCodeGenProjects">
@@ -163,13 +176,13 @@
             SkipNonexistentTargets="true">
       <Output ItemName="ProjectsToInclude" TaskParameter="TargetOutputs"/>
     </MSBuild>
-    <RemoveDuplicates Inputs="@(ProjectsToInclude->Replace($(RepoRoot), ''))">
+    <RemoveDuplicates Inputs="@(ProjectsToInclude)">
       <Output TaskParameter="Filtered" ItemName="ProjectsToIncludeFitered"/>
     </RemoveDuplicates>
     <Message Text="Write to file $(OutputProjectFilePath)" Importance="high"/>
-    <Message Text="%24%28RepoRoot%29%(ProjectsToIncludeFitered.Identity)" Importance="high"/>
+    <Message Text="%(ProjectsToIncludeFitered.Identity)" Importance="high"/>
     <ItemGroup>
-      <_WriteToLines Include="%24%28RepoRoot%29%(ProjectsToIncludeFitered.Identity)" />
+      <_WriteToLines Include="%(ProjectsToIncludeFitered.Identity)" />
     </ItemGroup>
     <WriteLinesToFile File="$(OutputProjectFilePath)" Lines="@(_WriteToLines)" />
   </Target>

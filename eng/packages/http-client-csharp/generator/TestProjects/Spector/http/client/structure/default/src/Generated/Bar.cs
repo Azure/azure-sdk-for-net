@@ -16,7 +16,7 @@ namespace Client.Structure.Service
     {
         protected Bar() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Five(RequestContext context) => throw null;
 

@@ -56,17 +56,20 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
             ElasticityProfile = elasticityProfile;
             ContainerGroupProperties = containerGroupProperties;
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolProperties"/>. </summary>
         /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
         /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
+        /// <param name="zones"> Specifies zones of standby container group pools. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, StandbyContainerGroupProperties containerGroupProperties, StandbyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupPoolProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, StandbyContainerGroupProperties containerGroupProperties, IList<string> zones, StandbyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ElasticityProfile = elasticityProfile;
             ContainerGroupProperties = containerGroupProperties;
+            Zones = zones;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -80,6 +83,8 @@ namespace Azure.ResourceManager.StandbyPool.Models
         public StandbyContainerGroupPoolElasticityProfile ElasticityProfile { get; set; }
         /// <summary> Specifies container group properties of standby container group pools. </summary>
         public StandbyContainerGroupProperties ContainerGroupProperties { get; set; }
+        /// <summary> Specifies zones of standby container group pools. </summary>
+        public IList<string> Zones { get; }
         /// <summary> The status of the last operation. </summary>
         public StandbyProvisioningState? ProvisioningState { get; }
     }

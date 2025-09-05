@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityConnectorGitLabGroupResource : IJsonModel<SecurityConnectorGitLabGroupData>
     {
+        private static SecurityConnectorGitLabGroupData s_dataDeserializationInstance;
+        private static SecurityConnectorGitLabGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityConnectorGitLabGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityConnectorGitLabGroupData>)Data).Write(writer, options);
 
-        SecurityConnectorGitLabGroupData IJsonModel<SecurityConnectorGitLabGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityConnectorGitLabGroupData>)Data).Create(ref reader, options);
+        SecurityConnectorGitLabGroupData IJsonModel<SecurityConnectorGitLabGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityConnectorGitLabGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityConnectorGitLabGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityConnectorGitLabGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityConnectorGitLabGroupData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SecurityConnectorGitLabGroupData IPersistableModel<SecurityConnectorGitLabGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityConnectorGitLabGroupData>(data, options);
+        SecurityConnectorGitLabGroupData IPersistableModel<SecurityConnectorGitLabGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityConnectorGitLabGroupData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<SecurityConnectorGitLabGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityConnectorGitLabGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityConnectorGitLabGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityConnectorGitLabGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

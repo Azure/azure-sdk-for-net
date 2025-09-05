@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class DedicatedHostGroupResource : IJsonModel<DedicatedHostGroupData>
     {
+        private static DedicatedHostGroupData s_dataDeserializationInstance;
+        private static DedicatedHostGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DedicatedHostGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DedicatedHostGroupData>)Data).Write(writer, options);
 
-        DedicatedHostGroupData IJsonModel<DedicatedHostGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DedicatedHostGroupData>)Data).Create(ref reader, options);
+        DedicatedHostGroupData IJsonModel<DedicatedHostGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DedicatedHostGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DedicatedHostGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DedicatedHostGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DedicatedHostGroupData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        DedicatedHostGroupData IPersistableModel<DedicatedHostGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DedicatedHostGroupData>(data, options);
+        DedicatedHostGroupData IPersistableModel<DedicatedHostGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DedicatedHostGroupData>(data, options, AzureResourceManagerComputeContext.Default);
 
-        string IPersistableModel<DedicatedHostGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DedicatedHostGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DedicatedHostGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DedicatedHostGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

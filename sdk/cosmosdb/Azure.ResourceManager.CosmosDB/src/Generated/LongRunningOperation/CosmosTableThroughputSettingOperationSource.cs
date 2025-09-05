@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosTableThroughputSettingResource IOperationSource<CosmosTableThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content));
+            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default));
             return new CosmosTableThroughputSettingResource(_client, data);
         }
 
         async ValueTask<CosmosTableThroughputSettingResource> IOperationSource<CosmosTableThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content));
+            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default));
             return await Task.FromResult(new CosmosTableThroughputSettingResource(_client, data)).ConfigureAwait(false);
         }
 

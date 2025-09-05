@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Compute
 
         VirtualMachineRunCommandResource IOperationSource<VirtualMachineRunCommandResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualMachineRunCommandData>(response.Content);
+            var data = ModelReaderWriter.Read<VirtualMachineRunCommandData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
             return new VirtualMachineRunCommandResource(_client, data);
         }
 
         async ValueTask<VirtualMachineRunCommandResource> IOperationSource<VirtualMachineRunCommandResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualMachineRunCommandData>(response.Content);
+            var data = ModelReaderWriter.Read<VirtualMachineRunCommandData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
             return await Task.FromResult(new VirtualMachineRunCommandResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class SiteSlotDiagnosticResource : IJsonModel<DiagnosticCategoryData>
     {
+        private static DiagnosticCategoryData s_dataDeserializationInstance;
+        private static DiagnosticCategoryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DiagnosticCategoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticCategoryData>)Data).Write(writer, options);
 
-        DiagnosticCategoryData IJsonModel<DiagnosticCategoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticCategoryData>)Data).Create(ref reader, options);
+        DiagnosticCategoryData IJsonModel<DiagnosticCategoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticCategoryData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DiagnosticCategoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DiagnosticCategoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiagnosticCategoryData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        DiagnosticCategoryData IPersistableModel<DiagnosticCategoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiagnosticCategoryData>(data, options);
+        DiagnosticCategoryData IPersistableModel<DiagnosticCategoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiagnosticCategoryData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<DiagnosticCategoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiagnosticCategoryData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DiagnosticCategoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiagnosticCategoryData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

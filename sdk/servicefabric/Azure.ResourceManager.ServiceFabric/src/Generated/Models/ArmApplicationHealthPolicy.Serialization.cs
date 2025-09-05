@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ArmApplicationHealthPolicy)} does not support writing '{options.Format}' format.");
             }

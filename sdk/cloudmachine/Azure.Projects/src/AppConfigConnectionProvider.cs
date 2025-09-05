@@ -9,13 +9,13 @@ using Azure.Data.AppConfiguration;
 
 namespace Azure.Projects;
 
-internal class AppConfigConnectionProvider : ConnectionProvider
+internal class AppConfigConnectionProvider : ClientConnectionProvider
 {
     private readonly ConfigurationClient _config;
-    private readonly ConnectionCollection _connectionCache = new();
+    private readonly ClientConnectionCollection _connectionCache = new();
     private readonly TokenCredential _credential;
 
-    public AppConfigConnectionProvider(Uri endpoint, TokenCredential credential)
+    public AppConfigConnectionProvider(Uri endpoint, TokenCredential credential) : base(maxCacheSize: 100)
     {
         _credential = credential;
         _config = new(endpoint, _credential);
@@ -32,7 +32,7 @@ internal class AppConfigConnectionProvider : ConnectionProvider
         {
             ConfigurationSetting setting = _config.GetConfigurationSetting(connectionId);
             string value = setting.Value;
-            ClientConnection connetion = new(connectionId, value, _credential);
+            ClientConnection connetion = new(connectionId, value, _credential, CredentialKind.TokenCredential);
             _connectionCache.Add(connetion);
             return connetion;
         }

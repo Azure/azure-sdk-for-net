@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.LabServices
 
         LabUserResource IOperationSource<LabUserResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LabUserData>(response.Content);
+            var data = ModelReaderWriter.Read<LabUserData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerLabServicesContext.Default);
             return new LabUserResource(_client, data);
         }
 
         async ValueTask<LabUserResource> IOperationSource<LabUserResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LabUserData>(response.Content);
+            var data = ModelReaderWriter.Read<LabUserData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerLabServicesContext.Default);
             return await Task.FromResult(new LabUserResource(_client, data)).ConfigureAwait(false);
         }
     }

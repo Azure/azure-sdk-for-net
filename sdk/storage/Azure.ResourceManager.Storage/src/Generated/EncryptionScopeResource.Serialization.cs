@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class EncryptionScopeResource : IJsonModel<EncryptionScopeData>
     {
+        private static EncryptionScopeData s_dataDeserializationInstance;
+        private static EncryptionScopeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<EncryptionScopeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EncryptionScopeData>)Data).Write(writer, options);
 
-        EncryptionScopeData IJsonModel<EncryptionScopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EncryptionScopeData>)Data).Create(ref reader, options);
+        EncryptionScopeData IJsonModel<EncryptionScopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EncryptionScopeData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EncryptionScopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EncryptionScopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EncryptionScopeData>(Data, options, AzureResourceManagerStorageContext.Default);
 
-        EncryptionScopeData IPersistableModel<EncryptionScopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EncryptionScopeData>(data, options);
+        EncryptionScopeData IPersistableModel<EncryptionScopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EncryptionScopeData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<EncryptionScopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EncryptionScopeData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<EncryptionScopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EncryptionScopeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

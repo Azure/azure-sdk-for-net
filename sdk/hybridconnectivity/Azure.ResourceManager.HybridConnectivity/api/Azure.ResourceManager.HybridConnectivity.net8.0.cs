@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.HybridConnectivity
 {
+    public partial class AzureResourceManagerHybridConnectivityContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerHybridConnectivityContext() { }
+        public static Azure.ResourceManager.HybridConnectivity.AzureResourceManagerHybridConnectivityContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class HybridConnectivityEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridConnectivity.HybridConnectivityEndpointResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.HybridConnectivityEndpointResource>, System.Collections.IEnumerable
     {
         protected HybridConnectivityEndpointCollection() { }

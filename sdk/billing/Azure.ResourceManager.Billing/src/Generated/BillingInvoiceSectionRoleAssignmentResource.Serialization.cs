@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class BillingInvoiceSectionRoleAssignmentResource : IJsonModel<BillingRoleAssignmentData>
     {
+        private static BillingRoleAssignmentData s_dataDeserializationInstance;
+        private static BillingRoleAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BillingRoleAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BillingRoleAssignmentData>)Data).Write(writer, options);
 
-        BillingRoleAssignmentData IJsonModel<BillingRoleAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingRoleAssignmentData>)Data).Create(ref reader, options);
+        BillingRoleAssignmentData IJsonModel<BillingRoleAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingRoleAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BillingRoleAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BillingRoleAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingRoleAssignmentData>(Data, options, AzureResourceManagerBillingContext.Default);
 
-        BillingRoleAssignmentData IPersistableModel<BillingRoleAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingRoleAssignmentData>(data, options);
+        BillingRoleAssignmentData IPersistableModel<BillingRoleAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingRoleAssignmentData>(data, options, AzureResourceManagerBillingContext.Default);
 
-        string IPersistableModel<BillingRoleAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingRoleAssignmentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BillingRoleAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingRoleAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

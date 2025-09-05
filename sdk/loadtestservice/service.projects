@@ -19,6 +19,9 @@
 
   <ItemGroup Condition="'$(SDKType)' == 'client'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Developer.LoadTesting\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Developer.Playwright\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Developer.Playwright.MSTest\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Developer.Playwright.NUnit\**\*.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'mgmtclient'">

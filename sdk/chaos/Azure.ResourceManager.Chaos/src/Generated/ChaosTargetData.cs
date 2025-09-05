@@ -65,13 +65,13 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Location of the target resource. </param>
         /// <param name="properties"> The properties of the target resource. </param>
+        /// <param name="location"> Azure resource location. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ChaosTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> properties, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Location = location;
             Properties = properties;
+            Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -80,8 +80,6 @@ namespace Azure.ResourceManager.Chaos
         {
         }
 
-        /// <summary> Location of the target resource. </summary>
-        public AzureLocation? Location { get; set; }
         /// <summary>
         /// The properties of the target resource.
         /// <para>
@@ -113,5 +111,7 @@ namespace Azure.ResourceManager.Chaos
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> Properties { get; }
+        /// <summary> Azure resource location. </summary>
+        public AzureLocation? Location { get; set; }
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class VerifiedPartnerResource : IJsonModel<VerifiedPartnerData>
     {
+        private static VerifiedPartnerData s_dataDeserializationInstance;
+        private static VerifiedPartnerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VerifiedPartnerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VerifiedPartnerData>)Data).Write(writer, options);
 
-        VerifiedPartnerData IJsonModel<VerifiedPartnerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VerifiedPartnerData>)Data).Create(ref reader, options);
+        VerifiedPartnerData IJsonModel<VerifiedPartnerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VerifiedPartnerData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VerifiedPartnerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VerifiedPartnerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VerifiedPartnerData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
-        VerifiedPartnerData IPersistableModel<VerifiedPartnerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VerifiedPartnerData>(data, options);
+        VerifiedPartnerData IPersistableModel<VerifiedPartnerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VerifiedPartnerData>(data, options, AzureResourceManagerEventGridContext.Default);
 
-        string IPersistableModel<VerifiedPartnerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VerifiedPartnerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VerifiedPartnerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VerifiedPartnerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

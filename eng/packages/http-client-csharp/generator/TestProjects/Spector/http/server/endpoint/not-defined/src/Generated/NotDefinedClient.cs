@@ -21,7 +21,7 @@ namespace Server.Endpoint.NotDefined
 
         public NotDefinedClient(Uri endpoint, NotDefinedClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Valid(RequestContext context) => throw null;
 

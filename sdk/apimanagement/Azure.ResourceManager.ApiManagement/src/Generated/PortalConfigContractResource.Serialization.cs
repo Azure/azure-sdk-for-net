@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class PortalConfigContractResource : IJsonModel<PortalConfigContractData>
     {
+        private static PortalConfigContractData s_dataDeserializationInstance;
+        private static PortalConfigContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PortalConfigContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PortalConfigContractData>)Data).Write(writer, options);
 
-        PortalConfigContractData IJsonModel<PortalConfigContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PortalConfigContractData>)Data).Create(ref reader, options);
+        PortalConfigContractData IJsonModel<PortalConfigContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PortalConfigContractData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PortalConfigContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PortalConfigContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PortalConfigContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        PortalConfigContractData IPersistableModel<PortalConfigContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PortalConfigContractData>(data, options);
+        PortalConfigContractData IPersistableModel<PortalConfigContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PortalConfigContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<PortalConfigContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PortalConfigContractData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PortalConfigContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PortalConfigContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

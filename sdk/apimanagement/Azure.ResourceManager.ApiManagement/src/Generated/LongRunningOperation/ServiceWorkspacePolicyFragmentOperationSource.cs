@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ApiManagement
 
         ServiceWorkspacePolicyFragmentResource IOperationSource<ServiceWorkspacePolicyFragmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PolicyFragmentContractData>(response.Content);
+            var data = ModelReaderWriter.Read<PolicyFragmentContractData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
             return new ServiceWorkspacePolicyFragmentResource(_client, data);
         }
 
         async ValueTask<ServiceWorkspacePolicyFragmentResource> IOperationSource<ServiceWorkspacePolicyFragmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PolicyFragmentContractData>(response.Content);
+            var data = ModelReaderWriter.Read<PolicyFragmentContractData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
             return await Task.FromResult(new ServiceWorkspacePolicyFragmentResource(_client, data)).ConfigureAwait(false);
         }
     }

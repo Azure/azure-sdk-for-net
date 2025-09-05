@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Relay
 {
+    public partial class AzureResourceManagerRelayContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerRelayContext() { }
+        public static Azure.ResourceManager.Relay.AzureResourceManagerRelayContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class RelayAuthorizationRuleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relay.RelayAuthorizationRuleData>
     {
         public RelayAuthorizationRuleData() { }

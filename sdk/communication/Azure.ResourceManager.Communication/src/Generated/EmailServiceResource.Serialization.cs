@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Communication
 {
     public partial class EmailServiceResource : IJsonModel<EmailServiceResourceData>
     {
+        private static EmailServiceResourceData s_dataDeserializationInstance;
+        private static EmailServiceResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<EmailServiceResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EmailServiceResourceData>)Data).Write(writer, options);
 
-        EmailServiceResourceData IJsonModel<EmailServiceResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EmailServiceResourceData>)Data).Create(ref reader, options);
+        EmailServiceResourceData IJsonModel<EmailServiceResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EmailServiceResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EmailServiceResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EmailServiceResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EmailServiceResourceData>(Data, options, AzureResourceManagerCommunicationContext.Default);
 
-        EmailServiceResourceData IPersistableModel<EmailServiceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EmailServiceResourceData>(data, options);
+        EmailServiceResourceData IPersistableModel<EmailServiceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EmailServiceResourceData>(data, options, AzureResourceManagerCommunicationContext.Default);
 
-        string IPersistableModel<EmailServiceResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EmailServiceResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<EmailServiceResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EmailServiceResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -94,6 +94,16 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             }
         }
 
+        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerOauthAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default)
+        {
+            ShareClientOptions options = DestinationClientBuilder.GetOptions();
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            ShareServiceClient oauthService = DestinationClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
+            return await DestinationClientBuilder.GetTestShareAsync(oauthService, containerName);
+        }
+
         protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(ShareServiceClient service = null, string containerName = null, CancellationToken cancellationToken = default)
             => await DestinationClientBuilder.GetTestShareAsync(service, containerName);
 
@@ -102,7 +112,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             string directoryPath,
             TransferPropertiesTestType propertiesTestType = default)
         {
-            ShareFileStorageResourceOptions options = default;
+            ShareFileStorageResourceOptions options = new()
+            {
+                SkipProtocolValidation = true,
+            };
             if (propertiesTestType == TransferPropertiesTestType.NewProperties)
             {
                 options = new ShareFileStorageResourceOptions
@@ -115,7 +128,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     FileAttributes = _defaultFileAttributes,
                     FileCreatedOn = _defaultFileCreatedOn,
                     FileChangedOn = _defaultFileChangedOn,
-                    FileLastWrittenOn = _defaultFileLastWrittenOn
+                    FileLastWrittenOn = _defaultFileLastWrittenOn,
+                    SkipProtocolValidation = true
                 };
             }
             else if (propertiesTestType == TransferPropertiesTestType.NoPreserve)
@@ -130,13 +144,15 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     FileAttributes = default,
                     FileCreatedOn = default,
                     FileLastWrittenOn = default,
+                    SkipProtocolValidation = true
                 };
             }
             else if (propertiesTestType == TransferPropertiesTestType.Preserve)
             {
                 options = new ShareFileStorageResourceOptions
                 {
-                    FilePermissions = true
+                    FilePermissions = true,
+                    SkipProtocolValidation = true
                 };
             }
             // Authorize with SAS when performing operations
@@ -170,19 +186,12 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             return InstrumentClientOptions(options);
         }
 
-        protected override ShareClient GetOAuthDestinationContainerClient(string containerName)
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceDisposingContainerOauthAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default)
         {
-            ShareClientOptions options = DestinationClientBuilder.GetOptions();
-            options.ShareTokenIntent = ShareTokenIntent.Backup;
-            ShareServiceClient oauthService = DestinationClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
-            return oauthService.GetShareClient(containerName);
-        }
-
-        protected override BlobContainerClient GetOAuthSourceContainerClient(string containerName)
-        {
-            BlobClientOptions options = SourceClientBuilder.GetOptions();
-            BlobServiceClient oauthService = SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
-            return oauthService.GetBlobContainerClient(containerName);
+            BlobServiceClient oauthService = SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential);
+            return await SourceClientBuilder.GetTestContainerAsync(oauthService, containerName);
         }
 
         // Blob to File always needs OAuth source container

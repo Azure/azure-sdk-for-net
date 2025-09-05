@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Kusto
 
         KustoDataConnectionResource IOperationSource<KustoDataConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KustoDataConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<KustoDataConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
             return new KustoDataConnectionResource(_client, data);
         }
 
         async ValueTask<KustoDataConnectionResource> IOperationSource<KustoDataConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KustoDataConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<KustoDataConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
             return await Task.FromResult(new KustoDataConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

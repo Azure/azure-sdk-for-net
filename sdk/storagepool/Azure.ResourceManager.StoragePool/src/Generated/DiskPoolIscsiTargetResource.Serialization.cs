@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.StoragePool
 {
     public partial class DiskPoolIscsiTargetResource : IJsonModel<DiskPoolIscsiTargetData>
     {
+        private static DiskPoolIscsiTargetData s_dataDeserializationInstance;
+        private static DiskPoolIscsiTargetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DiskPoolIscsiTargetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DiskPoolIscsiTargetData>)Data).Write(writer, options);
 
-        DiskPoolIscsiTargetData IJsonModel<DiskPoolIscsiTargetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiskPoolIscsiTargetData>)Data).Create(ref reader, options);
+        DiskPoolIscsiTargetData IJsonModel<DiskPoolIscsiTargetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiskPoolIscsiTargetData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DiskPoolIscsiTargetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DiskPoolIscsiTargetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiskPoolIscsiTargetData>(Data, options, AzureResourceManagerStoragePoolContext.Default);
 
-        DiskPoolIscsiTargetData IPersistableModel<DiskPoolIscsiTargetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskPoolIscsiTargetData>(data, options);
+        DiskPoolIscsiTargetData IPersistableModel<DiskPoolIscsiTargetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskPoolIscsiTargetData>(data, options, AzureResourceManagerStoragePoolContext.Default);
 
-        string IPersistableModel<DiskPoolIscsiTargetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiskPoolIscsiTargetData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DiskPoolIscsiTargetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiskPoolIscsiTargetData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

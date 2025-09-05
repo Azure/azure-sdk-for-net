@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// Dns name used for the service. If this is specified, then the DNS name can be used to return the IP addresses of service endpoints for application layer protocols (e.g., HTTP).
         /// When updating serviceDnsName, old name may be temporarily resolvable. However, rely on new name.
         /// When removing serviceDnsName, removed name may temporarily be resolvable. Do not rely on the name being unresolvable.
-        ///
         /// </param>
         /// <param name="hasPersistedState"> A flag indicating whether this is a persistent service which stores states on the local disk. If it is then the value of this property is true, if not it is false. </param>
         /// <param name="targetReplicaSetSize"> The target replica set size as a number. </param>

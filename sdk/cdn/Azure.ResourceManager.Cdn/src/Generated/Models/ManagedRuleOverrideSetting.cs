@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines a managed rule group override setting. </summary>
+    /// <summary>
+    /// Defines a managed rule group override setting.
+    /// Serialized Name: ManagedRuleOverride
+    /// </summary>
     public partial class ManagedRuleOverrideSetting
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleOverrideSetting"/>. </summary>
-        /// <param name="ruleId"> Identifier for the managed rule. </param>
+        /// <param name="ruleId">
+        /// Identifier for the managed rule.
+        /// Serialized Name: ManagedRuleOverride.ruleId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public ManagedRuleOverrideSetting(string ruleId)
         {
@@ -56,9 +62,18 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleOverrideSetting"/>. </summary>
-        /// <param name="ruleId"> Identifier for the managed rule. </param>
-        /// <param name="enabledState"> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </param>
-        /// <param name="action"> Describes the override action to be applied when rule matches. </param>
+        /// <param name="ruleId">
+        /// Identifier for the managed rule.
+        /// Serialized Name: ManagedRuleOverride.ruleId
+        /// </param>
+        /// <param name="enabledState">
+        /// Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified.
+        /// Serialized Name: ManagedRuleOverride.enabledState
+        /// </param>
+        /// <param name="action">
+        /// Describes the override action to be applied when rule matches.
+        /// Serialized Name: ManagedRuleOverride.action
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedRuleOverrideSetting(string ruleId, ManagedRuleSetupState? enabledState, OverrideActionType? action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,11 +88,20 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Identifier for the managed rule. </summary>
+        /// <summary>
+        /// Identifier for the managed rule.
+        /// Serialized Name: ManagedRuleOverride.ruleId
+        /// </summary>
         public string RuleId { get; set; }
-        /// <summary> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </summary>
+        /// <summary>
+        /// Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified.
+        /// Serialized Name: ManagedRuleOverride.enabledState
+        /// </summary>
         public ManagedRuleSetupState? EnabledState { get; set; }
-        /// <summary> Describes the override action to be applied when rule matches. </summary>
+        /// <summary>
+        /// Describes the override action to be applied when rule matches.
+        /// Serialized Name: ManagedRuleOverride.action
+        /// </summary>
         public OverrideActionType? Action { get; set; }
     }
 }

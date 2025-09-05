@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseServerSecurityAlertPolicyResource : IJsonModel<SynapseServerSecurityAlertPolicyData>
     {
+        private static SynapseServerSecurityAlertPolicyData s_dataDeserializationInstance;
+        private static SynapseServerSecurityAlertPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseServerSecurityAlertPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseServerSecurityAlertPolicyData>)Data).Write(writer, options);
 
-        SynapseServerSecurityAlertPolicyData IJsonModel<SynapseServerSecurityAlertPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseServerSecurityAlertPolicyData>)Data).Create(ref reader, options);
+        SynapseServerSecurityAlertPolicyData IJsonModel<SynapseServerSecurityAlertPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseServerSecurityAlertPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseServerSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseServerSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseServerSecurityAlertPolicyData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseServerSecurityAlertPolicyData IPersistableModel<SynapseServerSecurityAlertPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseServerSecurityAlertPolicyData>(data, options);
+        SynapseServerSecurityAlertPolicyData IPersistableModel<SynapseServerSecurityAlertPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseServerSecurityAlertPolicyData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseServerSecurityAlertPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseServerSecurityAlertPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseServerSecurityAlertPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseServerSecurityAlertPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

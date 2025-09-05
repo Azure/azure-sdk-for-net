@@ -7,8 +7,6 @@ Project("{4AB2B2F7-3DF1-4166-9DB7-97E807C491B1}") = "Azure.ResourceManager.Migra
 EndProject
 Project("{4AB2B2F7-3DF1-4166-9DB7-97E807C491B1}") = "Azure.ResourceManager.MigrationDiscoverySap.Tests", "tests\Azure.ResourceManager.MigrationDiscoverySap.Tests.csproj", "{B6017D85-04BB-4AE2-B908-B8454A2397B0}"
 EndProject
-Project("{4AB2B2F7-3DF1-4166-9DB7-97E807C491B1}") = "Azure.ResourceManager.MigrationDiscoverySap.Samples", "samples\Azure.ResourceManager.MigrationDiscoverySap.Samples.csproj", "{8E16EADA-F94B-4CA4-95E0-BB2D05C5FB0C}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,17 +47,5 @@ Global
 		{B6017D85-04BB-4AE2-B908-B8454A2397B0}.Release|x64.Build.0 = Release|Any CPU
 		{B6017D85-04BB-4AE2-B908-B8454A2397B0}.Release|x86.ActiveCfg = Release|Any CPU
 		{B6017D85-04BB-4AE2-B908-B8454A2397B0}.Release|x86.Build.0 = Release|Any CPU
-		{8E16EADA-F94B-4CA4-95E0-BB2D05C5FB0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E16EADA-F94B-4CA4-95E0-BB2D05C5FB0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E16EADA-F94B-4CA4-95E0-BB2D05C5FB0C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8E16EADA-F94B-4CA4-95E0-BB2D05C5FB0C}.Debug|x64.Build.0 = Debug|Any CPU
-		{8E16EADA-F94B-4CA4-95E0-BB2D05C5FB0C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8E16EADA-F94B-4CA4-95E0-BB2D05C5FB0C}.Debug|x86.Build.0 = Debug|Any CPU
-		{8E16EADA-F94B-4CA4-95E0-BB2D05C5FB0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E16EADA-F94B-4CA4-95E0-BB2D05C5FB0C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E16EADA-F94B-4CA4-95E0-BB2D05C5FB0C}.Release|x64.ActiveCfg = Release|Any CPU
-		{8E16EADA-F94B-4CA4-95E0-BB2D05C5FB0C}.Release|x64.Build.0 = Release|Any CPU
-		{8E16EADA-F94B-4CA4-95E0-BB2D05C5FB0C}.Release|x86.ActiveCfg = Release|Any CPU
-		{8E16EADA-F94B-4CA4-95E0-BB2D05C5FB0C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

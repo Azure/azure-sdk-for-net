@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.StreamAnalytics
 {
+    public partial class AzureResourceManagerStreamAnalyticsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerStreamAnalyticsContext() { }
+        public static Azure.ResourceManager.StreamAnalytics.AzureResourceManagerStreamAnalyticsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class StreamAnalyticsClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterResource>, System.Collections.IEnumerable
     {
         protected StreamAnalyticsClusterCollection() { }

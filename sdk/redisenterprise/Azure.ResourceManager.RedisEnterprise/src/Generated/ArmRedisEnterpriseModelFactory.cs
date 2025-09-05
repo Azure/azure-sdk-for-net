@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="kind"> Distinguishes the kind of cluster. Read-only. </param>
         /// <param name="sku"> The SKU to create, which affects price, performance, and features. </param>
         /// <param name="zones"> The Availability Zones where this cluster will be deployed. </param>
         /// <param name="identity"> The identity of the resource. </param>
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="redisVersion"> Version of redis the cluster supports, e.g. '6'. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified Redis Enterprise cluster. </param>
         /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseClusterData"/> instance for mocking. </returns>
-        public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RedisEnterpriseSku sku = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, RedisEnterpriseHighAvailability? highAvailability = null, RedisEnterpriseTlsVersion? minimumTlsVersion = null, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = null, string hostName = null, RedisEnterpriseProvisioningStatus? provisioningState = null, RedisEnterpriseRedundancyMode? redundancyMode = null, RedisEnterpriseClusterResourceState? resourceState = null, string redisVersion = null, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = null)
+        public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RedisEnterpriseKind? kind = null, RedisEnterpriseSku sku = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, RedisEnterpriseHighAvailability? highAvailability = null, RedisEnterpriseTlsVersion? minimumTlsVersion = null, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = null, string hostName = null, RedisEnterpriseProvisioningStatus? provisioningState = null, RedisEnterpriseRedundancyMode? redundancyMode = null, RedisEnterpriseClusterResourceState? resourceState = null, string redisVersion = null, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 systemData,
                 tags,
                 location,
+                kind,
                 sku,
                 zones?.ToList(),
                 identity,
@@ -314,7 +316,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RedisEnterpriseSku sku, IEnumerable<string> zones, ManagedServiceIdentity identity, RedisEnterpriseTlsVersion? minimumTlsVersion, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections)
         {
-            return RedisEnterpriseClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, zones: zones, identity: identity, highAvailability: default, minimumTlsVersion: minimumTlsVersion, customerManagedKeyEncryption: customerManagedKeyEncryption, hostName: hostName, provisioningState: provisioningState, redundancyMode: default, resourceState: resourceState, redisVersion: redisVersion, privateEndpointConnections: privateEndpointConnections);
+            return RedisEnterpriseClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, kind: default, sku: sku, zones: zones, identity: identity, highAvailability: default, minimumTlsVersion: minimumTlsVersion, customerManagedKeyEncryption: customerManagedKeyEncryption, hostName: hostName, provisioningState: provisioningState, redundancyMode: default, resourceState: resourceState, redisVersion: redisVersion, privateEndpointConnections: privateEndpointConnections);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterPatch" />. </summary>

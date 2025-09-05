@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Network.Models
 
         private const string BasicValue = "Basic";
         private const string StandardValue = "Standard";
+        private const string StandardV2Value = "StandardV2";
 
         /// <summary> Basic. </summary>
         public static PublicIPAddressSkuName Basic { get; } = new PublicIPAddressSkuName(BasicValue);
         /// <summary> Standard. </summary>
         public static PublicIPAddressSkuName Standard { get; } = new PublicIPAddressSkuName(StandardValue);
+        /// <summary> StandardV2. </summary>
+        public static PublicIPAddressSkuName StandardV2 { get; } = new PublicIPAddressSkuName(StandardV2Value);
         /// <summary> Determines if two <see cref="PublicIPAddressSkuName"/> values are the same. </summary>
         public static bool operator ==(PublicIPAddressSkuName left, PublicIPAddressSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PublicIPAddressSkuName"/> values are not the same. </summary>

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     public partial class InteractionResourceFormatResource : IJsonModel<InteractionResourceFormatData>
     {
+        private static InteractionResourceFormatData s_dataDeserializationInstance;
+        private static InteractionResourceFormatData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<InteractionResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<InteractionResourceFormatData>)Data).Write(writer, options);
 
-        InteractionResourceFormatData IJsonModel<InteractionResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InteractionResourceFormatData>)Data).Create(ref reader, options);
+        InteractionResourceFormatData IJsonModel<InteractionResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InteractionResourceFormatData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<InteractionResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<InteractionResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<InteractionResourceFormatData>(Data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
-        InteractionResourceFormatData IPersistableModel<InteractionResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InteractionResourceFormatData>(data, options);
+        InteractionResourceFormatData IPersistableModel<InteractionResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InteractionResourceFormatData>(data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
-        string IPersistableModel<InteractionResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InteractionResourceFormatData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<InteractionResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InteractionResourceFormatData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

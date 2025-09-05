@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         FarmBeatResource IOperationSource<FarmBeatResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FarmBeatData>(response.Content);
+            var data = ModelReaderWriter.Read<FarmBeatData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAgFoodPlatformContext.Default);
             return new FarmBeatResource(_client, data);
         }
 
         async ValueTask<FarmBeatResource> IOperationSource<FarmBeatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FarmBeatData>(response.Content);
+            var data = ModelReaderWriter.Read<FarmBeatData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAgFoodPlatformContext.Default);
             return await Task.FromResult(new FarmBeatResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -55,15 +55,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceFamilyCapability"/>. </summary>
         /// <param name="name"> Family name. </param>
         /// <param name="sku"> SKU name. </param>
+        /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the family. </param>
         /// <param name="supportedLicenseTypes"> List of supported license types. </param>
         /// <param name="supportedVcoresValues"> List of supported virtual cores values. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceFamilyCapability(string name, string sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, IReadOnlyList<ManagedInstanceVcoresCapability> supportedVcoresValues, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedInstanceFamilyCapability(string name, string sku, bool? isZoneRedundant, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, IReadOnlyList<ManagedInstanceVcoresCapability> supportedVcoresValues, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Sku = sku;
+            IsZoneRedundant = isZoneRedundant;
             SupportedLicenseTypes = supportedLicenseTypes;
             SupportedVcoresValues = supportedVcoresValues;
             Status = status;
@@ -77,6 +79,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> SKU name. </summary>
         [WirePath("sku")]
         public string Sku { get; }
+        /// <summary> Whether or not zone redundancy is supported for the family. </summary>
+        [WirePath("zoneRedundant")]
+        public bool? IsZoneRedundant { get; }
         /// <summary> List of supported license types. </summary>
         [WirePath("supportedLicenseTypes")]
         public IReadOnlyList<LicenseTypeCapability> SupportedLicenseTypes { get; }

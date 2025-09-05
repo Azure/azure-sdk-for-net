@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DigitalTwins
 {
     public partial class DigitalTwinsPrivateLinkResource : IJsonModel<DigitalTwinsPrivateLinkResourceData>
     {
+        private static DigitalTwinsPrivateLinkResourceData s_dataDeserializationInstance;
+        private static DigitalTwinsPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DigitalTwinsPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DigitalTwinsPrivateLinkResourceData>)Data).Write(writer, options);
 
-        DigitalTwinsPrivateLinkResourceData IJsonModel<DigitalTwinsPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DigitalTwinsPrivateLinkResourceData>)Data).Create(ref reader, options);
+        DigitalTwinsPrivateLinkResourceData IJsonModel<DigitalTwinsPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DigitalTwinsPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DigitalTwinsPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DigitalTwinsPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DigitalTwinsPrivateLinkResourceData>(Data, options, AzureResourceManagerDigitalTwinsContext.Default);
 
-        DigitalTwinsPrivateLinkResourceData IPersistableModel<DigitalTwinsPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DigitalTwinsPrivateLinkResourceData>(data, options);
+        DigitalTwinsPrivateLinkResourceData IPersistableModel<DigitalTwinsPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DigitalTwinsPrivateLinkResourceData>(data, options, AzureResourceManagerDigitalTwinsContext.Default);
 
-        string IPersistableModel<DigitalTwinsPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DigitalTwinsPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DigitalTwinsPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DigitalTwinsPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

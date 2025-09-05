@@ -26,9 +26,10 @@ describe("Test GetInputType for scalar", () => {
     const context = await createCSharpSdkContext(createEmitterContext(program));
     const model = createModel(context);
 
-    const inputParamArray = model.clients[0].operations[0].parameters.filter(
-      (p) => p.name === "location"
-    );
+    const inputParamArray =
+      model.clients[0].methods[0].operation.parameters.filter(
+        (p) => p.name === "location"
+      );
     strictEqual(1, inputParamArray.length);
     const type = inputParamArray[0].type;
     strictEqual(type.kind, "string");

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     public partial class ViewResourceFormatResource : IJsonModel<ViewResourceFormatData>
     {
+        private static ViewResourceFormatData s_dataDeserializationInstance;
+        private static ViewResourceFormatData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ViewResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ViewResourceFormatData>)Data).Write(writer, options);
 
-        ViewResourceFormatData IJsonModel<ViewResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ViewResourceFormatData>)Data).Create(ref reader, options);
+        ViewResourceFormatData IJsonModel<ViewResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ViewResourceFormatData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ViewResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ViewResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ViewResourceFormatData>(Data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
-        ViewResourceFormatData IPersistableModel<ViewResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ViewResourceFormatData>(data, options);
+        ViewResourceFormatData IPersistableModel<ViewResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ViewResourceFormatData>(data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
-        string IPersistableModel<ViewResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ViewResourceFormatData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ViewResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ViewResourceFormatData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

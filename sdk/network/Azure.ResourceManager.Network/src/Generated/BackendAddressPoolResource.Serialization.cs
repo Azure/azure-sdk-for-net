@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class BackendAddressPoolResource : IJsonModel<BackendAddressPoolData>
     {
+        private static BackendAddressPoolData s_dataDeserializationInstance;
+        private static BackendAddressPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BackendAddressPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BackendAddressPoolData>)Data).Write(writer, options);
 
-        BackendAddressPoolData IJsonModel<BackendAddressPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackendAddressPoolData>)Data).Create(ref reader, options);
+        BackendAddressPoolData IJsonModel<BackendAddressPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackendAddressPoolData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BackendAddressPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BackendAddressPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackendAddressPoolData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        BackendAddressPoolData IPersistableModel<BackendAddressPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackendAddressPoolData>(data, options);
+        BackendAddressPoolData IPersistableModel<BackendAddressPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackendAddressPoolData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<BackendAddressPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackendAddressPoolData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BackendAddressPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackendAddressPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

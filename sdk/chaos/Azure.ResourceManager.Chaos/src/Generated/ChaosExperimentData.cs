@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the experiment resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="provisioningState"> Most recent provisioning state for the given experiment resource. </param>
         /// <param name="steps"> List of steps. </param>
         /// <param name="selectors">
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Chaos
         {
         }
 
-        /// <summary> The identity of the experiment resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Most recent provisioning state for the given experiment resource. </summary>
         public ChaosProvisioningState? ProvisioningState { get; }

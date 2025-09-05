@@ -32,7 +32,10 @@ namespace Azure.ResourceManager
 
         private T CreateResult(Response response)
         {
+            // This call will never be invoked with a collection of models, so we can safely disable the warning
+#pragma warning disable AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext
             object data = ModelReaderWriter.Read(response.Content, typeof(T));
+#pragma warning restore AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext
             return _isResource
                 ? (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, data }, null)
                 : (T)data;

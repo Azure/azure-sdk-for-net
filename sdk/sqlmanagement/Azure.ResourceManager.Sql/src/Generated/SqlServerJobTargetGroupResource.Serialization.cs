@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerJobTargetGroupResource : IJsonModel<SqlServerJobTargetGroupData>
     {
+        private static SqlServerJobTargetGroupData s_dataDeserializationInstance;
+        private static SqlServerJobTargetGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlServerJobTargetGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobTargetGroupData>)Data).Write(writer, options);
 
-        SqlServerJobTargetGroupData IJsonModel<SqlServerJobTargetGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobTargetGroupData>)Data).Create(ref reader, options);
+        SqlServerJobTargetGroupData IJsonModel<SqlServerJobTargetGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobTargetGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerJobTargetGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerJobTargetGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerJobTargetGroupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerJobTargetGroupData IPersistableModel<SqlServerJobTargetGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobTargetGroupData>(data, options);
+        SqlServerJobTargetGroupData IPersistableModel<SqlServerJobTargetGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobTargetGroupData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerJobTargetGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobTargetGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlServerJobTargetGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobTargetGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AgFoodPlatform
 {
     public partial class FarmBeatResource : IJsonModel<FarmBeatData>
     {
+        private static FarmBeatData s_dataDeserializationInstance;
+        private static FarmBeatData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FarmBeatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FarmBeatData>)Data).Write(writer, options);
 
-        FarmBeatData IJsonModel<FarmBeatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FarmBeatData>)Data).Create(ref reader, options);
+        FarmBeatData IJsonModel<FarmBeatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FarmBeatData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FarmBeatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FarmBeatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FarmBeatData>(Data, options, AzureResourceManagerAgFoodPlatformContext.Default);
 
-        FarmBeatData IPersistableModel<FarmBeatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FarmBeatData>(data, options);
+        FarmBeatData IPersistableModel<FarmBeatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FarmBeatData>(data, options, AzureResourceManagerAgFoodPlatformContext.Default);
 
-        string IPersistableModel<FarmBeatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FarmBeatData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FarmBeatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FarmBeatData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

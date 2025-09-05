@@ -21,7 +21,7 @@ public abstract partial class ModelReaderWriterTypeBuilder
 
         public object Builder => _instance ??= _builder.CreateInstance();
 
-        public object ToCollection() => _builder.ToCollection(AssertType(Builder, _builder.BuilderType));
+        public object ToCollection() => _builder.ConvertCollectionBuilder(AssertType(Builder, _builder.BuilderType));
 
         public void AddItem(object? item, string? key)
         {
@@ -32,7 +32,7 @@ public abstract partial class ModelReaderWriterTypeBuilder
 
             if (key is not null)
             {
-                _builder.AddKeyValuePair(AssertType(Builder, _builder.BuilderType), key, item);
+                _builder.AddItemWithKey(AssertType(Builder, _builder.BuilderType), key, item);
             }
             else
             {

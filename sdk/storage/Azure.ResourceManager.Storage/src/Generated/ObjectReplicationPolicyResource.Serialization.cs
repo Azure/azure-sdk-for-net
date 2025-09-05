@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class ObjectReplicationPolicyResource : IJsonModel<ObjectReplicationPolicyData>
     {
+        private static ObjectReplicationPolicyData s_dataDeserializationInstance;
+        private static ObjectReplicationPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ObjectReplicationPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ObjectReplicationPolicyData>)Data).Write(writer, options);
 
-        ObjectReplicationPolicyData IJsonModel<ObjectReplicationPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ObjectReplicationPolicyData>)Data).Create(ref reader, options);
+        ObjectReplicationPolicyData IJsonModel<ObjectReplicationPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ObjectReplicationPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ObjectReplicationPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ObjectReplicationPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ObjectReplicationPolicyData>(Data, options, AzureResourceManagerStorageContext.Default);
 
-        ObjectReplicationPolicyData IPersistableModel<ObjectReplicationPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ObjectReplicationPolicyData>(data, options);
+        ObjectReplicationPolicyData IPersistableModel<ObjectReplicationPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ObjectReplicationPolicyData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<ObjectReplicationPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ObjectReplicationPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ObjectReplicationPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ObjectReplicationPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VirtualApplianceSiteResource : IJsonModel<VirtualApplianceSiteData>
     {
+        private static VirtualApplianceSiteData s_dataDeserializationInstance;
+        private static VirtualApplianceSiteData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VirtualApplianceSiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualApplianceSiteData>)Data).Write(writer, options);
 
-        VirtualApplianceSiteData IJsonModel<VirtualApplianceSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualApplianceSiteData>)Data).Create(ref reader, options);
+        VirtualApplianceSiteData IJsonModel<VirtualApplianceSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualApplianceSiteData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualApplianceSiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VirtualApplianceSiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualApplianceSiteData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        VirtualApplianceSiteData IPersistableModel<VirtualApplianceSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualApplianceSiteData>(data, options);
+        VirtualApplianceSiteData IPersistableModel<VirtualApplianceSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualApplianceSiteData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<VirtualApplianceSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualApplianceSiteData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VirtualApplianceSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualApplianceSiteData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

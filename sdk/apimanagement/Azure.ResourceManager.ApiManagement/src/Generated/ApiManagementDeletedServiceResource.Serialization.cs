@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementDeletedServiceResource : IJsonModel<ApiManagementDeletedServiceData>
     {
+        private static ApiManagementDeletedServiceData s_dataDeserializationInstance;
+        private static ApiManagementDeletedServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiManagementDeletedServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementDeletedServiceData>)Data).Write(writer, options);
 
-        ApiManagementDeletedServiceData IJsonModel<ApiManagementDeletedServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementDeletedServiceData>)Data).Create(ref reader, options);
+        ApiManagementDeletedServiceData IJsonModel<ApiManagementDeletedServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementDeletedServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementDeletedServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementDeletedServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementDeletedServiceData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiManagementDeletedServiceData IPersistableModel<ApiManagementDeletedServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementDeletedServiceData>(data, options);
+        ApiManagementDeletedServiceData IPersistableModel<ApiManagementDeletedServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementDeletedServiceData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementDeletedServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementDeletedServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementDeletedServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementDeletedServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

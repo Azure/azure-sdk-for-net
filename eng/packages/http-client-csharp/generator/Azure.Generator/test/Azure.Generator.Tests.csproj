@@ -35,5 +35,5 @@
   <ItemGroup>
     <Compile Remove="common\**" />
   </ItemGroup>
-  
+
 </Project>

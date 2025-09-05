@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class GeoBackupPolicyResource : IJsonModel<GeoBackupPolicyData>
     {
+        private static GeoBackupPolicyData s_dataDeserializationInstance;
+        private static GeoBackupPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GeoBackupPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GeoBackupPolicyData>)Data).Write(writer, options);
 
-        GeoBackupPolicyData IJsonModel<GeoBackupPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GeoBackupPolicyData>)Data).Create(ref reader, options);
+        GeoBackupPolicyData IJsonModel<GeoBackupPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GeoBackupPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GeoBackupPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GeoBackupPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GeoBackupPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        GeoBackupPolicyData IPersistableModel<GeoBackupPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GeoBackupPolicyData>(data, options);
+        GeoBackupPolicyData IPersistableModel<GeoBackupPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GeoBackupPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<GeoBackupPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GeoBackupPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GeoBackupPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GeoBackupPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

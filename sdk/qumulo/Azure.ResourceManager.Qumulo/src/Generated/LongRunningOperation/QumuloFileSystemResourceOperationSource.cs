@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Qumulo
 
         QumuloFileSystemResource IOperationSource<QumuloFileSystemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<QumuloFileSystemResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<QumuloFileSystemResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQumuloContext.Default);
             return new QumuloFileSystemResource(_client, data);
         }
 
         async ValueTask<QumuloFileSystemResource> IOperationSource<QumuloFileSystemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<QumuloFileSystemResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<QumuloFileSystemResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQumuloContext.Default);
             return await Task.FromResult(new QumuloFileSystemResource(_client, data)).ConfigureAwait(false);
         }
     }

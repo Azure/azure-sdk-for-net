@@ -15,7 +15,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 use-model-reader-writer: true
 client-side-validation: false

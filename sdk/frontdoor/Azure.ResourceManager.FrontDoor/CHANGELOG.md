@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2025-05-10)
+
+### Features Added
+
+- Upgraded version to 2025-03-01
+- Added support for captcha
 
 ## 1.3.1 (2025-03-11)
 

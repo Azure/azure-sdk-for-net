@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementGatewayCertificateAuthorityResource : IJsonModel<ApiManagementGatewayCertificateAuthorityData>
     {
+        private static ApiManagementGatewayCertificateAuthorityData s_dataDeserializationInstance;
+        private static ApiManagementGatewayCertificateAuthorityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiManagementGatewayCertificateAuthorityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGatewayCertificateAuthorityData>)Data).Write(writer, options);
 
-        ApiManagementGatewayCertificateAuthorityData IJsonModel<ApiManagementGatewayCertificateAuthorityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGatewayCertificateAuthorityData>)Data).Create(ref reader, options);
+        ApiManagementGatewayCertificateAuthorityData IJsonModel<ApiManagementGatewayCertificateAuthorityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGatewayCertificateAuthorityData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementGatewayCertificateAuthorityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementGatewayCertificateAuthorityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementGatewayCertificateAuthorityData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiManagementGatewayCertificateAuthorityData IPersistableModel<ApiManagementGatewayCertificateAuthorityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementGatewayCertificateAuthorityData>(data, options);
+        ApiManagementGatewayCertificateAuthorityData IPersistableModel<ApiManagementGatewayCertificateAuthorityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementGatewayCertificateAuthorityData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementGatewayCertificateAuthorityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementGatewayCertificateAuthorityData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementGatewayCertificateAuthorityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementGatewayCertificateAuthorityData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

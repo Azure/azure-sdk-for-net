@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 {
     public partial class ConnectedClusterBgpPeerResource : IJsonModel<ConnectedClusterBgpPeerData>
     {
+        private static ConnectedClusterBgpPeerData s_dataDeserializationInstance;
+        private static ConnectedClusterBgpPeerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ConnectedClusterBgpPeerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedClusterBgpPeerData>)Data).Write(writer, options);
 
-        ConnectedClusterBgpPeerData IJsonModel<ConnectedClusterBgpPeerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedClusterBgpPeerData>)Data).Create(ref reader, options);
+        ConnectedClusterBgpPeerData IJsonModel<ConnectedClusterBgpPeerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedClusterBgpPeerData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ConnectedClusterBgpPeerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ConnectedClusterBgpPeerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConnectedClusterBgpPeerData>(Data, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
 
-        ConnectedClusterBgpPeerData IPersistableModel<ConnectedClusterBgpPeerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectedClusterBgpPeerData>(data, options);
+        ConnectedClusterBgpPeerData IPersistableModel<ConnectedClusterBgpPeerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectedClusterBgpPeerData>(data, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
 
-        string IPersistableModel<ConnectedClusterBgpPeerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectedClusterBgpPeerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ConnectedClusterBgpPeerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectedClusterBgpPeerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

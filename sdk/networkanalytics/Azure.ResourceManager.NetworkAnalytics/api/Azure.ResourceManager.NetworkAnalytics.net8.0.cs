@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.NetworkAnalytics
 {
+    public partial class AzureResourceManagerNetworkAnalyticsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerNetworkAnalyticsContext() { }
+        public static Azure.ResourceManager.NetworkAnalytics.AzureResourceManagerNetworkAnalyticsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DataProductCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkAnalytics.DataProductResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkAnalytics.DataProductResource>, System.Collections.IEnumerable
     {
         protected DataProductCollection() { }

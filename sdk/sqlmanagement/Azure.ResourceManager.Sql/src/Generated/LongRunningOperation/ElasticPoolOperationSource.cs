@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         ElasticPoolResource IOperationSource<ElasticPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<ElasticPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new ElasticPoolResource(_client, data);
         }
 
         async ValueTask<ElasticPoolResource> IOperationSource<ElasticPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<ElasticPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new ElasticPoolResource(_client, data)).ConfigureAwait(false);
         }
     }

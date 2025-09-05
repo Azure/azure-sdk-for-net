@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseDataWarehouseUserActivityResource : IJsonModel<SynapseDataWarehouseUserActivityData>
     {
+        private static SynapseDataWarehouseUserActivityData s_dataDeserializationInstance;
+        private static SynapseDataWarehouseUserActivityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseDataWarehouseUserActivityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseDataWarehouseUserActivityData>)Data).Write(writer, options);
 
-        SynapseDataWarehouseUserActivityData IJsonModel<SynapseDataWarehouseUserActivityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseDataWarehouseUserActivityData>)Data).Create(ref reader, options);
+        SynapseDataWarehouseUserActivityData IJsonModel<SynapseDataWarehouseUserActivityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseDataWarehouseUserActivityData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseDataWarehouseUserActivityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseDataWarehouseUserActivityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseDataWarehouseUserActivityData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseDataWarehouseUserActivityData IPersistableModel<SynapseDataWarehouseUserActivityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseDataWarehouseUserActivityData>(data, options);
+        SynapseDataWarehouseUserActivityData IPersistableModel<SynapseDataWarehouseUserActivityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseDataWarehouseUserActivityData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseDataWarehouseUserActivityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseDataWarehouseUserActivityData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseDataWarehouseUserActivityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseDataWarehouseUserActivityData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

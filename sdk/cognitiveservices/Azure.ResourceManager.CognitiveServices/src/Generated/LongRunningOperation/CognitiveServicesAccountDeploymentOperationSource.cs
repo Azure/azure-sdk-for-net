@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CognitiveServices
 
         CognitiveServicesAccountDeploymentResource IOperationSource<CognitiveServicesAccountDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CognitiveServicesAccountDeploymentData>(response.Content);
+            var data = ModelReaderWriter.Read<CognitiveServicesAccountDeploymentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCognitiveServicesContext.Default);
             return new CognitiveServicesAccountDeploymentResource(_client, data);
         }
 
         async ValueTask<CognitiveServicesAccountDeploymentResource> IOperationSource<CognitiveServicesAccountDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CognitiveServicesAccountDeploymentData>(response.Content);
+            var data = ModelReaderWriter.Read<CognitiveServicesAccountDeploymentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCognitiveServicesContext.Default);
             return await Task.FromResult(new CognitiveServicesAccountDeploymentResource(_client, data)).ConfigureAwait(false);
         }
     }

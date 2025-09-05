@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.EventGrid
 
         DomainTopicEventSubscriptionResource IOperationSource<DomainTopicEventSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EventGridSubscriptionData>(response.Content);
+            var data = ModelReaderWriter.Read<EventGridSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
             return new DomainTopicEventSubscriptionResource(_client, data);
         }
 
         async ValueTask<DomainTopicEventSubscriptionResource> IOperationSource<DomainTopicEventSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EventGridSubscriptionData>(response.Content);
+            var data = ModelReaderWriter.Read<EventGridSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
             return await Task.FromResult(new DomainTopicEventSubscriptionResource(_client, data)).ConfigureAwait(false);
         }
     }

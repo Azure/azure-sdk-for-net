@@ -1,5 +1,4 @@
 {
-  "output-folder": ".",
   "package-name": "Authentication.OAuth2",
   "license": {
     "name": "MIT License",

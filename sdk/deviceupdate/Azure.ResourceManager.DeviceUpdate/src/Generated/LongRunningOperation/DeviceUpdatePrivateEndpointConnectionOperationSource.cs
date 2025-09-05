@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         DeviceUpdatePrivateEndpointConnectionResource IOperationSource<DeviceUpdatePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeviceUpdatePrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<DeviceUpdatePrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceUpdateContext.Default);
             return new DeviceUpdatePrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<DeviceUpdatePrivateEndpointConnectionResource> IOperationSource<DeviceUpdatePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeviceUpdatePrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<DeviceUpdatePrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceUpdateContext.Default);
             return await Task.FromResult(new DeviceUpdatePrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

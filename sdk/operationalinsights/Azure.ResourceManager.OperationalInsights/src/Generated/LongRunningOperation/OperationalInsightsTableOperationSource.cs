@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.OperationalInsights
 
         OperationalInsightsTableResource IOperationSource<OperationalInsightsTableResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OperationalInsightsTableData>(response.Content);
+            var data = ModelReaderWriter.Read<OperationalInsightsTableData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOperationalInsightsContext.Default);
             return new OperationalInsightsTableResource(_client, data);
         }
 
         async ValueTask<OperationalInsightsTableResource> IOperationSource<OperationalInsightsTableResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OperationalInsightsTableData>(response.Content);
+            var data = ModelReaderWriter.Read<OperationalInsightsTableData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOperationalInsightsContext.Default);
             return await Task.FromResult(new OperationalInsightsTableResource(_client, data)).ConfigureAwait(false);
         }
     }

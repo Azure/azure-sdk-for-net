@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.TrafficManager
 {
     public partial class TrafficManagerEndpointResource : IJsonModel<TrafficManagerEndpointData>
     {
+        private static TrafficManagerEndpointData s_dataDeserializationInstance;
+        private static TrafficManagerEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<TrafficManagerEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerEndpointData>)Data).Write(writer, options);
 
-        TrafficManagerEndpointData IJsonModel<TrafficManagerEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerEndpointData>)Data).Create(ref reader, options);
+        TrafficManagerEndpointData IJsonModel<TrafficManagerEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerEndpointData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TrafficManagerEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<TrafficManagerEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrafficManagerEndpointData>(Data, options, AzureResourceManagerTrafficManagerContext.Default);
 
-        TrafficManagerEndpointData IPersistableModel<TrafficManagerEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficManagerEndpointData>(data, options);
+        TrafficManagerEndpointData IPersistableModel<TrafficManagerEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficManagerEndpointData>(data, options, AzureResourceManagerTrafficManagerContext.Default);
 
-        string IPersistableModel<TrafficManagerEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficManagerEndpointData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<TrafficManagerEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficManagerEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

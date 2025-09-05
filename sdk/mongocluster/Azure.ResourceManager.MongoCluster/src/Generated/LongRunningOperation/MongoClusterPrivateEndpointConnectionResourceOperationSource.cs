@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MongoCluster
 
         MongoClusterPrivateEndpointConnectionResource IOperationSource<MongoClusterPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MongoClusterPrivateEndpointConnectionResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<MongoClusterPrivateEndpointConnectionResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMongoClusterContext.Default);
             return new MongoClusterPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<MongoClusterPrivateEndpointConnectionResource> IOperationSource<MongoClusterPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MongoClusterPrivateEndpointConnectionResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<MongoClusterPrivateEndpointConnectionResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMongoClusterContext.Default);
             return await Task.FromResult(new MongoClusterPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

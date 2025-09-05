@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Communication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCommunicationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LinkNotificationHubContent)} does not support writing '{options.Format}' format.");
             }

@@ -108,6 +108,52 @@ namespace Azure.Communication.Sms.Tests
         }
 
         [Test]
+        public void SmsRestClient_SendWithNullMessagingConnectPartner_ShouldThrow()
+        {
+            var client = CreateSmsRestClient();
+
+            var from = "+123456789";
+            var message = "Message";
+            var recipients = Enumerable.Empty<SmsRecipient>();
+
+            try
+            {
+                client.Send(from, recipients, message, new SmsSendOptions(true)
+                {
+                    MessagingConnect = new MessagingConnectOptions("apiKey", null)
+                });
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual(nameof(MessagingConnectOptions.Partner).ToLower(), ex.ParamName?.ToLower());
+                return;
+            }
+        }
+
+        [Test]
+        public void SmsRestClient_SendWithNullMessagingConnectApiKey_ShouldThrow()
+        {
+            var client = CreateSmsRestClient();
+
+            var from = "+123456789";
+            var message = "Message";
+            var recipients = Enumerable.Empty<SmsRecipient>();
+
+            try
+            {
+                client.Send(from, recipients, message, new SmsSendOptions(true)
+                {
+                    MessagingConnect = new MessagingConnectOptions(null, "partner")
+                });
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual(nameof(MessagingConnectOptions.ApiKey).ToLower(), ex.ParamName?.ToLower());
+                return;
+            }
+        }
+
+        [Test]
         public async Task SmsRestClient_SendAsyncWithNullSender_ShouldThrow()
         {
             var client = CreateSmsRestClient();
@@ -160,6 +206,52 @@ namespace Azure.Communication.Sms.Tests
             catch (ArgumentNullException ex)
             {
                 Assert.AreEqual("message", ex.ParamName);
+                return;
+            }
+        }
+
+        [Test]
+        public async Task SmsRestClient_SendAsyncWithNullMessagingConnectApiKey_ShouldThrow()
+        {
+            var client = CreateSmsRestClient();
+
+            var from = "+123456789";
+            var message = "Message";
+            var recipients = Enumerable.Empty<SmsRecipient>();
+
+            try
+            {
+                await client.SendAsync(from, recipients, message, new SmsSendOptions(true)
+                {
+                    MessagingConnect = new MessagingConnectOptions(null, "partner")
+                });
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual(nameof(MessagingConnectOptions.ApiKey).ToLower(), ex.ParamName?.ToLower());
+                return;
+            }
+        }
+
+        [Test]
+        public async Task SmsRestClient_SendAsyncWithNullMessagingConnectPartner_ShouldThrow()
+        {
+            var client = CreateSmsRestClient();
+
+            var from = "+123456789";
+            var message = "Message";
+            var recipients = Enumerable.Empty<SmsRecipient>();
+
+            try
+            {
+                await client.SendAsync(from, recipients, message, new SmsSendOptions(true)
+                {
+                    MessagingConnect = new MessagingConnectOptions("apiKey", null)
+                });
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual(nameof(MessagingConnectOptions.Partner).ToLower(), ex.ParamName?.ToLower());
                 return;
             }
         }

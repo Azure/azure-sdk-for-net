@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NetApp
 
         NetAppSubvolumeInfoResource IOperationSource<NetAppSubvolumeInfoResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetAppSubvolumeInfoData>(response.Content);
+            var data = ModelReaderWriter.Read<NetAppSubvolumeInfoData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return new NetAppSubvolumeInfoResource(_client, data);
         }
 
         async ValueTask<NetAppSubvolumeInfoResource> IOperationSource<NetAppSubvolumeInfoResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetAppSubvolumeInfoData>(response.Content);
+            var data = ModelReaderWriter.Read<NetAppSubvolumeInfoData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return await Task.FromResult(new NetAppSubvolumeInfoResource(_client, data)).ConfigureAwait(false);
         }
     }

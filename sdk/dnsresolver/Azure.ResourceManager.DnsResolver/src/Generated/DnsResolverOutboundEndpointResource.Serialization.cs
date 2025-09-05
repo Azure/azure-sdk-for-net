@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DnsResolver
 {
     public partial class DnsResolverOutboundEndpointResource : IJsonModel<DnsResolverOutboundEndpointData>
     {
+        private static DnsResolverOutboundEndpointData s_dataDeserializationInstance;
+        private static DnsResolverOutboundEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DnsResolverOutboundEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverOutboundEndpointData>)Data).Write(writer, options);
 
-        DnsResolverOutboundEndpointData IJsonModel<DnsResolverOutboundEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverOutboundEndpointData>)Data).Create(ref reader, options);
+        DnsResolverOutboundEndpointData IJsonModel<DnsResolverOutboundEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverOutboundEndpointData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DnsResolverOutboundEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DnsResolverOutboundEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnsResolverOutboundEndpointData>(Data, options, AzureResourceManagerDnsResolverContext.Default);
 
-        DnsResolverOutboundEndpointData IPersistableModel<DnsResolverOutboundEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsResolverOutboundEndpointData>(data, options);
+        DnsResolverOutboundEndpointData IPersistableModel<DnsResolverOutboundEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsResolverOutboundEndpointData>(data, options, AzureResourceManagerDnsResolverContext.Default);
 
-        string IPersistableModel<DnsResolverOutboundEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsResolverOutboundEndpointData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DnsResolverOutboundEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsResolverOutboundEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

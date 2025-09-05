@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ServiceBus
 {
     public partial class ServiceBusPrivateEndpointConnectionResource : IJsonModel<ServiceBusPrivateEndpointConnectionData>
     {
+        private static ServiceBusPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static ServiceBusPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ServiceBusPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        ServiceBusPrivateEndpointConnectionData IJsonModel<ServiceBusPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        ServiceBusPrivateEndpointConnectionData IJsonModel<ServiceBusPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceBusPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ServiceBusPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceBusPrivateEndpointConnectionData>(Data, options, AzureResourceManagerServiceBusContext.Default);
 
-        ServiceBusPrivateEndpointConnectionData IPersistableModel<ServiceBusPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusPrivateEndpointConnectionData>(data, options);
+        ServiceBusPrivateEndpointConnectionData IPersistableModel<ServiceBusPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusPrivateEndpointConnectionData>(data, options, AzureResourceManagerServiceBusContext.Default);
 
-        string IPersistableModel<ServiceBusPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceBusPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ServiceBusPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceBusPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

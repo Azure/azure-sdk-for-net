@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class MobileNetworkRoutingInfoResource : IJsonModel<MobileNetworkRoutingInfoData>
     {
+        private static MobileNetworkRoutingInfoData s_dataDeserializationInstance;
+        private static MobileNetworkRoutingInfoData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MobileNetworkRoutingInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MobileNetworkRoutingInfoData>)Data).Write(writer, options);
 
-        MobileNetworkRoutingInfoData IJsonModel<MobileNetworkRoutingInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MobileNetworkRoutingInfoData>)Data).Create(ref reader, options);
+        MobileNetworkRoutingInfoData IJsonModel<MobileNetworkRoutingInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MobileNetworkRoutingInfoData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MobileNetworkRoutingInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MobileNetworkRoutingInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MobileNetworkRoutingInfoData>(Data, options, AzureResourceManagerMobileNetworkContext.Default);
 
-        MobileNetworkRoutingInfoData IPersistableModel<MobileNetworkRoutingInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MobileNetworkRoutingInfoData>(data, options);
+        MobileNetworkRoutingInfoData IPersistableModel<MobileNetworkRoutingInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MobileNetworkRoutingInfoData>(data, options, AzureResourceManagerMobileNetworkContext.Default);
 
-        string IPersistableModel<MobileNetworkRoutingInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MobileNetworkRoutingInfoData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MobileNetworkRoutingInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MobileNetworkRoutingInfoData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The ContinentsResponseContinentsItem. </summary>
+    /// <summary>
+    /// The ContinentsResponseContinentsItem.
+    /// Serialized Name: ContinentsResponseContinentsItem
+    /// </summary>
     public partial class ContinentsResponseContinentsItem
     {
         /// <summary>
@@ -51,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContinentsResponseContinentsItem"/>. </summary>
-        /// <param name="id"></param>
+        /// <param name="id"> Serialized Name: ContinentsResponseContinentsItem.id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContinentsResponseContinentsItem(string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the id. </summary>
+        /// <summary> Serialized Name: ContinentsResponseContinentsItem.id. </summary>
         public string Id { get; }
     }
 }

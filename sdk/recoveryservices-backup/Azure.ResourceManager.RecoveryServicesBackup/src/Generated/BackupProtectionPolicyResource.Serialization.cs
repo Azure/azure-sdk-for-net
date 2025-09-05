@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     public partial class BackupProtectionPolicyResource : IJsonModel<BackupProtectionPolicyData>
     {
+        private static BackupProtectionPolicyData s_dataDeserializationInstance;
+        private static BackupProtectionPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BackupProtectionPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BackupProtectionPolicyData>)Data).Write(writer, options);
 
-        BackupProtectionPolicyData IJsonModel<BackupProtectionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupProtectionPolicyData>)Data).Create(ref reader, options);
+        BackupProtectionPolicyData IJsonModel<BackupProtectionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupProtectionPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BackupProtectionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BackupProtectionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackupProtectionPolicyData>(Data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        BackupProtectionPolicyData IPersistableModel<BackupProtectionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupProtectionPolicyData>(data, options);
+        BackupProtectionPolicyData IPersistableModel<BackupProtectionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupProtectionPolicyData>(data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        string IPersistableModel<BackupProtectionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupProtectionPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BackupProtectionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupProtectionPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

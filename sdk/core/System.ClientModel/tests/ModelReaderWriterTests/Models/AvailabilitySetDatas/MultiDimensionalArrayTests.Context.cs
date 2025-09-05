@@ -47,7 +47,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override void AddItem(object collection, object item)
                     => ((List<List<AvailabilitySetData>>)collection).Add((List<AvailabilitySetData>)item);
 
-                protected override object ToCollection(object builder)
+                protected override object ConvertCollectionBuilder(object builder)
                 {
                     var instance = (List<List<AvailabilitySetData>>)builder;
                     int rowCount = instance.Count;

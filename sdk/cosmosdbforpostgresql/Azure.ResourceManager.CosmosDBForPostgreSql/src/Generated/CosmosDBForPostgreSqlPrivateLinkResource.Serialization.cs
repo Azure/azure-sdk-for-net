@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
     public partial class CosmosDBForPostgreSqlPrivateLinkResource : IJsonModel<CosmosDBForPostgreSqlPrivateLinkResourceData>
     {
+        private static CosmosDBForPostgreSqlPrivateLinkResourceData s_dataDeserializationInstance;
+        private static CosmosDBForPostgreSqlPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CosmosDBForPostgreSqlPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBForPostgreSqlPrivateLinkResourceData>)Data).Write(writer, options);
 
-        CosmosDBForPostgreSqlPrivateLinkResourceData IJsonModel<CosmosDBForPostgreSqlPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBForPostgreSqlPrivateLinkResourceData>)Data).Create(ref reader, options);
+        CosmosDBForPostgreSqlPrivateLinkResourceData IJsonModel<CosmosDBForPostgreSqlPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBForPostgreSqlPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBForPostgreSqlPrivateLinkResourceData>(Data, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
 
-        CosmosDBForPostgreSqlPrivateLinkResourceData IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBForPostgreSqlPrivateLinkResourceData>(data, options);
+        CosmosDBForPostgreSqlPrivateLinkResourceData IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBForPostgreSqlPrivateLinkResourceData>(data, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
 
-        string IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

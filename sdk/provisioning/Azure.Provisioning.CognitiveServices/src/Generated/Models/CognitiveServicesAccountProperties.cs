@@ -119,6 +119,16 @@ public partial class CognitiveServicesAccountProperties : ProvisionableConstruct
     private BicepList<ServiceAccountUserOwnedStorage>? _userOwnedStorage;
 
     /// <summary>
+    /// The user owned AML workspace properties.
+    /// </summary>
+    public UserOwnedAmlWorkspace AmlWorkspace 
+    {
+        get { Initialize(); return _amlWorkspace!; }
+        set { Initialize(); AssignOrReplace(ref _amlWorkspace, value); }
+    }
+    private UserOwnedAmlWorkspace? _amlWorkspace;
+
+    /// <summary>
     /// The private endpoint connection associated with the Cognitive Services
     /// account.
     /// </summary>
@@ -281,6 +291,16 @@ public partial class CognitiveServicesAccountProperties : ProvisionableConstruct
     private AbusePenalty? _abusePenalty;
 
     /// <summary>
+    /// Cognitive Services Rai Monitor Config.
+    /// </summary>
+    public RaiMonitorConfig RaiMonitorConfig 
+    {
+        get { Initialize(); return _raiMonitorConfig!; }
+        set { Initialize(); AssignOrReplace(ref _raiMonitorConfig, value); }
+    }
+    private RaiMonitorConfig? _raiMonitorConfig;
+
+    /// <summary>
     /// Creates a new CognitiveServicesAccountProperties.
     /// </summary>
     public CognitiveServicesAccountProperties()
@@ -304,6 +324,7 @@ public partial class CognitiveServicesAccountProperties : ProvisionableConstruct
         _networkAcls = DefineModelProperty<CognitiveServicesNetworkRuleSet>("NetworkAcls", ["networkAcls"]);
         _encryption = DefineModelProperty<ServiceAccountEncryptionProperties>("Encryption", ["encryption"]);
         _userOwnedStorage = DefineListProperty<ServiceAccountUserOwnedStorage>("UserOwnedStorage", ["userOwnedStorage"]);
+        _amlWorkspace = DefineModelProperty<UserOwnedAmlWorkspace>("AmlWorkspace", ["amlWorkspace"]);
         _privateEndpointConnections = DefineListProperty<CognitiveServicesPrivateEndpointConnectionData>("PrivateEndpointConnections", ["privateEndpointConnections"], isOutput: true);
         _publicNetworkAccess = DefineProperty<ServiceAccountPublicNetworkAccess>("PublicNetworkAccess", ["publicNetworkAccess"]);
         _apiProperties = DefineModelProperty<ServiceAccountApiProperties>("ApiProperties", ["apiProperties"]);
@@ -321,5 +342,6 @@ public partial class CognitiveServicesAccountProperties : ProvisionableConstruct
         _locations = DefineModelProperty<CognitiveServicesMultiRegionSettings>("Locations", ["locations"]);
         _commitmentPlanAssociations = DefineListProperty<CommitmentPlanAssociation>("CommitmentPlanAssociations", ["commitmentPlanAssociations"], isOutput: true);
         _abusePenalty = DefineModelProperty<AbusePenalty>("AbusePenalty", ["abusePenalty"], isOutput: true);
+        _raiMonitorConfig = DefineModelProperty<RaiMonitorConfig>("RaiMonitorConfig", ["raiMonitorConfig"]);
     }
 }

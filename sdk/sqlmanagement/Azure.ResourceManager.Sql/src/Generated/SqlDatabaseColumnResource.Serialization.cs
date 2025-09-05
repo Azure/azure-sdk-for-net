@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlDatabaseColumnResource : IJsonModel<DatabaseColumnData>
     {
+        private static DatabaseColumnData s_dataDeserializationInstance;
+        private static DatabaseColumnData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DatabaseColumnData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseColumnData>)Data).Write(writer, options);
 
-        DatabaseColumnData IJsonModel<DatabaseColumnData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseColumnData>)Data).Create(ref reader, options);
+        DatabaseColumnData IJsonModel<DatabaseColumnData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseColumnData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DatabaseColumnData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DatabaseColumnData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatabaseColumnData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        DatabaseColumnData IPersistableModel<DatabaseColumnData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseColumnData>(data, options);
+        DatabaseColumnData IPersistableModel<DatabaseColumnData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseColumnData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<DatabaseColumnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseColumnData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DatabaseColumnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseColumnData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

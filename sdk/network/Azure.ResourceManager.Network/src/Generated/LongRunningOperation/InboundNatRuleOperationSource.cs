@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         InboundNatRuleResource IOperationSource<InboundNatRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<InboundNatRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<InboundNatRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new InboundNatRuleResource(_client, data);
         }
 
         async ValueTask<InboundNatRuleResource> IOperationSource<InboundNatRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<InboundNatRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<InboundNatRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new InboundNatRuleResource(_client, data)).ConfigureAwait(false);
         }
     }

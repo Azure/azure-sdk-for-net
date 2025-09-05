@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     public partial class OracleDBServerResource : IJsonModel<OracleDBServerData>
     {
+        private static OracleDBServerData s_dataDeserializationInstance;
+        private static OracleDBServerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<OracleDBServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OracleDBServerData>)Data).Write(writer, options);
 
-        OracleDBServerData IJsonModel<OracleDBServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OracleDBServerData>)Data).Create(ref reader, options);
+        OracleDBServerData IJsonModel<OracleDBServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OracleDBServerData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<OracleDBServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<OracleDBServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OracleDBServerData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        OracleDBServerData IPersistableModel<OracleDBServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleDBServerData>(data, options);
+        OracleDBServerData IPersistableModel<OracleDBServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleDBServerData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        string IPersistableModel<OracleDBServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OracleDBServerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<OracleDBServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OracleDBServerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

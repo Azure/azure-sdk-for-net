@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HealthcareApis
 {
     public partial class FhirServiceResource : IJsonModel<FhirServiceData>
     {
+        private static FhirServiceData s_dataDeserializationInstance;
+        private static FhirServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FhirServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FhirServiceData>)Data).Write(writer, options);
 
-        FhirServiceData IJsonModel<FhirServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FhirServiceData>)Data).Create(ref reader, options);
+        FhirServiceData IJsonModel<FhirServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FhirServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FhirServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FhirServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FhirServiceData>(Data, options, AzureResourceManagerHealthcareApisContext.Default);
 
-        FhirServiceData IPersistableModel<FhirServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FhirServiceData>(data, options);
+        FhirServiceData IPersistableModel<FhirServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FhirServiceData>(data, options, AzureResourceManagerHealthcareApisContext.Default);
 
-        string IPersistableModel<FhirServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FhirServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FhirServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FhirServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

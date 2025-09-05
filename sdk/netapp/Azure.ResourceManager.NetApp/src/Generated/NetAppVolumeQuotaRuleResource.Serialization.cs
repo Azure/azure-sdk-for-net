@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class NetAppVolumeQuotaRuleResource : IJsonModel<NetAppVolumeQuotaRuleData>
     {
+        private static NetAppVolumeQuotaRuleData s_dataDeserializationInstance;
+        private static NetAppVolumeQuotaRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetAppVolumeQuotaRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeQuotaRuleData>)Data).Write(writer, options);
 
-        NetAppVolumeQuotaRuleData IJsonModel<NetAppVolumeQuotaRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeQuotaRuleData>)Data).Create(ref reader, options);
+        NetAppVolumeQuotaRuleData IJsonModel<NetAppVolumeQuotaRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeQuotaRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetAppVolumeQuotaRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetAppVolumeQuotaRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppVolumeQuotaRuleData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
-        NetAppVolumeQuotaRuleData IPersistableModel<NetAppVolumeQuotaRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppVolumeQuotaRuleData>(data, options);
+        NetAppVolumeQuotaRuleData IPersistableModel<NetAppVolumeQuotaRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppVolumeQuotaRuleData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<NetAppVolumeQuotaRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppVolumeQuotaRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetAppVolumeQuotaRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppVolumeQuotaRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

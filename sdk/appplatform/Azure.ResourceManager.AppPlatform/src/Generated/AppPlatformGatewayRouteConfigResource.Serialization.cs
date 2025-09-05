@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppPlatform
 {
     public partial class AppPlatformGatewayRouteConfigResource : IJsonModel<AppPlatformGatewayRouteConfigData>
     {
+        private static AppPlatformGatewayRouteConfigData s_dataDeserializationInstance;
+        private static AppPlatformGatewayRouteConfigData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppPlatformGatewayRouteConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformGatewayRouteConfigData>)Data).Write(writer, options);
 
-        AppPlatformGatewayRouteConfigData IJsonModel<AppPlatformGatewayRouteConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformGatewayRouteConfigData>)Data).Create(ref reader, options);
+        AppPlatformGatewayRouteConfigData IJsonModel<AppPlatformGatewayRouteConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformGatewayRouteConfigData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppPlatformGatewayRouteConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppPlatformGatewayRouteConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppPlatformGatewayRouteConfigData>(Data, options, AzureResourceManagerAppPlatformContext.Default);
 
-        AppPlatformGatewayRouteConfigData IPersistableModel<AppPlatformGatewayRouteConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformGatewayRouteConfigData>(data, options);
+        AppPlatformGatewayRouteConfigData IPersistableModel<AppPlatformGatewayRouteConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformGatewayRouteConfigData>(data, options, AzureResourceManagerAppPlatformContext.Default);
 
-        string IPersistableModel<AppPlatformGatewayRouteConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformGatewayRouteConfigData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppPlatformGatewayRouteConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformGatewayRouteConfigData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

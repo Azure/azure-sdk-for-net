@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> A rule that specifies a set of actions and conditions. </summary>
+    /// <summary>
+    /// A rule that specifies a set of actions and conditions
+    /// Serialized Name: DeliveryRule
+    /// </summary>
     public partial class DeliveryRule
     {
         /// <summary>
@@ -47,9 +50,13 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRule"/>. </summary>
-        /// <param name="order"> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </param>
+        /// <param name="order">
+        /// The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied.
+        /// Serialized Name: DeliveryRule.order
+        /// </param>
         /// <param name="actions">
         /// A list of actions that are executed when all the conditions of a rule are satisfied.
+        /// Serialized Name: DeliveryRule.actions
         /// Please note <see cref="DeliveryRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriRewriteAction"/> and <see cref="UriSigningAction"/>.
         /// </param>
@@ -64,15 +71,23 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRule"/>. </summary>
-        /// <param name="name"> Name of the rule. </param>
-        /// <param name="order"> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </param>
+        /// <param name="name">
+        /// Name of the rule
+        /// Serialized Name: DeliveryRule.name
+        /// </param>
+        /// <param name="order">
+        /// The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied.
+        /// Serialized Name: DeliveryRule.order
+        /// </param>
         /// <param name="conditions">
         /// A list of conditions that must be matched for the actions to be executed
+        /// Serialized Name: DeliveryRule.conditions
         /// Please note <see cref="DeliveryRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeliveryRuleClientPortCondition"/>, <see cref="DeliveryRuleCookiesCondition"/>, <see cref="DeliveryRuleHostNameCondition"/>, <see cref="DeliveryRuleHttpVersionCondition"/>, <see cref="DeliveryRuleIsDeviceCondition"/>, <see cref="DeliveryRulePostArgsCondition"/>, <see cref="DeliveryRuleQueryStringCondition"/>, <see cref="DeliveryRuleRemoteAddressCondition"/>, <see cref="DeliveryRuleRequestBodyCondition"/>, <see cref="DeliveryRuleRequestHeaderCondition"/>, <see cref="DeliveryRuleRequestMethodCondition"/>, <see cref="DeliveryRuleRequestSchemeCondition"/>, <see cref="DeliveryRuleRequestUriCondition"/>, <see cref="DeliveryRuleServerPortCondition"/>, <see cref="DeliveryRuleSocketAddressCondition"/>, <see cref="DeliveryRuleSslProtocolCondition"/>, <see cref="DeliveryRuleUriFileExtensionCondition"/>, <see cref="DeliveryRuleUriFileNameCondition"/> and <see cref="DeliveryRuleUriPathCondition"/>.
         /// </param>
         /// <param name="actions">
         /// A list of actions that are executed when all the conditions of a rule are satisfied.
+        /// Serialized Name: DeliveryRule.actions
         /// Please note <see cref="DeliveryRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriRewriteAction"/> and <see cref="UriSigningAction"/>.
         /// </param>
@@ -91,18 +106,26 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Name of the rule. </summary>
+        /// <summary>
+        /// Name of the rule
+        /// Serialized Name: DeliveryRule.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </summary>
+        /// <summary>
+        /// The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied.
+        /// Serialized Name: DeliveryRule.order
+        /// </summary>
         public int Order { get; set; }
         /// <summary>
         /// A list of conditions that must be matched for the actions to be executed
+        /// Serialized Name: DeliveryRule.conditions
         /// Please note <see cref="DeliveryRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeliveryRuleClientPortCondition"/>, <see cref="DeliveryRuleCookiesCondition"/>, <see cref="DeliveryRuleHostNameCondition"/>, <see cref="DeliveryRuleHttpVersionCondition"/>, <see cref="DeliveryRuleIsDeviceCondition"/>, <see cref="DeliveryRulePostArgsCondition"/>, <see cref="DeliveryRuleQueryStringCondition"/>, <see cref="DeliveryRuleRemoteAddressCondition"/>, <see cref="DeliveryRuleRequestBodyCondition"/>, <see cref="DeliveryRuleRequestHeaderCondition"/>, <see cref="DeliveryRuleRequestMethodCondition"/>, <see cref="DeliveryRuleRequestSchemeCondition"/>, <see cref="DeliveryRuleRequestUriCondition"/>, <see cref="DeliveryRuleServerPortCondition"/>, <see cref="DeliveryRuleSocketAddressCondition"/>, <see cref="DeliveryRuleSslProtocolCondition"/>, <see cref="DeliveryRuleUriFileExtensionCondition"/>, <see cref="DeliveryRuleUriFileNameCondition"/> and <see cref="DeliveryRuleUriPathCondition"/>.
         /// </summary>
         public IList<DeliveryRuleCondition> Conditions { get; }
         /// <summary>
         /// A list of actions that are executed when all the conditions of a rule are satisfied.
+        /// Serialized Name: DeliveryRule.actions
         /// Please note <see cref="DeliveryRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriRewriteAction"/> and <see cref="UriSigningAction"/>.
         /// </summary>

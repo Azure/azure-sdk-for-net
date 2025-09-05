@@ -45,5 +45,89 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
             ApiCenterServiceResource.ValidateResourceId(id);
             return new ApiCenterServiceResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ApiCenterMetadataSchemaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiCenterMetadataSchemaResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterMetadataSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApiCenterMetadataSchemaResource"/> object. </returns>
+        public virtual ApiCenterMetadataSchemaResource GetApiCenterMetadataSchemaResource(ResourceIdentifier id)
+        {
+            ApiCenterMetadataSchemaResource.ValidateResourceId(id);
+            return new ApiCenterMetadataSchemaResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ApiCenterWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiCenterWorkspaceResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApiCenterWorkspaceResource"/> object. </returns>
+        public virtual ApiCenterWorkspaceResource GetApiCenterWorkspaceResource(ResourceIdentifier id)
+        {
+            ApiCenterWorkspaceResource.ValidateResourceId(id);
+            return new ApiCenterWorkspaceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ApiCenterApiResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiCenterApiResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterApiResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApiCenterApiResource"/> object. </returns>
+        public virtual ApiCenterApiResource GetApiCenterApiResource(ResourceIdentifier id)
+        {
+            ApiCenterApiResource.ValidateResourceId(id);
+            return new ApiCenterApiResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ApiCenterDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiCenterDeploymentResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterDeploymentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApiCenterDeploymentResource"/> object. </returns>
+        public virtual ApiCenterDeploymentResource GetApiCenterDeploymentResource(ResourceIdentifier id)
+        {
+            ApiCenterDeploymentResource.ValidateResourceId(id);
+            return new ApiCenterDeploymentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ApiCenterApiVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiCenterApiVersionResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterApiVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApiCenterApiVersionResource"/> object. </returns>
+        public virtual ApiCenterApiVersionResource GetApiCenterApiVersionResource(ResourceIdentifier id)
+        {
+            ApiCenterApiVersionResource.ValidateResourceId(id);
+            return new ApiCenterApiVersionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ApiCenterApiDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiCenterApiDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterApiDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApiCenterApiDefinitionResource"/> object. </returns>
+        public virtual ApiCenterApiDefinitionResource GetApiCenterApiDefinitionResource(ResourceIdentifier id)
+        {
+            ApiCenterApiDefinitionResource.ValidateResourceId(id);
+            return new ApiCenterApiDefinitionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ApiCenterEnvironmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiCenterEnvironmentResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterEnvironmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApiCenterEnvironmentResource"/> object. </returns>
+        public virtual ApiCenterEnvironmentResource GetApiCenterEnvironmentResource(ResourceIdentifier id)
+        {
+            ApiCenterEnvironmentResource.ValidateResourceId(id);
+            return new ApiCenterEnvironmentResource(Client, id);
+        }
     }
 }

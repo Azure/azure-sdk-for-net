@@ -13,73 +13,36 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the chat thread participant. </summary>
     public partial class AcsChatThreadParticipantProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadParticipantProperties"/>. </summary>
         /// <param name="participantCommunicationIdentifier"> The communication identifier of the user. </param>
-        /// <param name="metadata"> The metadata of the user. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="participantCommunicationIdentifier"/> or <paramref name="metadata"/> is null. </exception>
-        internal AcsChatThreadParticipantProperties(CommunicationIdentifierModel participantCommunicationIdentifier, IReadOnlyDictionary<string, string> metadata)
+        internal AcsChatThreadParticipantProperties(CommunicationIdentifierModel participantCommunicationIdentifier)
         {
-            Argument.AssertNotNull(participantCommunicationIdentifier, nameof(participantCommunicationIdentifier));
-            Argument.AssertNotNull(metadata, nameof(metadata));
-
             ParticipantCommunicationIdentifier = participantCommunicationIdentifier;
-            Metadata = metadata;
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadParticipantProperties"/>. </summary>
         /// <param name="displayName"> The name of the user. </param>
         /// <param name="participantCommunicationIdentifier"> The communication identifier of the user. </param>
         /// <param name="metadata"> The metadata of the user. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsChatThreadParticipantProperties(string displayName, CommunicationIdentifierModel participantCommunicationIdentifier, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AcsChatThreadParticipantProperties(string displayName, CommunicationIdentifierModel participantCommunicationIdentifier, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             ParticipantCommunicationIdentifier = participantCommunicationIdentifier;
             Metadata = metadata;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcsChatThreadParticipantProperties"/> for deserialization. </summary>
-        internal AcsChatThreadParticipantProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the user. </summary>
         public string DisplayName { get; }
+
         /// <summary> The communication identifier of the user. </summary>
         public CommunicationIdentifierModel ParticipantCommunicationIdentifier { get; }
+
         /// <summary> The metadata of the user. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
     }

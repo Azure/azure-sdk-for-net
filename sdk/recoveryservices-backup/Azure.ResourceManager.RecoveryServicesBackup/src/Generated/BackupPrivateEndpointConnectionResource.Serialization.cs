@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     public partial class BackupPrivateEndpointConnectionResource : IJsonModel<BackupPrivateEndpointConnectionData>
     {
+        private static BackupPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static BackupPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BackupPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BackupPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        BackupPrivateEndpointConnectionData IJsonModel<BackupPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        BackupPrivateEndpointConnectionData IJsonModel<BackupPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BackupPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BackupPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackupPrivateEndpointConnectionData>(Data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        BackupPrivateEndpointConnectionData IPersistableModel<BackupPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupPrivateEndpointConnectionData>(data, options);
+        BackupPrivateEndpointConnectionData IPersistableModel<BackupPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupPrivateEndpointConnectionData>(data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        string IPersistableModel<BackupPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BackupPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

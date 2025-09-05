@@ -1,6 +1,8 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ImportRepoCommonSettings>true</ImportRepoCommonSettings>
+    <!-- Don't warn for missing XML comments for test projects as the stubbed versions will not have them. -->
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
   <!--
     Add any shared properties you want for the projects under this package directory that need to be set before the auto imported Directory.Build.props

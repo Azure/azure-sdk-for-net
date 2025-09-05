@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class ActionGroupResource : IJsonModel<ActionGroupData>
     {
+        private static ActionGroupData s_dataDeserializationInstance;
+        private static ActionGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ActionGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ActionGroupData>)Data).Write(writer, options);
 
-        ActionGroupData IJsonModel<ActionGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ActionGroupData>)Data).Create(ref reader, options);
+        ActionGroupData IJsonModel<ActionGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ActionGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ActionGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ActionGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ActionGroupData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
-        ActionGroupData IPersistableModel<ActionGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ActionGroupData>(data, options);
+        ActionGroupData IPersistableModel<ActionGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ActionGroupData>(data, options, AzureResourceManagerMonitorContext.Default);
 
-        string IPersistableModel<ActionGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ActionGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ActionGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ActionGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

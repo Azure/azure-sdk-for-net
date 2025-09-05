@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Connectionaiting for approval or rejection. </summary>
+        /// <summary> Connection waiting for approval or rejection. </summary>
         public static HealthDataAIServicesPrivateEndpointServiceConnectionStatus Pending { get; } = new HealthDataAIServicesPrivateEndpointServiceConnectionStatus(PendingValue);
         /// <summary> Connection approved. </summary>
         public static HealthDataAIServicesPrivateEndpointServiceConnectionStatus Approved { get; } = new HealthDataAIServicesPrivateEndpointServiceConnectionStatus(ApprovedValue);

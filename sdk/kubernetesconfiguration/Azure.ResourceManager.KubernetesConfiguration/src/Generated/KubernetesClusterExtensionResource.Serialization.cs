@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 {
     public partial class KubernetesClusterExtensionResource : IJsonModel<KubernetesClusterExtensionData>
     {
+        private static KubernetesClusterExtensionData s_dataDeserializationInstance;
+        private static KubernetesClusterExtensionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<KubernetesClusterExtensionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesClusterExtensionData>)Data).Write(writer, options);
 
-        KubernetesClusterExtensionData IJsonModel<KubernetesClusterExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesClusterExtensionData>)Data).Create(ref reader, options);
+        KubernetesClusterExtensionData IJsonModel<KubernetesClusterExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesClusterExtensionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KubernetesClusterExtensionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<KubernetesClusterExtensionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KubernetesClusterExtensionData>(Data, options, AzureResourceManagerKubernetesConfigurationContext.Default);
 
-        KubernetesClusterExtensionData IPersistableModel<KubernetesClusterExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubernetesClusterExtensionData>(data, options);
+        KubernetesClusterExtensionData IPersistableModel<KubernetesClusterExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubernetesClusterExtensionData>(data, options, AzureResourceManagerKubernetesConfigurationContext.Default);
 
-        string IPersistableModel<KubernetesClusterExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KubernetesClusterExtensionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<KubernetesClusterExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KubernetesClusterExtensionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

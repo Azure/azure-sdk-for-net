@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         AutoUpgradeProfileResource IOperationSource<AutoUpgradeProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AutoUpgradeProfileData>(response.Content);
+            var data = ModelReaderWriter.Read<AutoUpgradeProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceFleetContext.Default);
             return new AutoUpgradeProfileResource(_client, data);
         }
 
         async ValueTask<AutoUpgradeProfileResource> IOperationSource<AutoUpgradeProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AutoUpgradeProfileData>(response.Content);
+            var data = ModelReaderWriter.Read<AutoUpgradeProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceFleetContext.Default);
             return await Task.FromResult(new AutoUpgradeProfileResource(_client, data)).ConfigureAwait(false);
         }
     }

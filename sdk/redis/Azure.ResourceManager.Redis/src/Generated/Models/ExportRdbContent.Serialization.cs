@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Redis.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ExportRdbContent)} does not support writing '{options.Format}' format.");
             }

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Cdn
     /// <summary>
     /// A class representing the FrontDoorRuleSet data model.
     /// Friendly RuleSet name mapping to the any RuleSet or secret related information.
+    /// Serialized Name: RuleSet
     /// </summary>
     public partial class FrontDoorRuleSetData : ResourceData
     {
@@ -61,9 +62,15 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning status. </param>
-        /// <param name="deploymentStatus"></param>
-        /// <param name="profileName"> The name of the profile which holds the rule set. </param>
+        /// <param name="provisioningState">
+        /// Provisioning status
+        /// Serialized Name: RuleSet.properties.provisioningState
+        /// </param>
+        /// <param name="deploymentStatus"> Serialized Name: RuleSet.properties.deploymentStatus. </param>
+        /// <param name="profileName">
+        /// The name of the profile which holds the rule set.
+        /// Serialized Name: RuleSet.properties.profileName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, string profileName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,11 +80,17 @@ namespace Azure.ResourceManager.Cdn
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Provisioning status. </summary>
+        /// <summary>
+        /// Provisioning status
+        /// Serialized Name: RuleSet.properties.provisioningState
+        /// </summary>
         public FrontDoorProvisioningState? ProvisioningState { get; }
-        /// <summary> Gets the deployment status. </summary>
+        /// <summary> Serialized Name: RuleSet.properties.deploymentStatus. </summary>
         public FrontDoorDeploymentStatus? DeploymentStatus { get; }
-        /// <summary> The name of the profile which holds the rule set. </summary>
+        /// <summary>
+        /// The name of the profile which holds the rule set.
+        /// Serialized Name: RuleSet.properties.profileName
+        /// </summary>
         public string ProfileName { get; }
     }
 }

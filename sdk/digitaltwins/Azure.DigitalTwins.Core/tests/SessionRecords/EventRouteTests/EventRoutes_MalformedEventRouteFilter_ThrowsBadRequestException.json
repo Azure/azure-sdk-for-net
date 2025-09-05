@@ -1,0 +1,42 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-736906149?api-version=2023-10-31",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "84",
+        "Content-Type": "application/json",
+        "traceparent": "00-cb520a634db7865d64e10834770bec60-3c0f36e37a92a61d-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET Framework 4.8.9300.0; Microsoft Windows 10.0.26100 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "endpointName": "someEventHubEndpoint",
+        "filter": "this is not a valid filter string"
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "249",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 14:56:12 GMT",
+        "mise-correlation-id": "1663ac7b-6238-4a39-be6a-0ecb33278d40",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-cb520a634db7865d64e10834770bec60-66b0cd464f966ab2-01",
+        "x-ms-error-code": "EventRouteFilterInvalid"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "EventRouteFilterInvalid",
+          "message": "The provided filter is invalid. Parsing error, Line=1, Position=6, Message=Unexpected input 'is'. See event route documentation for supported values and structure (https://aka.ms/ADTv2Routes)."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
+    "RandomSeed": "1587108538"
+  }
+}

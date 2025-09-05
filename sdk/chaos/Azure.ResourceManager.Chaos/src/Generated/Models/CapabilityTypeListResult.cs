@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Chaos.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CapabilityTypeListResult"/>. </summary>
-        internal CapabilityTypeListResult()
+        /// <param name="value"> The CapabilityType items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal CapabilityTypeListResult(IEnumerable<ChaosCapabilityMetadataData> value)
         {
-            Value = new ChangeTrackingList<ChaosCapabilityTypeData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapabilityTypeListResult"/>. </summary>
-        /// <param name="value"> List of Capability Type resources. </param>
-        /// <param name="nextLink"> URL to retrieve the next page of Capability Type resources. </param>
+        /// <param name="value"> The CapabilityType items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapabilityTypeListResult(IReadOnlyList<ChaosCapabilityTypeData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CapabilityTypeListResult(IReadOnlyList<ChaosCapabilityMetadataData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Capability Type resources. </summary>
-        public IReadOnlyList<ChaosCapabilityTypeData> Value { get; }
-        /// <summary> URL to retrieve the next page of Capability Type resources. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="CapabilityTypeListResult"/> for deserialization. </summary>
+        internal CapabilityTypeListResult()
+        {
+        }
+
+        /// <summary> The CapabilityType items on this page. </summary>
+        public IReadOnlyList<ChaosCapabilityMetadataData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseIPFirewallRuleInfoResource IOperationSource<SynapseIPFirewallRuleInfoResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseIPFirewallRuleInfoData>(response.Content);
+            var data = ModelReaderWriter.Read<SynapseIPFirewallRuleInfoData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
             return new SynapseIPFirewallRuleInfoResource(_client, data);
         }
 
         async ValueTask<SynapseIPFirewallRuleInfoResource> IOperationSource<SynapseIPFirewallRuleInfoResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseIPFirewallRuleInfoData>(response.Content);
+            var data = ModelReaderWriter.Read<SynapseIPFirewallRuleInfoData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
             return await Task.FromResult(new SynapseIPFirewallRuleInfoResource(_client, data)).ConfigureAwait(false);
         }
     }

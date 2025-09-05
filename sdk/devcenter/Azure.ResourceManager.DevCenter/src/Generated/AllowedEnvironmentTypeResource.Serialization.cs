@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevCenter
 {
     public partial class AllowedEnvironmentTypeResource : IJsonModel<AllowedEnvironmentTypeData>
     {
+        private static AllowedEnvironmentTypeData s_dataDeserializationInstance;
+        private static AllowedEnvironmentTypeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AllowedEnvironmentTypeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AllowedEnvironmentTypeData>)Data).Write(writer, options);
 
-        AllowedEnvironmentTypeData IJsonModel<AllowedEnvironmentTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AllowedEnvironmentTypeData>)Data).Create(ref reader, options);
+        AllowedEnvironmentTypeData IJsonModel<AllowedEnvironmentTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AllowedEnvironmentTypeData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AllowedEnvironmentTypeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AllowedEnvironmentTypeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AllowedEnvironmentTypeData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
-        AllowedEnvironmentTypeData IPersistableModel<AllowedEnvironmentTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AllowedEnvironmentTypeData>(data, options);
+        AllowedEnvironmentTypeData IPersistableModel<AllowedEnvironmentTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AllowedEnvironmentTypeData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
-        string IPersistableModel<AllowedEnvironmentTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AllowedEnvironmentTypeData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AllowedEnvironmentTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AllowedEnvironmentTypeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

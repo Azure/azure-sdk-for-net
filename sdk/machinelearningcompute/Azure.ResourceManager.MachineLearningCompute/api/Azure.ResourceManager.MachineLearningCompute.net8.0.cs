@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.MachineLearningCompute
 {
+    public partial class AzureResourceManagerMachineLearningComputeContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerMachineLearningComputeContext() { }
+        public static Azure.ResourceManager.MachineLearningCompute.AzureResourceManagerMachineLearningComputeContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class MachineLearningComputeExtensions
     {
         public static Azure.Pageable<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperation> GetAvailableOperationsMachineLearningComputes(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.IotCentral
 
         IotCentralPrivateEndpointConnectionResource IOperationSource<IotCentralPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotCentralPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<IotCentralPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotCentralContext.Default);
             return new IotCentralPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<IotCentralPrivateEndpointConnectionResource> IOperationSource<IotCentralPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotCentralPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<IotCentralPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotCentralContext.Default);
             return await Task.FromResult(new IotCentralPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

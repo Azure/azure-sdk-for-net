@@ -7,8 +7,6 @@ Project("{130761D8-9A24-4F22-AF15-4D6738ED7423}") = "Azure.ResourceManager.PaloA
 EndProject
 Project("{130761D8-9A24-4F22-AF15-4D6738ED7423}") = "Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests", "tests\Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.csproj", "{6C2BBC6A-A803-4931-A081-014A09AAE44F}"
 EndProject
-Project("{130761D8-9A24-4F22-AF15-4D6738ED7423}") = "Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples", "samples\Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples.csproj", "{312AEB25-4354-4B6B-A9E5-88F6FBBE2B5E}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,17 +47,5 @@ Global
 		{6C2BBC6A-A803-4931-A081-014A09AAE44F}.Release|x64.Build.0 = Release|Any CPU
 		{6C2BBC6A-A803-4931-A081-014A09AAE44F}.Release|x86.ActiveCfg = Release|Any CPU
 		{6C2BBC6A-A803-4931-A081-014A09AAE44F}.Release|x86.Build.0 = Release|Any CPU
-		{312AEB25-4354-4B6B-A9E5-88F6FBBE2B5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{312AEB25-4354-4B6B-A9E5-88F6FBBE2B5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{312AEB25-4354-4B6B-A9E5-88F6FBBE2B5E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{312AEB25-4354-4B6B-A9E5-88F6FBBE2B5E}.Debug|x64.Build.0 = Debug|Any CPU
-		{312AEB25-4354-4B6B-A9E5-88F6FBBE2B5E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{312AEB25-4354-4B6B-A9E5-88F6FBBE2B5E}.Debug|x86.Build.0 = Debug|Any CPU
-		{312AEB25-4354-4B6B-A9E5-88F6FBBE2B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{312AEB25-4354-4B6B-A9E5-88F6FBBE2B5E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{312AEB25-4354-4B6B-A9E5-88F6FBBE2B5E}.Release|x64.ActiveCfg = Release|Any CPU
-		{312AEB25-4354-4B6B-A9E5-88F6FBBE2B5E}.Release|x64.Build.0 = Release|Any CPU
-		{312AEB25-4354-4B6B-A9E5-88F6FBBE2B5E}.Release|x86.ActiveCfg = Release|Any CPU
-		{312AEB25-4354-4B6B-A9E5-88F6FBBE2B5E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

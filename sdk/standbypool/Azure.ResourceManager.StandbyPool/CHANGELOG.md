@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2025-05-10)
+
+### Features Added
+- Support for Zonal deployments of Container Group Standby Pools.
+- Support for Hibernated State in Virtual Machine Standby Pools.
+- Exposing StandbyPool Health Status for both Virtual Machine and Container Group Standby Pools in GetRuntimeView API.
+- Exposing StandbyPool Prediction Information for both Virtual Machine and Container Group Standby Pools in GetRuntimeView API.
 
 ## 1.0.0 (2024-09-10)
 

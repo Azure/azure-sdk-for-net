@@ -21,7 +21,7 @@ namespace Server.Versions.NotVersioned
 
         public NotVersionedClient(Uri endpoint, NotVersionedClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response WithoutApiVersion(RequestContext context) => throw null;
 

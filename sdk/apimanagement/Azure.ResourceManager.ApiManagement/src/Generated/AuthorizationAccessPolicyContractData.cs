@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of <see cref="AuthorizationAccessPolicyContractData"/>. </summary>
         public AuthorizationAccessPolicyContractData()
         {
+            AppIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationAccessPolicyContractData"/>. </summary>
@@ -60,16 +61,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="appIds"> The allowed Azure Active Directory Application IDs. </param>
         /// <param name="tenantId"> The Tenant Id. </param>
         /// <param name="objectId"> The Object Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationAccessPolicyContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string objectId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AuthorizationAccessPolicyContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> appIds, Guid? tenantId, string objectId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            AppIds = appIds;
             TenantId = tenantId;
             ObjectId = objectId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The allowed Azure Active Directory Application IDs. </summary>
+        [WirePath("properties.appIds")]
+        public IList<string> AppIds { get; }
         /// <summary> The Tenant Id. </summary>
         [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }

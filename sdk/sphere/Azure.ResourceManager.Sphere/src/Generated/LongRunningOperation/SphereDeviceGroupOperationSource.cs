@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sphere
 
         SphereDeviceGroupResource IOperationSource<SphereDeviceGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SphereDeviceGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<SphereDeviceGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSphereContext.Default);
             return new SphereDeviceGroupResource(_client, data);
         }
 
         async ValueTask<SphereDeviceGroupResource> IOperationSource<SphereDeviceGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SphereDeviceGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<SphereDeviceGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSphereContext.Default);
             return await Task.FromResult(new SphereDeviceGroupResource(_client, data)).ConfigureAwait(false);
         }
     }

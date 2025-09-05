@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="description"> Text that describes the purpose of the storage task assignment. </param>
         /// <param name="executionContext"> The storage task assignment execution context. </param>
         /// <param name="report"> The storage task assignment report. </param>
-        /// <param name="provisioningState"> Represents the provisioning state of the storage task assignment. </param>
+        /// <param name="storageTaskAssignmentProvisioningState"> Represents the provisioning state of the storage task assignment. </param>
         /// <param name="runStatus"> Run status of storage task assignment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskAssignmentProperties(ResourceIdentifier taskId, bool isEnabled, string description, StorageTaskAssignmentExecutionContext executionContext, StorageTaskAssignmentReport report, StorageProvisioningState? provisioningState, StorageTaskReportProperties runStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskAssignmentProperties(ResourceIdentifier taskId, bool isEnabled, string description, StorageTaskAssignmentExecutionContext executionContext, StorageTaskAssignmentReport report, StorageTaskAssignmentProvisioningState? storageTaskAssignmentProvisioningState, StorageTaskReportProperties runStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TaskId = taskId;
             IsEnabled = isEnabled;
             Description = description;
             ExecutionContext = executionContext;
             Report = report;
-            ProvisioningState = provisioningState;
+            StorageTaskAssignmentProvisioningState = storageTaskAssignmentProvisioningState;
             RunStatus = runStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Represents the provisioning state of the storage task assignment. </summary>
         [WirePath("provisioningState")]
-        public StorageProvisioningState? ProvisioningState { get; }
+        public StorageTaskAssignmentProvisioningState? StorageTaskAssignmentProvisioningState { get; }
         /// <summary> Run status of storage task assignment. </summary>
         [WirePath("runStatus")]
         public StorageTaskReportProperties RunStatus { get; set; }

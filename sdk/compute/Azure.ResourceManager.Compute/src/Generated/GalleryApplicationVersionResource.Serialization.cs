@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class GalleryApplicationVersionResource : IJsonModel<GalleryApplicationVersionData>
     {
+        private static GalleryApplicationVersionData s_dataDeserializationInstance;
+        private static GalleryApplicationVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GalleryApplicationVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GalleryApplicationVersionData>)Data).Write(writer, options);
 
-        GalleryApplicationVersionData IJsonModel<GalleryApplicationVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GalleryApplicationVersionData>)Data).Create(ref reader, options);
+        GalleryApplicationVersionData IJsonModel<GalleryApplicationVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GalleryApplicationVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GalleryApplicationVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GalleryApplicationVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GalleryApplicationVersionData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        GalleryApplicationVersionData IPersistableModel<GalleryApplicationVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryApplicationVersionData>(data, options);
+        GalleryApplicationVersionData IPersistableModel<GalleryApplicationVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryApplicationVersionData>(data, options, AzureResourceManagerComputeContext.Default);
 
-        string IPersistableModel<GalleryApplicationVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GalleryApplicationVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GalleryApplicationVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GalleryApplicationVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

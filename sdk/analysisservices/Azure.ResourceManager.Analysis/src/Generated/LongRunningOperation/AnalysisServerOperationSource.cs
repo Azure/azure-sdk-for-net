@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Analysis
 
         AnalysisServerResource IOperationSource<AnalysisServerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AnalysisServerData>(response.Content);
+            var data = ModelReaderWriter.Read<AnalysisServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAnalysisContext.Default);
             return new AnalysisServerResource(_client, data);
         }
 
         async ValueTask<AnalysisServerResource> IOperationSource<AnalysisServerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AnalysisServerData>(response.Content);
+            var data = ModelReaderWriter.Read<AnalysisServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAnalysisContext.Default);
             return await Task.FromResult(new AnalysisServerResource(_client, data)).ConfigureAwait(false);
         }
     }

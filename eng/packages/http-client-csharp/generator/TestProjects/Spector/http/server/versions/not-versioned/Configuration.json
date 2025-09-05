@@ -1,5 +1,4 @@
 {
-  "output-folder": ".",
   "package-name": "Server.Versions.NotVersioned",
   "license": {
     "name": "MIT License",

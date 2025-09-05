@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Generator.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -52,6 +53,11 @@ public class SimpleModel(Specification spec, Type armType, string name, string? 
                     // Write the properties
                     foreach (Property property in Properties)
                     {
+                        // we do not write those hidden properties with EditorBrowsableAttribute, these should be added back by customized code in partial classes
+                        if (property.HideLevel.HasFlag(PropertyHideLevel.HideProperty))
+                        {
+                            continue;
+                        }
                         if (fence.RequiresSeparator) { writer.WriteLine(); }
                         if (!property.HideAccessors)
                         {
@@ -91,7 +97,7 @@ public class SimpleModel(Specification spec, Type armType, string name, string? 
                         writer.WriteLine($"/// </summary>");
                         writer.WriteLine($"private partial {property.BicepTypeReference} Get{property.Name}DefaultValue();");
                     }
-                    
+
                     // Write the .ctor
                     if (fence.RequiresSeparator) { writer.WriteLine(); }
                     writer.WriteLine($"/// <summary>");
@@ -120,6 +126,10 @@ public class SimpleModel(Specification spec, Type armType, string name, string? 
                         }
                         foreach (Property property in Properties)
                         {
+                            if (property.HideLevel.HasFlag(PropertyHideLevel.HideField))
+                            {
+                                continue; // Skip hidden properties
+                            }
                             writer.Write($"{property.FieldName} = ");
                             if (property.PropertyType is SimpleModel || property.PropertyType is Resource)
                             {
@@ -139,6 +149,10 @@ public class SimpleModel(Specification spec, Type armType, string name, string? 
                             }
                             writer.Write($"<{property.BicepPropertyTypeReference}>(\"{property.Name}\", ");
                             writer.Write($"[{string.Join(", ", (property.Path ?? [property.Name]).Select(s => $"\"{s}\""))}]");
+                            if (property.PropertyType is Resource r)
+                            {
+                                writer.Write($", new {r.Name}(\"{r.Name.ToCamelCase()}\")");
+                            }
                             if (property.IsRequired) { writer.Write($", isRequired: true"); }
                             if (property.IsReadOnly) { writer.Write($", isOutput: true"); }
                             if (property.IsSecure) { writer.Write($", isSecure: true"); }

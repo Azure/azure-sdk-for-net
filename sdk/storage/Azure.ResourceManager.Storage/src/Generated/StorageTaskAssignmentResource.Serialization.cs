@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class StorageTaskAssignmentResource : IJsonModel<StorageTaskAssignmentData>
     {
+        private static StorageTaskAssignmentData s_dataDeserializationInstance;
+        private static StorageTaskAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StorageTaskAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageTaskAssignmentData>)Data).Write(writer, options);
 
-        StorageTaskAssignmentData IJsonModel<StorageTaskAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageTaskAssignmentData>)Data).Create(ref reader, options);
+        StorageTaskAssignmentData IJsonModel<StorageTaskAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageTaskAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StorageTaskAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StorageTaskAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageTaskAssignmentData>(Data, options, AzureResourceManagerStorageContext.Default);
 
-        StorageTaskAssignmentData IPersistableModel<StorageTaskAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageTaskAssignmentData>(data, options);
+        StorageTaskAssignmentData IPersistableModel<StorageTaskAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageTaskAssignmentData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<StorageTaskAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageTaskAssignmentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StorageTaskAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageTaskAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

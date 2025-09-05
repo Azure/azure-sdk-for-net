@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="vmManagedDisks"> The list of vm managed disk details. </param>
         /// <param name="multiVmGroupName"> The multi vm group name. </param>
         /// <param name="multiVmGroupId"> The multi vm group id. </param>
+        /// <param name="protectionClusterId"> The replication protection cluster Id. </param>
         /// <param name="recoveryBootDiagStorageAccountId"> The boot diagnostic storage account. </param>
         /// <param name="diskEncryptionInfo"> The recovery disk encryption information (for two pass flows). </param>
         /// <param name="recoveryAvailabilityZone"> The recovery availability zone. </param>
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryVirtualMachineScaleSetId"> The virtual machine scale set Id. </param>
         /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
         /// <param name="autoProtectionOfDataDisk"> A value indicating whether the auto protection is enabled. </param>
-        internal A2AEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier fabricObjectId, ResourceIdentifier recoveryContainerId, ResourceIdentifier recoveryResourceGroupId, string recoveryCloudServiceId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier recoveryProximityPlacementGroupId, IList<A2AVmDiskDetails> vmDisks, IList<A2AVmManagedDiskDetails> vmManagedDisks, string multiVmGroupName, string multiVmGroupId, ResourceIdentifier recoveryBootDiagStorageAccountId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation recoveryExtendedLocation, ResourceIdentifier recoveryAzureNetworkId, string recoverySubnetName, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk) : base(instanceType, serializedAdditionalRawData)
+        internal A2AEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier fabricObjectId, ResourceIdentifier recoveryContainerId, ResourceIdentifier recoveryResourceGroupId, string recoveryCloudServiceId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier recoveryProximityPlacementGroupId, IList<A2AVmDiskDetails> vmDisks, IList<A2AVmManagedDiskDetails> vmManagedDisks, string multiVmGroupName, string multiVmGroupId, ResourceIdentifier protectionClusterId, ResourceIdentifier recoveryBootDiagStorageAccountId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation recoveryExtendedLocation, ResourceIdentifier recoveryAzureNetworkId, string recoverySubnetName, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk) : base(instanceType, serializedAdditionalRawData)
         {
             FabricObjectId = fabricObjectId;
             RecoveryContainerId = recoveryContainerId;
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             VmManagedDisks = vmManagedDisks;
             MultiVmGroupName = multiVmGroupName;
             MultiVmGroupId = multiVmGroupId;
+            ProtectionClusterId = protectionClusterId;
             RecoveryBootDiagStorageAccountId = recoveryBootDiagStorageAccountId;
             DiskEncryptionInfo = diskEncryptionInfo;
             RecoveryAvailabilityZone = recoveryAvailabilityZone;
@@ -98,6 +100,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string MultiVmGroupName { get; set; }
         /// <summary> The multi vm group id. </summary>
         public string MultiVmGroupId { get; set; }
+        /// <summary> The replication protection cluster Id. </summary>
+        public ResourceIdentifier ProtectionClusterId { get; set; }
         /// <summary> The boot diagnostic storage account. </summary>
         public ResourceIdentifier RecoveryBootDiagStorageAccountId { get; set; }
         /// <summary> The recovery disk encryption information (for two pass flows). </summary>

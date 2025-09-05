@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="keyVaultProperties"> Properties provided by key vault. </param>
         /// <param name="encryptionIdentity"> The identity to be used with service-side encryption at rest. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanEncryptionProperties(ElasticSanKeyVaultProperties keyVaultProperties, EncryptionIdentity encryptionIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSanEncryptionProperties(ElasticSanKeyVaultProperties keyVaultProperties, ElasticSanEncryptionIdentity encryptionIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVaultProperties = keyVaultProperties;
             EncryptionIdentity = encryptionIdentity;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Properties provided by key vault. </summary>
         public ElasticSanKeyVaultProperties KeyVaultProperties { get; set; }
         /// <summary> The identity to be used with service-side encryption at rest. </summary>
-        internal EncryptionIdentity EncryptionIdentity { get; set; }
+        internal ElasticSanEncryptionIdentity EncryptionIdentity { get; set; }
         /// <summary> Resource identifier of the UserAssigned identity to be associated with server-side encryption on the volume group. </summary>
         public ResourceIdentifier EncryptionUserAssignedIdentity
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             set
             {
                 if (EncryptionIdentity is null)
-                    EncryptionIdentity = new EncryptionIdentity();
+                    EncryptionIdentity = new ElasticSanEncryptionIdentity();
                 EncryptionIdentity.EncryptionUserAssignedIdentity = value;
             }
         }

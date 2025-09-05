@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         ServerAdvancedThreatProtectionResource IOperationSource<ServerAdvancedThreatProtectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServerAdvancedThreatProtectionData>(response.Content);
+            var data = ModelReaderWriter.Read<ServerAdvancedThreatProtectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new ServerAdvancedThreatProtectionResource(_client, data);
         }
 
         async ValueTask<ServerAdvancedThreatProtectionResource> IOperationSource<ServerAdvancedThreatProtectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServerAdvancedThreatProtectionData>(response.Content);
+            var data = ModelReaderWriter.Read<ServerAdvancedThreatProtectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new ServerAdvancedThreatProtectionResource(_client, data)).ConfigureAwait(false);
         }
     }

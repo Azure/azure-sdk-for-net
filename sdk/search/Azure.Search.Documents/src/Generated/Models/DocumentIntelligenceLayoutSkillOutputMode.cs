@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         private const string OneToManyValue = "oneToMany";
 
-        /// <summary> Specify the deepest markdown header section to parse. </summary>
+        /// <summary> Specify that the output should be parsed as 'oneToMany'. </summary>
         public static DocumentIntelligenceLayoutSkillOutputMode OneToMany { get; } = new DocumentIntelligenceLayoutSkillOutputMode(OneToManyValue);
         /// <summary> Determines if two <see cref="DocumentIntelligenceLayoutSkillOutputMode"/> values are the same. </summary>
         public static bool operator ==(DocumentIntelligenceLayoutSkillOutputMode left, DocumentIntelligenceLayoutSkillOutputMode right) => left.Equals(right);

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
 {
     public partial class DevOpsPoolResource : IJsonModel<DevOpsPoolData>
     {
+        private static DevOpsPoolData s_dataDeserializationInstance;
+        private static DevOpsPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevOpsPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevOpsPoolData>)Data).Write(writer, options);
 
-        DevOpsPoolData IJsonModel<DevOpsPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevOpsPoolData>)Data).Create(ref reader, options);
+        DevOpsPoolData IJsonModel<DevOpsPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevOpsPoolData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevOpsPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevOpsPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevOpsPoolData>(Data, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
 
-        DevOpsPoolData IPersistableModel<DevOpsPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevOpsPoolData>(data, options);
+        DevOpsPoolData IPersistableModel<DevOpsPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevOpsPoolData>(data, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
 
-        string IPersistableModel<DevOpsPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevOpsPoolData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevOpsPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevOpsPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

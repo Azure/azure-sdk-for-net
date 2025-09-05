@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudL2NetworkResource : IJsonModel<NetworkCloudL2NetworkData>
     {
+        private static NetworkCloudL2NetworkData s_dataDeserializationInstance;
+        private static NetworkCloudL2NetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkCloudL2NetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudL2NetworkData>)Data).Write(writer, options);
 
-        NetworkCloudL2NetworkData IJsonModel<NetworkCloudL2NetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudL2NetworkData>)Data).Create(ref reader, options);
+        NetworkCloudL2NetworkData IJsonModel<NetworkCloudL2NetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudL2NetworkData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkCloudL2NetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkCloudL2NetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudL2NetworkData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        NetworkCloudL2NetworkData IPersistableModel<NetworkCloudL2NetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudL2NetworkData>(data, options);
+        NetworkCloudL2NetworkData IPersistableModel<NetworkCloudL2NetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudL2NetworkData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        string IPersistableModel<NetworkCloudL2NetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudL2NetworkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkCloudL2NetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudL2NetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

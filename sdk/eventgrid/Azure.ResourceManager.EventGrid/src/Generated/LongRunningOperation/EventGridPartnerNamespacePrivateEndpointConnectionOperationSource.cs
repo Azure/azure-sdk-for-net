@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.EventGrid
 
         EventGridPartnerNamespacePrivateEndpointConnectionResource IOperationSource<EventGridPartnerNamespacePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EventGridPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<EventGridPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
             return new EventGridPartnerNamespacePrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<EventGridPartnerNamespacePrivateEndpointConnectionResource> IOperationSource<EventGridPartnerNamespacePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EventGridPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<EventGridPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
             return await Task.FromResult(new EventGridPartnerNamespacePrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

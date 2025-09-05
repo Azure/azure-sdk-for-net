@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Sql.Models
         private const string GrsValue = "GRS";
         private const string LrsValue = "LRS";
         private const string ZrsValue = "ZRS";
+        private const string GzrsValue = "GZRS";
 
         /// <summary> GRS. </summary>
         public static StorageCapabilityStorageAccountType Grs { get; } = new StorageCapabilityStorageAccountType(GrsValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.Sql.Models
         public static StorageCapabilityStorageAccountType Lrs { get; } = new StorageCapabilityStorageAccountType(LrsValue);
         /// <summary> ZRS. </summary>
         public static StorageCapabilityStorageAccountType Zrs { get; } = new StorageCapabilityStorageAccountType(ZrsValue);
+        /// <summary> GZRS. </summary>
+        public static StorageCapabilityStorageAccountType Gzrs { get; } = new StorageCapabilityStorageAccountType(GzrsValue);
         /// <summary> Determines if two <see cref="StorageCapabilityStorageAccountType"/> values are the same. </summary>
         public static bool operator ==(StorageCapabilityStorageAccountType left, StorageCapabilityStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageCapabilityStorageAccountType"/> values are not the same. </summary>

@@ -34,8 +34,11 @@ namespace Azure.Compute.Batch
                 throw new FormatException($"The model {nameof(BatchError)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("code"u8);
-            writer.WriteStringValue(Code);
+            if (Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code);
+            }
             if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
@@ -139,7 +142,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchError)} does not support writing '{options.Format}' format.");
             }

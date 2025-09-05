@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
     public partial class CosmosDBForPostgreSqlRoleResource : IJsonModel<CosmosDBForPostgreSqlRoleData>
     {
+        private static CosmosDBForPostgreSqlRoleData s_dataDeserializationInstance;
+        private static CosmosDBForPostgreSqlRoleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CosmosDBForPostgreSqlRoleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBForPostgreSqlRoleData>)Data).Write(writer, options);
 
-        CosmosDBForPostgreSqlRoleData IJsonModel<CosmosDBForPostgreSqlRoleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBForPostgreSqlRoleData>)Data).Create(ref reader, options);
+        CosmosDBForPostgreSqlRoleData IJsonModel<CosmosDBForPostgreSqlRoleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBForPostgreSqlRoleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CosmosDBForPostgreSqlRoleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CosmosDBForPostgreSqlRoleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBForPostgreSqlRoleData>(Data, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
 
-        CosmosDBForPostgreSqlRoleData IPersistableModel<CosmosDBForPostgreSqlRoleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBForPostgreSqlRoleData>(data, options);
+        CosmosDBForPostgreSqlRoleData IPersistableModel<CosmosDBForPostgreSqlRoleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBForPostgreSqlRoleData>(data, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
 
-        string IPersistableModel<CosmosDBForPostgreSqlRoleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBForPostgreSqlRoleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CosmosDBForPostgreSqlRoleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBForPostgreSqlRoleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

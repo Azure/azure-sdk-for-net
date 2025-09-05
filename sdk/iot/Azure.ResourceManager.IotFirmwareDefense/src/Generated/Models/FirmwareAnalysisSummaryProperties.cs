@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary>
     /// Properties of an analysis summary.
     /// Please note <see cref="FirmwareAnalysisSummaryProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="BinaryHardeningSummary"/>, <see cref="CryptoCertificateSummary"/>, <see cref="CryptoKeySummary"/>, <see cref="CveSummary"/> and <see cref="FirmwareSummary"/>.
+    /// The available derived classes include <see cref="BinaryHardeningSummary"/>, <see cref="CveSummary"/>, <see cref="CryptoCertificateSummary"/>, <see cref="CryptoKeySummary"/> and <see cref="FirmwareSummary"/>.
     /// </summary>
     public abstract partial class FirmwareAnalysisSummaryProperties
     {
@@ -55,15 +55,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FirmwareAnalysisSummaryProperties"/>. </summary>
-        /// <param name="summaryType"> Describes the type of summary. </param>
+        /// <param name="summaryType"> The type of summary. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirmwareAnalysisSummaryProperties(FirmwareAnalysisSummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FirmwareAnalysisSummaryProperties(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SummaryType = summaryType;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Describes the type of summary. </summary>
+        /// <summary> The type of summary. </summary>
         internal FirmwareAnalysisSummaryType SummaryType { get; set; }
+        /// <summary> The status of the last operation. </summary>
+        public FirmwareProvisioningState? ProvisioningState { get; }
     }
 }

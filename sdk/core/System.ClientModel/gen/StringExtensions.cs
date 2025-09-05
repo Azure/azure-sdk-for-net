@@ -13,6 +13,7 @@ internal static class StringExtensions
 
     private static readonly Dictionary<char, string?> s_toIdentifierReplacements = new()
     {
+        { '.', "_" },
         { '<', "_" },
         { '>', "" },
         { '[', "_Array" },

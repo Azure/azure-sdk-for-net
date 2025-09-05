@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerJobExecutionResource : IJsonModel<SqlServerJobExecutionData>
     {
+        private static SqlServerJobExecutionData s_dataDeserializationInstance;
+        private static SqlServerJobExecutionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlServerJobExecutionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobExecutionData>)Data).Write(writer, options);
 
-        SqlServerJobExecutionData IJsonModel<SqlServerJobExecutionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobExecutionData>)Data).Create(ref reader, options);
+        SqlServerJobExecutionData IJsonModel<SqlServerJobExecutionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobExecutionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerJobExecutionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerJobExecutionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerJobExecutionData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerJobExecutionData IPersistableModel<SqlServerJobExecutionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobExecutionData>(data, options);
+        SqlServerJobExecutionData IPersistableModel<SqlServerJobExecutionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobExecutionData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerJobExecutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobExecutionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlServerJobExecutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobExecutionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

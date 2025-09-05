@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class SiteProcessModuleResource : IJsonModel<ProcessModuleInfoData>
     {
+        private static ProcessModuleInfoData s_dataDeserializationInstance;
+        private static ProcessModuleInfoData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ProcessModuleInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProcessModuleInfoData>)Data).Write(writer, options);
 
-        ProcessModuleInfoData IJsonModel<ProcessModuleInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProcessModuleInfoData>)Data).Create(ref reader, options);
+        ProcessModuleInfoData IJsonModel<ProcessModuleInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProcessModuleInfoData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProcessModuleInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ProcessModuleInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProcessModuleInfoData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        ProcessModuleInfoData IPersistableModel<ProcessModuleInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProcessModuleInfoData>(data, options);
+        ProcessModuleInfoData IPersistableModel<ProcessModuleInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProcessModuleInfoData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<ProcessModuleInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProcessModuleInfoData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ProcessModuleInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProcessModuleInfoData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

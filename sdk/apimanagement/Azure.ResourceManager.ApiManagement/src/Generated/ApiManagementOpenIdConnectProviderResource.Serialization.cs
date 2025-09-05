@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementOpenIdConnectProviderResource : IJsonModel<ApiManagementOpenIdConnectProviderData>
     {
+        private static ApiManagementOpenIdConnectProviderData s_dataDeserializationInstance;
+        private static ApiManagementOpenIdConnectProviderData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiManagementOpenIdConnectProviderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementOpenIdConnectProviderData>)Data).Write(writer, options);
 
-        ApiManagementOpenIdConnectProviderData IJsonModel<ApiManagementOpenIdConnectProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementOpenIdConnectProviderData>)Data).Create(ref reader, options);
+        ApiManagementOpenIdConnectProviderData IJsonModel<ApiManagementOpenIdConnectProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementOpenIdConnectProviderData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementOpenIdConnectProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementOpenIdConnectProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementOpenIdConnectProviderData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiManagementOpenIdConnectProviderData IPersistableModel<ApiManagementOpenIdConnectProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementOpenIdConnectProviderData>(data, options);
+        ApiManagementOpenIdConnectProviderData IPersistableModel<ApiManagementOpenIdConnectProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementOpenIdConnectProviderData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementOpenIdConnectProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementOpenIdConnectProviderData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementOpenIdConnectProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementOpenIdConnectProviderData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The WafRankingsResponseDataItem. </summary>
+    /// <summary>
+    /// The WafRankingsResponseDataItem.
+    /// Serialized Name: WafRankingsResponseDataItem
+    /// </summary>
     public partial class WafRankingsResponseDataItem
     {
         /// <summary>
@@ -53,8 +56,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WafRankingsResponseDataItem"/>. </summary>
-        /// <param name="groupValues"></param>
-        /// <param name="metrics"></param>
+        /// <param name="groupValues"> Serialized Name: WafRankingsResponseDataItem.groupValues. </param>
+        /// <param name="metrics"> Serialized Name: WafRankingsResponseDataItem.metrics. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WafRankingsResponseDataItem(IReadOnlyList<string> groupValues, IReadOnlyList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> metrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +66,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the group values. </summary>
+        /// <summary> Serialized Name: WafRankingsResponseDataItem.groupValues. </summary>
         public IReadOnlyList<string> GroupValues { get; }
-        /// <summary> Gets the metrics. </summary>
+        /// <summary> Serialized Name: WafRankingsResponseDataItem.metrics. </summary>
         public IReadOnlyList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> Metrics { get; }
     }
 }

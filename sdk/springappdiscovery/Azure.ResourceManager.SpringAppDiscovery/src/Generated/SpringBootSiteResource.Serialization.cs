@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery
 {
     public partial class SpringBootSiteResource : IJsonModel<SpringBootSiteData>
     {
+        private static SpringBootSiteData s_dataDeserializationInstance;
+        private static SpringBootSiteData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SpringBootSiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SpringBootSiteData>)Data).Write(writer, options);
 
-        SpringBootSiteData IJsonModel<SpringBootSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SpringBootSiteData>)Data).Create(ref reader, options);
+        SpringBootSiteData IJsonModel<SpringBootSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SpringBootSiteData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SpringBootSiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SpringBootSiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SpringBootSiteData>(Data, options, AzureResourceManagerSpringAppDiscoveryContext.Default);
 
-        SpringBootSiteData IPersistableModel<SpringBootSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SpringBootSiteData>(data, options);
+        SpringBootSiteData IPersistableModel<SpringBootSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SpringBootSiteData>(data, options, AzureResourceManagerSpringAppDiscoveryContext.Default);
 
-        string IPersistableModel<SpringBootSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SpringBootSiteData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SpringBootSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SpringBootSiteData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

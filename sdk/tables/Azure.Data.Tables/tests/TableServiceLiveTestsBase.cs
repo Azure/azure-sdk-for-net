@@ -421,6 +421,15 @@ namespace Azure.Data.Tables.Tests
             public ETag ETag { get; set; }
         }
 
+        public class TimeSpanTestEntity : ITableEntity
+        {
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
+            public TimeSpan? TimespanProperty { get; set; }
+        }
+
         public class ComplexEntity : ITableEntity
         {
             public const int NumberOfNonNullProperties = 28;

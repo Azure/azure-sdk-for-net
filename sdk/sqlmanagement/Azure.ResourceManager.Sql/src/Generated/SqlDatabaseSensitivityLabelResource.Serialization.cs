@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlDatabaseSensitivityLabelResource : IJsonModel<SensitivityLabelData>
     {
+        private static SensitivityLabelData s_dataDeserializationInstance;
+        private static SensitivityLabelData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SensitivityLabelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SensitivityLabelData>)Data).Write(writer, options);
 
-        SensitivityLabelData IJsonModel<SensitivityLabelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SensitivityLabelData>)Data).Create(ref reader, options);
+        SensitivityLabelData IJsonModel<SensitivityLabelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SensitivityLabelData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SensitivityLabelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SensitivityLabelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SensitivityLabelData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SensitivityLabelData IPersistableModel<SensitivityLabelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SensitivityLabelData>(data, options);
+        SensitivityLabelData IPersistableModel<SensitivityLabelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SensitivityLabelData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SensitivityLabelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SensitivityLabelData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SensitivityLabelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SensitivityLabelData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

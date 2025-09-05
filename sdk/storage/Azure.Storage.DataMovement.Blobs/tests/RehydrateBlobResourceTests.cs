@@ -71,6 +71,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 contentDisposition: DefaultContentDisposition,
                 isCacheControlSet: true,
                 cacheControl: DefaultCacheControl,
+                isAccessTierSet: true,
                 accessTier: accessTier,
                 isMetadataSet: true,
                 metadata: DataProvider.BuildMetadata(),
@@ -91,6 +92,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             default,
             false,
             default,
+            false,
             default,
             false,
             default,
@@ -183,6 +185,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     .FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
+            Assert.AreEqual(checkpointDetails.IsAccessTierSet, storageResource._options._isAccessTierSet);
             Assert.AreEqual(checkpointDetails.AccessTierValue.Value, storageResource._options.AccessTier.Value);
             Assert.AreEqual(checkpointDetails.IsMetadataSet, storageResource._options._isMetadataSet);
             Assert.AreEqual(checkpointDetails.Metadata, storageResource._options.Metadata);
@@ -262,6 +265,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
             Assert.AreEqual(checkpointDetails.IsMetadataSet, storageResource._options._isMetadataSet);
             Assert.AreEqual(checkpointDetails.Metadata, storageResource._options.Metadata);
+            Assert.AreEqual(checkpointDetails.IsAccessTierSet, storageResource._options._isAccessTierSet);
+            Assert.AreEqual(checkpointDetails.AccessTierValue.Value, storageResource._options.AccessTier.Value);
             Assert.AreEqual(checkpointDetails.IsCacheControlSet, storageResource._options._isCacheControlSet);
             Assert.AreEqual(checkpointDetails.CacheControl, storageResource._options.CacheControl);
             Assert.AreEqual(checkpointDetails.IsContentDispositionSet, storageResource._options._isContentDispositionSet);

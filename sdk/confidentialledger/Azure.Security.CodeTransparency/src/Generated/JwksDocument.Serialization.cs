@@ -109,7 +109,7 @@ namespace Azure.Security.CodeTransparency
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureSecurityCodeTransparencyContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(JwksDocument)} does not support writing '{options.Format}' format.");
             }

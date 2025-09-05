@@ -10,11 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the cache-key query string action for the delivery rule. </summary>
+    /// <summary>
+    /// Defines the cache-key query string action for the delivery rule.
+    /// Serialized Name: DeliveryRuleCacheKeyQueryStringAction
+    /// </summary>
     public partial class DeliveryRuleCacheKeyQueryStringAction : DeliveryRuleAction
     {
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleCacheKeyQueryStringAction"/>. </summary>
-        /// <param name="properties"> Defines the parameters for the action. </param>
+        /// <param name="properties">
+        /// Defines the parameters for the action.
+        /// Serialized Name: DeliveryRuleCacheKeyQueryStringAction.parameters
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeliveryRuleCacheKeyQueryStringAction(CacheKeyQueryStringActionProperties properties)
         {
@@ -25,9 +31,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleCacheKeyQueryStringAction"/>. </summary>
-        /// <param name="name"> The name of the action for the delivery rule. </param>
+        /// <param name="name">
+        /// The name of the action for the delivery rule.
+        /// Serialized Name: DeliveryRuleAction.name
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Defines the parameters for the action. </param>
+        /// <param name="properties">
+        /// Defines the parameters for the action.
+        /// Serialized Name: DeliveryRuleCacheKeyQueryStringAction.parameters
+        /// </param>
         internal DeliveryRuleCacheKeyQueryStringAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, CacheKeyQueryStringActionProperties properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
@@ -39,7 +51,10 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Defines the parameters for the action. </summary>
+        /// <summary>
+        /// Defines the parameters for the action.
+        /// Serialized Name: DeliveryRuleCacheKeyQueryStringAction.parameters
+        /// </summary>
         public CacheKeyQueryStringActionProperties Properties { get; set; }
     }
 }

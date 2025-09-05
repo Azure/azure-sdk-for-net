@@ -38,8 +38,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
         /// <param name="targetNicTags"> The tags for the target NICs. </param>
         /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="linuxLicenseType"> The license type for Linux VM's. </param>
+        /// <param name="userSelectedOSName"> The OS name selected by user. </param>
         /// <param name="vmDisks"> The list of disk update properties. </param>
-        internal HyperVReplicaAzureUpdateReplicationProtectedItemContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryAzureV1ResourceGroupId, ResourceIdentifier recoveryAzureV2ResourceGroupId, string useManagedDisks, IDictionary<string, string> diskIdToDiskEncryptionMap, ResourceIdentifier targetProximityPlacementGroupId, string targetAvailabilityZone, IDictionary<string, string> targetVmTags, IDictionary<string, string> targetManagedDiskTags, IDictionary<string, string> targetNicTags, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, IList<UpdateDiskContent> vmDisks) : base(instanceType, serializedAdditionalRawData)
+        internal HyperVReplicaAzureUpdateReplicationProtectedItemContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryAzureV1ResourceGroupId, ResourceIdentifier recoveryAzureV2ResourceGroupId, string useManagedDisks, IDictionary<string, string> diskIdToDiskEncryptionMap, ResourceIdentifier targetProximityPlacementGroupId, string targetAvailabilityZone, IDictionary<string, string> targetVmTags, IDictionary<string, string> targetManagedDiskTags, IDictionary<string, string> targetNicTags, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, string userSelectedOSName, IList<UpdateDiskContent> vmDisks) : base(instanceType, serializedAdditionalRawData)
         {
             RecoveryAzureV1ResourceGroupId = recoveryAzureV1ResourceGroupId;
             RecoveryAzureV2ResourceGroupId = recoveryAzureV2ResourceGroupId;
@@ -51,6 +53,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetManagedDiskTags = targetManagedDiskTags;
             TargetNicTags = targetNicTags;
             SqlServerLicenseType = sqlServerLicenseType;
+            LinuxLicenseType = linuxLicenseType;
+            UserSelectedOSName = userSelectedOSName;
             VmDisks = vmDisks;
             InstanceType = instanceType ?? "HyperVReplicaAzure";
         }
@@ -75,6 +79,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public IDictionary<string, string> TargetNicTags { get; }
         /// <summary> The SQL Server license type. </summary>
         public SiteRecoverySqlServerLicenseType? SqlServerLicenseType { get; set; }
+        /// <summary> The license type for Linux VM's. </summary>
+        public RecoveryServicesSiteRecoveryLinuxLicenseType? LinuxLicenseType { get; set; }
+        /// <summary> The OS name selected by user. </summary>
+        public string UserSelectedOSName { get; set; }
         /// <summary> The list of disk update properties. </summary>
         public IList<UpdateDiskContent> VmDisks { get; }
     }

@@ -1,5 +1,11 @@
 namespace Azure.Security.CodeTransparency
 {
+    public partial class AzureSecurityCodeTransparencyContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureSecurityCodeTransparencyContext() { }
+        public static Azure.Security.CodeTransparency.AzureSecurityCodeTransparencyContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CodeTransparencyCertificateClient
     {
         protected CodeTransparencyCertificateClient() { }
@@ -39,7 +45,7 @@ namespace Azure.Security.CodeTransparency
         public virtual Azure.Response<System.BinaryData> GetTransparencyConfigCbor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTransparencyConfigCborAsync(Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetTransparencyConfigCborAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes) { }
+        public virtual void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes) { }
     }
     public partial class CodeTransparencyClientOptions : Azure.Core.ClientOptions
     {

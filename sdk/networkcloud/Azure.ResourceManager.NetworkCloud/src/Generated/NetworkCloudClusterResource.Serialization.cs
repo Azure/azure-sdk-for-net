@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudClusterResource : IJsonModel<NetworkCloudClusterData>
     {
+        private static NetworkCloudClusterData s_dataDeserializationInstance;
+        private static NetworkCloudClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkCloudClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudClusterData>)Data).Write(writer, options);
 
-        NetworkCloudClusterData IJsonModel<NetworkCloudClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudClusterData>)Data).Create(ref reader, options);
+        NetworkCloudClusterData IJsonModel<NetworkCloudClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudClusterData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkCloudClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkCloudClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudClusterData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        NetworkCloudClusterData IPersistableModel<NetworkCloudClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudClusterData>(data, options);
+        NetworkCloudClusterData IPersistableModel<NetworkCloudClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudClusterData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        string IPersistableModel<NetworkCloudClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudClusterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkCloudClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

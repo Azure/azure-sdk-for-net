@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.DataShare
 {
+    public partial class AzureResourceManagerDataShareContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerDataShareContext() { }
+        public static Azure.ResourceManager.DataShare.AzureResourceManagerDataShareContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DataShareAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.DataShareAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.DataShareAccountResource>, System.Collections.IEnumerable
     {
         protected DataShareAccountCollection() { }

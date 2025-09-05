@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MixedReality.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMixedRealityContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MixedRealityAccountKeys)} does not support writing '{options.Format}' format.");
             }

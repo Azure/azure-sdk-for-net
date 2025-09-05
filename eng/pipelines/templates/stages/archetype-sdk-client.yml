@@ -54,6 +54,15 @@ parameters:
   - name: oneESTemplateTag
     type: string
     default: true
+  - name: ExcludePaths
+    type: object
+    default: []
+  - name: PublicFeed
+    type: string
+    default: 'Nuget.org'
+  - name: PublicPublishEnvironment
+    type: string
+    default: package-publish
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
@@ -101,8 +110,13 @@ extends:
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
             DependsOn:
               - Build
-            Artifacts: ${{ parameters.Artifacts }}
+            Artifacts:
+              - ${{ each artifact in parameters.Artifacts }}:
+                 - ${{ if ne(artifact.createReleaseStage, 'false') }}:
+                    - ${{ artifact }}
             ${{ if eq(parameters.ServiceDirectory, 'template') }}:
               TestPipeline: true
             ArtifactName: packages
+            PublicFeed: ${{ parameters.PublicFeed }}
+            PublicPublishEnvironment: ${{ parameters.PublicPublishEnvironment }}
 

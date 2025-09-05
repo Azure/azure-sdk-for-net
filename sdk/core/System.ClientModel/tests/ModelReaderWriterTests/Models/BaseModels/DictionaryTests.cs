@@ -73,7 +73,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
 
                 protected override object CreateInstance() => new Dictionary<string, BaseModel>();
 
-                protected override void AddKeyValuePair(object collection, string key, object item)
+                protected override void AddItemWithKey(object collection, string key, object item)
                     => ((Dictionary<string, BaseModel>)collection).Add(key, (BaseModel)item);
             }
         }

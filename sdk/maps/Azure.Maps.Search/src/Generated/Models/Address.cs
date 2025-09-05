@@ -27,8 +27,10 @@ namespace Azure.Maps.Search.Models
         /// <param name="postalCode"> Postal Code property. </param>
         /// <param name="countryRegion"></param>
         /// <param name="formattedAddress"> Formatted Address property. </param>
+        /// <param name="streetName"> The name of the street from formattedAddress. </param>
+        /// <param name="streetNumber"> The number in the street, if available, from formattedAddress. </param>
         /// <param name="intersection"> The address of the result. </param>
-        internal Address(string addressLine, string locality, string neighborhood, IReadOnlyList<AddressAdminDistrictsItem> adminDistricts, string postalCode, AddressCountryRegion countryRegion, string formattedAddress, Intersection intersection)
+        internal Address(string addressLine, string locality, string neighborhood, IReadOnlyList<AddressAdminDistrictsItem> adminDistricts, string postalCode, AddressCountryRegion countryRegion, string formattedAddress, string streetName, string streetNumber, Intersection intersection)
         {
             AddressLine = addressLine;
             Locality = locality;
@@ -37,6 +39,8 @@ namespace Azure.Maps.Search.Models
             PostalCode = postalCode;
             CountryRegion = countryRegion;
             FormattedAddress = formattedAddress;
+            StreetName = streetName;
+            StreetNumber = streetNumber;
             Intersection = intersection;
         }
 
@@ -54,6 +58,10 @@ namespace Azure.Maps.Search.Models
         public AddressCountryRegion CountryRegion { get; }
         /// <summary> Formatted Address property. </summary>
         public string FormattedAddress { get; }
+        /// <summary> The name of the street from formattedAddress. </summary>
+        public string StreetName { get; }
+        /// <summary> The number in the street, if available, from formattedAddress. </summary>
+        public string StreetNumber { get; }
         /// <summary> The address of the result. </summary>
         public Intersection Intersection { get; }
     }

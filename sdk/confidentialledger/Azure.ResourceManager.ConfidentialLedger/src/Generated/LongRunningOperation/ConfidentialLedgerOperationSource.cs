@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         ConfidentialLedgerResource IOperationSource<ConfidentialLedgerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConfidentialLedgerData>(response.Content);
+            var data = ModelReaderWriter.Read<ConfidentialLedgerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConfidentialLedgerContext.Default);
             return new ConfidentialLedgerResource(_client, data);
         }
 
         async ValueTask<ConfidentialLedgerResource> IOperationSource<ConfidentialLedgerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConfidentialLedgerData>(response.Content);
+            var data = ModelReaderWriter.Read<ConfidentialLedgerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConfidentialLedgerContext.Default);
             return await Task.FromResult(new ConfidentialLedgerResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.ServiceNetworking
 
         AssociationData IJsonModel<AssociationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AssociationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AssociationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AssociationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options, AzureResourceManagerServiceNetworkingContext.Default);
 
-        AssociationData IPersistableModel<AssociationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AssociationData>(data, options);
+        AssociationData IPersistableModel<AssociationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AssociationData>(data, options, AzureResourceManagerServiceNetworkingContext.Default);
 
         string IPersistableModel<AssociationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AssociationData>)Data).GetFormatFromOptions(options);
     }

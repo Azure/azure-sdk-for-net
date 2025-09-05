@@ -86,14 +86,14 @@ internal class TestConnectionStore : ConnectionStore
     {
         _provider.AddConnection(connectionId, new ClientConnection(connectionId, endpoint));
     }
-    public ConnectionProvider Provider => _provider;
+    public ClientConnectionProvider Provider => _provider;
 }
-internal class TestConnectionProvider : ConnectionProvider
+internal class TestConnectionProvider : ClientConnectionProvider
 {
     private readonly Dictionary<string, ClientConnection> _connections = new();
     private readonly TokenCredential _credential;
 
-    public TestConnectionProvider(TokenCredential credential)
+    public TestConnectionProvider(TokenCredential credential) : base(maxCacheSize: 100)
         => _credential = credential;
     public override ClientConnection GetConnection(string connectionId)
         => _connections[connectionId];
@@ -102,7 +102,7 @@ internal class TestConnectionProvider : ConnectionProvider
     {
         if (connection.Credential == null)
         {
-            _connections.Add(connectionId, new ClientConnection(connectionId, connection.Locator, _credential));
+            _connections.Add(connectionId, new ClientConnection(connectionId, connection.Locator, _credential, CredentialKind.TokenCredential));
         }
         else
         {

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.StoragePool
 
         DiskPoolIscsiTargetResource IOperationSource<DiskPoolIscsiTargetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DiskPoolIscsiTargetData>(response.Content);
+            var data = ModelReaderWriter.Read<DiskPoolIscsiTargetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStoragePoolContext.Default);
             return new DiskPoolIscsiTargetResource(_client, data);
         }
 
         async ValueTask<DiskPoolIscsiTargetResource> IOperationSource<DiskPoolIscsiTargetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DiskPoolIscsiTargetData>(response.Content);
+            var data = ModelReaderWriter.Read<DiskPoolIscsiTargetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStoragePoolContext.Default);
             return await Task.FromResult(new DiskPoolIscsiTargetResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class DatabaseAdvancedThreatProtectionResource : IJsonModel<DatabaseAdvancedThreatProtectionData>
     {
+        private static DatabaseAdvancedThreatProtectionData s_dataDeserializationInstance;
+        private static DatabaseAdvancedThreatProtectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DatabaseAdvancedThreatProtectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseAdvancedThreatProtectionData>)Data).Write(writer, options);
 
-        DatabaseAdvancedThreatProtectionData IJsonModel<DatabaseAdvancedThreatProtectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseAdvancedThreatProtectionData>)Data).Create(ref reader, options);
+        DatabaseAdvancedThreatProtectionData IJsonModel<DatabaseAdvancedThreatProtectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseAdvancedThreatProtectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DatabaseAdvancedThreatProtectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DatabaseAdvancedThreatProtectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatabaseAdvancedThreatProtectionData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        DatabaseAdvancedThreatProtectionData IPersistableModel<DatabaseAdvancedThreatProtectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseAdvancedThreatProtectionData>(data, options);
+        DatabaseAdvancedThreatProtectionData IPersistableModel<DatabaseAdvancedThreatProtectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseAdvancedThreatProtectionData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<DatabaseAdvancedThreatProtectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseAdvancedThreatProtectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DatabaseAdvancedThreatProtectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseAdvancedThreatProtectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MachineLearning
 
         MachineLearningBatchEndpointResource IOperationSource<MachineLearningBatchEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MachineLearningBatchEndpointData>(response.Content);
+            var data = ModelReaderWriter.Read<MachineLearningBatchEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMachineLearningContext.Default);
             return new MachineLearningBatchEndpointResource(_client, data);
         }
 
         async ValueTask<MachineLearningBatchEndpointResource> IOperationSource<MachineLearningBatchEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MachineLearningBatchEndpointData>(response.Content);
+            var data = ModelReaderWriter.Read<MachineLearningBatchEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMachineLearningContext.Default);
             return await Task.FromResult(new MachineLearningBatchEndpointResource(_client, data)).ConfigureAwait(false);
         }
     }

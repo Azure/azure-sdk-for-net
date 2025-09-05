@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EnrichmentIPAddressContent)} does not support writing '{options.Format}' format.");
             }

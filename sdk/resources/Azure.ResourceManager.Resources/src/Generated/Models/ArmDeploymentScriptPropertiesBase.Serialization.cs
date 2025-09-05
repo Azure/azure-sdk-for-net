@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            ContainerConfiguration containerSettings = default;
+            ScriptContainerConfiguration containerSettings = default;
             ScriptStorageConfiguration storageAccountSettings = default;
             ScriptCleanupOptions? cleanupPreference = default;
             ScriptProvisioningState? provisioningState = default;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property.Value, options);
+                    containerSettings = ScriptContainerConfiguration.DeserializeScriptContainerConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageAccountSettings"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ArmDeploymentScriptPropertiesBase)} does not support writing '{options.Format}' format.");
             }

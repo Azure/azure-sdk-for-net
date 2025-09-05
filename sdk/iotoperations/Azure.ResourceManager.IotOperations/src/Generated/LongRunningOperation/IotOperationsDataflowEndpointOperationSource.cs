@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.IotOperations
 
         IotOperationsDataflowEndpointResource IOperationSource<IotOperationsDataflowEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotOperationsDataflowEndpointData>(response.Content);
+            var data = ModelReaderWriter.Read<IotOperationsDataflowEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotOperationsContext.Default);
             return new IotOperationsDataflowEndpointResource(_client, data);
         }
 
         async ValueTask<IotOperationsDataflowEndpointResource> IOperationSource<IotOperationsDataflowEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotOperationsDataflowEndpointData>(response.Content);
+            var data = ModelReaderWriter.Read<IotOperationsDataflowEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotOperationsContext.Default);
             return await Task.FromResult(new IotOperationsDataflowEndpointResource(_client, data)).ConfigureAwait(false);
         }
     }

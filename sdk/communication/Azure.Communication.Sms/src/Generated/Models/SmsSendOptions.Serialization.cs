@@ -27,6 +27,11 @@ namespace Azure.Communication.Sms
                 writer.WritePropertyName("deliveryReportTimeoutInSeconds"u8);
                 writer.WriteNumberValue(DeliveryReportTimeoutInSeconds.Value);
             }
+            if (Optional.IsDefined(MessagingConnect))
+            {
+                writer.WritePropertyName("messagingConnect"u8);
+                writer.WriteObjectValue(MessagingConnect);
+            }
             writer.WriteEndObject();
         }
 

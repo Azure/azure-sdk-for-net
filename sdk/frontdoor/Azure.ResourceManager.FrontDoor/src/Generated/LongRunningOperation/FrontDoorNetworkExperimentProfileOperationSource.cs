@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.FrontDoor
 
         FrontDoorNetworkExperimentProfileResource IOperationSource<FrontDoorNetworkExperimentProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FrontDoorNetworkExperimentProfileData>(response.Content);
+            var data = ModelReaderWriter.Read<FrontDoorNetworkExperimentProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerFrontDoorContext.Default);
             return new FrontDoorNetworkExperimentProfileResource(_client, data);
         }
 
         async ValueTask<FrontDoorNetworkExperimentProfileResource> IOperationSource<FrontDoorNetworkExperimentProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FrontDoorNetworkExperimentProfileData>(response.Content);
+            var data = ModelReaderWriter.Read<FrontDoorNetworkExperimentProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerFrontDoorContext.Default);
             return await Task.FromResult(new FrontDoorNetworkExperimentProfileResource(_client, data)).ConfigureAwait(false);
         }
     }

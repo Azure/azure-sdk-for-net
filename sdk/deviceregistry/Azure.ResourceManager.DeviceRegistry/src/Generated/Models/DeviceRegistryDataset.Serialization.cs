@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceRegistryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeviceRegistryDataset)} does not support writing '{options.Format}' format.");
             }

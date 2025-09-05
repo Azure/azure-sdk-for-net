@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class IssueTests : ApiManagementManagementTestBase
     {
         public IssueTests(bool isAsync)
-                    : base(isAsync)//, RecordedTestMode.Record)
+                    : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private async Task SetCollectionsAsync()
         {
-            ResourceGroup = await CreateResourceGroupAsync();
+            ResourceGroup = await CreateResourceGroupAsync(AzureLocation.EastUS);
             ApiServiceCollection = ResourceGroup.GetApiManagementServices();
         }
 

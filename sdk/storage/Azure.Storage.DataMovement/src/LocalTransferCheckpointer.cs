@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.MemoryMappedFiles;
@@ -27,7 +28,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Stores references to the memory mapped files stored by IDs.
         /// </summary>
-        internal readonly Dictionary<string, JobPlanFile> _transferStates;
+        internal readonly ConcurrentDictionary<string, JobPlanFile> _transferStates;
 
         /// <summary>
         /// Initializes a new instance of <see cref="LocalTransferCheckpointer"/> class.
@@ -35,7 +36,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="folderPath">Path to the folder containing the checkpointing information to resume from.</param>
         public LocalTransferCheckpointer(string folderPath)
         {
-            _transferStates = new Dictionary<string, JobPlanFile>();
+            _transferStates = new ConcurrentDictionary<string, JobPlanFile>();
             if (string.IsNullOrEmpty(folderPath))
             {
                 _pathToCheckpointer = Path.Combine(Environment.CurrentDirectory, DataMovementConstants.DefaultCheckpointerPath);
@@ -109,7 +110,7 @@ namespace Azure.Storage.DataMovement
                     transferId,
                     headerStream,
                     cancellationToken).ConfigureAwait(false);
-                _transferStates.Add(transferId, jobPlanFile);
+                AddToTransferStates(transferId, jobPlanFile);
             }
         }
 
@@ -302,7 +303,7 @@ namespace Azure.Storage.DataMovement
                 }
             }
 
-            _transferStates.Remove(transferId);
+            _transferStates.TryRemove(transferId, out _);
             return Task.FromResult(result);
         }
 
@@ -337,7 +338,8 @@ namespace Azure.Storage.DataMovement
             // if paused or other completion state, remove the memory cache but still write state to the plan file for later resume
             if (status.State == TransferState.Completed || status.State == TransferState.Paused)
             {
-                _transferStates.Remove(transferId);
+                // If TryRemove fails, it's fine it may be because it does not already exist or already has been removed
+                _transferStates.TryRemove(transferId, out _);
             }
 
             await jobPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
@@ -406,7 +408,7 @@ namespace Azure.Storage.DataMovement
                 JobPlanFile jobPlanFile = JobPlanFile.LoadExistingJobPlanFile(path);
                 if (!_transferStates.ContainsKey(jobPlanFile.Id))
                 {
-                    _transferStates.Add(jobPlanFile.Id, jobPlanFile);
+                    AddToTransferStates(jobPlanFile.Id, jobPlanFile);
                 }
                 else
                 {
@@ -433,17 +435,18 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Clears cache for a given trandfer ID and repopulates from disk if any.
+        /// Clears cache for a given transfer ID and repopulates from disk if any.
         /// </summary>
         private void RefreshCache(string transferId)
         {
-            _transferStates.Remove(transferId);
+            // If TryRemove fails, it's fine it may be because it does not already exist or already has been removed
+            _transferStates.TryRemove(transferId, out _);
             JobPlanFile jobPlanFile = JobPlanFile.LoadExistingJobPlanFile(_pathToCheckpointer, transferId);
             if (!File.Exists(jobPlanFile.FilePath))
             {
                 return;
             }
-            _transferStates.Add(transferId, jobPlanFile);
+            AddToTransferStates(transferId, jobPlanFile);
             foreach (string path in Directory.EnumerateFiles(_pathToCheckpointer)
                 .Where(p => Path.GetExtension(p) == DataMovementConstants.JobPartPlanFile.FileExtension))
             {
@@ -475,6 +478,14 @@ namespace Azure.Storage.DataMovement
             else
             {
                 throw Errors.InvalidSourceDestinationParams();
+            }
+        }
+
+        private void AddToTransferStates(string transferId, JobPlanFile jobPlanFile)
+        {
+            if (!_transferStates.TryAdd(transferId, jobPlanFile))
+            {
+                throw Errors.CollisionJobPlanFile(transferId);
             }
         }
     }

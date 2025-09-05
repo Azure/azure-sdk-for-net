@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.StorageMover
 {
     public partial class StorageMoverResource : IJsonModel<StorageMoverData>
     {
+        private static StorageMoverData s_dataDeserializationInstance;
+        private static StorageMoverData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StorageMoverData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageMoverData>)Data).Write(writer, options);
 
-        StorageMoverData IJsonModel<StorageMoverData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageMoverData>)Data).Create(ref reader, options);
+        StorageMoverData IJsonModel<StorageMoverData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageMoverData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StorageMoverData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StorageMoverData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageMoverData>(Data, options, AzureResourceManagerStorageMoverContext.Default);
 
-        StorageMoverData IPersistableModel<StorageMoverData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageMoverData>(data, options);
+        StorageMoverData IPersistableModel<StorageMoverData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageMoverData>(data, options, AzureResourceManagerStorageMoverContext.Default);
 
-        string IPersistableModel<StorageMoverData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageMoverData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StorageMoverData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageMoverData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

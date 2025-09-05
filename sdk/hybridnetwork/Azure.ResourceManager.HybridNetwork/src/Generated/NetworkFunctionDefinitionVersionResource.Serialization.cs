@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     public partial class NetworkFunctionDefinitionVersionResource : IJsonModel<NetworkFunctionDefinitionVersionData>
     {
+        private static NetworkFunctionDefinitionVersionData s_dataDeserializationInstance;
+        private static NetworkFunctionDefinitionVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkFunctionDefinitionVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFunctionDefinitionVersionData>)Data).Write(writer, options);
 
-        NetworkFunctionDefinitionVersionData IJsonModel<NetworkFunctionDefinitionVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFunctionDefinitionVersionData>)Data).Create(ref reader, options);
+        NetworkFunctionDefinitionVersionData IJsonModel<NetworkFunctionDefinitionVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFunctionDefinitionVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkFunctionDefinitionVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkFunctionDefinitionVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFunctionDefinitionVersionData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        NetworkFunctionDefinitionVersionData IPersistableModel<NetworkFunctionDefinitionVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFunctionDefinitionVersionData>(data, options);
+        NetworkFunctionDefinitionVersionData IPersistableModel<NetworkFunctionDefinitionVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFunctionDefinitionVersionData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        string IPersistableModel<NetworkFunctionDefinitionVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFunctionDefinitionVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkFunctionDefinitionVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFunctionDefinitionVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

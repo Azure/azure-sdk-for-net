@@ -68,8 +68,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="backupOn"> The time the backup was taken. </param>
         /// <param name="backupExpireOn"> The time the long term retention backup will expire. </param>
         /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
+        /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backup. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceLongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedInstanceName, DateTimeOffset? managedInstanceCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, SqlBackupStorageRedundancy? backupStorageRedundancy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ManagedInstanceLongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedInstanceName, DateTimeOffset? managedInstanceCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageAccessTier? backupStorageAccessTier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ManagedInstanceName = managedInstanceName;
             ManagedInstanceCreateOn = managedInstanceCreateOn;
@@ -78,6 +79,7 @@ namespace Azure.ResourceManager.Sql
             BackupOn = backupOn;
             BackupExpireOn = backupExpireOn;
             BackupStorageRedundancy = backupStorageRedundancy;
+            BackupStorageAccessTier = backupStorageAccessTier;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -102,5 +104,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The storage redundancy type of the backup. </summary>
         [WirePath("properties.backupStorageRedundancy")]
         public SqlBackupStorageRedundancy? BackupStorageRedundancy { get; }
+        /// <summary> The BackupStorageAccessTier for the LTR backup. </summary>
+        [WirePath("properties.backupStorageAccessTier")]
+        public SqlBackupStorageAccessTier? BackupStorageAccessTier { get; }
     }
 }

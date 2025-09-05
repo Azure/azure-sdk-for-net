@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            FileShare driverShare = default;
+            DataMigrationFileShareInfo driverShare = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    driverShare = FileShare.DeserializeFileShare(property.Value, options);
+                    driverShare = DataMigrationFileShareInfo.DeserializeDataMigrationFileShareInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(UploadOciDriverTaskInput)} does not support writing '{options.Format}' format.");
             }

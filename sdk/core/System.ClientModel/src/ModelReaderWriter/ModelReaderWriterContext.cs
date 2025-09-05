@@ -33,9 +33,9 @@ public abstract class ModelReaderWriterContext
     /// <returns>True if the corresponding <see cref="ModelReaderWriterTypeBuilder"/> if defined in the context otherwise false.</returns>
     public bool TryGetTypeBuilder(Type type, [NotNullWhen(true)] out ModelReaderWriterTypeBuilder? builder)
     {
-        if (TryGetTypeBuilderCore(type, out builder))
+        if (TryGetTypeBuilderCore(type, out builder) && builder is not null)
         {
-            builder!.Context = this;
+            builder.Context = this;
             return true;
         }
 

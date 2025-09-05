@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementNamedValueResource : IJsonModel<ApiManagementNamedValueData>
     {
+        private static ApiManagementNamedValueData s_dataDeserializationInstance;
+        private static ApiManagementNamedValueData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiManagementNamedValueData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementNamedValueData>)Data).Write(writer, options);
 
-        ApiManagementNamedValueData IJsonModel<ApiManagementNamedValueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementNamedValueData>)Data).Create(ref reader, options);
+        ApiManagementNamedValueData IJsonModel<ApiManagementNamedValueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementNamedValueData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementNamedValueData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementNamedValueData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementNamedValueData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiManagementNamedValueData IPersistableModel<ApiManagementNamedValueData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementNamedValueData>(data, options);
+        ApiManagementNamedValueData IPersistableModel<ApiManagementNamedValueData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementNamedValueData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementNamedValueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementNamedValueData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementNamedValueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementNamedValueData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.EventHubs
 {
     public partial class EventHubsSchemaGroupResource : IJsonModel<EventHubsSchemaGroupData>
     {
+        private static EventHubsSchemaGroupData s_dataDeserializationInstance;
+        private static EventHubsSchemaGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<EventHubsSchemaGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsSchemaGroupData>)Data).Write(writer, options);
 
-        EventHubsSchemaGroupData IJsonModel<EventHubsSchemaGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsSchemaGroupData>)Data).Create(ref reader, options);
+        EventHubsSchemaGroupData IJsonModel<EventHubsSchemaGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsSchemaGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EventHubsSchemaGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EventHubsSchemaGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventHubsSchemaGroupData>(Data, options, AzureResourceManagerEventHubsContext.Default);
 
-        EventHubsSchemaGroupData IPersistableModel<EventHubsSchemaGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsSchemaGroupData>(data, options);
+        EventHubsSchemaGroupData IPersistableModel<EventHubsSchemaGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsSchemaGroupData>(data, options, AzureResourceManagerEventHubsContext.Default);
 
-        string IPersistableModel<EventHubsSchemaGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsSchemaGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<EventHubsSchemaGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsSchemaGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

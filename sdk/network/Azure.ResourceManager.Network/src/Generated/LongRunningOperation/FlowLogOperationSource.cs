@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         FlowLogResource IOperationSource<FlowLogResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FlowLogData>(response.Content);
+            var data = ModelReaderWriter.Read<FlowLogData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new FlowLogResource(_client, data);
         }
 
         async ValueTask<FlowLogResource> IOperationSource<FlowLogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FlowLogData>(response.Content);
+            var data = ModelReaderWriter.Read<FlowLogData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new FlowLogResource(_client, data)).ConfigureAwait(false);
         }
     }

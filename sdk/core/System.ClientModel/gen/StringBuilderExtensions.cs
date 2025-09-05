@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -52,7 +53,8 @@ internal static class StringBuilderExtensions
     {
         for (int i = 0; i < rank; i++)
         {
-            builder.Append("List<");
+            builder.AppendType(typeof(List<>));
+            builder.Append("<");
         }
         builder.Append(elementName);
         builder.Append('>', rank);

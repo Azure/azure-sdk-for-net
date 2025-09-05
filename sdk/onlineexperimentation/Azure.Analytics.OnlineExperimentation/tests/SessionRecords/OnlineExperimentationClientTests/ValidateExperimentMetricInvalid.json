@@ -1,0 +1,126 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics:validate?api-version=2025-05-31-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "287",
+        "Content-Type": "application/json",
+        "traceparent": "00-ac82c9ad2f89d1a062ad0505b3805089-d353e1ebbcc32736-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "lifecycle": "Active",
+        "displayName": "Invalid Metric",
+        "description": "An invalid metric for validation testing",
+        "categories": [
+          "Test"
+        ],
+        "desiredDirection": "Increase",
+        "definition": {
+          "type": "EventCount",
+          "event": {
+            "eventName": "ValidationEvent",
+            "filter": "this is not a valid filter expression."
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "1240",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 May 2025 04:35:17 GMT",
+        "mise-correlation-id": "355dadf3-4024-44c8-b6e0-63d581e3f258",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "5b624f9b-cdac-427b-9da2-5213e405fc20",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "diagnostics": [
+          {
+            "code": "InvalidEventCondition",
+            "message": "Expected: ;"
+          },
+          {
+            "code": "InvalidEventCondition",
+            "message": "Expected: ;"
+          },
+          {
+            "code": "InvalidEventCondition",
+            "message": "Expected: ;"
+          },
+          {
+            "code": "InvalidEventCondition",
+            "message": "Expected: ;"
+          },
+          {
+            "code": "InvalidEventCondition",
+            "message": "Expected: ;"
+          },
+          {
+            "code": "InvalidEventCondition",
+            "message": "Expected: ;"
+          },
+          {
+            "code": "InvalidEventCondition",
+            "message": "Missing name"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "Syntax of kind PathExpression is currently not supproted"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "NameReference 'this' is not supported"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "NameReference ' is' is not supported"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "NameReference ' not' is not supported"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "NameReference ' a' is not supported"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "NameReference ' valid' is not supported"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "NameReference ' filter' is not supported"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "NameReference ' expression' is not supported"
+          },
+          {
+            "code": "UnsupportedEventCondition",
+            "message": "NameReference '' is not supported"
+          }
+        ],
+        "isValid": false
+      }
+    }
+  ],
+  "Variables": {
+    "ENDPOINT": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net",
+    "RandomSeed": "744257200"
+  }
+}

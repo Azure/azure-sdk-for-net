@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.ServiceNetworking
 
         FrontendData IJsonModel<FrontendData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontendData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FrontendData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FrontendData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options, AzureResourceManagerServiceNetworkingContext.Default);
 
-        FrontendData IPersistableModel<FrontendData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontendData>(data, options);
+        FrontendData IPersistableModel<FrontendData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontendData>(data, options, AzureResourceManagerServiceNetworkingContext.Default);
 
         string IPersistableModel<FrontendData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontendData>)Data).GetFormatFromOptions(options);
     }

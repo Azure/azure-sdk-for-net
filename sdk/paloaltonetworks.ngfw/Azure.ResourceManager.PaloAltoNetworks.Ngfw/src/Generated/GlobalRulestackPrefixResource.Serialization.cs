@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     public partial class GlobalRulestackPrefixResource : IJsonModel<GlobalRulestackPrefixData>
     {
+        private static GlobalRulestackPrefixData s_dataDeserializationInstance;
+        private static GlobalRulestackPrefixData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GlobalRulestackPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GlobalRulestackPrefixData>)Data).Write(writer, options);
 
-        GlobalRulestackPrefixData IJsonModel<GlobalRulestackPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GlobalRulestackPrefixData>)Data).Create(ref reader, options);
+        GlobalRulestackPrefixData IJsonModel<GlobalRulestackPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GlobalRulestackPrefixData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GlobalRulestackPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GlobalRulestackPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GlobalRulestackPrefixData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        GlobalRulestackPrefixData IPersistableModel<GlobalRulestackPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GlobalRulestackPrefixData>(data, options);
+        GlobalRulestackPrefixData IPersistableModel<GlobalRulestackPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GlobalRulestackPrefixData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        string IPersistableModel<GlobalRulestackPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GlobalRulestackPrefixData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GlobalRulestackPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GlobalRulestackPrefixData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -1,10 +1,6 @@
-# Microsoft Azure NeonPostgres management client library for .NET
+# Microsoft Azure Neon Postgres management client library for .NET
 
-Neon is a modern Postgres database service that takes the world’s most-loved database and delivers it as a serverless platform designed to optimize both performance and cost. It eliminates the need for manual server resizing by offering compute and storage autoscaling, including scale-to-zero for inactive databases to save costs. Additionally, Neon supports database branching, enabling iterative CI/CD workflows and instant point-in-time recovery.
-
-Efficient autoscaling for Postgres. Neon’s autoscaling adjusts resources dynamically based on actual usage, boosting performance during traffic spikes.
-Faster developer workflows. Via database branching, developers can instantly create database copies for testing, feature development, and schema migrations.
-Perfect for AI apps and agents. With pgvector for vector embeddings, serverless speed for agentic infrastructure, and optimal price performance due to scale-to-zero.
+Neon is a cloud-native Postgres solution designed for modern applications. It offers a serverless, fully managed, and scalable Postgres database. Neon's advanced features include autoscaling, scale-to-zero, database branching, instant point-in-time restore, and time travel queries. Neon simplifies database management with seamless integration into your existing workflows, providing a powerful, cost-efficient solution for developers and businesses. 
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,14 +10,14 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started
+## Getting started 
 
 ### Install the package
 
-Install the Microsoft Azure NeonPostgres management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Neon Postgres management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.NeonPostgres --prerelease
+dotnet add package Azure.ResourceManager.NeonPostgres
 ```
 
 ### Prerequisites
@@ -41,7 +37,7 @@ Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azu
 Documentation is available to help you learn how to use this package:
 
 - [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
-- [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet).
+- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
 - [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Examples

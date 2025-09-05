@@ -119,6 +119,12 @@ namespace Azure.ResourceManager.HybridNetwork
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridNetwork.Models.ProxyArtifactVersionsListOverview> UpdateStateProxyArtifact(Azure.WaitUntil waitUntil, string artifactVersionName, string artifactName, Azure.ResourceManager.HybridNetwork.Models.ArtifactChangeState artifactChangeState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridNetwork.Models.ProxyArtifactVersionsListOverview>> UpdateStateProxyArtifactAsync(Azure.WaitUntil waitUntil, string artifactVersionName, string artifactName, Azure.ResourceManager.HybridNetwork.Models.ArtifactChangeState artifactChangeState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class AzureResourceManagerHybridNetworkContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerHybridNetworkContext() { }
+        public static Azure.ResourceManager.HybridNetwork.AzureResourceManagerHybridNetworkContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ComponentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridNetwork.ComponentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.ComponentResource>, System.Collections.IEnumerable
     {
         protected ComponentCollection() { }

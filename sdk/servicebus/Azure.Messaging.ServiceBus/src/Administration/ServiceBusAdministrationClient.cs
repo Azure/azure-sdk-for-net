@@ -114,6 +114,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 tokenCredential,
                 _fullyQualifiedNamespace,
                 options.Version,
+                connectionStringProperties.Endpoint.Port,
                 useTls);
         }
 
@@ -190,9 +191,12 @@ namespace Azure.Messaging.ServiceBus.Administration
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
 
+            var port = -1;
+
             if (Uri.TryCreate(fullyQualifiedNamespace, UriKind.Absolute, out var uri))
             {
                 fullyQualifiedNamespace = uri.Host;
+                port = uri.Port;
             }
 
             Argument.AssertWellFormedServiceBusNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
@@ -216,6 +220,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 credential,
                 _fullyQualifiedNamespace,
                 options.Version,
+                port,
                 true);
         }
 

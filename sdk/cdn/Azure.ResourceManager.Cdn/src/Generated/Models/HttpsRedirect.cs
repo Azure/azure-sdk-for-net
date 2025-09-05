@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </summary>
+    /// <summary>
+    /// Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed.
+    /// Serialized Name: HttpsRedirect
+    /// </summary>
     public readonly partial struct HttpsRedirect : IEquatable<HttpsRedirect>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: HttpsRedirect.Enabled
+        /// </summary>
         public static HttpsRedirect Enabled { get; } = new HttpsRedirect(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: HttpsRedirect.Disabled
+        /// </summary>
         public static HttpsRedirect Disabled { get; } = new HttpsRedirect(DisabledValue);
         /// <summary> Determines if two <see cref="HttpsRedirect"/> values are the same. </summary>
         public static bool operator ==(HttpsRedirect left, HttpsRedirect right) => left.Equals(right);

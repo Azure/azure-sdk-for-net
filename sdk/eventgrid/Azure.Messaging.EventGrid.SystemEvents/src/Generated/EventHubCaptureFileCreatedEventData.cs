@@ -13,41 +13,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.EventHub.CaptureFileCreated event. </summary>
     public partial class EventHubCaptureFileCreatedEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventHubCaptureFileCreatedEventData"/>. </summary>
-        internal EventHubCaptureFileCreatedEventData()
+        /// <param name="fileurl"> The path to the capture file. </param>
+        /// <param name="fileType"> The file type of the capture file. </param>
+        /// <param name="partitionId"> The shard ID. </param>
+        internal EventHubCaptureFileCreatedEventData(string fileurl, string fileType, string partitionId)
         {
+            Fileurl = fileurl;
+            FileType = fileType;
+            PartitionId = partitionId;
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubCaptureFileCreatedEventData"/>. </summary>
@@ -60,8 +37,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="lastSequenceNumber"> The last sequence number from the queue. </param>
         /// <param name="firstEnqueueTime"> The first time from the queue. </param>
         /// <param name="lastEnqueueTime"> The last time from the queue. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubCaptureFileCreatedEventData(string fileurl, string fileType, string partitionId, int? sizeInBytes, int? eventCount, int? firstSequenceNumber, int? lastSequenceNumber, DateTimeOffset? firstEnqueueTime, DateTimeOffset? lastEnqueueTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubCaptureFileCreatedEventData(string fileurl, string fileType, string partitionId, int? sizeInBytes, int? eventCount, int? firstSequenceNumber, int? lastSequenceNumber, DateTimeOffset? firstEnqueueTime, DateTimeOffset? lastEnqueueTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Fileurl = fileurl;
             FileType = fileType;
@@ -72,25 +49,33 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             LastSequenceNumber = lastSequenceNumber;
             FirstEnqueueTime = firstEnqueueTime;
             LastEnqueueTime = lastEnqueueTime;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The path to the capture file. </summary>
         public string Fileurl { get; }
+
         /// <summary> The file type of the capture file. </summary>
         public string FileType { get; }
+
         /// <summary> The shard ID. </summary>
         public string PartitionId { get; }
+
         /// <summary> The file size. </summary>
         public int? SizeInBytes { get; }
+
         /// <summary> The number of events in the file. </summary>
         public int? EventCount { get; }
+
         /// <summary> The smallest sequence number from the queue. </summary>
         public int? FirstSequenceNumber { get; }
+
         /// <summary> The last sequence number from the queue. </summary>
         public int? LastSequenceNumber { get; }
+
         /// <summary> The first time from the queue. </summary>
         public DateTimeOffset? FirstEnqueueTime { get; }
+
         /// <summary> The last time from the queue. </summary>
         public DateTimeOffset? LastEnqueueTime { get; }
     }

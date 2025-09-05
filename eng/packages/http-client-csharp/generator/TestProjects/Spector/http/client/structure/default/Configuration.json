@@ -1,6 +1,5 @@
 {
-  "output-folder": ".",
-  "package-name": "Client.Structure.Service",
+  "package-name": "Client.Structure.Service.Default",
   "license": {
     "name": "MIT License",
     "company": "Microsoft Corporation",

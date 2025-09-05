@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ServiceWorkspaceApiSchemaResource : IJsonModel<ApiSchemaData>
     {
+        private static ApiSchemaData s_dataDeserializationInstance;
+        private static ApiSchemaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiSchemaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiSchemaData>)Data).Write(writer, options);
 
-        ApiSchemaData IJsonModel<ApiSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiSchemaData>)Data).Create(ref reader, options);
+        ApiSchemaData IJsonModel<ApiSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiSchemaData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiSchemaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiSchemaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiSchemaData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiSchemaData IPersistableModel<ApiSchemaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiSchemaData>(data, options);
+        ApiSchemaData IPersistableModel<ApiSchemaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiSchemaData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiSchemaData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiSchemaData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

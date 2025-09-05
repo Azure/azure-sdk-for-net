@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class BillingPaymentMethodLinkResource : IJsonModel<BillingPaymentMethodLinkData>
     {
+        private static BillingPaymentMethodLinkData s_dataDeserializationInstance;
+        private static BillingPaymentMethodLinkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BillingPaymentMethodLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BillingPaymentMethodLinkData>)Data).Write(writer, options);
 
-        BillingPaymentMethodLinkData IJsonModel<BillingPaymentMethodLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingPaymentMethodLinkData>)Data).Create(ref reader, options);
+        BillingPaymentMethodLinkData IJsonModel<BillingPaymentMethodLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingPaymentMethodLinkData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BillingPaymentMethodLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BillingPaymentMethodLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingPaymentMethodLinkData>(Data, options, AzureResourceManagerBillingContext.Default);
 
-        BillingPaymentMethodLinkData IPersistableModel<BillingPaymentMethodLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingPaymentMethodLinkData>(data, options);
+        BillingPaymentMethodLinkData IPersistableModel<BillingPaymentMethodLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingPaymentMethodLinkData>(data, options, AzureResourceManagerBillingContext.Default);
 
-        string IPersistableModel<BillingPaymentMethodLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingPaymentMethodLinkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BillingPaymentMethodLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingPaymentMethodLinkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

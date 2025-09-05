@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SelfHelp
 {
     public partial class SelfHelpSolutionResource : IJsonModel<SelfHelpSolutionData>
     {
+        private static SelfHelpSolutionData s_dataDeserializationInstance;
+        private static SelfHelpSolutionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SelfHelpSolutionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SelfHelpSolutionData>)Data).Write(writer, options);
 
-        SelfHelpSolutionData IJsonModel<SelfHelpSolutionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SelfHelpSolutionData>)Data).Create(ref reader, options);
+        SelfHelpSolutionData IJsonModel<SelfHelpSolutionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SelfHelpSolutionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SelfHelpSolutionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SelfHelpSolutionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SelfHelpSolutionData>(Data, options, AzureResourceManagerSelfHelpContext.Default);
 
-        SelfHelpSolutionData IPersistableModel<SelfHelpSolutionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SelfHelpSolutionData>(data, options);
+        SelfHelpSolutionData IPersistableModel<SelfHelpSolutionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SelfHelpSolutionData>(data, options, AzureResourceManagerSelfHelpContext.Default);
 
-        string IPersistableModel<SelfHelpSolutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SelfHelpSolutionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SelfHelpSolutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SelfHelpSolutionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

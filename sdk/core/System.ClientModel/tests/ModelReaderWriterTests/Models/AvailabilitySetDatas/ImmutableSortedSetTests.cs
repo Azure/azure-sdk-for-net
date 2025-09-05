@@ -71,7 +71,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override void AddItem(object collection, object item)
                     => ((ImmutableSortedSet<AvailabilitySetData>.Builder)collection).Add((AvailabilitySetData)item);
 
-                protected override object ToCollection(object builder)
+                protected override object ConvertCollectionBuilder(object builder)
                     => ((ImmutableSortedSet<AvailabilitySetData>.Builder)builder).ToImmutable();
             }
         }

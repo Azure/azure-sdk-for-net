@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     public partial class PostgreSqlMigrationResource : IJsonModel<PostgreSqlMigrationData>
     {
+        private static PostgreSqlMigrationData s_dataDeserializationInstance;
+        private static PostgreSqlMigrationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PostgreSqlMigrationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlMigrationData>)Data).Write(writer, options);
 
-        PostgreSqlMigrationData IJsonModel<PostgreSqlMigrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlMigrationData>)Data).Create(ref reader, options);
+        PostgreSqlMigrationData IJsonModel<PostgreSqlMigrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlMigrationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PostgreSqlMigrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PostgreSqlMigrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlMigrationData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        PostgreSqlMigrationData IPersistableModel<PostgreSqlMigrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlMigrationData>(data, options);
+        PostgreSqlMigrationData IPersistableModel<PostgreSqlMigrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlMigrationData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        string IPersistableModel<PostgreSqlMigrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlMigrationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PostgreSqlMigrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlMigrationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

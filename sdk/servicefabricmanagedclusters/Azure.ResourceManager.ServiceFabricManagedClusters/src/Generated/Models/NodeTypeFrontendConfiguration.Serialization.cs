@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (property.NameEquals("loadBalancerBackendAddressPoolId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (property.NameEquals("loadBalancerInboundNatPoolId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (property.NameEquals("applicationGatewayBackendAddressPoolId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support writing '{options.Format}' format.");
             }

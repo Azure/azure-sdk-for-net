@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Messaging.E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventGrid.SourceGeneration", "EventGridSourceGenerator\src\Azure.Messaging.EventGrid.SourceGeneration.csproj", "{FFBE6318-A232-4490-8DB4-2441EA3ED8C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventGrid.SystemEvents", "..\Azure.Messaging.EventGrid.SystemEvents\src\Azure.Messaging.EventGrid.SystemEvents.csproj", "{FD5ADE22-9804-4A94-B824-28BB62E23DF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{FFBE6318-A232-4490-8DB4-2441EA3ED8C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFBE6318-A232-4490-8DB4-2441EA3ED8C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFBE6318-A232-4490-8DB4-2441EA3ED8C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD5ADE22-9804-4A94-B824-28BB62E23DF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD5ADE22-9804-4A94-B824-28BB62E23DF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD5ADE22-9804-4A94-B824-28BB62E23DF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD5ADE22-9804-4A94-B824-28BB62E23DF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

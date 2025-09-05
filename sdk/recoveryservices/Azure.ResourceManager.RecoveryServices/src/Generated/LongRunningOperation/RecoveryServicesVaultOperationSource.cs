@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.RecoveryServices
 
         RecoveryServicesVaultResource IOperationSource<RecoveryServicesVaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RecoveryServicesVaultData>(response.Content);
+            var data = ModelReaderWriter.Read<RecoveryServicesVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesContext.Default);
             return new RecoveryServicesVaultResource(_client, data);
         }
 
         async ValueTask<RecoveryServicesVaultResource> IOperationSource<RecoveryServicesVaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RecoveryServicesVaultData>(response.Content);
+            var data = ModelReaderWriter.Read<RecoveryServicesVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesContext.Default);
             return await Task.FromResult(new RecoveryServicesVaultResource(_client, data)).ConfigureAwait(false);
         }
     }

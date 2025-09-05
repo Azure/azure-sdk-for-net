@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataShare
 
         DataShareAccountResource IOperationSource<DataShareAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataShareAccountData>(response.Content);
+            var data = ModelReaderWriter.Read<DataShareAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataShareContext.Default);
             return new DataShareAccountResource(_client, data);
         }
 
         async ValueTask<DataShareAccountResource> IOperationSource<DataShareAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataShareAccountData>(response.Content);
+            var data = ModelReaderWriter.Read<DataShareAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataShareContext.Default);
             return await Task.FromResult(new DataShareAccountResource(_client, data)).ConfigureAwait(false);
         }
     }

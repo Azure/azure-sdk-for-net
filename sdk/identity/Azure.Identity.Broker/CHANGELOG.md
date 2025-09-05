@@ -1,12 +1,47 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0 (2025-09-04)
+
+### Breaking Changes
+
+- Deprecated `SharedTokenCacheCredentialBrokerOptions`. The supporting credential (`SharedTokenCacheCredential`) was a legacy mechanism for authenticating clients using credentials provided to Visual Studio. For brokered authentication, consider using `InteractiveBrowserCredential` instead.
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client.Broker` dependency to version 4.76.0
+- Updated `Azure.Identity` dependency to version 1.15.0
+
+## 1.3.0-beta.4 (2025-07-11)
+
+### Features Added
+
+- Support Microsoft Broker on macOS.
+
+### Other Changes
+
+- Updated `Azure.Identity` to 1.14.2 to apply a security fix in the updated `Microsoft.Identity.Client` dependency.
+
+## 1.2.1 (2025-07-11)
+
+### Other Changes
+
+- Updated `Azure.Identity` to 1.14.2 to apply a security fix in the updated `Microsoft.Identity.Client` dependency.
+
+## 1.3.0-beta.3 (2025-06-10)
+
+### Features Added
+
+- Support Microsoft Broker on Linux and WSL. This library relies on the Microsoft Authentication Library (MSAL) to handle the broker. For more information about prerequisites and how to utilize the broker, see [Enable SSO in native Linux apps using MSAL.NET](https://learn.microsoft.com/entra/msal/dotnet/acquiring-tokens/desktop-mobile/linux-dotnet-sdk)
 
 ### Other Changes
 

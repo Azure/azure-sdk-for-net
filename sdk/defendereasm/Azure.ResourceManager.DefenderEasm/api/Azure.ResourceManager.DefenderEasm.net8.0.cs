@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.DefenderEasm
 {
+    public partial class AzureResourceManagerDefenderEasmContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerDefenderEasmContext() { }
+        public static Azure.ResourceManager.DefenderEasm.AzureResourceManagerDefenderEasmContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class DefenderEasmExtensions
     {
         public static Azure.ResourceManager.DefenderEasm.EasmLabelResource GetEasmLabelResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }

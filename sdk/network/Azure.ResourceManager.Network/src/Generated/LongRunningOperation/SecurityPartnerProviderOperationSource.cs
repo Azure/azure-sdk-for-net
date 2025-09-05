@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         SecurityPartnerProviderResource IOperationSource<SecurityPartnerProviderResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SecurityPartnerProviderData>(response.Content);
+            var data = ModelReaderWriter.Read<SecurityPartnerProviderData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new SecurityPartnerProviderResource(_client, data);
         }
 
         async ValueTask<SecurityPartnerProviderResource> IOperationSource<SecurityPartnerProviderResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SecurityPartnerProviderData>(response.Content);
+            var data = ModelReaderWriter.Read<SecurityPartnerProviderData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new SecurityPartnerProviderResource(_client, data)).ConfigureAwait(false);
         }
     }

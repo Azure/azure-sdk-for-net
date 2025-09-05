@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     public partial class VMwareVmInstanceResource : IJsonModel<VMwareVmInstanceData>
     {
+        private static VMwareVmInstanceData s_dataDeserializationInstance;
+        private static VMwareVmInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VMwareVmInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VMwareVmInstanceData>)Data).Write(writer, options);
 
-        VMwareVmInstanceData IJsonModel<VMwareVmInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VMwareVmInstanceData>)Data).Create(ref reader, options);
+        VMwareVmInstanceData IJsonModel<VMwareVmInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VMwareVmInstanceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VMwareVmInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VMwareVmInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VMwareVmInstanceData>(Data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
-        VMwareVmInstanceData IPersistableModel<VMwareVmInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VMwareVmInstanceData>(data, options);
+        VMwareVmInstanceData IPersistableModel<VMwareVmInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VMwareVmInstanceData>(data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
-        string IPersistableModel<VMwareVmInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VMwareVmInstanceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VMwareVmInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VMwareVmInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

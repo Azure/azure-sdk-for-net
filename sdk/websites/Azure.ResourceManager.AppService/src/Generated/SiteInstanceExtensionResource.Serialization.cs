@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class SiteInstanceExtensionResource : IJsonModel<MSDeployStatusData>
     {
+        private static MSDeployStatusData s_dataDeserializationInstance;
+        private static MSDeployStatusData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MSDeployStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MSDeployStatusData>)Data).Write(writer, options);
 
-        MSDeployStatusData IJsonModel<MSDeployStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MSDeployStatusData>)Data).Create(ref reader, options);
+        MSDeployStatusData IJsonModel<MSDeployStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MSDeployStatusData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MSDeployStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MSDeployStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MSDeployStatusData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        MSDeployStatusData IPersistableModel<MSDeployStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MSDeployStatusData>(data, options);
+        MSDeployStatusData IPersistableModel<MSDeployStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MSDeployStatusData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<MSDeployStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MSDeployStatusData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MSDeployStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MSDeployStatusData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

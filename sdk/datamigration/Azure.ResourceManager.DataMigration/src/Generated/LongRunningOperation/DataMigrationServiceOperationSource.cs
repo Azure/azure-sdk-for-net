@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataMigration
 
         DataMigrationServiceResource IOperationSource<DataMigrationServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataMigrationServiceData>(response.Content);
+            var data = ModelReaderWriter.Read<DataMigrationServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataMigrationContext.Default);
             return new DataMigrationServiceResource(_client, data);
         }
 
         async ValueTask<DataMigrationServiceResource> IOperationSource<DataMigrationServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataMigrationServiceData>(response.Content);
+            var data = ModelReaderWriter.Read<DataMigrationServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataMigrationContext.Default);
             return await Task.FromResult(new DataMigrationServiceResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         PostgreSqlFlexibleServerActiveDirectoryAdministratorResource IOperationSource<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>(response.Content);
+            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             return new PostgreSqlFlexibleServerActiveDirectoryAdministratorResource(_client, data);
         }
 
         async ValueTask<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource> IOperationSource<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>(response.Content);
+            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             return await Task.FromResult(new PostgreSqlFlexibleServerActiveDirectoryAdministratorResource(_client, data)).ConfigureAwait(false);
         }
     }

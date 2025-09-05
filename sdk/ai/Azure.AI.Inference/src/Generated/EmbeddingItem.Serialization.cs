@@ -114,7 +114,7 @@ namespace Azure.AI.Inference
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIInferenceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EmbeddingItem)} does not support writing '{options.Format}' format.");
             }

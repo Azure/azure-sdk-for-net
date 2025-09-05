@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryAgentDetails)} does not support writing '{options.Format}' format.");
             }

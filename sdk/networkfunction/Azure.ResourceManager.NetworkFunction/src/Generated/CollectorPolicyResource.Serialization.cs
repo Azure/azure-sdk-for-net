@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetworkFunction
 {
     public partial class CollectorPolicyResource : IJsonModel<CollectorPolicyData>
     {
+        private static CollectorPolicyData s_dataDeserializationInstance;
+        private static CollectorPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CollectorPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CollectorPolicyData>)Data).Write(writer, options);
 
-        CollectorPolicyData IJsonModel<CollectorPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CollectorPolicyData>)Data).Create(ref reader, options);
+        CollectorPolicyData IJsonModel<CollectorPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CollectorPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CollectorPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CollectorPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CollectorPolicyData>(Data, options, AzureResourceManagerNetworkFunctionContext.Default);
 
-        CollectorPolicyData IPersistableModel<CollectorPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CollectorPolicyData>(data, options);
+        CollectorPolicyData IPersistableModel<CollectorPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CollectorPolicyData>(data, options, AzureResourceManagerNetworkFunctionContext.Default);
 
-        string IPersistableModel<CollectorPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CollectorPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CollectorPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CollectorPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

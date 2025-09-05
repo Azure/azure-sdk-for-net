@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationConnectionTypeResource : IJsonModel<AutomationConnectionTypeData>
     {
+        private static AutomationConnectionTypeData s_dataDeserializationInstance;
+        private static AutomationConnectionTypeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AutomationConnectionTypeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutomationConnectionTypeData>)Data).Write(writer, options);
 
-        AutomationConnectionTypeData IJsonModel<AutomationConnectionTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationConnectionTypeData>)Data).Create(ref reader, options);
+        AutomationConnectionTypeData IJsonModel<AutomationConnectionTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationConnectionTypeData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutomationConnectionTypeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AutomationConnectionTypeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationConnectionTypeData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
-        AutomationConnectionTypeData IPersistableModel<AutomationConnectionTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationConnectionTypeData>(data, options);
+        AutomationConnectionTypeData IPersistableModel<AutomationConnectionTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationConnectionTypeData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<AutomationConnectionTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationConnectionTypeData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AutomationConnectionTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationConnectionTypeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

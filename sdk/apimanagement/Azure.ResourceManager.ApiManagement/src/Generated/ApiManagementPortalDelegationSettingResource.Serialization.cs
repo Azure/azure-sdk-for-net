@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementPortalDelegationSettingResource : IJsonModel<ApiManagementPortalDelegationSettingData>
     {
+        private static ApiManagementPortalDelegationSettingData s_dataDeserializationInstance;
+        private static ApiManagementPortalDelegationSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiManagementPortalDelegationSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementPortalDelegationSettingData>)Data).Write(writer, options);
 
-        ApiManagementPortalDelegationSettingData IJsonModel<ApiManagementPortalDelegationSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementPortalDelegationSettingData>)Data).Create(ref reader, options);
+        ApiManagementPortalDelegationSettingData IJsonModel<ApiManagementPortalDelegationSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementPortalDelegationSettingData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementPortalDelegationSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementPortalDelegationSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementPortalDelegationSettingData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiManagementPortalDelegationSettingData IPersistableModel<ApiManagementPortalDelegationSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementPortalDelegationSettingData>(data, options);
+        ApiManagementPortalDelegationSettingData IPersistableModel<ApiManagementPortalDelegationSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementPortalDelegationSettingData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementPortalDelegationSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementPortalDelegationSettingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementPortalDelegationSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementPortalDelegationSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -122,6 +122,12 @@ namespace Azure.AI.AnomalyDetector
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.AnomalyValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.AnomalyValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureAIAnomalyDetectorContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAIAnomalyDetectorContext() { }
+        public static Azure.AI.AnomalyDetector.AzureAIAnomalyDetectorContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CorrelationChanges : System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.CorrelationChanges>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.CorrelationChanges>
     {
         internal CorrelationChanges() { }
@@ -540,6 +546,7 @@ namespace Microsoft.Extensions.Azure
     public static partial class AIAnomalyDetectorClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.AnomalyDetector.AnomalyDetectorClient, Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions> AddAnomalyDetectorClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.AnomalyDetector.AnomalyDetectorClient, Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions> AddAnomalyDetectorClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

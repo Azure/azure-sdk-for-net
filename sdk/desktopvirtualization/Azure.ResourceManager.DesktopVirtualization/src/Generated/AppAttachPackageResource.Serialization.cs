@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     public partial class AppAttachPackageResource : IJsonModel<AppAttachPackageData>
     {
+        private static AppAttachPackageData s_dataDeserializationInstance;
+        private static AppAttachPackageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppAttachPackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppAttachPackageData>)Data).Write(writer, options);
 
-        AppAttachPackageData IJsonModel<AppAttachPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppAttachPackageData>)Data).Create(ref reader, options);
+        AppAttachPackageData IJsonModel<AppAttachPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppAttachPackageData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppAttachPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppAttachPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppAttachPackageData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        AppAttachPackageData IPersistableModel<AppAttachPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppAttachPackageData>(data, options);
+        AppAttachPackageData IPersistableModel<AppAttachPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppAttachPackageData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        string IPersistableModel<AppAttachPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppAttachPackageData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppAttachPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppAttachPackageData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

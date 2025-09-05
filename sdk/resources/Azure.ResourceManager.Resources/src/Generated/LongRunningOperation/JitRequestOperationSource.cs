@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Resources
 
         JitRequestResource IOperationSource<JitRequestResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<JitRequestData>(response.Content);
+            var data = ModelReaderWriter.Read<JitRequestData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
             return new JitRequestResource(_client, data);
         }
 
         async ValueTask<JitRequestResource> IOperationSource<JitRequestResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<JitRequestData>(response.Content);
+            var data = ModelReaderWriter.Read<JitRequestData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
             return await Task.FromResult(new JitRequestResource(_client, data)).ConfigureAwait(false);
         }
     }

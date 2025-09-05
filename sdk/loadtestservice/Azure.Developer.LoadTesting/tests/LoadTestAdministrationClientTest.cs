@@ -4,14 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.TestFramework;
-using Azure.Core.TestFramework.Models;
-using Azure.Developer.LoadTesting.Tests.Helper;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Developer.LoadTesting.Tests
 {
@@ -24,28 +23,34 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             _loadTestAdministrationClient = CreateAdministrationClient();
 
-            if (!CheckForSkipSetUp())
+            // NOTE: Load test, test file and test profile requires a load test first.
+            if (RequiresLoadTest() || RequiresTestFile() || RequiresTestProfile())
             {
-                await _testHelper.SetupTestingLoadTestResourceAsync(_loadTestAdministrationClient, _testId);
+                await _testHelper.SetupLoadTestAsync(_loadTestAdministrationClient, _testId);
+            }
 
-                if (CheckForUploadTestFile())
-                {
-                    await _testHelper.SetupTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
-                }
+            if (RequiresTestFile() || RequiresTestProfile())
+            {
+                await _testHelper.SetupTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
+            }
+
+            if (RequiresTestProfile())
+            {
+                await _testHelper.SetupTestProfileAsync(_loadTestAdministrationClient, _testProfileId, _testId, TestEnvironment.TargetResourceId);
             }
         }
 
         [TearDown]
         public async Task TearDown()
         {
-            if (!CheckForSkipTearDown())
+            if (!SkipTearDown())
             {
+                await _loadTestAdministrationClient.DeleteTestProfileAsync(_testProfileId);
                 await _loadTestAdministrationClient.DeleteTestAsync(_testId);
             }
         }
 
         [Test]
-        [Category(SKIP_SET_UP)]
         public async Task CreateOrUpdateTest()
         {
             Response response = await _loadTestAdministrationClient.CreateOrUpdateTestAsync(
@@ -75,57 +80,46 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
+        [Category(REQUIRES_LOAD_TEST)]
         [Category(SKIP_TEAR_DOWN)]
         public async Task DeleteTest()
         {
             Response response = await _loadTestAdministrationClient.DeleteTestAsync(_testId);
-            try
-            {
-                await _loadTestAdministrationClient.DeleteTestAsync(_testId);
-                Assert.Fail();
-            }
-            catch (RequestFailedException)
-            {
-                Assert.Pass();
-            }
-            catch (Exception)
-            {
-                Assert.Fail();
-            }
         }
 
         [Test]
+        [Category(REQUIRES_LOAD_TEST)]
         public async Task GetLoadTest()
         {
-            Response response = await _loadTestAdministrationClient.GetTestAsync(_testId);
-            JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
-            Assert.NotNull(response.Content);
-            Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
+            var loadTestResponse = await _loadTestAdministrationClient.GetTestAsync(_testId);
+            var loadTest = loadTestResponse.Value;
+            Assert.NotNull(loadTest);
+            Assert.AreEqual(_testId, loadTest.TestId);
         }
 
         [Test]
+        [Category(REQUIRES_LOAD_TEST)]
         public async Task ListLoadTest()
         {
             int pageSizeHint = 2;
-            AsyncPageable<BinaryData> responsePageable = _loadTestAdministrationClient.GetTestsAsync();
+            var pagedResponse = _loadTestAdministrationClient.GetTestsAsync();
 
             int count = 0;
 
-            await foreach (var page in responsePageable.AsPages(pageSizeHint: pageSizeHint))
+            await foreach (var page in pagedResponse.AsPages(pageSizeHint: pageSizeHint))
             {
                 count++;
 
                foreach (var value in page.Values)
                {
-                    JsonDocument jsonDocument = JsonDocument.Parse(value.ToString());
-                    Assert.NotNull(jsonDocument.RootElement.GetProperty("testId").ToString());
+                    Assert.NotNull(value.TestId);
 
                     Console.WriteLine(value.ToString());
                }
             }
 
             int i = 0;
-            await foreach (var page in responsePageable.AsPages(pageSizeHint: pageSizeHint))
+            await foreach (var page in pagedResponse.AsPages(pageSizeHint: pageSizeHint))
             {
                 i++;
 
@@ -141,18 +135,18 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
-        [Category(UPLOAD_TEST_FILE)]
+        [Category(REQUIRES_TEST_FILE)]
         public async Task GetTestFile()
         {
-            Response response = await _loadTestAdministrationClient.GetTestFileAsync(_testId, _fileName);
+            var fileGetResponse = await _loadTestAdministrationClient.GetTestFileAsync(_testId, _fileName);
 
-            JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
-            Assert.NotNull(response.Content);
-            Assert.AreEqual(_fileName, jsonDocument.RootElement.GetProperty("fileName").ToString());
+            var file = fileGetResponse.Value;
+            Assert.NotNull(file);
+            Assert.AreEqual(_fileName, file.FileName);
         }
 
         [Test]
-        [Category(UPLOAD_TEST_FILE)]
+        [Category(REQUIRES_TEST_FILE)]
         public async Task DeleteTestFile()
         {
             Response response = await _loadTestAdministrationClient.DeleteTestFileAsync(_testId, _fileName);
@@ -173,22 +167,22 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
-        [Category(UPLOAD_TEST_FILE)]
+        [Category(REQUIRES_TEST_FILE)]
         public async Task ListTestFiles()
         {
-            AsyncPageable<BinaryData> responsePageable = _loadTestAdministrationClient.GetTestFilesAsync(_testId);
+            var pagedResponse = _loadTestAdministrationClient.GetTestFilesAsync(_testId);
 
-            await foreach (var page in responsePageable.AsPages())
+            await foreach (var page in pagedResponse.AsPages())
             {
                 foreach (var value in page.Values)
                 {
-                    JsonDocument jsonDocument = JsonDocument.Parse(value.ToString());
-                    Assert.AreEqual(_fileName, jsonDocument.RootElement.GetProperty("fileName").ToString());
+                    Assert.AreEqual(_fileName, value.FileName);
                 }
             }
         }
 
         [Test]
+        [Category(REQUIRES_LOAD_TEST)]
         public async Task CreateOrUpdateAppComponents()
         {
             _resourceId = TestEnvironment.ResourceId;
@@ -217,6 +211,7 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
+        [Category(REQUIRES_LOAD_TEST)]
         public async Task GetAppComponents()
         {
             _resourceId = TestEnvironment.ResourceId;
@@ -241,12 +236,16 @@ namespace Azure.Developer.LoadTesting.Tests
                     )
                 );
 
-            Response response = await _loadTestAdministrationClient.GetAppComponentsAsync(_testId);
-            JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
-            Assert.AreEqual(_resourceId, jsonDocument.RootElement.GetProperty("components").GetProperty(_resourceId).GetProperty("resourceId").ToString());
+            var appComponentsResponse = await _loadTestAdministrationClient.GetAppComponentsAsync(_testId);
+            var appComponents = appComponentsResponse.Value;
+            Assert.NotNull(appComponents);
+            var component = appComponents.Components.Values.FirstOrDefault();
+            Assert.NotNull(component);
+            Assert.AreEqual(_resourceId, component.ResourceId.ToString());
         }
 
         [Test]
+        [Category(REQUIRES_LOAD_TEST)]
         public async Task CreateOrUpdateServerMetricsConfig()
         {
             _resourceId = TestEnvironment.ResourceId;
@@ -281,6 +280,7 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
+        [Category(REQUIRES_LOAD_TEST)]
         public async Task GetServerMetricsConfig()
         {
             _resourceId = TestEnvironment.ResourceId;
@@ -310,17 +310,22 @@ namespace Azure.Developer.LoadTesting.Tests
                     )
                 );
 
-            Response response = await _loadTestAdministrationClient.GetServerMetricsConfigAsync(_testId);
-            JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
-            Assert.AreEqual(_resourceId, jsonDocument.RootElement.GetProperty("metrics").GetProperty(_resourceId).GetProperty("resourceId").ToString());
+            var serverMetricsResponse = await _loadTestAdministrationClient.GetServerMetricsConfigAsync(_testId);
+            var serverMetrics = serverMetricsResponse.Value;
+            Assert.NotNull(serverMetrics);
+            var metric = serverMetrics.Metrics.Values.FirstOrDefault();
+            Assert.NotNull(metric);
+            Assert.AreEqual(_resourceId, metric.ResourceId.ToString());
         }
 
         [Test]
-        public async Task UploadTestFile()
+        [Category(REQUIRES_LOAD_TEST)]
+        public async Task UploadTestFile_WaitUntilCompleted()
         {
+            var fileContentStream = await _testHelper.GetFileContentStreamAsync(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _fileName));
             FileUploadResultOperation fileUploadOperation = await _loadTestAdministrationClient.UploadTestFileAsync(
                 WaitUntil.Completed, _testId, _fileName, RequestContent.Create(
-                    File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _fileName))
+                    fileContentStream
                     )
                 );
 
@@ -329,23 +334,98 @@ namespace Azure.Developer.LoadTesting.Tests
             Assert.AreEqual("VALIDATION_SUCCESS", jsonDocument.RootElement.GetProperty("validationStatus").ToString());
             Assert.IsTrue(fileUploadOperation.HasValue);
             Assert.IsTrue(fileUploadOperation.HasCompleted);
+        }
 
-            await TearDown();
-            await SetUp();
-
-            fileUploadOperation = await _loadTestAdministrationClient.UploadTestFileAsync(
+        [Test]
+        [Category(REQUIRES_LOAD_TEST)]
+        public async Task UploadTestFile_PollOperation()
+        {
+            var fileContentStream = await _testHelper.GetFileContentStreamAsync(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _fileName));
+            FileUploadResultOperation fileUploadOperation = await _loadTestAdministrationClient.UploadTestFileAsync(
                    WaitUntil.Started, _testId, _fileName, RequestContent.Create(
-                        File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _fileName))
+                        fileContentStream
                     )
                 );
 
             await fileUploadOperation.WaitForCompletionAsync();
 
-            jsonDocument = JsonDocument.Parse(fileUploadOperation.Value.ToString());
+            JsonDocument jsonDocument = JsonDocument.Parse(fileUploadOperation.Value.ToString());
             Assert.AreEqual(_fileName, jsonDocument.RootElement.GetProperty("fileName").ToString());
             Assert.AreEqual("VALIDATION_SUCCESS", jsonDocument.RootElement.GetProperty("validationStatus").ToString());
             Assert.IsTrue(fileUploadOperation.HasValue);
             Assert.IsTrue(fileUploadOperation.HasCompleted);
+        }
+
+        [Test]
+        [Category(REQUIRES_LOAD_TEST)]
+        public async Task CreateOrUpdateTestProfile()
+        {
+            _targetResourceId = TestEnvironment.TargetResourceId;
+            Response response = await _loadTestAdministrationClient.CreateOrUpdateTestProfileAsync(
+                _testProfileId,
+                RequestContent.Create(
+                        new
+                        {
+                            displayName = "Dotnet Testing Framework Loadtest",
+                            description = "This test was created through loadtesting C# SDK",
+                            testId = _testId,
+                            targetResourceId = _targetResourceId,
+                            targetResourceConfigurations = new
+                            {
+                                kind = "FunctionsFlexConsumption",
+                                configurations = new
+                                {
+                                    config1 = new
+                                    {
+                                        instanceMemoryMB = 2048,
+                                        httpConcurrency = 20
+                                    },
+                                    config2 = new
+                                    {
+                                        instanceMemoryMB = 4096,
+                                        httpConcurrency = 20
+                                    }
+                                }
+                            }
+                        }
+                    )
+                );
+            JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
+            Assert.AreEqual(_testProfileId, jsonDocument.RootElement.GetProperty("testProfileId").ToString());
+        }
+
+        [Test]
+        [Category(REQUIRES_TEST_PROFILE)]
+        public async Task GetTestProfile()
+        {
+            var testProfileResponse = await _loadTestAdministrationClient.GetTestProfileAsync(_testProfileId);
+            var testProfile = testProfileResponse.Value;
+            Assert.NotNull(testProfile);
+            Assert.AreEqual(_testProfileId, testProfile.TestProfileId);
+            Assert.AreEqual(_targetResourceId, testProfile.TargetResourceId.ToString());
+        }
+
+        [Test]
+        [Category(REQUIRES_TEST_PROFILE)]
+        public async Task ListTestProfile()
+        {
+            var testProfilesResponse = _loadTestAdministrationClient.GetTestProfilesAsync();
+            Assert.NotNull(testProfilesResponse);
+            await foreach (var page in testProfilesResponse.AsPages())
+            {
+                foreach (var value in page.Values)
+                {
+                    Assert.NotNull(value.TestProfileId);
+                }
+            }
+        }
+
+        [Test]
+        [Category(REQUIRES_LOAD_TEST)]
+        [Category(REQUIRES_TEST_PROFILE)]
+        public async Task DeleteTestProfile()
+        {
+            Response response = await _loadTestAdministrationClient.DeleteTestProfileAsync(_testProfileId);
         }
     }
 }

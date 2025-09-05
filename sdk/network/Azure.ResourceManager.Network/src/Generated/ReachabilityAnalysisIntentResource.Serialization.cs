@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ReachabilityAnalysisIntentResource : IJsonModel<ReachabilityAnalysisIntentData>
     {
+        private static ReachabilityAnalysisIntentData s_dataDeserializationInstance;
+        private static ReachabilityAnalysisIntentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ReachabilityAnalysisIntentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ReachabilityAnalysisIntentData>)Data).Write(writer, options);
 
-        ReachabilityAnalysisIntentData IJsonModel<ReachabilityAnalysisIntentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ReachabilityAnalysisIntentData>)Data).Create(ref reader, options);
+        ReachabilityAnalysisIntentData IJsonModel<ReachabilityAnalysisIntentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ReachabilityAnalysisIntentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ReachabilityAnalysisIntentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ReachabilityAnalysisIntentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ReachabilityAnalysisIntentData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        ReachabilityAnalysisIntentData IPersistableModel<ReachabilityAnalysisIntentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReachabilityAnalysisIntentData>(data, options);
+        ReachabilityAnalysisIntentData IPersistableModel<ReachabilityAnalysisIntentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReachabilityAnalysisIntentData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<ReachabilityAnalysisIntentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ReachabilityAnalysisIntentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ReachabilityAnalysisIntentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ReachabilityAnalysisIntentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class RegionInfoResource : IJsonModel<RegionInfoResourceData>
     {
+        private static RegionInfoResourceData s_dataDeserializationInstance;
+        private static RegionInfoResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RegionInfoResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RegionInfoResourceData>)Data).Write(writer, options);
 
-        RegionInfoResourceData IJsonModel<RegionInfoResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RegionInfoResourceData>)Data).Create(ref reader, options);
+        RegionInfoResourceData IJsonModel<RegionInfoResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RegionInfoResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RegionInfoResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RegionInfoResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RegionInfoResourceData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
-        RegionInfoResourceData IPersistableModel<RegionInfoResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RegionInfoResourceData>(data, options);
+        RegionInfoResourceData IPersistableModel<RegionInfoResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RegionInfoResourceData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<RegionInfoResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RegionInfoResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RegionInfoResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RegionInfoResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

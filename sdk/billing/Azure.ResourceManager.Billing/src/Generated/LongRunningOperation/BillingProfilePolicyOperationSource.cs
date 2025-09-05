@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Billing
 
         BillingProfilePolicyResource IOperationSource<BillingProfilePolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BillingProfilePolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<BillingProfilePolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
             return new BillingProfilePolicyResource(_client, data);
         }
 
         async ValueTask<BillingProfilePolicyResource> IOperationSource<BillingProfilePolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BillingProfilePolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<BillingProfilePolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
             return await Task.FromResult(new BillingProfilePolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

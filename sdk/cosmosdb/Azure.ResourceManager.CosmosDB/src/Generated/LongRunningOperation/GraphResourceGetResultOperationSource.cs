@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CosmosDB
 
         GraphResourceGetResultResource IOperationSource<GraphResourceGetResultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GraphResourceGetResultData>(response.Content);
+            var data = ModelReaderWriter.Read<GraphResourceGetResultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return new GraphResourceGetResultResource(_client, data);
         }
 
         async ValueTask<GraphResourceGetResultResource> IOperationSource<GraphResourceGetResultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GraphResourceGetResultData>(response.Content);
+            var data = ModelReaderWriter.Read<GraphResourceGetResultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return await Task.FromResult(new GraphResourceGetResultResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         LoadBalancerResource IOperationSource<LoadBalancerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LoadBalancerData>(response.Content);
+            var data = ModelReaderWriter.Read<LoadBalancerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new LoadBalancerResource(_client, data);
         }
 
         async ValueTask<LoadBalancerResource> IOperationSource<LoadBalancerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LoadBalancerData>(response.Content);
+            var data = ModelReaderWriter.Read<LoadBalancerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new LoadBalancerResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.OracleDatabase
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _oracleDBServerDBServersClientDiagnostics;
-        private readonly DbServersRestOperations _oracleDBServerDBServersRestClient;
+        private readonly ClientDiagnostics _oracleDBServerDbServersClientDiagnostics;
+        private readonly DbServersRestOperations _oracleDBServerDbServersRestClient;
         private readonly OracleDBServerData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OracleDBServerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _oracleDBServerDBServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string oracleDBServerDBServersApiVersion);
-            _oracleDBServerDBServersRestClient = new DbServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBServerDBServersApiVersion);
+            _oracleDBServerDbServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string oracleDBServerDbServersApiVersion);
+            _oracleDBServerDbServersRestClient = new DbServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBServerDbServersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbServers_Get</description>
+        /// <description>DbServer_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<OracleDBServerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _oracleDBServerDBServersClientDiagnostics.CreateScope("OracleDBServerResource.Get");
+            using var scope = _oracleDBServerDbServersClientDiagnostics.CreateScope("OracleDBServerResource.Get");
             scope.Start();
             try
             {
-                var response = await _oracleDBServerDBServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _oracleDBServerDbServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OracleDBServerResource(Client, response.Value), response.GetRawResponse());
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbServers_Get</description>
+        /// <description>DbServer_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<OracleDBServerResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _oracleDBServerDBServersClientDiagnostics.CreateScope("OracleDBServerResource.Get");
+            using var scope = _oracleDBServerDbServersClientDiagnostics.CreateScope("OracleDBServerResource.Get");
             scope.Start();
             try
             {
-                var response = _oracleDBServerDBServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _oracleDBServerDbServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OracleDBServerResource(Client, response.Value), response.GetRawResponse());

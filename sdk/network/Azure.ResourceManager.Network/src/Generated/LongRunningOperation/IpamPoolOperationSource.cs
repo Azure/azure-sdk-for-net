@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         IpamPoolResource IOperationSource<IpamPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IpamPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<IpamPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new IpamPoolResource(_client, data);
         }
 
         async ValueTask<IpamPoolResource> IOperationSource<IpamPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IpamPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<IpamPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new IpamPoolResource(_client, data)).ConfigureAwait(false);
         }
     }

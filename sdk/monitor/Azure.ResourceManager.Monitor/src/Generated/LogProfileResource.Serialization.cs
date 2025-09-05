@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class LogProfileResource : IJsonModel<LogProfileData>
     {
+        private static LogProfileData s_dataDeserializationInstance;
+        private static LogProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<LogProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LogProfileData>)Data).Write(writer, options);
 
-        LogProfileData IJsonModel<LogProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogProfileData>)Data).Create(ref reader, options);
+        LogProfileData IJsonModel<LogProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogProfileData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LogProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LogProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LogProfileData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
-        LogProfileData IPersistableModel<LogProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogProfileData>(data, options);
+        LogProfileData IPersistableModel<LogProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogProfileData>(data, options, AzureResourceManagerMonitorContext.Default);
 
-        string IPersistableModel<LogProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogProfileData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<LogProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            PostgreSqlConnectionInfo sourceConnectionInfo = default;
-            PostgreSqlConnectionInfo targetConnectionInfo = default;
+            DataMigrationPostgreSqlConnectionInfo sourceConnectionInfo = default;
+            DataMigrationPostgreSqlConnectionInfo targetConnectionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = DataMigrationPostgreSqlConnectionInfo.DeserializeDataMigrationPostgreSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = DataMigrationPostgreSqlConnectionInfo.DeserializeDataMigrationPostgreSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForPostgreSqlSyncTaskInput)} does not support writing '{options.Format}' format.");
             }

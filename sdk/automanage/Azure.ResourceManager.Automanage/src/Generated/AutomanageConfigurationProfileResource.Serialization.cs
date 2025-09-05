@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Automanage
 {
     public partial class AutomanageConfigurationProfileResource : IJsonModel<AutomanageConfigurationProfileData>
     {
+        private static AutomanageConfigurationProfileData s_dataDeserializationInstance;
+        private static AutomanageConfigurationProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AutomanageConfigurationProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutomanageConfigurationProfileData>)Data).Write(writer, options);
 
-        AutomanageConfigurationProfileData IJsonModel<AutomanageConfigurationProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomanageConfigurationProfileData>)Data).Create(ref reader, options);
+        AutomanageConfigurationProfileData IJsonModel<AutomanageConfigurationProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomanageConfigurationProfileData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutomanageConfigurationProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AutomanageConfigurationProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomanageConfigurationProfileData>(Data, options, AzureResourceManagerAutomanageContext.Default);
 
-        AutomanageConfigurationProfileData IPersistableModel<AutomanageConfigurationProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomanageConfigurationProfileData>(data, options);
+        AutomanageConfigurationProfileData IPersistableModel<AutomanageConfigurationProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomanageConfigurationProfileData>(data, options, AzureResourceManagerAutomanageContext.Default);
 
-        string IPersistableModel<AutomanageConfigurationProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomanageConfigurationProfileData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AutomanageConfigurationProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomanageConfigurationProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

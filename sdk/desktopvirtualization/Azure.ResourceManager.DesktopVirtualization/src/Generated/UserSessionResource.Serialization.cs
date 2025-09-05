@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     public partial class UserSessionResource : IJsonModel<UserSessionData>
     {
+        private static UserSessionData s_dataDeserializationInstance;
+        private static UserSessionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<UserSessionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<UserSessionData>)Data).Write(writer, options);
 
-        UserSessionData IJsonModel<UserSessionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<UserSessionData>)Data).Create(ref reader, options);
+        UserSessionData IJsonModel<UserSessionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<UserSessionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<UserSessionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<UserSessionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<UserSessionData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        UserSessionData IPersistableModel<UserSessionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<UserSessionData>(data, options);
+        UserSessionData IPersistableModel<UserSessionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<UserSessionData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        string IPersistableModel<UserSessionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<UserSessionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<UserSessionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<UserSessionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

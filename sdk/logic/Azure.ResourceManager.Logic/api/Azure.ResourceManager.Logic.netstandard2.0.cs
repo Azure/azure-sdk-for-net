@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Logic
 {
+    public partial class AzureResourceManagerLogicContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerLogicContext() { }
+        public static Azure.ResourceManager.Logic.AzureResourceManagerLogicContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class IntegrationAccountAgreementCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource>, System.Collections.IEnumerable
     {
         protected IntegrationAccountAgreementCollection() { }

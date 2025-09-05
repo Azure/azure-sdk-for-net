@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DnsResolver
 
         DnsForwardingRulesetResource IOperationSource<DnsForwardingRulesetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DnsForwardingRulesetData>(response.Content);
+            var data = ModelReaderWriter.Read<DnsForwardingRulesetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
             return new DnsForwardingRulesetResource(_client, data);
         }
 
         async ValueTask<DnsForwardingRulesetResource> IOperationSource<DnsForwardingRulesetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DnsForwardingRulesetData>(response.Content);
+            var data = ModelReaderWriter.Read<DnsForwardingRulesetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
             return await Task.FromResult(new DnsForwardingRulesetResource(_client, data)).ConfigureAwait(false);
         }
     }

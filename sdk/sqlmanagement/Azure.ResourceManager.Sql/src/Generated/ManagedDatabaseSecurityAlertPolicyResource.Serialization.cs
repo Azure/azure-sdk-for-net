@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class ManagedDatabaseSecurityAlertPolicyResource : IJsonModel<ManagedDatabaseSecurityAlertPolicyData>
     {
+        private static ManagedDatabaseSecurityAlertPolicyData s_dataDeserializationInstance;
+        private static ManagedDatabaseSecurityAlertPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ManagedDatabaseSecurityAlertPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedDatabaseSecurityAlertPolicyData>)Data).Write(writer, options);
 
-        ManagedDatabaseSecurityAlertPolicyData IJsonModel<ManagedDatabaseSecurityAlertPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedDatabaseSecurityAlertPolicyData>)Data).Create(ref reader, options);
+        ManagedDatabaseSecurityAlertPolicyData IJsonModel<ManagedDatabaseSecurityAlertPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedDatabaseSecurityAlertPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedDatabaseSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedDatabaseSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedDatabaseSecurityAlertPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        ManagedDatabaseSecurityAlertPolicyData IPersistableModel<ManagedDatabaseSecurityAlertPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedDatabaseSecurityAlertPolicyData>(data, options);
+        ManagedDatabaseSecurityAlertPolicyData IPersistableModel<ManagedDatabaseSecurityAlertPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedDatabaseSecurityAlertPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ManagedDatabaseSecurityAlertPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedDatabaseSecurityAlertPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ManagedDatabaseSecurityAlertPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedDatabaseSecurityAlertPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

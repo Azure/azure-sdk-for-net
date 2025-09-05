@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.HybridContainerService
 {
+    public partial class AzureResourceManagerHybridContainerServiceContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerHybridContainerServiceContext() { }
+        public static Azure.ResourceManager.HybridContainerService.AzureResourceManagerHybridContainerServiceContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class HybridContainerServiceAgentPoolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource>, System.Collections.IEnumerable
     {
         protected HybridContainerServiceAgentPoolCollection() { }

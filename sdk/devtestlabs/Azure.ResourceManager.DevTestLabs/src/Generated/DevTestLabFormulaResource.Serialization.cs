@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabFormulaResource : IJsonModel<DevTestLabFormulaData>
     {
+        private static DevTestLabFormulaData s_dataDeserializationInstance;
+        private static DevTestLabFormulaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevTestLabFormulaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabFormulaData>)Data).Write(writer, options);
 
-        DevTestLabFormulaData IJsonModel<DevTestLabFormulaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabFormulaData>)Data).Create(ref reader, options);
+        DevTestLabFormulaData IJsonModel<DevTestLabFormulaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabFormulaData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabFormulaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevTestLabFormulaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabFormulaData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        DevTestLabFormulaData IPersistableModel<DevTestLabFormulaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabFormulaData>(data, options);
+        DevTestLabFormulaData IPersistableModel<DevTestLabFormulaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabFormulaData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        string IPersistableModel<DevTestLabFormulaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabFormulaData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevTestLabFormulaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabFormulaData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

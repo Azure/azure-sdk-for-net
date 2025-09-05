@@ -31,6 +31,8 @@ steps:
     inputs:
       artifactName: '$(PublishArtifactName)'
       targetPath: '${{ parameters.ArtifactPath }}'
-      # Disable sbom generation by default for forked PR builds to avoid a bunch of warnings
-      ${{ if not(and(eq(variables['Build.Reason'],'PullRequest'), eq(variables['System.PullRequest.IsFork'], 'True'))) }}:
+      # Disable sbom generation by default for our public or pull request validation builds to avoid unnecessary work
+      ${{ if or(eq(variables['System.TeamProject'], 'public'), eq(variables['Build.Reason'], 'PullRequest')) }}:
+        sbomEnabled: false
+      ${{ else }}:
         sbomEnabled: ${{ parameters.SbomEnabled }}

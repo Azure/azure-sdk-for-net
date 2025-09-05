@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The JSON object that contains the properties to send health probes to origin. </summary>
+    /// <summary>
+    /// The JSON object that contains the properties to send health probes to origin.
+    /// Serialized Name: HealthProbeParameters
+    /// </summary>
     public partial class HealthProbeSettings
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthProbeSettings"/>. </summary>
-        /// <param name="probePath"> The path relative to the origin that is used to determine the health of the origin. </param>
-        /// <param name="probeRequestType"> The type of health probe request that is made. </param>
-        /// <param name="probeProtocol"> Protocol to use for health probe. </param>
-        /// <param name="probeIntervalInSeconds"> The number of seconds between health probes.Default is 240sec. </param>
+        /// <param name="probePath">
+        /// The path relative to the origin that is used to determine the health of the origin.
+        /// Serialized Name: HealthProbeParameters.probePath
+        /// </param>
+        /// <param name="probeRequestType">
+        /// The type of health probe request that is made.
+        /// Serialized Name: HealthProbeParameters.probeRequestType
+        /// </param>
+        /// <param name="probeProtocol">
+        /// Protocol to use for health probe.
+        /// Serialized Name: HealthProbeParameters.probeProtocol
+        /// </param>
+        /// <param name="probeIntervalInSeconds">
+        /// The number of seconds between health probes.Default is 240sec.
+        /// Serialized Name: HealthProbeParameters.probeIntervalInSeconds
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HealthProbeSettings(string probePath, HealthProbeRequestType? probeRequestType, HealthProbeProtocol? probeProtocol, int? probeIntervalInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +80,25 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The path relative to the origin that is used to determine the health of the origin. </summary>
+        /// <summary>
+        /// The path relative to the origin that is used to determine the health of the origin.
+        /// Serialized Name: HealthProbeParameters.probePath
+        /// </summary>
         public string ProbePath { get; set; }
-        /// <summary> The type of health probe request that is made. </summary>
+        /// <summary>
+        /// The type of health probe request that is made.
+        /// Serialized Name: HealthProbeParameters.probeRequestType
+        /// </summary>
         public HealthProbeRequestType? ProbeRequestType { get; set; }
-        /// <summary> Protocol to use for health probe. </summary>
+        /// <summary>
+        /// Protocol to use for health probe.
+        /// Serialized Name: HealthProbeParameters.probeProtocol
+        /// </summary>
         public HealthProbeProtocol? ProbeProtocol { get; set; }
-        /// <summary> The number of seconds between health probes.Default is 240sec. </summary>
+        /// <summary>
+        /// The number of seconds between health probes.Default is 240sec.
+        /// Serialized Name: HealthProbeParameters.probeIntervalInSeconds
+        /// </summary>
         public int? ProbeIntervalInSeconds { get; set; }
     }
 }

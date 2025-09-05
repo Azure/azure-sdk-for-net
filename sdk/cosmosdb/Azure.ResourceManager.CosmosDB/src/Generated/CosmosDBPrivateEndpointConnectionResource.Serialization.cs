@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CosmosDBPrivateEndpointConnectionResource : IJsonModel<CosmosDBPrivateEndpointConnectionData>
     {
+        private static CosmosDBPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static CosmosDBPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CosmosDBPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        CosmosDBPrivateEndpointConnectionData IJsonModel<CosmosDBPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        CosmosDBPrivateEndpointConnectionData IJsonModel<CosmosDBPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CosmosDBPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CosmosDBPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBPrivateEndpointConnectionData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        CosmosDBPrivateEndpointConnectionData IPersistableModel<CosmosDBPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBPrivateEndpointConnectionData>(data, options);
+        CosmosDBPrivateEndpointConnectionData IPersistableModel<CosmosDBPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBPrivateEndpointConnectionData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CosmosDBPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CosmosDBPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

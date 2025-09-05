@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     public partial class ProfileResourceFormatResource : IJsonModel<ProfileResourceFormatData>
     {
+        private static ProfileResourceFormatData s_dataDeserializationInstance;
+        private static ProfileResourceFormatData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ProfileResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProfileResourceFormatData>)Data).Write(writer, options);
 
-        ProfileResourceFormatData IJsonModel<ProfileResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProfileResourceFormatData>)Data).Create(ref reader, options);
+        ProfileResourceFormatData IJsonModel<ProfileResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProfileResourceFormatData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProfileResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ProfileResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProfileResourceFormatData>(Data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
-        ProfileResourceFormatData IPersistableModel<ProfileResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProfileResourceFormatData>(data, options);
+        ProfileResourceFormatData IPersistableModel<ProfileResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProfileResourceFormatData>(data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
-        string IPersistableModel<ProfileResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProfileResourceFormatData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ProfileResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProfileResourceFormatData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

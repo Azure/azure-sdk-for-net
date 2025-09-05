@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class PacketCoreDataPlaneResource : IJsonModel<PacketCoreDataPlaneData>
     {
+        private static PacketCoreDataPlaneData s_dataDeserializationInstance;
+        private static PacketCoreDataPlaneData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PacketCoreDataPlaneData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PacketCoreDataPlaneData>)Data).Write(writer, options);
 
-        PacketCoreDataPlaneData IJsonModel<PacketCoreDataPlaneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PacketCoreDataPlaneData>)Data).Create(ref reader, options);
+        PacketCoreDataPlaneData IJsonModel<PacketCoreDataPlaneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PacketCoreDataPlaneData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PacketCoreDataPlaneData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PacketCoreDataPlaneData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PacketCoreDataPlaneData>(Data, options, AzureResourceManagerMobileNetworkContext.Default);
 
-        PacketCoreDataPlaneData IPersistableModel<PacketCoreDataPlaneData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PacketCoreDataPlaneData>(data, options);
+        PacketCoreDataPlaneData IPersistableModel<PacketCoreDataPlaneData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PacketCoreDataPlaneData>(data, options, AzureResourceManagerMobileNetworkContext.Default);
 
-        string IPersistableModel<PacketCoreDataPlaneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PacketCoreDataPlaneData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PacketCoreDataPlaneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PacketCoreDataPlaneData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

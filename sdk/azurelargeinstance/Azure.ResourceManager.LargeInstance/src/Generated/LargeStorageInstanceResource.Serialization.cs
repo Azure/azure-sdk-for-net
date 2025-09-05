@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.LargeInstance
 {
     public partial class LargeStorageInstanceResource : IJsonModel<LargeStorageInstanceData>
     {
+        private static LargeStorageInstanceData s_dataDeserializationInstance;
+        private static LargeStorageInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<LargeStorageInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LargeStorageInstanceData>)Data).Write(writer, options);
 
-        LargeStorageInstanceData IJsonModel<LargeStorageInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LargeStorageInstanceData>)Data).Create(ref reader, options);
+        LargeStorageInstanceData IJsonModel<LargeStorageInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LargeStorageInstanceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LargeStorageInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LargeStorageInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LargeStorageInstanceData>(Data, options, AzureResourceManagerLargeInstanceContext.Default);
 
-        LargeStorageInstanceData IPersistableModel<LargeStorageInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LargeStorageInstanceData>(data, options);
+        LargeStorageInstanceData IPersistableModel<LargeStorageInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LargeStorageInstanceData>(data, options, AzureResourceManagerLargeInstanceContext.Default);
 
-        string IPersistableModel<LargeStorageInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LargeStorageInstanceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<LargeStorageInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LargeStorageInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

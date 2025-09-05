@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NetApp
 
         NetAppBackupVaultResource IOperationSource<NetAppBackupVaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetAppBackupVaultData>(response.Content);
+            var data = ModelReaderWriter.Read<NetAppBackupVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return new NetAppBackupVaultResource(_client, data);
         }
 
         async ValueTask<NetAppBackupVaultResource> IOperationSource<NetAppBackupVaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetAppBackupVaultData>(response.Content);
+            var data = ModelReaderWriter.Read<NetAppBackupVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return await Task.FromResult(new NetAppBackupVaultResource(_client, data)).ConfigureAwait(false);
         }
     }

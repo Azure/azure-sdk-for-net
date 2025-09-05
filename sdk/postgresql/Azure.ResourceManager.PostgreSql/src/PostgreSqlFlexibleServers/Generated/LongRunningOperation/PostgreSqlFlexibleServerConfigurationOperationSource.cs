@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         PostgreSqlFlexibleServerConfigurationResource IOperationSource<PostgreSqlFlexibleServerConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerConfigurationData>(response.Content);
+            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             return new PostgreSqlFlexibleServerConfigurationResource(_client, data);
         }
 
         async ValueTask<PostgreSqlFlexibleServerConfigurationResource> IOperationSource<PostgreSqlFlexibleServerConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerConfigurationData>(response.Content);
+            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             return await Task.FromResult(new PostgreSqlFlexibleServerConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Redis
 {
     public partial class RedisCacheAccessPolicyResource : IJsonModel<RedisCacheAccessPolicyData>
     {
+        private static RedisCacheAccessPolicyData s_dataDeserializationInstance;
+        private static RedisCacheAccessPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RedisCacheAccessPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RedisCacheAccessPolicyData>)Data).Write(writer, options);
 
-        RedisCacheAccessPolicyData IJsonModel<RedisCacheAccessPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisCacheAccessPolicyData>)Data).Create(ref reader, options);
+        RedisCacheAccessPolicyData IJsonModel<RedisCacheAccessPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisCacheAccessPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RedisCacheAccessPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RedisCacheAccessPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisCacheAccessPolicyData>(Data, options, AzureResourceManagerRedisContext.Default);
 
-        RedisCacheAccessPolicyData IPersistableModel<RedisCacheAccessPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisCacheAccessPolicyData>(data, options);
+        RedisCacheAccessPolicyData IPersistableModel<RedisCacheAccessPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisCacheAccessPolicyData>(data, options, AzureResourceManagerRedisContext.Default);
 
-        string IPersistableModel<RedisCacheAccessPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisCacheAccessPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RedisCacheAccessPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisCacheAccessPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

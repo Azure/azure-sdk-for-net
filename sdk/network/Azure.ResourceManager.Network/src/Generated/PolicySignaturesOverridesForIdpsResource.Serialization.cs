@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class PolicySignaturesOverridesForIdpsResource : IJsonModel<PolicySignaturesOverridesForIdpsData>
     {
+        private static PolicySignaturesOverridesForIdpsData s_dataDeserializationInstance;
+        private static PolicySignaturesOverridesForIdpsData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PolicySignaturesOverridesForIdpsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PolicySignaturesOverridesForIdpsData>)Data).Write(writer, options);
 
-        PolicySignaturesOverridesForIdpsData IJsonModel<PolicySignaturesOverridesForIdpsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicySignaturesOverridesForIdpsData>)Data).Create(ref reader, options);
+        PolicySignaturesOverridesForIdpsData IJsonModel<PolicySignaturesOverridesForIdpsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicySignaturesOverridesForIdpsData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PolicySignaturesOverridesForIdpsData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PolicySignaturesOverridesForIdpsData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PolicySignaturesOverridesForIdpsData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        PolicySignaturesOverridesForIdpsData IPersistableModel<PolicySignaturesOverridesForIdpsData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicySignaturesOverridesForIdpsData>(data, options);
+        PolicySignaturesOverridesForIdpsData IPersistableModel<PolicySignaturesOverridesForIdpsData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicySignaturesOverridesForIdpsData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<PolicySignaturesOverridesForIdpsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicySignaturesOverridesForIdpsData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PolicySignaturesOverridesForIdpsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicySignaturesOverridesForIdpsData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

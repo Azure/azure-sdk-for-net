@@ -46,6 +46,12 @@ extends:
       safeName: AzureCore
       triggeringPaths:
       - /sdk/resourcemanager/
+      - /eng/Versioning.targets
+      - /eng/Packages.Data.props
+      - /eng/Directory.Build.Common.props
+      - /eng/Directory.Build.Common.targets
+      - /eng/service.proj
+
     - name: Azure.Core.Experimental
       safeName: AzureCoreExperimental
     - name: Azure.Core.Expressions.DataFactory
@@ -60,13 +66,12 @@ extends:
       safeName: AzureCoreAmqp
     - name: System.ClientModel
       safeName: SystemClientModel
-    - name: Azure.Core.TestFramework
-      safeName: AzureCoreTestFramework
-      skipReleaseStage: true
     CheckAOTCompat: true
     AOTTestInputs:
     - ArtifactName: Azure.Core
       ExpectedWarningsFilepath: /Azure.Core/tests/compatibility/ExpectedAotWarnings.txt
+    - ArtifactName: Azure.Core.Expressions.DataFactory
+      ExpectedWarningsFilepath: /Azure.Core.Expressions.DataFactory/tests/compatibility/ExpectedAotWarnings.txt
     - ArtifactName: System.ClientModel
       ExpectedWarningsFilepath: None
 

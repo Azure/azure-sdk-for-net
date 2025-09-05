@@ -13,49 +13,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.ModelRegistered event. </summary>
     public partial class MachineLearningServicesModelRegisteredEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelRegisteredEventData"/>. </summary>
-        /// <param name="modelTags"> The tags of the model that was registered. </param>
-        /// <param name="modelProperties"> The properties of the model that was registered. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelTags"/> or <paramref name="modelProperties"/> is null. </exception>
-        internal MachineLearningServicesModelRegisteredEventData(IReadOnlyDictionary<string, BinaryData> modelTags, IReadOnlyDictionary<string, BinaryData> modelProperties)
+        /// <param name="modelName"> The name of the model that was registered. </param>
+        /// <param name="modelVersion"> The version of the model that was registered. </param>
+        internal MachineLearningServicesModelRegisteredEventData(string modelName, string modelVersion)
         {
-            Argument.AssertNotNull(modelTags, nameof(modelTags));
-            Argument.AssertNotNull(modelProperties, nameof(modelProperties));
-
-            ModelTags = modelTags;
-            ModelProperties = modelProperties;
+            ModelName = modelName;
+            ModelVersion = modelVersion;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelRegisteredEventData"/>. </summary>
@@ -63,86 +30,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="modelVersion"> The version of the model that was registered. </param>
         /// <param name="modelTags"> The tags of the model that was registered. </param>
         /// <param name="modelProperties"> The properties of the model that was registered. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningServicesModelRegisteredEventData(string modelName, string modelVersion, IReadOnlyDictionary<string, BinaryData> modelTags, IReadOnlyDictionary<string, BinaryData> modelProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningServicesModelRegisteredEventData(string modelName, string modelVersion, object modelTags, object modelProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ModelName = modelName;
             ModelVersion = modelVersion;
             ModelTags = modelTags;
             ModelProperties = modelProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelRegisteredEventData"/> for deserialization. </summary>
-        internal MachineLearningServicesModelRegisteredEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the model that was registered. </summary>
         public string ModelName { get; }
+
         /// <summary> The version of the model that was registered. </summary>
         public string ModelVersion { get; }
-        /// <summary>
-        /// The tags of the model that was registered.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> ModelTags { get; }
-        /// <summary>
-        /// The properties of the model that was registered.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> ModelProperties { get; }
     }
 }

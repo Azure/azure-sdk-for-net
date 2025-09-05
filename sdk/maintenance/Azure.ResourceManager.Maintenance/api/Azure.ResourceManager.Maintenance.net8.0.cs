@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Maintenance
 {
+    public partial class AzureResourceManagerMaintenanceContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerMaintenanceContext() { }
+        public static Azure.ResourceManager.Maintenance.AzureResourceManagerMaintenanceContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class MaintenanceApplyUpdateCollection : Azure.ResourceManager.ArmCollection
     {
         protected MaintenanceApplyUpdateCollection() { }

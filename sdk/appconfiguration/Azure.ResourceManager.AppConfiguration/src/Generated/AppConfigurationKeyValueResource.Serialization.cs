@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppConfiguration
 {
     public partial class AppConfigurationKeyValueResource : IJsonModel<AppConfigurationKeyValueData>
     {
+        private static AppConfigurationKeyValueData s_dataDeserializationInstance;
+        private static AppConfigurationKeyValueData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppConfigurationKeyValueData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationKeyValueData>)Data).Write(writer, options);
 
-        AppConfigurationKeyValueData IJsonModel<AppConfigurationKeyValueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationKeyValueData>)Data).Create(ref reader, options);
+        AppConfigurationKeyValueData IJsonModel<AppConfigurationKeyValueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationKeyValueData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppConfigurationKeyValueData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppConfigurationKeyValueData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppConfigurationKeyValueData>(Data, options, AzureResourceManagerAppConfigurationContext.Default);
 
-        AppConfigurationKeyValueData IPersistableModel<AppConfigurationKeyValueData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppConfigurationKeyValueData>(data, options);
+        AppConfigurationKeyValueData IPersistableModel<AppConfigurationKeyValueData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppConfigurationKeyValueData>(data, options, AzureResourceManagerAppConfigurationContext.Default);
 
-        string IPersistableModel<AppConfigurationKeyValueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppConfigurationKeyValueData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppConfigurationKeyValueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppConfigurationKeyValueData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

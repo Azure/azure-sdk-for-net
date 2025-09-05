@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.FrontDoor
 
         FrontDoorExperimentResource IOperationSource<FrontDoorExperimentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FrontDoorExperimentData>(response.Content);
+            var data = ModelReaderWriter.Read<FrontDoorExperimentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerFrontDoorContext.Default);
             return new FrontDoorExperimentResource(_client, data);
         }
 
         async ValueTask<FrontDoorExperimentResource> IOperationSource<FrontDoorExperimentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FrontDoorExperimentData>(response.Content);
+            var data = ModelReaderWriter.Read<FrontDoorExperimentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerFrontDoorContext.Default);
             return await Task.FromResult(new FrontDoorExperimentResource(_client, data)).ConfigureAwait(false);
         }
     }

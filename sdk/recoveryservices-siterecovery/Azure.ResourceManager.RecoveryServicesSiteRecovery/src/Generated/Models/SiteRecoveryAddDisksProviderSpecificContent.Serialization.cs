@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 switch (discriminator.GetString())
                 {
                     case "A2A": return A2AAddDisksContent.DeserializeA2AAddDisksContent(element, options);
+                    case "InMageRcm": return InMageRcmAddDisksContent.DeserializeInMageRcmAddDisksContent(element, options);
                 }
             }
             return UnknownAddDisksProviderSpecificContent.DeserializeUnknownAddDisksProviderSpecificContent(element, options);
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryAddDisksProviderSpecificContent)} does not support writing '{options.Format}' format.");
             }

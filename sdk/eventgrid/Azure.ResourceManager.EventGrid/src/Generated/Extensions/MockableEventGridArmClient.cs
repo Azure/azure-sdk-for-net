@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-15</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-15</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -190,6 +190,18 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="DomainTopicEventSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DomainTopicEventSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="DomainTopicEventSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DomainTopicEventSubscriptionResource"/> object. </returns>
+        public virtual DomainTopicEventSubscriptionResource GetDomainTopicEventSubscriptionResource(ResourceIdentifier id)
+        {
+            DomainTopicEventSubscriptionResource.ValidateResourceId(id);
+            return new DomainTopicEventSubscriptionResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="TopicEventSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="TopicEventSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="TopicEventSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -223,18 +235,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             EventSubscriptionResource.ValidateResourceId(id);
             return new EventSubscriptionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DomainTopicEventSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DomainTopicEventSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="DomainTopicEventSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DomainTopicEventSubscriptionResource"/> object. </returns>
-        public virtual DomainTopicEventSubscriptionResource GetDomainTopicEventSubscriptionResource(ResourceIdentifier id)
-        {
-            DomainTopicEventSubscriptionResource.ValidateResourceId(id);
-            return new DomainTopicEventSubscriptionResource(Client, id);
         }
 
         /// <summary>
@@ -298,18 +298,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EventGridTopicResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventGridTopicResource.CreateResourceIdentifier" /> to create an <see cref="EventGridTopicResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventGridTopicResource"/> object. </returns>
-        public virtual EventGridTopicResource GetEventGridTopicResource(ResourceIdentifier id)
-        {
-            EventGridTopicResource.ValidateResourceId(id);
-            return new EventGridTopicResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="PartnerConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PartnerConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="PartnerConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -319,6 +307,18 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             PartnerConfigurationResource.ValidateResourceId(id);
             return new PartnerConfigurationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PartnerDestinationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PartnerDestinationResource.CreateResourceIdentifier" /> to create a <see cref="PartnerDestinationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PartnerDestinationResource"/> object. </returns>
+        public virtual PartnerDestinationResource GetPartnerDestinationResource(ResourceIdentifier id)
+        {
+            PartnerDestinationResource.ValidateResourceId(id);
+            return new PartnerDestinationResource(Client, id);
         }
 
         /// <summary>
@@ -355,6 +355,30 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             PartnerTopicResource.ValidateResourceId(id);
             return new PartnerTopicResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TopicNetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TopicNetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="TopicNetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TopicNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual TopicNetworkSecurityPerimeterConfigurationResource GetTopicNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        {
+            TopicNetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
+            return new TopicNetworkSecurityPerimeterConfigurationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DomainNetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual DomainNetworkSecurityPerimeterConfigurationResource GetDomainNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        {
+            DomainNetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
+            return new DomainNetworkSecurityPerimeterConfigurationResource(Client, id);
         }
 
         /// <summary>
@@ -451,6 +475,18 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             SystemTopicResource.ValidateResourceId(id);
             return new SystemTopicResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EventGridTopicResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventGridTopicResource.CreateResourceIdentifier" /> to create an <see cref="EventGridTopicResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridTopicResource"/> object. </returns>
+        public virtual EventGridTopicResource GetEventGridTopicResource(ResourceIdentifier id)
+        {
+            EventGridTopicResource.ValidateResourceId(id);
+            return new EventGridTopicResource(Client, id);
         }
 
         /// <summary>

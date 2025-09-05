@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.GuestConfiguration
 {
+    public partial class AzureResourceManagerGuestConfigurationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerGuestConfigurationContext() { }
+        public static Azure.ResourceManager.GuestConfiguration.AzureResourceManagerGuestConfigurationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class GuestConfigurationAssignmentData : Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData>
     {
         public GuestConfigurationAssignmentData() { }

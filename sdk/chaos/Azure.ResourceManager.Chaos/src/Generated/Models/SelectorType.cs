@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Chaos.Models
         private const string ListValue = "List";
         private const string QueryValue = "Query";
 
-        /// <summary> List. </summary>
+        /// <summary> List selector type. </summary>
         public static SelectorType List { get; } = new SelectorType(ListValue);
-        /// <summary> Query. </summary>
+        /// <summary> Query selector type. </summary>
         public static SelectorType Query { get; } = new SelectorType(QueryValue);
         /// <summary> Determines if two <see cref="SelectorType"/> values are the same. </summary>
         public static bool operator ==(SelectorType left, SelectorType right) => left.Equals(right);

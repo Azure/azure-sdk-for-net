@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.5.1 (2025-07-28)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Redis` AOT-compatible
+
 ## 1.5.0 (2024-12-18)
 
 ### Features Added

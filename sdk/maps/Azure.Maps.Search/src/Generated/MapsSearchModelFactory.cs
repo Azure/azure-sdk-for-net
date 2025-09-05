@@ -77,9 +77,11 @@ namespace Azure.Maps.Search.Models
         /// <param name="postalCode"> Postal Code property. </param>
         /// <param name="countryRegion"></param>
         /// <param name="formattedAddress"> Formatted Address property. </param>
+        /// <param name="streetName"> The name of the street from formattedAddress. </param>
+        /// <param name="streetNumber"> The number in the street, if available, from formattedAddress. </param>
         /// <param name="intersection"> The address of the result. </param>
         /// <returns> A new <see cref="Models.Address"/> instance for mocking. </returns>
-        public static Address Address(string addressLine = null, string locality = null, string neighborhood = null, IEnumerable<AddressAdminDistrictsItem> adminDistricts = null, string postalCode = null, AddressCountryRegion countryRegion = null, string formattedAddress = null, Intersection intersection = null)
+        public static Address Address(string addressLine = null, string locality = null, string neighborhood = null, IEnumerable<AddressAdminDistrictsItem> adminDistricts = null, string postalCode = null, AddressCountryRegion countryRegion = null, string formattedAddress = null, string streetName = null, string streetNumber = null, Intersection intersection = null)
         {
             adminDistricts ??= new List<AddressAdminDistrictsItem>();
 
@@ -91,6 +93,8 @@ namespace Azure.Maps.Search.Models
                 postalCode,
                 countryRegion,
                 formattedAddress,
+                streetName,
+                streetNumber,
                 intersection);
         }
 

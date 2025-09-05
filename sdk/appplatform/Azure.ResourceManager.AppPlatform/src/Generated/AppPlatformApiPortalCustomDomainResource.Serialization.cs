@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppPlatform
 {
     public partial class AppPlatformApiPortalCustomDomainResource : IJsonModel<AppPlatformApiPortalCustomDomainData>
     {
+        private static AppPlatformApiPortalCustomDomainData s_dataDeserializationInstance;
+        private static AppPlatformApiPortalCustomDomainData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppPlatformApiPortalCustomDomainData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformApiPortalCustomDomainData>)Data).Write(writer, options);
 
-        AppPlatformApiPortalCustomDomainData IJsonModel<AppPlatformApiPortalCustomDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformApiPortalCustomDomainData>)Data).Create(ref reader, options);
+        AppPlatformApiPortalCustomDomainData IJsonModel<AppPlatformApiPortalCustomDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformApiPortalCustomDomainData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppPlatformApiPortalCustomDomainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppPlatformApiPortalCustomDomainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppPlatformApiPortalCustomDomainData>(Data, options, AzureResourceManagerAppPlatformContext.Default);
 
-        AppPlatformApiPortalCustomDomainData IPersistableModel<AppPlatformApiPortalCustomDomainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformApiPortalCustomDomainData>(data, options);
+        AppPlatformApiPortalCustomDomainData IPersistableModel<AppPlatformApiPortalCustomDomainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformApiPortalCustomDomainData>(data, options, AzureResourceManagerAppPlatformContext.Default);
 
-        string IPersistableModel<AppPlatformApiPortalCustomDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformApiPortalCustomDomainData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppPlatformApiPortalCustomDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformApiPortalCustomDomainData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

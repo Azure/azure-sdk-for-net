@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.WorkloadMonitor
 {
     public partial class HealthMonitorStateChangeResource : IJsonModel<HealthMonitorStateChangeData>
     {
+        private static HealthMonitorStateChangeData s_dataDeserializationInstance;
+        private static HealthMonitorStateChangeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HealthMonitorStateChangeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HealthMonitorStateChangeData>)Data).Write(writer, options);
 
-        HealthMonitorStateChangeData IJsonModel<HealthMonitorStateChangeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthMonitorStateChangeData>)Data).Create(ref reader, options);
+        HealthMonitorStateChangeData IJsonModel<HealthMonitorStateChangeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthMonitorStateChangeData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HealthMonitorStateChangeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HealthMonitorStateChangeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthMonitorStateChangeData>(Data, options, AzureResourceManagerWorkloadMonitorContext.Default);
 
-        HealthMonitorStateChangeData IPersistableModel<HealthMonitorStateChangeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthMonitorStateChangeData>(data, options);
+        HealthMonitorStateChangeData IPersistableModel<HealthMonitorStateChangeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthMonitorStateChangeData>(data, options, AzureResourceManagerWorkloadMonitorContext.Default);
 
-        string IPersistableModel<HealthMonitorStateChangeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthMonitorStateChangeData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HealthMonitorStateChangeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthMonitorStateChangeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

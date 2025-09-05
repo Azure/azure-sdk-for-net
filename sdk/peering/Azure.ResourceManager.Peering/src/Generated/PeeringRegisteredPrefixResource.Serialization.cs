@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Peering
 {
     public partial class PeeringRegisteredPrefixResource : IJsonModel<PeeringRegisteredPrefixData>
     {
+        private static PeeringRegisteredPrefixData s_dataDeserializationInstance;
+        private static PeeringRegisteredPrefixData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PeeringRegisteredPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PeeringRegisteredPrefixData>)Data).Write(writer, options);
 
-        PeeringRegisteredPrefixData IJsonModel<PeeringRegisteredPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PeeringRegisteredPrefixData>)Data).Create(ref reader, options);
+        PeeringRegisteredPrefixData IJsonModel<PeeringRegisteredPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PeeringRegisteredPrefixData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PeeringRegisteredPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PeeringRegisteredPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PeeringRegisteredPrefixData>(Data, options, AzureResourceManagerPeeringContext.Default);
 
-        PeeringRegisteredPrefixData IPersistableModel<PeeringRegisteredPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PeeringRegisteredPrefixData>(data, options);
+        PeeringRegisteredPrefixData IPersistableModel<PeeringRegisteredPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PeeringRegisteredPrefixData>(data, options, AzureResourceManagerPeeringContext.Default);
 
-        string IPersistableModel<PeeringRegisteredPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PeeringRegisteredPrefixData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PeeringRegisteredPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PeeringRegisteredPrefixData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

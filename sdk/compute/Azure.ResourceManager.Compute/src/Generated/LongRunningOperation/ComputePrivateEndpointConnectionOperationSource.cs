@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Compute
 
         ComputePrivateEndpointConnectionResource IOperationSource<ComputePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ComputePrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<ComputePrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
             return new ComputePrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<ComputePrivateEndpointConnectionResource> IOperationSource<ComputePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ComputePrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<ComputePrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
             return await Task.FromResult(new ComputePrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

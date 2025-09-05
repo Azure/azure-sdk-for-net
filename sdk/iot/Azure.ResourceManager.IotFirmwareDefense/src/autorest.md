@@ -7,19 +7,20 @@ azure-arm: true
 csharp: true
 library-name: IotFirmwareDefense
 namespace: Azure.ResourceManager.IotFirmwareDefense
-require: https://github.com/Azure/azure-rest-api-specs/blob/cf5ad1932d00c7d15497705ad6b71171d3d68b1e/specification/fist/resource-manager/readme.md
-#tag: package-2024-01-10
+require: https://github.com/Azure/azure-rest-api-specs/blob/0490f6e57b3d0c8bd60d8bf237ddb6308e89ebd3/specification/fist/resource-manager/readme.md
+tag: package-2025-08-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  flatten-models: true
 use-model-reader-writer: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -64,32 +65,36 @@ rename-mapping:
   CveResource: CveResult
   PasswordHashResource: PasswordHashResult
   SbomComponentResource: SbomComponentResult
-  SummaryName: FirmwareAnalysisSummaryName
-  SummaryName.CVE: Cve
   SummaryType: FirmwareAnalysisSummaryType
-  SummaryType.CVE: Cve
   CryptoCertificateResource: CryptoCertificateResult
   CryptoCertificateSummaryResource: CryptoCertificateSummary
-  CryptoKeyResource: CryptoKeyResult
+  CryptoKeyResource.properties.keyType: CryptoKeyType
+  CryptoKeyResource.properties.usage: CryptoKeyUsage
   CryptoKeyResource.properties.cryptoKeyId: CryptoKeyId
+  CryptoKeyResource: CryptoKeyResult
   CryptoKeySummaryResource: CryptoKeySummary
   Firmware: IotFirmware
   ProvisioningState: FirmwareProvisioningState
   SummaryResource: FirmwareAnalysisSummary
   SummaryResourceProperties: FirmwareAnalysisSummaryProperties
-  BinaryHardeningResource.properties.features.nx: NXFlag
-  BinaryHardeningResource.properties.features.pie: PieFlag
-  BinaryHardeningResource.properties.features.relro: RelroFlag
-  BinaryHardeningResource.properties.features.canary: CanaryFlag
-  BinaryHardeningResource.properties.features.stripped: StrippedFlag
-  BinaryHardeningSummaryResource.nx: NXPercentage
-  BinaryHardeningSummaryResource.pie: PiePercentage
-  BinaryHardeningSummaryResource.relro: RelroPercentage
-  BinaryHardeningSummaryResource.canary: CanaryPercentage
-  BinaryHardeningSummaryResource.stripped: StrippedPercentage
   Status: FirmwareAnalysisStatus
   StatusMessage: FirmwareAnalysisStatusMessage
   PairedKey: CryptoPairedKey
   UrlToken: FirmwareUrlToken
+  AzureResourceManagerCommonTypesSkuUpdate: IotFirmwareDefenseSkuUpdate
+
+directive:
+  - from: iotfirmwaredefense.json
+    where: $.definitions
+    transform: >
+      $.BinaryHardeningResource.properties.properties["x-ms-client-flatten"] = true;
+      $.CryptoCertificateResource.properties.properties["x-ms-client-flatten"] = true;
+      $.CryptoKeyResource.properties.properties["x-ms-client-flatten"] = true;
+      $.CveResource.properties.properties["x-ms-client-flatten"] = true;
+      $.PasswordHashResource.properties.properties["x-ms-client-flatten"] = true;
+      $.SbomComponentResource.properties.properties["x-ms-client-flatten"] = true;
+      $.Workspace.properties.properties["x-ms-client-flatten"] = true;
+      $.Firmware.properties.properties["x-ms-client-flatten"] = true;
+      $.FirmwareUpdateDefinition.properties.properties["x-ms-client-flatten"] = true;
 
 ```

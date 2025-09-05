@@ -16,7 +16,7 @@ namespace Parameters.Spread
 
         public SpreadClient(Uri endpoint, SpreadClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Model GetModelClient() => throw null;
 

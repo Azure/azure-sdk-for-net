@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Automation.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutomationJobScheduleCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }

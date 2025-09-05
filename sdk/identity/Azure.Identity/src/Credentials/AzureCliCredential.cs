@@ -28,6 +28,7 @@ namespace Azure.Identity
         internal const string Troubleshoot = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/azclicredential/troubleshoot";
         internal const string InteractiveLoginRequired = "Azure CLI could not login. Interactive login is required.";
         internal const string CLIInternalError = "CLIInternalError: The command failed with an unexpected error. Here is the traceback:";
+        internal const string ClaimsChallengeLoginFormat = "Azure CLI authentication requires multi-factor authentication or additional claims. Please run '{0}' to re-authenticate with the required claims. After completing login, retry the operation.";
         internal TimeSpan ProcessTimeout { get; private set; }
 
         // The default install paths are used to find Azure CLI if no path is specified. This is to prevent executing out of the current working directory.
@@ -130,9 +131,23 @@ namespace Azure.Identity
             Validations.ValidateTenantId(tenantId, nameof(context.TenantId), true);
             ScopeUtilities.ValidateScope(resource);
 
+            // The Azure CLI cannot automatically satisfy an MFA or other claims challenge during non-interactive token acquisition.
+            // When a claims challenge is present we surface an AuthenticationFailedException instructing the user to re-authenticate
+            // with the provided claims using 'az login --claims-challenge'. This mirrors the cross-language guidance for CLI based auth.
+            // We purposefully do NOT translate this into a CredentialUnavailableException (even when part of a chain) so that callers
+            // receive the claims challenge context and can act on it rather than silently falling back to another credential.
+            if (!string.IsNullOrWhiteSpace(context.Claims))
+            {
+                string loginCommand = string.IsNullOrEmpty(tenantId)
+                    ? $"az login --claims-challenge {context.Claims}"
+                    : $"az login --tenant {tenantId} --claims-challenge {context.Claims}";
+
+                throw new AuthenticationFailedException(string.Format(CultureInfo.InvariantCulture, ClaimsChallengeLoginFormat, loginCommand));
+            }
+
             GetFileNameAndArguments(resource, tenantId, Subscription, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureCliProcessStartInfo(fileName, argument);
-            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), ProcessTimeout, _logPII, cancellationToken);
+            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), ProcessTimeout, _logPII, redirectStandardInput: true, cancellationToken);
 
             string output;
             try

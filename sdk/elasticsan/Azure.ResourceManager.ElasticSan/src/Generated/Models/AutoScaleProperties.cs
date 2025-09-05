@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Initializes a new instance of <see cref="AutoScaleProperties"/>. </summary>
         /// <param name="scaleUpProperties"> Scale up settings on Elastic San Appliance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoScaleProperties(ScaleUpProperties scaleUpProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutoScaleProperties(ElasticSanScaleUpProperties scaleUpProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ScaleUpProperties = scaleUpProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Scale up settings on Elastic San Appliance. </summary>
-        public ScaleUpProperties ScaleUpProperties { get; set; }
+        public ElasticSanScaleUpProperties ScaleUpProperties { get; set; }
     }
 }

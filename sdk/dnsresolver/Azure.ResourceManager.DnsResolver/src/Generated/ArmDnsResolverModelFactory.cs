@@ -244,12 +244,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="location"> The location. </param>
         /// <param name="etag"> ETag of the DNS security rule. </param>
         /// <param name="priority"> The priority of the DNS security rule. </param>
-        /// <param name="action"> The action to take on DNS requests that match the DNS security rule. </param>
+        /// <param name="actionType"> The action to take on DNS requests that match the DNS security rule. </param>
         /// <param name="dnsResolverDomainLists"> DNS resolver policy domains lists that the DNS security rule applies to. </param>
         /// <param name="dnsSecurityRuleState"> The state of DNS security rule. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS security rule. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <returns> A new <see cref="DnsResolver.DnsSecurityRuleData"/> instance for mocking. </returns>
-        public static DnsSecurityRuleData DnsSecurityRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, int priority = default, DnsSecurityRuleAction action = null, IEnumerable<WritableSubResource> dnsResolverDomainLists = null, DnsSecurityRuleState? dnsSecurityRuleState = null, DnsResolverProvisioningState? provisioningState = null)
+        public static DnsSecurityRuleData DnsSecurityRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, int priority = default, DnsSecurityRuleActionType? actionType = null, IEnumerable<WritableSubResource> dnsResolverDomainLists = null, DnsSecurityRuleState? dnsSecurityRuleState = null, DnsResolverProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
             dnsResolverDomainLists ??= new List<WritableSubResource>();
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 location,
                 etag,
                 priority,
-                action,
+                actionType != null ? new DnsSecurityRuleAction(actionType, serializedAdditionalRawData: null) : null,
                 dnsResolverDomainLists?.ToList(),
                 dnsSecurityRuleState,
                 provisioningState,
@@ -306,11 +306,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> ETag of the DNS resolver domain list. </param>
-        /// <param name="domains"> The domains in the domain list. </param>
+        /// <param name="domains"> The domains in the domain list. Will be null if user is using large domain list. </param>
+        /// <param name="domainsUri"> The URL for bulk upload or download for domain lists containing larger set of domains. This will be populated if domains is empty or null. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS resolver domain list. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver domain list resource. </param>
         /// <returns> A new <see cref="DnsResolver.DnsResolverDomainListData"/> instance for mocking. </returns>
-        public static DnsResolverDomainListData DnsResolverDomainListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IEnumerable<string> domains = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
+        public static DnsResolverDomainListData DnsResolverDomainListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IEnumerable<string> domains = null, Uri domainsUri = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
         {
             tags ??= new Dictionary<string, string>();
             domains ??= new List<string>();
@@ -324,6 +325,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 location,
                 etag,
                 domains?.ToList(),
+                domainsUri,
                 provisioningState,
                 resourceGuid,
                 serializedAdditionalRawData: null);

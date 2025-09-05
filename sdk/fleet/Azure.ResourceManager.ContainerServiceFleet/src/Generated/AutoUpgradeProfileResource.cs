@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.ContainerServiceFleet.Models;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
@@ -35,6 +36,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         private readonly ClientDiagnostics _autoUpgradeProfileClientDiagnostics;
         private readonly AutoUpgradeProfilesRestOperations _autoUpgradeProfileRestClient;
+        private readonly ClientDiagnostics _autoUpgradeProfileOperationsClientDiagnostics;
+        private readonly AutoUpgradeProfileRestOperations _autoUpgradeProfileOperationsRestClient;
         private readonly AutoUpgradeProfileData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -62,6 +65,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             _autoUpgradeProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string autoUpgradeProfileApiVersion);
             _autoUpgradeProfileRestClient = new AutoUpgradeProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, autoUpgradeProfileApiVersion);
+            _autoUpgradeProfileOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _autoUpgradeProfileOperationsRestClient = new AutoUpgradeProfileRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -101,7 +106,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-02-preview</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +146,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-02-preview</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -181,7 +186,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-02-preview</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,7 +229,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-02-preview</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -267,7 +272,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-02-preview</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -315,7 +320,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-02-preview</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -339,6 +344,82 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 var response = _autoUpgradeProfileRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, ifNoneMatch, cancellationToken);
                 var operation = new ContainerServiceFleetArmOperation<AutoUpgradeProfileResource>(new AutoUpgradeProfileOperationSource(Client), _autoUpgradeProfileClientDiagnostics, Pipeline, _autoUpgradeProfileRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates an update run for a given auto upgrade profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/autoUpgradeProfiles/{autoUpgradeProfileName}/generateUpdateRun</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoUpgradeProfileOperations_GenerateUpdateRun</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<AutoUpgradeProfileGenerateResult>> GenerateUpdateRunAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _autoUpgradeProfileOperationsClientDiagnostics.CreateScope("AutoUpgradeProfileResource.GenerateUpdateRun");
+            scope.Start();
+            try
+            {
+                var response = await _autoUpgradeProfileOperationsRestClient.GenerateUpdateRunAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainerServiceFleetArmOperation<AutoUpgradeProfileGenerateResult>(new AutoUpgradeProfileGenerateResultOperationSource(), _autoUpgradeProfileOperationsClientDiagnostics, Pipeline, _autoUpgradeProfileOperationsRestClient.CreateGenerateUpdateRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates an update run for a given auto upgrade profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/autoUpgradeProfiles/{autoUpgradeProfileName}/generateUpdateRun</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoUpgradeProfileOperations_GenerateUpdateRun</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<AutoUpgradeProfileGenerateResult> GenerateUpdateRun(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _autoUpgradeProfileOperationsClientDiagnostics.CreateScope("AutoUpgradeProfileResource.GenerateUpdateRun");
+            scope.Start();
+            try
+            {
+                var response = _autoUpgradeProfileOperationsRestClient.GenerateUpdateRun(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ContainerServiceFleetArmOperation<AutoUpgradeProfileGenerateResult>(new AutoUpgradeProfileGenerateResultOperationSource(), _autoUpgradeProfileOperationsClientDiagnostics, Pipeline, _autoUpgradeProfileOperationsRestClient.CreateGenerateUpdateRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

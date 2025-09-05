@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityCloudConnectorResource : IJsonModel<SecurityCloudConnectorData>
     {
+        private static SecurityCloudConnectorData s_dataDeserializationInstance;
+        private static SecurityCloudConnectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityCloudConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityCloudConnectorData>)Data).Write(writer, options);
 
-        SecurityCloudConnectorData IJsonModel<SecurityCloudConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityCloudConnectorData>)Data).Create(ref reader, options);
+        SecurityCloudConnectorData IJsonModel<SecurityCloudConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityCloudConnectorData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityCloudConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityCloudConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityCloudConnectorData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SecurityCloudConnectorData IPersistableModel<SecurityCloudConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityCloudConnectorData>(data, options);
+        SecurityCloudConnectorData IPersistableModel<SecurityCloudConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityCloudConnectorData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<SecurityCloudConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityCloudConnectorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityCloudConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityCloudConnectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(RemotePrivateEndpointConnection))
             {
                 writer.WritePropertyName("remotePrivateEndpointConnection"u8);
-                JsonSerializer.Serialize(writer, RemotePrivateEndpointConnection);
+                ((IJsonModel<WritableSubResource>)RemotePrivateEndpointConnection).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(GroupConnectivityInformation))
             {
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    remotePrivateEndpointConnection = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    remotePrivateEndpointConnection = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                     continue;
                 }
                 if (property.NameEquals("groupConnectivityInformation"u8))
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationPrivateLinkServiceProxy)} does not support writing '{options.Format}' format.");
             }

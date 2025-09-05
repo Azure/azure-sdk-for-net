@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGuestConfigurationContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

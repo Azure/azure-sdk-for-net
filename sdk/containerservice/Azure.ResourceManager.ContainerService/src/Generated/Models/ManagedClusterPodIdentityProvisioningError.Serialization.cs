@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(ErrorDetail))
             {
                 writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, ErrorDetail);
+                ((IJsonModel<ResponseError>)ErrorDetail).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerContainerServiceContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

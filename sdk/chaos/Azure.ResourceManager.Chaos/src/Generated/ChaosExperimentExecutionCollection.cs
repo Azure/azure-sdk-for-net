@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     public partial class ChaosExperimentExecutionCollection : ArmCollection, IEnumerable<ChaosExperimentExecutionResource>, IAsyncEnumerable<ChaosExperimentExecutionResource>
     {
-        private readonly ClientDiagnostics _chaosExperimentExecutionExperimentsClientDiagnostics;
-        private readonly ExperimentsRestOperations _chaosExperimentExecutionExperimentsRestClient;
+        private readonly ClientDiagnostics _chaosExperimentExecutionExperimentExecutionsClientDiagnostics;
+        private readonly ExperimentExecutionsRestOperations _chaosExperimentExecutionExperimentExecutionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ChaosExperimentExecutionCollection"/> class for mocking. </summary>
         protected ChaosExperimentExecutionCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ChaosExperimentExecutionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _chaosExperimentExecutionExperimentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosExperimentExecutionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ChaosExperimentExecutionResource.ResourceType, out string chaosExperimentExecutionExperimentsApiVersion);
-            _chaosExperimentExecutionExperimentsRestClient = new ExperimentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, chaosExperimentExecutionExperimentsApiVersion);
+            _chaosExperimentExecutionExperimentExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosExperimentExecutionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ChaosExperimentExecutionResource.ResourceType, out string chaosExperimentExecutionExperimentExecutionsApiVersion);
+            _chaosExperimentExecutionExperimentExecutionsRestClient = new ExperimentExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, chaosExperimentExecutionExperimentExecutionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_GetExecution</description>
+        /// <description>ExperimentExecution_GetExecution</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
-            using var scope = _chaosExperimentExecutionExperimentsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.Get");
+            using var scope = _chaosExperimentExecutionExperimentExecutionsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _chaosExperimentExecutionExperimentsRestClient.GetExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, executionId, cancellationToken).ConfigureAwait(false);
+                var response = await _chaosExperimentExecutionExperimentExecutionsRestClient.GetExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, executionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ChaosExperimentExecutionResource(Client, response.Value), response.GetRawResponse());
@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_GetExecution</description>
+        /// <description>ExperimentExecution_GetExecution</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
-            using var scope = _chaosExperimentExecutionExperimentsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.Get");
+            using var scope = _chaosExperimentExecutionExperimentExecutionsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.Get");
             scope.Start();
             try
             {
-                var response = _chaosExperimentExecutionExperimentsRestClient.GetExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, executionId, cancellationToken);
+                var response = _chaosExperimentExecutionExperimentExecutionsRestClient.GetExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, executionId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ChaosExperimentExecutionResource(Client, response.Value), response.GetRawResponse());
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_ListAllExecutions</description>
+        /// <description>ExperimentExecution_ListAllExecutions</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An async collection of <see cref="ChaosExperimentExecutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ChaosExperimentExecutionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosExperimentExecutionExperimentsRestClient.CreateListAllExecutionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosExperimentExecutionExperimentsRestClient.CreateListAllExecutionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ChaosExperimentExecutionResource(Client, ChaosExperimentExecutionData.DeserializeChaosExperimentExecutionData(e)), _chaosExperimentExecutionExperimentsClientDiagnostics, Pipeline, "ChaosExperimentExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosExperimentExecutionExperimentExecutionsRestClient.CreateListAllExecutionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosExperimentExecutionExperimentExecutionsRestClient.CreateListAllExecutionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ChaosExperimentExecutionResource(Client, ChaosExperimentExecutionData.DeserializeChaosExperimentExecutionData(e)), _chaosExperimentExecutionExperimentExecutionsClientDiagnostics, Pipeline, "ChaosExperimentExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_ListAllExecutions</description>
+        /// <description>ExperimentExecution_ListAllExecutions</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> A collection of <see cref="ChaosExperimentExecutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ChaosExperimentExecutionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosExperimentExecutionExperimentsRestClient.CreateListAllExecutionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosExperimentExecutionExperimentsRestClient.CreateListAllExecutionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ChaosExperimentExecutionResource(Client, ChaosExperimentExecutionData.DeserializeChaosExperimentExecutionData(e)), _chaosExperimentExecutionExperimentsClientDiagnostics, Pipeline, "ChaosExperimentExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosExperimentExecutionExperimentExecutionsRestClient.CreateListAllExecutionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosExperimentExecutionExperimentExecutionsRestClient.CreateListAllExecutionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ChaosExperimentExecutionResource(Client, ChaosExperimentExecutionData.DeserializeChaosExperimentExecutionData(e)), _chaosExperimentExecutionExperimentExecutionsClientDiagnostics, Pipeline, "ChaosExperimentExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_GetExecution</description>
+        /// <description>ExperimentExecution_GetExecution</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -230,11 +230,11 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
-            using var scope = _chaosExperimentExecutionExperimentsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.Exists");
+            using var scope = _chaosExperimentExecutionExperimentExecutionsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _chaosExperimentExecutionExperimentsRestClient.GetExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, executionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _chaosExperimentExecutionExperimentExecutionsRestClient.GetExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, executionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -253,11 +253,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_GetExecution</description>
+        /// <description>ExperimentExecution_GetExecution</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
-            using var scope = _chaosExperimentExecutionExperimentsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.Exists");
+            using var scope = _chaosExperimentExecutionExperimentExecutionsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _chaosExperimentExecutionExperimentsRestClient.GetExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, executionId, cancellationToken: cancellationToken);
+                var response = _chaosExperimentExecutionExperimentExecutionsRestClient.GetExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, executionId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -296,11 +296,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_GetExecution</description>
+        /// <description>ExperimentExecution_GetExecution</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -316,11 +316,11 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
-            using var scope = _chaosExperimentExecutionExperimentsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.GetIfExists");
+            using var scope = _chaosExperimentExecutionExperimentExecutionsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _chaosExperimentExecutionExperimentsRestClient.GetExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, executionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _chaosExperimentExecutionExperimentExecutionsRestClient.GetExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, executionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<ChaosExperimentExecutionResource>(response.GetRawResponse());
                 return Response.FromValue(new ChaosExperimentExecutionResource(Client, response.Value), response.GetRawResponse());
@@ -341,11 +341,11 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Experiments_GetExecution</description>
+        /// <description>ExperimentExecution_GetExecution</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -361,11 +361,11 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
-            using var scope = _chaosExperimentExecutionExperimentsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.GetIfExists");
+            using var scope = _chaosExperimentExecutionExperimentExecutionsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _chaosExperimentExecutionExperimentsRestClient.GetExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, executionId, cancellationToken: cancellationToken);
+                var response = _chaosExperimentExecutionExperimentExecutionsRestClient.GetExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, executionId, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<ChaosExperimentExecutionResource>(response.GetRawResponse());
                 return Response.FromValue(new ChaosExperimentExecutionResource(Client, response.Value), response.GetRawResponse());

@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.BotService
 {
+    public partial class AzureResourceManagerBotServiceContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerBotServiceContext() { }
+        public static Azure.ResourceManager.BotService.AzureResourceManagerBotServiceContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BotChannelCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.BotService.BotChannelResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.BotService.BotChannelResource>, System.Collections.IEnumerable
     {
         protected BotChannelCollection() { }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.StreamAnalytics
 {
     public partial class StreamingJobResource : IJsonModel<StreamingJobData>
     {
+        private static StreamingJobData s_dataDeserializationInstance;
+        private static StreamingJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StreamingJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StreamingJobData>)Data).Write(writer, options);
 
-        StreamingJobData IJsonModel<StreamingJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StreamingJobData>)Data).Create(ref reader, options);
+        StreamingJobData IJsonModel<StreamingJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StreamingJobData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StreamingJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StreamingJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StreamingJobData>(Data, options, AzureResourceManagerStreamAnalyticsContext.Default);
 
-        StreamingJobData IPersistableModel<StreamingJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StreamingJobData>(data, options);
+        StreamingJobData IPersistableModel<StreamingJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StreamingJobData>(data, options, AzureResourceManagerStreamAnalyticsContext.Default);
 
-        string IPersistableModel<StreamingJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StreamingJobData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StreamingJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StreamingJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

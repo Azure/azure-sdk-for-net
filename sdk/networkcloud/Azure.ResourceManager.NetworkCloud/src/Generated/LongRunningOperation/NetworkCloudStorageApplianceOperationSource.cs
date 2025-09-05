@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudStorageApplianceResource IOperationSource<NetworkCloudStorageApplianceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudStorageApplianceData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkCloudStorageApplianceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
             return new NetworkCloudStorageApplianceResource(_client, data);
         }
 
         async ValueTask<NetworkCloudStorageApplianceResource> IOperationSource<NetworkCloudStorageApplianceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudStorageApplianceData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkCloudStorageApplianceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
             return await Task.FromResult(new NetworkCloudStorageApplianceResource(_client, data)).ConfigureAwait(false);
         }
     }

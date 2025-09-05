@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Logic
 
         IntegrationServiceEnvironmentResource IOperationSource<IntegrationServiceEnvironmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IntegrationServiceEnvironmentData>(response.Content);
+            var data = ModelReaderWriter.Read<IntegrationServiceEnvironmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerLogicContext.Default);
             return new IntegrationServiceEnvironmentResource(_client, data);
         }
 
         async ValueTask<IntegrationServiceEnvironmentResource> IOperationSource<IntegrationServiceEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IntegrationServiceEnvironmentData>(response.Content);
+            var data = ModelReaderWriter.Read<IntegrationServiceEnvironmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerLogicContext.Default);
             return await Task.FromResult(new IntegrationServiceEnvironmentResource(_client, data)).ConfigureAwait(false);
         }
     }

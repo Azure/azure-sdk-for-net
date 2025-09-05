@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Purview
 {
+    public partial class AzureResourceManagerPurviewContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerPurviewContext() { }
+        public static Azure.ResourceManager.Purview.AzureResourceManagerPurviewContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class PurviewAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Purview.PurviewAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Purview.PurviewAccountResource>, System.Collections.IEnumerable
     {
         protected PurviewAccountCollection() { }

@@ -7,9 +7,8 @@ namespace Azure.Data.Tables
     {
         internal const string LegacyCosmosTableDomain = ".table.cosmosdb.";
         internal const string CosmosTableDomain = ".table.cosmos.";
-        internal const string StorageScope = "https://storage.azure.com/.default";
-        internal const string CosmosScope = "https://cosmos.azure.com/.default";
         internal const string ReturnNoContent = "return-no-content";
+        internal const string DefaultScope = ".default";
 
         internal static class CompatSwitches
         {

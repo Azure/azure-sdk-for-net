@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Support
 
         TenantSupportTicketResource IOperationSource<TenantSupportTicketResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SupportTicketData>(response.Content);
+            var data = ModelReaderWriter.Read<SupportTicketData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSupportContext.Default);
             return new TenantSupportTicketResource(_client, data);
         }
 
         async ValueTask<TenantSupportTicketResource> IOperationSource<TenantSupportTicketResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SupportTicketData>(response.Content);
+            var data = ModelReaderWriter.Read<SupportTicketData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSupportContext.Default);
             return await Task.FromResult(new TenantSupportTicketResource(_client, data)).ConfigureAwait(false);
         }
     }

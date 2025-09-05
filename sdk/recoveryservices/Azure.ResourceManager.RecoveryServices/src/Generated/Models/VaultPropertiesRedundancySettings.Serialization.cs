@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 throw new FormatException($"The model {nameof(VaultPropertiesRedundancySettings)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(StandardTierStorageRedundancy))
+            if (Optional.IsDefined(StandardTierStorageRedundancy))
             {
                 writer.WritePropertyName("standardTierStorageRedundancy"u8);
                 writer.WriteStringValue(StandardTierStorageRedundancy.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CrossRegionRestore))
+            if (Optional.IsDefined(CrossRegionRestore))
             {
                 writer.WritePropertyName("crossRegionRestore"u8);
                 writer.WriteStringValue(CrossRegionRestore.Value.ToString());
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VaultPropertiesRedundancySettings)} does not support writing '{options.Format}' format.");
             }

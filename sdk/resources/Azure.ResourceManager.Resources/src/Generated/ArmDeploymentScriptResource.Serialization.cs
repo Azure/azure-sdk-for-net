@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class ArmDeploymentScriptResource : IJsonModel<ArmDeploymentScriptData>
     {
+        private static ArmDeploymentScriptData s_dataDeserializationInstance;
+        private static ArmDeploymentScriptData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ArmDeploymentScriptData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ArmDeploymentScriptData>)Data).Write(writer, options);
 
-        ArmDeploymentScriptData IJsonModel<ArmDeploymentScriptData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArmDeploymentScriptData>)Data).Create(ref reader, options);
+        ArmDeploymentScriptData IJsonModel<ArmDeploymentScriptData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArmDeploymentScriptData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ArmDeploymentScriptData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ArmDeploymentScriptData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ArmDeploymentScriptData>(Data, options, AzureResourceManagerResourcesContext.Default);
 
-        ArmDeploymentScriptData IPersistableModel<ArmDeploymentScriptData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArmDeploymentScriptData>(data, options);
+        ArmDeploymentScriptData IPersistableModel<ArmDeploymentScriptData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArmDeploymentScriptData>(data, options, AzureResourceManagerResourcesContext.Default);
 
-        string IPersistableModel<ArmDeploymentScriptData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArmDeploymentScriptData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ArmDeploymentScriptData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArmDeploymentScriptData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

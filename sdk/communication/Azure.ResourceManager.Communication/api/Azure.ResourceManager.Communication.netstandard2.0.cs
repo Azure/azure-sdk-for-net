@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Communication
 {
+    public partial class AzureResourceManagerCommunicationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerCommunicationContext() { }
+        public static Azure.ResourceManager.Communication.AzureResourceManagerCommunicationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CommunicationDomainResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Communication.CommunicationDomainResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Communication.CommunicationDomainResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;

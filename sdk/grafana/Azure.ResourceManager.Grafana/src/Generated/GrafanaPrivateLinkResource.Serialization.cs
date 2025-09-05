@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Grafana
 {
     public partial class GrafanaPrivateLinkResource : IJsonModel<GrafanaPrivateLinkResourceData>
     {
+        private static GrafanaPrivateLinkResourceData s_dataDeserializationInstance;
+        private static GrafanaPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GrafanaPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GrafanaPrivateLinkResourceData>)Data).Write(writer, options);
 
-        GrafanaPrivateLinkResourceData IJsonModel<GrafanaPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GrafanaPrivateLinkResourceData>)Data).Create(ref reader, options);
+        GrafanaPrivateLinkResourceData IJsonModel<GrafanaPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GrafanaPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GrafanaPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GrafanaPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GrafanaPrivateLinkResourceData>(Data, options, AzureResourceManagerGrafanaContext.Default);
 
-        GrafanaPrivateLinkResourceData IPersistableModel<GrafanaPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GrafanaPrivateLinkResourceData>(data, options);
+        GrafanaPrivateLinkResourceData IPersistableModel<GrafanaPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GrafanaPrivateLinkResourceData>(data, options, AzureResourceManagerGrafanaContext.Default);
 
-        string IPersistableModel<GrafanaPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GrafanaPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GrafanaPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GrafanaPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DnsResolver
 {
     public partial class DnsResolverPolicyResource : IJsonModel<DnsResolverPolicyData>
     {
+        private static DnsResolverPolicyData s_dataDeserializationInstance;
+        private static DnsResolverPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DnsResolverPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverPolicyData>)Data).Write(writer, options);
 
-        DnsResolverPolicyData IJsonModel<DnsResolverPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverPolicyData>)Data).Create(ref reader, options);
+        DnsResolverPolicyData IJsonModel<DnsResolverPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DnsResolverPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DnsResolverPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnsResolverPolicyData>(Data, options, AzureResourceManagerDnsResolverContext.Default);
 
-        DnsResolverPolicyData IPersistableModel<DnsResolverPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsResolverPolicyData>(data, options);
+        DnsResolverPolicyData IPersistableModel<DnsResolverPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsResolverPolicyData>(data, options, AzureResourceManagerDnsResolverContext.Default);
 
-        string IPersistableModel<DnsResolverPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsResolverPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DnsResolverPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsResolverPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

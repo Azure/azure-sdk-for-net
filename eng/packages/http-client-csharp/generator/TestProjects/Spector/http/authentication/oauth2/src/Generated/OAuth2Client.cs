@@ -18,11 +18,11 @@ namespace Authentication.OAuth2
     {
         protected OAuth2Client() => throw null;
 
-        public OAuth2Client(TokenCredential tokenCredential) : this(new Uri("http://localhost:3000"), tokenCredential, new OAuth2ClientOptions()) => throw null;
+        public OAuth2Client(TokenCredential credential) : this(new Uri("http://localhost:3000"), credential, new OAuth2ClientOptions()) => throw null;
 
-        public OAuth2Client(Uri endpoint, TokenCredential tokenCredential, OAuth2ClientOptions options) => throw null;
+        public OAuth2Client(Uri endpoint, TokenCredential credential, OAuth2ClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Valid(RequestContext context) => throw null;
 

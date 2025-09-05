@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Type of enclave requested on the elastic pool. </summary>
+    /// <summary> Type of enclave requested on the database i.e. Default or VBS enclaves. </summary>
     public readonly partial struct SqlAlwaysEncryptedEnclaveType : IEquatable<SqlAlwaysEncryptedEnclaveType>
     {
         private readonly string _value;

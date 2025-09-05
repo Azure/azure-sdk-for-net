@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ServiceNetworking
 
         ApplicationGatewayForContainersSecurityPolicyResource IOperationSource<ApplicationGatewayForContainersSecurityPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApplicationGatewayForContainersSecurityPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<ApplicationGatewayForContainersSecurityPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceNetworkingContext.Default);
             return new ApplicationGatewayForContainersSecurityPolicyResource(_client, data);
         }
 
         async ValueTask<ApplicationGatewayForContainersSecurityPolicyResource> IOperationSource<ApplicationGatewayForContainersSecurityPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApplicationGatewayForContainersSecurityPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<ApplicationGatewayForContainersSecurityPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceNetworkingContext.Default);
             return await Task.FromResult(new ApplicationGatewayForContainersSecurityPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

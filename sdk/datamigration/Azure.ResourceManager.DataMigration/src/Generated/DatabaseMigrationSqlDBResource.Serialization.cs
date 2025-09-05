@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataMigration
 {
     public partial class DatabaseMigrationSqlDBResource : IJsonModel<DatabaseMigrationSqlDBData>
     {
+        private static DatabaseMigrationSqlDBData s_dataDeserializationInstance;
+        private static DatabaseMigrationSqlDBData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DatabaseMigrationSqlDBData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseMigrationSqlDBData>)Data).Write(writer, options);
 
-        DatabaseMigrationSqlDBData IJsonModel<DatabaseMigrationSqlDBData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseMigrationSqlDBData>)Data).Create(ref reader, options);
+        DatabaseMigrationSqlDBData IJsonModel<DatabaseMigrationSqlDBData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseMigrationSqlDBData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DatabaseMigrationSqlDBData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DatabaseMigrationSqlDBData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatabaseMigrationSqlDBData>(Data, options, AzureResourceManagerDataMigrationContext.Default);
 
-        DatabaseMigrationSqlDBData IPersistableModel<DatabaseMigrationSqlDBData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseMigrationSqlDBData>(data, options);
+        DatabaseMigrationSqlDBData IPersistableModel<DatabaseMigrationSqlDBData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseMigrationSqlDBData>(data, options, AzureResourceManagerDataMigrationContext.Default);
 
-        string IPersistableModel<DatabaseMigrationSqlDBData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseMigrationSqlDBData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DatabaseMigrationSqlDBData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseMigrationSqlDBData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

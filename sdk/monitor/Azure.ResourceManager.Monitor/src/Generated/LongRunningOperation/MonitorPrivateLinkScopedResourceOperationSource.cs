@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Monitor
 
         MonitorPrivateLinkScopedResource IOperationSource<MonitorPrivateLinkScopedResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MonitorPrivateLinkScopedResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<MonitorPrivateLinkScopedResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMonitorContext.Default);
             return new MonitorPrivateLinkScopedResource(_client, data);
         }
 
         async ValueTask<MonitorPrivateLinkScopedResource> IOperationSource<MonitorPrivateLinkScopedResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MonitorPrivateLinkScopedResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<MonitorPrivateLinkScopedResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMonitorContext.Default);
             return await Task.FromResult(new MonitorPrivateLinkScopedResource(_client, data)).ConfigureAwait(false);
         }
     }

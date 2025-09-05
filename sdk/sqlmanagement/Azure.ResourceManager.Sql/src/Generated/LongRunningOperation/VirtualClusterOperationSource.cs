@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         VirtualClusterResource IOperationSource<VirtualClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualClusterData>(response.Content);
+            var data = ModelReaderWriter.Read<VirtualClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new VirtualClusterResource(_client, data);
         }
 
         async ValueTask<VirtualClusterResource> IOperationSource<VirtualClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualClusterData>(response.Content);
+            var data = ModelReaderWriter.Read<VirtualClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new VirtualClusterResource(_client, data)).ConfigureAwait(false);
         }
     }

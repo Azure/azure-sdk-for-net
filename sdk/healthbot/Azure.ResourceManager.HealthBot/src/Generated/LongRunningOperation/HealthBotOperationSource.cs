@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HealthBot
 
         HealthBotResource IOperationSource<HealthBotResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthBotData>(response.Content);
+            var data = ModelReaderWriter.Read<HealthBotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthBotContext.Default);
             return new HealthBotResource(_client, data);
         }
 
         async ValueTask<HealthBotResource> IOperationSource<HealthBotResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthBotData>(response.Content);
+            var data = ModelReaderWriter.Read<HealthBotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthBotContext.Default);
             return await Task.FromResult(new HealthBotResource(_client, data)).ConfigureAwait(false);
         }
     }

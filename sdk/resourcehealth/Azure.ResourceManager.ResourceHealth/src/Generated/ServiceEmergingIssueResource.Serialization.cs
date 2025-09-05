@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ResourceHealth
 {
     public partial class ServiceEmergingIssueResource : IJsonModel<ServiceEmergingIssueData>
     {
+        private static ServiceEmergingIssueData s_dataDeserializationInstance;
+        private static ServiceEmergingIssueData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ServiceEmergingIssueData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceEmergingIssueData>)Data).Write(writer, options);
 
-        ServiceEmergingIssueData IJsonModel<ServiceEmergingIssueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceEmergingIssueData>)Data).Create(ref reader, options);
+        ServiceEmergingIssueData IJsonModel<ServiceEmergingIssueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceEmergingIssueData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceEmergingIssueData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ServiceEmergingIssueData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceEmergingIssueData>(Data, options, AzureResourceManagerResourceHealthContext.Default);
 
-        ServiceEmergingIssueData IPersistableModel<ServiceEmergingIssueData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceEmergingIssueData>(data, options);
+        ServiceEmergingIssueData IPersistableModel<ServiceEmergingIssueData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceEmergingIssueData>(data, options, AzureResourceManagerResourceHealthContext.Default);
 
-        string IPersistableModel<ServiceEmergingIssueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceEmergingIssueData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ServiceEmergingIssueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceEmergingIssueData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

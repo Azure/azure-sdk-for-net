@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.DevOpsInfrastructure
 {
+    public partial class AzureResourceManagerDevOpsInfrastructureContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerDevOpsInfrastructureContext() { }
+        public static Azure.ResourceManager.DevOpsInfrastructure.AzureResourceManagerDevOpsInfrastructureContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class DevOpsInfrastructureExtensions
     {
         public static Azure.Response<Azure.ResourceManager.DevOpsInfrastructure.DevOpsPoolResource> GetDevOpsPool(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

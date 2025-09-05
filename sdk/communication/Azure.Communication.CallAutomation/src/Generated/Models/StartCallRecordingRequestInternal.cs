@@ -21,7 +21,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="StartCallRecordingRequestInternal"/>. </summary>
         /// <param name="callLocator"> The call locator. (Only one of callLocator or callConnectionId to be used). </param>
-        /// <param name="callConnectionId"> The call connectionId. (Only one of callLocator or callConnectionId to be used). </param>
+        /// <param name="callConnectionId"> The call connection Id. (Only one of callLocator or callConnectionId to be used). </param>
         /// <param name="recordingStateCallbackUri"> The uri to send notifications to. </param>
         /// <param name="recordingContentType"> The content type of call recording. </param>
         /// <param name="recordingChannelType"> The channel type of call recording. </param>
@@ -56,7 +56,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> The call locator. (Only one of callLocator or callConnectionId to be used). </summary>
         public CallLocatorInternal CallLocator { get; set; }
-        /// <summary> The call connectionId. (Only one of callLocator or callConnectionId to be used). </summary>
+        /// <summary> The call connection Id. (Only one of callLocator or callConnectionId to be used). </summary>
         public string CallConnectionId { get; set; }
         /// <summary> The uri to send notifications to. </summary>
         public string RecordingStateCallbackUri { get; set; }

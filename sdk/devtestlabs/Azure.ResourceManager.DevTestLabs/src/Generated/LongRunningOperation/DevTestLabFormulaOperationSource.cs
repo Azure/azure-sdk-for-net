@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DevTestLabs
 
         DevTestLabFormulaResource IOperationSource<DevTestLabFormulaResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevTestLabFormulaData>(response.Content);
+            var data = ModelReaderWriter.Read<DevTestLabFormulaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
             return new DevTestLabFormulaResource(_client, data);
         }
 
         async ValueTask<DevTestLabFormulaResource> IOperationSource<DevTestLabFormulaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevTestLabFormulaData>(response.Content);
+            var data = ModelReaderWriter.Read<DevTestLabFormulaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
             return await Task.FromResult(new DevTestLabFormulaResource(_client, data)).ConfigureAwait(false);
         }
     }

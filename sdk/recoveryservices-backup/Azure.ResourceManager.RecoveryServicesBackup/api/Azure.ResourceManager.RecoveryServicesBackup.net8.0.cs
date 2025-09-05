@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
+    public partial class AzureResourceManagerRecoveryServicesBackupContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerRecoveryServicesBackupContext() { }
+        public static Azure.ResourceManager.RecoveryServicesBackup.AzureResourceManagerRecoveryServicesBackupContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BackupEngineCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RecoveryServicesBackup.BackupEngineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesBackup.BackupEngineResource>, System.Collections.IEnumerable
     {
         protected BackupEngineCollection() { }

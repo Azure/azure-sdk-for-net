@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class AseV3NetworkingConfigurationResource : IJsonModel<AseV3NetworkingConfigurationData>
     {
+        private static AseV3NetworkingConfigurationData s_dataDeserializationInstance;
+        private static AseV3NetworkingConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AseV3NetworkingConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AseV3NetworkingConfigurationData>)Data).Write(writer, options);
 
-        AseV3NetworkingConfigurationData IJsonModel<AseV3NetworkingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AseV3NetworkingConfigurationData>)Data).Create(ref reader, options);
+        AseV3NetworkingConfigurationData IJsonModel<AseV3NetworkingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AseV3NetworkingConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AseV3NetworkingConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AseV3NetworkingConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AseV3NetworkingConfigurationData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        AseV3NetworkingConfigurationData IPersistableModel<AseV3NetworkingConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AseV3NetworkingConfigurationData>(data, options);
+        AseV3NetworkingConfigurationData IPersistableModel<AseV3NetworkingConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AseV3NetworkingConfigurationData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<AseV3NetworkingConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AseV3NetworkingConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AseV3NetworkingConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AseV3NetworkingConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

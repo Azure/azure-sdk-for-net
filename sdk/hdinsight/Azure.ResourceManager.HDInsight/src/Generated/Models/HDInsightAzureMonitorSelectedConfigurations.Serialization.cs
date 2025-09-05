@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HDInsightAzureMonitorSelectedConfigurations)} does not support writing '{options.Format}' format.");
             }

@@ -1318,7 +1318,6 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2024_08_04)]
         public async Task AppendBlockFromUriAsync_SourceErrorAndStatusCode()
@@ -1334,9 +1333,9 @@ namespace Azure.Storage.Blobs.Test
                 destBlob.AppendBlockFromUriAsync(sourceBlob.Uri),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 409"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: PublicAccessNotPermitted"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Public access is not permitted on this storage account."));
+                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 401"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: NoAuthenticationInformation"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Server failed to authenticate the request. Please refer to the information in the www-authenticate header."));
                 });
         }
 
@@ -1393,8 +1392,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
-
             var data = GetRandomBuffer(Constants.KB);
 
             using (var stream = new MemoryStream(data))
@@ -1413,9 +1410,11 @@ namespace Azure.Storage.Blobs.Test
                     SourceRange = new HttpRange(0, Constants.KB)
                 };
 
+                Uri sourceUri = sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddDays(1));
+
                 // Act
                 Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(
-                    sourceBlob.Uri,
+                    sourceUri,
                     options);
 
                 Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);

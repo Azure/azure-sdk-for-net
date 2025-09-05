@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MixedReality
 {
     public partial class RemoteRenderingAccountResource : IJsonModel<RemoteRenderingAccountData>
     {
+        private static RemoteRenderingAccountData s_dataDeserializationInstance;
+        private static RemoteRenderingAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RemoteRenderingAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RemoteRenderingAccountData>)Data).Write(writer, options);
 
-        RemoteRenderingAccountData IJsonModel<RemoteRenderingAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RemoteRenderingAccountData>)Data).Create(ref reader, options);
+        RemoteRenderingAccountData IJsonModel<RemoteRenderingAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RemoteRenderingAccountData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RemoteRenderingAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RemoteRenderingAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RemoteRenderingAccountData>(Data, options, AzureResourceManagerMixedRealityContext.Default);
 
-        RemoteRenderingAccountData IPersistableModel<RemoteRenderingAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RemoteRenderingAccountData>(data, options);
+        RemoteRenderingAccountData IPersistableModel<RemoteRenderingAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RemoteRenderingAccountData>(data, options, AzureResourceManagerMixedRealityContext.Default);
 
-        string IPersistableModel<RemoteRenderingAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RemoteRenderingAccountData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RemoteRenderingAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RemoteRenderingAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

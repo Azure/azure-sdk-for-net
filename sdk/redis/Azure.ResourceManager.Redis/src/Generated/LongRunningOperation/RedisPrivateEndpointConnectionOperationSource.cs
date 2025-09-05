@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Redis
 
         RedisPrivateEndpointConnectionResource IOperationSource<RedisPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RedisPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<RedisPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
             return new RedisPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<RedisPrivateEndpointConnectionResource> IOperationSource<RedisPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RedisPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<RedisPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
             return await Task.FromResult(new RedisPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

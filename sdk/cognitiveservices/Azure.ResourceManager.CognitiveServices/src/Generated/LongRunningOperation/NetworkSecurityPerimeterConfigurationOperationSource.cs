@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CognitiveServices
 
         NetworkSecurityPerimeterConfigurationResource IOperationSource<NetworkSecurityPerimeterConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCognitiveServicesContext.Default);
             return new NetworkSecurityPerimeterConfigurationResource(_client, data);
         }
 
         async ValueTask<NetworkSecurityPerimeterConfigurationResource> IOperationSource<NetworkSecurityPerimeterConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCognitiveServicesContext.Default);
             return await Task.FromResult(new NetworkSecurityPerimeterConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }

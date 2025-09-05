@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.PolicyInsights
 {
+    public partial class AzureResourceManagerPolicyInsightsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerPolicyInsightsContext() { }
+        public static Azure.ResourceManager.PolicyInsights.AzureResourceManagerPolicyInsightsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class PolicyAttestationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PolicyInsights.PolicyAttestationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PolicyInsights.PolicyAttestationResource>, System.Collections.IEnumerable
     {
         protected PolicyAttestationCollection() { }

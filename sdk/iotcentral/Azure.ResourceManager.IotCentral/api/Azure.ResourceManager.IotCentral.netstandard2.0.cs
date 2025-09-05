@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.IotCentral
 {
+    public partial class AzureResourceManagerIotCentralContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerIotCentralContext() { }
+        public static Azure.ResourceManager.IotCentral.AzureResourceManagerIotCentralContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class IotCentralAppCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.IotCentral.IotCentralAppResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotCentral.IotCentralAppResource>, System.Collections.IEnumerable
     {
         protected IotCentralAppCollection() { }

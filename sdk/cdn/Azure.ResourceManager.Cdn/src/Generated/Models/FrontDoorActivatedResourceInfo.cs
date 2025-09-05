@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Reference to another resource along with its state. </summary>
+    /// <summary>
+    /// Reference to another resource along with its state.
+    /// Serialized Name: ActivatedResourceReference
+    /// </summary>
     public partial class FrontDoorActivatedResourceInfo
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorActivatedResourceInfo"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="isActive"> Whether the resource is active or inactive. </param>
+        /// <param name="id">
+        /// Resource ID.
+        /// Serialized Name: ActivatedResourceReference.id
+        /// </param>
+        /// <param name="isActive">
+        /// Whether the resource is active or inactive
+        /// Serialized Name: ActivatedResourceReference.isActive
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorActivatedResourceInfo(ResourceIdentifier id, bool? isActive, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource ID. </summary>
+        /// <summary>
+        /// Resource ID.
+        /// Serialized Name: ActivatedResourceReference.id
+        /// </summary>
         public ResourceIdentifier Id { get; set; }
-        /// <summary> Whether the resource is active or inactive. </summary>
+        /// <summary>
+        /// Whether the resource is active or inactive
+        /// Serialized Name: ActivatedResourceReference.isActive
+        /// </summary>
         public bool? IsActive { get; }
     }
 }

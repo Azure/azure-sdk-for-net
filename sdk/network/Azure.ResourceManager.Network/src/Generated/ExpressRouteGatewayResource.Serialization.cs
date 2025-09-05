@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ExpressRouteGatewayResource : IJsonModel<ExpressRouteGatewayData>
     {
+        private static ExpressRouteGatewayData s_dataDeserializationInstance;
+        private static ExpressRouteGatewayData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ExpressRouteGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteGatewayData>)Data).Write(writer, options);
 
-        ExpressRouteGatewayData IJsonModel<ExpressRouteGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteGatewayData>)Data).Create(ref reader, options);
+        ExpressRouteGatewayData IJsonModel<ExpressRouteGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteGatewayData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ExpressRouteGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ExpressRouteGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExpressRouteGatewayData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        ExpressRouteGatewayData IPersistableModel<ExpressRouteGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteGatewayData>(data, options);
+        ExpressRouteGatewayData IPersistableModel<ExpressRouteGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteGatewayData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<ExpressRouteGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRouteGatewayData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ExpressRouteGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRouteGatewayData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

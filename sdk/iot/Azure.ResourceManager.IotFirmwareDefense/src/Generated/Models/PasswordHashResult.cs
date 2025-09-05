@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Password hash resource. </summary>
+    /// <summary> The object representing a firmware analysis password hash result resource. </summary>
     public partial class PasswordHashResult : ResourceData
     {
         /// <summary>
@@ -64,8 +64,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="context"> Context of password hash. </param>
         /// <param name="username"> User name of password hash. </param>
         /// <param name="algorithm"> Algorithm of the password hash. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PasswordHashResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string passwordHashId, string filePath, string salt, string hash, string context, string username, string algorithm, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PasswordHashResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string passwordHashId, string filePath, string salt, string hash, string context, string username, string algorithm, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PasswordHashId = passwordHashId;
             FilePath = filePath;
@@ -74,6 +75,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Context = context;
             Username = username;
             Algorithm = algorithm;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -91,5 +93,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public string Username { get; set; }
         /// <summary> Algorithm of the password hash. </summary>
         public string Algorithm { get; set; }
+        /// <summary> The status of the last operation. </summary>
+        public FirmwareProvisioningState? ProvisioningState { get; }
     }
 }

@@ -34,8 +34,11 @@ namespace Azure.Developer.DevCenter.Models
                 throw new FormatException($"The model {nameof(DevCenterEnvironmentType)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             writer.WritePropertyName("deploymentTargetId"u8);
             writer.WriteStringValue(DeploymentTargetId);
             writer.WritePropertyName("status"u8);
@@ -115,7 +118,7 @@ namespace Azure.Developer.DevCenter.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureDeveloperDevCenterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DevCenterEnvironmentType)} does not support writing '{options.Format}' format.");
             }

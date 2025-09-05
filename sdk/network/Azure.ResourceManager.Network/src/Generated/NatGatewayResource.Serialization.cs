@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NatGatewayResource : IJsonModel<NatGatewayData>
     {
+        private static NatGatewayData s_dataDeserializationInstance;
+        private static NatGatewayData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NatGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NatGatewayData>)Data).Write(writer, options);
 
-        NatGatewayData IJsonModel<NatGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NatGatewayData>)Data).Create(ref reader, options);
+        NatGatewayData IJsonModel<NatGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NatGatewayData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NatGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NatGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NatGatewayData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        NatGatewayData IPersistableModel<NatGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NatGatewayData>(data, options);
+        NatGatewayData IPersistableModel<NatGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NatGatewayData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NatGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NatGatewayData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NatGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NatGatewayData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

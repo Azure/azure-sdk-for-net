@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HealthcareApis
 {
     public partial class HealthcareApisIotFhirDestinationResource : IJsonModel<HealthcareApisIotFhirDestinationData>
     {
+        private static HealthcareApisIotFhirDestinationData s_dataDeserializationInstance;
+        private static HealthcareApisIotFhirDestinationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HealthcareApisIotFhirDestinationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisIotFhirDestinationData>)Data).Write(writer, options);
 
-        HealthcareApisIotFhirDestinationData IJsonModel<HealthcareApisIotFhirDestinationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisIotFhirDestinationData>)Data).Create(ref reader, options);
+        HealthcareApisIotFhirDestinationData IJsonModel<HealthcareApisIotFhirDestinationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisIotFhirDestinationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HealthcareApisIotFhirDestinationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HealthcareApisIotFhirDestinationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthcareApisIotFhirDestinationData>(Data, options, AzureResourceManagerHealthcareApisContext.Default);
 
-        HealthcareApisIotFhirDestinationData IPersistableModel<HealthcareApisIotFhirDestinationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisIotFhirDestinationData>(data, options);
+        HealthcareApisIotFhirDestinationData IPersistableModel<HealthcareApisIotFhirDestinationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisIotFhirDestinationData>(data, options, AzureResourceManagerHealthcareApisContext.Default);
 
-        string IPersistableModel<HealthcareApisIotFhirDestinationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthcareApisIotFhirDestinationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HealthcareApisIotFhirDestinationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthcareApisIotFhirDestinationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Marketplace
 {
     public partial class MarketplaceAdminApprovalRequestResource : IJsonModel<MarketplaceAdminApprovalRequestData>
     {
+        private static MarketplaceAdminApprovalRequestData s_dataDeserializationInstance;
+        private static MarketplaceAdminApprovalRequestData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MarketplaceAdminApprovalRequestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MarketplaceAdminApprovalRequestData>)Data).Write(writer, options);
 
-        MarketplaceAdminApprovalRequestData IJsonModel<MarketplaceAdminApprovalRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MarketplaceAdminApprovalRequestData>)Data).Create(ref reader, options);
+        MarketplaceAdminApprovalRequestData IJsonModel<MarketplaceAdminApprovalRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MarketplaceAdminApprovalRequestData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MarketplaceAdminApprovalRequestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MarketplaceAdminApprovalRequestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MarketplaceAdminApprovalRequestData>(Data, options, AzureResourceManagerMarketplaceContext.Default);
 
-        MarketplaceAdminApprovalRequestData IPersistableModel<MarketplaceAdminApprovalRequestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MarketplaceAdminApprovalRequestData>(data, options);
+        MarketplaceAdminApprovalRequestData IPersistableModel<MarketplaceAdminApprovalRequestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MarketplaceAdminApprovalRequestData>(data, options, AzureResourceManagerMarketplaceContext.Default);
 
-        string IPersistableModel<MarketplaceAdminApprovalRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MarketplaceAdminApprovalRequestData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MarketplaceAdminApprovalRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MarketplaceAdminApprovalRequestData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

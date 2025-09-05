@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 {
     public partial class AppComplianceReportScopingConfigurationResource : IJsonModel<AppComplianceReportScopingConfigurationData>
     {
+        private static AppComplianceReportScopingConfigurationData s_dataDeserializationInstance;
+        private static AppComplianceReportScopingConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppComplianceReportScopingConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppComplianceReportScopingConfigurationData>)Data).Write(writer, options);
 
-        AppComplianceReportScopingConfigurationData IJsonModel<AppComplianceReportScopingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppComplianceReportScopingConfigurationData>)Data).Create(ref reader, options);
+        AppComplianceReportScopingConfigurationData IJsonModel<AppComplianceReportScopingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppComplianceReportScopingConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppComplianceReportScopingConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppComplianceReportScopingConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppComplianceReportScopingConfigurationData>(Data, options, AzureResourceManagerAppComplianceAutomationContext.Default);
 
-        AppComplianceReportScopingConfigurationData IPersistableModel<AppComplianceReportScopingConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppComplianceReportScopingConfigurationData>(data, options);
+        AppComplianceReportScopingConfigurationData IPersistableModel<AppComplianceReportScopingConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppComplianceReportScopingConfigurationData>(data, options, AzureResourceManagerAppComplianceAutomationContext.Default);
 
-        string IPersistableModel<AppComplianceReportScopingConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppComplianceReportScopingConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppComplianceReportScopingConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppComplianceReportScopingConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

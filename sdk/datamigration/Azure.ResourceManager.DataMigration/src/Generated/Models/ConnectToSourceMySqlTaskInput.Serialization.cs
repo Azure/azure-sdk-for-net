@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            MySqlConnectionInfo sourceConnectionInfo = default;
-            MySqlTargetPlatformType? targetPlatform = default;
+            DataMigrationMySqlConnectionInfo sourceConnectionInfo = default;
+            DataMigrationMySqlTargetPlatformType? targetPlatform = default;
             ServerLevelPermissionsGroup? checkPermissionsGroup = default;
             bool? isOfflineMigration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = DataMigrationMySqlConnectionInfo.DeserializeDataMigrationMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetPlatform"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    targetPlatform = new MySqlTargetPlatformType(property.Value.GetString());
+                    targetPlatform = new DataMigrationMySqlTargetPlatformType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("checkPermissionsGroup"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskInput)} does not support writing '{options.Format}' format.");
             }

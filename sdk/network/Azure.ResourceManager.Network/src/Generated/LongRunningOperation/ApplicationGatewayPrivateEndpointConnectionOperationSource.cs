@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         ApplicationGatewayPrivateEndpointConnectionResource IOperationSource<ApplicationGatewayPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApplicationGatewayPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<ApplicationGatewayPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new ApplicationGatewayPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<ApplicationGatewayPrivateEndpointConnectionResource> IOperationSource<ApplicationGatewayPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApplicationGatewayPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<ApplicationGatewayPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new ApplicationGatewayPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

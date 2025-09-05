@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.IotOperations.Models;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.IotOperations
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerIotOperationsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.IotOperations
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(IotOperationsBrokerAuthenticationData)} does not support writing '{options.Format}' format.");
             }

@@ -51,18 +51,33 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UpsertManagedServerOperationStep"/>. </summary>
+        /// <param name="stepStartOn"></param>
+        /// <param name="stepEndOn"></param>
+        /// <param name="timeElapsed"></param>
         /// <param name="order"></param>
         /// <param name="name"></param>
         /// <param name="status"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpsertManagedServerOperationStep(int? order, string name, UpsertManagedServerOperationStepStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UpsertManagedServerOperationStep(DateTimeOffset? stepStartOn, DateTimeOffset? stepEndOn, string timeElapsed, int? order, string name, UpsertManagedServerOperationStepStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            StepStartOn = stepStartOn;
+            StepEndOn = stepEndOn;
+            TimeElapsed = timeElapsed;
             Order = order;
             Name = name;
             Status = status;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Gets the step start on. </summary>
+        [WirePath("stepStartTime")]
+        public DateTimeOffset? StepStartOn { get; }
+        /// <summary> Gets the step end on. </summary>
+        [WirePath("stepEndTime")]
+        public DateTimeOffset? StepEndOn { get; }
+        /// <summary> Gets the time elapsed. </summary>
+        [WirePath("timeElapsed")]
+        public string TimeElapsed { get; }
         /// <summary> Gets the order. </summary>
         [WirePath("order")]
         public int? Order { get; }

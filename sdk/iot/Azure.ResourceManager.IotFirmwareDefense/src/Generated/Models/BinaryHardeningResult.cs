@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> binary hardening analysis result resource. </summary>
+    /// <summary> The object representing a firmware analysis binary hardening result resource. </summary>
     public partial class BinaryHardeningResult : ResourceData
     {
         /// <summary>
@@ -48,64 +48,47 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BinaryHardeningResult"/>. </summary>
-        public BinaryHardeningResult()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BinaryHardeningResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="binaryHardeningId"> ID for the binary hardening result. </param>
-        /// <param name="architecture"> The architecture of the uploaded firmware. </param>
-        /// <param name="filePath"> The executable path. </param>
-        /// <param name="class"> The executable class to indicate 32 or 64 bit. </param>
-        /// <param name="runpath"> The runpath of the uploaded firmware. </param>
-        /// <param name="rpath"> The rpath of the uploaded firmware. </param>
-        /// <param name="nxFlag"> NX (no-execute) flag. </param>
-        /// <param name="pieFlag"> PIE (position independent executable) flag. </param>
-        /// <param name="relroFlag"> RELRO (relocation read-only) flag. </param>
-        /// <param name="canaryFlag"> Canary (stack canaries) flag. </param>
-        /// <param name="strippedFlag"> Stripped flag. </param>
+        /// <param name="securityHardeningFeatures"> The security hardening features of the binary. </param>
+        /// <param name="executableArchitecture"> The architecture of the binary being reported on. </param>
+        /// <param name="filePath"> The path to the binary in the firmware. </param>
+        /// <param name="executableClass"> The executable class to indicate 32 or 64 bit. </param>
+        /// <param name="runpath"> The runpath property of the uploaded binary, which is a method of specifying additional paths to load objects at runtime. </param>
+        /// <param name="rpath"> The rpath property of the uploaded binary, which is a deprecated method of specifying additional paths to load objects at runtime. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BinaryHardeningResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string binaryHardeningId, string architecture, string filePath, string @class, string runpath, string rpath, bool? nxFlag, bool? pieFlag, bool? relroFlag, bool? canaryFlag, bool? strippedFlag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BinaryHardeningResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string binaryHardeningId, BinaryHardeningFeatures securityHardeningFeatures, string executableArchitecture, string filePath, ExecutableClass? executableClass, string runpath, string rpath, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BinaryHardeningId = binaryHardeningId;
-            Architecture = architecture;
+            SecurityHardeningFeatures = securityHardeningFeatures;
+            ExecutableArchitecture = executableArchitecture;
             FilePath = filePath;
-            Class = @class;
+            ExecutableClass = executableClass;
             Runpath = runpath;
             Rpath = rpath;
-            NXFlag = nxFlag;
-            PieFlag = pieFlag;
-            RelroFlag = relroFlag;
-            CanaryFlag = canaryFlag;
-            StrippedFlag = strippedFlag;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ID for the binary hardening result. </summary>
         public string BinaryHardeningId { get; set; }
-        /// <summary> The architecture of the uploaded firmware. </summary>
-        public string Architecture { get; set; }
-        /// <summary> The executable path. </summary>
+        /// <summary> The security hardening features of the binary. </summary>
+        public BinaryHardeningFeatures SecurityHardeningFeatures { get; set; }
+        /// <summary> The architecture of the binary being reported on. </summary>
+        public string ExecutableArchitecture { get; set; }
+        /// <summary> The path to the binary in the firmware. </summary>
         public string FilePath { get; set; }
         /// <summary> The executable class to indicate 32 or 64 bit. </summary>
-        public string Class { get; set; }
-        /// <summary> The runpath of the uploaded firmware. </summary>
+        public ExecutableClass? ExecutableClass { get; set; }
+        /// <summary> The runpath property of the uploaded binary, which is a method of specifying additional paths to load objects at runtime. </summary>
         public string Runpath { get; set; }
-        /// <summary> The rpath of the uploaded firmware. </summary>
+        /// <summary> The rpath property of the uploaded binary, which is a deprecated method of specifying additional paths to load objects at runtime. </summary>
         public string Rpath { get; set; }
-        /// <summary> NX (no-execute) flag. </summary>
-        public bool? NXFlag { get; set; }
-        /// <summary> PIE (position independent executable) flag. </summary>
-        public bool? PieFlag { get; set; }
-        /// <summary> RELRO (relocation read-only) flag. </summary>
-        public bool? RelroFlag { get; set; }
-        /// <summary> Canary (stack canaries) flag. </summary>
-        public bool? CanaryFlag { get; set; }
-        /// <summary> Stripped flag. </summary>
-        public bool? StrippedFlag { get; set; }
+        /// <summary> The status of the last operation. </summary>
+        public FirmwareProvisioningState? ProvisioningState { get; }
     }
 }

@@ -56,6 +56,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(ZonePinning))
+            {
+                writer.WritePropertyName("zonePinning"u8);
+                writer.WriteBooleanValue(ZonePinning.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -106,6 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
             string name = default;
             IReadOnlyList<ElasticPoolPerformanceLevelCapability> supportedElasticPoolPerformanceLevels = default;
             bool? zoneRedundant = default;
+            bool? zonePinning = default;
             SqlCapabilityStatus? status = default;
             string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -140,6 +146,15 @@ namespace Azure.ResourceManager.Sql.Models
                     zoneRedundant = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("zonePinning"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    zonePinning = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -164,6 +179,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 supportedElasticPoolPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerformanceLevelCapability>(),
                 zoneRedundant,
+                zonePinning,
                 status,
                 reason,
                 serializedAdditionalRawData);
@@ -242,6 +258,22 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ZonePinning), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  zonePinning: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ZonePinning))
+                {
+                    builder.Append("  zonePinning: ");
+                    var boolValue = ZonePinning.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -291,7 +323,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

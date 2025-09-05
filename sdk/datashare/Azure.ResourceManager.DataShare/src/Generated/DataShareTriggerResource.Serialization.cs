@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataShare
 {
     public partial class DataShareTriggerResource : IJsonModel<DataShareTriggerData>
     {
+        private static DataShareTriggerData s_dataDeserializationInstance;
+        private static DataShareTriggerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataShareTriggerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataShareTriggerData>)Data).Write(writer, options);
 
-        DataShareTriggerData IJsonModel<DataShareTriggerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataShareTriggerData>)Data).Create(ref reader, options);
+        DataShareTriggerData IJsonModel<DataShareTriggerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataShareTriggerData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataShareTriggerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataShareTriggerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataShareTriggerData>(Data, options, AzureResourceManagerDataShareContext.Default);
 
-        DataShareTriggerData IPersistableModel<DataShareTriggerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataShareTriggerData>(data, options);
+        DataShareTriggerData IPersistableModel<DataShareTriggerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataShareTriggerData>(data, options, AzureResourceManagerDataShareContext.Default);
 
-        string IPersistableModel<DataShareTriggerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataShareTriggerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataShareTriggerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataShareTriggerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

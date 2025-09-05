@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthcareApisContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HealthcareApisServiceImportConfiguration)} does not support writing '{options.Format}' format.");
             }

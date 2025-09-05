@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sphere
 {
     public partial class SphereDeviceGroupResource : IJsonModel<SphereDeviceGroupData>
     {
+        private static SphereDeviceGroupData s_dataDeserializationInstance;
+        private static SphereDeviceGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SphereDeviceGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SphereDeviceGroupData>)Data).Write(writer, options);
 
-        SphereDeviceGroupData IJsonModel<SphereDeviceGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SphereDeviceGroupData>)Data).Create(ref reader, options);
+        SphereDeviceGroupData IJsonModel<SphereDeviceGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SphereDeviceGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SphereDeviceGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SphereDeviceGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SphereDeviceGroupData>(Data, options, AzureResourceManagerSphereContext.Default);
 
-        SphereDeviceGroupData IPersistableModel<SphereDeviceGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SphereDeviceGroupData>(data, options);
+        SphereDeviceGroupData IPersistableModel<SphereDeviceGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SphereDeviceGroupData>(data, options, AzureResourceManagerSphereContext.Default);
 
-        string IPersistableModel<SphereDeviceGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SphereDeviceGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SphereDeviceGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SphereDeviceGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

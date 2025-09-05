@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class GremlinGraphResource : IJsonModel<GremlinGraphData>
     {
+        private static GremlinGraphData s_dataDeserializationInstance;
+        private static GremlinGraphData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GremlinGraphData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GremlinGraphData>)Data).Write(writer, options);
 
-        GremlinGraphData IJsonModel<GremlinGraphData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GremlinGraphData>)Data).Create(ref reader, options);
+        GremlinGraphData IJsonModel<GremlinGraphData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GremlinGraphData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GremlinGraphData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GremlinGraphData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GremlinGraphData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        GremlinGraphData IPersistableModel<GremlinGraphData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GremlinGraphData>(data, options);
+        GremlinGraphData IPersistableModel<GremlinGraphData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GremlinGraphData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<GremlinGraphData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GremlinGraphData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GremlinGraphData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GremlinGraphData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

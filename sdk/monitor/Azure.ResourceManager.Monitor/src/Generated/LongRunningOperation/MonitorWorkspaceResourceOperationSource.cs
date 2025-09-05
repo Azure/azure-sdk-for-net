@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Monitor
 
         MonitorWorkspaceResource IOperationSource<MonitorWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MonitorWorkspaceResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<MonitorWorkspaceResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMonitorContext.Default);
             return new MonitorWorkspaceResource(_client, data);
         }
 
         async ValueTask<MonitorWorkspaceResource> IOperationSource<MonitorWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MonitorWorkspaceResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<MonitorWorkspaceResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMonitorContext.Default);
             return await Task.FromResult(new MonitorWorkspaceResource(_client, data)).ConfigureAwait(false);
         }
     }

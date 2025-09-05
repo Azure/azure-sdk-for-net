@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class FileServiceResource : IJsonModel<FileServiceData>
     {
+        private static FileServiceData s_dataDeserializationInstance;
+        private static FileServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FileServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FileServiceData>)Data).Write(writer, options);
 
-        FileServiceData IJsonModel<FileServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FileServiceData>)Data).Create(ref reader, options);
+        FileServiceData IJsonModel<FileServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FileServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FileServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FileServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FileServiceData>(Data, options, AzureResourceManagerStorageContext.Default);
 
-        FileServiceData IPersistableModel<FileServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FileServiceData>(data, options);
+        FileServiceData IPersistableModel<FileServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FileServiceData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<FileServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FileServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FileServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FileServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class VirtualMachineRunCommandResource : IJsonModel<VirtualMachineRunCommandData>
     {
+        private static VirtualMachineRunCommandData s_dataDeserializationInstance;
+        private static VirtualMachineRunCommandData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VirtualMachineRunCommandData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineRunCommandData>)Data).Write(writer, options);
 
-        VirtualMachineRunCommandData IJsonModel<VirtualMachineRunCommandData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineRunCommandData>)Data).Create(ref reader, options);
+        VirtualMachineRunCommandData IJsonModel<VirtualMachineRunCommandData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineRunCommandData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualMachineRunCommandData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VirtualMachineRunCommandData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualMachineRunCommandData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        VirtualMachineRunCommandData IPersistableModel<VirtualMachineRunCommandData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualMachineRunCommandData>(data, options);
+        VirtualMachineRunCommandData IPersistableModel<VirtualMachineRunCommandData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualMachineRunCommandData>(data, options, AzureResourceManagerComputeContext.Default);
 
-        string IPersistableModel<VirtualMachineRunCommandData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualMachineRunCommandData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VirtualMachineRunCommandData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualMachineRunCommandData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

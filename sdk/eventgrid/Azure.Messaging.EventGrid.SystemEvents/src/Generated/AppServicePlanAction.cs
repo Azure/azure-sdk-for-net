@@ -14,35 +14,52 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct AppServicePlanAction : IEquatable<AppServicePlanAction>
     {
         private readonly string _value;
+        /// <summary> App Service plan is being updated. </summary>
+        private const string UpdatedValue = "Updated";
 
         /// <summary> Initializes a new instance of <see cref="AppServicePlanAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AppServicePlanAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UpdatedValue = "Updated";
+            _value = value;
+        }
 
         /// <summary> App Service plan is being updated. </summary>
         public static AppServicePlanAction Updated { get; } = new AppServicePlanAction(UpdatedValue);
+
         /// <summary> Determines if two <see cref="AppServicePlanAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppServicePlanAction left, AppServicePlanAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppServicePlanAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppServicePlanAction left, AppServicePlanAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServicePlanAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppServicePlanAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppServicePlanAction(string value) => new AppServicePlanAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppServicePlanAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppServicePlanAction?(string value) => value == null ? null : new AppServicePlanAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppServicePlanAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppServicePlanAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

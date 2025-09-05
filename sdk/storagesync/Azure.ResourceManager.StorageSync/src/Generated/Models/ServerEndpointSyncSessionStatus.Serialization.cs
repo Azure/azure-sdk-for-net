@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ServerEndpointSyncSessionStatus)} does not support writing '{options.Format}' format.");
             }

@@ -8,12 +8,11 @@ azure-arm: true
 csharp: true
 library-name: ManagedServiceIdentities
 namespace: Azure.ResourceManager.ManagedServiceIdentities
-require: https://github.com/Azure/azure-rest-api-specs/blob/1e790cfc5ee4e7ff98f99dd19a3174c4dd58432b/specification/msi/resource-manager/readme.md
-tag: package-2023-01-31
+require: https://github.com/Azure/azure-rest-api-specs/blob/bf90cab9d5f6060ce1f7775ffac88ed8eda785ca/specification/msi/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:

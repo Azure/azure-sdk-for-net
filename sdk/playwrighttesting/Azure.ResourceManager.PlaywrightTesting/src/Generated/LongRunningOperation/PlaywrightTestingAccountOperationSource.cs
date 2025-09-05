@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PlaywrightTesting
 
         PlaywrightTestingAccountResource IOperationSource<PlaywrightTestingAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PlaywrightTestingAccountData>(response.Content);
+            var data = ModelReaderWriter.Read<PlaywrightTestingAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPlaywrightTestingContext.Default);
             return new PlaywrightTestingAccountResource(_client, data);
         }
 
         async ValueTask<PlaywrightTestingAccountResource> IOperationSource<PlaywrightTestingAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PlaywrightTestingAccountData>(response.Content);
+            var data = ModelReaderWriter.Read<PlaywrightTestingAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPlaywrightTestingContext.Default);
             return await Task.FromResult(new PlaywrightTestingAccountResource(_client, data)).ConfigureAwait(false);
         }
     }

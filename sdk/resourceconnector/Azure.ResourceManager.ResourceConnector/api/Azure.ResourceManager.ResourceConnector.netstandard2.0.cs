@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ResourceConnector
 {
+    public partial class AzureResourceManagerResourceConnectorContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerResourceConnectorContext() { }
+        public static Azure.ResourceManager.ResourceConnector.AzureResourceManagerResourceConnectorContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ResourceConnectorApplianceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource>, System.Collections.IEnumerable
     {
         protected ResourceConnectorApplianceCollection() { }

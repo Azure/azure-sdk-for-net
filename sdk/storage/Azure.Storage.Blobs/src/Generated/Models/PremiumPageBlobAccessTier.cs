@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The PremiumPageBlobAccessTier. </summary>
-    internal readonly partial struct PremiumPageBlobAccessTier : IEquatable<PremiumPageBlobAccessTier>
+    public readonly partial struct PremiumPageBlobAccessTier : IEquatable<PremiumPageBlobAccessTier>
     {
         private readonly string _value;
 

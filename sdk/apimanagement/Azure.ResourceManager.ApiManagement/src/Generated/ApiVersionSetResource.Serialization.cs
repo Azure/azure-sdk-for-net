@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiVersionSetResource : IJsonModel<ApiVersionSetData>
     {
+        private static ApiVersionSetData s_dataDeserializationInstance;
+        private static ApiVersionSetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiVersionSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiVersionSetData>)Data).Write(writer, options);
 
-        ApiVersionSetData IJsonModel<ApiVersionSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiVersionSetData>)Data).Create(ref reader, options);
+        ApiVersionSetData IJsonModel<ApiVersionSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiVersionSetData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiVersionSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiVersionSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiVersionSetData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiVersionSetData IPersistableModel<ApiVersionSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiVersionSetData>(data, options);
+        ApiVersionSetData IPersistableModel<ApiVersionSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiVersionSetData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiVersionSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiVersionSetData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiVersionSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiVersionSetData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NewRelicObservability
 
         NewRelicObservabilityTagRuleResource IOperationSource<NewRelicObservabilityTagRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NewRelicObservabilityTagRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<NewRelicObservabilityTagRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNewRelicObservabilityContext.Default);
             return new NewRelicObservabilityTagRuleResource(_client, data);
         }
 
         async ValueTask<NewRelicObservabilityTagRuleResource> IOperationSource<NewRelicObservabilityTagRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NewRelicObservabilityTagRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<NewRelicObservabilityTagRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNewRelicObservabilityContext.Default);
             return await Task.FromResult(new NewRelicObservabilityTagRuleResource(_client, data)).ConfigureAwait(false);
         }
     }

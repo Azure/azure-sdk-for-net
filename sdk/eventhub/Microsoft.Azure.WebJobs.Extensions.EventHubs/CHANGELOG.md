@@ -10,6 +10,17 @@
 
 ### Other Changes
 
+## 6.5.2 (2025-06-16)
+
+### Bugs Fixed
+
+- Fixed a bug where the data types of broker-owned properties were being adjusted when an event was read by the client, causing the underlying AMQP data to be mutated.  This resulted in binary changes when the AMQP message was serialized and unintentionally altered the service contract.  Going forward, the original data types will be preserved on the AMQP representation of the message and type normalization only applied to the .NET `EventData` projection.
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.7.0, which contains several bug fixes and adds support for AOT. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+ 
+- Added a compatibility hack to the binding data associated with the trigger to preserve the previous service behavior of `Offset` being a valid numeric value.  As this data is not local to the trigger context and is surfaced upstream, the change in service behavior for GeoDR namespaces caused issues with some custom language workers making invalid assumptions about the string-based offset format.  To work around this, the `Offset` is being populated with `OffsetString` if it can be parsed as a number.  In the case that `OffsetString` is not a valid numeric value, it will default to `-1` which would position readers at the beginning of the stream, causing duplicates but preventing data loss.  A key for `OffsetString` was added that reflects the actual offset returned by the service in all scenarios.
+
 ## 6.5.1 (2025-04-09)
 
 ### Bugs Fixed

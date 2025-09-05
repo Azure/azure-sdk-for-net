@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Communication
 {
     public partial class CommunicationServiceResource : IJsonModel<CommunicationServiceResourceData>
     {
+        private static CommunicationServiceResourceData s_dataDeserializationInstance;
+        private static CommunicationServiceResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CommunicationServiceResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CommunicationServiceResourceData>)Data).Write(writer, options);
 
-        CommunicationServiceResourceData IJsonModel<CommunicationServiceResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommunicationServiceResourceData>)Data).Create(ref reader, options);
+        CommunicationServiceResourceData IJsonModel<CommunicationServiceResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommunicationServiceResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CommunicationServiceResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CommunicationServiceResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CommunicationServiceResourceData>(Data, options, AzureResourceManagerCommunicationContext.Default);
 
-        CommunicationServiceResourceData IPersistableModel<CommunicationServiceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommunicationServiceResourceData>(data, options);
+        CommunicationServiceResourceData IPersistableModel<CommunicationServiceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommunicationServiceResourceData>(data, options, AzureResourceManagerCommunicationContext.Default);
 
-        string IPersistableModel<CommunicationServiceResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommunicationServiceResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CommunicationServiceResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommunicationServiceResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

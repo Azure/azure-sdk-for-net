@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.BotService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TelephonyChannel)} does not support writing '{options.Format}' format.");
             }

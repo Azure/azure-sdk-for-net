@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the NetworkSecurityPerimeterAccessRule data model.
     /// The NSP access rule resource
     /// </summary>
-    public partial class NetworkSecurityPerimeterAccessRuleData : TrackedResourceData
+    public partial class NetworkSecurityPerimeterAccessRuleData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -53,8 +53,7 @@ namespace Azure.ResourceManager.Network
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRuleData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public NetworkSecurityPerimeterAccessRuleData(AzureLocation location) : base(location)
+        public NetworkSecurityPerimeterAccessRuleData()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
@@ -70,19 +69,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
         /// <param name="direction"> Direction that specifies whether the access rules is inbound/outbound. </param>
         /// <param name="addressPrefixes"> Inbound address prefixes (IPv4/IPv6). </param>
-        /// <param name="fullyQualifiedDomainNames"> Outbound rules fully qualified domain name format. </param>
+        /// <param name="fullyQualifiedDomainNames"> Outbound rules in fully qualified domain name format. </param>
         /// <param name="subscriptions"> List of subscription ids. </param>
         /// <param name="networkSecurityPerimeters"> Rule specified by the perimeter id. </param>
-        /// <param name="emailAddresses"> Outbound rules email address format. </param>
-        /// <param name="phoneNumbers"> Outbound rules phone number format. </param>
-        /// <param name="serviceTags"> Inbound rules service tag names. </param>
+        /// <param name="emailAddresses"> Outbound rules in email address format. This access rule type is currently unavailable for use. </param>
+        /// <param name="phoneNumbers"> Outbound rules in phone number format. This access rule type is currently unavailable for use. </param>
+        /// <param name="serviceTags"> Inbound rules of type service tag. This access rule type is currently unavailable for use. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterAccessRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkSecurityPerimeterProvisioningState? provisioningState, NetworkSecurityPerimeterAccessRuleDirection? direction, IList<string> addressPrefixes, IList<string> fullyQualifiedDomainNames, IList<WritableSubResource> subscriptions, IReadOnlyList<NetworkSecurityPerimeterBasedAccessRule> networkSecurityPerimeters, IList<string> emailAddresses, IList<string> phoneNumbers, IList<string> serviceTags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkSecurityPerimeterAccessRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterProvisioningState? provisioningState, NetworkSecurityPerimeterAccessRuleDirection? direction, IList<string> addressPrefixes, IList<string> fullyQualifiedDomainNames, IList<WritableSubResource> subscriptions, IReadOnlyList<NetworkSecurityPerimeterBasedAccessRule> networkSecurityPerimeters, IList<string> emailAddresses, IList<string> phoneNumbers, IList<string> serviceTags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Direction = direction;
@@ -96,28 +93,32 @@ namespace Azure.ResourceManager.Network
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRuleData"/> for deserialization. </summary>
-        internal NetworkSecurityPerimeterAccessRuleData()
-        {
-        }
-
         /// <summary> The provisioning state of the scope assignment resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkSecurityPerimeterProvisioningState? ProvisioningState { get; }
         /// <summary> Direction that specifies whether the access rules is inbound/outbound. </summary>
+        [WirePath("properties.direction")]
         public NetworkSecurityPerimeterAccessRuleDirection? Direction { get; set; }
         /// <summary> Inbound address prefixes (IPv4/IPv6). </summary>
+        [WirePath("properties.addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
-        /// <summary> Outbound rules fully qualified domain name format. </summary>
+        /// <summary> Outbound rules in fully qualified domain name format. </summary>
+        [WirePath("properties.fullyQualifiedDomainNames")]
         public IList<string> FullyQualifiedDomainNames { get; }
         /// <summary> List of subscription ids. </summary>
+        [WirePath("properties.subscriptions")]
         public IList<WritableSubResource> Subscriptions { get; }
         /// <summary> Rule specified by the perimeter id. </summary>
+        [WirePath("properties.networkSecurityPerimeters")]
         public IReadOnlyList<NetworkSecurityPerimeterBasedAccessRule> NetworkSecurityPerimeters { get; }
-        /// <summary> Outbound rules email address format. </summary>
+        /// <summary> Outbound rules in email address format. This access rule type is currently unavailable for use. </summary>
+        [WirePath("properties.emailAddresses")]
         public IList<string> EmailAddresses { get; }
-        /// <summary> Outbound rules phone number format. </summary>
+        /// <summary> Outbound rules in phone number format. This access rule type is currently unavailable for use. </summary>
+        [WirePath("properties.phoneNumbers")]
         public IList<string> PhoneNumbers { get; }
-        /// <summary> Inbound rules service tag names. </summary>
+        /// <summary> Inbound rules of type service tag. This access rule type is currently unavailable for use. </summary>
+        [WirePath("properties.serviceTags")]
         public IList<string> ServiceTags { get; }
     }
 }

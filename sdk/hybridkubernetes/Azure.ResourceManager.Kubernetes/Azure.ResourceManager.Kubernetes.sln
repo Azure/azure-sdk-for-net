@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Kuber
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Kubernetes.Tests", "tests\Azure.ResourceManager.Kubernetes.Tests.csproj", "{5FB5C28D-45A0-4BEE-9CB5-C93BB1C1BC50}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Kubernetes.Samples", "samples\Azure.ResourceManager.Kubernetes.Samples.csproj", "{81DFC0CB-EEC9-4694-B0E4-0FAD5862FF7B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,18 +41,6 @@ Global
 		{5FB5C28D-45A0-4BEE-9CB5-C93BB1C1BC50}.Release|x64.Build.0 = Release|Any CPU
 		{5FB5C28D-45A0-4BEE-9CB5-C93BB1C1BC50}.Release|x86.ActiveCfg = Release|Any CPU
 		{5FB5C28D-45A0-4BEE-9CB5-C93BB1C1BC50}.Release|x86.Build.0 = Release|Any CPU
-		{81DFC0CB-EEC9-4694-B0E4-0FAD5862FF7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81DFC0CB-EEC9-4694-B0E4-0FAD5862FF7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{81DFC0CB-EEC9-4694-B0E4-0FAD5862FF7B}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{81DFC0CB-EEC9-4694-B0E4-0FAD5862FF7B}.Debug|x64.Build.0 = Debug|Any CPU
-		{81DFC0CB-EEC9-4694-B0E4-0FAD5862FF7B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{81DFC0CB-EEC9-4694-B0E4-0FAD5862FF7B}.Debug|x86.Build.0 = Debug|Any CPU
-		{81DFC0CB-EEC9-4694-B0E4-0FAD5862FF7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81DFC0CB-EEC9-4694-B0E4-0FAD5862FF7B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{81DFC0CB-EEC9-4694-B0E4-0FAD5862FF7B}.Release|x64.ActiveCfg = Release|Any CPU
-		{81DFC0CB-EEC9-4694-B0E4-0FAD5862FF7B}.Release|x64.Build.0 = Release|Any CPU
-		{81DFC0CB-EEC9-4694-B0E4-0FAD5862FF7B}.Release|x86.ActiveCfg = Release|Any CPU
-		{81DFC0CB-EEC9-4694-B0E4-0FAD5862FF7B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

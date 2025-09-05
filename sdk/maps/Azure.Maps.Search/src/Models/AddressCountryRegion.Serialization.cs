@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    [CodeGenSerialization(nameof(Iso), "iso")]
     public partial class AddressCountryRegion
     {
     }

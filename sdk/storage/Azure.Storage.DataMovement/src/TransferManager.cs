@@ -375,9 +375,10 @@ namespace Azure.Storage.DataMovement
             Argument.AssertNotNull(sourceResource, nameof(sourceResource));
             Argument.AssertNotNull(destinationResource, nameof(destinationResource));
 
-            transferOptions ??= new TransferOptions();
-
             string transferId = _generateTransferId();
+            await destinationResource.ValidateTransferAsync(transferId, sourceResource, cancellationToken).ConfigureAwait(false);
+
+            transferOptions ??= new TransferOptions();
             try
             {
                 await _checkpointer.AddNewJobAsync(

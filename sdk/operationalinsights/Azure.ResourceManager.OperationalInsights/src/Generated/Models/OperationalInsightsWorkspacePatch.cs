@@ -74,9 +74,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="privateLinkScopedResources"> List of linked private link scope resources. </param>
         /// <param name="features"> Workspace features. </param>
         /// <param name="defaultDataCollectionRuleResourceId"> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </param>
+        /// <param name="replication"> workspace replication properties. </param>
+        /// <param name="failover"> workspace failover properties. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsWorkspacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, IDictionary<string, string> tags, OperationalInsightsWorkspaceEntityStatus? provisioningState, Guid? customerId, OperationalInsightsWorkspaceSku sku, int? retentionInDays, OperationalInsightsWorkspaceCapping workspaceCapping, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources, OperationalInsightsWorkspaceFeatures features, ResourceIdentifier defaultDataCollectionRuleResourceId, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal OperationalInsightsWorkspacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, IDictionary<string, string> tags, OperationalInsightsWorkspaceEntityStatus? provisioningState, Guid? customerId, OperationalInsightsWorkspaceSku sku, int? retentionInDays, OperationalInsightsWorkspaceCapping workspaceCapping, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources, OperationalInsightsWorkspaceFeatures features, ResourceIdentifier defaultDataCollectionRuleResourceId, OperationalInsightsWorkspaceReplicationProperties replication, OperationalInsightsWorkspaceFailoverProperties failover, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Tags = tags;
@@ -93,6 +95,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             PrivateLinkScopedResources = privateLinkScopedResources;
             Features = features;
             DefaultDataCollectionRuleResourceId = defaultDataCollectionRuleResourceId;
+            Replication = replication;
+            Failover = failover;
             ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -142,6 +146,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </summary>
         [WirePath("properties.defaultDataCollectionRuleResourceId")]
         public ResourceIdentifier DefaultDataCollectionRuleResourceId { get; set; }
+        /// <summary> workspace replication properties. </summary>
+        [WirePath("properties.replication")]
+        public OperationalInsightsWorkspaceReplicationProperties Replication { get; set; }
+        /// <summary> workspace failover properties. </summary>
+        [WirePath("properties.failover")]
+        public OperationalInsightsWorkspaceFailoverProperties Failover { get; set; }
         /// <summary> Resource Etag. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }

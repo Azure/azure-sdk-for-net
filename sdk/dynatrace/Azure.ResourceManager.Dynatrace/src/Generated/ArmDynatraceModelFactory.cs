@@ -53,6 +53,46 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceVmExtensionPayload(ingestionKey, environmentId, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Dynatrace.DynatraceMonitorData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="monitoringStatus"> Status of the monitor. </param>
+        /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
+        /// <param name="dynatraceEnvironmentProperties"> Properties of the Dynatrace environment. </param>
+        /// <param name="userInfo"> User info. </param>
+        /// <param name="planData"> Billing plan information. </param>
+        /// <param name="liftrResourceCategory"> Liftr Resource category. </param>
+        /// <param name="liftrResourcePreference"> The priority of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Dynatrace.DynatraceMonitorData"/> instance for mocking. </returns>
+        public static DynatraceMonitorData DynatraceMonitorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, DynatraceMonitoringStatus? monitoringStatus = null, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, DynatraceEnvironmentProperties dynatraceEnvironmentProperties = null, DynatraceMonitorUserInfo userInfo = null, DynatraceBillingPlanInfo planData = null, LiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null, DynatraceProvisioningState? provisioningState = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DynatraceMonitorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                monitoringStatus,
+                marketplaceSubscriptionStatus,
+                dynatraceEnvironmentProperties,
+                userInfo,
+                planData,
+                liftrResourceCategory,
+                liftrResourcePreference,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.DynatraceSingleSignOnProperties"/>. </summary>
         /// <param name="singleSignOnState"> State of Single Sign On. </param>
         /// <param name="enterpriseAppId"> Version of the Dynatrace agent installed on the VM. </param>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
     /// A class representing the ElasticSanPrivateEndpointConnection data model.
-    ///  Response for PrivateEndpoint Connection object
+    /// Response for PrivateEndpoint Connection object
     /// </summary>
     public partial class ElasticSanPrivateEndpointConnectionData : ResourceData
     {

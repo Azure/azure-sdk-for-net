@@ -13,9 +13,9 @@
     <PackageTags>IoT;DigitalTwins;$(PackageCommonTags)</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <Description>SDK for the Azure Digital Twins service</Description>
-    <Version>1.6.0-beta.1</Version>
+    <Version>1.7.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.4.0</ApiCompatVersion>
+    <ApiCompatVersion>1.6.0</ApiCompatVersion>
   </PropertyGroup>
 
   <ItemGroup>

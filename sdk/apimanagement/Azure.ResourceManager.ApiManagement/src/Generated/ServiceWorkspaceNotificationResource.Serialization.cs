@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ServiceWorkspaceNotificationResource : IJsonModel<ApiManagementNotificationData>
     {
+        private static ApiManagementNotificationData s_dataDeserializationInstance;
+        private static ApiManagementNotificationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiManagementNotificationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementNotificationData>)Data).Write(writer, options);
 
-        ApiManagementNotificationData IJsonModel<ApiManagementNotificationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementNotificationData>)Data).Create(ref reader, options);
+        ApiManagementNotificationData IJsonModel<ApiManagementNotificationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementNotificationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementNotificationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementNotificationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementNotificationData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiManagementNotificationData IPersistableModel<ApiManagementNotificationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementNotificationData>(data, options);
+        ApiManagementNotificationData IPersistableModel<ApiManagementNotificationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementNotificationData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementNotificationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementNotificationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementNotificationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementNotificationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

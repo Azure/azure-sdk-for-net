@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The minimum number of capacity units for this azure firewall. Use null to reset the value to the service default. </summary>
+        [WirePath("minCapacity")]
         public int? MinCapacity { get; set; }
         /// <summary> The maximum number of capacity units for this azure firewall. Use null to reset the value to the service default. </summary>
+        [WirePath("maxCapacity")]
         public int? MaxCapacity { get; set; }
     }
 }

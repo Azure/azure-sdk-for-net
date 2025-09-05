@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Guest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.GuestConfiguration.Tests", "tests\Azure.ResourceManager.GuestConfiguration.Tests.csproj", "{F30D65EF-52E6-4311-B782-F7D9725825C8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.GuestConfiguration.Samples", "samples\Azure.ResourceManager.GuestConfiguration.Samples.csproj", "{A21343E3-EDDA-487F-9ACD-A6375227C60F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,18 +41,6 @@ Global
 		{F30D65EF-52E6-4311-B782-F7D9725825C8}.Release|x64.Build.0 = Release|Any CPU
 		{F30D65EF-52E6-4311-B782-F7D9725825C8}.Release|x86.ActiveCfg = Release|Any CPU
 		{F30D65EF-52E6-4311-B782-F7D9725825C8}.Release|x86.Build.0 = Release|Any CPU
-		{A21343E3-EDDA-487F-9ACD-A6375227C60F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A21343E3-EDDA-487F-9ACD-A6375227C60F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A21343E3-EDDA-487F-9ACD-A6375227C60F}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{A21343E3-EDDA-487F-9ACD-A6375227C60F}.Debug|x64.Build.0 = Debug|Any CPU
-		{A21343E3-EDDA-487F-9ACD-A6375227C60F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A21343E3-EDDA-487F-9ACD-A6375227C60F}.Debug|x86.Build.0 = Debug|Any CPU
-		{A21343E3-EDDA-487F-9ACD-A6375227C60F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A21343E3-EDDA-487F-9ACD-A6375227C60F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A21343E3-EDDA-487F-9ACD-A6375227C60F}.Release|x64.ActiveCfg = Release|Any CPU
-		{A21343E3-EDDA-487F-9ACD-A6375227C60F}.Release|x64.Build.0 = Release|Any CPU
-		{A21343E3-EDDA-487F-9ACD-A6375227C60F}.Release|x86.ActiveCfg = Release|Any CPU
-		{A21343E3-EDDA-487F-9ACD-A6375227C60F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

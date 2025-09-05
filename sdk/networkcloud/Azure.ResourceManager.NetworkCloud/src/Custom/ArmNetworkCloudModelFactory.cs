@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="vmSkuName"> The VM SKU name that was used to create this cluster node. </param>
         /// <returns> A new <see cref="Models.KubernetesClusterNode"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KubernetesClusterNode KubernetesClusterNode(string agentPoolId = null, string availabilityZone = null, string bareMetalMachineId = null, long? cpuCores = null, KubernetesClusterNodeDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, long? diskSizeGB = null, string image = null, string kubernetesVersion = null, IEnumerable<KubernetesLabel> labels = null, long? memorySizeGB = null, NetworkCloudAgentPoolMode? mode = null, string name = null, IEnumerable<NetworkAttachment> networkAttachments = null, KubernetesNodePowerState? powerState = null, KubernetesNodeRole? role = null, IEnumerable<KubernetesLabel> taints = null, string vmSkuName = null)
+        public static KubernetesClusterNode KubernetesClusterNode(string agentPoolId, string availabilityZone, string bareMetalMachineId, long? cpuCores, KubernetesClusterNodeDetailedStatus? detailedStatus, string detailedStatusMessage, long? diskSizeGB, string image, string kubernetesVersion, IEnumerable<KubernetesLabel> labels, long? memorySizeGB, NetworkCloudAgentPoolMode? mode, string name, IEnumerable<NetworkAttachment> networkAttachments, KubernetesNodePowerState? powerState, KubernetesNodeRole? role, IEnumerable<KubernetesLabel> taints, string vmSkuName)
         {
             labels ??= new List<KubernetesLabel>();
             networkAttachments ??= new List<NetworkAttachment>();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="vmSkuName"> The name of the VM SKU that determines the size of resources allocated for node VMs. </param>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudAgentPoolData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkCloudAgentPoolData NetworkCloudAgentPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, AdministratorConfiguration administratorConfiguration = null, NetworkCloudAgentConfiguration agentOptions = null, AttachedNetworkConfiguration attachedNetworkConfiguration = null, IEnumerable<string> availabilityZones = null, long count = default, AgentPoolDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, string kubernetesVersion = null, IEnumerable<KubernetesLabel> labels = null, NetworkCloudAgentPoolMode mode = default, AgentPoolProvisioningState? provisioningState = null, IEnumerable<KubernetesLabel> taints = null, string upgradeMaxSurge = null, string vmSkuName = null)
+        public static NetworkCloudAgentPoolData NetworkCloudAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, AdministratorConfiguration administratorConfiguration, NetworkCloudAgentConfiguration agentOptions, AttachedNetworkConfiguration attachedNetworkConfiguration, IEnumerable<string> availabilityZones, long count, AgentPoolDetailedStatus? detailedStatus, string detailedStatusMessage, string kubernetesVersion, IEnumerable<KubernetesLabel> labels, NetworkCloudAgentPoolMode mode, AgentPoolProvisioningState? provisioningState, IEnumerable<KubernetesLabel> taints, string upgradeMaxSurge, string vmSkuName)
         {
             tags ??= new Dictionary<string, string>();
             availabilityZones ??= new List<string>();
@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 systemData,
                 tags,
                 location,
+                null,
                 extendedLocation,
                 administratorConfiguration,
                 agentOptions,
@@ -166,9 +167,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// </param>
         /// <returns> A new <see cref="Models.NetworkAttachment"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkAttachment NetworkAttachment(string attachedNetworkId = null, DefaultGateway? defaultGateway = null, VirtualMachineIPAllocationMethod ipAllocationMethod = default, string ipv4Address = null, string ipv6Address = null, string macAddress = null, string networkAttachmentName = null)
-        {
-            return new NetworkAttachment(
+        public static NetworkAttachment NetworkAttachment(string attachedNetworkId, DefaultGateway? defaultGateway, VirtualMachineIPAllocationMethod ipAllocationMethod, string ipv4Address, string ipv6Address, string macAddress, string networkAttachmentName)
+
+            => new NetworkAttachment(
                 new ResourceIdentifier(attachedNetworkId),
                 defaultGateway,
                 ipAllocationMethod,
@@ -177,6 +178,5 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 macAddress,
                 networkAttachmentName,
                 serializedAdditionalRawData: null);
-        }
     }
 }

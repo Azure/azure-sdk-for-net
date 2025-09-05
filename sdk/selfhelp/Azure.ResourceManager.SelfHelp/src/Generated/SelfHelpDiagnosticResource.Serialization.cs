@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SelfHelp
 {
     public partial class SelfHelpDiagnosticResource : IJsonModel<SelfHelpDiagnosticData>
     {
+        private static SelfHelpDiagnosticData s_dataDeserializationInstance;
+        private static SelfHelpDiagnosticData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SelfHelpDiagnosticData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SelfHelpDiagnosticData>)Data).Write(writer, options);
 
-        SelfHelpDiagnosticData IJsonModel<SelfHelpDiagnosticData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SelfHelpDiagnosticData>)Data).Create(ref reader, options);
+        SelfHelpDiagnosticData IJsonModel<SelfHelpDiagnosticData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SelfHelpDiagnosticData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SelfHelpDiagnosticData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SelfHelpDiagnosticData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SelfHelpDiagnosticData>(Data, options, AzureResourceManagerSelfHelpContext.Default);
 
-        SelfHelpDiagnosticData IPersistableModel<SelfHelpDiagnosticData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SelfHelpDiagnosticData>(data, options);
+        SelfHelpDiagnosticData IPersistableModel<SelfHelpDiagnosticData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SelfHelpDiagnosticData>(data, options, AzureResourceManagerSelfHelpContext.Default);
 
-        string IPersistableModel<SelfHelpDiagnosticData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SelfHelpDiagnosticData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SelfHelpDiagnosticData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SelfHelpDiagnosticData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

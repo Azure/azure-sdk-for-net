@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Resources
 
         TagResource IOperationSource<TagResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<TagResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<TagResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContext.Default);
             return new TagResource(_client, data);
         }
 
         async ValueTask<TagResource> IOperationSource<TagResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<TagResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<TagResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContext.Default);
             return await Task.FromResult(new TagResource(_client, data)).ConfigureAwait(false);
         }
     }

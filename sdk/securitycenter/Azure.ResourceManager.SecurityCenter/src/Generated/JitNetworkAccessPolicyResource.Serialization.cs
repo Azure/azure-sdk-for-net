@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class JitNetworkAccessPolicyResource : IJsonModel<JitNetworkAccessPolicyData>
     {
+        private static JitNetworkAccessPolicyData s_dataDeserializationInstance;
+        private static JitNetworkAccessPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<JitNetworkAccessPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<JitNetworkAccessPolicyData>)Data).Write(writer, options);
 
-        JitNetworkAccessPolicyData IJsonModel<JitNetworkAccessPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<JitNetworkAccessPolicyData>)Data).Create(ref reader, options);
+        JitNetworkAccessPolicyData IJsonModel<JitNetworkAccessPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<JitNetworkAccessPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<JitNetworkAccessPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<JitNetworkAccessPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<JitNetworkAccessPolicyData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        JitNetworkAccessPolicyData IPersistableModel<JitNetworkAccessPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JitNetworkAccessPolicyData>(data, options);
+        JitNetworkAccessPolicyData IPersistableModel<JitNetworkAccessPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JitNetworkAccessPolicyData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<JitNetworkAccessPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<JitNetworkAccessPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<JitNetworkAccessPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<JitNetworkAccessPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

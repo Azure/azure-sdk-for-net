@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapsePrivateLinkHubResource : IJsonModel<SynapsePrivateLinkHubData>
     {
+        private static SynapsePrivateLinkHubData s_dataDeserializationInstance;
+        private static SynapsePrivateLinkHubData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapsePrivateLinkHubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapsePrivateLinkHubData>)Data).Write(writer, options);
 
-        SynapsePrivateLinkHubData IJsonModel<SynapsePrivateLinkHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapsePrivateLinkHubData>)Data).Create(ref reader, options);
+        SynapsePrivateLinkHubData IJsonModel<SynapsePrivateLinkHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapsePrivateLinkHubData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapsePrivateLinkHubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapsePrivateLinkHubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapsePrivateLinkHubData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapsePrivateLinkHubData IPersistableModel<SynapsePrivateLinkHubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapsePrivateLinkHubData>(data, options);
+        SynapsePrivateLinkHubData IPersistableModel<SynapsePrivateLinkHubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapsePrivateLinkHubData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapsePrivateLinkHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapsePrivateLinkHubData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapsePrivateLinkHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapsePrivateLinkHubData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

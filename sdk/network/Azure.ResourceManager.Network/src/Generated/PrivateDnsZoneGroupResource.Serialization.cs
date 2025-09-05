@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class PrivateDnsZoneGroupResource : IJsonModel<PrivateDnsZoneGroupData>
     {
+        private static PrivateDnsZoneGroupData s_dataDeserializationInstance;
+        private static PrivateDnsZoneGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PrivateDnsZoneGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PrivateDnsZoneGroupData>)Data).Write(writer, options);
 
-        PrivateDnsZoneGroupData IJsonModel<PrivateDnsZoneGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateDnsZoneGroupData>)Data).Create(ref reader, options);
+        PrivateDnsZoneGroupData IJsonModel<PrivateDnsZoneGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateDnsZoneGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PrivateDnsZoneGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PrivateDnsZoneGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PrivateDnsZoneGroupData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        PrivateDnsZoneGroupData IPersistableModel<PrivateDnsZoneGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateDnsZoneGroupData>(data, options);
+        PrivateDnsZoneGroupData IPersistableModel<PrivateDnsZoneGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateDnsZoneGroupData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<PrivateDnsZoneGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateDnsZoneGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PrivateDnsZoneGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateDnsZoneGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

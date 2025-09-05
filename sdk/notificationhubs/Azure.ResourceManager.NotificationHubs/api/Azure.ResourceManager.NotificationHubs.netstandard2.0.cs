@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.NotificationHubs
 {
+    public partial class AzureResourceManagerNotificationHubsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerNotificationHubsContext() { }
+        public static Azure.ResourceManager.NotificationHubs.AzureResourceManagerNotificationHubsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class NotificationHubAuthorizationRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleResource>, System.Collections.IEnumerable
     {
         protected NotificationHubAuthorizationRuleCollection() { }

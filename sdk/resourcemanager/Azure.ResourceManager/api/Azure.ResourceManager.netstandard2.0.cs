@@ -122,6 +122,12 @@ namespace Azure.ResourceManager
         public virtual Azure.ResourceManager.Resources.TagResource GetTagResource() { throw null; }
         protected virtual bool TryGetApiVersion(Azure.Core.ResourceType resourceType, out string apiVersion) { throw null; }
     }
+    public partial class AzureResourceManagerContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerContext() { }
+        public static Azure.ResourceManager.AzureResourceManagerContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public enum AzureStackProfile
     {
         Profile20200901Hybrid = 0,
@@ -695,7 +701,7 @@ namespace Azure.ResourceManager.Models
     }
     public partial class OperationStatusResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Models.OperationStatusResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Models.OperationStatusResult>
     {
-        protected OperationStatusResult() { }
+        protected internal OperationStatusResult() { }
         protected OperationStatusResult(Azure.Core.ResourceIdentifier id, string name, string status, float? percentComplete, System.DateTimeOffset? startOn, System.DateTimeOffset? endOn, System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Models.OperationStatusResult> operations, Azure.ResponseError error) { }
         public OperationStatusResult(string status) { }
         public System.DateTimeOffset? EndOn { get { throw null; } }
@@ -835,7 +841,7 @@ namespace Azure.ResourceManager.Models
     }
     public abstract partial class TrackedResourceData : Azure.ResourceManager.Models.ResourceData
     {
-        protected TrackedResourceData() { }
+        protected internal TrackedResourceData() { }
         protected TrackedResourceData(Azure.Core.AzureLocation location) { }
         protected TrackedResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location) { }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }

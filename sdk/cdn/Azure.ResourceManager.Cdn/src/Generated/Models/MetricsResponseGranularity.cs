@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The MetricsResponseGranularity. </summary>
+    /// <summary>
+    /// The MetricsResponseGranularity.
+    /// Serialized Name: MetricsGranularity
+    /// </summary>
     public readonly partial struct MetricsResponseGranularity : IEquatable<MetricsResponseGranularity>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string PT1HValue = "PT1H";
         private const string P1DValue = "P1D";
 
-        /// <summary> PT5M. </summary>
+        /// <summary>
+        /// PT5M
+        /// Serialized Name: MetricsGranularity.PT5M
+        /// </summary>
         public static MetricsResponseGranularity PT5M { get; } = new MetricsResponseGranularity(PT5MValue);
-        /// <summary> PT1H. </summary>
+        /// <summary>
+        /// PT1H
+        /// Serialized Name: MetricsGranularity.PT1H
+        /// </summary>
         public static MetricsResponseGranularity PT1H { get; } = new MetricsResponseGranularity(PT1HValue);
-        /// <summary> P1D. </summary>
+        /// <summary>
+        /// P1D
+        /// Serialized Name: MetricsGranularity.P1D
+        /// </summary>
         public static MetricsResponseGranularity P1D { get; } = new MetricsResponseGranularity(P1DValue);
         /// <summary> Determines if two <see cref="MetricsResponseGranularity"/> values are the same. </summary>
         public static bool operator ==(MetricsResponseGranularity left, MetricsResponseGranularity right) => left.Equals(right);

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.OracleDatabase
 
         CloudExadataInfrastructureResource IOperationSource<CloudExadataInfrastructureResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CloudExadataInfrastructureData>(response.Content);
+            var data = ModelReaderWriter.Read<CloudExadataInfrastructureData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return new CloudExadataInfrastructureResource(_client, data);
         }
 
         async ValueTask<CloudExadataInfrastructureResource> IOperationSource<CloudExadataInfrastructureResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CloudExadataInfrastructureData>(response.Content);
+            var data = ModelReaderWriter.Read<CloudExadataInfrastructureData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return await Task.FromResult(new CloudExadataInfrastructureResource(_client, data)).ConfigureAwait(false);
         }
     }

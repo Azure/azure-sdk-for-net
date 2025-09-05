@@ -67,5 +67,10 @@ namespace Azure.Storage.DataMovement.Tests
                 yield return MockStorageResourceItem.MakeSourceResource(_fileSize, uri.Uri);
             }
         }
+
+        protected internal override async Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            return await Task.FromResult(new StorageResourceContainerProperties());
+        }
     }
 }

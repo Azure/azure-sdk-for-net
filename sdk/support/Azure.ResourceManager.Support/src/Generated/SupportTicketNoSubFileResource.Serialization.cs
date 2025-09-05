@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Support
 {
     public partial class SupportTicketNoSubFileResource : IJsonModel<SupportFileDetailData>
     {
+        private static SupportFileDetailData s_dataDeserializationInstance;
+        private static SupportFileDetailData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SupportFileDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SupportFileDetailData>)Data).Write(writer, options);
 
-        SupportFileDetailData IJsonModel<SupportFileDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SupportFileDetailData>)Data).Create(ref reader, options);
+        SupportFileDetailData IJsonModel<SupportFileDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SupportFileDetailData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SupportFileDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SupportFileDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SupportFileDetailData>(Data, options, AzureResourceManagerSupportContext.Default);
 
-        SupportFileDetailData IPersistableModel<SupportFileDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SupportFileDetailData>(data, options);
+        SupportFileDetailData IPersistableModel<SupportFileDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SupportFileDetailData>(data, options, AzureResourceManagerSupportContext.Default);
 
-        string IPersistableModel<SupportFileDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SupportFileDetailData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SupportFileDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SupportFileDetailData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
+    public partial class AzureResourceManagerConnectedVMwarevSphereContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerConnectedVMwarevSphereContext() { }
+        public static Azure.ResourceManager.ConnectedVMwarevSphere.AzureResourceManagerConnectedVMwarevSphereContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class ConnectedVMwarevSphereExtensions
     {
         public static Azure.ResourceManager.ConnectedVMwarevSphere.VCenterInventoryItemResource GetVCenterInventoryItemResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }

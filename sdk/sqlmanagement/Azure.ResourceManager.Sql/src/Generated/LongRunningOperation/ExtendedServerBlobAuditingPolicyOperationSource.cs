@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         ExtendedServerBlobAuditingPolicyResource IOperationSource<ExtendedServerBlobAuditingPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExtendedServerBlobAuditingPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<ExtendedServerBlobAuditingPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new ExtendedServerBlobAuditingPolicyResource(_client, data);
         }
 
         async ValueTask<ExtendedServerBlobAuditingPolicyResource> IOperationSource<ExtendedServerBlobAuditingPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExtendedServerBlobAuditingPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<ExtendedServerBlobAuditingPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new ExtendedServerBlobAuditingPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

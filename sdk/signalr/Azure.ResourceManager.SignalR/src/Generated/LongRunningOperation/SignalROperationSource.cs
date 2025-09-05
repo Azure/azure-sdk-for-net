@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.SignalR
 
         SignalRResource IOperationSource<SignalRResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SignalRData>(response.Content);
+            var data = ModelReaderWriter.Read<SignalRData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSignalRContext.Default);
             return new SignalRResource(_client, data);
         }
 
         async ValueTask<SignalRResource> IOperationSource<SignalRResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SignalRData>(response.Content);
+            var data = ModelReaderWriter.Read<SignalRData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSignalRContext.Default);
             return await Task.FromResult(new SignalRResource(_client, data)).ConfigureAwait(false);
         }
     }

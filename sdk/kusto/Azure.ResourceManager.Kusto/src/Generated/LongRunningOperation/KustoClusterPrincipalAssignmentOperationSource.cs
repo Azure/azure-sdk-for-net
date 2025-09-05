@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Kusto
 
         KustoClusterPrincipalAssignmentResource IOperationSource<KustoClusterPrincipalAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KustoClusterPrincipalAssignmentData>(response.Content);
+            var data = ModelReaderWriter.Read<KustoClusterPrincipalAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
             return new KustoClusterPrincipalAssignmentResource(_client, data);
         }
 
         async ValueTask<KustoClusterPrincipalAssignmentResource> IOperationSource<KustoClusterPrincipalAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KustoClusterPrincipalAssignmentData>(response.Content);
+            var data = ModelReaderWriter.Read<KustoClusterPrincipalAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
             return await Task.FromResult(new KustoClusterPrincipalAssignmentResource(_client, data)).ConfigureAwait(false);
         }
     }

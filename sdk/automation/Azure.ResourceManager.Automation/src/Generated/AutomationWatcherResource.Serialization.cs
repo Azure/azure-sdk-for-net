@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationWatcherResource : IJsonModel<AutomationWatcherData>
     {
+        private static AutomationWatcherData s_dataDeserializationInstance;
+        private static AutomationWatcherData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AutomationWatcherData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutomationWatcherData>)Data).Write(writer, options);
 
-        AutomationWatcherData IJsonModel<AutomationWatcherData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationWatcherData>)Data).Create(ref reader, options);
+        AutomationWatcherData IJsonModel<AutomationWatcherData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationWatcherData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutomationWatcherData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AutomationWatcherData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationWatcherData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
-        AutomationWatcherData IPersistableModel<AutomationWatcherData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationWatcherData>(data, options);
+        AutomationWatcherData IPersistableModel<AutomationWatcherData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationWatcherData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<AutomationWatcherData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationWatcherData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AutomationWatcherData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationWatcherData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

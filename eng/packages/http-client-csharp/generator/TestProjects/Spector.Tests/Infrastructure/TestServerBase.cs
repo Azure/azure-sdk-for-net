@@ -21,7 +21,7 @@ namespace TestProjects.Spector.Tests
 
         public TestServerBase(string processPath, string processArguments)
         {
-            var portPhrase = "Started server on port ";
+            var portPhrase = "Started server on ";
 
             var processStartInfo = new ProcessStartInfo("node", $"{processPath} {processArguments}")
             {

@@ -21,6 +21,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (value == 1000) return OperationalInsightsWorkspaceCapacityReservationLevel.TenHundred;
             if (value == 2000) return OperationalInsightsWorkspaceCapacityReservationLevel.TwoThousand;
             if (value == 5000) return OperationalInsightsWorkspaceCapacityReservationLevel.FiveThousand;
+            if (value == 10000) return OperationalInsightsWorkspaceCapacityReservationLevel.TenThousand;
+            if (value == 25000) return OperationalInsightsWorkspaceCapacityReservationLevel.TwentyFiveThousand;
+            if (value == 50000) return OperationalInsightsWorkspaceCapacityReservationLevel.FiftyThousand;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OperationalInsightsWorkspaceCapacityReservationLevel value.");
         }
     }

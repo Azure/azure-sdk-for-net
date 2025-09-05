@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class StorageInsightResource : IJsonModel<StorageInsightData>
     {
+        private static StorageInsightData s_dataDeserializationInstance;
+        private static StorageInsightData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StorageInsightData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageInsightData>)Data).Write(writer, options);
 
-        StorageInsightData IJsonModel<StorageInsightData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageInsightData>)Data).Create(ref reader, options);
+        StorageInsightData IJsonModel<StorageInsightData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageInsightData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StorageInsightData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StorageInsightData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageInsightData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        StorageInsightData IPersistableModel<StorageInsightData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageInsightData>(data, options);
+        StorageInsightData IPersistableModel<StorageInsightData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageInsightData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        string IPersistableModel<StorageInsightData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageInsightData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StorageInsightData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageInsightData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

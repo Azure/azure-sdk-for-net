@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectedRegistryPatch"/>. </summary>
-        /// <param name="syncProperties"> The sync properties of the connected registry with its parent. </param>
+        /// <param name="syncProperties"> The parameters for updating the sync properties of the connected registry with its parent. </param>
         /// <param name="logging"> The logging properties of the connected registry. </param>
         /// <param name="clientTokenIds"> The list of the ACR token resource IDs used to authenticate clients to the connected registry. </param>
         /// <param name="notificationsList"> The list of notifications subscription information for the connected registry. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The sync properties of the connected registry with its parent. </summary>
+        /// <summary> The parameters for updating the sync properties of the connected registry with its parent. </summary>
         [WirePath("properties.syncProperties")]
         public ConnectedRegistrySyncUpdateProperties SyncProperties { get; set; }
         /// <summary> The logging properties of the connected registry. </summary>

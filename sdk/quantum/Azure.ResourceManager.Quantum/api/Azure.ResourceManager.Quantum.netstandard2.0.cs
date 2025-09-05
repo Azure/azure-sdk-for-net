@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Quantum
 {
+    public partial class AzureResourceManagerQuantumContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerQuantumContext() { }
+        public static Azure.ResourceManager.Quantum.AzureResourceManagerQuantumContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class QuantumExtensions
     {
         public static Azure.Response<Azure.ResourceManager.Quantum.Models.WorkspaceNameAvailabilityResult> CheckWorkspaceNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.Quantum.Models.WorkspaceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

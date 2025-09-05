@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class PartnerTransferDetailResource : IJsonModel<PartnerTransferDetailData>
     {
+        private static PartnerTransferDetailData s_dataDeserializationInstance;
+        private static PartnerTransferDetailData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PartnerTransferDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PartnerTransferDetailData>)Data).Write(writer, options);
 
-        PartnerTransferDetailData IJsonModel<PartnerTransferDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PartnerTransferDetailData>)Data).Create(ref reader, options);
+        PartnerTransferDetailData IJsonModel<PartnerTransferDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PartnerTransferDetailData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PartnerTransferDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PartnerTransferDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PartnerTransferDetailData>(Data, options, AzureResourceManagerBillingContext.Default);
 
-        PartnerTransferDetailData IPersistableModel<PartnerTransferDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PartnerTransferDetailData>(data, options);
+        PartnerTransferDetailData IPersistableModel<PartnerTransferDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PartnerTransferDetailData>(data, options, AzureResourceManagerBillingContext.Default);
 
-        string IPersistableModel<PartnerTransferDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PartnerTransferDetailData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PartnerTransferDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PartnerTransferDetailData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

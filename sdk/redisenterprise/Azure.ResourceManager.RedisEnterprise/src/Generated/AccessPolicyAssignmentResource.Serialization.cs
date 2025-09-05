@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RedisEnterprise
 {
     public partial class AccessPolicyAssignmentResource : IJsonModel<AccessPolicyAssignmentData>
     {
+        private static AccessPolicyAssignmentData s_dataDeserializationInstance;
+        private static AccessPolicyAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AccessPolicyAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AccessPolicyAssignmentData>)Data).Write(writer, options);
 
-        AccessPolicyAssignmentData IJsonModel<AccessPolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AccessPolicyAssignmentData>)Data).Create(ref reader, options);
+        AccessPolicyAssignmentData IJsonModel<AccessPolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AccessPolicyAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AccessPolicyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AccessPolicyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AccessPolicyAssignmentData>(Data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
-        AccessPolicyAssignmentData IPersistableModel<AccessPolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AccessPolicyAssignmentData>(data, options);
+        AccessPolicyAssignmentData IPersistableModel<AccessPolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AccessPolicyAssignmentData>(data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
-        string IPersistableModel<AccessPolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AccessPolicyAssignmentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AccessPolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AccessPolicyAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

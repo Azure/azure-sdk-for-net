@@ -11,6 +11,12 @@ namespace Azure.Messaging.WebPubSub
         Mqtt = 1,
         SocketIO = 2,
     }
+    public partial class WebPubSubGroupMember
+    {
+        public WebPubSubGroupMember(string connectionId) { }
+        public string ConnectionId { get { throw null; } }
+        public string? UserId { get { throw null; } set { } }
+    }
     public enum WebPubSubPermission
     {
         SendToGroup = 1,
@@ -70,6 +76,8 @@ namespace Azure.Messaging.WebPubSub
         public virtual System.Threading.Tasks.Task<Azure.Response> GrantPermissionAsync(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<bool> GroupExists(string group, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> GroupExistsAsync(string group, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.WebPubSubGroupMember> ListConnectionsInGroup(string group, int? maxpagesize = default(int?), int? maxCount = default(int?), string continuationToken = null) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.WebPubSubGroupMember> ListConnectionsInGroupAsync(string group, int? maxpagesize = default(int?), int? maxCount = default(int?), string continuationToken = null) { throw null; }
         public virtual Azure.Response RemoveConnectionFromAllGroups(string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveConnectionFromAllGroupsAsync(string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RemoveConnectionFromGroup(string group, string connectionId, Azure.RequestContext context = null) { throw null; }
@@ -109,12 +117,13 @@ namespace Azure.Messaging.WebPubSub
     }
     public partial class WebPubSubServiceClientOptions : Azure.Core.ClientOptions
     {
-        public WebPubSubServiceClientOptions(Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion version = Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion.V2024_01_01) { }
+        public WebPubSubServiceClientOptions(Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion version = Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion.V2024_12_01) { }
         public System.Uri ReverseProxyEndpoint { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2021_10_01 = 1,
             V2024_01_01 = 2,
+            V2024_12_01 = 3,
         }
     }
 }

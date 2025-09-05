@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.IotHub.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(IotHubPrivateEndpointGroupInformationProperties)} does not support writing '{options.Format}' format.");
             }

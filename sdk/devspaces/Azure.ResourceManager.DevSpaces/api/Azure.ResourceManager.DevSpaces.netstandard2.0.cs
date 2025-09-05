@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.DevSpaces
 {
+    public partial class AzureResourceManagerDevSpacesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerDevSpacesContext() { }
+        public static Azure.ResourceManager.DevSpaces.AzureResourceManagerDevSpacesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ControllerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevSpaces.ControllerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevSpaces.ControllerResource>, System.Collections.IEnumerable
     {
         protected ControllerCollection() { }

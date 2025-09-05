@@ -133,7 +133,7 @@ namespace Azure.AI.Translation.Text
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAITranslationTextContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SourceDictionaryLanguage)} does not support writing '{options.Format}' format.");
             }

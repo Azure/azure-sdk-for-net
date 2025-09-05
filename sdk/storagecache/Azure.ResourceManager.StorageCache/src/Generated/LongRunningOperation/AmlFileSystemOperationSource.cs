@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.StorageCache
 
         AmlFileSystemResource IOperationSource<AmlFileSystemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AmlFileSystemData>(response.Content);
+            var data = ModelReaderWriter.Read<AmlFileSystemData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageCacheContext.Default);
             return new AmlFileSystemResource(_client, data);
         }
 
         async ValueTask<AmlFileSystemResource> IOperationSource<AmlFileSystemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AmlFileSystemData>(response.Content);
+            var data = ModelReaderWriter.Read<AmlFileSystemData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageCacheContext.Default);
             return await Task.FromResult(new AmlFileSystemResource(_client, data)).ConfigureAwait(false);
         }
     }

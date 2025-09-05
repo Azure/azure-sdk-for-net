@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CosmosDBThroughputPoolResource : IJsonModel<CosmosDBThroughputPoolData>
     {
+        private static CosmosDBThroughputPoolData s_dataDeserializationInstance;
+        private static CosmosDBThroughputPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CosmosDBThroughputPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBThroughputPoolData>)Data).Write(writer, options);
 
-        CosmosDBThroughputPoolData IJsonModel<CosmosDBThroughputPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBThroughputPoolData>)Data).Create(ref reader, options);
+        CosmosDBThroughputPoolData IJsonModel<CosmosDBThroughputPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBThroughputPoolData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CosmosDBThroughputPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CosmosDBThroughputPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBThroughputPoolData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        CosmosDBThroughputPoolData IPersistableModel<CosmosDBThroughputPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBThroughputPoolData>(data, options);
+        CosmosDBThroughputPoolData IPersistableModel<CosmosDBThroughputPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBThroughputPoolData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CosmosDBThroughputPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBThroughputPoolData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CosmosDBThroughputPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBThroughputPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

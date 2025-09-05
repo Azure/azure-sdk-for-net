@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ServiceBus
 {
     public partial class ServiceBusTopicResource : IJsonModel<ServiceBusTopicData>
     {
+        private static ServiceBusTopicData s_dataDeserializationInstance;
+        private static ServiceBusTopicData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ServiceBusTopicData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusTopicData>)Data).Write(writer, options);
 
-        ServiceBusTopicData IJsonModel<ServiceBusTopicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusTopicData>)Data).Create(ref reader, options);
+        ServiceBusTopicData IJsonModel<ServiceBusTopicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusTopicData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceBusTopicData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ServiceBusTopicData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceBusTopicData>(Data, options, AzureResourceManagerServiceBusContext.Default);
 
-        ServiceBusTopicData IPersistableModel<ServiceBusTopicData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusTopicData>(data, options);
+        ServiceBusTopicData IPersistableModel<ServiceBusTopicData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusTopicData>(data, options, AzureResourceManagerServiceBusContext.Default);
 
-        string IPersistableModel<ServiceBusTopicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceBusTopicData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ServiceBusTopicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceBusTopicData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

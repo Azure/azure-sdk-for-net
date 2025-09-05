@@ -1,0 +1,33 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/ai/ci.agents.persistent.yml
+    - sdk/ai/Azure.AI.Agents.Persistent
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/ai/ci.agents.persistent.yml
+    - sdk/ai/Azure.AI.Agents.Persistent
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: ai
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.AI.Agents.Persistent
+      safeName: AzureAIAgentsPersistent

@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Digit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.DigitalTwins.Tests", "tests\Azure.ResourceManager.DigitalTwins.Tests.csproj", "{812C9F5B-2F44-45A6-8B59-B9B6528886EF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.DigitalTwins.Samples", "samples\Azure.ResourceManager.DigitalTwins.Samples.csproj", "{0D714EBB-E344-4B44-8F80-623D183953BE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,18 +41,6 @@ Global
 		{812C9F5B-2F44-45A6-8B59-B9B6528886EF}.Release|x64.Build.0 = Release|Any CPU
 		{812C9F5B-2F44-45A6-8B59-B9B6528886EF}.Release|x86.ActiveCfg = Release|Any CPU
 		{812C9F5B-2F44-45A6-8B59-B9B6528886EF}.Release|x86.Build.0 = Release|Any CPU
-		{0D714EBB-E344-4B44-8F80-623D183953BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0D714EBB-E344-4B44-8F80-623D183953BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0D714EBB-E344-4B44-8F80-623D183953BE}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{0D714EBB-E344-4B44-8F80-623D183953BE}.Debug|x64.Build.0 = Debug|Any CPU
-		{0D714EBB-E344-4B44-8F80-623D183953BE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0D714EBB-E344-4B44-8F80-623D183953BE}.Debug|x86.Build.0 = Debug|Any CPU
-		{0D714EBB-E344-4B44-8F80-623D183953BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0D714EBB-E344-4B44-8F80-623D183953BE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0D714EBB-E344-4B44-8F80-623D183953BE}.Release|x64.ActiveCfg = Release|Any CPU
-		{0D714EBB-E344-4B44-8F80-623D183953BE}.Release|x64.Build.0 = Release|Any CPU
-		{0D714EBB-E344-4B44-8F80-623D183953BE}.Release|x86.ActiveCfg = Release|Any CPU
-		{0D714EBB-E344-4B44-8F80-623D183953BE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

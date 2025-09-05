@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     public partial class SiteRecoveryServicesProviderResource : IJsonModel<SiteRecoveryServicesProviderData>
     {
+        private static SiteRecoveryServicesProviderData s_dataDeserializationInstance;
+        private static SiteRecoveryServicesProviderData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SiteRecoveryServicesProviderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryServicesProviderData>)Data).Write(writer, options);
 
-        SiteRecoveryServicesProviderData IJsonModel<SiteRecoveryServicesProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryServicesProviderData>)Data).Create(ref reader, options);
+        SiteRecoveryServicesProviderData IJsonModel<SiteRecoveryServicesProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryServicesProviderData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SiteRecoveryServicesProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SiteRecoveryServicesProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteRecoveryServicesProviderData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        SiteRecoveryServicesProviderData IPersistableModel<SiteRecoveryServicesProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryServicesProviderData>(data, options);
+        SiteRecoveryServicesProviderData IPersistableModel<SiteRecoveryServicesProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryServicesProviderData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<SiteRecoveryServicesProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryServicesProviderData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SiteRecoveryServicesProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryServicesProviderData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

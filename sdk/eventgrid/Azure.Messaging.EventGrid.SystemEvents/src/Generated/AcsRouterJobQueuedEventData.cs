@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -15,49 +14,36 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterJobQueuedEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobQueuedEventData"/>. </summary>
-        /// <param name="labels"> Router Job events Labels. </param>
-        /// <param name="tags"> Router Jobs events Tags. </param>
-        /// <param name="attachedWorkerSelectors"> Router Job Queued Attached Worker Selector. </param>
-        /// <param name="requestedWorkerSelectors"> Router Job Queued Requested Worker Selector. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labels"/>, <paramref name="tags"/>, <paramref name="attachedWorkerSelectors"/> or <paramref name="requestedWorkerSelectors"/> is null. </exception>
-        internal AcsRouterJobQueuedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IEnumerable<AcsRouterWorkerSelector> attachedWorkerSelectors, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors) : base(labels, tags)
+        internal AcsRouterJobQueuedEventData()
         {
-            Argument.AssertNotNull(labels, nameof(labels));
-            Argument.AssertNotNull(tags, nameof(tags));
-            Argument.AssertNotNull(attachedWorkerSelectors, nameof(attachedWorkerSelectors));
-            Argument.AssertNotNull(requestedWorkerSelectors, nameof(requestedWorkerSelectors));
-
-            AttachedWorkerSelectors = attachedWorkerSelectors.ToList();
-            RequestedWorkerSelectors = requestedWorkerSelectors.ToList();
+            AttachedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
+            RequestedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobQueuedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="queueId"> Router Job events Queue Id. </param>
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="priority"> Router Job Priority. </param>
         /// <param name="attachedWorkerSelectors"> Router Job Queued Attached Worker Selector. </param>
         /// <param name="requestedWorkerSelectors"> Router Job Queued Requested Worker Selector. </param>
-        internal AcsRouterJobQueuedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, int? priority, IReadOnlyList<AcsRouterWorkerSelector> attachedWorkerSelectors, IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors) : base(jobId, channelReference, channelId, serializedAdditionalRawData, queueId, labels, tags)
+        internal AcsRouterJobQueuedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, int? priority, IReadOnlyList<AcsRouterWorkerSelector> attachedWorkerSelectors, IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
         {
             Priority = priority;
             AttachedWorkerSelectors = attachedWorkerSelectors;
             RequestedWorkerSelectors = requestedWorkerSelectors;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobQueuedEventData"/> for deserialization. </summary>
-        internal AcsRouterJobQueuedEventData()
-        {
-        }
-
         /// <summary> Router Job Priority. </summary>
         public int? Priority { get; }
+
         /// <summary> Router Job Queued Attached Worker Selector. </summary>
         public IReadOnlyList<AcsRouterWorkerSelector> AttachedWorkerSelectors { get; }
+
         /// <summary> Router Job Queued Requested Worker Selector. </summary>
         public IReadOnlyList<AcsRouterWorkerSelector> RequestedWorkerSelectors { get; }
     }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevCenter
 {
     public partial class ImageVersionResource : IJsonModel<ImageVersionData>
     {
+        private static ImageVersionData s_dataDeserializationInstance;
+        private static ImageVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ImageVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ImageVersionData>)Data).Write(writer, options);
 
-        ImageVersionData IJsonModel<ImageVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ImageVersionData>)Data).Create(ref reader, options);
+        ImageVersionData IJsonModel<ImageVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ImageVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ImageVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ImageVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ImageVersionData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
-        ImageVersionData IPersistableModel<ImageVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ImageVersionData>(data, options);
+        ImageVersionData IPersistableModel<ImageVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ImageVersionData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
-        string IPersistableModel<ImageVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ImageVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ImageVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ImageVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

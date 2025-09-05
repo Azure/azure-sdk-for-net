@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseWorkloadClassifierResource : IJsonModel<SynapseWorkloadClassifierData>
     {
+        private static SynapseWorkloadClassifierData s_dataDeserializationInstance;
+        private static SynapseWorkloadClassifierData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseWorkloadClassifierData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseWorkloadClassifierData>)Data).Write(writer, options);
 
-        SynapseWorkloadClassifierData IJsonModel<SynapseWorkloadClassifierData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseWorkloadClassifierData>)Data).Create(ref reader, options);
+        SynapseWorkloadClassifierData IJsonModel<SynapseWorkloadClassifierData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseWorkloadClassifierData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseWorkloadClassifierData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseWorkloadClassifierData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseWorkloadClassifierData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseWorkloadClassifierData IPersistableModel<SynapseWorkloadClassifierData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseWorkloadClassifierData>(data, options);
+        SynapseWorkloadClassifierData IPersistableModel<SynapseWorkloadClassifierData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseWorkloadClassifierData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseWorkloadClassifierData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseWorkloadClassifierData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseWorkloadClassifierData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseWorkloadClassifierData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

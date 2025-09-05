@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseBigDataPoolInfoResource : IJsonModel<SynapseBigDataPoolInfoData>
     {
+        private static SynapseBigDataPoolInfoData s_dataDeserializationInstance;
+        private static SynapseBigDataPoolInfoData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseBigDataPoolInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseBigDataPoolInfoData>)Data).Write(writer, options);
 
-        SynapseBigDataPoolInfoData IJsonModel<SynapseBigDataPoolInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseBigDataPoolInfoData>)Data).Create(ref reader, options);
+        SynapseBigDataPoolInfoData IJsonModel<SynapseBigDataPoolInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseBigDataPoolInfoData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseBigDataPoolInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseBigDataPoolInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseBigDataPoolInfoData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseBigDataPoolInfoData IPersistableModel<SynapseBigDataPoolInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseBigDataPoolInfoData>(data, options);
+        SynapseBigDataPoolInfoData IPersistableModel<SynapseBigDataPoolInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseBigDataPoolInfoData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseBigDataPoolInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseBigDataPoolInfoData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseBigDataPoolInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseBigDataPoolInfoData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

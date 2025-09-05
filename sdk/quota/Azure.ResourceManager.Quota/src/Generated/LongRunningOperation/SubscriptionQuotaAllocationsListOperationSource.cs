@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Quota
 
         SubscriptionQuotaAllocationsListResource IOperationSource<SubscriptionQuotaAllocationsListResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SubscriptionQuotaAllocationsListData>(response.Content);
+            var data = ModelReaderWriter.Read<SubscriptionQuotaAllocationsListData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
             return new SubscriptionQuotaAllocationsListResource(_client, data);
         }
 
         async ValueTask<SubscriptionQuotaAllocationsListResource> IOperationSource<SubscriptionQuotaAllocationsListResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SubscriptionQuotaAllocationsListData>(response.Content);
+            var data = ModelReaderWriter.Read<SubscriptionQuotaAllocationsListData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
             return await Task.FromResult(new SubscriptionQuotaAllocationsListResource(_client, data)).ConfigureAwait(false);
         }
     }

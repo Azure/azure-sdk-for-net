@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.KeyVault
 {
+    public partial class AzureResourceManagerKeyVaultContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerKeyVaultContext() { }
+        public static Azure.ResourceManager.KeyVault.AzureResourceManagerKeyVaultContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DeletedKeyVaultCollection : Azure.ResourceManager.ArmCollection
     {
         protected DeletedKeyVaultCollection() { }

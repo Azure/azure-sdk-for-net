@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Avs
 
         AvsCloudLinkResource IOperationSource<AvsCloudLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AvsCloudLinkData>(response.Content);
+            var data = ModelReaderWriter.Read<AvsCloudLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
             return new AvsCloudLinkResource(_client, data);
         }
 
         async ValueTask<AvsCloudLinkResource> IOperationSource<AvsCloudLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AvsCloudLinkData>(response.Content);
+            var data = ModelReaderWriter.Read<AvsCloudLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
             return await Task.FromResult(new AvsCloudLinkResource(_client, data)).ConfigureAwait(false);
         }
     }

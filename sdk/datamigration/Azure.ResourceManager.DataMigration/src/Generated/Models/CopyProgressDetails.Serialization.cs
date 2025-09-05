@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("rowsCopied"u8);
                 writer.WriteNumberValue(RowsCopied.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CopyStart))
+            if (options.Format != "W" && Optional.IsDefined(CopyStartOn))
             {
                 writer.WritePropertyName("copyStart"u8);
-                writer.WriteStringValue(CopyStart.Value, "O");
+                writer.WriteStringValue(CopyStartOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CopyThroughput))
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CopyProgressDetails)} does not support writing '{options.Format}' format.");
             }

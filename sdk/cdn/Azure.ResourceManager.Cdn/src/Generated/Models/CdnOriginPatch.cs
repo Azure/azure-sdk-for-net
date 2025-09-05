@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Origin properties needed for origin update. </summary>
+    /// <summary>
+    /// Origin properties needed for origin update.
+    /// Serialized Name: OriginUpdateParameters
+    /// </summary>
     public partial class CdnOriginPatch
     {
         /// <summary>
@@ -52,17 +55,50 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnOriginPatch"/>. </summary>
-        /// <param name="hostName"> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </param>
-        /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>
-        /// <param name="httpsPort"> The value of the HTTPS port. Must be between 1 and 65535. </param>
-        /// <param name="originHostHeader"> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint. </param>
-        /// <param name="priority"> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </param>
-        /// <param name="weight"> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </param>
-        /// <param name="enabled"> Origin is enabled for load balancing or not. </param>
-        /// <param name="privateLinkAlias"> The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'. </param>
-        /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>
-        /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </param>
-        /// <param name="privateLinkApprovalMessage"> A custom message to be included in the approval request to connect to the Private Link. </param>
+        /// <param name="hostName">
+        /// The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint.
+        /// Serialized Name: OriginUpdateParameters.properties.hostName
+        /// </param>
+        /// <param name="httpPort">
+        /// The value of the HTTP port. Must be between 1 and 65535.
+        /// Serialized Name: OriginUpdateParameters.properties.httpPort
+        /// </param>
+        /// <param name="httpsPort">
+        /// The value of the HTTPS port. Must be between 1 and 65535.
+        /// Serialized Name: OriginUpdateParameters.properties.httpsPort
+        /// </param>
+        /// <param name="originHostHeader">
+        /// The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint
+        /// Serialized Name: OriginUpdateParameters.properties.originHostHeader
+        /// </param>
+        /// <param name="priority">
+        /// Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5
+        /// Serialized Name: OriginUpdateParameters.properties.priority
+        /// </param>
+        /// <param name="weight">
+        /// Weight of the origin in given origin group for load balancing. Must be between 1 and 1000
+        /// Serialized Name: OriginUpdateParameters.properties.weight
+        /// </param>
+        /// <param name="enabled">
+        /// Origin is enabled for load balancing or not
+        /// Serialized Name: OriginUpdateParameters.properties.enabled
+        /// </param>
+        /// <param name="privateLinkAlias">
+        /// The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'
+        /// Serialized Name: OriginUpdateParameters.properties.privateLinkAlias
+        /// </param>
+        /// <param name="privateLinkResourceId">
+        /// The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'
+        /// Serialized Name: OriginUpdateParameters.properties.privateLinkResourceId
+        /// </param>
+        /// <param name="privateLinkLocation">
+        /// The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated
+        /// Serialized Name: OriginUpdateParameters.properties.privateLinkLocation
+        /// </param>
+        /// <param name="privateLinkApprovalMessage">
+        /// A custom message to be included in the approval request to connect to the Private Link.
+        /// Serialized Name: OriginUpdateParameters.properties.privateLinkApprovalMessage
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CdnOriginPatch(string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,27 +116,60 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </summary>
+        /// <summary>
+        /// The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint.
+        /// Serialized Name: OriginUpdateParameters.properties.hostName
+        /// </summary>
         public string HostName { get; set; }
-        /// <summary> The value of the HTTP port. Must be between 1 and 65535. </summary>
+        /// <summary>
+        /// The value of the HTTP port. Must be between 1 and 65535.
+        /// Serialized Name: OriginUpdateParameters.properties.httpPort
+        /// </summary>
         public int? HttpPort { get; set; }
-        /// <summary> The value of the HTTPS port. Must be between 1 and 65535. </summary>
+        /// <summary>
+        /// The value of the HTTPS port. Must be between 1 and 65535.
+        /// Serialized Name: OriginUpdateParameters.properties.httpsPort
+        /// </summary>
         public int? HttpsPort { get; set; }
-        /// <summary> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint. </summary>
+        /// <summary>
+        /// The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint
+        /// Serialized Name: OriginUpdateParameters.properties.originHostHeader
+        /// </summary>
         public string OriginHostHeader { get; set; }
-        /// <summary> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </summary>
+        /// <summary>
+        /// Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5
+        /// Serialized Name: OriginUpdateParameters.properties.priority
+        /// </summary>
         public int? Priority { get; set; }
-        /// <summary> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </summary>
+        /// <summary>
+        /// Weight of the origin in given origin group for load balancing. Must be between 1 and 1000
+        /// Serialized Name: OriginUpdateParameters.properties.weight
+        /// </summary>
         public int? Weight { get; set; }
-        /// <summary> Origin is enabled for load balancing or not. </summary>
+        /// <summary>
+        /// Origin is enabled for load balancing or not
+        /// Serialized Name: OriginUpdateParameters.properties.enabled
+        /// </summary>
         public bool? Enabled { get; set; }
-        /// <summary> The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'. </summary>
+        /// <summary>
+        /// The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'
+        /// Serialized Name: OriginUpdateParameters.properties.privateLinkAlias
+        /// </summary>
         public string PrivateLinkAlias { get; set; }
-        /// <summary> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </summary>
+        /// <summary>
+        /// The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'
+        /// Serialized Name: OriginUpdateParameters.properties.privateLinkResourceId
+        /// </summary>
         public ResourceIdentifier PrivateLinkResourceId { get; set; }
-        /// <summary> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </summary>
+        /// <summary>
+        /// The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated
+        /// Serialized Name: OriginUpdateParameters.properties.privateLinkLocation
+        /// </summary>
         public string PrivateLinkLocation { get; set; }
-        /// <summary> A custom message to be included in the approval request to connect to the Private Link. </summary>
+        /// <summary>
+        /// A custom message to be included in the approval request to connect to the Private Link.
+        /// Serialized Name: OriginUpdateParameters.properties.privateLinkApprovalMessage
+        /// </summary>
         public string PrivateLinkApprovalMessage { get; set; }
     }
 }

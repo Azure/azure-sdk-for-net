@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web.UI;
+using System.Threading.Tasks;
 
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -135,6 +135,32 @@ namespace Azure.Template.Tests.Samples
             }
 
             client.RemoveUserFromGroup("some_group", "some_user");
+            #endregion
+        }
+
+        public async Task ListConnectionsInGroupAsync()
+        {
+            var connectionString = TestEnvironment.ConnectionString;
+            var client = new WebPubSubServiceClient(connectionString, "some_hub");
+
+            #region Snippet:WebPubSubListConnectionsInGroupAsync
+            await foreach (WebPubSubGroupMember member in client.ListConnectionsInGroupAsync("groupName"))
+            {
+                Console.WriteLine($"ConnectionId: {member.ConnectionId}, UserId: {member.UserId}");
+            }
+            #endregion
+        }
+
+        public void ListConnectionsInGroup()
+        {
+            var connectionString = TestEnvironment.ConnectionString;
+            var client = new WebPubSubServiceClient(connectionString, "some_hub");
+
+            #region Snippet:WebPubSubListConnectionsInGroup
+            foreach (WebPubSubGroupMember member in client.ListConnectionsInGroup("groupName"))
+            {
+                Console.WriteLine($"ConnectionId: {member.ConnectionId}, UserId: {member.UserId}");
+            }
             #endregion
         }
 

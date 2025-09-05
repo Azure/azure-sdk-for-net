@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Orbital
 
         OrbitalSpacecraftResource IOperationSource<OrbitalSpacecraftResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OrbitalSpacecraftData>(response.Content);
+            var data = ModelReaderWriter.Read<OrbitalSpacecraftData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOrbitalContext.Default);
             return new OrbitalSpacecraftResource(_client, data);
         }
 
         async ValueTask<OrbitalSpacecraftResource> IOperationSource<OrbitalSpacecraftResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OrbitalSpacecraftData>(response.Content);
+            var data = ModelReaderWriter.Read<OrbitalSpacecraftData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOrbitalContext.Default);
             return await Task.FromResult(new OrbitalSpacecraftResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     public partial class HybridContainerServiceVirtualNetworkResource : IJsonModel<HybridContainerServiceVirtualNetworkData>
     {
+        private static HybridContainerServiceVirtualNetworkData s_dataDeserializationInstance;
+        private static HybridContainerServiceVirtualNetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HybridContainerServiceVirtualNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridContainerServiceVirtualNetworkData>)Data).Write(writer, options);
 
-        HybridContainerServiceVirtualNetworkData IJsonModel<HybridContainerServiceVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridContainerServiceVirtualNetworkData>)Data).Create(ref reader, options);
+        HybridContainerServiceVirtualNetworkData IJsonModel<HybridContainerServiceVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridContainerServiceVirtualNetworkData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HybridContainerServiceVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HybridContainerServiceVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridContainerServiceVirtualNetworkData>(Data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
-        HybridContainerServiceVirtualNetworkData IPersistableModel<HybridContainerServiceVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridContainerServiceVirtualNetworkData>(data, options);
+        HybridContainerServiceVirtualNetworkData IPersistableModel<HybridContainerServiceVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridContainerServiceVirtualNetworkData>(data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
-        string IPersistableModel<HybridContainerServiceVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridContainerServiceVirtualNetworkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HybridContainerServiceVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridContainerServiceVirtualNetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

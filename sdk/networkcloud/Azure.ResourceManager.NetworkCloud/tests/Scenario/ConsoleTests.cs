@@ -8,6 +8,7 @@ using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             // Delete
-            var deleteResult = await console.DeleteAsync(WaitUntil.Completed);
+            var deleteResult = await console.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
             Assert.IsTrue(deleteResult.HasCompleted);
         }
     }

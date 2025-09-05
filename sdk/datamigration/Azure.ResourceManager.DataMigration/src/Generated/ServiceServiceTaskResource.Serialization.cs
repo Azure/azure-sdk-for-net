@@ -11,16 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    public partial class ServiceServiceTaskResource : IJsonModel<ProjectTaskData>
+    public partial class ServiceServiceTaskResource : IJsonModel<DataMigrationProjectTaskData>
     {
-        void IJsonModel<ProjectTaskData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProjectTaskData>)Data).Write(writer, options);
+        private static DataMigrationProjectTaskData s_dataDeserializationInstance;
+        private static DataMigrationProjectTaskData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        ProjectTaskData IJsonModel<ProjectTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProjectTaskData>)Data).Create(ref reader, options);
+        void IJsonModel<DataMigrationProjectTaskData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataMigrationProjectTaskData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<ProjectTaskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        DataMigrationProjectTaskData IJsonModel<DataMigrationProjectTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataMigrationProjectTaskData>)DataDeserializationInstance).Create(ref reader, options);
 
-        ProjectTaskData IPersistableModel<ProjectTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProjectTaskData>(data, options);
+        BinaryData IPersistableModel<DataMigrationProjectTaskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataMigrationProjectTaskData>(Data, options, AzureResourceManagerDataMigrationContext.Default);
 
-        string IPersistableModel<ProjectTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProjectTaskData>)Data).GetFormatFromOptions(options);
+        DataMigrationProjectTaskData IPersistableModel<DataMigrationProjectTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataMigrationProjectTaskData>(data, options, AzureResourceManagerDataMigrationContext.Default);
+
+        string IPersistableModel<DataMigrationProjectTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataMigrationProjectTaskData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

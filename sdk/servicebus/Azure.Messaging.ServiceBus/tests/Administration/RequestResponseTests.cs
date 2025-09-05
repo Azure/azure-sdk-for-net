@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Management
 {
+    [TestFixture]
     public class RequestResponseTests
     {
         private readonly HttpRequestAndResponse _requestResponse;
@@ -20,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         {
             var options = new ServiceBusAdministrationClientOptions();
             var pipeline = HttpPipelineBuilder.Build(options);
-            _requestResponse = new HttpRequestAndResponse(pipeline, new ClientDiagnostics(options), null, "fakeNamespace", ServiceBusAdministrationClientOptions.ServiceVersion.V2017_04, true);
+            _requestResponse = new HttpRequestAndResponse(pipeline, new ClientDiagnostics(options), null, "fakeNamespace", ServiceBusAdministrationClientOptions.ServiceVersion.V2017_04, -1, true);
         }
 
         [Test]
@@ -216,6 +217,47 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 return;
             }
             Assert.Fail("No exception!");
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(80)]
+        [TestCase(8989)]
+        [TestCase(6335)]
+        public void CustomPortIsPreserved(int port)
+        {
+            var options = new ServiceBusAdministrationClientOptions();
+            var pipeline = HttpPipelineBuilder.Build(options);
+            var requestResponse = new HttpRequestAndResponse(pipeline, new ClientDiagnostics(options), null, "fakeNamespace", ServiceBusAdministrationClientOptions.ServiceVersion.V2017_04, port, true);
+
+            Assert.AreEqual(port, requestResponse.BuildDefaultUri("dummy").Port);
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-1)]
+        [TestCase(-200)]
+        public void DefaultPortIsPreserved(int port)
+        {
+            var options = new ServiceBusAdministrationClientOptions();
+            var pipeline = HttpPipelineBuilder.Build(options);
+            var requestResponse = new HttpRequestAndResponse(pipeline, new ClientDiagnostics(options), null, "fakeNamespace", ServiceBusAdministrationClientOptions.ServiceVersion.V2017_04, port, true);
+
+            var defaultPort = new UriBuilder("https://www.examplke.com").Uri.Port;
+            Assert.AreEqual(defaultPort, requestResponse.BuildDefaultUri("dummy").Port);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void UseTlsIsHonored(bool useTls)
+        {
+            var options = new ServiceBusAdministrationClientOptions();
+            var pipeline = HttpPipelineBuilder.Build(options);
+            var requestResponse = new HttpRequestAndResponse(pipeline, new ClientDiagnostics(options), null, "fakeNamespace", ServiceBusAdministrationClientOptions.ServiceVersion.V2017_04, -1, useTls);
+
+            var expectedScheme = useTls ? "https" : "http";
+            Assert.AreEqual(expectedScheme, requestResponse.BuildDefaultUri("dummy").Scheme);
         }
     }
 }

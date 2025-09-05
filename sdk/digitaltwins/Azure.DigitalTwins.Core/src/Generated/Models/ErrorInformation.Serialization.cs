@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    internal partial class ErrorInformation : IUtf8JsonSerializable
+    public partial class ErrorInformation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

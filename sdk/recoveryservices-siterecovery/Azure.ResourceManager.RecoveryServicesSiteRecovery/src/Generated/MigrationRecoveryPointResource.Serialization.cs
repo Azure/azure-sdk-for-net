@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     public partial class MigrationRecoveryPointResource : IJsonModel<MigrationRecoveryPointData>
     {
+        private static MigrationRecoveryPointData s_dataDeserializationInstance;
+        private static MigrationRecoveryPointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MigrationRecoveryPointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MigrationRecoveryPointData>)Data).Write(writer, options);
 
-        MigrationRecoveryPointData IJsonModel<MigrationRecoveryPointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationRecoveryPointData>)Data).Create(ref reader, options);
+        MigrationRecoveryPointData IJsonModel<MigrationRecoveryPointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationRecoveryPointData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MigrationRecoveryPointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MigrationRecoveryPointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationRecoveryPointData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        MigrationRecoveryPointData IPersistableModel<MigrationRecoveryPointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationRecoveryPointData>(data, options);
+        MigrationRecoveryPointData IPersistableModel<MigrationRecoveryPointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationRecoveryPointData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<MigrationRecoveryPointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationRecoveryPointData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MigrationRecoveryPointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationRecoveryPointData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

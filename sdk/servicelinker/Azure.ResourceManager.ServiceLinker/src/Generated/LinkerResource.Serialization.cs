@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ServiceLinker
 {
     public partial class LinkerResource : IJsonModel<LinkerResourceData>
     {
+        private static LinkerResourceData s_dataDeserializationInstance;
+        private static LinkerResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<LinkerResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LinkerResourceData>)Data).Write(writer, options);
 
-        LinkerResourceData IJsonModel<LinkerResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LinkerResourceData>)Data).Create(ref reader, options);
+        LinkerResourceData IJsonModel<LinkerResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LinkerResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LinkerResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LinkerResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LinkerResourceData>(Data, options, AzureResourceManagerServiceLinkerContext.Default);
 
-        LinkerResourceData IPersistableModel<LinkerResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LinkerResourceData>(data, options);
+        LinkerResourceData IPersistableModel<LinkerResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LinkerResourceData>(data, options, AzureResourceManagerServiceLinkerContext.Default);
 
-        string IPersistableModel<LinkerResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LinkerResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<LinkerResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LinkerResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

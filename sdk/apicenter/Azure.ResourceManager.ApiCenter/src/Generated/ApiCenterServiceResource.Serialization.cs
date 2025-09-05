@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiCenter
 {
     public partial class ApiCenterServiceResource : IJsonModel<ApiCenterServiceData>
     {
+        private static ApiCenterServiceData s_dataDeserializationInstance;
+        private static ApiCenterServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiCenterServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiCenterServiceData>)Data).Write(writer, options);
 
-        ApiCenterServiceData IJsonModel<ApiCenterServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiCenterServiceData>)Data).Create(ref reader, options);
+        ApiCenterServiceData IJsonModel<ApiCenterServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiCenterServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiCenterServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiCenterServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiCenterServiceData>(Data, options, AzureResourceManagerApiCenterContext.Default);
 
-        ApiCenterServiceData IPersistableModel<ApiCenterServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiCenterServiceData>(data, options);
+        ApiCenterServiceData IPersistableModel<ApiCenterServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiCenterServiceData>(data, options, AzureResourceManagerApiCenterContext.Default);
 
-        string IPersistableModel<ApiCenterServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiCenterServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiCenterServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiCenterServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

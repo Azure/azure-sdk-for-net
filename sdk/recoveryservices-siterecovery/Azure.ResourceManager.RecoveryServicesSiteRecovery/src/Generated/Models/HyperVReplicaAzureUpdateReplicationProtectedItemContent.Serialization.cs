@@ -109,6 +109,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("sqlServerLicenseType"u8);
                 writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
             }
+            if (Optional.IsDefined(LinuxLicenseType))
+            {
+                writer.WritePropertyName("linuxLicenseType"u8);
+                writer.WriteStringValue(LinuxLicenseType.Value.ToString());
+            }
+            if (Optional.IsDefined(UserSelectedOSName))
+            {
+                writer.WritePropertyName("userSelectedOSName"u8);
+                writer.WriteStringValue(UserSelectedOSName);
+            }
             if (Optional.IsCollectionDefined(VmDisks))
             {
                 writer.WritePropertyName("vmDisks"u8);
@@ -151,6 +161,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IDictionary<string, string> targetManagedDiskTags = default;
             IDictionary<string, string> targetNicTags = default;
             SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
+            RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default;
+            string userSelectedOSName = default;
             IList<UpdateDiskContent> vmDisks = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -259,6 +271,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     sqlServerLicenseType = new SiteRecoverySqlServerLicenseType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("linuxLicenseType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("userSelectedOSName"u8))
+                {
+                    userSelectedOSName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("vmDisks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -297,6 +323,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
                 targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
                 sqlServerLicenseType,
+                linuxLicenseType,
+                userSelectedOSName,
                 vmDisks ?? new ChangeTrackingList<UpdateDiskContent>());
         }
 
@@ -307,7 +335,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HyperVReplicaAzureUpdateReplicationProtectedItemContent)} does not support writing '{options.Format}' format.");
             }

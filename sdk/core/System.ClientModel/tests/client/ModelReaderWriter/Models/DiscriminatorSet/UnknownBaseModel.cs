@@ -70,9 +70,19 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         BinaryData IPersistableModel<BaseModel>.Write(ModelReaderWriterOptions options)
         {
-            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<BaseModel>)this).GetFormatFromOptions(options) : options.Format;
 
-            return ModelReaderWriter.Write(this, options);
+            switch (format)
+            {
+                case "J":
+# if SOURCE_GENERATOR
+                    return ModelReaderWriter.Write(this, options, BasicContext.Default);
+#else
+                    return ModelReaderWriter.Write(this, options);
+#endif
+                default:
+                    throw new FormatException($"The model {nameof(BaseModel)} does not support writing '{options.Format}' format.");
+            }
         }
     }
 }

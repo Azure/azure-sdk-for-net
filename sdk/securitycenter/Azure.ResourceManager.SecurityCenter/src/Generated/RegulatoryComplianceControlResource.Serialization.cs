@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class RegulatoryComplianceControlResource : IJsonModel<RegulatoryComplianceControlData>
     {
+        private static RegulatoryComplianceControlData s_dataDeserializationInstance;
+        private static RegulatoryComplianceControlData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RegulatoryComplianceControlData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RegulatoryComplianceControlData>)Data).Write(writer, options);
 
-        RegulatoryComplianceControlData IJsonModel<RegulatoryComplianceControlData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RegulatoryComplianceControlData>)Data).Create(ref reader, options);
+        RegulatoryComplianceControlData IJsonModel<RegulatoryComplianceControlData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RegulatoryComplianceControlData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RegulatoryComplianceControlData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RegulatoryComplianceControlData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RegulatoryComplianceControlData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        RegulatoryComplianceControlData IPersistableModel<RegulatoryComplianceControlData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RegulatoryComplianceControlData>(data, options);
+        RegulatoryComplianceControlData IPersistableModel<RegulatoryComplianceControlData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RegulatoryComplianceControlData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<RegulatoryComplianceControlData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RegulatoryComplianceControlData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RegulatoryComplianceControlData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RegulatoryComplianceControlData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

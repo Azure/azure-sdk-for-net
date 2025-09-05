@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         PacketCaptureResource IOperationSource<PacketCaptureResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PacketCaptureData>(response.Content);
+            var data = ModelReaderWriter.Read<PacketCaptureData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new PacketCaptureResource(_client, data);
         }
 
         async ValueTask<PacketCaptureResource> IOperationSource<PacketCaptureResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PacketCaptureData>(response.Content);
+            var data = ModelReaderWriter.Read<PacketCaptureData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new PacketCaptureResource(_client, data)).ConfigureAwait(false);
         }
     }

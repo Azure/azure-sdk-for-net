@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VirtualNetworkPeeringResource : IJsonModel<VirtualNetworkPeeringData>
     {
+        private static VirtualNetworkPeeringData s_dataDeserializationInstance;
+        private static VirtualNetworkPeeringData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VirtualNetworkPeeringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkPeeringData>)Data).Write(writer, options);
 
-        VirtualNetworkPeeringData IJsonModel<VirtualNetworkPeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkPeeringData>)Data).Create(ref reader, options);
+        VirtualNetworkPeeringData IJsonModel<VirtualNetworkPeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkPeeringData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualNetworkPeeringData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VirtualNetworkPeeringData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualNetworkPeeringData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        VirtualNetworkPeeringData IPersistableModel<VirtualNetworkPeeringData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkPeeringData>(data, options);
+        VirtualNetworkPeeringData IPersistableModel<VirtualNetworkPeeringData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkPeeringData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<VirtualNetworkPeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkPeeringData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VirtualNetworkPeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkPeeringData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

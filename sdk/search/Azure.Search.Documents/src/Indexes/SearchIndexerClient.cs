@@ -960,5 +960,52 @@ namespace Azure.Search.Documents.Indexes
                 throw;
             }
         }
+
+        /// <summary> Resync selective options from the datasource to be re-ingested by the indexer. </summary>
+        /// <param name="indexerName"> The name of the indexer to resync for. </param>
+        /// <param name="indexerResync"> The <see cref="IndexerResyncBody"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexerResync"/> is null. </exception>
+        public virtual Response Resync(string indexerName, IndexerResyncBody indexerResync, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(Resync)}");
+            scope.Start();
+            try
+            {
+                return IndexersClient.Resync(
+                    indexerName,
+                    indexerResync,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Resync selective options from the datasource to be re-ingested by the indexer. </summary>
+        /// <param name="indexerName"> The name of the indexer to resync for. </param>
+        /// <param name="indexerResync"> The <see cref="IndexerResyncBody"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexerResync"/> is null. </exception>
+        public virtual async Task<Response> ResyncAsync(string indexerName, IndexerResyncBody indexerResync, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(Resync)}");
+            scope.Start();
+            try
+            {
+                return await IndexersClient.ResyncAsync(
+                    indexerName,
+                    indexerResync,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }

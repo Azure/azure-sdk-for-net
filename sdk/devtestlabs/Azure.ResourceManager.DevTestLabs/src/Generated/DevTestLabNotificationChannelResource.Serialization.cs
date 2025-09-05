@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabNotificationChannelResource : IJsonModel<DevTestLabNotificationChannelData>
     {
+        private static DevTestLabNotificationChannelData s_dataDeserializationInstance;
+        private static DevTestLabNotificationChannelData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevTestLabNotificationChannelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabNotificationChannelData>)Data).Write(writer, options);
 
-        DevTestLabNotificationChannelData IJsonModel<DevTestLabNotificationChannelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabNotificationChannelData>)Data).Create(ref reader, options);
+        DevTestLabNotificationChannelData IJsonModel<DevTestLabNotificationChannelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabNotificationChannelData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabNotificationChannelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevTestLabNotificationChannelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabNotificationChannelData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        DevTestLabNotificationChannelData IPersistableModel<DevTestLabNotificationChannelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabNotificationChannelData>(data, options);
+        DevTestLabNotificationChannelData IPersistableModel<DevTestLabNotificationChannelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabNotificationChannelData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        string IPersistableModel<DevTestLabNotificationChannelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabNotificationChannelData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevTestLabNotificationChannelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabNotificationChannelData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

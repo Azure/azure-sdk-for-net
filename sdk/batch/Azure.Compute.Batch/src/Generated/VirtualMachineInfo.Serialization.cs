@@ -81,7 +81,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            ImageReference imageReference = default;
+            BatchVmImageReference imageReference = default;
             string scaleSetVmResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    imageReference = ImageReference.DeserializeImageReference(property.Value, options);
+                    imageReference = BatchVmImageReference.DeserializeBatchVmImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scaleSetVmResourceId"u8))
@@ -117,7 +117,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineInfo)} does not support writing '{options.Format}' format.");
             }

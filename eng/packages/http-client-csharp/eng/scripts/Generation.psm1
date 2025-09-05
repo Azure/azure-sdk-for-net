@@ -4,18 +4,20 @@ function Invoke($command, $executePath=$repoRoot)
 {
     Write-Host "> $command"
     Push-Location $executePath
-    if ($IsLinux -or $IsMacOs)
-    {
-        sh -c "$command 2>&1"
+    try {
+        if ($IsLinux -or $IsMacOs)
+        {
+            sh -c "$command 2>&1"
+        }
+        else
+        {
+            cmd /c "$command 2>&1"
+        }
     }
-    else
-    {
-        cmd /c "$command 2>&1"
+    finally {
+        Pop-Location
     }
-    Pop-Location
-
-    if($LastExitCode -ne 0)
-    {
+    if($LastExitCode -ne 0) {
         Write-Error "Command failed to execute: $command"
     }
 }
@@ -26,7 +28,7 @@ function Get-TspCommand {
         [string]$generationDir,
         [bool]$generateStub = $false,
         [string]$apiVersion = $null,
-        [bool]$forceNewProject = $false
+        [string]$libraryNameOverride = $null
     )
     $command = "npx tsp compile $specFile"
     $command += " --trace @azure-typespec/http-client-csharp"
@@ -45,9 +47,11 @@ function Get-TspCommand {
         $command += " --option @azure-typespec/http-client-csharp.api-version=$apiVersion"
     }
 
-    if ($forceNewProject) {
-        $command += " --option @azure-typespec/http-client-csharp.new-project=true"
+    if ($libraryNameOverride) {
+        $command += " --option @azure-typespec/http-client-csharp.package-name=$libraryNameOverride"
     }
+
+    $command += " --option @azure-typespec/http-client-csharp.new-project=true"
 
     return $command
 }
@@ -63,7 +67,7 @@ function Get-Mgmt-TspCommand {
     $command = "npx tsp compile $specFile"
     $command += " --trace @azure-typespec/http-client-csharp-mgmt"
     $command += " --emit $repoRoot/../../http-client-csharp-mgmt"
-    
+
     $configFile = Join-Path $generationDir "tspconfig.yaml"
     if (Test-Path $configFile) {
         $command += " --config=$configFile"
@@ -73,7 +77,7 @@ function Get-Mgmt-TspCommand {
     if ($generateStub) {
         $command += " --option @azure-typespec/http-client-csharp-mgmt.plugin-name=AzureStubPlugin"
     }
-    
+
     if ($apiVersion) {
         $command += " --option @azure-typespec/http-client-csharp-mgmt.api-version=$apiVersion"
     }
@@ -87,7 +91,7 @@ function Get-Mgmt-TspCommand {
 
 function Refresh-Build {
     Write-Host "Building emitter and generator" -ForegroundColor Cyan
-    Invoke "npm run build:emitter" 
+    Invoke "npm run build:emitter"
     # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE
@@ -110,7 +114,7 @@ function Refresh-Mgmt-Build {
     }
 
     # we don't want to build the entire solution because the test projects might not build until after regeneration
-    Invoke "dotnet build $repoRoot/../../http-client-csharp-mgmt/generator/Azure.Generator.Mgmt/src"
+    Invoke "dotnet build $repoRoot/../../http-client-csharp-mgmt/generator/Azure.Generator.Management/src"
     # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE
@@ -190,16 +194,19 @@ function Generate-Versioning {
     ## get the last two directories of the output directory and add V1/V2 to disambiguate the namespaces
     $namespaceRoot = $(($outputFolders[-2..-1] | `
                            ForEach-Object { $_.Substring(0,1).ToUpper() + $_.Substring(1) }) -join ".")
+    $v1LibraryNameOverride = $namespaceRoot + ".V1"
+    $v2LibraryNameOverride = $namespaceRoot + ".V2"
 
-    Invoke (Get-TspCommand $specFilePath $v1Dir -generateStub $generateStub -apiVersion "v1")
-    Invoke (Get-TspCommand $specFilePath $v2Dir -generateStub $generateStub -apiVersion "v2")
+    Invoke (Get-TspCommand $specFilePath $v1Dir -generateStub $generateStub -apiVersion "v1" -libraryNameOverride $v1LibraryNameOverride)
+    Invoke (Get-TspCommand $specFilePath $v2Dir -generateStub $generateStub -apiVersion "v2" -libraryNameOverride $v2LibraryNameOverride)
 
     if ($outputFolders.Contains("removed")) {
         $v2PreviewDir = $(Join-Path $outputDir "v2Preview")
         if ($createOutputDirIfNotExist -and -not (Test-Path $v2PreviewDir)) {
             New-Item -ItemType Directory -Path $v2PreviewDir | Out-Null
         }
-        Invoke (Get-TspCommand $specFilePath $v2PreviewDir -generateStub $generateStub -apiVersion "v2preview")
+        $v2PreviewLibraryNameOverride = $namespaceRoot + ".V2Preview"
+        Invoke (Get-TspCommand $specFilePath $v2PreviewDir -generateStub $generateStub -apiVersion "v2preview" -libraryNameOverride $v2PreviewLibraryNameOverride)
     }
 
     # exit if the generation failed

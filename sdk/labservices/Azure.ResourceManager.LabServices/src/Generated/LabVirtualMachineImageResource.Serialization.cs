@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.LabServices
 {
     public partial class LabVirtualMachineImageResource : IJsonModel<LabVirtualMachineImageData>
     {
+        private static LabVirtualMachineImageData s_dataDeserializationInstance;
+        private static LabVirtualMachineImageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<LabVirtualMachineImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LabVirtualMachineImageData>)Data).Write(writer, options);
 
-        LabVirtualMachineImageData IJsonModel<LabVirtualMachineImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LabVirtualMachineImageData>)Data).Create(ref reader, options);
+        LabVirtualMachineImageData IJsonModel<LabVirtualMachineImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LabVirtualMachineImageData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LabVirtualMachineImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LabVirtualMachineImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LabVirtualMachineImageData>(Data, options, AzureResourceManagerLabServicesContext.Default);
 
-        LabVirtualMachineImageData IPersistableModel<LabVirtualMachineImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LabVirtualMachineImageData>(data, options);
+        LabVirtualMachineImageData IPersistableModel<LabVirtualMachineImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LabVirtualMachineImageData>(data, options, AzureResourceManagerLabServicesContext.Default);
 
-        string IPersistableModel<LabVirtualMachineImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LabVirtualMachineImageData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<LabVirtualMachineImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LabVirtualMachineImageData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

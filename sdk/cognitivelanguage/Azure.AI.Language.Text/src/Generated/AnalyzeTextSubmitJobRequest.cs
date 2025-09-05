@@ -72,13 +72,15 @@ namespace Azure.AI.Language.Text
         /// The available derived classes include <see cref="AbstractiveSummarizationOperationAction"/>, <see cref="CustomEntitiesOperationAction"/>, <see cref="CustomMultiLabelClassificationOperationAction"/>, <see cref="CustomSingleLabelClassificationOperationAction"/>, <see cref="EntityLinkingOperationAction"/>, <see cref="EntitiesOperationAction"/>, <see cref="ExtractiveSummarizationOperationAction"/>, <see cref="HealthcareOperationAction"/>, <see cref="KeyPhraseOperationAction"/>, <see cref="PiiOperationAction"/> and <see cref="SentimentAnalysisOperationAction"/>.
         /// </param>
         /// <param name="defaultLanguage"> Default language to use for records requesting automatic language detection. </param>
+        /// <param name="cancelAfter"> Optional duration in seconds after which the job will be canceled if not completed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeTextSubmitJobRequest(string displayName, MultiLanguageTextInput textInput, IReadOnlyList<AnalyzeTextOperationAction> actions, string defaultLanguage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyzeTextSubmitJobRequest(string displayName, MultiLanguageTextInput textInput, IReadOnlyList<AnalyzeTextOperationAction> actions, string defaultLanguage, float? cancelAfter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             TextInput = textInput;
             Actions = actions;
             DefaultLanguage = defaultLanguage;
+            CancelAfter = cancelAfter;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -99,5 +101,7 @@ namespace Azure.AI.Language.Text
         public IReadOnlyList<AnalyzeTextOperationAction> Actions { get; }
         /// <summary> Default language to use for records requesting automatic language detection. </summary>
         public string DefaultLanguage { get; }
+        /// <summary> Optional duration in seconds after which the job will be canceled if not completed. </summary>
+        public float? CancelAfter { get; }
     }
 }

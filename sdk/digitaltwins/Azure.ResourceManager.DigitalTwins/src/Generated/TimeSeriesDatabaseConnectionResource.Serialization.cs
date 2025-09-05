@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DigitalTwins
 {
     public partial class TimeSeriesDatabaseConnectionResource : IJsonModel<TimeSeriesDatabaseConnectionData>
     {
+        private static TimeSeriesDatabaseConnectionData s_dataDeserializationInstance;
+        private static TimeSeriesDatabaseConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<TimeSeriesDatabaseConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TimeSeriesDatabaseConnectionData>)Data).Write(writer, options);
 
-        TimeSeriesDatabaseConnectionData IJsonModel<TimeSeriesDatabaseConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TimeSeriesDatabaseConnectionData>)Data).Create(ref reader, options);
+        TimeSeriesDatabaseConnectionData IJsonModel<TimeSeriesDatabaseConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TimeSeriesDatabaseConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TimeSeriesDatabaseConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<TimeSeriesDatabaseConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TimeSeriesDatabaseConnectionData>(Data, options, AzureResourceManagerDigitalTwinsContext.Default);
 
-        TimeSeriesDatabaseConnectionData IPersistableModel<TimeSeriesDatabaseConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TimeSeriesDatabaseConnectionData>(data, options);
+        TimeSeriesDatabaseConnectionData IPersistableModel<TimeSeriesDatabaseConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TimeSeriesDatabaseConnectionData>(data, options, AzureResourceManagerDigitalTwinsContext.Default);
 
-        string IPersistableModel<TimeSeriesDatabaseConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TimeSeriesDatabaseConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<TimeSeriesDatabaseConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TimeSeriesDatabaseConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-08-01-preview";
+            _apiVersion = apiVersion ?? "2025-01-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 

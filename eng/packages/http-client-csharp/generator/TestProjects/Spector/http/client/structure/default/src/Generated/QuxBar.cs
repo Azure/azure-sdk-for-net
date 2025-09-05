@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Client.Structure.Service
+namespace Client.Structure.Service._Qux
 {
     public partial class QuxBar
     {
         protected QuxBar() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Nine(RequestContext context) => throw null;
 

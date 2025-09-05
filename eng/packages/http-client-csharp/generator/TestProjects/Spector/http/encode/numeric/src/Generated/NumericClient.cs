@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core.Pipeline;
+using Encode.Numeric._Property;
 
 namespace Encode.Numeric
 {
@@ -16,7 +17,7 @@ namespace Encode.Numeric
 
         public NumericClient(Uri endpoint, NumericClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Property GetPropertyClient() => throw null;
     }

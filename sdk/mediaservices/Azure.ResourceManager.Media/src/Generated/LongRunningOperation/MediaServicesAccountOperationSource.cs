@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Media
 
         MediaServicesAccountResource IOperationSource<MediaServicesAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MediaServicesAccountData>(response.Content);
+            var data = ModelReaderWriter.Read<MediaServicesAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMediaContext.Default);
             return new MediaServicesAccountResource(_client, data);
         }
 
         async ValueTask<MediaServicesAccountResource> IOperationSource<MediaServicesAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MediaServicesAccountData>(response.Content);
+            var data = ModelReaderWriter.Read<MediaServicesAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMediaContext.Default);
             return await Task.FromResult(new MediaServicesAccountResource(_client, data)).ConfigureAwait(false);
         }
     }

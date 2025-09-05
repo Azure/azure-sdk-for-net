@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Media
 {
     public partial class MediaServicesAccountResource : IJsonModel<MediaServicesAccountData>
     {
+        private static MediaServicesAccountData s_dataDeserializationInstance;
+        private static MediaServicesAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MediaServicesAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MediaServicesAccountData>)Data).Write(writer, options);
 
-        MediaServicesAccountData IJsonModel<MediaServicesAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MediaServicesAccountData>)Data).Create(ref reader, options);
+        MediaServicesAccountData IJsonModel<MediaServicesAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MediaServicesAccountData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MediaServicesAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MediaServicesAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MediaServicesAccountData>(Data, options, AzureResourceManagerMediaContext.Default);
 
-        MediaServicesAccountData IPersistableModel<MediaServicesAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MediaServicesAccountData>(data, options);
+        MediaServicesAccountData IPersistableModel<MediaServicesAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MediaServicesAccountData>(data, options, AzureResourceManagerMediaContext.Default);
 
-        string IPersistableModel<MediaServicesAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MediaServicesAccountData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MediaServicesAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MediaServicesAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

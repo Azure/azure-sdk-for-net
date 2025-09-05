@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DeviceRegistry
 
         DeviceRegistryAssetResource IOperationSource<DeviceRegistryAssetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeviceRegistryAssetData>(response.Content);
+            var data = ModelReaderWriter.Read<DeviceRegistryAssetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceRegistryContext.Default);
             return new DeviceRegistryAssetResource(_client, data);
         }
 
         async ValueTask<DeviceRegistryAssetResource> IOperationSource<DeviceRegistryAssetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeviceRegistryAssetData>(response.Content);
+            var data = ModelReaderWriter.Read<DeviceRegistryAssetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceRegistryContext.Default);
             return await Task.FromResult(new DeviceRegistryAssetResource(_client, data)).ConfigureAwait(false);
         }
     }

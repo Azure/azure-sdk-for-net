@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     public partial class DeviceProvisioningServicesCertificateResource : IJsonModel<DeviceProvisioningServicesCertificateData>
     {
+        private static DeviceProvisioningServicesCertificateData s_dataDeserializationInstance;
+        private static DeviceProvisioningServicesCertificateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DeviceProvisioningServicesCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeviceProvisioningServicesCertificateData>)Data).Write(writer, options);
 
-        DeviceProvisioningServicesCertificateData IJsonModel<DeviceProvisioningServicesCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceProvisioningServicesCertificateData>)Data).Create(ref reader, options);
+        DeviceProvisioningServicesCertificateData IJsonModel<DeviceProvisioningServicesCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceProvisioningServicesCertificateData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeviceProvisioningServicesCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DeviceProvisioningServicesCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceProvisioningServicesCertificateData>(Data, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
 
-        DeviceProvisioningServicesCertificateData IPersistableModel<DeviceProvisioningServicesCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceProvisioningServicesCertificateData>(data, options);
+        DeviceProvisioningServicesCertificateData IPersistableModel<DeviceProvisioningServicesCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceProvisioningServicesCertificateData>(data, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
 
-        string IPersistableModel<DeviceProvisioningServicesCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceProvisioningServicesCertificateData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DeviceProvisioningServicesCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceProvisioningServicesCertificateData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

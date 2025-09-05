@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppPlatform
 
         AppPlatformServiceRegistryResource IOperationSource<AppPlatformServiceRegistryResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppPlatformServiceRegistryData>(response.Content);
+            var data = ModelReaderWriter.Read<AppPlatformServiceRegistryData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
             return new AppPlatformServiceRegistryResource(_client, data);
         }
 
         async ValueTask<AppPlatformServiceRegistryResource> IOperationSource<AppPlatformServiceRegistryResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppPlatformServiceRegistryData>(response.Content);
+            var data = ModelReaderWriter.Read<AppPlatformServiceRegistryData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
             return await Task.FromResult(new AppPlatformServiceRegistryResource(_client, data)).ConfigureAwait(false);
         }
     }

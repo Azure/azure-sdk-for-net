@@ -69,14 +69,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Gets or sets the description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Number of IP addresses to allocate for a static CIDR resource. The IP addresses will be assigned based on IpamPools available space. </summary>
+        [WirePath("numberOfIPAddressesToAllocate")]
         public string NumberOfIPAddressesToAllocate { get; set; }
         /// <summary> List of IP address prefixes of the resource. </summary>
+        [WirePath("addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
         /// <summary> Total number of IP addresses allocated for the static CIDR resource. </summary>
+        [WirePath("totalNumberOfIPAddresses")]
         public string TotalNumberOfIPAddresses { get; }
         /// <summary> Provisioning states of a resource. </summary>
+        [WirePath("provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; set; }
     }
 }

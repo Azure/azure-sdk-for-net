@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         PublicIPAddressResource IOperationSource<PublicIPAddressResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PublicIPAddressData>(response.Content);
+            var data = ModelReaderWriter.Read<PublicIPAddressData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new PublicIPAddressResource(_client, data);
         }
 
         async ValueTask<PublicIPAddressResource> IOperationSource<PublicIPAddressResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PublicIPAddressData>(response.Content);
+            var data = ModelReaderWriter.Read<PublicIPAddressData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new PublicIPAddressResource(_client, data)).ConfigureAwait(false);
         }
     }

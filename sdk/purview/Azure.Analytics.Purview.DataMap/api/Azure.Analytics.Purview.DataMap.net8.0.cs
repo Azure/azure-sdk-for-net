@@ -925,6 +925,12 @@ namespace Azure.Analytics.Purview.DataMap
         string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AutoCompleteResultValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AutoCompleteResultValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureAnalyticsPurviewDataMapContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAnalyticsPurviewDataMapContext() { }
+        public static Azure.Analytics.Purview.DataMap.AzureAnalyticsPurviewDataMapContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BulkImportResult : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.BulkImportResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.BulkImportResult>
     {
         internal BulkImportResult() { }
@@ -1980,6 +1986,7 @@ namespace Microsoft.Extensions.Azure
     public static partial class AnalyticsPurviewDataMapClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.DataMap.DataMapClient, Azure.Analytics.Purview.DataMap.DataMapClientOptions> AddDataMapClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.DataMap.DataMapClient, Azure.Analytics.Purview.DataMap.DataMapClientOptions> AddDataMapClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

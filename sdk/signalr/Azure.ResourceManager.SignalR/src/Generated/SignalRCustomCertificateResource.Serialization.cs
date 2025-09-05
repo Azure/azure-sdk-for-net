@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SignalR
 {
     public partial class SignalRCustomCertificateResource : IJsonModel<SignalRCustomCertificateData>
     {
+        private static SignalRCustomCertificateData s_dataDeserializationInstance;
+        private static SignalRCustomCertificateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SignalRCustomCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SignalRCustomCertificateData>)Data).Write(writer, options);
 
-        SignalRCustomCertificateData IJsonModel<SignalRCustomCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRCustomCertificateData>)Data).Create(ref reader, options);
+        SignalRCustomCertificateData IJsonModel<SignalRCustomCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRCustomCertificateData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SignalRCustomCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SignalRCustomCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SignalRCustomCertificateData>(Data, options, AzureResourceManagerSignalRContext.Default);
 
-        SignalRCustomCertificateData IPersistableModel<SignalRCustomCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRCustomCertificateData>(data, options);
+        SignalRCustomCertificateData IPersistableModel<SignalRCustomCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRCustomCertificateData>(data, options, AzureResourceManagerSignalRContext.Default);
 
-        string IPersistableModel<SignalRCustomCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRCustomCertificateData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SignalRCustomCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRCustomCertificateData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

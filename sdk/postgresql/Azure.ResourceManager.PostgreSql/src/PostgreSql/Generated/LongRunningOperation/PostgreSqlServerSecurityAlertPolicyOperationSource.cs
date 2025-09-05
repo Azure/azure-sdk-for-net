@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PostgreSql
 
         PostgreSqlServerSecurityAlertPolicyResource IOperationSource<PostgreSqlServerSecurityAlertPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlServerSecurityAlertPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<PostgreSqlServerSecurityAlertPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             return new PostgreSqlServerSecurityAlertPolicyResource(_client, data);
         }
 
         async ValueTask<PostgreSqlServerSecurityAlertPolicyResource> IOperationSource<PostgreSqlServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlServerSecurityAlertPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<PostgreSqlServerSecurityAlertPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             return await Task.FromResult(new PostgreSqlServerSecurityAlertPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

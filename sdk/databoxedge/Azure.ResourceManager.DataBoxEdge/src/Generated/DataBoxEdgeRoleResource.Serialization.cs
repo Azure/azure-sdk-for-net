@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     public partial class DataBoxEdgeRoleResource : IJsonModel<DataBoxEdgeRoleData>
     {
+        private static DataBoxEdgeRoleData s_dataDeserializationInstance;
+        private static DataBoxEdgeRoleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataBoxEdgeRoleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeRoleData>)Data).Write(writer, options);
 
-        DataBoxEdgeRoleData IJsonModel<DataBoxEdgeRoleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeRoleData>)Data).Create(ref reader, options);
+        DataBoxEdgeRoleData IJsonModel<DataBoxEdgeRoleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeRoleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataBoxEdgeRoleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataBoxEdgeRoleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataBoxEdgeRoleData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        DataBoxEdgeRoleData IPersistableModel<DataBoxEdgeRoleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeRoleData>(data, options);
+        DataBoxEdgeRoleData IPersistableModel<DataBoxEdgeRoleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeRoleData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        string IPersistableModel<DataBoxEdgeRoleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeRoleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataBoxEdgeRoleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeRoleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

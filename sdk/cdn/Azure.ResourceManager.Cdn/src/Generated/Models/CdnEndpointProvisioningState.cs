@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Provisioning status of the endpoint. </summary>
+    /// <summary>
+    /// Provisioning status of the endpoint.
+    /// Serialized Name: EndpointProvisioningState
+    /// </summary>
     public readonly partial struct CdnEndpointProvisioningState : IEquatable<CdnEndpointProvisioningState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string DeletingValue = "Deleting";
         private const string CreatingValue = "Creating";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: EndpointProvisioningState.Succeeded
+        /// </summary>
         public static CdnEndpointProvisioningState Succeeded { get; } = new CdnEndpointProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: EndpointProvisioningState.Failed
+        /// </summary>
         public static CdnEndpointProvisioningState Failed { get; } = new CdnEndpointProvisioningState(FailedValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: EndpointProvisioningState.Updating
+        /// </summary>
         public static CdnEndpointProvisioningState Updating { get; } = new CdnEndpointProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: EndpointProvisioningState.Deleting
+        /// </summary>
         public static CdnEndpointProvisioningState Deleting { get; } = new CdnEndpointProvisioningState(DeletingValue);
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: EndpointProvisioningState.Creating
+        /// </summary>
         public static CdnEndpointProvisioningState Creating { get; } = new CdnEndpointProvisioningState(CreatingValue);
         /// <summary> Determines if two <see cref="CdnEndpointProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CdnEndpointProvisioningState left, CdnEndpointProvisioningState right) => left.Equals(right);

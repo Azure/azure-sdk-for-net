@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class DdosCustomPolicyResource : IJsonModel<DdosCustomPolicyData>
     {
+        private static DdosCustomPolicyData s_dataDeserializationInstance;
+        private static DdosCustomPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DdosCustomPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DdosCustomPolicyData>)Data).Write(writer, options);
 
-        DdosCustomPolicyData IJsonModel<DdosCustomPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DdosCustomPolicyData>)Data).Create(ref reader, options);
+        DdosCustomPolicyData IJsonModel<DdosCustomPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DdosCustomPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DdosCustomPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DdosCustomPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DdosCustomPolicyData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        DdosCustomPolicyData IPersistableModel<DdosCustomPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DdosCustomPolicyData>(data, options);
+        DdosCustomPolicyData IPersistableModel<DdosCustomPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DdosCustomPolicyData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<DdosCustomPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DdosCustomPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DdosCustomPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DdosCustomPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

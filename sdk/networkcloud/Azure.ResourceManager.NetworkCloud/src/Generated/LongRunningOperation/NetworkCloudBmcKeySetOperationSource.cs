@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudBmcKeySetResource IOperationSource<NetworkCloudBmcKeySetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudBmcKeySetData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkCloudBmcKeySetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
             return new NetworkCloudBmcKeySetResource(_client, data);
         }
 
         async ValueTask<NetworkCloudBmcKeySetResource> IOperationSource<NetworkCloudBmcKeySetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudBmcKeySetData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkCloudBmcKeySetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
             return await Task.FromResult(new NetworkCloudBmcKeySetResource(_client, data)).ConfigureAwait(false);
         }
     }

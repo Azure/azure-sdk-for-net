@@ -375,7 +375,10 @@ namespace Azure.Storage.Blobs.Test
                 // compare data
                 Assert.AreEqual(expectedEncryptedData, encryptedData);
 
-                var asBlockBlob = InstrumentClient(disposable.Container.GetBlockBlobClient(blobName));
+                // can't get a block blob client with CSE enabled. Get fresh client without CSE options.
+                BlockBlobClient asBlockBlob = InstrumentClient(BlobsClientBuilder.GetServiceClient_SharedKey()
+                    .GetBlobContainerClient(disposable.Container.Name)
+                    .GetBlockBlobClient(blobName));
                 BlockList list = (await asBlockBlob.GetBlockListAsync()).Value;
                 if (list.CommittedBlocks.Count() > 1)
                 {

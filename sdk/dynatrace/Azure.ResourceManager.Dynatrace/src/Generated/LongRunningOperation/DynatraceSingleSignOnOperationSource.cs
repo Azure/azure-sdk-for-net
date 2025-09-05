@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Dynatrace
 
         DynatraceSingleSignOnResource IOperationSource<DynatraceSingleSignOnResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DynatraceSingleSignOnData>(response.Content);
+            var data = ModelReaderWriter.Read<DynatraceSingleSignOnData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDynatraceContext.Default);
             return new DynatraceSingleSignOnResource(_client, data);
         }
 
         async ValueTask<DynatraceSingleSignOnResource> IOperationSource<DynatraceSingleSignOnResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DynatraceSingleSignOnData>(response.Content);
+            var data = ModelReaderWriter.Read<DynatraceSingleSignOnData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDynatraceContext.Default);
             return await Task.FromResult(new DynatraceSingleSignOnResource(_client, data)).ConfigureAwait(false);
         }
     }

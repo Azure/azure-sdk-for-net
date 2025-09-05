@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
 
         SapDiscoverySiteResource IOperationSource<SapDiscoverySiteResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SapDiscoverySiteData>(response.Content);
+            var data = ModelReaderWriter.Read<SapDiscoverySiteData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMigrationDiscoverySapContext.Default);
             return new SapDiscoverySiteResource(_client, data);
         }
 
         async ValueTask<SapDiscoverySiteResource> IOperationSource<SapDiscoverySiteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SapDiscoverySiteData>(response.Content);
+            var data = ModelReaderWriter.Read<SapDiscoverySiteData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMigrationDiscoverySapContext.Default);
             return await Task.FromResult(new SapDiscoverySiteResource(_client, data)).ConfigureAwait(false);
         }
     }

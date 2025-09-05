@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         BackendAddressPoolResource IOperationSource<BackendAddressPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BackendAddressPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<BackendAddressPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new BackendAddressPoolResource(_client, data);
         }
 
         async ValueTask<BackendAddressPoolResource> IOperationSource<BackendAddressPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BackendAddressPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<BackendAddressPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new BackendAddressPoolResource(_client, data)).ConfigureAwait(false);
         }
     }

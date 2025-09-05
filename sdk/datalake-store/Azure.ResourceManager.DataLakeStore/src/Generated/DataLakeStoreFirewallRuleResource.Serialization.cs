@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataLakeStore
 {
     public partial class DataLakeStoreFirewallRuleResource : IJsonModel<DataLakeStoreFirewallRuleData>
     {
+        private static DataLakeStoreFirewallRuleData s_dataDeserializationInstance;
+        private static DataLakeStoreFirewallRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataLakeStoreFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeStoreFirewallRuleData>)Data).Write(writer, options);
 
-        DataLakeStoreFirewallRuleData IJsonModel<DataLakeStoreFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeStoreFirewallRuleData>)Data).Create(ref reader, options);
+        DataLakeStoreFirewallRuleData IJsonModel<DataLakeStoreFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeStoreFirewallRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataLakeStoreFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataLakeStoreFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataLakeStoreFirewallRuleData>(Data, options, AzureResourceManagerDataLakeStoreContext.Default);
 
-        DataLakeStoreFirewallRuleData IPersistableModel<DataLakeStoreFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeStoreFirewallRuleData>(data, options);
+        DataLakeStoreFirewallRuleData IPersistableModel<DataLakeStoreFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeStoreFirewallRuleData>(data, options, AzureResourceManagerDataLakeStoreContext.Default);
 
-        string IPersistableModel<DataLakeStoreFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeStoreFirewallRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataLakeStoreFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeStoreFirewallRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         PaloAltoNetworksFirewallResource IOperationSource<PaloAltoNetworksFirewallResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PaloAltoNetworksFirewallData>(response.Content);
+            var data = ModelReaderWriter.Read<PaloAltoNetworksFirewallData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
             return new PaloAltoNetworksFirewallResource(_client, data);
         }
 
         async ValueTask<PaloAltoNetworksFirewallResource> IOperationSource<PaloAltoNetworksFirewallResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PaloAltoNetworksFirewallData>(response.Content);
+            var data = ModelReaderWriter.Read<PaloAltoNetworksFirewallData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
             return await Task.FromResult(new PaloAltoNetworksFirewallResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -4,22 +4,29 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Health.Deidentification.Tests;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Health.Deidentification.Samples
 {
     public partial class Samples_DeidentificationClient : SamplesBase<DeidentificationTestEnvironment>
     {
+        private static void DemonstrateCredential()
+        {
+#pragma warning disable CS0219 // Variable is assigned but its value is never used
+            #region Snippet:AzHealthDeidSample1_DemonstrateCredential
+            const string serviceEndpoint = "https://example.api.cac001.deid.azure.com";
+            TokenCredential credential = new DefaultAzureCredential();
+            #endregion
+#pragma warning restore CS0219 // Variable is assigned but its value is never used
+        }
+
         [Test]
         public void HelloWorld()
         {
-            const string serviceEndpoint = "https://example.api.cac001.deid.azure.com";
+            string serviceEndpoint = TestEnvironment.Endpoint;
             TokenCredential credential = TestEnvironment.Credential;
 
             #region Snippet:AzHealthDeidSample1_HelloWorld

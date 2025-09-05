@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.StandbyPool
 {
     public partial class StandbyVirtualMachineResource : IJsonModel<StandbyVirtualMachineData>
     {
+        private static StandbyVirtualMachineData s_dataDeserializationInstance;
+        private static StandbyVirtualMachineData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StandbyVirtualMachineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StandbyVirtualMachineData>)Data).Write(writer, options);
 
-        StandbyVirtualMachineData IJsonModel<StandbyVirtualMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StandbyVirtualMachineData>)Data).Create(ref reader, options);
+        StandbyVirtualMachineData IJsonModel<StandbyVirtualMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StandbyVirtualMachineData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StandbyVirtualMachineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StandbyVirtualMachineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StandbyVirtualMachineData>(Data, options, AzureResourceManagerStandbyPoolContext.Default);
 
-        StandbyVirtualMachineData IPersistableModel<StandbyVirtualMachineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StandbyVirtualMachineData>(data, options);
+        StandbyVirtualMachineData IPersistableModel<StandbyVirtualMachineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StandbyVirtualMachineData>(data, options, AzureResourceManagerStandbyPoolContext.Default);
 
-        string IPersistableModel<StandbyVirtualMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StandbyVirtualMachineData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StandbyVirtualMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StandbyVirtualMachineData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

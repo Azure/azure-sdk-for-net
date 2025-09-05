@@ -126,7 +126,7 @@ namespace Azure.AI.Vision.Face
         internal virtual MultipartFormDataRequestContent ToMultipartRequestContent()
         {
             MultipartFormDataRequestContent content = new MultipartFormDataRequestContent();
-            content.Add(ModelReaderWriter.Write(Parameters, ModelSerializationExtensions.WireOptions), "Parameters");
+            content.Add(ModelReaderWriter.Write<CreateLivenessWithVerifySessionContent>(Parameters, ModelSerializationExtensions.WireOptions, AzureAIVisionFaceContext.Default), "Parameters");
             content.Add(VerifyImage, "VerifyImage", "VerifyImage", "application/octet-stream");
             return content;
         }
@@ -138,7 +138,7 @@ namespace Azure.AI.Vision.Face
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIVisionFaceContext.Default);
                 case "MFD":
                     return SerializeMultipart(options);
                 default:

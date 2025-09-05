@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class ResourceGroupSecurityTaskResource : IJsonModel<SecurityTaskData>
     {
+        private static SecurityTaskData s_dataDeserializationInstance;
+        private static SecurityTaskData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityTaskData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityTaskData>)Data).Write(writer, options);
 
-        SecurityTaskData IJsonModel<SecurityTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityTaskData>)Data).Create(ref reader, options);
+        SecurityTaskData IJsonModel<SecurityTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityTaskData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityTaskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityTaskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityTaskData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SecurityTaskData IPersistableModel<SecurityTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityTaskData>(data, options);
+        SecurityTaskData IPersistableModel<SecurityTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityTaskData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<SecurityTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityTaskData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityTaskData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

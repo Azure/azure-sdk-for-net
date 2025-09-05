@@ -1,5 +1,15 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
+parameters:
+  - name: ReleaseToDevOpsOnly
+    displayName: 'Release package to DevOps feed instead of Nuget.org'
+    type: boolean
+    default: false
+  - name: AutoApproveRelease
+    displayName: 'Automatically approve the release stage'
+    type: boolean
+    default: false
+
 trigger:
   branches:
     include:
@@ -33,21 +43,14 @@ pr:
     - eng/common/
 #endif
 
-# Switch to canary to test canary 1es branch. 1es template validation will set this parameter
-# to canary on run.
-parameters:
-- name: oneESTemplateTag
-  type: string
-  default: release
-  values:
-    - release
-    - canary
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    ${{ if eq(parameters.ReleaseToDevOpsOnly, 'true') }}:
+      PublicFeed: 'public/storage-staging'
+    ${{ if eq(parameters.AutoApproveRelease, 'true') }}:
+      PublicPublishEnvironment: none
     ServiceDirectory: template
-    oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
     ArtifactName: packages
     Artifacts:
     - name: Azure.Template

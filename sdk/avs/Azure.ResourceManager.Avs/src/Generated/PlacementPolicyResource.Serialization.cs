@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class PlacementPolicyResource : IJsonModel<PlacementPolicyData>
     {
+        private static PlacementPolicyData s_dataDeserializationInstance;
+        private static PlacementPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PlacementPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PlacementPolicyData>)Data).Write(writer, options);
 
-        PlacementPolicyData IJsonModel<PlacementPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PlacementPolicyData>)Data).Create(ref reader, options);
+        PlacementPolicyData IJsonModel<PlacementPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PlacementPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PlacementPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PlacementPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PlacementPolicyData>(Data, options, AzureResourceManagerAvsContext.Default);
 
-        PlacementPolicyData IPersistableModel<PlacementPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PlacementPolicyData>(data, options);
+        PlacementPolicyData IPersistableModel<PlacementPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PlacementPolicyData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<PlacementPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PlacementPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PlacementPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PlacementPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

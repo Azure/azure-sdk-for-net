@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppContainers
 
         SessionPoolResource IOperationSource<SessionPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SessionPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<SessionPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
             return new SessionPoolResource(_client, data);
         }
 
         async ValueTask<SessionPoolResource> IOperationSource<SessionPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SessionPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<SessionPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
             return await Task.FromResult(new SessionPoolResource(_client, data)).ConfigureAwait(false);
         }
     }

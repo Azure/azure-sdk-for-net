@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -73,15 +73,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="summaryName"> The Firmware analysis summary name describing the type of summary. </param>
+        /// <param name="summaryType"> The Firmware analysis summary name describing the type of summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FirmwareAnalysisSummaryResource>> GetAsync(FirmwareAnalysisSummaryName summaryName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FirmwareAnalysisSummaryResource>> GetAsync(FirmwareAnalysisSummaryType summaryType, CancellationToken cancellationToken = default)
         {
             using var scope = _firmwareAnalysisSummarySummariesClientDiagnostics.CreateScope("FirmwareAnalysisSummaryCollection.Get");
             scope.Start();
             try
             {
-                var response = await _firmwareAnalysisSummarySummariesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, summaryName, cancellationToken).ConfigureAwait(false);
+                var response = await _firmwareAnalysisSummarySummariesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, summaryType, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FirmwareAnalysisSummaryResource(Client, response.Value), response.GetRawResponse());
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="summaryName"> The Firmware analysis summary name describing the type of summary. </param>
+        /// <param name="summaryType"> The Firmware analysis summary name describing the type of summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FirmwareAnalysisSummaryResource> Get(FirmwareAnalysisSummaryName summaryName, CancellationToken cancellationToken = default)
+        public virtual Response<FirmwareAnalysisSummaryResource> Get(FirmwareAnalysisSummaryType summaryType, CancellationToken cancellationToken = default)
         {
             using var scope = _firmwareAnalysisSummarySummariesClientDiagnostics.CreateScope("FirmwareAnalysisSummaryCollection.Get");
             scope.Start();
             try
             {
-                var response = _firmwareAnalysisSummarySummariesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, summaryName, cancellationToken);
+                var response = _firmwareAnalysisSummarySummariesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, summaryType, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FirmwareAnalysisSummaryResource(Client, response.Value), response.GetRawResponse());
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -215,15 +215,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="summaryName"> The Firmware analysis summary name describing the type of summary. </param>
+        /// <param name="summaryType"> The Firmware analysis summary name describing the type of summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(FirmwareAnalysisSummaryName summaryName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(FirmwareAnalysisSummaryType summaryType, CancellationToken cancellationToken = default)
         {
             using var scope = _firmwareAnalysisSummarySummariesClientDiagnostics.CreateScope("FirmwareAnalysisSummaryCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _firmwareAnalysisSummarySummariesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, summaryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _firmwareAnalysisSummarySummariesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, summaryType, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,15 +254,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="summaryName"> The Firmware analysis summary name describing the type of summary. </param>
+        /// <param name="summaryType"> The Firmware analysis summary name describing the type of summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(FirmwareAnalysisSummaryName summaryName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(FirmwareAnalysisSummaryType summaryType, CancellationToken cancellationToken = default)
         {
             using var scope = _firmwareAnalysisSummarySummariesClientDiagnostics.CreateScope("FirmwareAnalysisSummaryCollection.Exists");
             scope.Start();
             try
             {
-                var response = _firmwareAnalysisSummarySummariesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, summaryName, cancellationToken: cancellationToken);
+                var response = _firmwareAnalysisSummarySummariesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, summaryType, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -293,15 +293,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="summaryName"> The Firmware analysis summary name describing the type of summary. </param>
+        /// <param name="summaryType"> The Firmware analysis summary name describing the type of summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<FirmwareAnalysisSummaryResource>> GetIfExistsAsync(FirmwareAnalysisSummaryName summaryName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<FirmwareAnalysisSummaryResource>> GetIfExistsAsync(FirmwareAnalysisSummaryType summaryType, CancellationToken cancellationToken = default)
         {
             using var scope = _firmwareAnalysisSummarySummariesClientDiagnostics.CreateScope("FirmwareAnalysisSummaryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _firmwareAnalysisSummarySummariesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, summaryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _firmwareAnalysisSummarySummariesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, summaryType, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<FirmwareAnalysisSummaryResource>(response.GetRawResponse());
                 return Response.FromValue(new FirmwareAnalysisSummaryResource(Client, response.Value), response.GetRawResponse());
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-10</description>
+        /// <description>2025-08-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -334,15 +334,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="summaryName"> The Firmware analysis summary name describing the type of summary. </param>
+        /// <param name="summaryType"> The Firmware analysis summary name describing the type of summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<FirmwareAnalysisSummaryResource> GetIfExists(FirmwareAnalysisSummaryName summaryName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<FirmwareAnalysisSummaryResource> GetIfExists(FirmwareAnalysisSummaryType summaryType, CancellationToken cancellationToken = default)
         {
             using var scope = _firmwareAnalysisSummarySummariesClientDiagnostics.CreateScope("FirmwareAnalysisSummaryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _firmwareAnalysisSummarySummariesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, summaryName, cancellationToken: cancellationToken);
+                var response = _firmwareAnalysisSummarySummariesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, summaryType, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<FirmwareAnalysisSummaryResource>(response.GetRawResponse());
                 return Response.FromValue(new FirmwareAnalysisSummaryResource(Client, response.Value), response.GetRawResponse());

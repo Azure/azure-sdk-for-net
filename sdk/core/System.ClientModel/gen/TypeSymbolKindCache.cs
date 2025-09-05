@@ -26,6 +26,11 @@ namespace System.ClientModel.SourceGeneration
         {
             if (typeSymbol is INamedTypeSymbol namedTypeSymbol)
             {
+                if (IsPersistable(namedTypeSymbol))
+                {
+                    return TypeBuilderKind.IPersistableModel;
+                }
+
                 if (IsList(namedTypeSymbol))
                 {
                     return TypeBuilderKind.IList;
@@ -46,7 +51,7 @@ namespace System.ClientModel.SourceGeneration
                 return arraySymbol.Rank == 1 ? TypeBuilderKind.Array : TypeBuilderKind.MultiDimensionalArray;
             }
 
-            return TypeBuilderKind.IPersistableModel;
+            return TypeBuilderKind.Unknown;
         }
 
         private static bool IsReadOnlyMemory(INamedTypeSymbol namedSymbol)
@@ -59,7 +64,16 @@ namespace System.ClientModel.SourceGeneration
             return typeSymbol.AllInterfaces
                 .Any(i => i.OriginalDefinition.SpecialType == SpecialType.None &&
                           i.ContainingNamespace?.ToDisplayString() == "System.Collections" &&
-                          i.Name == "IList");
+                          i.Name == "IList") && typeSymbol.IsGenericType && typeSymbol.TypeArguments.Length == 1;
+        }
+
+        private static bool IsPersistable(INamedTypeSymbol typeSymbol)
+        {
+            return typeSymbol.AllInterfaces
+                .Any(i => i.OriginalDefinition.SpecialType == SpecialType.None &&
+                          i.ContainingNamespace?.ToDisplayString() == "System.ClientModel.Primitives" &&
+                          i.Name == "IPersistableModel" &&
+                          i.IsGenericType);
         }
 
         private static bool IsDictionary(INamedTypeSymbol typeSymbol)
@@ -67,7 +81,7 @@ namespace System.ClientModel.SourceGeneration
             return typeSymbol.AllInterfaces
                 .Any(i => i.OriginalDefinition.SpecialType == SpecialType.None &&
                           i.ContainingNamespace?.ToDisplayString() == "System.Collections.Generic" &&
-                          i.Name == "IDictionary");
+                          i.Name == "IDictionary") && typeSymbol.IsGenericType && typeSymbol.TypeArguments.Length == 2;
         }
     }
 }

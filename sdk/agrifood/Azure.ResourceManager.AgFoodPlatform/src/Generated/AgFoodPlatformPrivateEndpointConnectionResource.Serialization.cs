@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AgFoodPlatform
 {
     public partial class AgFoodPlatformPrivateEndpointConnectionResource : IJsonModel<AgFoodPlatformPrivateEndpointConnectionData>
     {
+        private static AgFoodPlatformPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static AgFoodPlatformPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AgFoodPlatformPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AgFoodPlatformPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        AgFoodPlatformPrivateEndpointConnectionData IJsonModel<AgFoodPlatformPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AgFoodPlatformPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        AgFoodPlatformPrivateEndpointConnectionData IJsonModel<AgFoodPlatformPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AgFoodPlatformPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AgFoodPlatformPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AgFoodPlatformPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AgFoodPlatformPrivateEndpointConnectionData>(Data, options, AzureResourceManagerAgFoodPlatformContext.Default);
 
-        AgFoodPlatformPrivateEndpointConnectionData IPersistableModel<AgFoodPlatformPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AgFoodPlatformPrivateEndpointConnectionData>(data, options);
+        AgFoodPlatformPrivateEndpointConnectionData IPersistableModel<AgFoodPlatformPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AgFoodPlatformPrivateEndpointConnectionData>(data, options, AzureResourceManagerAgFoodPlatformContext.Default);
 
-        string IPersistableModel<AgFoodPlatformPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AgFoodPlatformPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AgFoodPlatformPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AgFoodPlatformPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-02-01";
+            _apiVersion = apiVersion ?? "2025-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get log report for AFD profile. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
@@ -205,8 +205,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get log report for AFD profile. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
@@ -330,8 +330,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get log analytics ranking report for AFD profile. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="rankings"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogRanking"/> to use. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogRankingMetric"/> to use. </param>
@@ -367,8 +367,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get log analytics ranking report for AFD profile. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="rankings"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogRanking"/> to use. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogRankingMetric"/> to use. </param>
@@ -440,8 +440,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get all available location names for AFD log analytics report. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
@@ -469,8 +469,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get all available location names for AFD log analytics report. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
@@ -534,8 +534,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get all endpoints and custom domains available for AFD log report. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
@@ -563,8 +563,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get all endpoints and custom domains available for AFD log report. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
@@ -690,8 +690,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get Waf related log analytics report for AFD profile. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
@@ -727,8 +727,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get Waf related log analytics report for AFD profile. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
@@ -862,8 +862,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get WAF log analytics charts for AFD profile. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
@@ -900,8 +900,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Get WAF log analytics charts for AFD profile. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>

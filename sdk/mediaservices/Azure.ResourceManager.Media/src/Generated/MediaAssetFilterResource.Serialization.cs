@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Media
 {
     public partial class MediaAssetFilterResource : IJsonModel<MediaAssetFilterData>
     {
+        private static MediaAssetFilterData s_dataDeserializationInstance;
+        private static MediaAssetFilterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MediaAssetFilterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MediaAssetFilterData>)Data).Write(writer, options);
 
-        MediaAssetFilterData IJsonModel<MediaAssetFilterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MediaAssetFilterData>)Data).Create(ref reader, options);
+        MediaAssetFilterData IJsonModel<MediaAssetFilterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MediaAssetFilterData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MediaAssetFilterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MediaAssetFilterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MediaAssetFilterData>(Data, options, AzureResourceManagerMediaContext.Default);
 
-        MediaAssetFilterData IPersistableModel<MediaAssetFilterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MediaAssetFilterData>(data, options);
+        MediaAssetFilterData IPersistableModel<MediaAssetFilterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MediaAssetFilterData>(data, options, AzureResourceManagerMediaContext.Default);
 
-        string IPersistableModel<MediaAssetFilterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MediaAssetFilterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MediaAssetFilterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MediaAssetFilterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseEncryptionProtectorResource IOperationSource<SynapseEncryptionProtectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseEncryptionProtectorData>(response.Content);
+            var data = ModelReaderWriter.Read<SynapseEncryptionProtectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
             return new SynapseEncryptionProtectorResource(_client, data);
         }
 
         async ValueTask<SynapseEncryptionProtectorResource> IOperationSource<SynapseEncryptionProtectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseEncryptionProtectorData>(response.Content);
+            var data = ModelReaderWriter.Read<SynapseEncryptionProtectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
             return await Task.FromResult(new SynapseEncryptionProtectorResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -7,12 +7,17 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ## AutoRest Configuration
 > see https://aka.ms/autorest
 
+```yaml
+use-model-reader-writer: true
+```
+
 ## Swagger Source(s)
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/8c53aa7023e66a9ec24ede6a9fad0ed730d62515/specification/search/data-plane/Azure.Search/preview/2025-03-01-preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/8c53aa7023e66a9ec24ede6a9fad0ed730d62515/specification/search/data-plane/Azure.Search/preview/2025-03-01-preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/1755004c92eefdc7a66b4cd90df27d0af4cb0456/specification/search/data-plane/Azure.Search/preview/2025-05-01-preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/1755004c92eefdc7a66b4cd90df27d0af4cb0456/specification/search/data-plane/Azure.Search/preview/2025-05-01-preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/1755004c92eefdc7a66b4cd90df27d0af4cb0456/specification/search/data-plane/Azure.Search/preview/2025-05-01-preview/knowledgeagent.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -56,6 +61,41 @@ directive:
   where: $.definitions.LexicalNormalizer
   transform: >
     $["discriminator"] = "@odata.type";
+```
+
+### Remove nullable annotations
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SearchIndexerDataSource.properties.indexerPermissionOptions
+  transform: >
+    delete $["x-nullable"]
+```
+
+### Move KnowledgeAgent models to Azure.Search.Documents.Agents.Models
+
+Models in knowledgeagent.json should be moved to Azure.Search.Documents.Agents.Models.
+
+```yaml
+directive:
+  from: knowledgeagent.json
+  where: $.definitions.*
+  transform: >
+    $["x-namespace"] = "Azure.Search.Documents.Agents.Models"
+```
+
+### Remove models that have newer versions
+
+These classes have `CodeGenModel` pointing to newer models. Don't try to generate the
+old models into the same class.
+
+```yaml
+directive:
+  - remove-model: EdgeNGramTokenFilter
+  - remove-model: KeywordTokenizer
+  - remove-model: LuceneStandardTokenizer
+  - remove-model: NGramTokenFilter
 ```
 
 ## Renaming models after the AI Studio rebrand to AI Foundry

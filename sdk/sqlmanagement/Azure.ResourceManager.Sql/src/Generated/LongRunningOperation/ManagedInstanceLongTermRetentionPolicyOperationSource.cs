@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceLongTermRetentionPolicyResource IOperationSource<ManagedInstanceLongTermRetentionPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedInstanceLongTermRetentionPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedInstanceLongTermRetentionPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new ManagedInstanceLongTermRetentionPolicyResource(_client, data);
         }
 
         async ValueTask<ManagedInstanceLongTermRetentionPolicyResource> IOperationSource<ManagedInstanceLongTermRetentionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedInstanceLongTermRetentionPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedInstanceLongTermRetentionPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new ManagedInstanceLongTermRetentionPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

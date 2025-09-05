@@ -17,6 +17,7 @@ namespace Azure.Identity
         {
             HttpPipeline = HttpPipelineBuilder.Build(new HttpPipelineOptions(options) { RequestFailedDetailsParser = new ManagedIdentityRequestFailedDetailsParser() });
             Diagnostics = new ClientDiagnostics(options);
+            ClientOptions = options;
         }
 
         public CredentialPipeline(HttpPipeline httpPipeline, ClientDiagnostics diagnostics)
@@ -51,6 +52,8 @@ namespace Azure.Identity
         }
 
         public HttpPipeline HttpPipeline { get; }
+
+        public ClientOptions ClientOptions { get; }
 
         public ClientDiagnostics Diagnostics { get; }
 

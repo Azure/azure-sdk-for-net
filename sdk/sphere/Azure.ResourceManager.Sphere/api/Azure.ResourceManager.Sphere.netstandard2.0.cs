@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Sphere
 {
+    public partial class AzureResourceManagerSphereContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerSphereContext() { }
+        public static Azure.ResourceManager.Sphere.AzureResourceManagerSphereContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class SphereCatalogCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sphere.SphereCatalogResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sphere.SphereCatalogResource>, System.Collections.IEnumerable
     {
         protected SphereCatalogCollection() { }

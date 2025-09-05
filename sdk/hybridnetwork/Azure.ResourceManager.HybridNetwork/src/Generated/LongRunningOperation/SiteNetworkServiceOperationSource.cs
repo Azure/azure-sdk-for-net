@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HybridNetwork
 
         SiteNetworkServiceResource IOperationSource<SiteNetworkServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SiteNetworkServiceData>(response.Content);
+            var data = ModelReaderWriter.Read<SiteNetworkServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
             return new SiteNetworkServiceResource(_client, data);
         }
 
         async ValueTask<SiteNetworkServiceResource> IOperationSource<SiteNetworkServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SiteNetworkServiceData>(response.Content);
+            var data = ModelReaderWriter.Read<SiteNetworkServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
             return await Task.FromResult(new SiteNetworkServiceResource(_client, data)).ConfigureAwait(false);
         }
     }

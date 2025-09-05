@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class IntegrationAccountMapResource : IJsonModel<IntegrationAccountMapData>
     {
+        private static IntegrationAccountMapData s_dataDeserializationInstance;
+        private static IntegrationAccountMapData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<IntegrationAccountMapData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationAccountMapData>)Data).Write(writer, options);
 
-        IntegrationAccountMapData IJsonModel<IntegrationAccountMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationAccountMapData>)Data).Create(ref reader, options);
+        IntegrationAccountMapData IJsonModel<IntegrationAccountMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationAccountMapData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IntegrationAccountMapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IntegrationAccountMapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IntegrationAccountMapData>(Data, options, AzureResourceManagerLogicContext.Default);
 
-        IntegrationAccountMapData IPersistableModel<IntegrationAccountMapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IntegrationAccountMapData>(data, options);
+        IntegrationAccountMapData IPersistableModel<IntegrationAccountMapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IntegrationAccountMapData>(data, options, AzureResourceManagerLogicContext.Default);
 
-        string IPersistableModel<IntegrationAccountMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IntegrationAccountMapData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<IntegrationAccountMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IntegrationAccountMapData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

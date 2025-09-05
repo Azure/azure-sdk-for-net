@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.LabServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLabServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LabVirtualMachineResetPasswordContent)} does not support writing '{options.Format}' format.");
             }

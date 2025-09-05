@@ -6,13 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.Communication.Messages;
 using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="NotificationMessagesClient"/>, <see cref="MessageTemplateClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="NotificationMessagesClient"/>, <see cref="MessageTemplateClient"/>, <see cref="ConversationAdministrationClient"/>, <see cref="ConversationThreadClient"/> to client builder. </summary>
     public static partial class CommunicationMessagesClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="NotificationMessagesClient"/> instance. </summary>
@@ -53,9 +54,49 @@ namespace Microsoft.Extensions.Azure
             return builder.RegisterClientFactory<MessageTemplateClient, CommunicationMessagesClientOptions>((options, cred) => new MessageTemplateClient(endpoint, cred, options));
         }
 
+        /// <summary> Registers a <see cref="ConversationAdministrationClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        public static IAzureClientBuilder<ConversationAdministrationClient, CommunicationMessagesClientOptions> AddConversationAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<ConversationAdministrationClient, CommunicationMessagesClientOptions>((options) => new ConversationAdministrationClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="ConversationAdministrationClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        public static IAzureClientBuilder<ConversationAdministrationClient, CommunicationMessagesClientOptions> AddConversationAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<ConversationAdministrationClient, CommunicationMessagesClientOptions>((options, cred) => new ConversationAdministrationClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="ConversationThreadClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        public static IAzureClientBuilder<ConversationThreadClient, CommunicationMessagesClientOptions> AddConversationThreadClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<ConversationThreadClient, CommunicationMessagesClientOptions>((options) => new ConversationThreadClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="ConversationThreadClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        public static IAzureClientBuilder<ConversationThreadClient, CommunicationMessagesClientOptions> AddConversationThreadClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<ConversationThreadClient, CommunicationMessagesClientOptions>((options, cred) => new ConversationThreadClient(endpoint, cred, options));
+        }
+
         /// <summary> Registers a <see cref="NotificationMessagesClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
+        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<NotificationMessagesClient, CommunicationMessagesClientOptions> AddNotificationMessagesClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
@@ -64,10 +105,32 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="MessageTemplateClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
+        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<MessageTemplateClient, CommunicationMessagesClientOptions> AddMessageTemplateClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<MessageTemplateClient, CommunicationMessagesClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="ConversationAdministrationClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static IAzureClientBuilder<ConversationAdministrationClient, CommunicationMessagesClientOptions> AddConversationAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<ConversationAdministrationClient, CommunicationMessagesClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="ConversationThreadClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static IAzureClientBuilder<ConversationThreadClient, CommunicationMessagesClientOptions> AddConversationThreadClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<ConversationThreadClient, CommunicationMessagesClientOptions>(configuration);
         }
     }
 }

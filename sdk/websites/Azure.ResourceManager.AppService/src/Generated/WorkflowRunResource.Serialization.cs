@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class WorkflowRunResource : IJsonModel<WorkflowRunData>
     {
+        private static WorkflowRunData s_dataDeserializationInstance;
+        private static WorkflowRunData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkflowRunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowRunData>)Data).Write(writer, options);
 
-        WorkflowRunData IJsonModel<WorkflowRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowRunData>)Data).Create(ref reader, options);
+        WorkflowRunData IJsonModel<WorkflowRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowRunData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkflowRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WorkflowRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowRunData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        WorkflowRunData IPersistableModel<WorkflowRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowRunData>(data, options);
+        WorkflowRunData IPersistableModel<WorkflowRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowRunData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<WorkflowRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowRunData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkflowRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowRunData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

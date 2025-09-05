@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.SignalR
 
         SignalRCustomCertificateResource IOperationSource<SignalRCustomCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SignalRCustomCertificateData>(response.Content);
+            var data = ModelReaderWriter.Read<SignalRCustomCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSignalRContext.Default);
             return new SignalRCustomCertificateResource(_client, data);
         }
 
         async ValueTask<SignalRCustomCertificateResource> IOperationSource<SignalRCustomCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SignalRCustomCertificateData>(response.Content);
+            var data = ModelReaderWriter.Read<SignalRCustomCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSignalRContext.Default);
             return await Task.FromResult(new SignalRCustomCertificateResource(_client, data)).ConfigureAwait(false);
         }
     }

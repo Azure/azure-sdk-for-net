@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MachineLearning
 
         MachineLearningFeaturestoreEntityVersionResource IOperationSource<MachineLearningFeaturestoreEntityVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MachineLearningFeaturestoreEntityVersionData>(response.Content);
+            var data = ModelReaderWriter.Read<MachineLearningFeaturestoreEntityVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMachineLearningContext.Default);
             return new MachineLearningFeaturestoreEntityVersionResource(_client, data);
         }
 
         async ValueTask<MachineLearningFeaturestoreEntityVersionResource> IOperationSource<MachineLearningFeaturestoreEntityVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MachineLearningFeaturestoreEntityVersionData>(response.Content);
+            var data = ModelReaderWriter.Read<MachineLearningFeaturestoreEntityVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMachineLearningContext.Default);
             return await Task.FromResult(new MachineLearningFeaturestoreEntityVersionResource(_client, data)).ConfigureAwait(false);
         }
     }

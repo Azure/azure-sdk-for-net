@@ -89,9 +89,9 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Name of the template. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </summary>
-        public string Language { get; }
+        public string Language { get; set; }
         /// <summary>
         /// The template values.
         /// Please note <see cref="MessageTemplateValue"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

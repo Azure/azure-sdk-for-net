@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.2 (2025-09-03)
+
+### Features Added
+
+- Make `Azure.ResourceManager.EventGrid` AOT-compatible
+
+## 1.2.0-beta.1 (2025-06-05)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2025-02-15' to 'package-2025-04-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/79c3ab8586bd78947815ebf39b66584f67095c2f/specification/eventgrid/resource-manager/readme.md.
+    - CustomWebhookAuthentication
+
+### Other Changes
+
+- Upgraded common resource type version from v5 to v6.
+- Renamed AAD to Microsoft Entra ID.
 
 ## 1.1.0 (2025-03-31)
 

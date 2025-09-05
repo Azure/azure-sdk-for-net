@@ -190,7 +190,7 @@ namespace Azure.Analytics.Purview.DataMap
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AtlasTimeZone)} does not support writing '{options.Format}' format.");
             }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseAadOnlyAuthenticationResource : IJsonModel<SynapseAadOnlyAuthenticationData>
     {
+        private static SynapseAadOnlyAuthenticationData s_dataDeserializationInstance;
+        private static SynapseAadOnlyAuthenticationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseAadOnlyAuthenticationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseAadOnlyAuthenticationData>)Data).Write(writer, options);
 
-        SynapseAadOnlyAuthenticationData IJsonModel<SynapseAadOnlyAuthenticationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseAadOnlyAuthenticationData>)Data).Create(ref reader, options);
+        SynapseAadOnlyAuthenticationData IJsonModel<SynapseAadOnlyAuthenticationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseAadOnlyAuthenticationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseAadOnlyAuthenticationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseAadOnlyAuthenticationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseAadOnlyAuthenticationData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseAadOnlyAuthenticationData IPersistableModel<SynapseAadOnlyAuthenticationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseAadOnlyAuthenticationData>(data, options);
+        SynapseAadOnlyAuthenticationData IPersistableModel<SynapseAadOnlyAuthenticationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseAadOnlyAuthenticationData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseAadOnlyAuthenticationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseAadOnlyAuthenticationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseAadOnlyAuthenticationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseAadOnlyAuthenticationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

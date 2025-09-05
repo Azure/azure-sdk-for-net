@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class CloudServiceSwapResource : IJsonModel<CloudServiceSwapData>
     {
+        private static CloudServiceSwapData s_dataDeserializationInstance;
+        private static CloudServiceSwapData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CloudServiceSwapData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceSwapData>)Data).Write(writer, options);
 
-        CloudServiceSwapData IJsonModel<CloudServiceSwapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceSwapData>)Data).Create(ref reader, options);
+        CloudServiceSwapData IJsonModel<CloudServiceSwapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceSwapData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CloudServiceSwapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CloudServiceSwapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudServiceSwapData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        CloudServiceSwapData IPersistableModel<CloudServiceSwapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudServiceSwapData>(data, options);
+        CloudServiceSwapData IPersistableModel<CloudServiceSwapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudServiceSwapData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<CloudServiceSwapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudServiceSwapData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CloudServiceSwapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudServiceSwapData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

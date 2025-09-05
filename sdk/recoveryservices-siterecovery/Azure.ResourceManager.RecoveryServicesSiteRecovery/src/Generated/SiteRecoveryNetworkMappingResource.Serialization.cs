@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     public partial class SiteRecoveryNetworkMappingResource : IJsonModel<SiteRecoveryNetworkMappingData>
     {
+        private static SiteRecoveryNetworkMappingData s_dataDeserializationInstance;
+        private static SiteRecoveryNetworkMappingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SiteRecoveryNetworkMappingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryNetworkMappingData>)Data).Write(writer, options);
 
-        SiteRecoveryNetworkMappingData IJsonModel<SiteRecoveryNetworkMappingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryNetworkMappingData>)Data).Create(ref reader, options);
+        SiteRecoveryNetworkMappingData IJsonModel<SiteRecoveryNetworkMappingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryNetworkMappingData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SiteRecoveryNetworkMappingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SiteRecoveryNetworkMappingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteRecoveryNetworkMappingData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        SiteRecoveryNetworkMappingData IPersistableModel<SiteRecoveryNetworkMappingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryNetworkMappingData>(data, options);
+        SiteRecoveryNetworkMappingData IPersistableModel<SiteRecoveryNetworkMappingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryNetworkMappingData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<SiteRecoveryNetworkMappingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryNetworkMappingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SiteRecoveryNetworkMappingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryNetworkMappingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

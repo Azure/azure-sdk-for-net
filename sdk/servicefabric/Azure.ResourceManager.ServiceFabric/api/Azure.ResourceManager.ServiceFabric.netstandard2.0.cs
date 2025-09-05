@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ServiceFabric
 {
+    public partial class AzureResourceManagerServiceFabricContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerServiceFabricContext() { }
+        public static Azure.ResourceManager.ServiceFabric.AzureResourceManagerServiceFabricContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ServiceFabricApplicationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>, System.Collections.IEnumerable
     {
         protected ServiceFabricApplicationCollection() { }

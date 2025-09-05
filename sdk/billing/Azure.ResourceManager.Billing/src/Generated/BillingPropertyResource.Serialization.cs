@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class BillingPropertyResource : IJsonModel<BillingPropertyData>
     {
+        private static BillingPropertyData s_dataDeserializationInstance;
+        private static BillingPropertyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BillingPropertyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BillingPropertyData>)Data).Write(writer, options);
 
-        BillingPropertyData IJsonModel<BillingPropertyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingPropertyData>)Data).Create(ref reader, options);
+        BillingPropertyData IJsonModel<BillingPropertyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingPropertyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BillingPropertyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BillingPropertyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingPropertyData>(Data, options, AzureResourceManagerBillingContext.Default);
 
-        BillingPropertyData IPersistableModel<BillingPropertyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingPropertyData>(data, options);
+        BillingPropertyData IPersistableModel<BillingPropertyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingPropertyData>(data, options, AzureResourceManagerBillingContext.Default);
 
-        string IPersistableModel<BillingPropertyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingPropertyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BillingPropertyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingPropertyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

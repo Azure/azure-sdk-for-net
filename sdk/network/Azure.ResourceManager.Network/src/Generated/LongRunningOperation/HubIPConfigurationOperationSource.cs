@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         HubIPConfigurationResource IOperationSource<HubIPConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HubIPConfigurationData>(response.Content);
+            var data = ModelReaderWriter.Read<HubIPConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new HubIPConfigurationResource(_client, data);
         }
 
         async ValueTask<HubIPConfigurationResource> IOperationSource<HubIPConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HubIPConfigurationData>(response.Content);
+            var data = ModelReaderWriter.Read<HubIPConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new HubIPConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }

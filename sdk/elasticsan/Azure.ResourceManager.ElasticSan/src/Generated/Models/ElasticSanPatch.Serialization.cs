@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new ElasticSanPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 baseSizeTiB,
                 extendedCapacitySizeTiB,
                 publicNetworkAccess,
                 autoScaleProperties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ElasticSanPatch)} does not support writing '{options.Format}' format.");
             }

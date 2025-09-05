@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.OracleDatabase
 
         CloudVmClusterVirtualNetworkAddressResource IOperationSource<CloudVmClusterVirtualNetworkAddressResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CloudVmClusterVirtualNetworkAddressData>(response.Content);
+            var data = ModelReaderWriter.Read<CloudVmClusterVirtualNetworkAddressData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return new CloudVmClusterVirtualNetworkAddressResource(_client, data);
         }
 
         async ValueTask<CloudVmClusterVirtualNetworkAddressResource> IOperationSource<CloudVmClusterVirtualNetworkAddressResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CloudVmClusterVirtualNetworkAddressData>(response.Content);
+            var data = ModelReaderWriter.Read<CloudVmClusterVirtualNetworkAddressData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return await Task.FromResult(new CloudVmClusterVirtualNetworkAddressResource(_client, data)).ConfigureAwait(false);
         }
     }

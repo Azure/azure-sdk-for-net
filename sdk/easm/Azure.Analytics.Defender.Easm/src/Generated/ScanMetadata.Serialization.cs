@@ -147,7 +147,7 @@ namespace Azure.Analytics.Defender.Easm
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ScanMetadata)} does not support writing '{options.Format}' format.");
             }

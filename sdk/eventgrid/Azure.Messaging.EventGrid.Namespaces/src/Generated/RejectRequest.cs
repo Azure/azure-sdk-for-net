@@ -14,63 +14,26 @@ namespace Azure.Messaging.EventGrid.Namespaces
     /// <summary> The RejectRequest. </summary>
     internal partial class RejectRequest
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RejectRequest"/>. </summary>
         /// <param name="lockTokens"> Array of lock tokens. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="lockTokens"/> is null. </exception>
         internal RejectRequest(IEnumerable<string> lockTokens)
         {
-            Argument.AssertNotNull(lockTokens, nameof(lockTokens));
-
             LockTokens = lockTokens.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RejectRequest"/>. </summary>
         /// <param name="lockTokens"> Array of lock tokens. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RejectRequest(IReadOnlyList<string> lockTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RejectRequest(IList<string> lockTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LockTokens = lockTokens;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RejectRequest"/> for deserialization. </summary>
-        internal RejectRequest()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Array of lock tokens. </summary>
-        public IReadOnlyList<string> LockTokens { get; }
+        public IList<string> LockTokens { get; }
     }
 }

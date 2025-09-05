@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.LargeInstance
 {
+    public partial class AzureResourceManagerLargeInstanceContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerLargeInstanceContext() { }
+        public static Azure.ResourceManager.LargeInstance.AzureResourceManagerLargeInstanceContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class LargeInstanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LargeInstance.LargeInstanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.LargeInstance.LargeInstanceResource>, System.Collections.IEnumerable
     {
         protected LargeInstanceCollection() { }

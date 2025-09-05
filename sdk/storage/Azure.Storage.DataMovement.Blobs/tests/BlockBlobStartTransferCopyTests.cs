@@ -172,6 +172,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 options = new BlockBlobStorageResourceOptions
                 {
+                    AccessTier = default,
                     ContentDisposition = default,
                     ContentLanguage = default,
                     CacheControl = default,
@@ -211,7 +212,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 Assert.IsNull(destinationProperties.ContentDisposition);
                 Assert.IsNull(destinationProperties.ContentLanguage);
                 Assert.IsNull(destinationProperties.CacheControl);
-                Assert.AreEqual(_defaultAccessTier.ToString(), destinationProperties.AccessTier);
+                // Because AccessTier is not preserved, the access tier value on the destination will
+                // default to what the storage account sets (normally AccessTier.Hot)
+                Assert.AreNotEqual(_defaultAccessTier.ToString(), destinationProperties.AccessTier);
                 Assert.That(destinationProperties.ContentType, Is.Not.EqualTo(_defaultContentType));
 
                 GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();

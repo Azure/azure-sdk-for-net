@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Quota
 {
     public partial class GroupQuotaSubscriptionResource : IJsonModel<GroupQuotaSubscriptionData>
     {
+        private static GroupQuotaSubscriptionData s_dataDeserializationInstance;
+        private static GroupQuotaSubscriptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GroupQuotaSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GroupQuotaSubscriptionData>)Data).Write(writer, options);
 
-        GroupQuotaSubscriptionData IJsonModel<GroupQuotaSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GroupQuotaSubscriptionData>)Data).Create(ref reader, options);
+        GroupQuotaSubscriptionData IJsonModel<GroupQuotaSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GroupQuotaSubscriptionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GroupQuotaSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GroupQuotaSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GroupQuotaSubscriptionData>(Data, options, AzureResourceManagerQuotaContext.Default);
 
-        GroupQuotaSubscriptionData IPersistableModel<GroupQuotaSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GroupQuotaSubscriptionData>(data, options);
+        GroupQuotaSubscriptionData IPersistableModel<GroupQuotaSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GroupQuotaSubscriptionData>(data, options, AzureResourceManagerQuotaContext.Default);
 
-        string IPersistableModel<GroupQuotaSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GroupQuotaSubscriptionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GroupQuotaSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GroupQuotaSubscriptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sphere
 {
     public partial class SphereDeploymentResource : IJsonModel<SphereDeploymentData>
     {
+        private static SphereDeploymentData s_dataDeserializationInstance;
+        private static SphereDeploymentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SphereDeploymentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SphereDeploymentData>)Data).Write(writer, options);
 
-        SphereDeploymentData IJsonModel<SphereDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SphereDeploymentData>)Data).Create(ref reader, options);
+        SphereDeploymentData IJsonModel<SphereDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SphereDeploymentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SphereDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SphereDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SphereDeploymentData>(Data, options, AzureResourceManagerSphereContext.Default);
 
-        SphereDeploymentData IPersistableModel<SphereDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SphereDeploymentData>(data, options);
+        SphereDeploymentData IPersistableModel<SphereDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SphereDeploymentData>(data, options, AzureResourceManagerSphereContext.Default);
 
-        string IPersistableModel<SphereDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SphereDeploymentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SphereDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SphereDeploymentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

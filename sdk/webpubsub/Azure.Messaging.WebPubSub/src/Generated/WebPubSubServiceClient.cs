@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -1539,6 +1540,62 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
+        /// <summary>
+        /// [Protocol Method] List connections in a group.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="group"> Target group name, whose length should be greater than 0 and less than 1025. </param>
+        /// <param name="maxpagesize"> The maximum number of connections to include in a single response. It should be between 1 and 200. </param>
+        /// <param name="maxCount"> The maximum number of connections to return. If the value is not set, then all the connections in a group are returned. </param>
+        /// <param name="continuationToken"> A token that allows the client to retrieve the next page of results. This parameter is provided by the service in the response of a previous request when there are additional results to be fetched. Clients should include the continuationToken in the next request to receive the subsequent page of data. If this parameter is omitted, the server will return the first page of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        internal virtual AsyncPageable<BinaryData> GetConnectionsInGroupsAsync(string group, int? maxpagesize = null, int? maxCount = null, string continuationToken = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsInGroupsRequest(group, pageSizeHint, maxCount, continuationToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsInGroupsNextPageRequest(nextLink, group, pageSizeHint, maxCount, continuationToken, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WebPubSubServiceClient.GetConnectionsInGroups", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List connections in a group.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="group"> Target group name, whose length should be greater than 0 and less than 1025. </param>
+        /// <param name="maxpagesize"> The maximum number of connections to include in a single response. It should be between 1 and 200. </param>
+        /// <param name="maxCount"> The maximum number of connections to return. If the value is not set, then all the connections in a group are returned. </param>
+        /// <param name="continuationToken"> A token that allows the client to retrieve the next page of results. This parameter is provided by the service in the response of a previous request when there are additional results to be fetched. Clients should include the continuationToken in the next request to receive the subsequent page of data. If this parameter is omitted, the server will return the first page of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        internal virtual Pageable<BinaryData> GetConnectionsInGroups(string group, int? maxpagesize = null, int? maxCount = null, string continuationToken = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsInGroupsRequest(group, pageSizeHint, maxCount, continuationToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsInGroupsNextPageRequest(nextLink, group, pageSizeHint, maxCount, continuationToken, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WebPubSubServiceClient.GetConnectionsInGroups", "value", "nextLink", maxpagesize, context);
+        }
+
         internal HttpMessage CreateAddConnectionsToGroupsRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1824,6 +1881,36 @@ namespace Azure.Messaging.WebPubSub
             return message;
         }
 
+        internal HttpMessage CreateGetConnectionsInGroupsRequest(string group, int? maxpagesize, int? maxCount, string continuationToken, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/groups/", false);
+            uri.AppendPath(group, true);
+            uri.AppendPath("/connections", false);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            if (continuationToken != null)
+            {
+                uri.AppendQuery("continuationToken", continuationToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateRemoveConnectionFromGroupRequest(string group, string connectionId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -2050,6 +2137,19 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetConnectionsInGroupsNextPageRequest(string nextLink, string group, int? maxpagesize, int? maxCount, string continuationToken, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

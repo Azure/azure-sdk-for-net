@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     public partial class ScopeMapResource : IJsonModel<ScopeMapData>
     {
+        private static ScopeMapData s_dataDeserializationInstance;
+        private static ScopeMapData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ScopeMapData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScopeMapData>)Data).Write(writer, options);
 
-        ScopeMapData IJsonModel<ScopeMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScopeMapData>)Data).Create(ref reader, options);
+        ScopeMapData IJsonModel<ScopeMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScopeMapData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ScopeMapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ScopeMapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScopeMapData>(Data, options, AzureResourceManagerContainerRegistryContext.Default);
 
-        ScopeMapData IPersistableModel<ScopeMapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScopeMapData>(data, options);
+        ScopeMapData IPersistableModel<ScopeMapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScopeMapData>(data, options, AzureResourceManagerContainerRegistryContext.Default);
 
-        string IPersistableModel<ScopeMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScopeMapData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ScopeMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScopeMapData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

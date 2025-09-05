@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 {
+    public partial class AzureResourceManagerContainerOrchestratorRuntimeContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerContainerOrchestratorRuntimeContext() { }
+        public static Azure.ResourceManager.ContainerOrchestratorRuntime.AzureResourceManagerContainerOrchestratorRuntimeContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ConnectedClusterBgpPeerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerOrchestratorRuntime.ConnectedClusterBgpPeerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerOrchestratorRuntime.ConnectedClusterBgpPeerResource>, System.Collections.IEnumerable
     {
         protected ConnectedClusterBgpPeerCollection() { }

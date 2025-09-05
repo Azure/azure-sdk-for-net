@@ -14,14 +14,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ContainerServiceNodePoolRollingSucceededEventData : ContainerServiceNodePoolRollingEventData
     {
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingSucceededEventData"/>. </summary>
-        internal ContainerServiceNodePoolRollingSucceededEventData()
+        /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
+        internal ContainerServiceNodePoolRollingSucceededEventData(string nodePoolName) : base(nodePoolName)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingSucceededEventData"/>. </summary>
         /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceNodePoolRollingSucceededEventData(string nodePoolName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(nodePoolName, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceNodePoolRollingSucceededEventData(string nodePoolName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(nodePoolName, additionalBinaryDataProperties)
         {
         }
     }

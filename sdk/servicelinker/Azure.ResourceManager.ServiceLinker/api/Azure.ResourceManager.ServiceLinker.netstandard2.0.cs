@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ServiceLinker
 {
+    public partial class AzureResourceManagerServiceLinkerContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerServiceLinkerContext() { }
+        public static Azure.ResourceManager.ServiceLinker.AzureResourceManagerServiceLinkerContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class LinkerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceLinker.LinkerResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceLinker.LinkerResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;

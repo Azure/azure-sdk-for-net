@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class MobileNetworkSimGroupResource : IJsonModel<MobileNetworkSimGroupData>
     {
+        private static MobileNetworkSimGroupData s_dataDeserializationInstance;
+        private static MobileNetworkSimGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MobileNetworkSimGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MobileNetworkSimGroupData>)Data).Write(writer, options);
 
-        MobileNetworkSimGroupData IJsonModel<MobileNetworkSimGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MobileNetworkSimGroupData>)Data).Create(ref reader, options);
+        MobileNetworkSimGroupData IJsonModel<MobileNetworkSimGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MobileNetworkSimGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MobileNetworkSimGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MobileNetworkSimGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MobileNetworkSimGroupData>(Data, options, AzureResourceManagerMobileNetworkContext.Default);
 
-        MobileNetworkSimGroupData IPersistableModel<MobileNetworkSimGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MobileNetworkSimGroupData>(data, options);
+        MobileNetworkSimGroupData IPersistableModel<MobileNetworkSimGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MobileNetworkSimGroupData>(data, options, AzureResourceManagerMobileNetworkContext.Default);
 
-        string IPersistableModel<MobileNetworkSimGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MobileNetworkSimGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MobileNetworkSimGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MobileNetworkSimGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

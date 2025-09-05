@@ -119,6 +119,9 @@ namespace Azure.Core.TestFramework
             return new ValueTask<OperationState>(OnUpdateState(cancellationToken));
         }
 
+        RehydrationToken IOperation.GetRehydrationToken() =>
+            throw new NotImplementedException();
+
         public MockOperationInternal MockOperationInternal { get; }
 
         public Func<CancellationToken, OperationState> OnUpdateState { get; set; }

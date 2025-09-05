@@ -13,7 +13,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/535377f6ef91e9d847bb
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
   - Jobs_Update

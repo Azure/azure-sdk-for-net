@@ -1,11 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
-using System.Runtime.CompilerServices;
-using Azure.Core.Diagnostics;
+using Azure.Messaging.EventHubs.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Processor.Diagnostics
 {
@@ -20,7 +17,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
     /// </remarks>
     ///
     [EventSource(Name = EventSourceName)]
-    internal class EventProcessorClientEventSource : AzureEventSource
+    internal class EventProcessorClientEventSource : OptimizationsBaseEventSource
     {
         /// <summary>The name to use for the event source.</summary>
         private const string EventSourceName = "Azure-Messaging-EventHubs-Processor-EventProcessorClient";
@@ -232,214 +229,6 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(27, sequenceNumber ?? string.Empty, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, operationId ?? string.Empty);
-            }
-        }
-
-        /// <summary>
-        ///   Writes an event with four string arguments into a stack allocated <see cref="EventSource.EventData"/> struct
-        ///   to avoid the parameter array allocation on the WriteEvent methods.
-        /// </summary>
-        ///
-        /// <param name="eventId">The identifier of the event.</param>
-        /// <param name="arg1">The first argument.</param>
-        /// <param name="arg2">The second argument.</param>
-        /// <param name="arg3">The third argument.</param>
-        /// <param name="arg4">The fourth argument.</param>
-        ///
-        [NonEvent]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
-                                       string arg1,
-                                       string arg2,
-                                       string arg3,
-                                       string arg4)
-        {
-            fixed (char* arg1Ptr = arg1)
-            fixed (char* arg2Ptr = arg2)
-            fixed (char* arg3Ptr = arg3)
-            fixed (char* arg4Ptr = arg4)
-            {
-                var eventPayload = stackalloc EventData[4];
-
-                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
-                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
-
-                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
-                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
-
-                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
-                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
-
-                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
-                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
-
-                WriteEventCore(eventId, 4, eventPayload);
-            }
-        }
-
-        /// <summary>
-        ///   Writes an event with five string arguments into a stack allocated
-        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
-        /// </summary>
-        ///
-        /// <param name="eventId">The identifier of the event.</param>
-        /// <param name="arg1">The first argument.</param>
-        /// <param name="arg2">The second argument.</param>
-        /// <param name="arg3">The third argument.</param>
-        /// <param name="arg4">The fourth argument.</param>
-        /// <param name="arg5">The fifth argument.</param>
-        ///
-        [NonEvent]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
-                                       string arg1,
-                                       string arg2,
-                                       string arg3,
-                                       string arg4,
-                                       string arg5)
-        {
-            fixed (char* arg1Ptr = arg1)
-            fixed (char* arg2Ptr = arg2)
-            fixed (char* arg3Ptr = arg3)
-            fixed (char* arg4Ptr = arg4)
-            fixed (char* arg5Ptr = arg5)
-            {
-                var eventPayload = stackalloc EventData[5];
-
-                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
-                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
-
-                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
-                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
-
-                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
-                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
-
-                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
-                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
-
-                eventPayload[4].Size = (arg5.Length + 1) * sizeof(char);
-                eventPayload[4].DataPointer = (IntPtr)arg5Ptr;
-
-                WriteEventCore(eventId, 5, eventPayload);
-            }
-        }
-
-        /// <summary>
-        ///   Writes an event with five string arguments into a stack allocated
-        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
-        /// </summary>
-        ///
-        /// <param name="eventId">The identifier of the event.</param>
-        /// <param name="arg1">The first argument.</param>
-        /// <param name="arg2">The second argument.</param>
-        /// <param name="arg3">The third argument.</param>
-        /// <param name="arg4">The fourth argument.</param>
-        /// <param name="arg5">The fifth argument.</param>
-        /// <param name="arg6">The sixth argument.</param>
-        ///
-        [NonEvent]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
-                                       string arg1,
-                                       string arg2,
-                                       string arg3,
-                                       string arg4,
-                                       string arg5,
-                                       string arg6)
-        {
-            fixed (char* arg1Ptr = arg1)
-            fixed (char* arg2Ptr = arg2)
-            fixed (char* arg3Ptr = arg3)
-            fixed (char* arg4Ptr = arg4)
-            fixed (char* arg5Ptr = arg5)
-            fixed (char* arg6Ptr = arg6)
-            {
-                var eventPayload = stackalloc EventData[6];
-
-                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
-                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
-
-                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
-                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
-
-                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
-                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
-
-                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
-                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
-
-                eventPayload[4].Size = (arg5.Length + 1) * sizeof(char);
-                eventPayload[4].DataPointer = (IntPtr)arg5Ptr;
-
-                eventPayload[5].Size = (arg6.Length + 1) * sizeof(char);
-                eventPayload[5].DataPointer = (IntPtr)arg6Ptr;
-
-                WriteEventCore(eventId, 6, eventPayload);
-            }
-        }
-
-        /// <summary>
-        ///   Writes an event with five string arguments into a stack allocated
-        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
-        /// </summary>
-        ///
-        /// <param name="eventId">The identifier of the event.</param>
-        /// <param name="arg1">The first argument.</param>
-        /// <param name="arg2">The second argument.</param>
-        /// <param name="arg3">The third argument.</param>
-        /// <param name="arg4">The fourth argument.</param>
-        /// <param name="arg5">The fifth argument.</param>
-        /// <param name="arg6">The sixth argument.</param>
-        /// <param name="arg7">The seventh argument.</param>
-        ///
-        [NonEvent]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
-                                       string arg1,
-                                       string arg2,
-                                       string arg3,
-                                       string arg4,
-                                       string arg5,
-                                       string arg6,
-                                       string arg7)
-        {
-            fixed (char* arg1Ptr = arg1)
-            fixed (char* arg2Ptr = arg2)
-            fixed (char* arg3Ptr = arg3)
-            fixed (char* arg4Ptr = arg4)
-            fixed (char* arg5Ptr = arg5)
-            fixed (char* arg6Ptr = arg6)
-            fixed (char* arg7Ptr = arg7)
-            {
-                var eventPayload = stackalloc EventData[7];
-
-                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
-                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
-
-                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
-                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
-
-                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
-                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
-
-                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
-                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
-
-                eventPayload[4].Size = (arg5.Length + 1) * sizeof(char);
-                eventPayload[4].DataPointer = (IntPtr)arg5Ptr;
-
-                eventPayload[5].Size = (arg6.Length + 1) * sizeof(char);
-                eventPayload[5].DataPointer = (IntPtr)arg6Ptr;
-
-                eventPayload[6].Size = (arg7.Length + 1) * sizeof(char);
-                eventPayload[6].DataPointer = (IntPtr)arg7Ptr;
-
-                WriteEventCore(eventId, 7, eventPayload);
             }
         }
     }

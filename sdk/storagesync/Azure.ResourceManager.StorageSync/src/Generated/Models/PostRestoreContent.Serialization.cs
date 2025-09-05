@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PostRestoreContent)} does not support writing '{options.Format}' format.");
             }

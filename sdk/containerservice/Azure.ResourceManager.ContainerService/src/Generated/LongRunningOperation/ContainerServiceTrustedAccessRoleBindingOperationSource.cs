@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ContainerService
 
         ContainerServiceTrustedAccessRoleBindingResource IOperationSource<ContainerServiceTrustedAccessRoleBindingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerServiceTrustedAccessRoleBindingData>(response.Content);
+            var data = ModelReaderWriter.Read<ContainerServiceTrustedAccessRoleBindingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceContext.Default);
             return new ContainerServiceTrustedAccessRoleBindingResource(_client, data);
         }
 
         async ValueTask<ContainerServiceTrustedAccessRoleBindingResource> IOperationSource<ContainerServiceTrustedAccessRoleBindingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerServiceTrustedAccessRoleBindingData>(response.Content);
+            var data = ModelReaderWriter.Read<ContainerServiceTrustedAccessRoleBindingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceContext.Default);
             return await Task.FromResult(new ContainerServiceTrustedAccessRoleBindingResource(_client, data)).ConfigureAwait(false);
         }
     }

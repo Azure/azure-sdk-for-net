@@ -10,6 +10,31 @@
 
 ### Other Changes
 
+## 1.4.4 (2025-07-28)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Storage` AOT-compatible
+
+## 1.4.3 (2025-06-24)
+
+### Features Added
+
+- Updated per swagger change for StorageAction GA
+
+## 1.4.2 (2025-04-25)
+
+### Breaking Changes
+
+- Fixed issue https://github.com/Azure/azure-sdk-for-net/issues/49612.
+
+## 1.4.1 (2025-04-24)
+
+### Features Added
+
+- Added "Accepted" to StorageTaskAssignment properties ProvisioningState.
+- Updated doc link in API description.
+
 ## 1.4.0 (2025-02-18)
 
 ### Features Added

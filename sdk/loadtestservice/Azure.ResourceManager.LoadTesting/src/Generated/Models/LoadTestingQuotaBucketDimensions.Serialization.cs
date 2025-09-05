@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLoadTestingContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LoadTestingQuotaBucketDimensions)} does not support writing '{options.Format}' format.");
             }

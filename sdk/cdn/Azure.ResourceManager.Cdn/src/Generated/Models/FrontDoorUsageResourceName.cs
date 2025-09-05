@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The usage names. </summary>
+    /// <summary>
+    /// The usage names.
+    /// Serialized Name: UsageName
+    /// </summary>
     public partial class FrontDoorUsageResourceName
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorUsageResourceName"/>. </summary>
-        /// <param name="value"> A string describing the resource name. </param>
-        /// <param name="localizedValue"> A localized string describing the resource name. </param>
+        /// <param name="value">
+        /// A string describing the resource name.
+        /// Serialized Name: UsageName.value
+        /// </param>
+        /// <param name="localizedValue">
+        /// A localized string describing the resource name.
+        /// Serialized Name: UsageName.localizedValue
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorUsageResourceName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A string describing the resource name. </summary>
+        /// <summary>
+        /// A string describing the resource name.
+        /// Serialized Name: UsageName.value
+        /// </summary>
         public string Value { get; }
-        /// <summary> A localized string describing the resource name. </summary>
+        /// <summary>
+        /// A localized string describing the resource name.
+        /// Serialized Name: UsageName.localizedValue
+        /// </summary>
         public string LocalizedValue { get; }
     }
 }

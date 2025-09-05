@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevCenter
 {
     public partial class DevCenterProjectEnvironmentResource : IJsonModel<DevCenterProjectEnvironmentData>
     {
+        private static DevCenterProjectEnvironmentData s_dataDeserializationInstance;
+        private static DevCenterProjectEnvironmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevCenterProjectEnvironmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterProjectEnvironmentData>)Data).Write(writer, options);
 
-        DevCenterProjectEnvironmentData IJsonModel<DevCenterProjectEnvironmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterProjectEnvironmentData>)Data).Create(ref reader, options);
+        DevCenterProjectEnvironmentData IJsonModel<DevCenterProjectEnvironmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterProjectEnvironmentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevCenterProjectEnvironmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevCenterProjectEnvironmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevCenterProjectEnvironmentData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
-        DevCenterProjectEnvironmentData IPersistableModel<DevCenterProjectEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevCenterProjectEnvironmentData>(data, options);
+        DevCenterProjectEnvironmentData IPersistableModel<DevCenterProjectEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevCenterProjectEnvironmentData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
-        string IPersistableModel<DevCenterProjectEnvironmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevCenterProjectEnvironmentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevCenterProjectEnvironmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevCenterProjectEnvironmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

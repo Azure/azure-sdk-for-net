@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 
         ConnectedClusterLoadBalancerResource IOperationSource<ConnectedClusterLoadBalancerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectedClusterLoadBalancerData>(response.Content);
+            var data = ModelReaderWriter.Read<ConnectedClusterLoadBalancerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
             return new ConnectedClusterLoadBalancerResource(_client, data);
         }
 
         async ValueTask<ConnectedClusterLoadBalancerResource> IOperationSource<ConnectedClusterLoadBalancerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectedClusterLoadBalancerData>(response.Content);
+            var data = ModelReaderWriter.Read<ConnectedClusterLoadBalancerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
             return await Task.FromResult(new ConnectedClusterLoadBalancerResource(_client, data)).ConfigureAwait(false);
         }
     }

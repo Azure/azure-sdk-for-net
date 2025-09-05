@@ -34,9 +34,23 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <returns> A new <see cref="NetApp.NetAppBackupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
 
-        public static NetAppBackupData NetAppBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, AzureLocation location = default, string backupId = null, DateTimeOffset? createdOn = null, string provisioningState = null, long? size = null, string label = null, NetAppBackupType? backupType = null, string failureReason = null, string volumeName = null, bool? useExistingSnapshot = null)
+        public static NetAppBackupData NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, AzureLocation location, string backupId = null, DateTimeOffset? createdOn = null, string provisioningState = null, long? size = null, string label = null, NetAppBackupType? backupType = null, string failureReason = null, string volumeName = null, bool? useExistingSnapshot = null)
         {
-            return new NetAppBackupData(id, name, resourceType, systemData, backupId, createdOn, provisioningState, size, label, backupType, failureReason, null, useExistingSnapshot, snapshotName: null, backupPolicyArmResourceId: null,  serializedAdditionalRawData: null);
+            return NetAppBackupData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                backupId: backupId,
+                createdOn: createdOn,
+                snapshotCreationOn: null,
+                provisioningState: provisioningState,
+                size: size,
+                label: label,
+                backupType: backupType,
+                failureReason: failureReason,
+                useExistingSnapshot: useExistingSnapshot
+            );
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeGroupMetadata"/>. </summary>
@@ -139,26 +153,25 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="snapshotName"> The name of the snapshot. </param>
         /// <param name="backupPolicyResourceId"> ResourceId used to identify the backup policy. </param>
         /// <returns> A new <see cref="NetApp.NetAppBackupData"/> instance for mocking. </returns>
-        public static NetAppBackupData NetAppBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string backupId = null, DateTimeOffset? createdOn = null, string provisioningState = null, long? size = null, string label = null, NetAppBackupType? backupType = null, string failureReason = null, ResourceIdentifier volumeResourceId = null, bool? useExistingSnapshot = null, string snapshotName = null, string backupPolicyResourceId = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppBackupData NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupId, DateTimeOffset? createdOn, string provisioningState = null, long? size = null, string label = null, NetAppBackupType? backupType = null, string failureReason = null, ResourceIdentifier volumeResourceId = null, bool? useExistingSnapshot = null, string snapshotName = null, string backupPolicyResourceId = null)
         {
-            ResourceIdentifier backupPolicyArmResourceId = new ResourceIdentifier(backupPolicyResourceId);
-            return new NetAppBackupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                backupId,
-                createdOn,
-                provisioningState,
-                size,
-                label,
-                backupType,
-                failureReason,
-                volumeResourceId,
-                useExistingSnapshot,
-                snapshotName,
-                backupPolicyArmResourceId,
-                serializedAdditionalRawData: null);
+            return NetAppBackupData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                backupId: backupId,
+                createdOn: createdOn,
+                provisioningState: provisioningState,
+                size: size,
+                label: label,
+                backupType: backupType,
+                failureReason: failureReason,
+                volumeResourceId: volumeResourceId,
+                useExistingSnapshot: useExistingSnapshot,
+                snapshotName: snapshotName,
+                new ResourceIdentifier(backupPolicyResourceId));
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppKeyVaultProperties"/>. </summary>

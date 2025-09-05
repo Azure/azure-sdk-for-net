@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Orbit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Orbital.Tests", "tests\Azure.ResourceManager.Orbital.Tests.csproj", "{61CDECA4-8737-47F0-AD51-1E44C5B3D2DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Orbital.Samples", "samples\Azure.ResourceManager.Orbital.Samples.csproj", "{6D7FCB8A-8B0C-497D-885B-9526569CC2CD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,18 +41,6 @@ Global
 		{61CDECA4-8737-47F0-AD51-1E44C5B3D2DA}.Release|x64.Build.0 = Release|Any CPU
 		{61CDECA4-8737-47F0-AD51-1E44C5B3D2DA}.Release|x86.ActiveCfg = Release|Any CPU
 		{61CDECA4-8737-47F0-AD51-1E44C5B3D2DA}.Release|x86.Build.0 = Release|Any CPU
-		{6D7FCB8A-8B0C-497D-885B-9526569CC2CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D7FCB8A-8B0C-497D-885B-9526569CC2CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D7FCB8A-8B0C-497D-885B-9526569CC2CD}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{6D7FCB8A-8B0C-497D-885B-9526569CC2CD}.Debug|x64.Build.0 = Debug|Any CPU
-		{6D7FCB8A-8B0C-497D-885B-9526569CC2CD}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{6D7FCB8A-8B0C-497D-885B-9526569CC2CD}.Debug|x86.Build.0 = Debug|Any CPU
-		{6D7FCB8A-8B0C-497D-885B-9526569CC2CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D7FCB8A-8B0C-497D-885B-9526569CC2CD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D7FCB8A-8B0C-497D-885B-9526569CC2CD}.Release|x64.ActiveCfg = Release|Any CPU
-		{6D7FCB8A-8B0C-497D-885B-9526569CC2CD}.Release|x64.Build.0 = Release|Any CPU
-		{6D7FCB8A-8B0C-497D-885B-9526569CC2CD}.Release|x86.ActiveCfg = Release|Any CPU
-		{6D7FCB8A-8B0C-497D-885B-9526569CC2CD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

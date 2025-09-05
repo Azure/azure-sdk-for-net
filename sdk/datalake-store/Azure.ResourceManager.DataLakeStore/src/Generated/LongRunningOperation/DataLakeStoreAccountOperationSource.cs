@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataLakeStore
 
         DataLakeStoreAccountResource IOperationSource<DataLakeStoreAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataLakeStoreAccountData>(response.Content);
+            var data = ModelReaderWriter.Read<DataLakeStoreAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataLakeStoreContext.Default);
             return new DataLakeStoreAccountResource(_client, data);
         }
 
         async ValueTask<DataLakeStoreAccountResource> IOperationSource<DataLakeStoreAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataLakeStoreAccountData>(response.Content);
+            var data = ModelReaderWriter.Read<DataLakeStoreAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataLakeStoreContext.Default);
             return await Task.FromResult(new DataLakeStoreAccountResource(_client, data)).ConfigureAwait(false);
         }
     }

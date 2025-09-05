@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The IP tag type. Example: FirstPartyUsage. </summary>
+        [WirePath("ipTagType")]
         public string IPTagType { get; set; }
         /// <summary> The value of the IP tag associated with the public IP. Example: SQL. </summary>
+        [WirePath("tag")]
         public string Tag { get; set; }
     }
 }

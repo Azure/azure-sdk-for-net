@@ -155,6 +155,12 @@ namespace Azure.Storage.DataMovement
                 }
                 await OnTransferStateChangedAsync(TransferState.InProgress).ConfigureAwait(false);
 
+                if (!await _sourceResource.ShouldItemTransferAsync(_cancellationToken).ConfigureAwait(false))
+                {
+                    await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
+                    return;
+                }
+
                 StorageResourceItemProperties sourceProperties =
                     await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
                 if (!sourceProperties.ResourceLength.HasValue)

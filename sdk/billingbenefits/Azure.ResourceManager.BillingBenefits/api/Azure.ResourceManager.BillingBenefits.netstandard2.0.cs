@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.BillingBenefits
 {
+    public partial class AzureResourceManagerBillingBenefitsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerBillingBenefitsContext() { }
+        public static Azure.ResourceManager.BillingBenefits.AzureResourceManagerBillingBenefitsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class BillingBenefitsExtensions
     {
         public static Azure.Response<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasResource> GetBillingBenefitsReservationOrderAlias(this Azure.ResourceManager.Resources.TenantResource tenantResource, string reservationOrderAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

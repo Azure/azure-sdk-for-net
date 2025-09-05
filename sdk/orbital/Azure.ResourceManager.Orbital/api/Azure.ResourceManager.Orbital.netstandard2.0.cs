@@ -44,6 +44,12 @@ namespace Azure.ResourceManager.Orbital
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.AvailableGroundStationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.AvailableGroundStationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureResourceManagerOrbitalContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerOrbitalContext() { }
+        public static Azure.ResourceManager.Orbital.AzureResourceManagerOrbitalContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class OrbitalContactCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Orbital.OrbitalContactResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Orbital.OrbitalContactResource>, System.Collections.IEnumerable
     {
         protected OrbitalContactCollection() { }

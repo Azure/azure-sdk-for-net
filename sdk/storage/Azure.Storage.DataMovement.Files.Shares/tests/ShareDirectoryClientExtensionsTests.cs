@@ -72,7 +72,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 It.IsAny<StorageResource>(),
                 It.Is<StorageResource>(res => res is ShareDirectoryStorageResourceContainer &&
                     (res as ShareDirectoryStorageResourceContainer).ShareDirectoryClient == clientMock.Object &&
-                    (res as ShareDirectoryStorageResourceContainer).ResourceOptions == (useOptions ? storageResourceOptions : null)),
+                    (
+                        useOptions
+                            ? (res as ShareDirectoryStorageResourceContainer).ResourceOptions == storageResourceOptions
+                            : (res as ShareDirectoryStorageResourceContainer).ResourceOptions != null
+                    )
+                ),
                 useOptions ? transferOptions : null,
                 default), Times.Once);
             ExtensionMockTransferManager.VerifyNoOtherCalls();
@@ -100,7 +105,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ExtensionMockTransferManager.Verify(tm => tm.StartTransferAsync(
                 It.Is<StorageResource>(res => res is ShareDirectoryStorageResourceContainer &&
                     (res as ShareDirectoryStorageResourceContainer).ShareDirectoryClient == clientMock.Object &&
-                    (res as ShareDirectoryStorageResourceContainer).ResourceOptions == (useOptions ? storageResourceOptions : null)),
+                    (
+                        useOptions
+                            ? (res as ShareDirectoryStorageResourceContainer).ResourceOptions == storageResourceOptions
+                            : (res as ShareDirectoryStorageResourceContainer).ResourceOptions != null
+                    )
+                ),
                 It.IsAny<StorageResource>(),
                 useOptions ? transferOptions : null,
                 default), Times.Once);

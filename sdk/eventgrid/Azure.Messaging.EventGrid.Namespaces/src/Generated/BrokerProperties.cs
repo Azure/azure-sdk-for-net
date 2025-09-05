@@ -13,46 +13,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
     /// <summary> Properties of the Event Broker operation. </summary>
     public partial class BrokerProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BrokerProperties"/>. </summary>
         /// <param name="lockToken"> The token of the lock on the event. </param>
         /// <param name="deliveryCount"> The attempt count for delivering the event. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="lockToken"/> is null. </exception>
         internal BrokerProperties(string lockToken, int deliveryCount)
         {
-            Argument.AssertNotNull(lockToken, nameof(lockToken));
-
             LockToken = lockToken;
             DeliveryCount = deliveryCount;
         }
@@ -60,21 +28,17 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> Initializes a new instance of <see cref="BrokerProperties"/>. </summary>
         /// <param name="lockToken"> The token of the lock on the event. </param>
         /// <param name="deliveryCount"> The attempt count for delivering the event. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BrokerProperties(string lockToken, int deliveryCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BrokerProperties(string lockToken, int deliveryCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LockToken = lockToken;
             DeliveryCount = deliveryCount;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BrokerProperties"/> for deserialization. </summary>
-        internal BrokerProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The token of the lock on the event. </summary>
         public string LockToken { get; }
+
         /// <summary> The attempt count for delivering the event. </summary>
         public int DeliveryCount { get; }
     }

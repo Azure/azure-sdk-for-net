@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.SecurityCenter
 
         DevOpsRepositoryResource IOperationSource<DevOpsRepositoryResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevOpsRepositoryData>(response.Content);
+            var data = ModelReaderWriter.Read<DevOpsRepositoryData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecurityCenterContext.Default);
             return new DevOpsRepositoryResource(_client, data);
         }
 
         async ValueTask<DevOpsRepositoryResource> IOperationSource<DevOpsRepositoryResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevOpsRepositoryData>(response.Content);
+            var data = ModelReaderWriter.Read<DevOpsRepositoryData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecurityCenterContext.Default);
             return await Task.FromResult(new DevOpsRepositoryResource(_client, data)).ConfigureAwait(false);
         }
     }

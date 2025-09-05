@@ -1,5 +1,12 @@
 namespace Azure.DigitalTwins.Core
 {
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    public partial class AzureDigitalTwinsCoreContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        public AzureDigitalTwinsCoreContext() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.DigitalTwins.Core.AzureDigitalTwinsCoreContext Default { get { throw null; } }
+    }
     public partial class BasicDigitalTwin
     {
         public BasicDigitalTwin() { }
@@ -121,7 +128,7 @@ namespace Azure.DigitalTwins.Core
     }
     public partial class DigitalTwinsClientOptions : Azure.Core.ClientOptions
     {
-        public DigitalTwinsClientOptions(Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion version = Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion.V2023_06_30) { }
+        public DigitalTwinsClientOptions(Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion version = Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion.V2023_10_31) { }
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
         public Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -129,6 +136,7 @@ namespace Azure.DigitalTwins.Core
             V2020_10_31 = 1,
             V2022_05_31 = 2,
             V2023_06_30 = 3,
+            V2023_10_31 = 4,
         }
     }
     public partial class DigitalTwinsEventRoute
@@ -164,10 +172,20 @@ namespace Azure.DigitalTwins.Core
     }
     public static partial class DigitalTwinsModelFactory
     {
+        public static Azure.DigitalTwins.Core.Models.DeleteJob DeleteJob(string id = null, Azure.DigitalTwins.Core.Models.DeleteJobStatus? status = default(Azure.DigitalTwins.Core.Models.DeleteJobStatus?), System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? finishedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? purgeDateTime = default(System.DateTimeOffset?), Azure.DigitalTwins.Core.ErrorInformation error = null) { throw null; }
         public static Azure.DigitalTwins.Core.DigitalTwinsEventRoute DigitalTwinsEventRoute(string id = null, string endpointName = null, string filter = null) { throw null; }
         public static Azure.DigitalTwins.Core.DigitalTwinsModelData DigitalTwinsModelData(System.Collections.Generic.IReadOnlyDictionary<string, string> languageDisplayNames = null, System.Collections.Generic.IReadOnlyDictionary<string, string> languageDescriptions = null, string id = null, System.DateTimeOffset? uploadedOn = default(System.DateTimeOffset?), bool? decommissioned = default(bool?), string dtdlModel = null) { throw null; }
+        public static Azure.DigitalTwins.Core.ErrorInformation ErrorInformation(string code = null, string message = null, System.Collections.Generic.IEnumerable<Azure.DigitalTwins.Core.ErrorInformation> details = null, Azure.DigitalTwins.Core.InnerError innererror = null) { throw null; }
         public static Azure.DigitalTwins.Core.ImportJob ImportJob(string id = null, System.Uri inputBlobUri = null, System.Uri outputBlobUri = null, Azure.DigitalTwins.Core.ImportJobStatus? status = default(Azure.DigitalTwins.Core.ImportJobStatus?), System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastActionDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? finishedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? purgeDateTime = default(System.DateTimeOffset?), Azure.ResponseError error = null) { throw null; }
         public static Azure.DigitalTwins.Core.IncomingRelationship IncomingRelationship(string relationshipId = null, string sourceId = null, string relationshipName = null, string relationshipLink = null) { throw null; }
+    }
+    public partial class ErrorInformation
+    {
+        public ErrorInformation() { }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.DigitalTwins.Core.ErrorInformation> Details { get { throw null; } }
+        public Azure.DigitalTwins.Core.InnerError Innererror { get { throw null; } set { } }
+        public string Message { get { throw null; } }
     }
     public partial class GetModelsOptions
     {
@@ -218,8 +236,53 @@ namespace Azure.DigitalTwins.Core
         public string RelationshipName { get { throw null; } }
         public string SourceId { get { throw null; } }
     }
+    public partial class InnerError
+    {
+        public InnerError() { }
+        public string Code { get { throw null; } set { } }
+        public Azure.DigitalTwins.Core.InnerError Innererror { get { throw null; } set { } }
+    }
     public static partial class QueryChargeHelper
     {
         public static bool TryGetQueryCharge<T>(Azure.Page<T> page, out float queryCharge) { throw null; }
+    }
+}
+namespace Azure.DigitalTwins.Core.Models
+{
+    public partial class DeleteJob
+    {
+        internal DeleteJob() { }
+        public System.DateTimeOffset? CreatedDateTime { get { throw null; } }
+        public Azure.DigitalTwins.Core.ErrorInformation Error { get { throw null; } }
+        public System.DateTimeOffset? FinishedDateTime { get { throw null; } }
+        public string Id { get { throw null; } }
+        public System.DateTimeOffset? PurgeDateTime { get { throw null; } }
+        public Azure.DigitalTwins.Core.Models.DeleteJobStatus? Status { get { throw null; } }
+    }
+    public partial class DeleteJobsAddOptions
+    {
+        public DeleteJobsAddOptions() { }
+        public string Traceparent { get { throw null; } set { } }
+        public string Tracestate { get { throw null; } set { } }
+    }
+    public partial class DeleteJobsGetByIdOptions
+    {
+        public DeleteJobsGetByIdOptions() { }
+        public string Traceparent { get { throw null; } set { } }
+        public string Tracestate { get { throw null; } set { } }
+    }
+    public partial class DeleteJobsListOptions
+    {
+        public DeleteJobsListOptions() { }
+        public int? MaxItemsPerPage { get { throw null; } set { } }
+        public string Traceparent { get { throw null; } set { } }
+        public string Tracestate { get { throw null; } set { } }
+    }
+    public enum DeleteJobStatus
+    {
+        Notstarted = 0,
+        Running = 1,
+        Failed = 2,
+        Succeeded = 3,
     }
 }

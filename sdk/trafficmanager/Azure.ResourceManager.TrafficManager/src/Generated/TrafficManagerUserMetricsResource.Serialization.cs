@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.TrafficManager
 {
     public partial class TrafficManagerUserMetricsResource : IJsonModel<TrafficManagerUserMetricData>
     {
+        private static TrafficManagerUserMetricData s_dataDeserializationInstance;
+        private static TrafficManagerUserMetricData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<TrafficManagerUserMetricData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerUserMetricData>)Data).Write(writer, options);
 
-        TrafficManagerUserMetricData IJsonModel<TrafficManagerUserMetricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerUserMetricData>)Data).Create(ref reader, options);
+        TrafficManagerUserMetricData IJsonModel<TrafficManagerUserMetricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerUserMetricData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TrafficManagerUserMetricData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<TrafficManagerUserMetricData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrafficManagerUserMetricData>(Data, options, AzureResourceManagerTrafficManagerContext.Default);
 
-        TrafficManagerUserMetricData IPersistableModel<TrafficManagerUserMetricData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficManagerUserMetricData>(data, options);
+        TrafficManagerUserMetricData IPersistableModel<TrafficManagerUserMetricData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficManagerUserMetricData>(data, options, AzureResourceManagerTrafficManagerContext.Default);
 
-        string IPersistableModel<TrafficManagerUserMetricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficManagerUserMetricData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<TrafficManagerUserMetricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficManagerUserMetricData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

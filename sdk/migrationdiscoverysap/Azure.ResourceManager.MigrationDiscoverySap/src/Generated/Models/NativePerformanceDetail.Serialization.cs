@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NativePerformanceDetail)} does not support writing '{options.Format}' format.");
             }

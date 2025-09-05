@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         DeviceProvisioningServicesPrivateEndpointConnectionResource IOperationSource<DeviceProvisioningServicesPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeviceProvisioningServicesPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<DeviceProvisioningServicesPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceProvisioningServicesContext.Default);
             return new DeviceProvisioningServicesPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<DeviceProvisioningServicesPrivateEndpointConnectionResource> IOperationSource<DeviceProvisioningServicesPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeviceProvisioningServicesPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<DeviceProvisioningServicesPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceProvisioningServicesContext.Default);
             return await Task.FromResult(new DeviceProvisioningServicesPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

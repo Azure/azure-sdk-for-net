@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the state of a log scrubbing rule. Default value is enabled. </summary>
+    /// <summary>
+    /// Defines the state of a log scrubbing rule. Default value is enabled.
+    /// Serialized Name: ScrubbingRuleEntryState
+    /// </summary>
     public readonly partial struct ScrubbingRuleEntryState : IEquatable<ScrubbingRuleEntryState>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: ScrubbingRuleEntryState.Enabled
+        /// </summary>
         public static ScrubbingRuleEntryState Enabled { get; } = new ScrubbingRuleEntryState(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: ScrubbingRuleEntryState.Disabled
+        /// </summary>
         public static ScrubbingRuleEntryState Disabled { get; } = new ScrubbingRuleEntryState(DisabledValue);
         /// <summary> Determines if two <see cref="ScrubbingRuleEntryState"/> values are the same. </summary>
         public static bool operator ==(ScrubbingRuleEntryState left, ScrubbingRuleEntryState right) => left.Equals(right);

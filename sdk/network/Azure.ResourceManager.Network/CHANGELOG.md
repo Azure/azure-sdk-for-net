@@ -1,6 +1,6 @@
 # Release History
 
-## 1.11.0-beta.2 (Unreleased)
+## 1.12.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,40 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.11.3 (2025-08-21)
+
+### Features Added
+
+- Added `WirePath` attributes to all properties in all models for provisioning library to consume.
+
+## 1.11.2 (2025-08-11)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Network` AOT-compatible
+
+### Bugs Fixed
+
+- Fixed an issue in `ManagedRuleSetRuleGroup` deserialization where rule IDs could be either strings or numbers in JSON, causing `InvalidOperationException` when parsing mixed-type arrays.
+
+## 1.11.1 (2025-07-01)
+
+### Bugs Fixed
+
+- Fixed an issue that if `LoadBalancingRuleData.FrontendIPConfigurationId` or other hidden properties on `LoadBalancingRuleData` class are assigned with values, the corresponding service operation would fail with `NullReferenceException` because the collection properties on `LoadBalancingRuleData` class are not initialized.
+
+## 1.11.0 (2025-05-22)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-06-preview' to 'package-2024-07-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/e09cd33f2f497a30aff4d6ca706e4fd01cbb384d/specification/network/resource-manager/readme.md.
+
+## 1.11.0-beta.2 (2025-05-15)
+
+### Bugs Fixed
+
+- Fix issue #49779, add custom serialization and deserialization methods for `ResourceUri` in `VirtualHubInboundRoutesContent` & `VirtualHubOutboundRoutesContent`.
 
 ## 1.11.0-beta.1 (2025-02-14)
 

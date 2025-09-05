@@ -663,6 +663,8 @@ namespace Azure.Storage.Blobs.Test
                 null,
                 null,
                 null,
+                null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
+                null, // SignedDelegatedUserObjectId, will be added in future release.
                 constants.Sas.IPRange.ToString(),
                 SasExtensions.ToProtocolString(constants.Sas.Protocol),
                 SasQueryParametersInternals.DefaultSasVersionInternal,

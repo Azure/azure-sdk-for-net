@@ -65,10 +65,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of Verifier Workspace resource. </param>
+        /// <param name="etag"> String representing unique etag for the resource document. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVerifierWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkVerifierWorkspaceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkVerifierWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkVerifierWorkspaceProperties properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -78,6 +80,10 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Properties of Verifier Workspace resource. </summary>
+        [WirePath("properties")]
         public NetworkVerifierWorkspaceProperties Properties { get; set; }
+        /// <summary> String representing unique etag for the resource document. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; }
     }
 }

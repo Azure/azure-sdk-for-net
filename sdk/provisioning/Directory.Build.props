@@ -14,14 +14,24 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(AssemblyName)' != 'Azure.Provisioning' And '$(AssemblyName)' != 'Generator'">
-    <ProjectReference Include="../../Azure.Provisioning/src/Azure.Provisioning.csproj" />
-  </ItemGroup>
+  <!--
+    Temporarily disable warnings from new analyzers:
+      AZC0034: Typename is already used in another library.
+      AZC0035: Missing model factory method
+
+      Tracked by # 51311
+  -->
+  <PropertyGroup>
+    <NoWarn>
+      $(NoWarn);
+      AZC0034;
+      AZC0035;
+    </NoWarn>
+  </PropertyGroup>
 
   <ItemGroup Condition="'$(AssemblyName)' != 'Generator'">
     <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared\Core" />
   </ItemGroup>
-
   <ItemGroup>
     <!--
     Azure.Core isn't being found on builds with

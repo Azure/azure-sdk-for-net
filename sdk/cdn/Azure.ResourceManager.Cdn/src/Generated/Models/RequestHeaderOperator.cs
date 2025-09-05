@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: RequestHeaderOperator
+    /// </summary>
     public readonly partial struct RequestHeaderOperator : IEquatable<RequestHeaderOperator>
     {
         private readonly string _value;
@@ -33,25 +36,55 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Any. </summary>
+        /// <summary>
+        /// Any
+        /// Serialized Name: RequestHeaderOperator.Any
+        /// </summary>
         public static RequestHeaderOperator Any { get; } = new RequestHeaderOperator(AnyValue);
-        /// <summary> Equal. </summary>
+        /// <summary>
+        /// Equal
+        /// Serialized Name: RequestHeaderOperator.Equal
+        /// </summary>
         public static RequestHeaderOperator Equal { get; } = new RequestHeaderOperator(EqualValue);
-        /// <summary> Contains. </summary>
+        /// <summary>
+        /// Contains
+        /// Serialized Name: RequestHeaderOperator.Contains
+        /// </summary>
         public static RequestHeaderOperator Contains { get; } = new RequestHeaderOperator(ContainsValue);
-        /// <summary> BeginsWith. </summary>
+        /// <summary>
+        /// BeginsWith
+        /// Serialized Name: RequestHeaderOperator.BeginsWith
+        /// </summary>
         public static RequestHeaderOperator BeginsWith { get; } = new RequestHeaderOperator(BeginsWithValue);
-        /// <summary> EndsWith. </summary>
+        /// <summary>
+        /// EndsWith
+        /// Serialized Name: RequestHeaderOperator.EndsWith
+        /// </summary>
         public static RequestHeaderOperator EndsWith { get; } = new RequestHeaderOperator(EndsWithValue);
-        /// <summary> LessThan. </summary>
+        /// <summary>
+        /// LessThan
+        /// Serialized Name: RequestHeaderOperator.LessThan
+        /// </summary>
         public static RequestHeaderOperator LessThan { get; } = new RequestHeaderOperator(LessThanValue);
-        /// <summary> LessThanOrEqual. </summary>
+        /// <summary>
+        /// LessThanOrEqual
+        /// Serialized Name: RequestHeaderOperator.LessThanOrEqual
+        /// </summary>
         public static RequestHeaderOperator LessThanOrEqual { get; } = new RequestHeaderOperator(LessThanOrEqualValue);
-        /// <summary> GreaterThan. </summary>
+        /// <summary>
+        /// GreaterThan
+        /// Serialized Name: RequestHeaderOperator.GreaterThan
+        /// </summary>
         public static RequestHeaderOperator GreaterThan { get; } = new RequestHeaderOperator(GreaterThanValue);
-        /// <summary> GreaterThanOrEqual. </summary>
+        /// <summary>
+        /// GreaterThanOrEqual
+        /// Serialized Name: RequestHeaderOperator.GreaterThanOrEqual
+        /// </summary>
         public static RequestHeaderOperator GreaterThanOrEqual { get; } = new RequestHeaderOperator(GreaterThanOrEqualValue);
-        /// <summary> RegEx. </summary>
+        /// <summary>
+        /// RegEx
+        /// Serialized Name: RequestHeaderOperator.RegEx
+        /// </summary>
         public static RequestHeaderOperator RegEx { get; } = new RequestHeaderOperator(RegExValue);
         /// <summary> Determines if two <see cref="RequestHeaderOperator"/> values are the same. </summary>
         public static bool operator ==(RequestHeaderOperator left, RequestHeaderOperator right) => left.Equals(right);

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.VoiceServices
 
         VoiceServicesCommunicationsGatewayResource IOperationSource<VoiceServicesCommunicationsGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VoiceServicesCommunicationsGatewayData>(response.Content);
+            var data = ModelReaderWriter.Read<VoiceServicesCommunicationsGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerVoiceServicesContext.Default);
             return new VoiceServicesCommunicationsGatewayResource(_client, data);
         }
 
         async ValueTask<VoiceServicesCommunicationsGatewayResource> IOperationSource<VoiceServicesCommunicationsGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VoiceServicesCommunicationsGatewayData>(response.Content);
+            var data = ModelReaderWriter.Read<VoiceServicesCommunicationsGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerVoiceServicesContext.Default);
             return await Task.FromResult(new VoiceServicesCommunicationsGatewayResource(_client, data)).ConfigureAwait(false);
         }
     }

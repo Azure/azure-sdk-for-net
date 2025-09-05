@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class DdosProtectionPlanResource : IJsonModel<DdosProtectionPlanData>
     {
+        private static DdosProtectionPlanData s_dataDeserializationInstance;
+        private static DdosProtectionPlanData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DdosProtectionPlanData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DdosProtectionPlanData>)Data).Write(writer, options);
 
-        DdosProtectionPlanData IJsonModel<DdosProtectionPlanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DdosProtectionPlanData>)Data).Create(ref reader, options);
+        DdosProtectionPlanData IJsonModel<DdosProtectionPlanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DdosProtectionPlanData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DdosProtectionPlanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DdosProtectionPlanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DdosProtectionPlanData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        DdosProtectionPlanData IPersistableModel<DdosProtectionPlanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DdosProtectionPlanData>(data, options);
+        DdosProtectionPlanData IPersistableModel<DdosProtectionPlanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DdosProtectionPlanData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<DdosProtectionPlanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DdosProtectionPlanData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DdosProtectionPlanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DdosProtectionPlanData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

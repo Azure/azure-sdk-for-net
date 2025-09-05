@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HDInsight.Containers
 {
     public partial class HDInsightClusterResource : IJsonModel<HDInsightClusterData>
     {
+        private static HDInsightClusterData s_dataDeserializationInstance;
+        private static HDInsightClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HDInsightClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HDInsightClusterData>)Data).Write(writer, options);
 
-        HDInsightClusterData IJsonModel<HDInsightClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HDInsightClusterData>)Data).Create(ref reader, options);
+        HDInsightClusterData IJsonModel<HDInsightClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HDInsightClusterData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HDInsightClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HDInsightClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HDInsightClusterData>(Data, options, AzureResourceManagerHDInsightContainersContext.Default);
 
-        HDInsightClusterData IPersistableModel<HDInsightClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HDInsightClusterData>(data, options);
+        HDInsightClusterData IPersistableModel<HDInsightClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HDInsightClusterData>(data, options, AzureResourceManagerHDInsightContainersContext.Default);
 
-        string IPersistableModel<HDInsightClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HDInsightClusterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HDInsightClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HDInsightClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

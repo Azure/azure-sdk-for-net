@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                JsonSerializer.Serialize(writer, Subnet);
+                ((IJsonModel<WritableSubResource>)Subnet).Write(writer, options);
             }
             if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     {
                         continue;
                     }
-                    subnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    subnet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerServiceBusContext.Default);
                     continue;
                 }
                 if (property.NameEquals("ignoreMissingVnetServiceEndpoint"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceBusContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

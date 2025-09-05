@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerJobStepResource : IJsonModel<SqlServerJobStepData>
     {
+        private static SqlServerJobStepData s_dataDeserializationInstance;
+        private static SqlServerJobStepData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlServerJobStepData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobStepData>)Data).Write(writer, options);
 
-        SqlServerJobStepData IJsonModel<SqlServerJobStepData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobStepData>)Data).Create(ref reader, options);
+        SqlServerJobStepData IJsonModel<SqlServerJobStepData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobStepData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerJobStepData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerJobStepData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerJobStepData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerJobStepData IPersistableModel<SqlServerJobStepData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobStepData>(data, options);
+        SqlServerJobStepData IPersistableModel<SqlServerJobStepData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobStepData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerJobStepData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobStepData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlServerJobStepData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobStepData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

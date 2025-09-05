@@ -78,6 +78,7 @@ namespace Azure.AI.Language.Conversations.Models
                 switch (discriminator.GetString())
                 {
                     case "Conversation": return ConversationLanguageUnderstandingInput.DeserializeConversationLanguageUnderstandingInput(element, options);
+                    case "ConversationalAI": return ConversationalAITask.DeserializeConversationalAITask(element, options);
                 }
             }
             return UnknownAnalyzeConversationInput.DeserializeUnknownAnalyzeConversationInput(element, options);
@@ -90,7 +91,7 @@ namespace Azure.AI.Language.Conversations.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AnalyzeConversationInput)} does not support writing '{options.Format}' format.");
             }

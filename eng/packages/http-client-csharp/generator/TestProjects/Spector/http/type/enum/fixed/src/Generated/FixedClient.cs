@@ -16,7 +16,7 @@ namespace _Type._Enum.Fixed
 
         public FixedClient(Uri endpoint, FixedClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual String GetStringClient() => throw null;
     }

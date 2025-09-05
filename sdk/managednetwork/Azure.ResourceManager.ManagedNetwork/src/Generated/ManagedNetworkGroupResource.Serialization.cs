@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagedNetwork
 {
     public partial class ManagedNetworkGroupResource : IJsonModel<ManagedNetworkGroupData>
     {
+        private static ManagedNetworkGroupData s_dataDeserializationInstance;
+        private static ManagedNetworkGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ManagedNetworkGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedNetworkGroupData>)Data).Write(writer, options);
 
-        ManagedNetworkGroupData IJsonModel<ManagedNetworkGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedNetworkGroupData>)Data).Create(ref reader, options);
+        ManagedNetworkGroupData IJsonModel<ManagedNetworkGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedNetworkGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedNetworkGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedNetworkGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedNetworkGroupData>(Data, options, AzureResourceManagerManagedNetworkContext.Default);
 
-        ManagedNetworkGroupData IPersistableModel<ManagedNetworkGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedNetworkGroupData>(data, options);
+        ManagedNetworkGroupData IPersistableModel<ManagedNetworkGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedNetworkGroupData>(data, options, AzureResourceManagerManagedNetworkContext.Default);
 
-        string IPersistableModel<ManagedNetworkGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedNetworkGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ManagedNetworkGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedNetworkGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

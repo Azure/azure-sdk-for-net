@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Avs
 
         WorkloadNetworkDnsZoneResource IOperationSource<WorkloadNetworkDnsZoneResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadNetworkDnsZoneData>(response.Content);
+            var data = ModelReaderWriter.Read<WorkloadNetworkDnsZoneData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
             return new WorkloadNetworkDnsZoneResource(_client, data);
         }
 
         async ValueTask<WorkloadNetworkDnsZoneResource> IOperationSource<WorkloadNetworkDnsZoneResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadNetworkDnsZoneData>(response.Content);
+            var data = ModelReaderWriter.Read<WorkloadNetworkDnsZoneData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
             return await Task.FromResult(new WorkloadNetworkDnsZoneResource(_client, data)).ConfigureAwait(false);
         }
     }

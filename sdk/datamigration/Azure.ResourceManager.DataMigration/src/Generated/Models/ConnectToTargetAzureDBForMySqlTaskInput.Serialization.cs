@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            MySqlConnectionInfo sourceConnectionInfo = default;
-            MySqlConnectionInfo targetConnectionInfo = default;
+            DataMigrationMySqlConnectionInfo sourceConnectionInfo = default;
+            DataMigrationMySqlConnectionInfo targetConnectionInfo = default;
             bool? isOfflineMigration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = DataMigrationMySqlConnectionInfo.DeserializeDataMigrationMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = DataMigrationMySqlConnectionInfo.DeserializeDataMigrationMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isOfflineMigration"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForMySqlTaskInput)} does not support writing '{options.Format}' format.");
             }

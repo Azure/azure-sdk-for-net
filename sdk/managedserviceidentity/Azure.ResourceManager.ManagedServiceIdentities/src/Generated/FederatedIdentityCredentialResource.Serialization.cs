@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 {
     public partial class FederatedIdentityCredentialResource : IJsonModel<FederatedIdentityCredentialData>
     {
+        private static FederatedIdentityCredentialData s_dataDeserializationInstance;
+        private static FederatedIdentityCredentialData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FederatedIdentityCredentialData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FederatedIdentityCredentialData>)Data).Write(writer, options);
 
-        FederatedIdentityCredentialData IJsonModel<FederatedIdentityCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FederatedIdentityCredentialData>)Data).Create(ref reader, options);
+        FederatedIdentityCredentialData IJsonModel<FederatedIdentityCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FederatedIdentityCredentialData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FederatedIdentityCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FederatedIdentityCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FederatedIdentityCredentialData>(Data, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
 
-        FederatedIdentityCredentialData IPersistableModel<FederatedIdentityCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FederatedIdentityCredentialData>(data, options);
+        FederatedIdentityCredentialData IPersistableModel<FederatedIdentityCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FederatedIdentityCredentialData>(data, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
 
-        string IPersistableModel<FederatedIdentityCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FederatedIdentityCredentialData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FederatedIdentityCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FederatedIdentityCredentialData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems. </summary>
+    /// <summary>
+    /// The Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems.
+    /// Serialized Name: Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems
+    /// </summary>
     public partial class Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems
     {
         /// <summary>
@@ -51,8 +54,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems"/>. </summary>
-        /// <param name="dateOn"></param>
-        /// <param name="value"></param>
+        /// <param name="dateOn"> Serialized Name: Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems.dateTime. </param>
+        /// <param name="value"> Serialized Name: Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems.value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(DateTimeOffset? dateOn, float? value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +64,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the date on. </summary>
+        /// <summary> Serialized Name: Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems.dateTime. </summary>
         public DateTimeOffset? DateOn { get; }
-        /// <summary> Gets the value. </summary>
+        /// <summary> Serialized Name: Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems.value. </summary>
         public float? Value { get; }
     }
 }
