@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetEdgeSites_ListBySubscriptionGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/SitesBySubscription_List_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesBySubscription_List_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetSitesBySubscription_GetSiteSubscriptionGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/SitesBySubscription_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesBySubscription_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateSitesBySubscription_CreateSiteSubscriptionGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/SitesBySubscription_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesBySubscription_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateSitesBySubscription_PatchSiteSubscriptionGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/SitesBySubscription_Update_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesBySubscription_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SiteManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task DeleteSitesBySubscription_DeleteSiteSubscriptionGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-03-01-preview/SitesBySubscription_Delete_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/SitesBySubscription_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "Site_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
