@@ -86,18 +86,25 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Database principal role. </summary>
+        [WirePath("role")]
         public KustoDatabasePrincipalRole Role { get; set; }
         /// <summary> Database principal name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Database principal type. </summary>
+        [WirePath("type")]
         public KustoDatabasePrincipalType PrincipalType { get; set; }
         /// <summary> Database principal fully qualified name. </summary>
+        [WirePath("fqn")]
         public string Fqn { get; set; }
         /// <summary> Database principal email if exists. </summary>
+        [WirePath("email")]
         public string Email { get; set; }
         /// <summary> Application id - relevant only for application principal type. </summary>
+        [WirePath("appId")]
         public string AppId { get; set; }
         /// <summary> The tenant name of the principal. </summary>
+        [WirePath("tenantName")]
         public string TenantName { get; }
     }
 }

@@ -1,1 +1,0 @@
-ILC : warning IL3000: Microsoft\.Identity\.Client\.NativeInterop\.Platform\.GetExecutingAssemblyDirectory\(\): 'System\.Reflection\.Assembly\.Location\.get' always returns an empty string for assemblies embedded in a single-file app\. If the path to the app directory is needed, consider calling 'System\.AppContext\.BaseDirectory'

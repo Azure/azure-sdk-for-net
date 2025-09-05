@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 
@@ -56,7 +57,7 @@ namespace Azure.Health.Deidentification
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
+                ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,7 +139,7 @@ namespace Azure.Health.Deidentification
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(prop.Value.GetRawText());
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options, AzureHealthDeidentificationContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

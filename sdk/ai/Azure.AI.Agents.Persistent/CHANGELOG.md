@@ -3,10 +3,15 @@
 ## 1.2.0-beta.4 (Unreleased)
 
 ### Features Added
+- Updated `Microsoft.Extensions.AI.Abstractions` dependency to version 9.8.0.`
+- Added support of `FileSearchTool` and `CodeInterpreterTool` for `PersistentAgentsChatClient`
+- Bugfix: Addressed issues related to `ResponseFormat` when using `PersistentAgentsChatClient` with Structured Outputs.
+- Make `Azure.AI.Agents.Persistent` AOT compatible.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fix handling of streaming update of unexpected type [issue](https://github.com/Azure/azure-sdk-for-net/issues/52407).
 
 ### Other Changes
 
