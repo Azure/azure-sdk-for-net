@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Playwright.Models
 {
-    /// <summary> Playwright quota names. </summary>
+    /// <summary> Available Playwright quota types. </summary>
     public readonly partial struct PlaywrightQuotaName : IEquatable<PlaywrightQuotaName>
     {
         private readonly string _value;
