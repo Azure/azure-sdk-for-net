@@ -44,31 +44,4 @@ if (!$releasePlan)
 
 LogDebug "Updating pull request in release plan"
 Update-PullRequestInReleasePlan $ReleasePlanWorkItemId $PullRequestUrl $Status $LanguageName
-
-$releasePlanLink = $releasePlan["Custom.ReleasePlanLink"]
-$releasePlanSubmittedBy = $releasePlan["Custom.ReleasePlanSubmittedby"]
-$ReleasePlanTitle = $releasePlan["System.Title"]
-LogDebug "Release plan title: $ReleasePlanTitle"
-LogDebug "Release plan link: $releasePlanLink"
-Write-Host "Submitted by: $releasePlanSubmittedBy"
-
-# Add a comment in pull request to provide release plan context
-$regex = [regex]::new("https://github.com/(?<owner>[^/]+)/(?<repo>[^/]+)/pull/(?<prNumber>\d+)")
-if ($PullRequestUrl -and $PullRequestUrl -match $regex)
-{
-    $owner = $matches['owner']
-    $repo = $matches['repo']
-    $prNumber = $matches['prNumber']
-
-    # Generate comment to add release plan context
-    $comment = "## Release plan details`nTitle: $ReleasePlanTitle`nLink: [$releasePlanLink]($releasePlanLink)`nSubmitted by: $releasePlanSubmittedBy"
-    try
-    {
-        $resp =  Add-GitHubIssueComment -RepoOwner $owner -RepoName $repo -IssueNumber $prNumber -Comment $comment -AuthToken $AuthToken
-        LogDebug "Added comment to PR $prNumber in $owner/$repo"
-    }
-    catch
-    {
-        LogError "Failed to add comment to PR $prNumber in $owner/$repo. Error: $_"
-    }
-}
+LogDebug "Updated pull request in release plan"

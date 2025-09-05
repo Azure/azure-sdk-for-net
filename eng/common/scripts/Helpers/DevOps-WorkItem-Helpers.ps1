@@ -1104,5 +1104,10 @@ function Get-ReleasePlan-Link($releasePlanWorkItemId)
   $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
   $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.Id] = $releasePlanWorkItemId"
   $workItem = Invoke-Query $fields $query
+  if (!$workItem)
+  {
+      Write-Host "Release plan with ID $releasePlanWorkItemId not found."
+      return $null
+  }
   return $workItem["fields"]
 }
