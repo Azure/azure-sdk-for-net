@@ -44,13 +44,13 @@ namespace Azure.AI.Agents.Persistent
                 writer.WriteStringValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Optional.IsDefined(RequireApproval))
+            if (Optional.IsDefined(RequireApprovalInternal))
             {
                 writer.WritePropertyName("require_approval"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(RequireApproval);
+				writer.WriteRawValue(RequireApprovalInternal);
 #else
-                using (JsonDocument document = JsonDocument.Parse(RequireApproval, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(RequireApprovalInternal, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }

@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Data Connection name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.Kusto/clusters/databases/dataConnections. </summary>
+        [WirePath("type")]
         public KustoDataConnectionType ResourceType { get; }
     }
 }

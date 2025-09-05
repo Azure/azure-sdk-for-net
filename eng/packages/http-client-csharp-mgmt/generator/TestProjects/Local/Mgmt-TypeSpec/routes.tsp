@@ -9,22 +9,20 @@ using Azure.ResourceManager;
 
 namespace MgmtTypeSpec;
 
-interface FooTasks {
-  /**
-   * Runs the input conditions against input object metadata properties and designates matched objects in response.
-   */
-  @autoRoute
-  previewActions is ArmProviderActionSync<
-    Request = FooPreviewAction,
-    Response = FooPreviewAction,
-    Scope = SubscriptionActionScope,
-    Parameters = {
-      @path
-      @segment("locations")
-      location: Azure.Core.azureLocation;
-    }
-  >;
-}
+/**
+ * Runs the input conditions against input object metadata properties and designates matched objects in response.
+ */
+@autoRoute
+op previewActions is ArmProviderActionSync<
+  Request = FooPreviewAction,
+  Response = FooPreviewAction,
+  Scope = SubscriptionActionScope,
+  Parameters = {
+    @path
+    @segment("locations")
+    location: Azure.Core.azureLocation;
+  }
+>;
 
 model FooPreviewAction {
   /** The action to be performed. */

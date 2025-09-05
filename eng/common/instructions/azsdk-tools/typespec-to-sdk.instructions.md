@@ -26,17 +26,17 @@ Your goal is to guide user through the process of generating SDKs from TypeSpec 
 ## Step 3: Verify Authentication and Repository Status
 **Goal**: Ensure user is authenticated and working in correct repository
 **Actions**:
-1. Run `GetGitHubUserDetails` to verify login status
+1. Run `azsdk_get_github_user_details` to verify login status
 2. If not logged in, prompt: "Please login to GitHub using `gh auth login`"
 3. Once logged in, display user details to confirm identity
-4. Run `CheckIfSpecInPublicRepo` to verify repository
+4. Run `azsdk_check_typespec_project_in_public_repo` to verify repository
 5. If not in public repo, inform: "Please make spec changes in Azure/azure-rest-api-specs public repo to generate SDKs"
 **Success Criteria**: User authenticated and working in public Azure repo
 
 ## Step 4: Review and Commit Changes
 **Goal**: Stage and commit TypeSpec modifications
 **Actions**:
-1. Run `GetModifiedTypeSpecProjects` to identify changes
+1. Run `azsdk_get_modified_typespec_projects` to identify changes
 2. If no changes found, inform: "No TypeSpec projects were modified in current branch"
 3. Display all modified files (excluding `.github` and `.vscode` folders)
 4. Prompt user: "Please review the modified files. Do you want to commit these changes? (yes/no)"
@@ -63,7 +63,7 @@ Your goal is to guide user through the process of generating SDKs from TypeSpec 
 ## Step 6: Create Specification Pull Request
 **Goal**: Create PR for TypeSpec changes if not already created
 **Actions**:
-1. Check if spec PR already exists using `GetPullRequestForCurrentBranch`
+1. Check if spec PR already exists using `azsdk_get_pull_request_link_for_current_branch`
 2. If PR exists, display PR details and proceed to Step 7
 3. If no PR exists:
     - Refer to #file:create-spec-pullrequest.instructions.md
@@ -86,7 +86,7 @@ Your goal is to guide user through the process of generating SDKs from TypeSpec 
 ## Step 8: Show Generated SDK PRs
 **Goal**: Display all created SDK pull requests
 **Actions**:
-1. Run `GetSDKPullRequestDetails` to fetch generated SDK PR info.
+1. Run `azsdk_get_sdk_pull_request_link` to fetch generated SDK PR info.
 
 ## Step 9: Validate Label and Codeowners
 **Goal**: Validate the label and all codeowners for a service. Create new label and codeowner entry if none exist.

@@ -43,6 +43,8 @@ interface Foos {
   update is ArmCustomPatchAsync<Foo, Foo>;
 
   list is ArmResourceListByParent<Foo>;
+
+  listBySubscription is ArmListBySubscription<Foo>;
 }
 
 @singleton
