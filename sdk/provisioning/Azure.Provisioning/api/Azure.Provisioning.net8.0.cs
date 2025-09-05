@@ -77,6 +77,7 @@ namespace Azure.Provisioning
         void Azure.Provisioning.IBicepValue.SetReadOnly() { }
         public Azure.Provisioning.Expressions.BicepExpression Compile() { throw null; }
         public static explicit operator Azure.Provisioning.Expressions.BicepExpression (Azure.Provisioning.BicepValue value) { throw null; }
+        public Azure.Provisioning.Expressions.BicepExpression ToBicepExpression() { throw null; }
         public override string ToString() { throw null; }
     }
     public static partial class BicepValueExtensions
