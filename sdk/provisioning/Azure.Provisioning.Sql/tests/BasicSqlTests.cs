@@ -2,22 +2,16 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.Sql.Tests;
 
-public class BasicSqlTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicSqlTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.sql/sql-database/main.bicep")]
-    public async Task CreateSimpleSqlServerAndDatabase()
+    internal static Trycep CreateSimpleSqlServerAndDatabaseTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:SqlServerBasic
@@ -47,7 +41,7 @@ public class BasicSqlTests(bool async)
                 infra.Add(adminPass);
 
                 SqlServer sql =
-                    new(nameof(sql))
+                    new(nameof(sql), SqlServer.ResourceVersions.V2021_11_01)
                     {
                         AdministratorLogin = adminLogin,
                         AdministratorLoginPassword = adminPass
@@ -55,7 +49,7 @@ public class BasicSqlTests(bool async)
                 infra.Add(sql);
 
                 SqlDatabase db =
-                    new(nameof(db))
+                    new(nameof(db), SqlDatabase.ResourceVersions.V2021_11_01)
                     {
                         Parent = sql,
                         Name = dbName,
@@ -65,8 +59,15 @@ public class BasicSqlTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.sql/sql-database/main.bicep")]
+    public async Task CreateSimpleSqlServerAndDatabase()
+    {
+        await using Trycep test = CreateSimpleSqlServerAndDatabaseTest();
+        test.Compare(
             """
             @description('The name of the SQL Database.')
             param dbName string = 'SampleDB'
@@ -99,8 +100,6 @@ public class BasicSqlTests(bool async)
               }
               parent: sql
             }
-            """)
-        .Lint()
-        .ValidateAndDeployAsync();
+            """);
     }
 }
