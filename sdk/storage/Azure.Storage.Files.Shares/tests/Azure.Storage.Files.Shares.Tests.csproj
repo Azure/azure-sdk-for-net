@@ -10,6 +10,7 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Files.Shares.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\" />

@@ -569,6 +569,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
+                filePropertySemantics: options?.PropertySemantics,
                 async: false, // async
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -618,6 +619,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: null,
                 posixProperties: null,
+                filePropertySemantics: null,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -656,6 +658,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
+                filePropertySemantics: options?.PropertySemantics,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -705,6 +708,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: null,
                 posixProperties: null,
+                filePropertySemantics: null,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -732,6 +736,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="posixProperties">
         /// Optional NFS properties.
         /// </param>
+        /// <param name="filePropertySemantics">
+        /// Optional, only applicable to SMB files.
+        /// How attributes and permissions should be set on the file.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -758,6 +766,7 @@ namespace Azure.Storage.Files.Shares
             string filePermission,
             FilePermissionFormat? filePermissionFormat,
             FilePosixProperties posixProperties,
+            FilePropertySemantics? filePropertySemantics,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
@@ -794,6 +803,7 @@ namespace Azure.Storage.Files.Shares
                             owner: posixProperties?.Owner,
                             group: posixProperties?.Group,
                             fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
+                            filePropertySemantics: filePropertySemantics,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -811,6 +821,7 @@ namespace Azure.Storage.Files.Shares
                             owner: posixProperties?.Owner,
                             group: posixProperties?.Group,
                             fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
+                            filePropertySemantics: filePropertySemantics,
                             cancellationToken: cancellationToken);
                     }
 
@@ -869,6 +880,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
+                filePropertySemantics: options?.PropertySemantics,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -918,6 +930,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: null,
                 posixProperties: null,
+                filePropertySemantics: null,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -956,6 +969,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
+                filePropertySemantics: null,
                 async: true,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -1005,6 +1019,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: null,
                 posixProperties: null,
+                filePropertySemantics: null,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -1032,6 +1047,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="posixProperties">
         /// Optional NFS properties.
         /// </param>
+        /// <param name="filePropertySemantics">
+        /// Optional, only applicable to SMB files.
+        /// How attributes and permissions should be set on the file.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1058,6 +1077,7 @@ namespace Azure.Storage.Files.Shares
             string filePermission,
             FilePermissionFormat? filePermissionFormat,
             FilePosixProperties posixProperties,
+            FilePropertySemantics? filePropertySemantics,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
@@ -1075,6 +1095,7 @@ namespace Azure.Storage.Files.Shares
                         filePermission,
                         filePermissionFormat,
                         posixProperties,
+                        filePropertySemantics,
                         async,
                         cancellationToken,
                         operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(CreateIfNotExists)}")
@@ -3627,6 +3648,7 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareFileSasPermissions permissions, DateTimeOffset expiresOn) =>
             GenerateSasUri(permissions, expiresOn, out _);
@@ -3694,6 +3716,7 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareSasBuilder builder)
             => GenerateSasUri(builder, out _);
@@ -3733,6 +3756,18 @@ namespace Azure.Storage.Files.Shares
             // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
             builder = ShareSasBuilder.DeepCopy(builder);
 
+            SetBuilderAndValidate(builder);
+
+            ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
+            {
+                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential, out stringToSign).ToString()
+            };
+            return sasUri.ToUri();
+        }
+        #endregion
+
+        private void SetBuilderAndValidate(ShareSasBuilder builder)
+        {
             // Assign builder's ShareName and Path, if they are null.
             builder.ShareName ??= ShareName;
             builder.FilePath ??= Path;
@@ -3751,13 +3786,7 @@ namespace Azure.Storage.Files.Shares
                     nameof(ShareSasBuilder),
                     nameof(Path));
             }
-            ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
-            {
-                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential, out stringToSign).ToString()
-            };
-            return sasUri.ToUri();
         }
-        #endregion
 
         #region GetParentClientCore
 

@@ -322,7 +322,8 @@ namespace Azure.Storage.Files.Shares
                     Owner = response.Headers.Owner,
                     Group = response.Headers.Group,
                     FileType = response.Headers.NfsFileType,
-                }
+                },
+                ContentHash = response.Headers.ContentMD5,
             };
 
             return shareFileInfo;
@@ -764,6 +765,7 @@ namespace Azure.Storage.Files.Shares
                 MaxBurstCreditsForIops = response.Headers.MaxBurstCreditsForIops,
                 NextAllowedProvisionedIopsDowngradeTime = response.Headers.NextAllowedProvisionedIopsDowngradeTime,
                 NextAllowedProvisionedBandwidthDowngradeTime = response.Headers.NextAllowedProvisionedBandwidthDowngradeTime,
+                EnableDirectoryLease = response.Headers.EnableSmbDirectoryLease,
             };
         }
 
@@ -885,6 +887,7 @@ namespace Azure.Storage.Files.Shares
                 MaxBurstCreditsForIops = sharePropertiesInternal.MaxBurstCreditsForIops,
                 NextAllowedProvisionedIopsDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedIopsDowngradeTime,
                 NextAllowedProvisionedBandwidthDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedBandwidthDowngradeTime,
+                EnableDirectoryLease = sharePropertiesInternal.EnableSmbDirectoryLease,
             };
         }
 
