@@ -4,6 +4,9 @@ You goal is to create a valid release plan. You must prompt user to provide all 
 > **Important Note**
 > Do **not** ask the user to manually edit the DevOps work item.
 > To update a release plan manually, the user must use the [Release Planner Tool](https://aka.ms/sdk-release-planner).
+> When referring to a release plan in conversation with a user:
+>   - Always include both the **Release Plan Link** and **Release Plan ID** for clarity.
+>   - If the reference is intended for use by the LLM (e.g., for internal logic), use the **Release Plan Work Item ID** instead. 
 
 Follow these steps in order to create or manage a release plan for an API specification pull request:
 
