@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary> Specifies how Tasks should be distributed across Compute Nodes. </summary>
-    public partial class BatchTaskSchedulingPolicy
+    /// <summary> Specifies ProxyAgent settings while creating the virtual machine. </summary>
+    public partial class ProxyAgentSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +45,29 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/>. </summary>
-        /// <param name="nodeFillType"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
-        public BatchTaskSchedulingPolicy(BatchNodeFillType nodeFillType)
+        /// <summary> Initializes a new instance of <see cref="ProxyAgentSettings"/>. </summary>
+        public ProxyAgentSettings()
         {
-            NodeFillType = nodeFillType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/>. </summary>
-        /// <param name="jobDefaultOrder"> The order for scheduling tasks from different jobs with the same priority. If not specified, the default is none. </param>
-        /// <param name="nodeFillType"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
+        /// <summary> Initializes a new instance of <see cref="ProxyAgentSettings"/>. </summary>
+        /// <param name="enabled"> Specifies whether Metadata Security Protocol feature should be enabled on the virtual machine or virtual machine scale set. Default is False. </param>
+        /// <param name="imds"> Settings for the IMDS endpoint. </param>
+        /// <param name="wireServer"> Settings for the WireServer endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskSchedulingPolicy(BatchJobDefaultOrder? jobDefaultOrder, BatchNodeFillType nodeFillType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProxyAgentSettings(bool? enabled, HostEndpointSettings imds, HostEndpointSettings wireServer, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            JobDefaultOrder = jobDefaultOrder;
-            NodeFillType = nodeFillType;
+            Enabled = enabled;
+            Imds = imds;
+            WireServer = wireServer;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/> for deserialization. </summary>
-        internal BatchTaskSchedulingPolicy()
-        {
-        }
-
-        /// <summary> The order for scheduling tasks from different jobs with the same priority. If not specified, the default is none. </summary>
-        public BatchJobDefaultOrder? JobDefaultOrder { get; set; }
-        /// <summary> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </summary>
-        public BatchNodeFillType NodeFillType { get; set; }
+        /// <summary> Specifies whether Metadata Security Protocol feature should be enabled on the virtual machine or virtual machine scale set. Default is False. </summary>
+        public bool? Enabled { get; set; }
+        /// <summary> Settings for the IMDS endpoint. </summary>
+        public HostEndpointSettings Imds { get; set; }
+        /// <summary> Settings for the WireServer endpoint. </summary>
+        public HostEndpointSettings WireServer { get; set; }
     }
 }

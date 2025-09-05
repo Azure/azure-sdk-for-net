@@ -75,6 +75,11 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IpAddress.ToString());
             }
+            if (Optional.IsDefined(Ipv6Address))
+            {
+                writer.WritePropertyName("ipv6Address"u8);
+                writer.WriteStringValue(Ipv6Address.ToString());
+            }
             if (Optional.IsDefined(AffinityId))
             {
                 writer.WritePropertyName("affinityId"u8);
@@ -124,16 +129,6 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("startTaskInfo"u8);
                 writer.WriteObjectValue(StartTaskInfo, options);
-            }
-            if (Optional.IsCollectionDefined(CertificateReferences))
-            {
-                writer.WritePropertyName("certificateReferences"u8);
-                writer.WriteStartArray();
-                foreach (var item in CertificateReferences)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(Errors))
             {
@@ -210,6 +205,7 @@ namespace Azure.Compute.Batch
             DateTimeOffset? lastBootTime = default;
             DateTimeOffset? allocationTime = default;
             IPAddress ipAddress = default;
+            IPAddress ipv6Address = default;
             string affinityId = default;
             string vmSize = default;
             int? totalTasksRun = default;
@@ -219,7 +215,6 @@ namespace Azure.Compute.Batch
             IReadOnlyList<BatchTaskInfo> recentTasks = default;
             BatchStartTask startTask = default;
             BatchStartTaskInfo startTaskInfo = default;
-            IReadOnlyList<BatchCertificateReference> certificateReferences = default;
             IReadOnlyList<BatchNodeError> errors = default;
             bool? isDedicated = default;
             BatchNodeEndpointConfiguration endpointConfiguration = default;
@@ -295,6 +290,15 @@ namespace Azure.Compute.Batch
                         continue;
                     }
                     ipAddress = IPAddress.Parse(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("ipv6Address"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipv6Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("affinityId"u8))
@@ -375,20 +379,6 @@ namespace Azure.Compute.Batch
                     startTaskInfo = BatchStartTaskInfo.DeserializeBatchStartTaskInfo(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("certificateReferences"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BatchCertificateReference> array = new List<BatchCertificateReference>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
-                    }
-                    certificateReferences = array;
-                    continue;
-                }
                 if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -454,6 +444,7 @@ namespace Azure.Compute.Batch
                 lastBootTime,
                 allocationTime,
                 ipAddress,
+                ipv6Address,
                 affinityId,
                 vmSize,
                 totalTasksRun,
@@ -463,7 +454,6 @@ namespace Azure.Compute.Batch
                 recentTasks ?? new ChangeTrackingList<BatchTaskInfo>(),
                 startTask,
                 startTaskInfo,
-                certificateReferences ?? new ChangeTrackingList<BatchCertificateReference>(),
                 errors ?? new ChangeTrackingList<BatchNodeError>(),
                 isDedicated,
                 endpointConfiguration,
