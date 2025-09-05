@@ -70,6 +70,19 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
 
         MCPToolResource mcpToolResource = new(mcpServerLabel);
         mcpToolResource.UpdateHeader("SuperSecret", "123456");
+        // By default all the tools require approvals. To set the absolute trust for the tool please uncomment the
+        // next code.
+        // mcpToolResource.RequireApproval = new MCPApproval("never");
+        // If using multiple tools it is possible to set the trust per tool.
+        // var mcpApprovalPerTool = new MCPApprovalPerTool()
+        // {
+        //     Always= new MCPToolList(["non_trusted_tool1", "non_trusted_tool2"]),
+        //     Never = new MCPToolList(["trusted_tool1", "trusted_tool2"]),
+        // };
+        // mcpToolResource.RequireApproval = new MCPApproval(perToolApproval: mcpApprovalPerTool);
+        // Note: This functionality is available since version 1.2.0-beta.4.
+        // In older versions please use serialization into binary object as discussed in the issue
+        // https://github.com/Azure/azure-sdk-for-net/issues/52213
         ToolResources toolResources = mcpToolResource.ToToolResources();
         toolResources.Mcp.Add(new MCPToolResource(mcpServerLabel2));
 
@@ -178,6 +191,19 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
 
         MCPToolResource mcpToolResource = new(mcpServerLabel);
         mcpToolResource.UpdateHeader("SuperSecret", "123456");
+        // By default all the tools require approvals. To set the absolute trust for the tool please uncomment the
+        // next code.
+        // mcpToolResource.RequireApproval = new MCPApproval("never");
+        // If using multiple tools it is possible to set the trust per tool.
+        // var mcpApprovalPerTool = new MCPApprovalPerTool()
+        // {
+        //     Always= new MCPToolList(["non_trusted_tool1", "non_trusted_tool2"]),
+        //     Never = new MCPToolList(["trusted_tool1", "trusted_tool2"]),
+        // };
+        // mcpToolResource.RequireApproval = new MCPApproval(perToolApproval: mcpApprovalPerTool);
+        // Note: This functionality is available since version 1.2.0-beta.4.
+        // In older versions please use serialization into binary object as discussed in the issue
+        // https://github.com/Azure/azure-sdk-for-net/issues/52213
         ToolResources toolResources = mcpToolResource.ToToolResources();
         toolResources.Mcp.Add(new MCPToolResource(mcpServerLabel2));
 
