@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System;
 using System.ClientModel.Primitives;
@@ -41,11 +41,11 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
 
         Console.WriteLine("Create the Azure OpenAI chat client");
         var credential = new DefaultAzureCredential();
-        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
 
         ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
 
-        if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
+        if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
         {
             throw new InvalidOperationException("Invalid URI.");
         }
@@ -84,11 +84,11 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
 #endif
         Console.WriteLine("Create the Azure OpenAI chat client");
         var credential = new DefaultAzureCredential();
-        AIProjectClient projectClient = new(new Uri(endpoint), credential);
+        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
 
         ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
 
-        if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
+        if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
         {
             throw new InvalidOperationException("Invalid URI.");
         }
