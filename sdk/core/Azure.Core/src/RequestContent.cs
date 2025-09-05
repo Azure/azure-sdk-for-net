@@ -366,7 +366,7 @@ namespace Azure.Core
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
 #if NET6_0_OR_GREATER
-            await stream.WriteAsync(_buffer.AsMemory(0, _actualByteCount), cancellation).ConfigureAwait(false);
+                await stream.WriteAsync(_buffer.AsMemory(0, _actualByteCount), cancellation).ConfigureAwait(false);
 #else
                 await stream.WriteAsync(_buffer, 0, _actualByteCount, cancellation).ConfigureAwait(false);
 #endif
@@ -375,7 +375,7 @@ namespace Azure.Core
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
 #if NET6_0_OR_GREATER
-            stream.Write(_buffer.AsSpan(0, _actualByteCount));
+                stream.Write(_buffer.AsSpan(0, _actualByteCount));
 #else
                 stream.Write(_buffer, 0, _actualByteCount);
 #endif
