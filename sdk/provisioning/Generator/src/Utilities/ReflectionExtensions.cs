@@ -115,7 +115,7 @@ public static class ReflectionExtensions
     {
         Type? i = GetGenericInterface(type, typeof(IDictionary<,>)) ?? GetGenericInterface(type, typeof(IReadOnlyDictionary<,>));
         return i is not null && predicate(i.GetGenericArguments()[1]);
-    }   
+    }
 
     public static bool IsListOf(this Type type, Func<Type, bool> predicate)
     {
@@ -145,7 +145,7 @@ public static class ReflectionExtensions
             bool d = type.IsDictionaryOf(t => t.IsUsableType(visited));
             bool r = type.IsResourceData();
             bool m = type.IsModelType(visited);
-            IList<PropertyInfo> failures = [..type.GetProperties().Where(p => !p.PropertyType.IsUsableType(visited))];
+            IList<PropertyInfo> failures = [.. type.GetProperties().Where(p => !p.PropertyType.IsUsableType(visited))];
             Console.WriteLine(type.FullName + ": " + string.Join(", ", failures.Select(p => p.Name)));
         }
         return usable;

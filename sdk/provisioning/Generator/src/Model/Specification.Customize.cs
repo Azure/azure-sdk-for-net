@@ -75,6 +75,14 @@ public abstract partial class Specification : ModelBase
         action(property);
     }
 
+    public void RemoveProperties<T>(params string[] propertyNames)
+    {
+        foreach (string propertyName in propertyNames)
+        {
+            RemoveProperty<T>(propertyName);
+        }
+    }
+
     public void RemoveProperty<T>(string propertyName)
     {
         TypeModel model = GetModel<T>() as TypeModel ??
