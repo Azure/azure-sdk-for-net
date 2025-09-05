@@ -13,8 +13,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(QuickBooksLinkedServiceConverter))]
-    public partial class QuickBooksLinkedService : IUtf8JsonSerializable
+    [JsonConverter(typeof(ServiceNowV2LinkedServiceConverter))]
+    public partial class ServiceNowV2LinkedService : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -64,43 +64,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionProperties))
-            {
-                writer.WritePropertyName("connectionProperties"u8);
-                writer.WriteObjectValue<object>(ConnectionProperties);
-            }
             writer.WritePropertyName("endpoint"u8);
             writer.WriteObjectValue<object>(Endpoint);
-            writer.WritePropertyName("companyId"u8);
-            writer.WriteObjectValue<object>(CompanyId);
-            writer.WritePropertyName("consumerKey"u8);
-            writer.WriteObjectValue<object>(ConsumerKey);
-            writer.WritePropertyName("consumerSecret"u8);
-            writer.WriteObjectValue(ConsumerSecret);
-            if (Optional.IsDefined(AccessToken))
+            writer.WritePropertyName("authenticationType"u8);
+            writer.WriteStringValue(AuthenticationType.ToString());
+            if (Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("accessToken"u8);
-                writer.WriteObjectValue(AccessToken);
+                writer.WritePropertyName("username"u8);
+                writer.WriteObjectValue<object>(Username);
             }
-            if (Optional.IsDefined(AccessTokenSecret))
+            if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("accessTokenSecret"u8);
-                writer.WriteObjectValue(AccessTokenSecret);
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue(Password);
             }
-            if (Optional.IsDefined(RefreshToken))
+            if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("refreshToken"u8);
-                writer.WriteObjectValue(RefreshToken);
+                writer.WritePropertyName("clientId"u8);
+                writer.WriteObjectValue<object>(ClientId);
             }
-            if (Optional.IsDefined(UseEncryptedEndpoints))
+            if (Optional.IsDefined(ClientSecret))
             {
-                writer.WritePropertyName("useEncryptedEndpoints"u8);
-                writer.WriteObjectValue<object>(UseEncryptedEndpoints);
+                writer.WritePropertyName("clientSecret"u8);
+                writer.WriteObjectValue(ClientSecret);
+            }
+            if (Optional.IsDefined(GrantType))
+            {
+                writer.WritePropertyName("grantType"u8);
+                writer.WriteObjectValue<object>(GrantType);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue<object>(EncryptedCredential);
+                writer.WriteStringValue(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -111,7 +107,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static QuickBooksLinkedService DeserializeQuickBooksLinkedService(JsonElement element)
+        internal static ServiceNowV2LinkedService DeserializeServiceNowV2LinkedService(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,16 +119,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
-            object connectionProperties = default;
             object endpoint = default;
-            object companyId = default;
-            object consumerKey = default;
-            SecretBase consumerSecret = default;
-            SecretBase accessToken = default;
-            SecretBase accessTokenSecret = default;
-            SecretBase refreshToken = default;
-            object useEncryptedEndpoints = default;
-            object encryptedCredential = default;
+            ServiceNowV2AuthenticationType authenticationType = default;
+            object username = default;
+            SecretBase password = default;
+            object clientId = default;
+            SecretBase clientSecret = default;
+            object grantType = default;
+            string encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -205,78 +199,64 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("connectionProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            connectionProperties = property0.Value.GetObject();
-                            continue;
-                        }
                         if (property0.NameEquals("endpoint"u8))
                         {
                             endpoint = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("companyId"u8))
+                        if (property0.NameEquals("authenticationType"u8))
                         {
-                            companyId = property0.Value.GetObject();
+                            authenticationType = new ServiceNowV2AuthenticationType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("consumerKey"u8))
-                        {
-                            consumerKey = property0.Value.GetObject();
-                            continue;
-                        }
-                        if (property0.NameEquals("consumerSecret"u8))
-                        {
-                            consumerSecret = SecretBase.DeserializeSecretBase(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("accessToken"u8))
+                        if (property0.NameEquals("username"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            accessToken = SecretBase.DeserializeSecretBase(property0.Value);
+                            username = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("accessTokenSecret"u8))
+                        if (property0.NameEquals("password"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            accessTokenSecret = SecretBase.DeserializeSecretBase(property0.Value);
+                            password = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("refreshToken"u8))
+                        if (property0.NameEquals("clientId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            refreshToken = SecretBase.DeserializeSecretBase(property0.Value);
+                            clientId = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("useEncryptedEndpoints"u8))
+                        if (property0.NameEquals("clientSecret"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            useEncryptedEndpoints = property0.Value.GetObject();
+                            clientSecret = SecretBase.DeserializeSecretBase(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("grantType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            grantType = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptedCredential = property0.Value.GetObject();
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -285,7 +265,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new QuickBooksLinkedService(
+            return new ServiceNowV2LinkedService(
                 type,
                 version,
                 connectVia,
@@ -293,24 +273,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
-                connectionProperties,
                 endpoint,
-                companyId,
-                consumerKey,
-                consumerSecret,
-                accessToken,
-                accessTokenSecret,
-                refreshToken,
-                useEncryptedEndpoints,
+                authenticationType,
+                username,
+                password,
+                clientId,
+                clientSecret,
+                grantType,
                 encryptedCredential);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new QuickBooksLinkedService FromResponse(Response response)
+        internal static new ServiceNowV2LinkedService FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeQuickBooksLinkedService(document.RootElement);
+            return DeserializeServiceNowV2LinkedService(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
@@ -321,17 +299,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return content;
         }
 
-        internal partial class QuickBooksLinkedServiceConverter : JsonConverter<QuickBooksLinkedService>
+        internal partial class ServiceNowV2LinkedServiceConverter : JsonConverter<ServiceNowV2LinkedService>
         {
-            public override void Write(Utf8JsonWriter writer, QuickBooksLinkedService model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, ServiceNowV2LinkedService model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
 
-            public override QuickBooksLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override ServiceNowV2LinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeQuickBooksLinkedService(document.RootElement);
+                return DeserializeServiceNowV2LinkedService(document.RootElement);
             }
         }
     }
