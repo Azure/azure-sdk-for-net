@@ -6,9 +6,7 @@ param(
     [Parameter(Mandatory = $true)]
     $Status,
     [Parameter(Mandatory = $true)]
-    $LanguageName,
-    [Parameter(Mandatory = $true)]
-    $AuthToken
+    $LanguageName
 )
 
 <#
@@ -26,9 +24,6 @@ The status of the pull request.
 
 .PARAMETER LanguageName
 The programming language associated with the pull request.
-
-.PARAMETER AuthToken
-The authentication token for GitHub API.
 
 #>
 
