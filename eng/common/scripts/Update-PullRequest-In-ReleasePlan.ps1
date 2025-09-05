@@ -31,11 +31,6 @@ Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot common.ps1)
 . (Join-Path $PSScriptRoot Helpers DevOps-WorkItem-Helpers.ps1)
 
-$releasePlan = Get-ReleasePlan-Link $ReleasePlanWorkItemId
-if (!$releasePlan)
-{
-    LogError "Release plan with ID $ReleasePlanWorkItemId not found."
-}
 
 LogDebug "Updating pull request in release plan"
 Update-PullRequestInReleasePlan $ReleasePlanWorkItemId $PullRequestUrl $Status $LanguageName
