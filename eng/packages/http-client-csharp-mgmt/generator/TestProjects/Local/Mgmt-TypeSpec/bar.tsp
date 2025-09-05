@@ -58,14 +58,19 @@ model BarQuotaResource is ProxyResource<BarQuotaProperties> {
   ...ResourceNameParameter<BarQuotaResource, SegmentName = "quotas", Type = QuotaName>;
 }
 
-model BarNestedQuotaProperties extends BarDeeplyNestedQuotaProperties {
-  innerProp1: int32;
-  innerProp2: string;
+model BarNestedQuotaProperties extends BarMiddleNestedQuotaProperties {
+  prop1: string;
+  prop2: int32;
+}
+
+model BarMiddleNestedQuotaProperties extends BarDeeplyNestedQuotaProperties {
+  middleProp1: int32;
+  middleProp2: string;
 }
 
 model BarDeeplyNestedQuotaProperties {
-  prop1: string;
-  prop2: int32;
+  innerProp1: int32;
+  innerProp2: string;
 }
 
 model BarQuotaProperties {

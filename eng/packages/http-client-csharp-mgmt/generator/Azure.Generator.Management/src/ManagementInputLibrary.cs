@@ -34,6 +34,12 @@ namespace Azure.Generator.Management
                 {
                     if (property.Decorators.Any(d => d.Name == FlattenPropertyDecoratorName))
                     {
+                        // skip discriminator property
+                        if (property.IsDiscriminator)
+                        {
+                            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic("general-warning", "Discriminator property should not be flattened.", targetCrossLanguageDefinitionId: model.CrossLanguageDefinitionId);
+                            continue;
+                        }
                         if (!result.TryGetValue(model, out var properties))
                         {
                             properties = new List<InputModelProperty>();

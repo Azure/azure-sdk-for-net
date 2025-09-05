@@ -141,7 +141,7 @@ namespace Azure.Generator.Management.Visitors
                 if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(property.Type, out var typeProvider)
                     && typeProvider is ModelProvider modelProvider)
                 {
-                    var innerProperties = PropertyHelpers.GetInnerProperties(modelProvider);
+                    var innerProperties = PropertyHelpers.GetAllProperties(modelProvider);
                     // only safe flatten single property
                     if (innerProperties.Count != 1)
                     {
@@ -161,7 +161,17 @@ namespace Azure.Generator.Management.Visitors
 
                     // If the inner property is a value type, we need to ensure that we handle the nullability correctly.
                     var isOverriddenValueType = innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable;
-                    var flattenedProperty = new PropertyProvider(innerProperty.Description, innerProperty.Modifiers, isOverriddenValueType ? innerProperty.Type.WithNullable(true) : innerProperty.Type, flattenPropertyName, flattenPropertyBody, model, innerProperty.ExplicitInterface, innerProperty.WireInfo, innerProperty.Attributes);
+                    var flattenedProperty =
+                        new PropertyProvider(
+                            innerProperty.Description,
+                            innerProperty.Modifiers,
+                            isOverriddenValueType ? innerProperty.Type.WithNullable(true) : innerProperty.Type,
+                            flattenPropertyName,
+                            flattenPropertyBody,
+                            model,
+                            innerProperty.ExplicitInterface,
+                            null,
+                            innerProperty.Attributes);
 
                     // make the internalized properties internal
                     property.Update(modifiers: property.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);

@@ -39,10 +39,10 @@ namespace MgmtTypeSpec.Models
             {
                 throw new FormatException($"The model {nameof(BarDeeplyNestedQuotaProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("prop1"u8);
-            writer.WriteStringValue(Prop1);
-            writer.WritePropertyName("prop2"u8);
-            writer.WriteNumberValue(Prop2);
+            writer.WritePropertyName("innerProp1"u8);
+            writer.WriteNumberValue(InnerProp1);
+            writer.WritePropertyName("innerProp2"u8);
+            writer.WriteStringValue(InnerProp2);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -85,19 +85,19 @@ namespace MgmtTypeSpec.Models
             {
                 return null;
             }
-            string prop1 = default;
-            int prop2 = default;
+            int innerProp1 = default;
+            string innerProp2 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("prop1"u8))
+                if (prop.NameEquals("innerProp1"u8))
                 {
-                    prop1 = prop.Value.GetString();
+                    innerProp1 = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("prop2"u8))
+                if (prop.NameEquals("innerProp2"u8))
                 {
-                    prop2 = prop.Value.GetInt32();
+                    innerProp2 = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,7 +105,7 @@ namespace MgmtTypeSpec.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BarDeeplyNestedQuotaProperties(prop1, prop2, additionalBinaryDataProperties);
+            return new BarDeeplyNestedQuotaProperties(innerProp1, innerProp2, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

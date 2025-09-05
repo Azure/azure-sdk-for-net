@@ -20,6 +20,7 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(BarData))]
     [ModelReaderWriterBuildable(typeof(BarDeeplyNestedQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(BarListResult))]
+    [ModelReaderWriterBuildable(typeof(BarMiddleNestedQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(BarNestedQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(BarProperties))]
     [ModelReaderWriterBuildable(typeof(BarQuotaProperties))]

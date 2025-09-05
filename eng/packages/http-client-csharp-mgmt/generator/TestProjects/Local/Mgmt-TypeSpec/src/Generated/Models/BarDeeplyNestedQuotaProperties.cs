@@ -18,32 +18,32 @@ namespace MgmtTypeSpec.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BarDeeplyNestedQuotaProperties"/>. </summary>
-        /// <param name="prop1"></param>
-        /// <param name="prop2"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="prop1"/> is null. </exception>
-        public BarDeeplyNestedQuotaProperties(string prop1, int prop2)
+        /// <param name="innerProp1"></param>
+        /// <param name="innerProp2"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/> is null. </exception>
+        public BarDeeplyNestedQuotaProperties(int innerProp1, string innerProp2)
         {
-            Argument.AssertNotNull(prop1, nameof(prop1));
+            Argument.AssertNotNull(innerProp2, nameof(innerProp2));
 
-            Prop1 = prop1;
-            Prop2 = prop2;
+            InnerProp1 = innerProp1;
+            InnerProp2 = innerProp2;
         }
 
         /// <summary> Initializes a new instance of <see cref="BarDeeplyNestedQuotaProperties"/>. </summary>
-        /// <param name="prop1"></param>
-        /// <param name="prop2"></param>
+        /// <param name="innerProp1"></param>
+        /// <param name="innerProp2"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BarDeeplyNestedQuotaProperties(string prop1, int prop2, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BarDeeplyNestedQuotaProperties(int innerProp1, string innerProp2, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Prop1 = prop1;
-            Prop2 = prop2;
+            InnerProp1 = innerProp1;
+            InnerProp2 = innerProp2;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Prop1. </summary>
-        public string Prop1 { get; set; }
+        /// <summary> Gets or sets the InnerProp1. </summary>
+        public int InnerProp1 { get; set; }
 
-        /// <summary> Gets or sets the Prop2. </summary>
-        public int Prop2 { get; set; }
+        /// <summary> Gets or sets the InnerProp2. </summary>
+        public string InnerProp2 { get; set; }
     }
 }

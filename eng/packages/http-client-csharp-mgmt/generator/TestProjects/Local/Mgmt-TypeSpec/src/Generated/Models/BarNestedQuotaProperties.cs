@@ -12,39 +12,44 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The BarNestedQuotaProperties. </summary>
-    public partial class BarNestedQuotaProperties : BarDeeplyNestedQuotaProperties
+    public partial class BarNestedQuotaProperties : BarMiddleNestedQuotaProperties
     {
         /// <summary> Initializes a new instance of <see cref="BarNestedQuotaProperties"/>. </summary>
-        /// <param name="prop1"></param>
-        /// <param name="prop2"></param>
         /// <param name="innerProp1"></param>
         /// <param name="innerProp2"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="prop1"/> or <paramref name="innerProp2"/> is null. </exception>
-        public BarNestedQuotaProperties(string prop1, int prop2, int innerProp1, string innerProp2) : base(prop1, prop2)
+        /// <param name="middleProp1"></param>
+        /// <param name="middleProp2"></param>
+        /// <param name="prop1"></param>
+        /// <param name="prop2"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/>, <paramref name="middleProp2"/> or <paramref name="prop1"/> is null. </exception>
+        public BarNestedQuotaProperties(int innerProp1, string innerProp2, int middleProp1, string middleProp2, string prop1, int prop2) : base(innerProp1, innerProp2, middleProp1, middleProp2)
         {
-            Argument.AssertNotNull(prop1, nameof(prop1));
             Argument.AssertNotNull(innerProp2, nameof(innerProp2));
+            Argument.AssertNotNull(middleProp2, nameof(middleProp2));
+            Argument.AssertNotNull(prop1, nameof(prop1));
 
-            InnerProp1 = innerProp1;
-            InnerProp2 = innerProp2;
+            Prop1 = prop1;
+            Prop2 = prop2;
         }
 
         /// <summary> Initializes a new instance of <see cref="BarNestedQuotaProperties"/>. </summary>
-        /// <param name="prop1"></param>
-        /// <param name="prop2"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="innerProp1"></param>
         /// <param name="innerProp2"></param>
-        internal BarNestedQuotaProperties(string prop1, int prop2, IDictionary<string, BinaryData> additionalBinaryDataProperties, int innerProp1, string innerProp2) : base(prop1, prop2, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="middleProp1"></param>
+        /// <param name="middleProp2"></param>
+        /// <param name="prop1"></param>
+        /// <param name="prop2"></param>
+        internal BarNestedQuotaProperties(int innerProp1, string innerProp2, IDictionary<string, BinaryData> additionalBinaryDataProperties, int middleProp1, string middleProp2, string prop1, int prop2) : base(innerProp1, innerProp2, additionalBinaryDataProperties, middleProp1, middleProp2)
         {
-            InnerProp1 = innerProp1;
-            InnerProp2 = innerProp2;
+            Prop1 = prop1;
+            Prop2 = prop2;
         }
 
-        /// <summary> Gets or sets the InnerProp1. </summary>
-        public int InnerProp1 { get; set; }
+        /// <summary> Gets or sets the Prop1. </summary>
+        public string Prop1 { get; set; }
 
-        /// <summary> Gets or sets the InnerProp2. </summary>
-        public string InnerProp2 { get; set; }
+        /// <summary> Gets or sets the Prop2. </summary>
+        public int Prop2 { get; set; }
     }
 }

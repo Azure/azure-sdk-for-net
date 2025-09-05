@@ -17,16 +17,21 @@ namespace Azure.Generator.Management.Utilities
 {
     internal class PropertyHelpers
     {
-        public static IReadOnlyList<PropertyProvider> GetInnerProperties(ModelProvider propertyModelProvider)
+        public static IReadOnlyList<PropertyProvider> GetAllProperties(ModelProvider propertyModelProvider)
         {
             var result = new List<PropertyProvider>();
             var baseType = propertyModelProvider.BaseModelProvider;
+            var baseTypes = new Stack<ModelProvider>();
 
             // Recursively get properties from base types
             while (baseType is not null)
             {
-                result.AddRange(baseType.Properties);
+                baseTypes.Push(baseType);
                 baseType = baseType.BaseModelProvider;
+            }
+            while (baseTypes.TryPop(out var item))
+            {
+                result.AddRange(item.Properties);
             }
             result.AddRange(propertyModelProvider.Properties);
             return result;

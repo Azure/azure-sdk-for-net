@@ -72,32 +72,6 @@ namespace MgmtTypeSpec
         /// <summary> Gets or sets the FlattenedNestedProperty. </summary>
         internal BarNestedQuotaProperties FlattenedNestedProperty { get; set; }
 
-        /// <summary> Gets or sets the Prop1. </summary>
-        public string FlattenedNestedPropertyProp1
-        {
-            get
-            {
-                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.Prop1;
-            }
-            set
-            {
-                FlattenedNestedProperty.Prop1 = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Prop2. </summary>
-        public int? FlattenedNestedPropertyProp2
-        {
-            get
-            {
-                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.Prop2;
-            }
-            set
-            {
-                FlattenedNestedProperty.Prop2 = value.Value;
-            }
-        }
-
         /// <summary> Gets or sets the InnerProp1. </summary>
         public int? FlattenedNestedPropertyInnerProp1
         {
@@ -121,6 +95,58 @@ namespace MgmtTypeSpec
             set
             {
                 FlattenedNestedProperty.InnerProp2 = value;
+            }
+        }
+
+        /// <summary> Gets or sets the MiddleProp1. </summary>
+        public int? FlattenedNestedPropertyMiddleProp1
+        {
+            get
+            {
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.MiddleProp1;
+            }
+            set
+            {
+                FlattenedNestedProperty.MiddleProp1 = value.Value;
+            }
+        }
+
+        /// <summary> Gets or sets the MiddleProp2. </summary>
+        public string FlattenedNestedPropertyMiddleProp2
+        {
+            get
+            {
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.MiddleProp2;
+            }
+            set
+            {
+                FlattenedNestedProperty.MiddleProp2 = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Prop1. </summary>
+        public string FlattenedNestedPropertyProp1
+        {
+            get
+            {
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.Prop1;
+            }
+            set
+            {
+                FlattenedNestedProperty.Prop1 = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Prop2. </summary>
+        public int? FlattenedNestedPropertyProp2
+        {
+            get
+            {
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.Prop2;
+            }
+            set
+            {
+                FlattenedNestedProperty.Prop2 = value.Value;
             }
         }
 

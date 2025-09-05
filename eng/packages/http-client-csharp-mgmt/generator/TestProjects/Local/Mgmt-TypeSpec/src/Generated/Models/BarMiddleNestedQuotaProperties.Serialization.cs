@@ -13,17 +13,17 @@ using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
-    /// <summary> The BarNestedQuotaProperties. </summary>
-    public partial class BarNestedQuotaProperties : IJsonModel<BarNestedQuotaProperties>
+    /// <summary> The BarMiddleNestedQuotaProperties. </summary>
+    public partial class BarMiddleNestedQuotaProperties : IJsonModel<BarMiddleNestedQuotaProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="BarNestedQuotaProperties"/> for deserialization. </summary>
-        internal BarNestedQuotaProperties()
+        /// <summary> Initializes a new instance of <see cref="BarMiddleNestedQuotaProperties"/> for deserialization. </summary>
+        internal BarMiddleNestedQuotaProperties()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BarNestedQuotaProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BarMiddleNestedQuotaProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,38 +34,38 @@ namespace MgmtTypeSpec.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BarNestedQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BarMiddleNestedQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BarNestedQuotaProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BarMiddleNestedQuotaProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("prop1"u8);
-            writer.WriteStringValue(Prop1);
-            writer.WritePropertyName("prop2"u8);
-            writer.WriteNumberValue(Prop2);
+            writer.WritePropertyName("middleProp1"u8);
+            writer.WriteNumberValue(MiddleProp1);
+            writer.WritePropertyName("middleProp2"u8);
+            writer.WriteStringValue(MiddleProp2);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BarNestedQuotaProperties IJsonModel<BarNestedQuotaProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BarNestedQuotaProperties)JsonModelCreateCore(ref reader, options);
+        BarMiddleNestedQuotaProperties IJsonModel<BarMiddleNestedQuotaProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BarMiddleNestedQuotaProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BarDeeplyNestedQuotaProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BarNestedQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BarMiddleNestedQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BarNestedQuotaProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BarMiddleNestedQuotaProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBarNestedQuotaProperties(document.RootElement, options);
+            return DeserializeBarMiddleNestedQuotaProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BarNestedQuotaProperties DeserializeBarNestedQuotaProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static BarMiddleNestedQuotaProperties DeserializeBarMiddleNestedQuotaProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,8 +76,6 @@ namespace MgmtTypeSpec.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int middleProp1 = default;
             string middleProp2 = default;
-            string prop1 = default;
-            int prop2 = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("innerProp1"u8))
@@ -100,69 +98,52 @@ namespace MgmtTypeSpec.Models
                     middleProp2 = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("prop1"u8))
-                {
-                    prop1 = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("prop2"u8))
-                {
-                    prop2 = prop.Value.GetInt32();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BarNestedQuotaProperties(
-                innerProp1,
-                innerProp2,
-                additionalBinaryDataProperties,
-                middleProp1,
-                middleProp2,
-                prop1,
-                prop2);
+            return new BarMiddleNestedQuotaProperties(innerProp1, innerProp2, additionalBinaryDataProperties, middleProp1, middleProp2);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BarNestedQuotaProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BarMiddleNestedQuotaProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BarNestedQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BarMiddleNestedQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BarNestedQuotaProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BarMiddleNestedQuotaProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BarNestedQuotaProperties IPersistableModel<BarNestedQuotaProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (BarNestedQuotaProperties)PersistableModelCreateCore(data, options);
+        BarMiddleNestedQuotaProperties IPersistableModel<BarMiddleNestedQuotaProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (BarMiddleNestedQuotaProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BarDeeplyNestedQuotaProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BarNestedQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BarMiddleNestedQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeBarNestedQuotaProperties(document.RootElement, options);
+                        return DeserializeBarMiddleNestedQuotaProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BarNestedQuotaProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BarMiddleNestedQuotaProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BarNestedQuotaProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BarMiddleNestedQuotaProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
