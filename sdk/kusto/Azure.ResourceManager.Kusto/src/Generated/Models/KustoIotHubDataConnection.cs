@@ -56,24 +56,34 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The resource ID of the Iot hub to be used to create a data connection. </summary>
+        [WirePath("properties.iotHubResourceId")]
         public ResourceIdentifier IotHubResourceId { get; set; }
         /// <summary> The iot hub consumer group. </summary>
+        [WirePath("properties.consumerGroup")]
         public string ConsumerGroup { get; set; }
         /// <summary> The table where the data should be ingested. Optionally the table information can be added to each message. </summary>
+        [WirePath("properties.tableName")]
         public string TableName { get; set; }
         /// <summary> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </summary>
+        [WirePath("properties.mappingRuleName")]
         public string MappingRuleName { get; set; }
         /// <summary> The data format of the message. Optionally the data format can be added to each message. </summary>
+        [WirePath("properties.dataFormat")]
         public KustoIotHubDataFormat? DataFormat { get; set; }
         /// <summary> System properties of the iot hub. </summary>
+        [WirePath("properties.eventSystemProperties")]
         public IList<string> EventSystemProperties { get; }
         /// <summary> The name of the share access policy. </summary>
+        [WirePath("properties.sharedAccessPolicyName")]
         public string SharedAccessPolicyName { get; set; }
         /// <summary> Indication for database routing information from the data connection, by default only database routing information is allowed. </summary>
+        [WirePath("properties.databaseRouting")]
         public KustoDatabaseRouting? DatabaseRouting { get; set; }
         /// <summary> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </summary>
+        [WirePath("properties.retrievalStartDate")]
         public DateTimeOffset? RetrievalStartOn { get; set; }
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public KustoProvisioningState? ProvisioningState { get; }
     }
 }

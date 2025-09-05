@@ -43,9 +43,6 @@ namespace MgmtTypeSpec
 
         internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string fooName, string barName, string barQuotaResourceName, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -59,16 +56,16 @@ namespace MgmtTypeSpec
             uri.AppendPath("/quotas/", false);
             uri.AppendPath(barQuotaResourceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string fooName, string barName, string barQuotaResourceName, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Method = RequestMethod.Patch;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -82,7 +79,10 @@ namespace MgmtTypeSpec
             uri.AppendPath("/quotas/", false);
             uri.AppendPath(barQuotaResourceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
