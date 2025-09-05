@@ -164,6 +164,71 @@ namespace Azure.ResourceManager.StorageSync
             return GetStorageSyncPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of StorageSyncRegisteredServerResources in the StorageSyncService. </summary>
+        /// <returns> An object representing collection of StorageSyncRegisteredServerResources and their operations over a StorageSyncRegisteredServerResource. </returns>
+        public virtual StorageSyncRegisteredServerCollection GetStorageSyncRegisteredServers()
+        {
+            return GetCachedClient(client => new StorageSyncRegisteredServerCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a given registered server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredServers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serverId"> GUID identifying the on-premises server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StorageSyncRegisteredServerResource>> GetStorageSyncRegisteredServerAsync(Guid serverId, CancellationToken cancellationToken = default)
+        {
+            return await GetStorageSyncRegisteredServers().GetAsync(serverId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a given registered server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredServers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serverId"> GUID identifying the on-premises server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<StorageSyncRegisteredServerResource> GetStorageSyncRegisteredServer(Guid serverId, CancellationToken cancellationToken = default)
+        {
+            return GetStorageSyncRegisteredServers().Get(serverId, cancellationToken);
+        }
+
         /// <summary> Gets a collection of StorageSyncGroupResources in the StorageSyncService. </summary>
         /// <returns> An object representing collection of StorageSyncGroupResources and their operations over a StorageSyncGroupResource. </returns>
         public virtual StorageSyncGroupCollection GetStorageSyncGroups()
@@ -231,71 +296,6 @@ namespace Azure.ResourceManager.StorageSync
         public virtual Response<StorageSyncGroupResource> GetStorageSyncGroup(string syncGroupName, CancellationToken cancellationToken = default)
         {
             return GetStorageSyncGroups().Get(syncGroupName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of StorageSyncRegisteredServerResources in the StorageSyncService. </summary>
-        /// <returns> An object representing collection of StorageSyncRegisteredServerResources and their operations over a StorageSyncRegisteredServerResource. </returns>
-        public virtual StorageSyncRegisteredServerCollection GetStorageSyncRegisteredServers()
-        {
-            return GetCachedClient(client => new StorageSyncRegisteredServerCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a given registered server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegisteredServers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="serverId"> GUID identifying the on-premises server. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<StorageSyncRegisteredServerResource>> GetStorageSyncRegisteredServerAsync(Guid serverId, CancellationToken cancellationToken = default)
-        {
-            return await GetStorageSyncRegisteredServers().GetAsync(serverId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a given registered server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegisteredServers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="serverId"> GUID identifying the on-premises server. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<StorageSyncRegisteredServerResource> GetStorageSyncRegisteredServer(Guid serverId, CancellationToken cancellationToken = default)
-        {
-            return GetStorageSyncRegisteredServers().Get(serverId, cancellationToken);
         }
 
         /// <summary> Gets a collection of StorageSyncWorkflowResources in the StorageSyncService. </summary>

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> managed identities for the Storage Sync service to interact with other Azure services without maintaining any secrets or credentials in code. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="incomingTrafficPolicy"> Incoming Traffic Policy. </param>
         /// <param name="storageSyncServiceStatus"> Storage Sync service status. </param>
         /// <param name="storageSyncServiceUid"> Storage Sync service Uid. </param>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StorageSync
         {
         }
 
-        /// <summary> managed identities for the Storage Sync service to interact with other Azure services without maintaining any secrets or credentials in code. </summary>
+        /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Incoming Traffic Policy. </summary>
         public IncomingTrafficPolicy? IncomingTrafficPolicy { get; set; }
