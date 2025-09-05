@@ -166,11 +166,11 @@ var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME"
 
 Console.WriteLine("Create the Azure OpenAI chat client");
 var credential = new DefaultAzureCredential();
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
 
 ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
 
-if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
+if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
 {
     throw new InvalidOperationException("Invalid URI.");
 }
