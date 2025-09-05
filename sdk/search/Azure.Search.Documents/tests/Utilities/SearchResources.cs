@@ -113,6 +113,20 @@ namespace Azure.Search.Documents.Tests
         private string _agentName = null;
 
         /// <summary>
+        /// The name of the knowledge source created for test data.
+        /// </summary>
+        public string KnowledgeSourceName
+        {
+            get => TestFixture.Recording.GetVariable("KnowledgeSourceName", _sourceName);
+            set
+            {
+                TestFixture.Recording.SetVariable("KnowledgeSourceName", value);
+                _sourceName = value;
+            }
+        }
+        private string _sourceName = null;
+
+        /// <summary>
         /// The search endpoint suffix.
         /// </summary>
         public string SearchEndpointSuffix => TestFixture.TestEnvironment.SearchEndpointSuffix;
@@ -144,6 +158,12 @@ namespace Azure.Search.Documents.Tests
         /// This is true for any knowledge agent resources that we created.
         /// </summary>
         public bool RequiresKnowledgeAgentCleanup { get; private set; }
+
+        /// <summary>
+        /// Flag indicating whether these knowledge source resources need to be cleaned up.
+        /// This is true for any knowledge source resources that we created.
+        /// </summary>
+        public bool RequiresKnowledgeSourceCleanup { get; private set; }
 
         /// <summary>
         /// Flag indicating whether these storage resources need to be cleaned up.
@@ -432,6 +452,7 @@ namespace Azure.Search.Documents.Tests
         /// </summary>
         public async ValueTask DisposeAsync() => await Task.WhenAll(
             DeleteKnowledgeAgentAsync(),
+            DeleteKnowledgeSourceAsync(),
             DeleteIndexAsync(),
             DeleteBlobContainerAsync());
 
@@ -448,6 +469,22 @@ namespace Azure.Search.Documents.Tests
                 RequiresCleanup = false;
 
                 await WaitForIndexDeletionAsync();
+            }
+        }
+
+        /// <summary>
+        /// Deletes the knowledge source created as a test resource.
+        /// </summary>
+        /// <returns></returns>
+        private async Task DeleteKnowledgeSourceAsync()
+        {
+            if (RequiresKnowledgeSourceCleanup && !string.IsNullOrEmpty(KnowledgeSourceName))
+            {
+                SearchIndexClient client = GetIndexClient();
+                await client.DeleteKnowledgeSourceAsync(KnowledgeSourceName);
+                RequiresKnowledgeSourceCleanup = false;
+
+                await WaitForKnowledgeSourceDeletionAsync();
             }
         }
 
@@ -555,9 +592,17 @@ namespace Azure.Search.Documents.Tests
             // Create the knowledge agent
             if (TestFixture.Mode != RecordedTestMode.Playback)
             {
+                SearchIndexClient client = GetIndexClient();
+
                 // Generate a random knowledge agent Name
                 KnowledgeAgentName = Random.GetName(8);
+                KnowledgeSourceName = Random.GetName(8);
                 string deploymentName = "gpt-4.1";
+
+                SearchIndexKnowledgeSource indexKnowledgeSource = new(KnowledgeSourceName, new(IndexName));
+                KnowledgeSource knowledgeSource = await client.CreateKnowledgeSourceAsync(indexKnowledgeSource);
+                RequiresKnowledgeSourceCleanup = true;
+                await WaitForKnowledgeSourceCreationAsync();
 
                 var knowledgeAgent = new KnowledgeAgent(
                     KnowledgeAgentName,
@@ -571,12 +616,11 @@ namespace Azure.Search.Documents.Tests
                             ModelName = AzureOpenAIModelName.Gpt41
                         })
                     },
-                new List<KnowledgeAgentTargetIndex>
+                    new List<KnowledgeSourceReference>
                     {
-                    new KnowledgeAgentTargetIndex(IndexName),
+                    new KnowledgeSourceReference(knowledgeSource.Name)
                     });
 
-                SearchIndexClient client = new SearchIndexClient(Endpoint, new AzureKeyCredential(PrimaryApiKey));
                 await client.CreateKnowledgeAgentAsync(knowledgeAgent);
                 RequiresKnowledgeAgentCleanup = true;
 
@@ -713,10 +757,24 @@ namespace Azure.Search.Documents.Tests
             await TestFixture.DelayAsync(TimeSpan.FromSeconds(2));
 
         /// <summary>
+        /// Wait for knowledge source creation.
+        /// </summary>
+        /// <returns>A Task to await.</returns>
+        public async Task WaitForKnowledgeSourceCreationAsync() =>
+            await TestFixture.DelayAsync(TimeSpan.FromSeconds(2));
+
+        /// <summary>
         /// Wait for the knowledge agent to be deleted.
         /// </summary>
         /// <returns>A Task to await.</returns>
         public async Task WaitForKnowledgeAgentDeletionAsync() =>
+            await TestFixture.DelayAsync(TimeSpan.FromSeconds(5));
+
+        /// <summary>
+        /// Wait for the knowledge source to be deleted.
+        /// </summary>
+        /// <returns>A Task to await.</returns>
+        public async Task WaitForKnowledgeSourceDeletionAsync() =>
             await TestFixture.DelayAsync(TimeSpan.FromSeconds(5));
 
         /// <summary>

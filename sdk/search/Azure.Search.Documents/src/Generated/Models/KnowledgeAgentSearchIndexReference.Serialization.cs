@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Agents.Models
 {
-    public partial class KnowledgeAgentAzureSearchDocReference : IUtf8JsonSerializable, IJsonModel<KnowledgeAgentAzureSearchDocReference>
+    public partial class KnowledgeAgentSearchIndexReference : IUtf8JsonSerializable, IJsonModel<KnowledgeAgentSearchIndexReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeAgentAzureSearchDocReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeAgentSearchIndexReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<KnowledgeAgentAzureSearchDocReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KnowledgeAgentSearchIndexReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Search.Documents.Agents.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentAzureSearchDocReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentSearchIndexReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KnowledgeAgentAzureSearchDocReference)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeAgentSearchIndexReference)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -40,37 +40,21 @@ namespace Azure.Search.Documents.Agents.Models
                 writer.WritePropertyName("docKey"u8);
                 writer.WriteStringValue(DocKey);
             }
-            if (Optional.IsCollectionDefined(SourceData))
-            {
-                writer.WritePropertyName("sourceData"u8);
-                writer.WriteStartObject();
-                foreach (var item in SourceData)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteObjectValue<object>(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
         }
 
-        KnowledgeAgentAzureSearchDocReference IJsonModel<KnowledgeAgentAzureSearchDocReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        KnowledgeAgentSearchIndexReference IJsonModel<KnowledgeAgentSearchIndexReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentAzureSearchDocReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentSearchIndexReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KnowledgeAgentAzureSearchDocReference)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeAgentSearchIndexReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKnowledgeAgentAzureSearchDocReference(document.RootElement, options);
+            return DeserializeKnowledgeAgentSearchIndexReference(document.RootElement, options);
         }
 
-        internal static KnowledgeAgentAzureSearchDocReference DeserializeKnowledgeAgentAzureSearchDocReference(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static KnowledgeAgentSearchIndexReference DeserializeKnowledgeAgentSearchIndexReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -79,10 +63,11 @@ namespace Azure.Search.Documents.Agents.Models
                 return null;
             }
             string docKey = default;
-            IReadOnlyDictionary<string, object> sourceData = default;
             string type = default;
             string id = default;
             int activitySource = default;
+            IReadOnlyDictionary<string, object> sourceData = default;
+            float? rerankerScore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,6 +75,21 @@ namespace Azure.Search.Documents.Agents.Models
                 if (property.NameEquals("docKey"u8))
                 {
                     docKey = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("activitySource"u8))
+                {
+                    activitySource = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("sourceData"u8))
@@ -113,19 +113,13 @@ namespace Azure.Search.Documents.Agents.Models
                     sourceData = dictionary;
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (property.NameEquals("rerankerScore"u8))
                 {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("activitySource"u8))
-                {
-                    activitySource = property.Value.GetInt32();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rerankerScore = property.Value.GetSingle();
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,52 +128,53 @@ namespace Azure.Search.Documents.Agents.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new KnowledgeAgentAzureSearchDocReference(
+            return new KnowledgeAgentSearchIndexReference(
                 type,
                 id,
                 activitySource,
+                sourceData ?? new ChangeTrackingDictionary<string, object>(),
+                rerankerScore,
                 serializedAdditionalRawData,
-                docKey,
-                sourceData ?? new ChangeTrackingDictionary<string, object>());
+                docKey);
         }
 
-        BinaryData IPersistableModel<KnowledgeAgentAzureSearchDocReference>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<KnowledgeAgentSearchIndexReference>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentAzureSearchDocReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentSearchIndexReference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeAgentAzureSearchDocReference)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeAgentSearchIndexReference)} does not support writing '{options.Format}' format.");
             }
         }
 
-        KnowledgeAgentAzureSearchDocReference IPersistableModel<KnowledgeAgentAzureSearchDocReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        KnowledgeAgentSearchIndexReference IPersistableModel<KnowledgeAgentSearchIndexReference>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentAzureSearchDocReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentSearchIndexReference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKnowledgeAgentAzureSearchDocReference(document.RootElement, options);
+                        return DeserializeKnowledgeAgentSearchIndexReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeAgentAzureSearchDocReference)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeAgentSearchIndexReference)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<KnowledgeAgentAzureSearchDocReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KnowledgeAgentSearchIndexReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new KnowledgeAgentAzureSearchDocReference FromResponse(Response response)
+        internal static new KnowledgeAgentSearchIndexReference FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKnowledgeAgentAzureSearchDocReference(document.RootElement);
+            return DeserializeKnowledgeAgentSearchIndexReference(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

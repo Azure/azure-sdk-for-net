@@ -61,6 +61,8 @@ namespace Azure.Search.Documents.Models
             string type = "Unknown";
             string id = default;
             int activitySource = default;
+            IReadOnlyDictionary<string, object> sourceData = default;
+            float? rerankerScore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,13 +82,49 @@ namespace Azure.Search.Documents.Models
                     activitySource = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("sourceData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
+                    }
+                    sourceData = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("rerankerScore"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rerankerScore = property.Value.GetSingle();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownKnowledgeAgentReference(type, id, activitySource, serializedAdditionalRawData);
+            return new UnknownKnowledgeAgentReference(
+                type,
+                id,
+                activitySource,
+                sourceData ?? new ChangeTrackingDictionary<string, object>(),
+                rerankerScore,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KnowledgeAgentReference>.Write(ModelReaderWriterOptions options)

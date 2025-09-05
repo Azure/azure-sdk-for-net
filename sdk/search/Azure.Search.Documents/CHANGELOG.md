@@ -1,19 +1,19 @@
 # Release History
 
-## 11.7.0-beta.7 (Unreleased)
+## 11.7.0-beta.7 (2025-09-05)
 
 ### Features Added
+- Added support for Knowledge Agent knowledge sources.
+- Added support for Knowledge Agent answer synthesis.
+- Added `VectorFilterMode.StrictPostFilter`.
 
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Dropped support for Knowledge Agent target index. Use knowledge sources instead.
+- Moved `QueryDebugMode` from `SemanticSearchOptions` to `SearchOptions` as it is no longer tied only to semantic queries.
 
 ## 11.7.0-beta.6 (2025-08-11)
 
 ### Features Added
-
 - Enable the new model serialization using System.ClientModel, refer to this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Added new AOT-compatible overloads for `Search<T>` and `SearchAsync<T>` that take `JsonTypeInfo<T>`.
 

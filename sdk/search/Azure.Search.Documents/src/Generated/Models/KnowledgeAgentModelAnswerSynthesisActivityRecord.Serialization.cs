@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Agents.Models
 {
-    public partial class KnowledgeAgentSemanticRankerActivityRecord : IUtf8JsonSerializable, IJsonModel<KnowledgeAgentSemanticRankerActivityRecord>
+    public partial class KnowledgeAgentModelAnswerSynthesisActivityRecord : IUtf8JsonSerializable, IJsonModel<KnowledgeAgentModelAnswerSynthesisActivityRecord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeAgentSemanticRankerActivityRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeAgentModelAnswerSynthesisActivityRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<KnowledgeAgentSemanticRankerActivityRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KnowledgeAgentModelAnswerSynthesisActivityRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Search.Documents.Agents.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentSemanticRankerActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentModelAnswerSynthesisActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KnowledgeAgentSemanticRankerActivityRecord)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeAgentModelAnswerSynthesisActivityRecord)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -40,26 +40,26 @@ namespace Azure.Search.Documents.Agents.Models
                 writer.WritePropertyName("inputTokens"u8);
                 writer.WriteNumberValue(InputTokens.Value);
             }
-            if (Optional.IsDefined(ElapsedMs))
+            if (Optional.IsDefined(OutputTokens))
             {
-                writer.WritePropertyName("elapsedMs"u8);
-                writer.WriteNumberValue(ElapsedMs.Value);
+                writer.WritePropertyName("outputTokens"u8);
+                writer.WriteNumberValue(OutputTokens.Value);
             }
         }
 
-        KnowledgeAgentSemanticRankerActivityRecord IJsonModel<KnowledgeAgentSemanticRankerActivityRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        KnowledgeAgentModelAnswerSynthesisActivityRecord IJsonModel<KnowledgeAgentModelAnswerSynthesisActivityRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentSemanticRankerActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentModelAnswerSynthesisActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KnowledgeAgentSemanticRankerActivityRecord)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeAgentModelAnswerSynthesisActivityRecord)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKnowledgeAgentSemanticRankerActivityRecord(document.RootElement, options);
+            return DeserializeKnowledgeAgentModelAnswerSynthesisActivityRecord(document.RootElement, options);
         }
 
-        internal static KnowledgeAgentSemanticRankerActivityRecord DeserializeKnowledgeAgentSemanticRankerActivityRecord(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static KnowledgeAgentModelAnswerSynthesisActivityRecord DeserializeKnowledgeAgentModelAnswerSynthesisActivityRecord(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -68,9 +68,10 @@ namespace Azure.Search.Documents.Agents.Models
                 return null;
             }
             int? inputTokens = default;
-            int? elapsedMs = default;
+            int? outputTokens = default;
             int id = default;
             string type = default;
+            int? elapsedMs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -84,13 +85,13 @@ namespace Azure.Search.Documents.Agents.Models
                     inputTokens = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("elapsedMs"u8))
+                if (property.NameEquals("outputTokens"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    elapsedMs = property.Value.GetInt32();
+                    outputTokens = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -103,52 +104,67 @@ namespace Azure.Search.Documents.Agents.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("elapsedMs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    elapsedMs = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new KnowledgeAgentSemanticRankerActivityRecord(id, type, serializedAdditionalRawData, inputTokens, elapsedMs);
+            return new KnowledgeAgentModelAnswerSynthesisActivityRecord(
+                id,
+                type,
+                elapsedMs,
+                serializedAdditionalRawData,
+                inputTokens,
+                outputTokens);
         }
 
-        BinaryData IPersistableModel<KnowledgeAgentSemanticRankerActivityRecord>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<KnowledgeAgentModelAnswerSynthesisActivityRecord>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentSemanticRankerActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentModelAnswerSynthesisActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeAgentSemanticRankerActivityRecord)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeAgentModelAnswerSynthesisActivityRecord)} does not support writing '{options.Format}' format.");
             }
         }
 
-        KnowledgeAgentSemanticRankerActivityRecord IPersistableModel<KnowledgeAgentSemanticRankerActivityRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
+        KnowledgeAgentModelAnswerSynthesisActivityRecord IPersistableModel<KnowledgeAgentModelAnswerSynthesisActivityRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentSemanticRankerActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentModelAnswerSynthesisActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKnowledgeAgentSemanticRankerActivityRecord(document.RootElement, options);
+                        return DeserializeKnowledgeAgentModelAnswerSynthesisActivityRecord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeAgentSemanticRankerActivityRecord)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeAgentModelAnswerSynthesisActivityRecord)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<KnowledgeAgentSemanticRankerActivityRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KnowledgeAgentModelAnswerSynthesisActivityRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new KnowledgeAgentSemanticRankerActivityRecord FromResponse(Response response)
+        internal static new KnowledgeAgentModelAnswerSynthesisActivityRecord FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKnowledgeAgentSemanticRankerActivityRecord(document.RootElement);
+            return DeserializeKnowledgeAgentModelAnswerSynthesisActivityRecord(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
