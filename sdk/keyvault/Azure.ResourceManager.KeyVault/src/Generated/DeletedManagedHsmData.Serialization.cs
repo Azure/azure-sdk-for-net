@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KeyVault
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
+            if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);

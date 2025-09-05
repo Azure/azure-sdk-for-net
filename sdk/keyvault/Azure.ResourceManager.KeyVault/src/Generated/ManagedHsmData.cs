@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of the managed HSM. </param>
         /// <param name="sku"> SKU details. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="identity"> Managed service identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedHsmProperties properties, ManagedHsmSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> SKU details. </summary>
         [WirePath("sku")]
         public ManagedHsmSku Sku { get; set; }
-        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        /// <summary> Managed service identity. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
     }
