@@ -87,6 +87,10 @@ namespace Azure.Generator.Management
             {
                 return new InheritableSystemObjectModelProvider(replacedType.FrameworkType, model);
             }
+            if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out _))
+            {
+                return null;
+            }
             return base.CreateModelCore(model);
         }
 

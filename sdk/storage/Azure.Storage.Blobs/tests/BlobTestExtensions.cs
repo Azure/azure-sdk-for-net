@@ -24,6 +24,32 @@ namespace Azure.Storage
             return builder.ToUri();
         }
 
+        private static BlobClientConfiguration BuildClientConfigurationWithEncryptionScope(
+            BlobClientConfiguration clientConfiguration,
+            string encryptionScope)
+            => new BlobClientConfiguration(
+                pipeline: clientConfiguration.Pipeline,
+                sharedKeyCredential: clientConfiguration.SharedKeyCredential,
+                clientDiagnostics: clientConfiguration.ClientDiagnostics,
+                version: clientConfiguration.Version,
+                customerProvidedKey: null,
+                transferValidation: clientConfiguration.TransferValidation,
+                encryptionScope: encryptionScope,
+                trimBlobNameSlashes: clientConfiguration.TrimBlobNameSlashes);
+
+        private static BlobClientConfiguration BuildClientConfigurationWithCpk(
+            BlobClientConfiguration clientConfiguration,
+            CustomerProvidedKey customerProvidedKey)
+            => new BlobClientConfiguration(
+                pipeline: clientConfiguration.Pipeline,
+                sharedKeyCredential: clientConfiguration.SharedKeyCredential,
+                clientDiagnostics: clientConfiguration.ClientDiagnostics,
+                version: clientConfiguration.Version,
+                customerProvidedKey: customerProvidedKey,
+                transferValidation: clientConfiguration.TransferValidation,
+                encryptionScope: null,
+                trimBlobNameSlashes: clientConfiguration.TrimBlobNameSlashes);
+
         /// <summary>
         /// Convert a base RequestConditions to BlobRequestConditions.
         /// </summary>

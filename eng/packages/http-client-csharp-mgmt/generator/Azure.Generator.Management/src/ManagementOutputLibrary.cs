@@ -127,7 +127,8 @@ namespace Azure.Generator.Management
             var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
             foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
-                if (scope != ResourceScope.Extension && (resourcesInScope.Count > 0 || nonResourceMethods.Count > 0))
+                if (scope != ResourceScope.Extension &&
+                    (resourcesInScope.Count > 0 || resourceMethods.Count > 0 || nonResourceMethods.Count > 0))
                 {
                     var mockableExtension = new MockableResourceProvider(scope, resourcesInScope, resourceMethods, nonResourceMethods);
                     mockableResources.Add(scope, mockableExtension);

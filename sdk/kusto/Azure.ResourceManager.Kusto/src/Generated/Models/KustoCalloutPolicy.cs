@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Regular expression or FQDN pattern for the callout URI. </summary>
+        [WirePath("calloutUriRegex")]
         public string CalloutUriRegex { get; set; }
         /// <summary> Type of the callout service, specifying the kind of external resource or service being accessed. </summary>
+        [WirePath("calloutType")]
         public KustoCalloutPolicyCalloutType? CalloutType { get; set; }
         /// <summary> Indicates whether outbound access is permitted for the specified URI pattern. </summary>
+        [WirePath("outboundAccess")]
         public KustoCalloutPolicyOutboundAccess? OutboundAccess { get; set; }
         /// <summary> Unique identifier for the callout configuration. </summary>
+        [WirePath("calloutId")]
         public string CalloutId { get; }
     }
 }

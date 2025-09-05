@@ -14,10 +14,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 {
     public class CryptoKeyTest : IotFirmwareDefenseManagementTestBase
     {
-        private static readonly string subscriptionId = "07aed47b-60ad-4d6e-a07a-89b602418441";
-        private static readonly string rgName = "sdk-tests-rg";
-        private static readonly string workspaceName = "default";
-        private static readonly string firmwareId = "cf833be1-3e8e-a00a-a037-ad27a0fc0497";
         private static SubscriptionResource testSubscription;
 
         public CryptoKeyTest(bool isAsync)

@@ -42,9 +42,6 @@ namespace MgmtTypeSpec
 
         internal HttpMessage CreatePreviewActionsRequest(Guid subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -53,7 +50,10 @@ namespace MgmtTypeSpec
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/previewActions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

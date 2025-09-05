@@ -168,11 +168,19 @@ internal static class BicepTypeMapping
         BicepExpression CompileNestedConstruct(ProvisionableConstruct construct)
         {
             IList<BicepStatement> statements = [.. construct.Compile()];
-            if (statements.Count != 1 || statements[0] is not ExpressionStatement expr)
+            if (statements.Count != 1)
             {
-                throw statements.Count == 1 ?
-                    new InvalidOperationException($"Cannot convert {construct} into a Bicep expression because it compiles to {statements[0]} instead.") :
-                    new InvalidOperationException($"Cannot convert {construct} into a Bicep expression because it contains multiple statements.");
+                throw new InvalidOperationException($"Cannot convert {construct} into a Bicep expression because it contains multiple statements.");
+            }
+            // TODO -- this is a workaround until https://github.com/Azure/azure-sdk-for-net/issues/52277 is resolved
+            if (statements[0] is ResourceStatement resource)
+            {
+                // handle the case when we are using a resource as property of other resources
+                return resource.Body;
+            }
+            if (statements[0] is not ExpressionStatement expr)
+            {
+                throw new InvalidOperationException($"Cannot convert {construct} into a Bicep expression because it compiles to {statements[0]} instead.");
             }
             return expr.Expression;
         }

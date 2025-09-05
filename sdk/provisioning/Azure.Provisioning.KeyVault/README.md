@@ -62,7 +62,7 @@ ProvisioningVariable tenantId =
 infra.Add(tenantId);
 
 KeyVaultService kv =
-    new(nameof(kv))
+    new(nameof(kv), KeyVaultService.ResourceVersions.V2023_07_01)
     {
         Properties =
             new KeyVaultProperties
@@ -96,7 +96,7 @@ KeyVaultService kv =
 infra.Add(kv);
 
 KeyVaultSecret secret =
-    new(nameof(secret))
+    new(nameof(secret), KeyVaultSecret.ResourceVersions.V2023_07_01)
     {
         Parent = kv,
         Name = "myDarkNecessities",

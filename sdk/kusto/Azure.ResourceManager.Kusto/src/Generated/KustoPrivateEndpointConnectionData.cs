@@ -79,16 +79,20 @@ namespace Azure.ResourceManager.Kusto
         /// <summary> Private endpoint which the connection belongs to. </summary>
         internal SubResource PrivateEndpoint { get; }
         /// <summary> Gets Id. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint?.Id;
         }
 
         /// <summary> Connection State of the Private Endpoint Connection. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public KustoPrivateLinkServiceConnectionStateProperty ConnectionState { get; set; }
         /// <summary> Group id of the private endpoint. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId { get; }
         /// <summary> Provisioning state of the private endpoint. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
     }
 }
