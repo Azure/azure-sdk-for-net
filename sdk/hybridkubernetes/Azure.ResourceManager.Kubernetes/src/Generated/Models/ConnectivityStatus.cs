@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kubernetes;
 
 namespace Azure.ResourceManager.Kubernetes.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Kubernetes.Models
     public readonly partial struct ConnectivityStatus : IEquatable<ConnectivityStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ConnectivityStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConnectivityStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ConnectingValue = "Connecting";
         private const string ConnectedValue = "Connected";
         private const string OfflineValue = "Offline";
         private const string ExpiredValue = "Expired";
+        private const string AgentNotInstalledValue = "AgentNotInstalled";
 
-        /// <summary> Connecting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ConnectivityStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Connecting. </summary>
         public static ConnectivityStatus Connecting { get; } = new ConnectivityStatus(ConnectingValue);
-        /// <summary> Connected. </summary>
+
+        /// <summary> Gets the Connected. </summary>
         public static ConnectivityStatus Connected { get; } = new ConnectivityStatus(ConnectedValue);
-        /// <summary> Offline. </summary>
+
+        /// <summary> Gets the Offline. </summary>
         public static ConnectivityStatus Offline { get; } = new ConnectivityStatus(OfflineValue);
-        /// <summary> Expired. </summary>
+
+        /// <summary> Gets the Expired. </summary>
         public static ConnectivityStatus Expired { get; } = new ConnectivityStatus(ExpiredValue);
+
+        /// <summary> Gets the AgentNotInstalled. </summary>
+        public static ConnectivityStatus AgentNotInstalled { get; } = new ConnectivityStatus(AgentNotInstalledValue);
+
         /// <summary> Determines if two <see cref="ConnectivityStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectivityStatus left, ConnectivityStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectivityStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectivityStatus left, ConnectivityStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectivityStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectivityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectivityStatus(string value) => new ConnectivityStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectivityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectivityStatus?(string value) => value == null ? null : new ConnectivityStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectivityStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectivityStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
