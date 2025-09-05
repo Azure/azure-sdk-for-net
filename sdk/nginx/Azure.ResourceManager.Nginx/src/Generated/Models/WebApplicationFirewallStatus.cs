@@ -51,13 +51,15 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallStatus"/>. </summary>
+        /// <param name="wafRelease"> NGINX App Protect WAF release version. </param>
         /// <param name="attackSignaturesPackage"> Package containing attack signatures for the NGINX App Protect Web Application Firewall (WAF). </param>
         /// <param name="botSignaturesPackage"> Package containing bot signatures for the NGINX App Protect Web Application Firewall (WAF). </param>
         /// <param name="threatCampaignsPackage"> Package containing threat campaigns for the NGINX App Protect Web Application Firewall (WAF). </param>
         /// <param name="componentVersions"> Versions of the NGINX App Protect Web Application Firewall (WAF) components. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebApplicationFirewallStatus(WebApplicationFirewallPackage attackSignaturesPackage, WebApplicationFirewallPackage botSignaturesPackage, WebApplicationFirewallPackage threatCampaignsPackage, WebApplicationFirewallComponentVersions componentVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WebApplicationFirewallStatus(string wafRelease, WebApplicationFirewallPackage attackSignaturesPackage, WebApplicationFirewallPackage botSignaturesPackage, WebApplicationFirewallPackage threatCampaignsPackage, WebApplicationFirewallComponentVersions componentVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            WafRelease = wafRelease;
             AttackSignaturesPackage = attackSignaturesPackage;
             BotSignaturesPackage = botSignaturesPackage;
             ThreatCampaignsPackage = threatCampaignsPackage;
@@ -65,6 +67,8 @@ namespace Azure.ResourceManager.Nginx.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> NGINX App Protect WAF release version. </summary>
+        public string WafRelease { get; }
         /// <summary> Package containing attack signatures for the NGINX App Protect Web Application Firewall (WAF). </summary>
         public WebApplicationFirewallPackage AttackSignaturesPackage { get; }
         /// <summary> Package containing bot signatures for the NGINX App Protect Web Application Firewall (WAF). </summary>

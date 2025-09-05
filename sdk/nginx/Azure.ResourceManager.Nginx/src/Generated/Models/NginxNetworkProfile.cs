@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxNetworkProfile. </summary>
+    /// <summary> Nginx Network Profile. </summary>
     public partial class NginxNetworkProfile
     {
         /// <summary>
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NginxNetworkProfile"/>. </summary>
-        /// <param name="frontEndIPConfiguration"></param>
-        /// <param name="networkInterfaceConfiguration"></param>
+        /// <param name="frontEndIPConfiguration"> Nginx Frontend IP Configuration. </param>
+        /// <param name="networkInterfaceConfiguration"> Nginx Network Interface Configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NginxNetworkProfile(NginxFrontendIPConfiguration frontEndIPConfiguration, NginxNetworkInterfaceConfiguration networkInterfaceConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.Nginx.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the front end ip configuration. </summary>
+        /// <summary> Nginx Frontend IP Configuration. </summary>
         public NginxFrontendIPConfiguration FrontEndIPConfiguration { get; set; }
-        /// <summary> Gets or sets the network interface configuration. </summary>
+        /// <summary> Nginx Network Interface Configuration. </summary>
         internal NginxNetworkInterfaceConfiguration NetworkInterfaceConfiguration { get; set; }
         /// <summary> Gets or sets the network interface subnet id. </summary>
         public ResourceIdentifier NetworkInterfaceSubnetId
