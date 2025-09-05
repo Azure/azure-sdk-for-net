@@ -891,6 +891,13 @@
 # ServiceLabel: %TimeSeriesInsights
 # ServiceOwners:                                                   @yeskarthik @rasidhan @dmdenmsft @Shipra1Mishra
 
+# PRLabel: %TrafficManager
+/sdk/trafficmanager/                                               @ransinha1989
+
+# ServiceLabel: %TrafficManager
+# AzureSdkOwners:                                                  @ransinha1989
+# ServiceOwners:                                                   @ransinha1989
+
 # PRLabel: %VideoAnalyzer
 /sdk/videoanalyzer/                                                @giakas
 
