@@ -136,7 +136,16 @@ public partial struct JsonPatch
     /// <param name="value">The value to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, double value)
     {
-        // calling Set with a float will come here as well so no need for an explicit overload
+        SetInternal(jsonPath, EncodeValue(value));
+    }
+
+    /// <summary>
+    /// Sets a value at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path of the value to be set.</param>
+    /// <param name="value">The value to set.</param>
+    public void Set(ReadOnlySpan<byte> jsonPath, float value)
+    {
         SetInternal(jsonPath, EncodeValue(value));
     }
 

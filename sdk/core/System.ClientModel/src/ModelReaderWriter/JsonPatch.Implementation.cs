@@ -17,6 +17,13 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public partial struct JsonPatch
 {
+    private const byte MaxInt32Utf8Bytes = 11;
+    private const byte MaxInt64Utf8Bytes = 20;
+    private const byte MaxDecimalUtf8Bytes = 64;
+    private const byte MaxGuidUtf8Bytes = 48;
+    private const byte MaxDateTimeUtf8Bytes = 64;
+    private const byte MaxTimeSpanUtf8Bytes = 64;
+
     // Dictionary-based storage using UTF8 byte arrays as keys and encoded byte arrays as values
     private SpanDictionary? _properties;
     private readonly EncodedValue _rawJson;
@@ -660,7 +667,7 @@ public partial struct JsonPatch
 
     private static EncodedValue EncodeValue(byte value)
     {
-        Span<byte> buffer = stackalloc byte[11];
+        Span<byte> buffer = stackalloc byte[MaxInt32Utf8Bytes];
         if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
         {
             return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
@@ -672,7 +679,7 @@ public partial struct JsonPatch
 
     private static EncodedValue EncodeValue(DateTime value, StandardFormat format = default)
     {
-        Span<byte> buffer = stackalloc byte[64];
+        Span<byte> buffer = stackalloc byte[MaxDateTimeUtf8Bytes];
         if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten, format))
         {
             return new(ValueKind.DateTime, buffer.Slice(0, bytesWritten).ToArray());
@@ -684,7 +691,7 @@ public partial struct JsonPatch
 
     private static EncodedValue EncodeValue(DateTimeOffset value, StandardFormat format = default)
     {
-        Span<byte> buffer = stackalloc byte[64];
+        Span<byte> buffer = stackalloc byte[MaxDateTimeUtf8Bytes];
         if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten, format))
         {
             return new(ValueKind.DateTime, buffer.Slice(0, bytesWritten).ToArray());
@@ -696,7 +703,7 @@ public partial struct JsonPatch
 
     private static EncodedValue EncodeValue(decimal value)
     {
-        Span<byte> buffer = stackalloc byte[64];
+        Span<byte> buffer = stackalloc byte[MaxDecimalUtf8Bytes];
         if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
         {
             return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
@@ -708,7 +715,19 @@ public partial struct JsonPatch
 
     private static EncodedValue EncodeValue(double value)
     {
-        Span<byte> buffer = stackalloc byte[64];
+        Span<byte> buffer = stackalloc byte[MaxDecimalUtf8Bytes];
+        if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
+        {
+            return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
+        }
+
+        // not sure how we could ever get here.
+        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+    }
+
+    private static EncodedValue EncodeValue(float value)
+    {
+        Span<byte> buffer = stackalloc byte[MaxDecimalUtf8Bytes];
         if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
         {
             return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
@@ -720,7 +739,7 @@ public partial struct JsonPatch
 
     private static EncodedValue EncodeValue(Guid value)
     {
-        Span<byte> buffer = stackalloc byte[128];
+        Span<byte> buffer = stackalloc byte[MaxGuidUtf8Bytes];
         if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
         {
             return new(ValueKind.Guid, buffer.Slice(0, bytesWritten).ToArray());
@@ -732,7 +751,7 @@ public partial struct JsonPatch
 
     private static EncodedValue EncodeValue(int value)
     {
-        Span<byte> buffer = stackalloc byte[11];
+        Span<byte> buffer = stackalloc byte[MaxInt32Utf8Bytes];
         if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
         {
             return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
@@ -744,7 +763,7 @@ public partial struct JsonPatch
 
     private static EncodedValue EncodeValue(long value)
     {
-        Span<byte> buffer = stackalloc byte[20];
+        Span<byte> buffer = stackalloc byte[MaxInt64Utf8Bytes];
         if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
         {
             return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
@@ -756,7 +775,7 @@ public partial struct JsonPatch
 
     private static EncodedValue EncodeValue(sbyte value)
     {
-        Span<byte> buffer = stackalloc byte[8];
+        Span<byte> buffer = stackalloc byte[MaxInt32Utf8Bytes];
         if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
         {
             return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
@@ -768,7 +787,7 @@ public partial struct JsonPatch
 
     private static EncodedValue EncodeValue(short value)
     {
-        Span<byte> buffer = stackalloc byte[11];
+        Span<byte> buffer = stackalloc byte[MaxInt32Utf8Bytes];
         if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
         {
             return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
@@ -780,7 +799,7 @@ public partial struct JsonPatch
 
     private static EncodedValue EncodeValue(TimeSpan value, StandardFormat format = default)
     {
-        Span<byte> buffer = stackalloc byte[64];
+        Span<byte> buffer = stackalloc byte[MaxTimeSpanUtf8Bytes];
         if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten, format))
         {
             return new(ValueKind.TimeSpan, buffer.Slice(0, bytesWritten).ToArray());
@@ -792,7 +811,7 @@ public partial struct JsonPatch
 
     private static EncodedValue EncodeValue(uint value)
     {
-        Span<byte> buffer = stackalloc byte[11];
+        Span<byte> buffer = stackalloc byte[MaxInt32Utf8Bytes];
         if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
         {
             return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
@@ -804,7 +823,7 @@ public partial struct JsonPatch
 
     private static EncodedValue EncodeValue(ulong value)
     {
-        Span<byte> buffer = stackalloc byte[20];
+        Span<byte> buffer = stackalloc byte[MaxInt64Utf8Bytes];
         if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
         {
             return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
@@ -816,7 +835,7 @@ public partial struct JsonPatch
 
     private static EncodedValue EncodeValue(ushort value)
     {
-        Span<byte> buffer = stackalloc byte[11];
+        Span<byte> buffer = stackalloc byte[MaxInt32Utf8Bytes];
         if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
         {
             return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
@@ -832,25 +851,10 @@ public partial struct JsonPatch
     }
 
     private static EncodedValue EncodeValue(byte[] value)
-    {
-        if (TryGetKnownValue(value, out var encodedValue))
-        {
-            return encodedValue;
-        }
-        return new(ValueKind.Json, value);
-    }
+        => EncodeValue(value.AsSpan());
 
     private static EncodedValue EncodeValue(BinaryData value)
-    {
-        var rom = value.ToMemory();
-
-        if (TryGetKnownValue(rom.Span, out var encodedValue))
-        {
-            return encodedValue;
-        }
-
-        return new(ValueKind.Json, rom);
-    }
+        => EncodeValue(value.ToMemory().Span);
 
     private static EncodedValue EncodeValue(ReadOnlySpan<byte> value)
     {
