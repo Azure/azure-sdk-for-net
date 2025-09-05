@@ -7,7 +7,7 @@
 - Added support of `FileSearchTool` and `CodeInterpreterTool` for `PersistentAgentsChatClient`
 - Bugfix: Addressed issues related to `ResponseFormat` when using `PersistentAgentsChatClient` with Structured Outputs.
 - Make `Azure.AI.Agents.Persistent` AOT compatible.
-- Improved the way how `RequireApproval` is being set. See the [issue](https://github.com/Azure/azure-sdk-for-net/issues/52213).
+- Improved the way `RequireApproval` is being set. See the [issue](https://github.com/Azure/azure-sdk-for-net/issues/52213).
 
 ### Breaking Changes
 

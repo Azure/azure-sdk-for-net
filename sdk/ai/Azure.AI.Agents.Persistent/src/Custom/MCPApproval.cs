@@ -17,7 +17,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary>
         /// Create an instance of an MCPApproval with custom trust levels for different tools.
         /// </summary>
-        /// <param name="perToolApproval">The object, describin, which tool never require approvals and which tools always require approvals.</param>
+        /// <param name="perToolApproval">The object, describing, which tools never require approvals and which tools always require approvals.</param>
         public MCPApproval(MCPApprovalPerTool perToolApproval)
         {
             if (perToolApproval == null)
