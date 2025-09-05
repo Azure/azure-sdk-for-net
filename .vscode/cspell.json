@@ -1803,6 +1803,13 @@
         "Acks",
         "acks"
       ]
+    },
+    {
+      "filename": "**/sdk/iotoperations/**/*.cs",
+      "words": [
+        "Akri",
+        "Bucketized"
+      ]
     }
   ],
   "allowCompoundWords": true
