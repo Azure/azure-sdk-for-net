@@ -70,7 +70,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 {
                     ((IJsonModel<AvailabilitySetData>)item).Write(writer, options);
                 }
-                Patch.WriteArrayTo(writer, "$"u8);
+                Patch.WriteTo(writer, "$"u8);
                 writer.WriteEndArray();
             }
 

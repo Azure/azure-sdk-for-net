@@ -23,6 +23,19 @@ public partial struct JsonPatch
         if (_properties == null)
             return;
 
+        if (_properties.TryGetValue(jsonPath, out var encodedValue))
+        {
+            if (encodedValue.Kind == ValueKind.Removed)
+                return;
+
+            if (encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
+            {
+                encodedValue.Kind |= ValueKind.Written;
+                _properties.Set(jsonPath, encodedValue);
+                writer.WriteRawValue(encodedValue.Value.Span.Slice(1, encodedValue.Value.Length - 2));
+            }
+        }
+
         Span<byte> normalizedPrefix = stackalloc byte[jsonPath.Length];
         JsonPathComparer.Default.Normalize(jsonPath, normalizedPrefix, out int bytesWritten);
         normalizedPrefix = normalizedPrefix.Slice(0, bytesWritten);
@@ -42,28 +55,28 @@ public partial struct JsonPatch
         }
     }
 
-    /// <summary>
-    /// Writes the JSON representation of the specified array to the specified Utf8JsonWriter.
-    /// Writes in standard JSON format.
-    /// </summary>
-    /// <param name="writer">The Utf8JsonWriter to write to.</param>
-    /// <param name="arrayPath">The JSON path of the array to write.</param>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public void WriteArrayTo(Utf8JsonWriter writer, ReadOnlySpan<byte> arrayPath)
-    {
-        if (_properties == null)
-            return;
+    ///// <summary>
+    ///// Writes the JSON representation of the specified array to the specified Utf8JsonWriter.
+    ///// Writes in standard JSON format.
+    ///// </summary>
+    ///// <param name="writer">The Utf8JsonWriter to write to.</param>
+    ///// <param name="arrayPath">The JSON path of the array to write.</param>
+    //[EditorBrowsable(EditorBrowsableState.Never)]
+    //public void WriteArrayTo(Utf8JsonWriter writer, ReadOnlySpan<byte> arrayPath)
+    //{
+    //    if (_properties == null)
+    //        return;
 
-        if (!_properties.TryGetValue(arrayPath, out var value))
-            return;
+    //    if (!_properties.TryGetValue(arrayPath, out var value))
+    //        return;
 
-        if (value.Kind == ValueKind.Removed)
-            return;
+    //    if (value.Kind == ValueKind.Removed)
+    //        return;
 
-        value.Kind |= ValueKind.Written;
-        _properties.Set(arrayPath, value);
-        writer.WriteRawValue(value.Value.Span.Slice(1, value.Value.Length - 2));
-    }
+    //    value.Kind |= ValueKind.Written;
+    //    _properties.Set(arrayPath, value);
+    //    writer.WriteRawValue(value.Value.Span.Slice(1, value.Value.Length - 2));
+    //}
 
     /// <summary>
     /// Writes the JSON representation of the JsonPatch to the specified Utf8JsonWriter.
