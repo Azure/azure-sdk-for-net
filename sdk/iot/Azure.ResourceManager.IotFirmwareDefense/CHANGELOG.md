@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Updated Microsoft.IoTfirmwareDefense API version to `2025-08-02`
+- Updated Microsoft.IoTFirmwareDefense API version to `2025-08-02`
 - Improve backwards compatibility for CVE data models
 
 ### Breaking Changes
