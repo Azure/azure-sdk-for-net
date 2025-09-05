@@ -77,6 +77,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "AdlsBlobBackupDatasourceParameters": return AdlsBlobBackupDataSourceSettings.DeserializeAdlsBlobBackupDataSourceSettings(element, options);
                     case "BlobBackupDatasourceParameters": return BlobBackupDataSourceSettings.DeserializeBlobBackupDataSourceSettings(element, options);
                     case "KubernetesClusterBackupDatasourceParameters": return KubernetesClusterBackupDataSourceSettings.DeserializeKubernetesClusterBackupDataSourceSettings(element, options);
                 }
