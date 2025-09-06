@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ImportJobsCreateOrUpdate()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/importJobs_CreateOrUpdate.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2025-07-01/examples/importJobs_CreateOrUpdate.json
             // this example is just showing the usage of "importJobs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ImportJobsGet()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/importJobs_Get.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2025-07-01/examples/importJobs_Get.json
             // this example is just showing the usage of "importJobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ImportJobsListByAmlFilesystem()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/importJobs_ListByAmlFilesystem.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2025-07-01/examples/importJobs_ListByAmlFilesystem.json
             // this example is just showing the usage of "importJobs_ListByAmlFileSystem" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ImportJobsGet()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/importJobs_Get.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2025-07-01/examples/importJobs_Get.json
             // this example is just showing the usage of "importJobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ImportJobsGet()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2024-03-01/examples/importJobs_Get.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2025-07-01/examples/importJobs_Get.json
             // this example is just showing the usage of "importJobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
