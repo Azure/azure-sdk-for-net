@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.StorageCache
 
         AutoExportJobResource IOperationSource<AutoExportJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AutoExportJobData>(response.Content);
+            var data = ModelReaderWriter.Read<AutoExportJobData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageCacheContext.Default);
             return new AutoExportJobResource(_client, data);
         }
 
         async ValueTask<AutoExportJobResource> IOperationSource<AutoExportJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AutoExportJobData>(response.Content);
+            var data = ModelReaderWriter.Read<AutoExportJobData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageCacheContext.Default);
             return await Task.FromResult(new AutoExportJobResource(_client, data)).ConfigureAwait(false);
         }
     }

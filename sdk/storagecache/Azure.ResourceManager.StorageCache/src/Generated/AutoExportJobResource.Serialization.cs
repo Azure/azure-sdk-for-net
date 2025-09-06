@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.StorageCache
 {
     public partial class AutoExportJobResource : IJsonModel<AutoExportJobData>
     {
+        private static AutoExportJobData s_dataDeserializationInstance;
+        private static AutoExportJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AutoExportJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutoExportJobData>)Data).Write(writer, options);
 
-        AutoExportJobData IJsonModel<AutoExportJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutoExportJobData>)Data).Create(ref reader, options);
+        AutoExportJobData IJsonModel<AutoExportJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutoExportJobData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutoExportJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AutoExportJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutoExportJobData>(Data, options, AzureResourceManagerStorageCacheContext.Default);
 
-        AutoExportJobData IPersistableModel<AutoExportJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoExportJobData>(data, options);
+        AutoExportJobData IPersistableModel<AutoExportJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoExportJobData>(data, options, AzureResourceManagerStorageCacheContext.Default);
 
-        string IPersistableModel<AutoExportJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutoExportJobData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AutoExportJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutoExportJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
