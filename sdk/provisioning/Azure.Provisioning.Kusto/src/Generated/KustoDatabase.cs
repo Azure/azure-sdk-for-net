@@ -56,6 +56,16 @@ public partial class KustoDatabase : ProvisionableResource
     private SystemData? _systemData;
 
     /// <summary>
+    /// Gets or sets the Kind.
+    /// </summary>
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
+
+    /// <summary>
     /// Gets or sets a reference to the parent KustoCluster.
     /// </summary>
     public KustoCluster? Parent
@@ -88,6 +98,7 @@ public partial class KustoDatabase : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<KustoCluster>("Parent", ["parent"], isRequired: true);

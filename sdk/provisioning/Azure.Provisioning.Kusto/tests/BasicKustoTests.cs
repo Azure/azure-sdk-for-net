@@ -849,4 +849,61 @@ public class BasicKustoTests
             }
             """);
     }
+
+    [Test]
+    [Description("Test that base KustoDatabase class includes Kind property")]
+    public async Task KustoDatabaseWithKindProperty()
+    {
+        await using Trycep test = new Trycep().Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+
+                // Create a base KustoDatabase (not a derived class) and set Kind explicitly
+                KustoCluster cluster = new("kustoCluster", KustoCluster.ResourceVersions.V2024_04_13)
+                {
+                    Name = "test-cluster",
+                    Sku = new KustoSku
+                    {
+                        Name = KustoSkuName.StandardE8dV4,
+                        Tier = KustoSkuTier.Standard,
+                        Capacity = 2
+                    }
+                };
+                infra.Add(cluster);
+
+                KustoDatabase database = new("kustoDatabase", KustoDatabase.ResourceVersions.V2024_04_13)
+                {
+                    Name = "test-database",
+                    Parent = cluster,
+                    Kind = "ReadWrite"  // This is the key test - Kind should be available
+                };
+                infra.Add(database);
+
+                return infra;
+            });
+
+        test.Compare(
+            """
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
+            resource kustoCluster 'Microsoft.Kusto/clusters@2024-04-13' = {
+              name: 'test-cluster'
+              location: location
+              sku: {
+                name: 'Standard_E8d_v4'
+                capacity: 2
+                tier: 'Standard'
+              }
+            }
+
+            resource kustoDatabase 'Microsoft.Kusto/clusters/databases@2024-04-13' = {
+              name: 'test-database'
+              location: location
+              kind: 'ReadWrite'
+              parent: kustoCluster
+            }
+            """);
+    }
 }
