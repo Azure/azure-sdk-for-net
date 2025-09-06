@@ -58,12 +58,12 @@ namespace Azure.Search.Documents.Agents.Models
         /// <param name="activity">
         /// The activity records for tracking progress and billing implications.
         /// Please note <see cref="KnowledgeAgentActivityRecord"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeAgentSearchActivityRecord"/>, <see cref="KnowledgeAgentSemanticRankerActivityRecord"/> and <see cref="KnowledgeAgentModelQueryPlanningActivityRecord"/>.
+        /// The available derived classes include <see cref="KnowledgeAgentAzureBlobActivityRecord"/>, <see cref="KnowledgeAgentRetrievalActivityRecord"/>, <see cref="KnowledgeAgentModelAnswerSynthesisActivityRecord"/>, <see cref="KnowledgeAgentModelQueryPlanningActivityRecord"/>, <see cref="KnowledgeAgentSearchIndexActivityRecord"/> and <see cref="KnowledgeAgentSemanticRerankerActivityRecord"/>.
         /// </param>
         /// <param name="references">
         /// The references for the retrieval data used in the response.
         /// Please note <see cref="KnowledgeAgentReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeAgentAzureSearchDocReference"/>.
+        /// The available derived classes include <see cref="KnowledgeAgentAzureBlobReference"/> and <see cref="KnowledgeAgentSearchIndexReference"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal KnowledgeAgentRetrievalResponse(IReadOnlyList<KnowledgeAgentMessage> response, IReadOnlyList<KnowledgeAgentActivityRecord> activity, IReadOnlyList<KnowledgeAgentReference> references, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -79,13 +79,13 @@ namespace Azure.Search.Documents.Agents.Models
         /// <summary>
         /// The activity records for tracking progress and billing implications.
         /// Please note <see cref="KnowledgeAgentActivityRecord"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeAgentSearchActivityRecord"/>, <see cref="KnowledgeAgentSemanticRankerActivityRecord"/> and <see cref="KnowledgeAgentModelQueryPlanningActivityRecord"/>.
+        /// The available derived classes include <see cref="KnowledgeAgentAzureBlobActivityRecord"/>, <see cref="KnowledgeAgentRetrievalActivityRecord"/>, <see cref="KnowledgeAgentModelAnswerSynthesisActivityRecord"/>, <see cref="KnowledgeAgentModelQueryPlanningActivityRecord"/>, <see cref="KnowledgeAgentSearchIndexActivityRecord"/> and <see cref="KnowledgeAgentSemanticRerankerActivityRecord"/>.
         /// </summary>
         public IReadOnlyList<KnowledgeAgentActivityRecord> Activity { get; }
         /// <summary>
         /// The references for the retrieval data used in the response.
         /// Please note <see cref="KnowledgeAgentReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeAgentAzureSearchDocReference"/>.
+        /// The available derived classes include <see cref="KnowledgeAgentAzureBlobReference"/> and <see cref="KnowledgeAgentSearchIndexReference"/>.
         /// </summary>
         public IReadOnlyList<KnowledgeAgentReference> References { get; }
     }
