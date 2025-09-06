@@ -15,12 +15,42 @@ namespace Azure.Generator.Management
     {
         private const string ResourceMetadataDecoratorName = "Azure.ClientGenerator.Core.@resourceSchema";
         private const string NonResourceMethodMetadata = "Azure.ClientGenerator.Core.@nonResourceMethodSchema";
+        private const string FlattenPropertyDecoratorName = "Azure.ClientGenerator.Core.@flattenProperty";
 
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
         private HashSet<InputModelType>? _resourceModels;
 
         private IReadOnlyDictionary<InputModelType, string>? _resourceUpdateModelToResourceNameMap;
+
+        private IReadOnlyDictionary<InputModelType, IList<InputModelProperty>>? _flattenPropertyMap;
+        internal IReadOnlyDictionary<InputModelType, IList<InputModelProperty>> FlattenPropertyMap => _flattenPropertyMap ??= BuildFlattenPropertyMap();
+        private IReadOnlyDictionary<InputModelType, IList<InputModelProperty>> BuildFlattenPropertyMap()
+        {
+            var result = new Dictionary<InputModelType, IList<InputModelProperty>>();
+            foreach (var model in InputNamespace.Models)
+            {
+                foreach (var property in model.Properties)
+                {
+                    if (property.Decorators.Any(d => d.Name == FlattenPropertyDecoratorName))
+                    {
+                        // skip discriminator property
+                        if (property.IsDiscriminator)
+                        {
+                            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic("general-warning", "Discriminator property should not be flattened.", targetCrossLanguageDefinitionId: model.CrossLanguageDefinitionId);
+                            continue;
+                        }
+                        if (!result.TryGetValue(model, out var properties))
+                        {
+                            properties = new List<InputModelProperty>();
+                            result[model] = properties;
+                        }
+                        properties.Add(property);
+                    }
+                }
+            }
+            return result;
+        }
 
         /// <inheritdoc/>
         public ManagementInputLibrary(string configPath) : base(configPath)
