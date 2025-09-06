@@ -1,15 +1,16 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Primitives;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
 {
@@ -65,47 +66,42 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             await Task.WhenAll(partitionPropertiesTasks).ConfigureAwait(false);
             EventProcessorCheckpoint[] checkpoints = null;
 
-            // Limit concurrent checkpoint fetches
-            const int MaxConcurrentCheckpointReads = 50;
-
             try
             {
-                using var semaphore = new SemaphoreSlim(Math.Min(MaxConcurrentCheckpointReads, partitions.Length), MaxConcurrentCheckpointReads);
-
-                var checkpointTasks = partitions
-                    .Select(partitionId => GetCheckpointWithSemaphoreAsync(partitionId, semaphore))
-                    .ToArray();
-
+                using var semaphore = new SemaphoreSlim(50, 50);
+                using var cts = new CancellationTokenSource();
+                var checkpointTasks = partitions.Select(async partition =>
+                {
+                    await semaphore.WaitAsync().ConfigureAwait(false);
+                    try
+                    {
+                        return await _checkpointStore.GetCheckpointAsync(
+                            _client.FullyQualifiedNamespace,
+                            _client.EventHubName,
+                            _client.ConsumerGroup,
+                            partition,
+                            cts.Token).ConfigureAwait(false);
+                    }
+                    catch
+                    {
+                        if (!cts.Token.IsCancellationRequested)
+                        {
+                            cts.Cancel();
+                        }
+                        throw;
+                    }
+                    finally
+                    {
+                        semaphore.Release();
+                    }
+                });
                 checkpoints = await Task.WhenAll(checkpointTasks).ConfigureAwait(false);
             }
             catch (Exception e)
             {
                 _logger.LogWarning($"Encountered an exception while getting checkpoints for Event Hub '{_client.EventHubName}' used for scaling. Error: {e.Message}");
             }
-
             return CreateTriggerMetrics(partitionPropertiesTasks.Select(t => t.Result).ToList(), checkpoints);
-
-            async Task<EventProcessorCheckpoint> GetCheckpointWithSemaphoreAsync(string partitionId, SemaphoreSlim semaphore)
-            {
-                await semaphore.WaitAsync().ConfigureAwait(false);
-                try
-                {
-                    return await _checkpointStore.GetCheckpointAsync(
-                        _client.FullyQualifiedNamespace,
-                        _client.EventHubName,
-                        _client.ConsumerGroup,
-                        partitionId,
-                        CancellationToken.None).ConfigureAwait(false);
-                }
-                catch
-                {
-                    throw;
-                }
-                finally
-                {
-                    semaphore.Release();
-                }
-            }
         }
 
         private EventHubsTriggerMetrics CreateTriggerMetrics(List<PartitionProperties> partitionRuntimeInfo, EventProcessorCheckpoint[] checkpoints, bool alwaysLog = false)
