@@ -897,10 +897,10 @@
 # ServiceLabel: %VideoAnalyzer
 # ServiceOwners:                                                   @giakas
 
-# PRLabel: %VoiceLive
+# PRLabel: %Voice Live
 /sdk/ai/Azure.AI.VoiceLive/                                       @rhurey @xitzhang
 
-# ServiceLabel: %VoiceLive
+# ServiceLabel: %Voice Live
 # ServiceOwners:                                                   @rhurey @xitzhang
 
 # ServiceLabel: %Web Apps
