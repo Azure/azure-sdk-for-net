@@ -59,11 +59,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of <see cref="CheckPolicyRestrictionsContent"/>. </summary>
         /// <param name="resourceDetails"> The information about the resource that will be evaluated. </param>
         /// <param name="pendingFields"> The list of fields and values that should be evaluated for potential restrictions. </param>
+        /// <param name="includeAuditEffect"> Whether to include policies with the 'audit' effect in the results. Defaults to false. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckPolicyRestrictionsContent(CheckRestrictionsResourceDetails resourceDetails, IList<PendingField> pendingFields, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CheckPolicyRestrictionsContent(CheckRestrictionsResourceDetails resourceDetails, IList<PendingField> pendingFields, bool? includeAuditEffect, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceDetails = resourceDetails;
             PendingFields = pendingFields;
+            IncludeAuditEffect = includeAuditEffect;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,5 +78,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public CheckRestrictionsResourceDetails ResourceDetails { get; }
         /// <summary> The list of fields and values that should be evaluated for potential restrictions. </summary>
         public IList<PendingField> PendingFields { get; }
+        /// <summary> Whether to include policies with the 'audit' effect in the results. Defaults to false. </summary>
+        public bool? IncludeAuditEffect { get; set; }
     }
 }
