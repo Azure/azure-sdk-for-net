@@ -272,7 +272,7 @@ namespace Azure.Core
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
 #if NET6_0_OR_GREATER
-                await stream.WriteAsync(_bytes.AsMemory(), cancellation).ConfigureAwait(false);
+                await stream.WriteAsync(_bytes.AsMemory(_contentStart, _contentLength), cancellation).ConfigureAwait(false);
 #else
                 await stream.WriteAsync(_bytes, _contentStart, _contentLength, cancellation).ConfigureAwait(false);
 #endif
@@ -411,7 +411,7 @@ namespace Azure.Core
 
             public override bool TryComputeLength(out long length)
             {
-                length = default;
+                length = 0;
                 return false;
             }
 
