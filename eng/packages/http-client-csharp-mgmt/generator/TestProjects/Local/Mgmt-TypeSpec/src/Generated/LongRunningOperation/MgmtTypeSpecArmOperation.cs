@@ -22,7 +22,7 @@ namespace MgmtTypeSpec
         private readonly NextLinkOperationImplementation _nextLinkOperation;
         private readonly string _operationId;
 
-        /// <summary> Initializes a new instance of MgmtTypeSpecArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MgmtTypeSpecArmOperation"/> class for mocking. </summary>
         protected MgmtTypeSpecArmOperation()
         {
         }
