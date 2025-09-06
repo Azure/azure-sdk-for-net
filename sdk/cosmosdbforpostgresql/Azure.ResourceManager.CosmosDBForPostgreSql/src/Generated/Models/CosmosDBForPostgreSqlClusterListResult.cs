@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    /// <summary> A list of clusters. </summary>
+    /// <summary> The response of a Cluster list operation. </summary>
     internal partial class CosmosDBForPostgreSqlClusterListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterListResult"/>. </summary>
-        internal CosmosDBForPostgreSqlClusterListResult()
+        /// <param name="value"> The Cluster items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal CosmosDBForPostgreSqlClusterListResult(IEnumerable<CosmosDBForPostgreSqlClusterData> value)
         {
-            Value = new ChangeTrackingList<CosmosDBForPostgreSqlClusterData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterListResult"/>. </summary>
-        /// <param name="value"> The list of clusters. </param>
-        /// <param name="nextLink"> The link used to get the next page of cluster list. </param>
+        /// <param name="value"> The Cluster items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlClusterListResult(IReadOnlyList<CosmosDBForPostgreSqlClusterData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBForPostgreSqlClusterListResult(IReadOnlyList<CosmosDBForPostgreSqlClusterData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of clusters. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterListResult"/> for deserialization. </summary>
+        internal CosmosDBForPostgreSqlClusterListResult()
+        {
+        }
+
+        /// <summary> The Cluster items on this page. </summary>
         public IReadOnlyList<CosmosDBForPostgreSqlClusterData> Value { get; }
-        /// <summary> The link used to get the next page of cluster list. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
