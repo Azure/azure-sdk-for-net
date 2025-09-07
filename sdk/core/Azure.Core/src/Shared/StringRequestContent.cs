@@ -53,7 +53,9 @@ namespace Azure.Core
 
         public override void Dispose()
         {
+#if NET6_0_OR_GREATER
             ArrayPool<byte>.Shared.Return(_buffer, clearArray: true);
+#endif
         }
     }
 }
