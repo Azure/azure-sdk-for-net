@@ -849,4 +849,44 @@ public class BasicKustoTests
             }
             """);
     }
+
+    [Test]
+    public void KustoBuiltInRoleTest()
+    {
+        // Test that KustoBuiltInRole follows the same pattern as other BuiltInRole types
+
+        // Test string constructor
+        var role1 = new KustoBuiltInRole("27711ba7-2646-4b87-9f78-cc4963fe6b36");
+        var role2 = KustoBuiltInRole.AzureDataExplorerClusterAdministrator;
+
+        // Test equality
+        Assert.That(role1, Is.EqualTo(role2));
+        Assert.That(role1 == role2, Is.True);
+        Assert.That(role1 != role2, Is.False);
+
+        // Test implicit string conversion
+        KustoBuiltInRole role3 = "27711ba7-2646-4b87-9f78-cc4963fe6b36";
+        Assert.That(role3, Is.EqualTo(role1));
+
+        // Test ToString
+        Assert.That(role1.ToString(), Is.EqualTo("27711ba7-2646-4b87-9f78-cc4963fe6b36"));
+
+        // Test GetBuiltInRoleName
+        Assert.That(KustoBuiltInRole.GetBuiltInRoleName(role1), Is.EqualTo("AzureDataExplorerClusterAdministrator"));
+        Assert.That(KustoBuiltInRole.GetBuiltInRoleName(KustoBuiltInRole.AzureDataExplorerDatabaseUser), Is.EqualTo("AzureDataExplorerDatabaseUser"));
+
+        // Test all predefined roles
+        Assert.That(KustoBuiltInRole.AzureDataExplorerClusterAdministrator.ToString(), Is.EqualTo("27711ba7-2646-4b87-9f78-cc4963fe6b36"));
+        Assert.That(KustoBuiltInRole.AzureDataExplorerDatabaseAdministrator.ToString(), Is.EqualTo("b4dcf68e-fa2e-472a-92a6-7dfeb9b96e20"));
+        Assert.That(KustoBuiltInRole.AzureDataExplorerDatabaseUser.ToString(), Is.EqualTo("9dd19a7c-2cd4-4f90-b13b-8dfe5c5c8e3c"));
+        Assert.That(KustoBuiltInRole.AzureDataExplorerDatabaseViewer.ToString(), Is.EqualTo("fd1bd6a4-7e4f-462e-b0b2-d8b9b54ca5b7"));
+
+        // Test hash code consistency
+        Assert.That(role1.GetHashCode(), Is.EqualTo(role2.GetHashCode()));
+
+        // Test object equality
+        Assert.That(role1.Equals((object)role2), Is.True);
+        Assert.That(role1.Equals((object)"not a role"), Is.False);
+        Assert.That(role1.Equals((object?)null), Is.False);
+    }
 }

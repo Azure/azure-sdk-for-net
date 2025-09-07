@@ -381,6 +381,28 @@ namespace Azure.Provisioning.Kusto
         public Azure.Provisioning.BicepList<string> TablesToInclude { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KustoBuiltInRole : System.IEquatable<Azure.Provisioning.Kusto.KustoBuiltInRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KustoBuiltInRole(string value) { throw null; }
+        public static Azure.Provisioning.Kusto.KustoBuiltInRole AzureDataExplorerClusterAdministrator { get { throw null; } }
+        public static Azure.Provisioning.Kusto.KustoBuiltInRole AzureDataExplorerDatabaseAdministrator { get { throw null; } }
+        public static Azure.Provisioning.Kusto.KustoBuiltInRole AzureDataExplorerDatabaseUser { get { throw null; } }
+        public static Azure.Provisioning.Kusto.KustoBuiltInRole AzureDataExplorerDatabaseViewer { get { throw null; } }
+        public bool Equals(Azure.Provisioning.Kusto.KustoBuiltInRole other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static string GetBuiltInRoleName(Azure.Provisioning.Kusto.KustoBuiltInRole value) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Provisioning.Kusto.KustoBuiltInRole left, Azure.Provisioning.Kusto.KustoBuiltInRole right) { throw null; }
+        public static implicit operator Azure.Provisioning.Kusto.KustoBuiltInRole (string value) { throw null; }
+        public static bool operator !=(Azure.Provisioning.Kusto.KustoBuiltInRole left, Azure.Provisioning.Kusto.KustoBuiltInRole right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class KustoDataConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public KustoDataConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
