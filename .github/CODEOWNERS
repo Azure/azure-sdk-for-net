@@ -892,11 +892,11 @@
 # ServiceOwners:                                                   @yeskarthik @rasidhan @dmdenmsft @Shipra1Mishra
 
 # PRLabel: %TrafficManager
-/sdk/trafficmanager/                                               @ransinha1989
+/sdk/trafficmanager/                                               @ransinha1989 @andresgallo36
 
 # ServiceLabel: %TrafficManager
-# AzureSdkOwners:                                                  @ransinha1989
-# ServiceOwners:                                                   @ransinha1989
+# AzureSdkOwners:                                                  @ransinha1989 @andresgallo36
+# ServiceOwners:                                                   @ransinha1989 @andresgallo36
 
 # PRLabel: %VideoAnalyzer
 /sdk/videoanalyzer/                                                @giakas
