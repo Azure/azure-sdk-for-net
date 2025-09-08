@@ -433,7 +433,7 @@ namespace Azure.Identity.Tests
             yield return new object[] { Constants.WorkloadIdentityCredential, typeof(WorkloadIdentityCredential) };
             yield return new object[] { Constants.ManagedIdentityCredential, typeof(ManagedIdentityCredential) };
             yield return new object[] { Constants.InteractiveBrowserCredential, typeof(InteractiveBrowserCredential) };
-            yield return new object[] { Constants.BrokerCredential, typeof(InteractiveBrowserCredential) };
+            yield return new object[] { Constants.BrokerCredential, typeof(BrokerCredential) };
         }
 
         [Test]
@@ -514,13 +514,6 @@ namespace Azure.Identity.Tests
             }))
             {
                 var factory = new DefaultAzureCredentialFactory(new());
-                if (credSelection == Constants.BrokerCredential)
-                {
-                    // BrokerCredential is not supported without the Azure.Identity.Broker package.
-                    var ex = Assert.Throws<CredentialUnavailableException>(() => factory.CreateCredentialChain());
-                    Assert.AreEqual("BrokerCredential is not available without a reference to Azure.Identity.Broker.", ex.Message);
-                    return;
-                }
                 var chain = factory.CreateCredentialChain();
 
                 // check the factory created the correct credentials
@@ -535,6 +528,7 @@ namespace Azure.Identity.Tests
                     Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
                     Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
                     Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential));
+                    Assert.IsTrue(chain.Any(cred => cred is BrokerCredential));
                     // InteractiveBrowser is always excluded by default.
                     Assert.IsFalse(chain.Any(cred => cred.GetType() == typeof(InteractiveBrowserCredential)));
                 }
@@ -551,6 +545,7 @@ namespace Azure.Identity.Tests
                     Assert.IsFalse(chain.Any(cred => cred is AzureDeveloperCliCredential));
                     Assert.IsFalse(chain.Any(cred => cred is VisualStudioCodeCredential));
                     Assert.IsFalse(chain.Any(cred => cred is InteractiveBrowserCredential));
+                    Assert.IsFalse(chain.Any(cred => cred is BrokerCredential));
                 }
                 else if (credSelection == Constants.VisualStudioCredential)
                 {
@@ -647,7 +642,6 @@ namespace Azure.Identity.Tests
                 expCredentialTypes.ConditionalAdd(!excludeCliCredential, typeof(AzureCliCredential));
                 expCredentialTypes.ConditionalAdd(!excludeAzurePowerShellCredential, typeof(AzurePowerShellCredential));
                 expCredentialTypes.ConditionalAdd(!excludeDeveloperCliCredential, typeof(AzureDeveloperCliCredential));
-                expCredentialTypes.ConditionalAdd(!excludeInteractiveBrowserCredential, typeof(InteractiveBrowserCredential));
                 expCredentialTypes.ConditionalAdd(!excludeBrokerCredential, typeof(BrokerCredential));
 
                 var options = new DefaultAzureCredentialOptions
