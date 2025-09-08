@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    [PersistableModelProxy(typeof(UnknownDataCenterAddressResult))]
+    [PersistableModelProxy(typeof(UnknownDataCenterAddressResponse))]
     public partial class DataCenterAddressResult : IUtf8JsonSerializable, IJsonModel<DataCenterAddressResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCenterAddressResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     case "DatacenterAddressLocation": return DataCenterAddressLocationResult.DeserializeDataCenterAddressLocationResult(element, options);
                 }
             }
-            return UnknownDataCenterAddressResult.DeserializeUnknownDataCenterAddressResult(element, options);
+            return UnknownDataCenterAddressResponse.DeserializeUnknownDataCenterAddressResponse(element, options);
         }
 
         BinaryData IPersistableModel<DataCenterAddressResult>.Write(ModelReaderWriterOptions options)

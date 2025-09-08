@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownDataBoxBasicJobDetails : IUtf8JsonSerializable, IJsonModel<DataBoxBasicJobDetails>
+    internal partial class UnknownJobDetails : IUtf8JsonSerializable, IJsonModel<DataBoxBasicJobDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxBasicJobDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return DeserializeDataBoxBasicJobDetails(document.RootElement, options);
         }
 
-        internal static UnknownDataBoxBasicJobDetails DeserializeUnknownDataBoxBasicJobDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownJobDetails DeserializeUnknownJobDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownDataBoxBasicJobDetails(
+            return new UnknownJobDetails(
                 jobStages ?? new ChangeTrackingList<DataBoxJobStage>(),
                 contactDetails,
                 shippingAddress,

@@ -11,9 +11,9 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Unknown version of DataBoxValidationContent. </summary>
-    internal partial class UnknownDataBoxValidationContent : DataBoxValidationContent
+    internal partial class UnknownValidationRequest : DataBoxValidationContent
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataBoxValidationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownValidationRequest"/>. </summary>
         /// <param name="validationCategory"> Identify the nature of validation. </param>
         /// <param name="individualRequestDetails">
         /// List of request details contain validationType and its request as key and value respectively.
@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.DataBox.Models
         /// The available derived classes include <see cref="DataBoxValidateAddressContent"/>, <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataTransferDetailsValidationContent"/>, <see cref="PreferencesValidationContent"/>, <see cref="SkuAvailabilityValidationContent"/> and <see cref="SubscriptionIsAllowedToCreateJobValidationContent"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataBoxValidationContent(string validationCategory, IList<DataBoxValidationInputContent> individualRequestDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(validationCategory, individualRequestDetails, serializedAdditionalRawData)
+        internal UnknownValidationRequest(string validationCategory, IList<DataBoxValidationInputContent> individualRequestDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(validationCategory, individualRequestDetails, serializedAdditionalRawData)
         {
             ValidationCategory = validationCategory ?? "Unknown";
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnknownDataBoxValidationContent"/> for deserialization. </summary>
-        internal UnknownDataBoxValidationContent()
+        /// <summary> Initializes a new instance of <see cref="UnknownValidationRequest"/> for deserialization. </summary>
+        internal UnknownValidationRequest()
         {
         }
     }

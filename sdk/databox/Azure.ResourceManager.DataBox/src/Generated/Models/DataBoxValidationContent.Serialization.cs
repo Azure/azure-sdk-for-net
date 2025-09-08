@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    [PersistableModelProxy(typeof(UnknownDataBoxValidationContent))]
+    [PersistableModelProxy(typeof(UnknownValidationRequest))]
     public partial class DataBoxValidationContent : IUtf8JsonSerializable, IJsonModel<DataBoxValidationContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxValidationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     case "JobCreationValidation": return CreateJobValidationContent.DeserializeCreateJobValidationContent(element, options);
                 }
             }
-            return UnknownDataBoxValidationContent.DeserializeUnknownDataBoxValidationContent(element, options);
+            return UnknownValidationRequest.DeserializeUnknownValidationRequest(element, options);
         }
 
         BinaryData IPersistableModel<DataBoxValidationContent>.Write(ModelReaderWriterOptions options)

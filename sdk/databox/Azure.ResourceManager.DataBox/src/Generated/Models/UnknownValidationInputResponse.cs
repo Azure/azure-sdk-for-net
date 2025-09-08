@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Unknown version of DataBoxValidationInputResult. </summary>
-    internal partial class UnknownDataBoxValidationInputResult : DataBoxValidationInputResult
+    internal partial class UnknownValidationInputResponse : DataBoxValidationInputResult
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataBoxValidationInputResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownValidationInputResponse"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataBoxValidationInputResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(validationType, error, serializedAdditionalRawData)
+        internal UnknownValidationInputResponse(DataBoxValidationInputDiscriminator validationType, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(validationType, error, serializedAdditionalRawData)
         {
             ValidationType = validationType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnknownDataBoxValidationInputResult"/> for deserialization. </summary>
-        internal UnknownDataBoxValidationInputResult()
+        /// <summary> Initializes a new instance of <see cref="UnknownValidationInputResponse"/> for deserialization. </summary>
+        internal UnknownValidationInputResponse()
         {
         }
     }

@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownDataBoxValidationInputResult : IUtf8JsonSerializable, IJsonModel<DataBoxValidationInputResult>
+    internal partial class UnknownValidationInputResponse : IUtf8JsonSerializable, IJsonModel<DataBoxValidationInputResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxValidationInputResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return DeserializeDataBoxValidationInputResult(document.RootElement, options);
         }
 
-        internal static UnknownDataBoxValidationInputResult DeserializeUnknownDataBoxValidationInputResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownValidationInputResponse DeserializeUnknownValidationInputResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownDataBoxValidationInputResult(validationType, error, serializedAdditionalRawData);
+            return new UnknownValidationInputResponse(validationType, error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxValidationInputResult>.Write(ModelReaderWriterOptions options)

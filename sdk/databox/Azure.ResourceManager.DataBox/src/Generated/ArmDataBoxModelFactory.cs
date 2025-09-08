@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataBox.Models
             copyLogDetails ??= new List<CopyLogDetails>();
             actions ??= new List<CustomerResolutionCode>();
 
-            return new UnknownDataBoxBasicJobDetails(
+            return new UnknownJobDetails(
                 jobStages?.ToList(),
                 contactDetails,
                 shippingAddress,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             supportedCarriersForReturnShipment ??= new List<string>();
 
-            return new UnknownDataCenterAddressResult(default, supportedCarriersForReturnShipment?.ToList(), dataCenterAzureLocation, serializedAdditionalRawData: null);
+            return new UnknownDataCenterAddressResponse(default, supportedCarriersForReturnShipment?.ToList(), dataCenterAzureLocation, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataCenterAddressInstructionResult"/>. </summary>
@@ -1090,7 +1090,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <returns> A new <see cref="Models.ScheduleAvailabilityContent"/> instance for mocking. </returns>
         public static ScheduleAvailabilityContent ScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, DeviceModelName? model = null)
         {
-            return new UnknownScheduleAvailabilityContent(storageLocation, default, country, model, serializedAdditionalRawData: null);
+            return new UnknownScheduleAvailabilityRequest(storageLocation, default, country, model, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxScheduleAvailabilityContent"/>. </summary>
@@ -1277,7 +1277,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <returns> A new <see cref="Models.DataBoxValidationInputResult"/> instance for mocking. </returns>
         public static DataBoxValidationInputResult DataBoxValidationInputResult(ResponseError error = null)
         {
-            return new UnknownDataBoxValidationInputResult(default, error, serializedAdditionalRawData: null);
+            return new UnknownValidationInputResponse(default, error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CreateOrderLimitForSubscriptionValidationResult"/>. </summary>

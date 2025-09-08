@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    [PersistableModelProxy(typeof(UnknownScheduleAvailabilityContent))]
+    [PersistableModelProxy(typeof(UnknownScheduleAvailabilityRequest))]
     public partial class ScheduleAvailabilityContent : IUtf8JsonSerializable, IJsonModel<ScheduleAvailabilityContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduleAvailabilityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     case "DataBoxHeavy": return HeavyScheduleAvailabilityContent.DeserializeHeavyScheduleAvailabilityContent(element, options);
                 }
             }
-            return UnknownScheduleAvailabilityContent.DeserializeUnknownScheduleAvailabilityContent(element, options);
+            return UnknownScheduleAvailabilityRequest.DeserializeUnknownScheduleAvailabilityRequest(element, options);
         }
 
         BinaryData IPersistableModel<ScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options)

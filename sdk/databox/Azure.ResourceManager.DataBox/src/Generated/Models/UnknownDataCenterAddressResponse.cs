@@ -12,20 +12,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Unknown version of DataCenterAddressResult. </summary>
-    internal partial class UnknownDataCenterAddressResult : DataCenterAddressResult
+    internal partial class UnknownDataCenterAddressResponse : DataCenterAddressResult
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataCenterAddressResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDataCenterAddressResponse"/>. </summary>
         /// <param name="datacenterAddressType"> Data center address type. </param>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataCenterAddressResult(DatacenterAddressType datacenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(datacenterAddressType, supportedCarriersForReturnShipment, dataCenterAzureLocation, serializedAdditionalRawData)
+        internal UnknownDataCenterAddressResponse(DatacenterAddressType datacenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(datacenterAddressType, supportedCarriersForReturnShipment, dataCenterAzureLocation, serializedAdditionalRawData)
         {
             DatacenterAddressType = datacenterAddressType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnknownDataCenterAddressResult"/> for deserialization. </summary>
-        internal UnknownDataCenterAddressResult()
+        /// <summary> Initializes a new instance of <see cref="UnknownDataCenterAddressResponse"/> for deserialization. </summary>
+        internal UnknownDataCenterAddressResponse()
         {
         }
     }
