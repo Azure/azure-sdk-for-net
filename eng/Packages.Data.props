@@ -250,12 +250,6 @@
     <PackageReference Update="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))">
-    <PackageReference Update="NUnit" Version="4.4.0" />
-    <PackageReference Update="NUnit3TestAdapter" Version="4.4.2" />
-    <PackageReference Update="Castle.Core" Version="5.1.0" />
-  </ItemGroup>
-
   <!-- Packages intended for Extensions libraries only -->
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
     <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="8.0.19" />
@@ -455,6 +449,11 @@
     <PackageReference Update="xunit" Version="2.4.2" />
 
     <PackageDownload Include="Azure.Sdk.Tools.Testproxy" Version="[$(TestProxyVersion)]" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))">
+    <PackageReference Update="NUnit" Version="4.4.0" />
+    <PackageReference Update="Castle.Core" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
