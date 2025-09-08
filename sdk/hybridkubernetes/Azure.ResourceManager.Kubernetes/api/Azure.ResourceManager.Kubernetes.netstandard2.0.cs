@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Kubernetes
     }
     public partial class ConnectedClusterData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kubernetes.ConnectedClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kubernetes.ConnectedClusterData>
     {
-        public ConnectedClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.Kubernetes.Models.ConnectedClusterProperties properties, Azure.ResourceManager.Kubernetes.Models.ConnectedClusterIdentity identity) { }
-        public Azure.ResourceManager.Kubernetes.Models.ConnectedClusterIdentity Identity { get { throw null; } set { } }
+        public ConnectedClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.Kubernetes.Models.ConnectedClusterProperties properties, Azure.ResourceManager.Models.ManagedServiceIdentity identity) { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Kubernetes.Models.ConnectedClusterKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.Kubernetes.Models.ConnectedClusterProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -72,6 +72,8 @@ namespace Azure.ResourceManager.Kubernetes
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kubernetes.ConnectedClusterResource>> GetConnectedClusterAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Kubernetes.ConnectedClusterResource GetConnectedClusterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Kubernetes.ConnectedClusterCollection GetConnectedClusters(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Kubernetes.ConnectedClusterResource> GetConnectedClusters(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Kubernetes.ConnectedClusterResource> GetConnectedClustersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Kubernetes.Mocking
@@ -87,6 +89,12 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
         public virtual Azure.Response<Azure.ResourceManager.Kubernetes.ConnectedClusterResource> GetConnectedCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kubernetes.ConnectedClusterResource>> GetConnectedClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Kubernetes.ConnectedClusterCollection GetConnectedClusters() { throw null; }
+    }
+    public partial class MockableKubernetesSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableKubernetesSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Kubernetes.ConnectedClusterResource> GetConnectedClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Kubernetes.ConnectedClusterResource> GetConnectedClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Kubernetes.Models
@@ -163,8 +171,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public static Azure.ResourceManager.Kubernetes.Models.AadProfile AadProfile(bool? enableAzureRBAC = default(bool?), System.Collections.Generic.IEnumerable<string> adminGroupObjectIDs = null, string tenantID = null) { throw null; }
         public static Azure.ResourceManager.Kubernetes.Models.AgentError AgentError(string message = null, string severity = null, string component = null, System.DateTimeOffset? time = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Kubernetes.Models.ArcAgentProfile ArcAgentProfile(string desiredAgentVersion = null, Azure.ResourceManager.Kubernetes.Models.AutoUpgradeOptions? agentAutoUpgrade = default(Azure.ResourceManager.Kubernetes.Models.AutoUpgradeOptions?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kubernetes.Models.SystemComponent> systemComponents = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kubernetes.Models.AgentError> agentErrors = null, string agentState = null) { throw null; }
-        public static Azure.ResourceManager.Kubernetes.ConnectedClusterData ConnectedClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Kubernetes.Models.ConnectedClusterProperties properties = null, Azure.ResourceManager.Kubernetes.Models.ConnectedClusterIdentity identity = null, Azure.ResourceManager.Kubernetes.Models.ConnectedClusterKind? kind = default(Azure.ResourceManager.Kubernetes.Models.ConnectedClusterKind?)) { throw null; }
-        public static Azure.ResourceManager.Kubernetes.Models.ConnectedClusterIdentity ConnectedClusterIdentity(string principalId = null, string tenantId = null, Azure.ResourceManager.Kubernetes.Models.ResourceIdentityType type = Azure.ResourceManager.Kubernetes.Models.ResourceIdentityType.None) { throw null; }
+        public static Azure.ResourceManager.Kubernetes.ConnectedClusterData ConnectedClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Kubernetes.Models.ConnectedClusterProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Kubernetes.Models.ConnectedClusterKind? kind = default(Azure.ResourceManager.Kubernetes.Models.ConnectedClusterKind?)) { throw null; }
         public static Azure.ResourceManager.Kubernetes.Models.ConnectedClusterPatch ConnectedClusterPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Kubernetes.Models.ConnectedClusterPatchProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Kubernetes.Models.ConnectedClusterProperties ConnectedClusterProperties(string agentPublicKeyCertificate = null, string kubernetesVersion = null, int? totalNodeCount = default(int?), int? totalCoreCount = default(int?), string agentVersion = null, Azure.ResourceManager.Kubernetes.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Kubernetes.Models.ProvisioningState?), string distribution = null, string distributionVersion = null, string infrastructure = null, string offering = null, System.DateTimeOffset? managedIdentityCertificateExpirationTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastConnectivityTime = default(System.DateTimeOffset?), Azure.ResourceManager.Kubernetes.Models.ConnectivityStatus? connectivityStatus = default(Azure.ResourceManager.Kubernetes.Models.ConnectivityStatus?), Azure.ResourceManager.Kubernetes.Models.PrivateLinkState? privateLinkState = default(Azure.ResourceManager.Kubernetes.Models.PrivateLinkState?), string privateLinkScopeResourceId = null, Azure.ResourceManager.Kubernetes.Models.AzureHybridBenefit? azureHybridBenefit = default(Azure.ResourceManager.Kubernetes.Models.AzureHybridBenefit?), Azure.ResourceManager.Kubernetes.Models.AadProfile aadProfile = null, Azure.ResourceManager.Kubernetes.Models.ArcAgentProfile arcAgentProfile = null, Azure.ResourceManager.Kubernetes.Models.SecurityProfileWorkloadIdentity securityWorkloadIdentity = null, Azure.ResourceManager.Kubernetes.Models.OidcIssuerProfile oidcIssuerProfile = null, bool? gatewayEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kubernetes.Models.ArcAgentryConfigurations> arcAgentryConfigurations = null, System.Collections.Generic.IReadOnlyDictionary<string, string> miscellaneousProperties = null) { throw null; }
         public static Azure.ResourceManager.Kubernetes.Models.CredentialResult CredentialResult(string name = null, System.BinaryData value = null) { throw null; }
@@ -231,22 +238,6 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public static implicit operator Azure.ResourceManager.Kubernetes.Models.AzureHybridBenefit? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kubernetes.Models.AzureHybridBenefit left, Azure.ResourceManager.Kubernetes.Models.AzureHybridBenefit right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ConnectedClusterIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kubernetes.Models.ConnectedClusterIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kubernetes.Models.ConnectedClusterIdentity>
-    {
-        public ConnectedClusterIdentity(Azure.ResourceManager.Kubernetes.Models.ResourceIdentityType type) { }
-        public string PrincipalId { get { throw null; } }
-        public string TenantId { get { throw null; } }
-        public Azure.ResourceManager.Kubernetes.Models.ResourceIdentityType Type { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Kubernetes.Models.ConnectedClusterIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Kubernetes.Models.ConnectedClusterIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Kubernetes.Models.ConnectedClusterIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kubernetes.Models.ConnectedClusterIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kubernetes.Models.ConnectedClusterIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Kubernetes.Models.ConnectedClusterIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kubernetes.Models.ConnectedClusterIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kubernetes.Models.ConnectedClusterIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kubernetes.Models.ConnectedClusterIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConnectedClusterKind : System.IEquatable<Azure.ResourceManager.Kubernetes.Models.ConnectedClusterKind>
@@ -478,11 +469,6 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public static implicit operator Azure.ResourceManager.Kubernetes.Models.ProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kubernetes.Models.ProvisioningState left, Azure.ResourceManager.Kubernetes.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public enum ResourceIdentityType
-    {
-        None = 0,
-        SystemAssigned = 1,
     }
     public partial class SecurityProfileWorkloadIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kubernetes.Models.SecurityProfileWorkloadIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kubernetes.Models.SecurityProfileWorkloadIdentity>
     {

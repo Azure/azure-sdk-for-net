@@ -31,6 +31,12 @@ namespace Azure.ResourceManager.Kubernetes
             return resourceGroupResource.GetCachedClient(client => new MockableKubernetesResourceGroupResource(client, resourceGroupResource.Id));
         }
 
+        /// <param name="subscriptionResource"></param>
+        private static MockableKubernetesSubscriptionResource GetMockableKubernetesSubscriptionResource(SubscriptionResource subscriptionResource)
+        {
+            return subscriptionResource.GetCachedClient(client => new MockableKubernetesSubscriptionResource(client, subscriptionResource.Id));
+        }
+
         /// <summary> Gets an object representing a <see cref="ConnectedClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -78,6 +84,30 @@ namespace Azure.ResourceManager.Kubernetes
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableKubernetesResourceGroupResource(resourceGroupResource).GetConnectedCluster(clusterName, cancellationToken);
+        }
+
+        /// <summary> API to enumerate registered connected K8s clusters under a Subscription. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ConnectedClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConnectedClusterResource> GetConnectedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableKubernetesSubscriptionResource(subscriptionResource).GetConnectedClustersAsync(cancellationToken);
+        }
+
+        /// <summary> API to enumerate registered connected K8s clusters under a Subscription. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ConnectedClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConnectedClusterResource> GetConnectedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableKubernetesSubscriptionResource(subscriptionResource).GetConnectedClusters(cancellationToken);
         }
     }
 }
