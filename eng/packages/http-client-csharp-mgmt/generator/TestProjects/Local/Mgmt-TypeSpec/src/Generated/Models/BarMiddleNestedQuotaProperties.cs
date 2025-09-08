@@ -12,15 +12,14 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The BarMiddleNestedQuotaProperties. </summary>
-    public partial class BarMiddleNestedQuotaProperties : BarDeeplyNestedQuotaProperties
+    internal partial class BarMiddleNestedQuotaProperties : BarDeeplyNestedQuotaProperties
     {
         /// <summary> Initializes a new instance of <see cref="BarMiddleNestedQuotaProperties"/>. </summary>
-        /// <param name="innerProp1"></param>
         /// <param name="innerProp2"></param>
         /// <param name="middleProp1"></param>
         /// <param name="middleProp2"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/> or <paramref name="middleProp2"/> is null. </exception>
-        public BarMiddleNestedQuotaProperties(int innerProp1, string innerProp2, int middleProp1, string middleProp2) : base(innerProp1, innerProp2)
+        public BarMiddleNestedQuotaProperties(string innerProp2, int middleProp1, IDictionary<string, string> middleProp2) : base(innerProp2)
         {
             Argument.AssertNotNull(innerProp2, nameof(innerProp2));
             Argument.AssertNotNull(middleProp2, nameof(middleProp2));
@@ -35,7 +34,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="middleProp1"></param>
         /// <param name="middleProp2"></param>
-        internal BarMiddleNestedQuotaProperties(int innerProp1, string innerProp2, IDictionary<string, BinaryData> additionalBinaryDataProperties, int middleProp1, string middleProp2) : base(innerProp1, innerProp2, additionalBinaryDataProperties)
+        internal BarMiddleNestedQuotaProperties(int? innerProp1, string innerProp2, IDictionary<string, BinaryData> additionalBinaryDataProperties, int middleProp1, IDictionary<string, string> middleProp2) : base(innerProp1, innerProp2, additionalBinaryDataProperties)
         {
             MiddleProp1 = middleProp1;
             MiddleProp2 = middleProp2;
@@ -44,7 +43,7 @@ namespace MgmtTypeSpec.Models
         /// <summary> Gets or sets the MiddleProp1. </summary>
         public int MiddleProp1 { get; set; }
 
-        /// <summary> Gets or sets the MiddleProp2. </summary>
-        public string MiddleProp2 { get; set; }
+        /// <summary> Gets the MiddleProp2. </summary>
+        public IDictionary<string, string> MiddleProp2 { get; }
     }
 }

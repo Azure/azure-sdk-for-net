@@ -14,7 +14,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The BarDeeplyNestedQuotaProperties. </summary>
-    public partial class BarDeeplyNestedQuotaProperties : IJsonModel<BarDeeplyNestedQuotaProperties>
+    internal partial class BarDeeplyNestedQuotaProperties : IJsonModel<BarDeeplyNestedQuotaProperties>
     {
         /// <summary> Initializes a new instance of <see cref="BarDeeplyNestedQuotaProperties"/> for deserialization. </summary>
         internal BarDeeplyNestedQuotaProperties()
@@ -39,8 +39,11 @@ namespace MgmtTypeSpec.Models
             {
                 throw new FormatException($"The model {nameof(BarDeeplyNestedQuotaProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("innerProp1"u8);
-            writer.WriteNumberValue(InnerProp1);
+            if (Optional.IsDefined(InnerProp1))
+            {
+                writer.WritePropertyName("innerProp1"u8);
+                writer.WriteNumberValue(InnerProp1.Value);
+            }
             writer.WritePropertyName("innerProp2"u8);
             writer.WriteStringValue(InnerProp2);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -85,13 +88,17 @@ namespace MgmtTypeSpec.Models
             {
                 return null;
             }
-            int innerProp1 = default;
+            int? innerProp1 = default;
             string innerProp2 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("innerProp1"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     innerProp1 = prop.Value.GetInt32();
                     continue;
                 }

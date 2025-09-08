@@ -14,7 +14,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The BarNestedQuotaProperties. </summary>
-    public partial class BarNestedQuotaProperties : IJsonModel<BarNestedQuotaProperties>
+    internal partial class BarNestedQuotaProperties : IJsonModel<BarNestedQuotaProperties>
     {
         /// <summary> Initializes a new instance of <see cref="BarNestedQuotaProperties"/> for deserialization. </summary>
         internal BarNestedQuotaProperties()
@@ -41,7 +41,17 @@ namespace MgmtTypeSpec.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("prop1"u8);
-            writer.WriteStringValue(Prop1);
+            writer.WriteStartArray();
+            foreach (string item in Prop1)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
             writer.WritePropertyName("prop2"u8);
             writer.WriteNumberValue(Prop2);
         }
@@ -71,17 +81,21 @@ namespace MgmtTypeSpec.Models
             {
                 return null;
             }
-            int innerProp1 = default;
+            int? innerProp1 = default;
             string innerProp2 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int middleProp1 = default;
-            string middleProp2 = default;
-            string prop1 = default;
+            IDictionary<string, string> middleProp2 = default;
+            IList<string> prop1 = default;
             int prop2 = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("innerProp1"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     innerProp1 = prop.Value.GetInt32();
                     continue;
                 }
@@ -97,12 +111,36 @@ namespace MgmtTypeSpec.Models
                 }
                 if (prop.NameEquals("middleProp2"u8))
                 {
-                    middleProp2 = prop.Value.GetString();
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    middleProp2 = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("prop1"u8))
                 {
-                    prop1 = prop.Value.GetString();
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    prop1 = array;
                     continue;
                 }
                 if (prop.NameEquals("prop2"u8))

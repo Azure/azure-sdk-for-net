@@ -59,17 +59,17 @@ model BarQuotaResource is ProxyResource<BarQuotaProperties> {
 }
 
 model BarNestedQuotaProperties extends BarMiddleNestedQuotaProperties {
-  prop1: string;
+  prop1: string[];
   prop2: int32;
 }
 
 model BarMiddleNestedQuotaProperties extends BarDeeplyNestedQuotaProperties {
   middleProp1: int32;
-  middleProp2: string;
+  middleProp2: Record<string>;
 }
 
 model BarDeeplyNestedQuotaProperties {
-  innerProp1: int32;
+  innerProp1?: int32;
   innerProp2: string;
 }
 

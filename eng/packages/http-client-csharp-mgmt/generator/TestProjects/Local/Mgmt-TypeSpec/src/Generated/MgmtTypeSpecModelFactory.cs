@@ -115,11 +115,12 @@ namespace MgmtTypeSpec.Models
         /// <param name="flattenedNestedPropertyInnerProp1"> Gets or sets the InnerProp1. </param>
         /// <param name="flattenedNestedPropertyInnerProp2"> Gets or sets the InnerProp2. </param>
         /// <param name="flattenedNestedPropertyMiddleProp1"> Gets or sets the MiddleProp1. </param>
-        /// <param name="flattenedNestedPropertyMiddleProp2"> Gets or sets the MiddleProp2. </param>
-        /// <param name="flattenedNestedPropertyProp1"> Gets or sets the Prop1. </param>
+        /// <param name="flattenedNestedPropertyMiddleProp2"> Gets the MiddleProp2. </param>
+        /// <param name="flattenedNestedPropertyProp1"> Gets the Prop1. </param>
         /// <param name="flattenedNestedPropertyProp2"> Gets or sets the Prop2. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="flattenedNestedPropertyInnerProp2"/>, <paramref name="flattenedNestedPropertyMiddleProp2"/> or <paramref name="flattenedNestedPropertyProp1"/> is null. </exception>
         /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsResourceData"/> instance for mocking. </returns>
-        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, int? flattenedNestedPropertyInnerProp1 = default, string flattenedNestedPropertyInnerProp2 = default, int? flattenedNestedPropertyMiddleProp1 = default, string flattenedNestedPropertyMiddleProp2 = default, string flattenedNestedPropertyProp1 = default, int? flattenedNestedPropertyProp2 = default)
+        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, int? flattenedNestedPropertyInnerProp1 = default, string flattenedNestedPropertyInnerProp2 = default, int? flattenedNestedPropertyMiddleProp1 = default, IDictionary<string, string> flattenedNestedPropertyMiddleProp2 = default, IList<string> flattenedNestedPropertyProp1 = default, int? flattenedNestedPropertyProp2 = default)
         {
             stringArray ??= new ChangeTrackingList<string>();
 
@@ -134,8 +135,9 @@ namespace MgmtTypeSpec.Models
                 propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, new Dictionary<string, BinaryData>()),
                 anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, new Dictionary<string, BinaryData>()),
                 flattenedNestedPropertyInnerProp1 is null || flattenedNestedPropertyInnerProp2 is null || flattenedNestedPropertyMiddleProp1 is null || flattenedNestedPropertyMiddleProp2 is null || flattenedNestedPropertyProp1 is null || flattenedNestedPropertyProp2 is null ? default : new BarNestedQuotaProperties(
-                    flattenedNestedPropertyInnerProp1.Value,
+                    flattenedNestedPropertyInnerProp1,
                     flattenedNestedPropertyInnerProp2,
+                    null,
                     flattenedNestedPropertyMiddleProp1.Value,
                     flattenedNestedPropertyMiddleProp2,
                     flattenedNestedPropertyProp1,

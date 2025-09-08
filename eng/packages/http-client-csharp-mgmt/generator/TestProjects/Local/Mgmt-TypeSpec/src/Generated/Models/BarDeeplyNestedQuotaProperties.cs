@@ -12,20 +12,18 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The BarDeeplyNestedQuotaProperties. </summary>
-    public partial class BarDeeplyNestedQuotaProperties
+    internal partial class BarDeeplyNestedQuotaProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BarDeeplyNestedQuotaProperties"/>. </summary>
-        /// <param name="innerProp1"></param>
         /// <param name="innerProp2"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/> is null. </exception>
-        public BarDeeplyNestedQuotaProperties(int innerProp1, string innerProp2)
+        public BarDeeplyNestedQuotaProperties(string innerProp2)
         {
             Argument.AssertNotNull(innerProp2, nameof(innerProp2));
 
-            InnerProp1 = innerProp1;
             InnerProp2 = innerProp2;
         }
 
@@ -33,7 +31,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="innerProp1"></param>
         /// <param name="innerProp2"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BarDeeplyNestedQuotaProperties(int innerProp1, string innerProp2, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BarDeeplyNestedQuotaProperties(int? innerProp1, string innerProp2, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InnerProp1 = innerProp1;
             InnerProp2 = innerProp2;
@@ -41,7 +39,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets or sets the InnerProp1. </summary>
-        public int InnerProp1 { get; set; }
+        public int? InnerProp1 { get; set; }
 
         /// <summary> Gets or sets the InnerProp2. </summary>
         public string InnerProp2 { get; set; }

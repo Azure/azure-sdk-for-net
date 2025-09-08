@@ -4,7 +4,6 @@
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
-using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -145,6 +144,13 @@ namespace Azure.Generator.Management.Visitors
                     // only safe flatten single property
                     if (innerProperties.Count != 1)
                     {
+                        continue;
+                    }
+
+                    // skip discriminator property
+                    if (property.IsDiscriminator)
+                    {
+                        ManagementClientGenerator.Instance.Emitter.ReportDiagnostic("general-warning", "Discriminator property should not be flattened.");
                         continue;
                     }
 

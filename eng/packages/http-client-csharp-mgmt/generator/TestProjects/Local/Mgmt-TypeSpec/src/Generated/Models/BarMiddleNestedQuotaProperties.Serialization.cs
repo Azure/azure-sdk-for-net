@@ -14,7 +14,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The BarMiddleNestedQuotaProperties. </summary>
-    public partial class BarMiddleNestedQuotaProperties : IJsonModel<BarMiddleNestedQuotaProperties>
+    internal partial class BarMiddleNestedQuotaProperties : IJsonModel<BarMiddleNestedQuotaProperties>
     {
         /// <summary> Initializes a new instance of <see cref="BarMiddleNestedQuotaProperties"/> for deserialization. </summary>
         internal BarMiddleNestedQuotaProperties()
@@ -43,7 +43,18 @@ namespace MgmtTypeSpec.Models
             writer.WritePropertyName("middleProp1"u8);
             writer.WriteNumberValue(MiddleProp1);
             writer.WritePropertyName("middleProp2"u8);
-            writer.WriteStringValue(MiddleProp2);
+            writer.WriteStartObject();
+            foreach (var item in MiddleProp2)
+            {
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteStringValue(item.Value);
+            }
+            writer.WriteEndObject();
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -71,15 +82,19 @@ namespace MgmtTypeSpec.Models
             {
                 return null;
             }
-            int innerProp1 = default;
+            int? innerProp1 = default;
             string innerProp2 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int middleProp1 = default;
-            string middleProp2 = default;
+            IDictionary<string, string> middleProp2 = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("innerProp1"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     innerProp1 = prop.Value.GetInt32();
                     continue;
                 }
@@ -95,7 +110,19 @@ namespace MgmtTypeSpec.Models
                 }
                 if (prop.NameEquals("middleProp2"u8))
                 {
-                    middleProp2 = prop.Value.GetString();
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    middleProp2 = dictionary;
                     continue;
                 }
                 if (options.Format != "W")

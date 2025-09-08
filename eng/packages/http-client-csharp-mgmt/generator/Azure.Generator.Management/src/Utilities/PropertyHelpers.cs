@@ -107,23 +107,18 @@ namespace Azure.Generator.Management.Utilities
             }
         }
 
-        public static MethodBodyStatement BuildSetterForPropertyFlatten(bool includeSetterCheck, ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty)
+        public static MethodBodyStatement BuildSetterForPropertyFlatten(ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty)
         {
-            var isOverriddenValueType = IsOverriddenValueType(innerProperty);
+            var isNullableValueType = innerProperty.Type.IsValueType && innerProperty.Type.IsNullable;
             var setter = new List<MethodBodyStatement>();
             var internalPropertyExpression = This.Property(internalProperty.Name);
 
-            if (includeSetterCheck)
-            {
-                setter.Add(new IfStatement(Value.Property(nameof(Nullable<int>.HasValue)))
-                    {
-                        new IfStatement(internalPropertyExpression.Is(Null))
-                        {
-                            internalPropertyExpression.Assign(New.Instance(innerModel.Type!)).Terminate()
-                        }
-                    });
-            }
-            setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(isOverriddenValueType ? Value.Property(nameof(Nullable<int>.Value)) : Value).Terminate());
+            setter.Add(
+                new IfStatement(internalPropertyExpression.Is(Null))
+                {
+                        internalPropertyExpression.Assign(New.Instance(innerModel.Type!)).Terminate()
+                });
+            setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(isNullableValueType ? Value.Property(nameof(Nullable<int>.Value)) : Value).Terminate());
             return setter;
         }
 
