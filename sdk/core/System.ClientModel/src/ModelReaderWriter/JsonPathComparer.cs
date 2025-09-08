@@ -13,9 +13,13 @@ internal class JsonPathComparer : IEqualityComparer<byte[]>
     public bool Equals(byte[]? x, byte[]? y)
     {
         if (ReferenceEquals(x, y))
+        {
             return true;
+        }
         if (x is null || y is null)
+        {
             return false;
+        }
         return x.AsSpan().SequenceEqual(y.AsSpan());
     }
 
@@ -25,7 +29,9 @@ internal class JsonPathComparer : IEqualityComparer<byte[]>
     public bool Equals(ReadOnlySpan<byte> alternate, byte[] other)
     {
         if (other is null)
+        {
             return false;
+        }
 
         return alternate.SequenceEqual(other.AsSpan());
     }
@@ -129,14 +135,18 @@ internal class JsonPathComparer : IEqualityComparer<byte[]>
     {
         // fast path if they are already nomrlaized
         if (x.SequenceEqual(y))
+        {
             return true;
+        }
 
         Span<byte> bufferX = stackalloc byte[x.Length];
         Span<byte> bufferY = stackalloc byte[y.Length];
         Normalize(x, bufferX, out int bytesWrittenX);
         Normalize(y, bufferY, out int bytesWrittenY);
         if (bytesWrittenX != bytesWrittenY)
+        {
             return false;
+        }
         return bufferX.Slice(0, bytesWrittenX).SequenceEqual(bufferY.Slice(0, bytesWrittenY));
     }
 }

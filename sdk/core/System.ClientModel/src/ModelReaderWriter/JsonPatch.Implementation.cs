@@ -460,19 +460,27 @@ public partial struct JsonPatch
         foreach (var kvp in _properties!)
         {
             if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.ModelOwned))
+            {
                 continue;
+            }
 
             ReadOnlySpan<byte> keySpan = kvp.Key;
             if (!keySpan.StartsWith(normalizedPrefix))
+            {
                 continue;
+            }
 
             keySpan = keySpan.Slice(normalizedPrefix.Length);
 
             if (!keySpan.IsArrayWrapped())
+            {
                 continue;
+            }
 
             if (Utf8Parser.TryParse(keySpan.Slice(1, keySpan.Length - 2), out int index, out _))
+            {
                 maxSibling = Math.Max(maxSibling, index);
+            }
         }
 
         return maxSibling;
@@ -517,23 +525,35 @@ public partial struct JsonPatch
         arrayItem = ReadOnlyMemory<byte>.Empty;
 
         if (!Utf8Parser.TryParse(jsonPath.GetIndexSpan(), out indexRequested, out _))
+        {
             return false;
+        }
 
         if (!TryGetRootJson(out var rootJson, true))
+        {
             return false;
+        }
 
         Utf8JsonReader jsonReader = new(rootJson.Span);
         if (!jsonReader.Advance(jsonPath.GetParent()))
+        {
             return false;
+        }
 
         if (jsonReader.TokenType == JsonTokenType.PropertyName)
+        {
             jsonReader.Read(); // Move to the value after the property name
+        }
 
         if (jsonReader.TokenType != JsonTokenType.StartArray)
+        {
             return false;
+        }
 
         if (!jsonReader.SkipToIndex(indexRequested, out length))
+        {
             return false;
+        }
 
         long start = jsonReader.TokenStartIndex;
         jsonReader.Skip();
@@ -560,18 +580,24 @@ public partial struct JsonPatch
             JsonPathComparer.Default.Normalize(jsonPath, normalizedPrefix, out int bytesWritten);
             normalizedPrefix = normalizedPrefix.Slice(0, bytesWritten);
 
+            // find all items in _properties that start with normalizedPrefix and combine them into a single array
             foreach (var kvp in _properties)
             {
                 if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.ModelOwned))
+                {
                     continue;
+                }
 
                 ReadOnlySpan<byte> keySpan = kvp.Key;
 
                 if (!keySpan.StartsWith(normalizedPrefix))
+                {
                     continue;
+                }
 
                 if (existingArray.IsEmpty)
                 {
+                    // if the existing array is empty, then we can just use the encoded value directly if it matches the prefix, otherwise we need to wrap it in an array
                     existingArray = keySpan.SequenceEqual(normalizedPrefix) ? encodedValue.Value : new([(byte)'[', .. kvp.Value.Value.Span, (byte)']']);
                 }
                 else
@@ -580,22 +606,27 @@ public partial struct JsonPatch
                     ReadOnlySpan<byte> childJsonPath = childPath.AsSpan(0, childPathLength);
                     if (childJsonPath.IsArrayIndex())
                     {
+                        // if the childJsonPath is an array index, we need to insert the value at that index in the existing array
                         existingArray = existingArray.InsertAt(childJsonPath, kvp.Value.Value);
                     }
                     else
                     {
+                        // otherwise we can just append the value to the existing array
                         existingArray = existingArray.Append(childJsonPath, kvp.Value.Value.Slice(1, kvp.Value.Value.Length - 2));
                     }
                 }
             }
+            // if existing array is still empty return the original encoded value, otherwise return the combined array
             return existingArray.IsEmpty ? encodedValue.Value : existingArray;
         }
         else
         {
             if (existingArray.IsEmpty)
             {
+                // if existing array is empty return the origin encoded value
                 return encodedValue.Value;
             }
+            // append the new encoded value to the existing array and return the combined array
             return new([.. existingArray.Span.Slice(0, existingArray.Length - 1), (byte)',', .. encodedValue.Value.Span.Slice(1)]);
         }
     }
@@ -605,7 +636,9 @@ public partial struct JsonPatch
         value = ReadOnlyMemory<byte>.Empty;
 
         if (_properties is null && _rawJson.Value.IsEmpty)
+        {
             return false;
+        }
 
         if (!onlyRaw && _properties?.TryGetValue("$"u8, out var encodedRoot) == true && (encodedRoot.Kind.HasFlag(ValueKind.ArrayItemAppend) ? _rawJson.Value.IsEmpty : true))
         {
@@ -643,13 +676,17 @@ public partial struct JsonPatch
             parentPath = parentPath.GetParent();
 
             if (parentPath.IsRoot())
+            {
                 break;
+            }
         }
 
         if (parentPath.IsRoot() && includeRoot)
         {
             if (_properties.TryGetValue(parentPath, out encodedValue))
+            {
                 return true;
+            }
 
             if (!_rawJson.Value.IsEmpty)
             {
@@ -890,7 +927,9 @@ public partial struct JsonPatch
     private void SetInternal(ReadOnlySpan<byte> jsonPath, EncodedValue encodedValue)
     {
         if (_propagatorSetter is not null && _propagatorSetter(jsonPath, encodedValue))
+        {
             return;
+        }
 
         EncodedValue currentValue = EncodedValue.Empty;
 
@@ -950,7 +989,9 @@ public partial struct JsonPatch
                 }
 
                 if (parentPath.IsRoot())
+                {
                     break;
+                }
 
                 nextPath = parentPath;
                 parentPath = parentPath.GetParent();

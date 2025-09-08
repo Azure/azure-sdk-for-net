@@ -21,12 +21,16 @@ public partial struct JsonPatch
     public void WriteTo(Utf8JsonWriter writer, ReadOnlySpan<byte> jsonPath)
     {
         if (_properties == null)
+        {
             return;
+        }
 
         if (_properties.TryGetValue(jsonPath, out var encodedValue))
         {
             if (encodedValue.Kind == ValueKind.Removed)
+            {
                 return;
+            }
 
             if (encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
             {
@@ -43,11 +47,15 @@ public partial struct JsonPatch
         foreach (var kvp in _properties)
         {
             if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.ModelOwned))
+            {
                 continue;
+            }
 
             ReadOnlySpan<byte> keySpan = kvp.Key;
             if (!keySpan.StartsWith(normalizedPrefix))
+            {
                 continue;
+            }
 
             keySpan = keySpan.Slice(normalizedPrefix.Length);
 
@@ -67,6 +75,7 @@ public partial struct JsonPatch
 
         SpanHashSet? arrays = null;
 
+        // write an empty object if we are not seeded and there are no properties to write and the writer is empty
         if (!isSeeded && _properties is null && isWriterEmpty)
         {
             writer.WriteStartObject();
@@ -74,12 +83,15 @@ public partial struct JsonPatch
             return;
         }
 
+        // if there are no properties to write and the writer is not empty then we don't need to write anything
+        // we assume the wrapping {} happened outside of us since writer is not empty.
         if (_properties is null && !isWriterEmpty)
         {
             return;
         }
 
-        // write patches
+        // if we have properties and we are either not seeded or the writer is empty then we need to write out the properties
+        // as standalone items not applying them to the original seeded raw json.
         if (_properties is not null && (isSeeded ? !isWriterEmpty : true))
         {
             bool writingRoot = !isSeeded && isWriterEmpty && !_properties.TryGetValue("$"u8, out var encodedValue) && !encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend);
@@ -91,7 +103,9 @@ public partial struct JsonPatch
             foreach (var kvp in _properties)
             {
                 if (_propagatorIsFlattened is not null && _propagatorIsFlattened(kvp.Key))
+                {
                     continue;
+                }
 
                 if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.ModelOwned))
                 {
@@ -145,6 +159,7 @@ public partial struct JsonPatch
 
         if (_properties is null)
         {
+            // if there are no properties then we simply echo the existing raw json back into the writer.
             if (!_rawJson.Value.IsEmpty && writer.CurrentDepth == 0 && writer.BytesCommitted == 0 && writer.BytesPending == 0)
             {
                 writer.WriteRawValue(_rawJson.Value.Span);
@@ -152,6 +167,7 @@ public partial struct JsonPatch
         }
         else
         {
+            // we need to apply the properties to the existing raw json and write out the new combined json to the writer.
             ReadOnlyMemory<byte> newJson = _rawJson.Value;
             foreach (var kvp in _properties)
             {
@@ -182,13 +198,17 @@ public partial struct JsonPatch
     private static void WriteEncodedValueAsJson(Utf8JsonWriter writer, ReadOnlySpan<byte> propertyName, EncodedValue encodedValue)
     {
         if (encodedValue.Value.Length == 0)
+        {
             throw new ArgumentException("Empty encoded value");
+        }
 
         ValueKind kind = encodedValue.Kind & ~ValueKind.ArrayItemAppend;
         ReadOnlySpan<byte> valueBytes = encodedValue.Value.Span;
 
         if (!propertyName.IsEmpty)
+        {
             writer.WritePropertyName(propertyName);
+        }
 
         switch (kind)
         {
@@ -231,7 +251,9 @@ public partial struct JsonPatch
     private void WriteAsJsonPatchTo(Utf8JsonWriter writer)
     {
         if (_properties is null)
+        {
             return;
+        }
 
         bool isSeeded = !_rawJson.Value.IsEmpty;
         ReadOnlyMemory<byte> rawJson = _rawJson.Value;

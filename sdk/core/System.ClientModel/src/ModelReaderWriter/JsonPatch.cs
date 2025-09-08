@@ -69,7 +69,9 @@ public partial struct JsonPatch
     public bool Contains(ReadOnlySpan<byte> jsonPath)
     {
         if (_properties == null)
+        {
             return false;
+        }
 
         // if someone called Append on an array, we don't want to consider that as "contains" for the array path
         // since the entire array wasn't set it was just one item appended to it.
@@ -310,7 +312,9 @@ public partial struct JsonPatch
     public bool GetBoolean(ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        }
 
         if (TryDecodeValue(encodedValue, out bool boolValue))
         {
@@ -328,7 +332,9 @@ public partial struct JsonPatch
     public byte GetByte(ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        }
 
         if (TryDecodeValue(encodedValue, out byte byteValue))
         {
@@ -347,7 +353,9 @@ public partial struct JsonPatch
     public DateTime GetDateTime(ReadOnlySpan<byte> jsonPath, StandardFormat format = default)
     {
         if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        }
 
         if (TryDecodeValue(encodedValue, out DateTime dateTimeValue, format))
         {
@@ -366,7 +374,9 @@ public partial struct JsonPatch
     public DateTimeOffset GetDateTimeOffset(ReadOnlySpan<byte> jsonPath, StandardFormat format = default)
     {
         if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        }
 
         if (TryDecodeValue(encodedValue, out DateTimeOffset dateTimeOffsetValue, format))
         {
@@ -384,7 +394,9 @@ public partial struct JsonPatch
     public decimal GetDecimal(ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        }
 
         if (TryDecodeValue(encodedValue, out decimal decimalValue))
         {
@@ -402,7 +414,9 @@ public partial struct JsonPatch
     public double GetDouble(ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        }
 
         if (TryDecodeValue(encodedValue, out double doubleValue))
         {
@@ -420,7 +434,9 @@ public partial struct JsonPatch
     public float GetFloat(ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        }
 
         if (TryDecodeValue(encodedValue, out float floatValue))
         {
@@ -438,7 +454,9 @@ public partial struct JsonPatch
     public Guid GetGuid(ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        }
 
         if (TryDecodeValue(encodedValue, out Guid guidValue))
         {
@@ -456,7 +474,9 @@ public partial struct JsonPatch
     public int GetInt32(ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        }
 
         if (TryDecodeValue(encodedValue, out int intValue))
         {
@@ -474,7 +494,9 @@ public partial struct JsonPatch
     public long GetInt64(ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        }
 
         if (TryDecodeValue(encodedValue, out long int64Value))
         {
@@ -492,7 +514,9 @@ public partial struct JsonPatch
     public sbyte GetInt8(ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        }
 
         if (TryDecodeValue(encodedValue, out sbyte int8Value))
         {
@@ -510,7 +534,9 @@ public partial struct JsonPatch
     public short GetInt16(ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        }
 
         if (TryDecodeValue(encodedValue, out short int16Value))
         {
@@ -529,7 +555,9 @@ public partial struct JsonPatch
     public TimeSpan GetTimeSpan(ReadOnlySpan<byte> jsonPath, StandardFormat format = default)
     {
         if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        }
 
         if (TryDecodeValue(encodedValue, out TimeSpan timeSpanValue, format))
         {
@@ -547,7 +575,9 @@ public partial struct JsonPatch
     public uint GetUInt32(ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        }
 
         if (TryDecodeValue(encodedValue, out uint uintValue))
         {
@@ -565,7 +595,9 @@ public partial struct JsonPatch
     public ulong GetUInt64(ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        }
 
         if (TryDecodeValue(encodedValue, out ulong uint64Value))
         {
@@ -583,7 +615,9 @@ public partial struct JsonPatch
     public ushort GetUInt16(ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        }
 
         if (TryDecodeValue(encodedValue, out ushort uint16Value))
         {
@@ -629,7 +663,9 @@ public partial struct JsonPatch
         where T : struct
     {
         if (!TryGetEncodedValue(jsonPath, out EncodedValue encodedValue))
+        {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        }
 
         if (TryDecodeNullableValue(encodedValue, out T? value, out bool supportedType))
         {
@@ -1296,7 +1332,9 @@ public partial struct JsonPatch
     public bool IsRemoved(ReadOnlySpan<byte> jsonPath)
     {
         if (_properties is null)
+        {
             return false;
+        }
 
         return _properties.TryGetValue(jsonPath, out var value) && value.Kind == ValueKind.Removed;
     }
@@ -1311,7 +1349,9 @@ public partial struct JsonPatch
     public bool Contains(ReadOnlySpan<byte> prefix, ReadOnlySpan<byte> property)
     {
         if (_properties == null)
+        {
             return false;
+        }
 
         Span<byte> normalizedPrefix = stackalloc byte[prefix.Length];
         JsonPathComparer.Default.Normalize(prefix, normalizedPrefix, out int bytesWritten);
@@ -1322,10 +1362,14 @@ public partial struct JsonPatch
             ReadOnlySpan<byte> keySpan = kvp.Key;
 
             if (!keySpan.StartsWith(normalizedPrefix))
+            {
                 continue;
+            }
 
             if (property.SequenceEqual(keySpan.Slice(normalizedPrefix.Length).GetPropertyNameFromSlice()))
+            {
                 return true;
+            }
         }
 
         return false;

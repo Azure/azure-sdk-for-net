@@ -81,7 +81,9 @@ internal ref struct JsonPathReader
         }
 
         if (Current.TokenType == JsonPathTokenType.End)
+        {
             return false;
+        }
 
         if (_consumed >= _length)
         {
@@ -105,7 +107,9 @@ internal ref struct JsonPathReader
             case OpenBracket:
                 // if the next byte is '\'', or '"', it's a quoted string, otherwise it's an array start
                 if (_consumed + 1 >= _length)
+                {
                     throw new FormatException($"Invalid JsonPath syntax at position {_consumed + 1}: expected a property or array index after '['");
+                }
 
                 var next = _jsonPath[_consumed + 1];
                 if (next == SingleQuote || next == DoubleQuote)
@@ -123,12 +127,16 @@ internal ref struct JsonPathReader
                 }
 
                 if (!IsDigit(next))
+                {
                     throw new FormatException($"Invalid JsonPath syntax at position {_consumed + 1}: expected a property or array index after '['");
+                }
 
                 _consumed++; // Skip '['
                 Current = ReadNumber();
                 if (_consumed >= _length || _jsonPath[_consumed] != CloseBracket)
+                {
                     throw new FormatException($"Invalid JsonPath syntax at position {_consumed}: expected ']' after number");
+                }
 
                 _consumed++; // Skip closing bracket
                 return true;
@@ -142,7 +150,9 @@ internal ref struct JsonPathReader
                 {
                     Current = ReadQuotedString();
                     if (_consumed >= _length || _jsonPath[_consumed] != CloseBracket)
+                    {
                         throw new FormatException($"Invalid JsonPath syntax at position {_consumed}: expected ']' after quoted string");
+                    }
 
                     _consumed++; // Skip closing bracket
                 }
@@ -158,10 +168,14 @@ internal ref struct JsonPathReader
     public JsonPathToken Peek()
     {
         if (Current.TokenType == JsonPathTokenType.End)
+        {
             return Current;
+        }
 
         if (_peeked.HasValue)
+        {
             return _peeked.Token;
+        }
 
         JsonPathReader local = this;
         local.Read();
@@ -175,19 +189,29 @@ internal ref struct JsonPathReader
     public ReadOnlySpan<byte> GetFirstProperty()
     {
         if (_jsonPath.IsRoot())
+        {
             return _jsonPath;
+        }
 
         if (!Read())
+        {
             return ReadOnlySpan<byte>.Empty;
+        }
 
         if (Current.TokenType != JsonPathTokenType.Root)
+        {
             return ReadOnlySpan<byte>.Empty;
+        }
 
         if (!Read())
+        {
             return ReadOnlySpan<byte>.Empty;
+        }
 
         if (Current.TokenType == JsonPathTokenType.PropertySeparator && !Read())
+        {
             return ReadOnlySpan<byte>.Empty;
+        }
 
         switch (Current.TokenType)
         {
@@ -207,7 +231,9 @@ internal ref struct JsonPathReader
         while (Read())
         {
             if (Current.TokenType == JsonPathTokenType.ArrayIndex)
+            {
                 return _jsonPath.Slice(0, _consumed);
+            }
         }
 
         return ReadOnlySpan<byte>.Empty;
@@ -224,13 +250,17 @@ internal ref struct JsonPathReader
         while (_consumed < _length)
         {
             if (localJsonPath[_consumed] == quote && _consumed + 1 < _length && localJsonPath[_consumed + 1] == ']')
+            {
                 break;
+            }
 
             _consumed++;
         }
 
         if (_consumed >= _length)
+        {
             throw new FormatException("Unterminated quoted string in JsonPath");
+        }
 
         var value = localJsonPath.Slice(initial, _consumed - initial);
         _consumed++; // Skip closing quote
@@ -243,7 +273,9 @@ internal ref struct JsonPathReader
         var localJsonPath = _jsonPath;
         int initial = _consumed;
         while (_consumed < _length && IsDigit(localJsonPath[_consumed]))
+        {
             _consumed++;
+        }
 
         return new JsonPathToken(JsonPathTokenType.ArrayIndex, initial, localJsonPath.Slice(initial, _consumed - initial));
     }
@@ -254,7 +286,9 @@ internal ref struct JsonPathReader
         var localJsonPath = _jsonPath;
         int initial = _consumed;
         while (_consumed < _length && localJsonPath[_consumed] is not Dot and not OpenBracket and not CloseBracket)
+        {
             _consumed++;
+        }
 
         return new JsonPathToken(JsonPathTokenType.Property, initial, localJsonPath.Slice(initial, _consumed - initial));
     }
@@ -265,10 +299,14 @@ internal ref struct JsonPathReader
     public bool Advance(ReadOnlySpan<byte> prefix)
     {
         if (prefix.IsEmpty || _jsonPath.IsEmpty)
+        {
             return false;
+        }
 
         if (prefix.Length >= _length)
+        {
             return false;
+        }
 
         if (_jsonPath.StartsWith(prefix))
         {
@@ -277,7 +315,9 @@ internal ref struct JsonPathReader
         }
 
         if (prefix[0] != DollarSign || _jsonPath[0] != DollarSign)
+        {
             return false;
+        }
 
         JsonPathReader prefixReader = new(prefix);
 
@@ -295,68 +335,20 @@ internal ref struct JsonPathReader
     internal ReadOnlySpan<byte> GetParsedPath()
     {
         if (_consumed == 0)
+        {
             return ReadOnlySpan<byte>.Empty;
+        }
 
         return _jsonPath.Slice(0, _consumed);
     }
 
-    private void Reset()
-    {
-        _consumed = 0;
-        Current = default;
-    }
-
     public bool Equals(JsonPathReader other)
     {
-        // Try fast path if they used the same format style
-        if (_jsonPath.SequenceEqual(other._jsonPath))
-            return true;
-
-        // Compare the tokens
-        var x = this;
-        var y = other;
-        x.Reset();
-        y.Reset();
-
-        while (x.Read() && y.Read())
-        {
-            if (!x.Current.ValueSpan.SequenceEqual(y.Current.ValueSpan))
-                return false;
-        }
-        return !x.Read() && !y.Read();
+        return JsonPathComparer.Default.NormalizedEquals(_jsonPath, other._jsonPath);
     }
 
     public override int GetHashCode()
     {
-        var local = this;
-        //reset in case we aren't starting from the beginning
-        local.Reset();
-
-#if NET8_0_OR_GREATER
-        var hash = new HashCode();
-        while (local.Read())
-        {
-            if (!local.Current.ValueSpan.IsEmpty)
-                hash.AddBytes(local.Current.ValueSpan);
-        }
-        return hash.ToHashCode();
-#else
-        unchecked
-        {
-            int hash = 17;
-            while (local.Read())
-            {
-                var span = local.Current.ValueSpan;
-                if (!span.IsEmpty)
-                {
-                    for (int i = 0; i < span.Length; i++)
-                    {
-                        hash = hash * 31 + span[i];
-                    }
-                }
-            }
-            return hash;
-        }
-#endif
+        return JsonPathComparer.Default.GetNormalizedHashCode(_jsonPath);
     }
 }

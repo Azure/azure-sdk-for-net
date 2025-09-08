@@ -367,6 +367,7 @@ namespace System.ClientModel.Primitives
         public void WriteTo(System.Text.Json.Utf8JsonWriter writer) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void WriteTo(System.Text.Json.Utf8JsonWriter writer, System.ReadOnlySpan<byte> jsonPath) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public readonly partial struct EncodedValue
         {
