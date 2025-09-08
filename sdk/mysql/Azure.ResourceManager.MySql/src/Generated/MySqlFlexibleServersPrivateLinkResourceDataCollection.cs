@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MySqlFlexibleServersPrivateLinkResource"/> and their operations.
-    /// Each <see cref="MySqlFlexibleServersPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="MySqlFlexibleServerResource"/>.
-    /// To get a <see cref="MySqlFlexibleServersPrivateLinkResourceCollection"/> instance call the GetMySqlFlexibleServersPrivateLinkResources method from an instance of <see cref="MySqlFlexibleServerResource"/>.
+    /// A class representing a collection of <see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/> and their operations.
+    /// Each <see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/> in the collection will belong to the same instance of <see cref="MySqlFlexibleServerResource"/>.
+    /// To get a <see cref="MySqlFlexibleServersPrivateLinkResourceDataCollection"/> instance call the GetMySqlFlexibleServersPrivateLinkResourceData method from an instance of <see cref="MySqlFlexibleServerResource"/>.
     /// </summary>
-    public partial class MySqlFlexibleServersPrivateLinkResourceCollection : ArmCollection, IEnumerable<MySqlFlexibleServersPrivateLinkResource>, IAsyncEnumerable<MySqlFlexibleServersPrivateLinkResource>
+    public partial class MySqlFlexibleServersPrivateLinkResourceDataCollection : ArmCollection, IEnumerable<MySqlFlexibleServersPrivateLinkResourceDataResource>, IAsyncEnumerable<MySqlFlexibleServersPrivateLinkResourceDataResource>
     {
-        private readonly ClientDiagnostics _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResourcesRestOperations _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServersPrivateLinkResourceCollection"/> class for mocking. </summary>
-        protected MySqlFlexibleServersPrivateLinkResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServersPrivateLinkResourceDataCollection"/> class for mocking. </summary>
+        protected MySqlFlexibleServersPrivateLinkResourceDataCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServersPrivateLinkResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServersPrivateLinkResourceDataCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal MySqlFlexibleServersPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MySqlFlexibleServersPrivateLinkResourceDataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServersPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MySqlFlexibleServersPrivateLinkResource.ResourceType, out string mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesApiVersion);
-            _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesApiVersion);
+            _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServersPrivateLinkResourceDataResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MySqlFlexibleServersPrivateLinkResourceDataResource.ResourceType, out string mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesApiVersion);
+            _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <description>PrivateLinkResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServersPrivateLinkResource"/></description>
+        /// <description><see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,18 +76,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        public virtual async Task<Response<MySqlFlexibleServersPrivateLinkResource>> GetAsync(string groupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServersPrivateLinkResourceDataResource>> GetAsync(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using var scope = _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MySqlFlexibleServersPrivateLinkResourceCollection.Get");
+            using var scope = _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics.CreateScope("MySqlFlexibleServersPrivateLinkResourceDataCollection.Get");
             scope.Start();
             try
             {
-                var response = await _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken).ConfigureAwait(false);
+                var response = await _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlFlexibleServersPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServersPrivateLinkResourceDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <description>PrivateLinkResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServersPrivateLinkResource"/></description>
+        /// <description><see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,18 +121,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        public virtual Response<MySqlFlexibleServersPrivateLinkResource> Get(string groupName, CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServersPrivateLinkResourceDataResource> Get(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using var scope = _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MySqlFlexibleServersPrivateLinkResourceCollection.Get");
+            using var scope = _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics.CreateScope("MySqlFlexibleServersPrivateLinkResourceDataCollection.Get");
             scope.Start();
             try
             {
-                var response = _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken);
+                var response = _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlFlexibleServersPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServersPrivateLinkResourceDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_ListByServer</description>
+        /// <description>PrivateLinkResource_ListByServer</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -158,16 +158,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServersPrivateLinkResource"/></description>
+        /// <description><see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlFlexibleServersPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MySqlFlexibleServersPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MySqlFlexibleServersPrivateLinkResourceDataResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlFlexibleServersPrivateLinkResource(Client, MySqlFlexibleServersPrivateLinkResourceData.DeserializeMySqlFlexibleServersPrivateLinkResourceData(e)), _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MySqlFlexibleServersPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlFlexibleServersPrivateLinkResourceDataResource(Client, MySqlFlexibleServersPrivateLinkResourceDataData.DeserializeMySqlFlexibleServersPrivateLinkResourceDataData(e)), _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics, Pipeline, "MySqlFlexibleServersPrivateLinkResourceDataCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_ListByServer</description>
+        /// <description>PrivateLinkResource_ListByServer</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -187,16 +187,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServersPrivateLinkResource"/></description>
+        /// <description><see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlFlexibleServersPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MySqlFlexibleServersPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MySqlFlexibleServersPrivateLinkResourceDataResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlFlexibleServersPrivateLinkResource(Client, MySqlFlexibleServersPrivateLinkResourceData.DeserializeMySqlFlexibleServersPrivateLinkResourceData(e)), _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MySqlFlexibleServersPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlFlexibleServersPrivateLinkResourceDataResource(Client, MySqlFlexibleServersPrivateLinkResourceDataData.DeserializeMySqlFlexibleServersPrivateLinkResourceDataData(e)), _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics, Pipeline, "MySqlFlexibleServersPrivateLinkResourceDataCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <description>PrivateLinkResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServersPrivateLinkResource"/></description>
+        /// <description><see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using var scope = _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MySqlFlexibleServersPrivateLinkResourceCollection.Exists");
+            using var scope = _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics.CreateScope("MySqlFlexibleServersPrivateLinkResourceDataCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <description>PrivateLinkResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServersPrivateLinkResource"/></description>
+        /// <description><see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -271,11 +271,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using var scope = _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MySqlFlexibleServersPrivateLinkResourceCollection.Exists");
+            using var scope = _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics.CreateScope("MySqlFlexibleServersPrivateLinkResourceDataCollection.Exists");
             scope.Start();
             try
             {
-                var response = _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
+                var response = _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <description>PrivateLinkResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServersPrivateLinkResource"/></description>
+        /// <description><see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,18 +310,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        public virtual async Task<NullableResponse<MySqlFlexibleServersPrivateLinkResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<MySqlFlexibleServersPrivateLinkResourceDataResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using var scope = _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MySqlFlexibleServersPrivateLinkResourceCollection.GetIfExists");
+            using var scope = _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics.CreateScope("MySqlFlexibleServersPrivateLinkResourceDataCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<MySqlFlexibleServersPrivateLinkResource>(response.GetRawResponse());
-                return Response.FromValue(new MySqlFlexibleServersPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<MySqlFlexibleServersPrivateLinkResourceDataResource>(response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServersPrivateLinkResourceDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <description>PrivateLinkResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServersPrivateLinkResource"/></description>
+        /// <description><see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -355,18 +355,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        public virtual NullableResponse<MySqlFlexibleServersPrivateLinkResource> GetIfExists(string groupName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<MySqlFlexibleServersPrivateLinkResourceDataResource> GetIfExists(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using var scope = _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MySqlFlexibleServersPrivateLinkResourceCollection.GetIfExists");
+            using var scope = _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics.CreateScope("MySqlFlexibleServersPrivateLinkResourceDataCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
+                var response = _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<MySqlFlexibleServersPrivateLinkResource>(response.GetRawResponse());
-                return Response.FromValue(new MySqlFlexibleServersPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<MySqlFlexibleServersPrivateLinkResourceDataResource>(response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServersPrivateLinkResourceDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             }
         }
 
-        IEnumerator<MySqlFlexibleServersPrivateLinkResource> IEnumerable<MySqlFlexibleServersPrivateLinkResource>.GetEnumerator()
+        IEnumerator<MySqlFlexibleServersPrivateLinkResourceDataResource> IEnumerable<MySqlFlexibleServersPrivateLinkResourceDataResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<MySqlFlexibleServersPrivateLinkResource> IAsyncEnumerable<MySqlFlexibleServersPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<MySqlFlexibleServersPrivateLinkResourceDataResource> IAsyncEnumerable<MySqlFlexibleServersPrivateLinkResourceDataResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

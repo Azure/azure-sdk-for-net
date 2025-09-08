@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
-    /// A Class representing a MySqlFlexibleServersPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlFlexibleServersPrivateLinkResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetMySqlFlexibleServersPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MySqlFlexibleServerResource"/> using the GetMySqlFlexibleServersPrivateLinkResource method.
+    /// A Class representing a MySqlFlexibleServersPrivateLinkResourceData along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMySqlFlexibleServersPrivateLinkResourceDataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlFlexibleServerResource"/> using the GetMySqlFlexibleServersPrivateLinkResourceData method.
     /// </summary>
-    public partial class MySqlFlexibleServersPrivateLinkResource : ArmResource
+    public partial class MySqlFlexibleServersPrivateLinkResourceDataResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="MySqlFlexibleServersPrivateLinkResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="serverName"> The serverName. </param>
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesRestClient;
-        private readonly MySqlFlexibleServersPrivateLinkResourceData _data;
+        private readonly ClientDiagnostics _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResourcesRestOperations _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesRestClient;
+        private readonly MySqlFlexibleServersPrivateLinkResourceDataData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/flexibleServers/privateLinkResources";
 
-        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServersPrivateLinkResource"/> class for mocking. </summary>
-        protected MySqlFlexibleServersPrivateLinkResource()
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/> class for mocking. </summary>
+        protected MySqlFlexibleServersPrivateLinkResourceDataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServersPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MySqlFlexibleServersPrivateLinkResource(ArmClient client, MySqlFlexibleServersPrivateLinkResourceData data) : this(client, data.Id)
+        internal MySqlFlexibleServersPrivateLinkResourceDataResource(ArmClient client, MySqlFlexibleServersPrivateLinkResourceDataData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServersPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MySqlFlexibleServersPrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MySqlFlexibleServersPrivateLinkResourceDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesApiVersion);
-            _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesApiVersion);
+            _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesApiVersion);
+            _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual MySqlFlexibleServersPrivateLinkResourceData Data
+        public virtual MySqlFlexibleServersPrivateLinkResourceDataData Data
         {
             get
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <description>PrivateLinkResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -105,21 +105,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServersPrivateLinkResource"/></description>
+        /// <description><see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MySqlFlexibleServersPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServersPrivateLinkResourceDataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MySqlFlexibleServersPrivateLinkResource.Get");
+            using var scope = _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics.CreateScope("MySqlFlexibleServersPrivateLinkResourceDataResource.Get");
             scope.Start();
             try
             {
-                var response = await _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlFlexibleServersPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServersPrivateLinkResourceDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <description>PrivateLinkResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -145,21 +145,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServersPrivateLinkResource"/></description>
+        /// <description><see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MySqlFlexibleServersPrivateLinkResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServersPrivateLinkResourceDataResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MySqlFlexibleServersPrivateLinkResource.Get");
+            using var scope = _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesClientDiagnostics.CreateScope("MySqlFlexibleServersPrivateLinkResourceDataResource.Get");
             scope.Start();
             try
             {
-                var response = _mySqlFlexibleServersPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _mySqlFlexibleServersPrivateLinkResourceDataPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlFlexibleServersPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServersPrivateLinkResourceDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

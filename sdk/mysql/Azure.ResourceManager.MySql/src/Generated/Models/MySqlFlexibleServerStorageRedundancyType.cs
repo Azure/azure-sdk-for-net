@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> The redundant type of the server storage. The parameter is used for server creation. </summary>
+    /// <summary> Enum to indicate whether storage sku value is 'ZoneRedundancy' or 'LocalRedundancy'. </summary>
     public readonly partial struct MySqlFlexibleServerStorageRedundancyType : IEquatable<MySqlFlexibleServerStorageRedundancyType>
     {
         private readonly string _value;

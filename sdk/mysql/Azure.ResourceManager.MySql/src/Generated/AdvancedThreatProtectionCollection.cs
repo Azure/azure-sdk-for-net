@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_UpdatePut</description>
+        /// <description>AdvancedThreatProtection_UpdatePut</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_UpdatePut</description>
+        /// <description>AdvancedThreatProtection_UpdatePut</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_List</description>
+        /// <description>AdvancedThreatProtection_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_List</description>
+        /// <description>AdvancedThreatProtection_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

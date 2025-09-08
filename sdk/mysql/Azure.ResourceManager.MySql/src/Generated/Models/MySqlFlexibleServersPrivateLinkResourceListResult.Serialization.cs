@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<MySqlFlexibleServersPrivateLinkResourceData> value = default;
+            IReadOnlyList<MySqlFlexibleServersPrivateLinkResourceDataData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<MySqlFlexibleServersPrivateLinkResourceData> array = new List<MySqlFlexibleServersPrivateLinkResourceData>();
+                    List<MySqlFlexibleServersPrivateLinkResourceDataData> array = new List<MySqlFlexibleServersPrivateLinkResourceDataData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServersPrivateLinkResourceData.DeserializeMySqlFlexibleServersPrivateLinkResourceData(item, options));
+                        array.Add(MySqlFlexibleServersPrivateLinkResourceDataData.DeserializeMySqlFlexibleServersPrivateLinkResourceDataData(item, options));
                     }
                     value = array;
                     continue;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MySqlFlexibleServersPrivateLinkResourceListResult(value ?? new ChangeTrackingList<MySqlFlexibleServersPrivateLinkResourceData>(), serializedAdditionalRawData);
+            return new MySqlFlexibleServersPrivateLinkResourceListResult(value ?? new ChangeTrackingList<MySqlFlexibleServersPrivateLinkResourceDataData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServersPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)
