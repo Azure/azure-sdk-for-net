@@ -45,11 +45,6 @@ namespace Azure.Search.Documents.Agents.Models
                 writer.WritePropertyName("outputTokens"u8);
                 writer.WriteNumberValue(OutputTokens.Value);
             }
-            if (Optional.IsDefined(ElapsedMs))
-            {
-                writer.WritePropertyName("elapsedMs"u8);
-                writer.WriteNumberValue(ElapsedMs.Value);
-            }
         }
 
         KnowledgeAgentModelQueryPlanningActivityRecord IJsonModel<KnowledgeAgentModelQueryPlanningActivityRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -74,9 +69,9 @@ namespace Azure.Search.Documents.Agents.Models
             }
             int? inputTokens = default;
             int? outputTokens = default;
-            int? elapsedMs = default;
             int id = default;
             string type = default;
+            int? elapsedMs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,15 +94,6 @@ namespace Azure.Search.Documents.Agents.Models
                     outputTokens = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("elapsedMs"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    elapsedMs = property.Value.GetInt32();
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetInt32();
@@ -116,6 +102,15 @@ namespace Azure.Search.Documents.Agents.Models
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("elapsedMs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    elapsedMs = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -127,10 +122,10 @@ namespace Azure.Search.Documents.Agents.Models
             return new KnowledgeAgentModelQueryPlanningActivityRecord(
                 id,
                 type,
+                elapsedMs,
                 serializedAdditionalRawData,
                 inputTokens,
-                outputTokens,
-                elapsedMs);
+                outputTokens);
         }
 
         BinaryData IPersistableModel<KnowledgeAgentModelQueryPlanningActivityRecord>.Write(ModelReaderWriterOptions options)

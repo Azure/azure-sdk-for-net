@@ -18,8 +18,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
+        /// <param name="sourceData"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownKnowledgeAgentReference(string type, string id, int activitySource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, id, activitySource, serializedAdditionalRawData)
+        internal UnknownKnowledgeAgentReference(string type, string id, int activitySource, IReadOnlyDictionary<string, object> sourceData, float? rerankerScore, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, id, activitySource, sourceData, rerankerScore, serializedAdditionalRawData)
         {
             Type = type ?? "Unknown";
         }

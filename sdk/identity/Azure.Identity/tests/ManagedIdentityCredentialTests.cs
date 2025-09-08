@@ -5,19 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.IO;
-using System.IO.Pipelines;
-using System.Net.NetworkInformation;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using Azure.Core;
 using Azure.Core.Diagnostics;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
@@ -37,7 +31,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyImdsRequestWithClientIdMockAsync()
+        public async Task VerifyImdsRequestWithClientIdMock()
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
@@ -99,7 +93,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task ImdsWithEmptyClientIdIsIgnoredMockAsync()
+        public async Task ImdsWithEmptyClientIdIsIgnoredMock()
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
@@ -181,7 +175,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyImdsRequestWithResourceIdMockAsync()
+        public async Task VerifyImdsRequestWithResourceIdMock()
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
@@ -217,7 +211,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyImdsRequestWithObjectIdMockAsync()
+        public async Task VerifyImdsRequestWithObjectIdMock()
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
@@ -549,7 +543,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyIMDSRequestWithPodIdentityEnvVarResourceIdMockAsync()
+        public async Task VerifyIMDSRequestWithPodIdentityEnvVarResourceIdMock()
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", "https://mock.podid.endpoint/" } });
 
@@ -585,7 +579,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyAppService2019RequestMockAsync()
+        public async Task VerifyAppService2019RequestMock()
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", "mock-msi-secret" }, { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
@@ -647,7 +641,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyAppService2019RequestWithClientIdMockAsync()
+        public async Task VerifyAppService2019RequestWithClientIdMock()
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
@@ -678,7 +672,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyAppService2019RequestWithResourceIdMockAsync()
+        public async Task VerifyAppService2019RequestWithResourceIdMock()
         {
             string resourceId = "resourceId";
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
@@ -711,7 +705,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyCloudShellMsiRequestMockAsync()
+        public async Task VerifyCloudShellMsiRequestMock()
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
@@ -1145,7 +1139,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyTokenExchangeMsiRequestMockAsync()
+        public async Task VerifyTokenExchangeMsiRequestMock()
         {
             List<string> messages = new();
             using AzureEventSourceListener listener = new AzureEventSourceListener(
@@ -1185,7 +1179,6 @@ namespace Azure.Identity.Tests
                 { "AZURE_FEDERATED_TOKEN_FILE", tokenFilePath }
             });
 
-            //var response = CreateMockResponse(200, ExpectedToken);
             var mockTransport = new MockTransport(req =>
             {
                 if (req.Uri.ToString().Contains("mock.authority.com"))
@@ -1203,6 +1196,76 @@ namespace Azure.Identity.Tests
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
             Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.ManagedIdentitySourceAttemptedMessage, "TokenExchangeManagedIdentitySource", true)));
+        }
+
+        [NonParallelizable]
+        [Test]
+        public async Task VerifyTokenExchangeMsiRequestMockUsesCache()
+        {
+            List<string> messages = new();
+            using AzureEventSourceListener listener = new AzureEventSourceListener(
+                (_, message) => messages.Add(message),
+                EventLevel.Informational);
+
+            var tenantId = "mock-tenant-id";
+            var clientId = "mock-client-id";
+            var authorityHostUrl = "https://mock.authority.com";
+
+            var assertionAudienceBuilder = new RequestUriBuilder();
+            assertionAudienceBuilder.Reset(new Uri(authorityHostUrl));
+            assertionAudienceBuilder.AppendPath(tenantId);
+            assertionAudienceBuilder.AppendPath("/oauth2/v2.0/token", escape: false);
+            var assertionAudience = assertionAudienceBuilder.ToString();
+            var assertionCertPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            string tokenFilePath = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
+
+#if NET9_0_OR_GREATER
+            var assertionCert = X509CertificateLoader.LoadPkcs12FromFile(assertionCertPath, null);
+#else
+            var assertionCert = new X509Certificate2(assertionCertPath);
+#endif
+
+            File.WriteAllText(tokenFilePath, ManagedIdentityCredentialFederatedTokenLiveTests.CreateClientAssertionJWT(clientId, assertionAudience, assertionCert));
+
+            using var environment = new TestEnvVar(new()
+            {
+                { "MSI_ENDPOINT", null },
+                { "MSI_SECRET", null },
+                { "IDENTITY_ENDPOINT", null },
+                { "IDENTITY_HEADER", null },
+                { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null },
+                { "AZURE_CLIENT_ID", clientId },
+                { "AZURE_TENANT_ID", tenantId },
+                { "AZURE_AUTHORITY_HOST", authorityHostUrl },
+                { "AZURE_FEDERATED_TOKEN_FILE", tokenFilePath }
+            });
+
+            int callCount = 0;
+            var mockTransport = new MockTransport(req =>
+            {
+                callCount++;
+                if (req.Uri.ToString().Contains("mock.authority.com"))
+                {
+                    return CreateMockResponseWithTokeType(200, ExpectedToken + callCount.ToString());
+                }
+                else
+                {
+                    return CreateMockResponse(200, ExpectedToken + callCount.ToString());
+                }
+            });
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(options: options));
+            // Fetch the token from the authority
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            // This request should be served from cache
+            AccessToken secondToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            // This request changes the scope and should come from the authority
+            AccessToken thirdToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate));
+
+            Assert.AreEqual(actualToken.Token, secondToken.Token);
+            Assert.AreNotEqual(actualToken.Token, thirdToken.Token);
             Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.ManagedIdentitySourceAttemptedMessage, "TokenExchangeManagedIdentitySource", true)));
         }
 
@@ -1249,7 +1312,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyImdsRequestWithCAEMockAsync()
+        public async Task VerifyImdsRequestWithCAEMock()
         {
             string caeClaims = """{"access_token":{"nbf":{"essential":true, "value":"1724337680"}}}""";
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });

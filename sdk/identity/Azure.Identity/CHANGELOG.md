@@ -6,6 +6,7 @@
 
 - Added a new `DefaultAzureCredential` constructor that accepts a custom environment variable name for credential configuration. This provides flexibility beyond the default `AZURE_TOKEN_CREDENTIALS` environment variable. The constructor accepts any environment variable name and uses the same credential selection logic as the existing `AZURE_TOKEN_CREDENTIALS` processing.
 - Added `DefaultAzureCredential.DefaultEnvironmentVariableName` constant property that returns `"AZURE_TOKEN_CREDENTIALS"` for convenience when referencing the default environment variable name.
+- `AzureCliCredential`, `AzurePowerShellCredential`, and `AzureDeveloperCliCredential` now throw an `AuthenticationFailedException` when the `TokenRequestContext` includes claims, as these credentials do not support claims challenges. The exception message includes guidance for handling such scenarios.
 
 ### Breaking Changes
 
@@ -13,6 +14,8 @@
 
 - Fixed `AzureDeveloperCliCredential` hanging when the `AZD_DEBUG` environment variable is set by adding the `--no-prompt` flag to prevent interactive prompts ([#52005](https://github.com/Azure/azure-sdk-for-net/issues/52005)).
 - `BrokerCredential` is now included in the chain when `AZURE_TOKEN_CREDENTIALS` is set to `dev` and the `Azure.Identity.Broker` package is installed.
+- Fixed an issue that prevented ManagedIdentityCredential from utilizing the token cache in Workload Identity Federation environments.
+- Fixed a bug in `DefaultAzureCredential` that caused the credential chain to be constructed incorrectly when using AZURE_TOKEN_CREDENTIALS in combination with `DefaultAzureCredentialOptions`.
 
 ### Other Changes
 

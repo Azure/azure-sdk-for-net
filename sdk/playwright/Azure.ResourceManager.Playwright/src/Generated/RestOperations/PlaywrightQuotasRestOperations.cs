@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Playwright
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-07-01-preview";
+            _apiVersion = apiVersion ?? "2025-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Playwright
             return message;
         }
 
-        /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
+        /// <summary> Gets a subscription-level location-based Playwright quota resource by name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
+        /// <summary> Gets a subscription-level location-based Playwright quota resource by name. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Playwright
             return message;
         }
 
-        /// <summary> List Playwright quota resources for a given subscription Id. </summary>
+        /// <summary> Lists Playwright quota resources for a given subscription ID. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> List Playwright quota resources for a given subscription Id. </summary>
+        /// <summary> Lists Playwright quota resources for a given subscription ID. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Playwright
             return message;
         }
 
-        /// <summary> List Playwright quota resources for a given subscription Id. </summary>
+        /// <summary> Lists Playwright quota resources for a given subscription ID. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> List Playwright quota resources for a given subscription Id. </summary>
+        /// <summary> Lists Playwright quota resources for a given subscription ID. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-04-01-preview";
+            _apiVersion = apiVersion ?? "2025-08-02";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             uri.AppendPath(workspaceName, true);
             uri.AppendPath("/firmwares/", false);
             uri.AppendPath(firmwareId, true);
-            uri.AppendPath("/commonVulnerabilitiesAndExposures", false);
+            uri.AppendPath("/cves", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             uri.AppendPath(workspaceName, true);
             uri.AppendPath("/firmwares/", false);
             uri.AppendPath(firmwareId, true);
-            uri.AppendPath("/commonVulnerabilitiesAndExposures", false);
+            uri.AppendPath("/cves", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

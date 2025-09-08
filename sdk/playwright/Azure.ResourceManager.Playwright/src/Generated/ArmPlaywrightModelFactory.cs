@@ -42,13 +42,20 @@ namespace Azure.ResourceManager.Playwright.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.PlaywrightWorkspaceProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last resource operation. </param>
-        /// <param name="dataplaneUri"> The workspace data plane URI. </param>
-        /// <param name="regionalAffinity"> This property sets the connection region for client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created. </param>
-        /// <param name="localAuth"> When enabled, this feature allows the workspace to use local auth (through service access token) for executing operations. </param>
+        /// <param name="dataplaneUri"> The workspace data plane service API URI. </param>
+        /// <param name="regionalAffinity"> Controls the connection region for client workers to cloud-hosted browsers. When enabled, workers connect to browsers in the closest Azure region for lower latency. When disabled, workers connect to browsers in the Azure region where the workspace was created. </param>
+        /// <param name="localAuth"> Enables the workspace to use local authentication through service access tokens for operations. </param>
+        /// <param name="workspaceId"> The workspace ID in GUID format. </param>
         /// <returns> A new <see cref="Models.PlaywrightWorkspaceProperties"/> instance for mocking. </returns>
-        public static PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState = null, Uri dataplaneUri = null, PlaywrightEnablementStatus? regionalAffinity = null, PlaywrightEnablementStatus? localAuth = null)
+        public static PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState = null, Uri dataplaneUri = null, PlaywrightEnablementStatus? regionalAffinity = null, PlaywrightEnablementStatus? localAuth = null, string workspaceId = null)
         {
-            return new PlaywrightWorkspaceProperties(provisioningState, dataplaneUri, regionalAffinity, localAuth, serializedAdditionalRawData: null);
+            return new PlaywrightWorkspaceProperties(
+                provisioningState,
+                dataplaneUri,
+                regionalAffinity,
+                localAuth,
+                workspaceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PlaywrightNameAvailabilityResult"/>. </summary>
@@ -80,7 +87,7 @@ namespace Azure.ResourceManager.Playwright.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PlaywrightQuotaProperties"/>. </summary>
-        /// <param name="freeTrial"> The subscription-level location-based Playwright quota resource free-trial properties. </param>
+        /// <param name="freeTrial"> The subscription-level location-based Playwright quota free trial properties. </param>
         /// <param name="provisioningState"> The status of the last resource operation. </param>
         /// <returns> A new <see cref="Models.PlaywrightQuotaProperties"/> instance for mocking. </returns>
         public static PlaywrightQuotaProperties PlaywrightQuotaProperties(PlaywrightFreeTrialProperties freeTrial = null, PlaywrightProvisioningState? provisioningState = null)
@@ -89,8 +96,8 @@ namespace Azure.ResourceManager.Playwright.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PlaywrightFreeTrialProperties"/>. </summary>
-        /// <param name="workspaceId"> Playwright workspace-id that has free-trial in the subscription. </param>
-        /// <param name="state"> The free-trial state. </param>
+        /// <param name="workspaceId"> The workspace ID in GUID format that has free trial enabled in the subscription. </param>
+        /// <param name="state"> The free trial state. </param>
         /// <returns> A new <see cref="Models.PlaywrightFreeTrialProperties"/> instance for mocking. </returns>
         public static PlaywrightFreeTrialProperties PlaywrightFreeTrialProperties(string workspaceId = null, PlaywrightFreeTrialState state = default)
         {
@@ -116,7 +123,7 @@ namespace Azure.ResourceManager.Playwright.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PlaywrightWorkspaceQuotaProperties"/>. </summary>
-        /// <param name="freeTrial"> The Playwright workspace quota resource free-trial properties. </param>
+        /// <param name="freeTrial"> The Playwright workspace quota free trial properties. </param>
         /// <param name="provisioningState"> The status of the last resource operation. </param>
         /// <returns> A new <see cref="Models.PlaywrightWorkspaceQuotaProperties"/> instance for mocking. </returns>
         public static PlaywrightWorkspaceQuotaProperties PlaywrightWorkspaceQuotaProperties(PlaywrightWorkspaceFreeTrialProperties freeTrial = null, PlaywrightProvisioningState? provisioningState = null)
@@ -125,11 +132,11 @@ namespace Azure.ResourceManager.Playwright.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PlaywrightWorkspaceFreeTrialProperties"/>. </summary>
-        /// <param name="createdOn"> The free-trial createdAt utcDateTime. </param>
-        /// <param name="expiryOn"> The free-trial expiryAt utcDateTime. </param>
-        /// <param name="allocatedValue"> The free-trial allocated limit value eg. allocated free execution minutes. </param>
-        /// <param name="usedValue"> The free-trial used value eg. used free execution minutes. </param>
-        /// <param name="percentageUsed"> The free-trial percentage used. </param>
+        /// <param name="createdOn"> The free trial creation timestamp in UTC. </param>
+        /// <param name="expiryOn"> The free trial expiration timestamp in UTC. </param>
+        /// <param name="allocatedValue"> The allocated limit value (e.g., allocated free execution minutes). </param>
+        /// <param name="usedValue"> The used value (e.g., used free execution minutes). </param>
+        /// <param name="percentageUsed"> The percentage of the free trial quota used. </param>
         /// <returns> A new <see cref="Models.PlaywrightWorkspaceFreeTrialProperties"/> instance for mocking. </returns>
         public static PlaywrightWorkspaceFreeTrialProperties PlaywrightWorkspaceFreeTrialProperties(DateTimeOffset createdOn = default, DateTimeOffset expiryOn = default, int allocatedValue = default, float usedValue = default, float percentageUsed = default)
         {

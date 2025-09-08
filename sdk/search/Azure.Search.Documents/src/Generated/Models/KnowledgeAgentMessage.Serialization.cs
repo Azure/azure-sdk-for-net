@@ -34,8 +34,11 @@ namespace Azure.Search.Documents.Agents.Models
                 throw new FormatException($"The model {nameof(KnowledgeAgentMessage)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("role"u8);
-            writer.WriteStringValue(Role);
+            if (Optional.IsDefined(Role))
+            {
+                writer.WritePropertyName("role"u8);
+                writer.WriteStringValue(Role);
+            }
             writer.WritePropertyName("content"u8);
             writer.WriteStartArray();
             foreach (var item in Content)
