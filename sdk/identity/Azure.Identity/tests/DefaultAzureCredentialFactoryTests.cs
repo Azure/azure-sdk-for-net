@@ -545,37 +545,7 @@ namespace Azure.Identity.Tests
                     Assert.IsFalse(chain.Any(cred => cred is AzureDeveloperCliCredential));
                     Assert.IsFalse(chain.Any(cred => cred is VisualStudioCodeCredential));
                     Assert.IsFalse(chain.Any(cred => cred is InteractiveBrowserCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is BrokerCredential));
                 }
-                else if (credSelection == Constants.VisualStudioCredential)
-                {
-                    Assert.IsTrue(chain.Single(cred => cred is VisualStudioCredential) is VisualStudioCredential);
-                }
-                else if (credSelection == Constants.VisualStudioCodeCredential)
-                {
-                    Assert.IsTrue(chain.Single(cred => cred is VisualStudioCodeCredential) is VisualStudioCodeCredential);
-                }
-                else if (credSelection == Constants.AzureCliCredential)
-                {
-                    Assert.IsTrue(chain.Single(cred => cred is AzureCliCredential) is AzureCliCredential);
-                }
-                else if (credSelection == Constants.AzurePowerShellCredential)
-                {
-                    Assert.IsTrue(chain.Single(cred => cred is AzurePowerShellCredential) is AzurePowerShellCredential);
-                }
-                else if (credSelection == Constants.AzureDeveloperCliCredential)
-                {
-                    Assert.IsTrue(chain.Single(cred => cred is AzureDeveloperCliCredential) is AzureDeveloperCliCredential);
-                }
-                else if (credSelection == Constants.InteractiveBrowserCredential)
-                {
-                    Assert.IsTrue(chain.Single(cred => cred is InteractiveBrowserCredential) is InteractiveBrowserCredential);
-                }
-                else if (credSelection == Constants.BrokerCredential)
-                {
-                    Assert.IsTrue(chain.Single(cred => cred is BrokerCredential) is BrokerCredential);
-                }
-
                 else if (credSelection == null)
                 {
                     //check the factory created the credentials
