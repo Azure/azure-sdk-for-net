@@ -2,29 +2,23 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.ContainerRegistry.Tests;
 
-public class BasicContainerRegistryTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicContainerRegistryTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.containerregistry/container-registry/main.bicep")]
-    public async Task CreateContainerRegistry()
+    internal static Trycep CreateContainerRegistryTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
                 #region Snippet:ContainerRegistryBasic
                 Infrastructure infra = new();
 
                 ContainerRegistryService registry =
-                    new(nameof(registry))
+                    new(nameof(registry), ContainerRegistryService.ResourceVersions.V2023_07_01)
                     {
                         Sku = new ContainerRegistrySku { Name = ContainerRegistrySkuName.Standard },
                         IsAdminUserEnabled = false,
@@ -37,8 +31,15 @@ public class BasicContainerRegistryTests(bool async)
                 #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.containerregistry/container-registry/main.bicep")]
+    public async Task CreateContainerRegistry()
+    {
+        await using Trycep test = CreateContainerRegistryTest();
+        test.Compare(
             """
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
@@ -59,8 +60,6 @@ public class BasicContainerRegistryTests(bool async)
             }
 
             output registryLoginServer string = registry.properties.loginServer
-            """)
-        .Lint()
-        .ValidateAndDeployAsync();
+            """);
     }
 }

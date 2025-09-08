@@ -44,7 +44,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             var action = new SqlRuleAction(expression);
 
             var parameters = xElement.Element(XName.Get("Parameters", AdministrationClientConstants.ServiceBusNamespace));
-            if (parameters != null && parameters.HasElements)
+            if (parameters is { HasElements: true })
             {
                 foreach (var param in parameters.Elements(XName.Get("KeyValueOfstringanyType", AdministrationClientConstants.ServiceBusNamespace)))
                 {

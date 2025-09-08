@@ -7,9 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Globalization;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -28,6 +30,8 @@ namespace Azure.Identity
         internal const string Troubleshoot = "Please visit https://aka.ms/azure-dev for installation instructions and then, once installed, authenticate to your Azure account using 'azd auth login'.";
         internal const string InteractiveLoginRequired = "Azure Developer CLI could not login. Interactive login is required.";
         internal const string AzdCLIInternalError = "AzdCLIInternalError: The command failed with an unexpected error. Here is the traceback:";
+        internal const string ClaimsChallengeLoginFormat = "Azure Developer CLI authentication requires multi-factor authentication or additional claims. Please run '{0}' to re-authenticate with the required claims. After completing login, retry the operation.";
+        internal const string AzdUnknownClaimsFlagError = "Azure Developer CLI authentication requires multi-factor authentication or additional claims. However, claims challenges are not supported by the installed Azure Developer CLI version. Please update to version 1.18.1 or later.";
         internal TimeSpan ProcessTimeout { get; private set; }
 
         private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
@@ -123,7 +127,7 @@ namespace Azure.Identity
                 ScopeUtilities.ValidateScope(scope);
             }
 
-            GetFileNameAndArguments(context.Scopes, tenantId, out string fileName, out string argument);
+            GetFileNameAndArguments(context.Scopes, tenantId, context.Claims, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureDeveloperCliProcessStartInfo(fileName, argument);
             using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), ProcessTimeout, _logPII, cancellationToken);
 
@@ -145,6 +149,23 @@ namespace Azure.Identity
             }
             catch (InvalidOperationException exception)
             {
+                // If an older azd version doesn't recognize the --claims flag, surface explicit guidance to update.
+                if (!string.IsNullOrWhiteSpace(context.Claims) && exception.Message.IndexOf("unknown flag: --claims", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    throw new AuthenticationFailedException(AzdUnknownClaimsFlagError);
+                }
+
+                // If a claims challenge was provided we attempted to invoke 'azd auth token' including the claims so azd can persist them.
+                // Since azd cannot complete the authentication non-interactively it returns an error instructing the user to run 'azd auth login'.
+                // Surface explicit guidance to the caller (never fall through when part of a chain) so they can remediate the challenge.
+                if (!string.IsNullOrWhiteSpace(context.Claims))
+                {
+                    string loginCommand = string.IsNullOrEmpty(tenantId)
+                        ? "azd auth login"
+                        : $"azd auth login --tenant-id {tenantId}";
+                    throw new AuthenticationFailedException(string.Format(CultureInfo.InvariantCulture, ClaimsChallengeLoginFormat, loginCommand));
+                }
+
                 bool isWinError = exception.Message.StartsWith(WinAzdCliError, StringComparison.CurrentCultureIgnoreCase);
 
                 bool isOtherOsError = AzdNotFoundPattern.IsMatch(exception.Message);
@@ -202,13 +223,29 @@ namespace Azure.Identity
                 WorkingDirectory = DefaultWorkingDir
             };
 
-        private static void GetFileNameAndArguments(string[] scopes, string tenantId, out string fileName, out string argument)
+        private static void GetFileNameAndArguments(string[] scopes, string tenantId, string claims, out string fileName, out string argument)
         {
             string scopeArgs = string.Join(" ", scopes.Select(scope => $"--scope {scope}"));
+            // azd expects the value passed to --claims to be base64 encoded. TokenRequestContext.Claims is a JSON string
+            // so we encode it here (the auth policy will decode it later).
+            string claimsArg = string.Empty;
+            if (!string.IsNullOrWhiteSpace(claims))
+            {
+                try
+                {
+                    string encodedClaims = Convert.ToBase64String(Encoding.UTF8.GetBytes(claims));
+                    claimsArg = $" --claims {encodedClaims}";
+                }
+                catch (Exception)
+                {
+                    // If encoding fails, fall back to omitting claims to mirror the prior behavior of not throwing for formatting issues here.
+                    claimsArg = string.Empty;
+                }
+            }
             string command = tenantId switch
             {
-                null => $"azd auth token --output json --no-prompt {scopeArgs}",
-                _ => $"azd auth token --output json --no-prompt {scopeArgs} --tenant-id {tenantId}"
+                null => $"azd auth token --output json --no-prompt {scopeArgs}{claimsArg}",
+                _ => $"azd auth token --output json --no-prompt {scopeArgs} --tenant-id {tenantId}{claimsArg}"
             };
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))

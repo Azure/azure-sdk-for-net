@@ -60,6 +60,7 @@ namespace Azure.Search.Documents.Models
             }
             int id = default;
             string type = "Unknown";
+            int? elapsedMs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -74,13 +75,22 @@ namespace Azure.Search.Documents.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("elapsedMs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    elapsedMs = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownKnowledgeAgentActivityRecord(id, type, serializedAdditionalRawData);
+            return new UnknownKnowledgeAgentActivityRecord(id, type, elapsedMs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KnowledgeAgentActivityRecord>.Write(ModelReaderWriterOptions options)

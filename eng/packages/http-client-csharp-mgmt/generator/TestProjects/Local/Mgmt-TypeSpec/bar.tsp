@@ -48,6 +48,8 @@ model BarSettingsResource is ProxyResource<BarSettingsProperties> {
   ...ResourceNameParameter<BarSettingsResource, SegmentName = "settings">;
 
   stringArray?: string[];
+  property: BarQuotaProperties;
+  anotherProperty: BarQuotaProperties;
 }
 
 @parentResource(Bar)
@@ -57,7 +59,7 @@ model BarQuotaResource is ProxyResource<BarQuotaProperties> {
 
 model BarQuotaProperties {
   /** enabled */
-  left: int16;
+  left: int32;
 }
 
 model BarSettingsProperties {

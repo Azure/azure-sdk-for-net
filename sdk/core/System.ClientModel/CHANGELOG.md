@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `ClientConnection` constructor, accepting credentials and metadata.
+
 ### Breaking Changes
 
 ### Bugs Fixed

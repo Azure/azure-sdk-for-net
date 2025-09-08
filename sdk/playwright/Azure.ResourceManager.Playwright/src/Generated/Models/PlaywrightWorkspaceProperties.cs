@@ -52,26 +52,30 @@ namespace Azure.ResourceManager.Playwright.Models
 
         /// <summary> Initializes a new instance of <see cref="PlaywrightWorkspaceProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last resource operation. </param>
-        /// <param name="dataplaneUri"> The workspace data plane URI. </param>
-        /// <param name="regionalAffinity"> This property sets the connection region for client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created. </param>
-        /// <param name="localAuth"> When enabled, this feature allows the workspace to use local auth (through service access token) for executing operations. </param>
+        /// <param name="dataplaneUri"> The workspace data plane service API URI. </param>
+        /// <param name="regionalAffinity"> Controls the connection region for client workers to cloud-hosted browsers. When enabled, workers connect to browsers in the closest Azure region for lower latency. When disabled, workers connect to browsers in the Azure region where the workspace was created. </param>
+        /// <param name="localAuth"> Enables the workspace to use local authentication through service access tokens for operations. </param>
+        /// <param name="workspaceId"> The workspace ID in GUID format. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState, Uri dataplaneUri, PlaywrightEnablementStatus? regionalAffinity, PlaywrightEnablementStatus? localAuth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState, Uri dataplaneUri, PlaywrightEnablementStatus? regionalAffinity, PlaywrightEnablementStatus? localAuth, string workspaceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             DataplaneUri = dataplaneUri;
             RegionalAffinity = regionalAffinity;
             LocalAuth = localAuth;
+            WorkspaceId = workspaceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the last resource operation. </summary>
         public PlaywrightProvisioningState? ProvisioningState { get; }
-        /// <summary> The workspace data plane URI. </summary>
+        /// <summary> The workspace data plane service API URI. </summary>
         public Uri DataplaneUri { get; }
-        /// <summary> This property sets the connection region for client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created. </summary>
+        /// <summary> Controls the connection region for client workers to cloud-hosted browsers. When enabled, workers connect to browsers in the closest Azure region for lower latency. When disabled, workers connect to browsers in the Azure region where the workspace was created. </summary>
         public PlaywrightEnablementStatus? RegionalAffinity { get; set; }
-        /// <summary> When enabled, this feature allows the workspace to use local auth (through service access token) for executing operations. </summary>
+        /// <summary> Enables the workspace to use local authentication through service access tokens for operations. </summary>
         public PlaywrightEnablementStatus? LocalAuth { get; set; }
+        /// <summary> The workspace ID in GUID format. </summary>
+        public string WorkspaceId { get; }
     }
 }

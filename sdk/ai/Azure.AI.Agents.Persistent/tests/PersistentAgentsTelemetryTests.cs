@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -15,9 +14,9 @@ using OpenTelemetry.Trace;
 using OpenTelemetry;
 using Azure.AI.Agents.Persistent.Tests.Utilities;
 using System.Text.Json;
-using System.ClientModel;
 using System.Reflection;
 using Azure.Identity;
+using System.Diagnostics;
 
 namespace Azure.AI.Agents.Persistent.Tests;
 
@@ -102,6 +101,22 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         }
         Assert.IsNotNull(admClient);
         return new PersistentAgentsClient(admClient);
+    }
+
+    private async Task<ThreadRun> WaitForRun(PersistentAgentsClient client, ThreadRun run)
+    {
+        double delay = 500;
+        do
+        {
+            if (Mode != RecordedTestMode.Playback)
+                await Task.Delay(TimeSpan.FromMilliseconds(delay));
+            run = await client.Runs.GetRunAsync(run.ThreadId, run.Id);
+        }
+        while (run.Status == RunStatus.Queued
+            || run.Status == RunStatus.InProgress
+            || run.Status == RunStatus.RequiresAction);
+        Assert.AreEqual(RunStatus.Completed, run.Status, message: run.LastError?.Message?.ToString());
+        return run;
     }
 
     private string GetModelDeploymentName()
@@ -543,7 +558,10 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
 
         while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress || run.Status == RunStatus.RequiresAction)
         {
-            await Task.Delay(1000);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(1000);
+            }
             run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 
             if (run.Status == RunStatus.RequiresAction && run.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
@@ -561,6 +579,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
                 run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs);
             }
         }
+        Assert.AreEqual(RunStatus.Completed, run.Status, run.LastError?.Message);
 
         // Enumerate messages and run steps to trigger spans
         await foreach (var messageInList in client.Messages.GetMessagesAsync(thread.Id))
@@ -749,6 +768,435 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             })
         };
         Assert.IsTrue(_traceVerifier.CheckSpanEvents(listRunStepsSpan, expectedListRunStepsEvents));
+    }
+
+    [RecordedTest]
+    public async Task TestBingCustomSearchTracingContentRecordingEnabled()
+    {
+        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        Type type = typeof(Azure.AI.Agents.Persistent.Telemetry.OpenTelemetryScope);
+        MethodInfo methodInfo = type.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
+        methodInfo?.Invoke(null, null);
+
+        PersistentAgentsClient client = GetClient();
+        var modelDeploymentName = GetModelDeploymentName();
+
+        string system_prompt = "You are helpful agent.";
+        string prompt = "How many medals did the USA win in the 2024 summer olympics?";
+        string agentName = "SDK Test Agent - DeepResearch";
+        // Create agent with toolset
+        PersistentAgent agent = await client.Administration.CreateAgentAsync(
+            model: modelDeploymentName,
+            name: agentName,
+            instructions: system_prompt,
+            tools: [
+                new BingCustomSearchToolDefinition(
+                    new BingCustomSearchToolParameters(
+                        connectionId: TestEnvironment.BING_CUSTOM_CONNECTION_ID,
+                        instanceName: TestEnvironment.BING_CONFIGURATION_NAME
+                    )
+                )
+            ]);
+
+        PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+
+        PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
+            thread.Id,
+            MessageRole.User,
+            prompt);
+
+        ThreadRun run = await client.Runs.CreateRunAsync(
+            thread.Id,
+            agent.Id,
+            additionalInstructions: "Please address the user as J. Doe. The user has a premium account.");
+        run = await WaitForRun(client, run);
+
+        // Enumerate messages and run steps to trigger spans
+        await foreach (PersistentThreadMessage messageInList in client.Messages.GetMessagesAsync(thread.Id))
+        {
+            _ = messageInList;
+        }
+
+        await foreach (RunStep step in client.Runs.GetRunStepsAsync(thread.Id, run.Id))
+        {
+            _ = step;
+        }
+
+        await client.Administration.DeleteAgentAsync(agent.Id);
+
+        // Force flush spans
+        _exporter.ForceFlush();
+
+        // Verify create_agent span
+        var createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "create_agent SDK Test Agent - DeepResearch");
+        Assert.IsNotNull(createAgentSpan);
+        var expectedCreateAgentAttributes = new Dictionary<string, object>
+        {
+            { "gen_ai.system", "az.ai.agents" },
+            { "gen_ai.operation.name", "create_agent" },
+            { "server.address", "*" },
+            { "az.namespace", "Microsoft.CognitiveServices" },
+            { "gen_ai.request.model", modelDeploymentName },
+            { "gen_ai.agent.name", agentName },
+            { "gen_ai.agent.id", "*" }
+        };
+        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(createAgentSpan, expectedCreateAgentAttributes));
+
+        var expectedCreateAgentEvents = new List<(string, Dictionary<string, object>)>
+        {
+            ("gen_ai.system.message", new Dictionary<string, object>
+            {
+                { "gen_ai.system", "az.ai.agents" },
+                { "gen_ai.event.content", $"{{\"content\": \"{system_prompt}\"}}" }
+            })
+        };
+        Assert.IsTrue(_traceVerifier.CheckSpanEvents(createAgentSpan, expectedCreateAgentEvents));
+
+        // Verify create_message span
+        var createMessageSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "create_message");
+        Assert.IsNotNull(createMessageSpan);
+        var expectedCreateMessageAttributes = new Dictionary<string, object>
+        {
+            { "gen_ai.system", "az.ai.agents" },
+            { "gen_ai.operation.name", "create_message" },
+            { "gen_ai.thread.id", "*" },
+            { "gen_ai.message.id", "*" }
+        };
+        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(createMessageSpan, expectedCreateMessageAttributes));
+
+        var expectedCreateMessageEvents = new List<(string, Dictionary<string, object>)>
+        {
+            ("gen_ai.user.message", new Dictionary<string, object>
+            {
+                { "gen_ai.system", "az.ai.agents" },
+                { "gen_ai.thread.id", "*" },
+                { "gen_ai.event.content", $"{{\"content\":\"{prompt}\",\"role\":\"user\"}}" }
+            })
+        };
+
+        Assert.IsTrue(_traceVerifier.CheckSpanEvents(createMessageSpan, expectedCreateMessageEvents));
+
+        // Verify get_thread_run span
+        var getThreadRunSpan = _exporter.GetExportedActivities().LastOrDefault(s => s.DisplayName == "get_thread_run");
+        Assert.IsNotNull(getThreadRunSpan);
+        var expectedGetThreadRunAttributes = new Dictionary<string, object>
+        {
+            { "gen_ai.system", "az.ai.agents" },
+            { "gen_ai.operation.name", "get_thread_run" },
+            { "server.address", "*" },
+            { "az.namespace", "Microsoft.CognitiveServices" },
+            { "gen_ai.thread.run.id", "*" },
+            { "gen_ai.thread.id", "*" },
+            { "gen_ai.response.model", modelDeploymentName },
+            { "gen_ai.usage.input_tokens", "+" },
+            { "gen_ai.usage.output_tokens", "+" },
+            { "gen_ai.agent.id", "*" },
+            { "gen_ai.thread.run.status", "completed" }
+        };
+        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(getThreadRunSpan, expectedGetThreadRunAttributes));
+
+        // Verify list_messages span explicitly
+        var listMessagesSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "list_messages");
+        Assert.IsNotNull(listMessagesSpan);
+
+        var expectedListMessagesAttributes = new Dictionary<string, object>
+        {
+            { "gen_ai.system", "az.ai.agents" },
+            { "gen_ai.operation.name", "list_messages" },
+            { "server.address", "*" },
+            { "az.namespace", "Microsoft.CognitiveServices" },
+            { "gen_ai.thread.id", "*" }
+        };
+        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(listMessagesSpan, expectedListMessagesAttributes));
+
+        var expectedListMessagesEvents = new List<(string, Dictionary<string, object>)>
+        {
+            ("gen_ai.user.message", new Dictionary<string, object>
+            {
+                { "gen_ai.system", "az.ai.agents" },
+                { "gen_ai.thread.id", "*" },
+                { "gen_ai.message.id", "*" },
+                { "gen_ai.event.content", $"{{\"content\":{{\"text\":{{\"value\":\"{prompt}\"}}}},\"role\":\"user\"}}" }
+            }),
+            ("gen_ai.assistant.message", new Dictionary<string, object>
+            {
+                { "gen_ai.system", "az.ai.agents" },
+                { "gen_ai.thread.id", "*" },
+                { "gen_ai.agent.id", "*" },
+                { "gen_ai.thread.run.id", "*" },
+                { "gen_ai.message.id", "*" },
+                { "gen_ai.event.content", "{\"content\":{\"text\":{\"value\":\"*\",\"annotations\":\"*\"}},\"role\":\"assistant\"}" }
+            })
+        };
+        Assert.IsTrue(_traceVerifier.CheckSpanEvents(listMessagesSpan, expectedListMessagesEvents));
+
+        // Verify list_run_steps span
+        var listRunStepsSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "list_run_steps");
+        Assert.IsNotNull(listRunStepsSpan);
+        var expectedListRunStepsAttributes = new Dictionary<string, object>
+        {
+            { "gen_ai.system", "az.ai.agents" },
+            { "gen_ai.operation.name", "list_run_steps" },
+            { "server.address", "*" },
+            { "az.namespace", "Microsoft.CognitiveServices" },
+            { "gen_ai.thread.id", "*" },
+            { "gen_ai.thread.run.id", "*" }
+        };
+        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(listRunStepsSpan, expectedListRunStepsAttributes));
+
+        var expectedListRunStepsEvents = new List<(string, Dictionary<string, object>)>
+        {
+            ("gen_ai.run_step.message_creation", new Dictionary<string, object>
+            {
+                { "gen_ai.system", "az.ai.agents" },
+                { "gen_ai.thread.id", "*" },
+                { "gen_ai.message.id", "*" },
+                { "gen_ai.agent.id", "*" },
+                { "gen_ai.thread.run.id", "*" },
+                { "gen_ai.run_step.status", "completed" },
+                { "gen_ai.run_step.start.timestamp", "+" },
+                { "gen_ai.run_step.end.timestamp", "+" },
+                { "gen_ai.usage.input_tokens", "+" },
+                { "gen_ai.usage.output_tokens", "+" }
+            }),
+            ("gen_ai.run_step.tool_calls", new Dictionary<string, object>
+            {
+                { "gen_ai.system", "az.ai.agents" },
+                { "gen_ai.thread.id", "*" },
+                { "gen_ai.agent.id", "*" },
+                { "gen_ai.thread.run.id", "*" },
+                { "gen_ai.run_step.status", "completed" },
+                { "gen_ai.run_step.start.timestamp", "+" },
+                { "gen_ai.run_step.end.timestamp", "+" },
+                { "gen_ai.usage.input_tokens", "+" },
+                { "gen_ai.usage.output_tokens", "+" },
+                { "gen_ai.event.content", "{\"tool_calls\":[{\"id\":\"*\",\"type\":\"bing_custom_search\",\"details\":{\"requesturl\":\"*\",\"response_metadata\":\"*\"}}]}"}
+            })
+        };
+        Assert.IsTrue(_traceVerifier.CheckSpanEvents(listRunStepsSpan, expectedListRunStepsEvents));
+    }
+
+    [RecordedTest]
+    public async Task TestDeepResearchToolTracingContentRecordingEnabled()
+    {
+        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        var type = typeof(Azure.AI.Agents.Persistent.Telemetry.OpenTelemetryScope);
+        var methodInfo = type.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
+        methodInfo?.Invoke(null, null);
+
+        var client = GetClient();
+        var modelDeploymentName = GetModelDeploymentName();
+
+        string system_prompt = "You are a helpful agent that assists in researching scientific topics.";
+        string prompt = "Research the current state of studies on orca intelligence and orca language, " +
+            "including what is currently known about orcas cognitive capabilities, " +
+            "communication systems and problem-solving reflected in recent publications in top their scientific " +
+            "journals like Science, Nature and PNAS.";
+        // Create agent with toolset
+        PersistentAgent agent = await client.Administration.CreateAgentAsync(
+            model: modelDeploymentName,
+            name: "SDK Test Agent - DeepResearch",
+            instructions: system_prompt,
+            tools: [
+                new DeepResearchToolDefinition(
+                    new DeepResearchDetails(
+                        model: TestEnvironment.DEEP_RESEARCH_MODEL_DEPLOYMENT_NAME,
+                        bingGroundingConnections: [new DeepResearchBingGroundingConnection(TestEnvironment.BING_CONNECTION_ID)]
+                    )
+                )
+            ]);
+
+        PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+
+        PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
+            thread.Id,
+            MessageRole.User,
+            prompt);
+
+        ThreadRun run = await client.Runs.CreateRunAsync(
+            thread.Id,
+            agent.Id,
+            additionalInstructions: "Please address the user as J. Doe. The user has a premium account.");
+        run = await WaitForRun(client, run);
+
+        // Enumerate messages and run steps to trigger spans
+        await foreach (var messageInList in client.Messages.GetMessagesAsync(thread.Id))
+        {
+            _ = messageInList;
+        }
+
+        await foreach (var step in client.Runs.GetRunStepsAsync(thread.Id, run.Id))
+        {
+            _ = step;
+        }
+
+        await client.Administration.DeleteAgentAsync(agent.Id);
+
+        // Force flush spans
+        _exporter.ForceFlush();
+
+        // Verify create_agent span
+        var createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "create_agent SDK Test Agent - DeepResearch");
+        Assert.IsNotNull(createAgentSpan);
+        var expectedCreateAgentAttributes = new Dictionary<string, object>
+        {
+            { "gen_ai.system", "az.ai.agents" },
+            { "gen_ai.operation.name", "create_agent" },
+            { "server.address", "*" },
+            { "az.namespace", "Microsoft.CognitiveServices" },
+            { "gen_ai.request.model", modelDeploymentName },
+            { "gen_ai.agent.name", "SDK Test Agent - DeepResearch" },
+            { "gen_ai.agent.id", "*" }
+        };
+        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(createAgentSpan, expectedCreateAgentAttributes));
+
+        var expectedCreateAgentEvents = new List<(string, Dictionary<string, object>)>
+        {
+            ("gen_ai.system.message", new Dictionary<string, object>
+            {
+                { "gen_ai.system", "az.ai.agents" },
+                { "gen_ai.event.content", $"{{\"content\": \"{system_prompt}\"}}" }
+            })
+        };
+        Assert.IsTrue(_traceVerifier.CheckSpanEvents(createAgentSpan, expectedCreateAgentEvents));
+
+        // Verify create_message span
+        var createMessageSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "create_message");
+        Assert.IsNotNull(createMessageSpan);
+        var expectedCreateMessageAttributes = new Dictionary<string, object>
+        {
+            { "gen_ai.system", "az.ai.agents" },
+            { "gen_ai.operation.name", "create_message" },
+            { "gen_ai.thread.id", "*" },
+            { "gen_ai.message.id", "*" }
+        };
+        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(createMessageSpan, expectedCreateMessageAttributes));
+
+        var expectedCreateMessageEvents = new List<(string, Dictionary<string, object>)>
+        {
+            ("gen_ai.user.message", new Dictionary<string, object>
+            {
+                { "gen_ai.system", "az.ai.agents" },
+                { "gen_ai.thread.id", "*" },
+                { "gen_ai.event.content", $"{{\"content\":\"{prompt}\",\"role\":\"user\"}}" }
+            })
+        };
+
+        Assert.IsTrue(_traceVerifier.CheckSpanEvents(createMessageSpan, expectedCreateMessageEvents));
+
+        // Verify get_thread_run span
+        var getThreadRunSpan = _exporter.GetExportedActivities().LastOrDefault(s => s.DisplayName == "get_thread_run");
+        Assert.IsNotNull(getThreadRunSpan);
+        var expectedGetThreadRunAttributes = new Dictionary<string, object>
+        {
+            { "gen_ai.system", "az.ai.agents" },
+            { "gen_ai.operation.name", "get_thread_run" },
+            { "server.address", "*" },
+            { "az.namespace", "Microsoft.CognitiveServices" },
+            { "gen_ai.thread.run.id", "*" },
+            { "gen_ai.thread.id", "*" },
+            { "gen_ai.response.model", modelDeploymentName },
+            { "gen_ai.usage.input_tokens", "+" },
+            { "gen_ai.usage.output_tokens", "+" },
+            { "gen_ai.agent.id", "*" },
+            { "gen_ai.thread.run.status", "completed" }
+        };
+        Assert.IsTrue(_traceVerifier.CheckSpanAttributes(getThreadRunSpan, expectedGetThreadRunAttributes));
+
+        // Verify list_messages span explicitly
+        //var listMessagesSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "list_messages");
+        IEnumerable<Activity> spans = _exporter.GetExportedActivities().Where(s => s.DisplayName == "list_messages");
+        Assert.Greater(spans.Count(), 0);
+
+        List<ActivityEvent> events = [];
+        var expectedListMessagesAttributes = new Dictionary<string, object>
+        {
+            { "gen_ai.system", "az.ai.agents" },
+            { "gen_ai.operation.name", "list_messages" },
+            { "server.address", "*" },
+            { "az.namespace", "Microsoft.CognitiveServices" },
+            { "gen_ai.thread.id", "*" }
+        };
+        foreach (Activity listMessagesSpan in spans)
+        {
+            Assert.IsTrue(_traceVerifier.CheckSpanAttributes(listMessagesSpan, expectedListMessagesAttributes));
+            events.AddRange(listMessagesSpan.Events);
+        }
+
+        var expectedListMessagesEvents = new List<(string, Dictionary<string, object>)>
+        {
+            ("gen_ai.user.message", new Dictionary<string, object>
+            {
+                { "gen_ai.system", "az.ai.agents" },
+                { "gen_ai.thread.id", "*" },
+                { "gen_ai.message.id", "*" },
+                { "gen_ai.event.content", $"{{\"content\":{{\"text\":{{\"value\":\"{prompt}\"}}}},\"role\":\"user\"}}" }
+            }),
+            ("gen_ai.assistant.message", new Dictionary<string, object>
+            {
+                { "gen_ai.system", "az.ai.agents" },
+                { "gen_ai.thread.id", "*" },
+                { "gen_ai.agent.id", "*" },
+                { "gen_ai.thread.run.id", "*" },
+                { "gen_ai.message.id", "*" },
+                { "gen_ai.event.content", "{\"content\":{\"text\":{\"value\":\"*\",\"annotations\":\"*\"}},\"role\":\"assistant\"}" }
+            })
+        };
+        Assert.IsTrue(_traceVerifier.CheckSpanEvents(events, expectedListMessagesEvents, allowAdditionalEvents: true));
+
+        // Verify list_run_steps span
+        events = [];
+        var expectedListRunStepsAttributes = new Dictionary<string, object>
+        {
+            { "gen_ai.system", "az.ai.agents" },
+            { "gen_ai.operation.name", "list_run_steps" },
+            { "server.address", "*" },
+            { "az.namespace", "Microsoft.CognitiveServices" },
+            { "gen_ai.thread.id", "*" },
+            { "gen_ai.thread.run.id", "*" }
+        };
+        spans = _exporter.GetExportedActivities().Where(s => s.DisplayName == "list_run_steps");
+        Assert.Greater(spans.Count(), 0);
+        List<ActivityEvent> runStepsSpanEvents = [];
+        foreach (Activity listRunStepsSpan in spans)
+        {
+            runStepsSpanEvents.AddRange(listRunStepsSpan.Events);
+            Assert.IsTrue(_traceVerifier.CheckSpanAttributes(listRunStepsSpan, expectedListRunStepsAttributes));
+        }
+
+        Assert.Greater(runStepsSpanEvents.Count(), 5, "Deep research typically have more than 5 steps.");
+        List<(string, Dictionary<string, object>)> expectedListRunStepsEvents =
+        [
+            ("gen_ai.run_step.message_creation", new Dictionary<string, object>
+                {
+                    { "gen_ai.system", "az.ai.agents" },
+                    { "gen_ai.thread.id", "*" },
+                    { "gen_ai.message.id", "*" },
+                    { "gen_ai.agent.id", "*" },
+                    { "gen_ai.thread.run.id", "*" },
+                    { "gen_ai.run_step.status", "completed" },
+                    { "gen_ai.run_step.start.timestamp", "*" },
+                    { "gen_ai.run_step.end.timestamp", "*" },
+                    { "gen_ai.usage.input_tokens", "0" },
+                    { "gen_ai.usage.output_tokens", "0" }
+                }
+            ),
+            ("gen_ai.run_step.tool_calls", new Dictionary<string, object>
+                {
+                    { "gen_ai.system", "az.ai.agents" },
+                    { "gen_ai.thread.id", "*" },
+                    { "gen_ai.agent.id", "*" },
+                    { "gen_ai.thread.run.id", "*" },
+                    { "gen_ai.run_step.status", "completed" },
+                    { "gen_ai.run_step.start.timestamp", "*" },
+                    { "gen_ai.run_step.end.timestamp", "*" },
+                    { "gen_ai.usage.input_tokens", "+" },
+                    { "gen_ai.usage.output_tokens", "+" },
+                    { "gen_ai.event.content", "{\"tool_calls\":[{\"id\":\"*\",\"type\":\"deep_research\",\"details\":{\"input\":\"*\"}}]}"}
+                }
+            )
+        ];
+        Assert.IsTrue(_traceVerifier.CheckSpanEvents(runStepsSpanEvents, expectedListRunStepsEvents, allowAdditionalEvents: true));
     }
 
     [RecordedTest]

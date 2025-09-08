@@ -358,8 +358,15 @@ try {
     # Make sure the provisioner OID is set so we can pass it through to the deployment.
     if (!$ProvisionerApplicationId -and !$ProvisionerApplicationOid) {
         if ($context.Account.Type -eq 'User') {
-            # HomeAccountId format is '<object id>.<tenant id>'
-            $userAccountId = (Get-AzContext).Account.ExtendedProperties.HomeAccountId.Split('.')[0]
+            # Calls to graph API in corp tenant get blocked by conditional access policy now
+            # but not in TME. For corp tenant we get the user's id from the login context
+            # but for TME it is different so we have to source it from graph
+            $userAccountId = if ($wellKnownTMETenants.Contains($TenantId)) {
+                (Get-AzADUser -SignedIn).Id
+            } else {
+                # HomeAccountId format is '<object id>.<tenant id>'
+                (Get-AzContext).Account.ExtendedProperties.HomeAccountId.Split('.')[0]
+            }
             if ($null -eq $userAccountId) {
                 throw "Failed to find entra object ID for the current user"
             }
@@ -430,12 +437,20 @@ try {
 
     if (!$CI -and !$ServicePrincipalAuth) {
         if ($TestApplicationId) {
-            Write-Warning "The specified TestApplicationId '$TestApplicationId' will be ignored when -ServicePrincipalAutth is not set."
+            Write-Warning "The specified TestApplicationId '$TestApplicationId' will be ignored when -ServicePrincipalAuth is not set."
         }
 
         $userAccountName = (Get-AzContext).Account.Id
         # HomeAccountId format is '<object id>.<tenant id>'
-        $userAccountId = (Get-AzContext).Account.ExtendedProperties.HomeAccountId.Split('.')[0]
+        # Calls to graph API in corp tenant get blocked by conditional access policy now
+        # but not in TME. For corp tenant we get the user's id from the login context
+        # but for TME it is different so we have to source it from graph
+        $userAccountId = if ($wellKnownTMETenants.Contains($TenantId)) {
+            (Get-AzADUser -SignedIn).Id
+        } else {
+            # HomeAccountId format is '<object id>.<tenant id>'
+            (Get-AzContext).Account.ExtendedProperties.HomeAccountId.Split('.')[0]
+        }
         if ($null -eq $userAccountId) {
             throw "Failed to find entra object ID for the current user"
         }
