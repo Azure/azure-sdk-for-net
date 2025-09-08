@@ -37,11 +37,6 @@ namespace Azure.ResourceManager.ServiceBus
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -92,7 +87,6 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -106,15 +100,6 @@ namespace Azure.ResourceManager.ServiceBus
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -200,7 +185,6 @@ namespace Azure.ResourceManager.ServiceBus
                 targetNamespace,
                 postMigrationName,
                 migrationState,
-                location,
                 serializedAdditionalRawData);
         }
 
@@ -235,21 +219,6 @@ namespace Azure.ResourceManager.ServiceBus
                     {
                         builder.AppendLine($"'{Name}'");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Location))
-                {
-                    builder.Append("  location: ");
-                    builder.AppendLine($"'{Location.Value.ToString()}'");
                 }
             }
 

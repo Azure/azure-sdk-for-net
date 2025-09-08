@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceBus.Samples
 {
-    public partial class Sample_MigrationConfigurationCollection
+    public partial class Sample_MigrationConfigPropertyCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,30 +28,30 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceBusNamespaceResource created on azure
-            // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
+            // this example assumes you already have this SBNamespaceResource created on azure
+            // for more information of creating SBNamespaceResource, please refer to the document of SBNamespaceResource
             string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-41";
-            ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
+            ResourceIdentifier sbNamespaceResourceId = SBNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            SBNamespaceResource sbNamespace = client.GetSBNamespaceResource(sbNamespaceResourceId);
 
-            // get the collection of this MigrationConfigurationResource
-            MigrationConfigurationCollection collection = serviceBusNamespace.GetMigrationConfigurations();
+            // get the collection of this MigrationConfigPropertyResource
+            MigrationConfigPropertyCollection collection = sbNamespace.GetMigrationConfigProperties();
 
             // invoke the operation
             MigrationConfigurationName configName = MigrationConfigurationName.Default;
-            MigrationConfigurationData data = new MigrationConfigurationData
+            MigrationConfigPropertyData data = new MigrationConfigPropertyData
             {
-                TargetServiceBusNamespace = new ResourceIdentifier("/subscriptions/5f750a97-50d9-4e36-8081-c9ee4c0210d4/resourceGroups/ResourceGroup/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-4028"),
+                TargetNamespace = "/subscriptions/5f750a97-50d9-4e36-8081-c9ee4c0210d4/resourceGroups/ResourceGroup/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-4028",
                 PostMigrationName = "sdk-PostMigration-5919",
             };
-            ArmOperation<MigrationConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configName, data);
-            MigrationConfigurationResource result = lro.Value;
+            ArmOperation<MigrationConfigPropertyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configName, data);
+            MigrationConfigPropertyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MigrationConfigurationData resourceData = result.Data;
+            MigrationConfigPropertyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -68,24 +68,24 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceBusNamespaceResource created on azure
-            // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
+            // this example assumes you already have this SBNamespaceResource created on azure
+            // for more information of creating SBNamespaceResource, please refer to the document of SBNamespaceResource
             string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-41";
-            ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
+            ResourceIdentifier sbNamespaceResourceId = SBNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            SBNamespaceResource sbNamespace = client.GetSBNamespaceResource(sbNamespaceResourceId);
 
-            // get the collection of this MigrationConfigurationResource
-            MigrationConfigurationCollection collection = serviceBusNamespace.GetMigrationConfigurations();
+            // get the collection of this MigrationConfigPropertyResource
+            MigrationConfigPropertyCollection collection = sbNamespace.GetMigrationConfigProperties();
 
             // invoke the operation
             MigrationConfigurationName configName = MigrationConfigurationName.Default;
-            MigrationConfigurationResource result = await collection.GetAsync(configName);
+            MigrationConfigPropertyResource result = await collection.GetAsync(configName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MigrationConfigurationData resourceData = result.Data;
+            MigrationConfigPropertyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -102,23 +102,23 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceBusNamespaceResource created on azure
-            // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
+            // this example assumes you already have this SBNamespaceResource created on azure
+            // for more information of creating SBNamespaceResource, please refer to the document of SBNamespaceResource
             string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-9259";
-            ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
+            ResourceIdentifier sbNamespaceResourceId = SBNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            SBNamespaceResource sbNamespace = client.GetSBNamespaceResource(sbNamespaceResourceId);
 
-            // get the collection of this MigrationConfigurationResource
-            MigrationConfigurationCollection collection = serviceBusNamespace.GetMigrationConfigurations();
+            // get the collection of this MigrationConfigPropertyResource
+            MigrationConfigPropertyCollection collection = sbNamespace.GetMigrationConfigProperties();
 
             // invoke the operation and iterate over the result
-            await foreach (MigrationConfigurationResource item in collection.GetAllAsync())
+            await foreach (MigrationConfigPropertyResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MigrationConfigurationData resourceData = item.Data;
+                MigrationConfigPropertyData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -138,16 +138,16 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceBusNamespaceResource created on azure
-            // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
+            // this example assumes you already have this SBNamespaceResource created on azure
+            // for more information of creating SBNamespaceResource, please refer to the document of SBNamespaceResource
             string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-41";
-            ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
+            ResourceIdentifier sbNamespaceResourceId = SBNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            SBNamespaceResource sbNamespace = client.GetSBNamespaceResource(sbNamespaceResourceId);
 
-            // get the collection of this MigrationConfigurationResource
-            MigrationConfigurationCollection collection = serviceBusNamespace.GetMigrationConfigurations();
+            // get the collection of this MigrationConfigPropertyResource
+            MigrationConfigPropertyCollection collection = sbNamespace.GetMigrationConfigProperties();
 
             // invoke the operation
             MigrationConfigurationName configName = MigrationConfigurationName.Default;
@@ -168,21 +168,21 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceBusNamespaceResource created on azure
-            // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
+            // this example assumes you already have this SBNamespaceResource created on azure
+            // for more information of creating SBNamespaceResource, please refer to the document of SBNamespaceResource
             string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-41";
-            ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
+            ResourceIdentifier sbNamespaceResourceId = SBNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            SBNamespaceResource sbNamespace = client.GetSBNamespaceResource(sbNamespaceResourceId);
 
-            // get the collection of this MigrationConfigurationResource
-            MigrationConfigurationCollection collection = serviceBusNamespace.GetMigrationConfigurations();
+            // get the collection of this MigrationConfigPropertyResource
+            MigrationConfigPropertyCollection collection = sbNamespace.GetMigrationConfigProperties();
 
             // invoke the operation
             MigrationConfigurationName configName = MigrationConfigurationName.Default;
-            NullableResponse<MigrationConfigurationResource> response = await collection.GetIfExistsAsync(configName);
-            MigrationConfigurationResource result = response.HasValue ? response.Value : null;
+            NullableResponse<MigrationConfigPropertyResource> response = await collection.GetIfExistsAsync(configName);
+            MigrationConfigPropertyResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MigrationConfigurationData resourceData = result.Data;
+                MigrationConfigPropertyData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

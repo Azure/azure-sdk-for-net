@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceBus.Samples
 {
-    public partial class Sample_ServiceBusNetworkRuleSetResource
+    public partial class Sample_NetworkRuleSetResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,20 +28,20 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceBusNetworkRuleSetResource created on azure
-            // for more information of creating ServiceBusNetworkRuleSetResource, please refer to the document of ServiceBusNetworkRuleSetResource
+            // this example assumes you already have this NetworkRuleSetResource created on azure
+            // for more information of creating NetworkRuleSetResource, please refer to the document of NetworkRuleSetResource
             string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-6019";
-            ResourceIdentifier serviceBusNetworkRuleSetResourceId = ServiceBusNetworkRuleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            ServiceBusNetworkRuleSetResource serviceBusNetworkRuleSet = client.GetServiceBusNetworkRuleSetResource(serviceBusNetworkRuleSetResourceId);
+            ResourceIdentifier networkRuleSetResourceId = NetworkRuleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            NetworkRuleSetResource networkRuleSet = client.GetNetworkRuleSetResource(networkRuleSetResourceId);
 
             // invoke the operation
-            ServiceBusNetworkRuleSetResource result = await serviceBusNetworkRuleSet.GetAsync();
+            NetworkRuleSetResource result = await networkRuleSet.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServiceBusNetworkRuleSetData resourceData = result.Data;
+            NetworkRuleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -58,59 +58,59 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceBusNetworkRuleSetResource created on azure
-            // for more information of creating ServiceBusNetworkRuleSetResource, please refer to the document of ServiceBusNetworkRuleSetResource
+            // this example assumes you already have this NetworkRuleSetResource created on azure
+            // for more information of creating NetworkRuleSetResource, please refer to the document of NetworkRuleSetResource
             string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-6019";
-            ResourceIdentifier serviceBusNetworkRuleSetResourceId = ServiceBusNetworkRuleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            ServiceBusNetworkRuleSetResource serviceBusNetworkRuleSet = client.GetServiceBusNetworkRuleSetResource(serviceBusNetworkRuleSetResourceId);
+            ResourceIdentifier networkRuleSetResourceId = NetworkRuleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            NetworkRuleSetResource networkRuleSet = client.GetNetworkRuleSetResource(networkRuleSetResourceId);
 
             // invoke the operation
-            ServiceBusNetworkRuleSetData data = new ServiceBusNetworkRuleSetData
+            NetworkRuleSetData data = new NetworkRuleSetData
             {
-                DefaultAction = ServiceBusNetworkRuleSetDefaultAction.Deny,
-                VirtualNetworkRules = {new ServiceBusNetworkRuleSetVirtualNetworkRules
+                DefaultAction = DefaultAction.Deny,
+                VirtualNetworkRules = {new NWRuleSetVirtualNetworkRules
 {
 SubnetId = new ResourceIdentifier("/subscriptions/854d368f-1828-428f-8f3c-f2affa9b2f7d/resourcegroups/alitest/providers/Microsoft.Network/virtualNetworks/myvn/subnets/subnet2"),
 IgnoreMissingVnetServiceEndpoint = true,
-}, new ServiceBusNetworkRuleSetVirtualNetworkRules
+}, new NWRuleSetVirtualNetworkRules
 {
 SubnetId = new ResourceIdentifier("/subscriptions/854d368f-1828-428f-8f3c-f2affa9b2f7d/resourcegroups/alitest/providers/Microsoft.Network/virtualNetworks/myvn/subnets/subnet3"),
 IgnoreMissingVnetServiceEndpoint = false,
-}, new ServiceBusNetworkRuleSetVirtualNetworkRules
+}, new NWRuleSetVirtualNetworkRules
 {
 SubnetId = new ResourceIdentifier("/subscriptions/854d368f-1828-428f-8f3c-f2affa9b2f7d/resourcegroups/alitest/providers/Microsoft.Network/virtualNetworks/myvn/subnets/subnet6"),
 IgnoreMissingVnetServiceEndpoint = false,
 }},
-                IPRules = {new ServiceBusNetworkRuleSetIPRules
+                IPRules = {new NWRuleSetIPRules
 {
 IPMask = "1.1.1.1",
-Action = ServiceBusNetworkRuleIPAction.Allow,
-}, new ServiceBusNetworkRuleSetIPRules
+Action = NetworkRuleIPAction.Allow,
+}, new NWRuleSetIPRules
 {
 IPMask = "1.1.1.2",
-Action = ServiceBusNetworkRuleIPAction.Allow,
-}, new ServiceBusNetworkRuleSetIPRules
+Action = NetworkRuleIPAction.Allow,
+}, new NWRuleSetIPRules
 {
 IPMask = "1.1.1.3",
-Action = ServiceBusNetworkRuleIPAction.Allow,
-}, new ServiceBusNetworkRuleSetIPRules
+Action = NetworkRuleIPAction.Allow,
+}, new NWRuleSetIPRules
 {
 IPMask = "1.1.1.4",
-Action = ServiceBusNetworkRuleIPAction.Allow,
-}, new ServiceBusNetworkRuleSetIPRules
+Action = NetworkRuleIPAction.Allow,
+}, new NWRuleSetIPRules
 {
 IPMask = "1.1.1.5",
-Action = ServiceBusNetworkRuleIPAction.Allow,
+Action = NetworkRuleIPAction.Allow,
 }},
             };
-            ArmOperation<ServiceBusNetworkRuleSetResource> lro = await serviceBusNetworkRuleSet.CreateOrUpdateAsync(WaitUntil.Completed, data);
-            ServiceBusNetworkRuleSetResource result = lro.Value;
+            ArmOperation<NetworkRuleSetResource> lro = await networkRuleSet.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            NetworkRuleSetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServiceBusNetworkRuleSetData resourceData = result.Data;
+            NetworkRuleSetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

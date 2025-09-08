@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceBus.Samples
 {
-    public partial class Sample_ServiceBusNamespaceResource
+    public partial class Sample_SBNamespaceResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,20 +28,20 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceBusNamespaceResource created on azure
-            // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
+            // this example assumes you already have this SBNamespaceResource created on azure
+            // for more information of creating SBNamespaceResource, please refer to the document of SBNamespaceResource
             string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-2924";
-            ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
+            ResourceIdentifier sbNamespaceResourceId = SBNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            SBNamespaceResource sbNamespace = client.GetSBNamespaceResource(sbNamespaceResourceId);
 
             // invoke the operation
-            ServiceBusNamespaceResource result = await serviceBusNamespace.GetAsync();
+            SBNamespaceResource result = await sbNamespace.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServiceBusNamespaceData resourceData = result.Data;
+            SBNamespaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -58,16 +58,16 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceBusNamespaceResource created on azure
-            // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
+            // this example assumes you already have this SBNamespaceResource created on azure
+            // for more information of creating SBNamespaceResource, please refer to the document of SBNamespaceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-3285";
-            ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
+            ResourceIdentifier sbNamespaceResourceId = SBNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            SBNamespaceResource sbNamespace = client.GetSBNamespaceResource(sbNamespaceResourceId);
 
             // invoke the operation
-            await serviceBusNamespace.DeleteAsync(WaitUntil.Completed);
+            await sbNamespace.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -84,16 +84,16 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceBusNamespaceResource created on azure
-            // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
+            // this example assumes you already have this SBNamespaceResource created on azure
+            // for more information of creating SBNamespaceResource, please refer to the document of SBNamespaceResource
             string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-3285";
-            ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
+            ResourceIdentifier sbNamespaceResourceId = SBNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            SBNamespaceResource sbNamespace = client.GetSBNamespaceResource(sbNamespaceResourceId);
 
             // invoke the operation
-            ServiceBusNamespacePatch patch = new ServiceBusNamespacePatch(new AzureLocation("South Central US"))
+            SBNamespacePatch patch = new SBNamespacePatch(new AzureLocation("South Central US"))
             {
                 Tags =
 {
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 ["tag4"] = "value4"
 },
             };
-            ServiceBusNamespaceResource result = await serviceBusNamespace.UpdateAsync(patch);
+            SBNamespaceResource result = await sbNamespace.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServiceBusNamespaceData resourceData = result.Data;
+            SBNamespaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -122,17 +122,17 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceBusNamespaceResource created on azure
-            // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
+            // this example assumes you already have this SBNamespaceResource created on azure
+            // for more information of creating SBNamespaceResource, please refer to the document of SBNamespaceResource
             string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "exampleResourceGroup";
             string namespaceName = "sdk-Namespace-9080";
-            ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
+            ResourceIdentifier sbNamespaceResourceId = SBNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            SBNamespaceResource sbNamespace = client.GetSBNamespaceResource(sbNamespaceResourceId);
 
             // invoke the operation
             ServiceBusNameAvailabilityContent content = new ServiceBusNameAvailabilityContent("sdk-DisasterRecovery-9474");
-            ServiceBusNameAvailabilityResult result = await serviceBusNamespace.CheckServiceBusDisasterRecoveryNameAvailabilityAsync(content);
+            ServiceBusNameAvailabilityResult result = await sbNamespace.CheckServiceBusDisasterRecoveryNameAvailabilityAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -149,16 +149,16 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceBusNamespaceResource created on azure
-            // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
+            // this example assumes you already have this SBNamespaceResource created on azure
+            // for more information of creating SBNamespaceResource, please refer to the document of SBNamespaceResource
             string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-2924";
-            ResourceIdentifier serviceBusNamespaceResourceId = ServiceBusNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
+            ResourceIdentifier sbNamespaceResourceId = SBNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            SBNamespaceResource sbNamespace = client.GetSBNamespaceResource(sbNamespaceResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ServiceBusPrivateLinkResource item in serviceBusNamespace.GetPrivateLinkResourcesAsync())
+            await foreach (ServiceBusPrivateLinkResource item in sbNamespace.GetPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
