@@ -3,11 +3,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="EndToEndTests\LibraryClient\LibraryClientOptions.cs" />
-  </ItemGroup>
 
-  <!-- Reference the Client Library -->
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.ClientModel.TestFramework.csproj" />
   </ItemGroup>
@@ -20,22 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!--
-      Explicit references to pull in patched versions of ASP.NET Core packages
-    -->
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" />
-  </ItemGroup>
-
-  <ItemGroup>
     <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
       <_Parameter1>SourcePath</_Parameter1>
       <_Parameter2>$(MSBuildProjectDirectory)</_Parameter2>
     </AssemblyAttribute>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="EndToEndTests\SessionRecords\" />
   </ItemGroup>
 </Project>

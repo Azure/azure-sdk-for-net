@@ -115,7 +115,7 @@ public class MockPipelineTransport : PipelineTransport
         }
         else
         {
-            Debug.Fail("MockPipelineTransport must have a response factory set.");
+            throw new InvalidOperationException("MockPipelineTransport must have a response factory set.");
         }
 
         if (mockMessage.Response?.ContentStream != null && ExpectSyncPipeline != null)
