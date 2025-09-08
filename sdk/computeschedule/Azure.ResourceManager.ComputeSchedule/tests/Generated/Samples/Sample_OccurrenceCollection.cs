@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ComputeSchedule.Samples
@@ -28,16 +27,16 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            // this example assumes you already have this ScheduledActionResource created on azure
+            // for more information of creating ScheduledActionResource, please refer to the document of ScheduledActionResource
             string subscriptionId = "CB26D7CB-3E27-465F-99C8-EAF7A4118245";
             string resourceGroupName = "rgcomputeschedule";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string scheduledActionName = "myScheduledAction";
+            ResourceIdentifier scheduledActionResourceId = ScheduledActionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scheduledActionName);
+            ScheduledActionResource scheduledAction = client.GetScheduledActionResource(scheduledActionResourceId);
 
             // get the collection of this OccurrenceResource
-            string scheduledActionName = "myScheduledAction";
-            OccurrenceCollection collection = resourceGroupResource.GetOccurrences(scheduledActionName);
+            OccurrenceCollection collection = scheduledAction.GetOccurrences();
 
             // invoke the operation
             string occurrenceId = "67b5bada-4772-43fc-8dbb-402476d98a45";
@@ -62,16 +61,16 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            // this example assumes you already have this ScheduledActionResource created on azure
+            // for more information of creating ScheduledActionResource, please refer to the document of ScheduledActionResource
             string subscriptionId = "CB26D7CB-3E27-465F-99C8-EAF7A4118245";
             string resourceGroupName = "rgcomputeschedule";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string scheduledActionName = "myScheduledAction";
+            ResourceIdentifier scheduledActionResourceId = ScheduledActionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scheduledActionName);
+            ScheduledActionResource scheduledAction = client.GetScheduledActionResource(scheduledActionResourceId);
 
             // get the collection of this OccurrenceResource
-            string scheduledActionName = "myScheduledAction";
-            OccurrenceCollection collection = resourceGroupResource.GetOccurrences(scheduledActionName);
+            OccurrenceCollection collection = scheduledAction.GetOccurrences();
 
             // invoke the operation and iterate over the result
             await foreach (OccurrenceResource item in collection.GetAllAsync())
@@ -98,16 +97,16 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            // this example assumes you already have this ScheduledActionResource created on azure
+            // for more information of creating ScheduledActionResource, please refer to the document of ScheduledActionResource
             string subscriptionId = "CB26D7CB-3E27-465F-99C8-EAF7A4118245";
             string resourceGroupName = "rgcomputeschedule";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string scheduledActionName = "myScheduledAction";
+            ResourceIdentifier scheduledActionResourceId = ScheduledActionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scheduledActionName);
+            ScheduledActionResource scheduledAction = client.GetScheduledActionResource(scheduledActionResourceId);
 
             // get the collection of this OccurrenceResource
-            string scheduledActionName = "myScheduledAction";
-            OccurrenceCollection collection = resourceGroupResource.GetOccurrences(scheduledActionName);
+            OccurrenceCollection collection = scheduledAction.GetOccurrences();
 
             // invoke the operation
             string occurrenceId = "67b5bada-4772-43fc-8dbb-402476d98a45";
@@ -128,16 +127,16 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            // this example assumes you already have this ScheduledActionResource created on azure
+            // for more information of creating ScheduledActionResource, please refer to the document of ScheduledActionResource
             string subscriptionId = "CB26D7CB-3E27-465F-99C8-EAF7A4118245";
             string resourceGroupName = "rgcomputeschedule";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string scheduledActionName = "myScheduledAction";
+            ResourceIdentifier scheduledActionResourceId = ScheduledActionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scheduledActionName);
+            ScheduledActionResource scheduledAction = client.GetScheduledActionResource(scheduledActionResourceId);
 
             // get the collection of this OccurrenceResource
-            string scheduledActionName = "myScheduledAction";
-            OccurrenceCollection collection = resourceGroupResource.GetOccurrences(scheduledActionName);
+            OccurrenceCollection collection = scheduledAction.GetOccurrences();
 
             // invoke the operation
             string occurrenceId = "67b5bada-4772-43fc-8dbb-402476d98a45";

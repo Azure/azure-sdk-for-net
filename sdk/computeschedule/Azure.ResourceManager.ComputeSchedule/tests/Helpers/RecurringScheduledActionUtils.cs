@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
 
         private static readonly HashSet<OccurrenceState> s_activeStates = [OccurrenceState.Created, OccurrenceState.Scheduled, OccurrenceState.Rescheduling];
 
-        public static ScheduledAction GenerateScheduledActionResource(
+        public static ScheduledActionData GenerateScheduledActionData(
             string location,
             UserRequestRetryPolicy retryPolicy,
             ScheduledActionDeadlineType deadlineType,
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
             string timezone,
             bool isDisabled)
         {
-            ScheduledAction sa =  new(new AzureLocation(location))
+            ScheduledActionData sa =  new(new AzureLocation(location))
             {
                 Properties = new ScheduledActionProperties(Models.ResourceType.VirtualMachine, actionType, startsOn, new ScheduledActionsSchedule(
                     scheduleTime,
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
             return sa;
         }
 
-        public static ScheduledAction GenerateScheduledActionResourceOther(
+        public static ScheduledActionData GenerateScheduledActionData(
             string scheduledActionName,
             string location,
             UserRequestRetryPolicy retryPolicy,
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
                 StartOn = startsOn
             };
 
-            ScheduledAction scheduledAction = new(id: ResourceIdentifier.Parse($"/subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}"), name: $"{scheduledActionName}", resourceType: "microsoft.computeschedule/scheduledactions", systemData: new SystemData(), tags: new Dictionary<string, string>(), location: new AzureLocation($"{location}"), properties: props, serializedAdditionalRawData: new Dictionary<string, BinaryData>());
+            ScheduledActionData scheduledAction = new(id: ResourceIdentifier.Parse($"/subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}"), name: $"{scheduledActionName}", resourceType: "microsoft.computeschedule/scheduledactions", systemData: new SystemData(), tags: new Dictionary<string, string>(), location: new AzureLocation($"{location}"), properties: props, serializedAdditionalRawData: new Dictionary<string, BinaryData>());
 
             return scheduledAction;
         }

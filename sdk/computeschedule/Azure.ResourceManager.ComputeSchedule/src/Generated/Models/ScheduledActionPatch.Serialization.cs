@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    public partial class ScheduledActionUpdate : IUtf8JsonSerializable, IJsonModel<ScheduledActionUpdate>
+    public partial class ScheduledActionPatch : IUtf8JsonSerializable, IJsonModel<ScheduledActionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledActionUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledActionPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ScheduledActionUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScheduledActionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledActionUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionPatch)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Tags))
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
-        ScheduledActionUpdate IJsonModel<ScheduledActionUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ScheduledActionPatch IJsonModel<ScheduledActionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledActionUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScheduledActionUpdate(document.RootElement, options);
+            return DeserializeScheduledActionPatch(document.RootElement, options);
         }
 
-        internal static ScheduledActionUpdate DeserializeScheduledActionUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ScheduledActionPatch DeserializeScheduledActionPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -122,38 +122,38 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ScheduledActionUpdate(tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
+            return new ScheduledActionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ScheduledActionUpdate>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ScheduledActionPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledActionUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ScheduledActionUpdate IPersistableModel<ScheduledActionUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ScheduledActionPatch IPersistableModel<ScheduledActionPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeScheduledActionUpdate(document.RootElement, options);
+                        return DeserializeScheduledActionPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledActionUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ScheduledActionUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScheduledActionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

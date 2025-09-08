@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableComputeScheduleSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _scheduledActionsClientDiagnostics;
-        private ScheduledActionsRestOperations _scheduledActionsRestClient;
+        private ClientDiagnostics _scheduledActionClientDiagnostics;
+        private ScheduledActionsRestOperations _scheduledActionRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableComputeScheduleSubscriptionResource"/> class for mocking. </summary>
         protected MockableComputeScheduleSubscriptionResource()
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
         }
 
-        private ClientDiagnostics ScheduledActionsClientDiagnostics => _scheduledActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ScheduledActionsRestOperations ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ScheduledActionClientDiagnostics => _scheduledActionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule", ScheduledActionResource.ResourceType.Namespace, Diagnostics);
+        private ScheduledActionsRestOperations ScheduledActionRestClient => _scheduledActionRestClient ??= new ScheduledActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ScheduledActionResource.ResourceType));
 
         private string GetApiVersionOrNull(Core.ResourceType resourceType)
         {
@@ -57,23 +57,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DeallocateResourceOperationResult>> SubmitVirtualMachineDeallocateAsync(string locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<DeallocateResourceOperationResult>> SubmitVirtualMachineDeallocateAsync(AzureLocation locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineDeallocate");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineDeallocate");
             scope.Start();
             try
             {
-                var response = await ScheduledActionsRestClient.SubmitVirtualMachineDeallocateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.SubmitVirtualMachineDeallocateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -98,23 +100,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<DeallocateResourceOperationResult> SubmitVirtualMachineDeallocate(string locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<DeallocateResourceOperationResult> SubmitVirtualMachineDeallocate(AzureLocation locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineDeallocate");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineDeallocate");
             scope.Start();
             try
             {
-                var response = ScheduledActionsRestClient.SubmitVirtualMachineDeallocate(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.SubmitVirtualMachineDeallocate(Id.SubscriptionId, locationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -139,23 +143,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<HibernateResourceOperationResult>> SubmitVirtualMachineHibernateAsync(string locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<HibernateResourceOperationResult>> SubmitVirtualMachineHibernateAsync(AzureLocation locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineHibernate");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineHibernate");
             scope.Start();
             try
             {
-                var response = await ScheduledActionsRestClient.SubmitVirtualMachineHibernateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.SubmitVirtualMachineHibernateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -180,23 +186,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<HibernateResourceOperationResult> SubmitVirtualMachineHibernate(string locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<HibernateResourceOperationResult> SubmitVirtualMachineHibernate(AzureLocation locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineHibernate");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineHibernate");
             scope.Start();
             try
             {
-                var response = ScheduledActionsRestClient.SubmitVirtualMachineHibernate(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.SubmitVirtualMachineHibernate(Id.SubscriptionId, locationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -221,23 +229,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<StartResourceOperationResult>> SubmitVirtualMachineStartAsync(string locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<StartResourceOperationResult>> SubmitVirtualMachineStartAsync(AzureLocation locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineStart");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineStart");
             scope.Start();
             try
             {
-                var response = await ScheduledActionsRestClient.SubmitVirtualMachineStartAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.SubmitVirtualMachineStartAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -262,23 +272,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<StartResourceOperationResult> SubmitVirtualMachineStart(string locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<StartResourceOperationResult> SubmitVirtualMachineStart(AzureLocation locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineStart");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineStart");
             scope.Start();
             try
             {
-                var response = ScheduledActionsRestClient.SubmitVirtualMachineStart(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.SubmitVirtualMachineStart(Id.SubscriptionId, locationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -303,23 +315,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DeallocateResourceOperationResult>> ExecuteVirtualMachineDeallocateAsync(string locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<DeallocateResourceOperationResult>> ExecuteVirtualMachineDeallocateAsync(AzureLocation locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineDeallocate");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineDeallocate");
             scope.Start();
             try
             {
-                var response = await ScheduledActionsRestClient.ExecuteVirtualMachineDeallocateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.ExecuteVirtualMachineDeallocateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -344,23 +358,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<DeallocateResourceOperationResult> ExecuteVirtualMachineDeallocate(string locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<DeallocateResourceOperationResult> ExecuteVirtualMachineDeallocate(AzureLocation locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineDeallocate");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineDeallocate");
             scope.Start();
             try
             {
-                var response = ScheduledActionsRestClient.ExecuteVirtualMachineDeallocate(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.ExecuteVirtualMachineDeallocate(Id.SubscriptionId, locationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -385,23 +401,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<HibernateResourceOperationResult>> ExecuteVirtualMachineHibernateAsync(string locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<HibernateResourceOperationResult>> ExecuteVirtualMachineHibernateAsync(AzureLocation locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineHibernate");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineHibernate");
             scope.Start();
             try
             {
-                var response = await ScheduledActionsRestClient.ExecuteVirtualMachineHibernateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.ExecuteVirtualMachineHibernateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -426,23 +444,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<HibernateResourceOperationResult> ExecuteVirtualMachineHibernate(string locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<HibernateResourceOperationResult> ExecuteVirtualMachineHibernate(AzureLocation locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineHibernate");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineHibernate");
             scope.Start();
             try
             {
-                var response = ScheduledActionsRestClient.ExecuteVirtualMachineHibernate(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.ExecuteVirtualMachineHibernate(Id.SubscriptionId, locationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -467,23 +487,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<StartResourceOperationResult>> ExecuteVirtualMachineStartAsync(string locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<StartResourceOperationResult>> ExecuteVirtualMachineStartAsync(AzureLocation locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineStart");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineStart");
             scope.Start();
             try
             {
-                var response = await ScheduledActionsRestClient.ExecuteVirtualMachineStartAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.ExecuteVirtualMachineStartAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -508,23 +530,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<StartResourceOperationResult> ExecuteVirtualMachineStart(string locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<StartResourceOperationResult> ExecuteVirtualMachineStart(AzureLocation locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineStart");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineStart");
             scope.Start();
             try
             {
-                var response = ScheduledActionsRestClient.ExecuteVirtualMachineStart(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.ExecuteVirtualMachineStart(Id.SubscriptionId, locationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -549,23 +573,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CreateResourceOperationResult>> VirtualMachinesExecuteCreateScheduledActionAsync(string locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CreateResourceOperationResult>> VirtualMachinesExecuteCreateScheduledActionAsync(AzureLocation locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteCreateScheduledAction");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteCreateScheduledAction");
             scope.Start();
             try
             {
-                var response = await ScheduledActionsRestClient.VirtualMachinesExecuteCreateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.VirtualMachinesExecuteCreateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -590,23 +616,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<CreateResourceOperationResult> VirtualMachinesExecuteCreateScheduledAction(string locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<CreateResourceOperationResult> VirtualMachinesExecuteCreateScheduledAction(AzureLocation locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteCreateScheduledAction");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteCreateScheduledAction");
             scope.Start();
             try
             {
-                var response = ScheduledActionsRestClient.VirtualMachinesExecuteCreate(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.VirtualMachinesExecuteCreate(Id.SubscriptionId, locationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -631,23 +659,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DeleteResourceOperationResult>> VirtualMachinesExecuteDeleteScheduledActionAsync(string locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<DeleteResourceOperationResult>> VirtualMachinesExecuteDeleteScheduledActionAsync(AzureLocation locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteDeleteScheduledAction");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteDeleteScheduledAction");
             scope.Start();
             try
             {
-                var response = await ScheduledActionsRestClient.VirtualMachinesExecuteDeleteAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.VirtualMachinesExecuteDeleteAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -672,23 +702,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<DeleteResourceOperationResult> VirtualMachinesExecuteDeleteScheduledAction(string locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<DeleteResourceOperationResult> VirtualMachinesExecuteDeleteScheduledAction(AzureLocation locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteDeleteScheduledAction");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteDeleteScheduledAction");
             scope.Start();
             try
             {
-                var response = ScheduledActionsRestClient.VirtualMachinesExecuteDelete(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.VirtualMachinesExecuteDelete(Id.SubscriptionId, locationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -713,23 +745,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<GetOperationStatusResult>> GetVirtualMachineOperationStatusAsync(string locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<GetOperationStatusResult>> GetVirtualMachineOperationStatusAsync(AzureLocation locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.GetVirtualMachineOperationStatus");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.GetVirtualMachineOperationStatus");
             scope.Start();
             try
             {
-                var response = await ScheduledActionsRestClient.GetVirtualMachineOperationStatusAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.GetVirtualMachineOperationStatusAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -754,23 +788,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<GetOperationStatusResult> GetVirtualMachineOperationStatus(string locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<GetOperationStatusResult> GetVirtualMachineOperationStatus(AzureLocation locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.GetVirtualMachineOperationStatus");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.GetVirtualMachineOperationStatus");
             scope.Start();
             try
             {
-                var response = ScheduledActionsRestClient.GetVirtualMachineOperationStatus(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.GetVirtualMachineOperationStatus(Id.SubscriptionId, locationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -795,23 +831,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CancelOperationsResult>> CancelVirtualMachineOperationsAsync(string locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CancelOperationsResult>> CancelVirtualMachineOperationsAsync(AzureLocation locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.CancelVirtualMachineOperations");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.CancelVirtualMachineOperations");
             scope.Start();
             try
             {
-                var response = await ScheduledActionsRestClient.CancelVirtualMachineOperationsAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.CancelVirtualMachineOperationsAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -836,23 +874,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<CancelOperationsResult> CancelVirtualMachineOperations(string locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<CancelOperationsResult> CancelVirtualMachineOperations(AzureLocation locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.CancelVirtualMachineOperations");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.CancelVirtualMachineOperations");
             scope.Start();
             try
             {
-                var response = ScheduledActionsRestClient.CancelVirtualMachineOperations(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.CancelVirtualMachineOperations(Id.SubscriptionId, locationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -877,23 +917,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<GetOperationErrorsResult>> GetVirtualMachineOperationErrorsAsync(string locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<GetOperationErrorsResult>> GetVirtualMachineOperationErrorsAsync(AzureLocation locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.GetVirtualMachineOperationErrors");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.GetVirtualMachineOperationErrors");
             scope.Start();
             try
             {
-                var response = await ScheduledActionsRestClient.GetVirtualMachineOperationErrorsAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.GetVirtualMachineOperationErrorsAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -918,23 +960,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<GetOperationErrorsResult> GetVirtualMachineOperationErrors(string locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<GetOperationErrorsResult> GetVirtualMachineOperationErrors(AzureLocation locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.GetVirtualMachineOperationErrors");
+            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.GetVirtualMachineOperationErrors");
             scope.Start();
             try
             {
-                var response = ScheduledActionsRestClient.GetVirtualMachineOperationErrors(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.GetVirtualMachineOperationErrors(Id.SubscriptionId, locationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -959,15 +1003,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScheduledAction"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScheduledAction> GetScheduledActionsBySubscriptionAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScheduledActionResource> GetScheduledActionsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledActionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduledActionsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ScheduledAction.DeserializeScheduledAction(e), ScheduledActionsClientDiagnostics, Pipeline, "MockableComputeScheduleSubscriptionResource.GetScheduledActionsBySubscription", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledActionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduledActionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScheduledActionResource(Client, ScheduledActionData.DeserializeScheduledActionData(e)), ScheduledActionClientDiagnostics, Pipeline, "MockableComputeScheduleSubscriptionResource.GetScheduledActions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -985,15 +1033,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-04-15-preview</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScheduledAction"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScheduledAction> GetScheduledActionsBySubscription(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScheduledActionResource> GetScheduledActions(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledActionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduledActionsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ScheduledAction.DeserializeScheduledAction(e), ScheduledActionsClientDiagnostics, Pipeline, "MockableComputeScheduleSubscriptionResource.GetScheduledActionsBySubscription", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledActionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduledActionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScheduledActionResource(Client, ScheduledActionData.DeserializeScheduledActionData(e)), ScheduledActionClientDiagnostics, Pipeline, "MockableComputeScheduleSubscriptionResource.GetScheduledActions", "value", "nextLink", cancellationToken);
         }
     }
 }

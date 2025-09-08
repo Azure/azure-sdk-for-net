@@ -13,7 +13,6 @@ using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ComputeSchedule.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ComputeSchedule
 {
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.ComputeSchedule
     /// A Class representing an Occurrence along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OccurrenceResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetOccurrenceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetOccurrence method.
+    /// Otherwise you can get one from its parent resource <see cref="ScheduledActionResource"/> using the GetOccurrence method.
     /// </summary>
     public partial class OccurrenceResource : ArmResource
     {

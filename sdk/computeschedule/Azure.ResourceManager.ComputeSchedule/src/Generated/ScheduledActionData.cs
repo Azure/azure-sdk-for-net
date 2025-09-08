@@ -7,11 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.ComputeSchedule.Models;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ComputeSchedule.Models
+namespace Azure.ResourceManager.ComputeSchedule
 {
-    /// <summary> The type used for update operations of the ScheduledAction. </summary>
-    public partial class ScheduledActionUpdate
+    /// <summary>
+    /// A class representing the ScheduledAction data model.
+    /// The scheduled action resource
+    /// </summary>
+    public partial class ScheduledActionData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +51,33 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionUpdate"/>. </summary>
-        public ScheduledActionUpdate()
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionData"/>. </summary>
+        /// <param name="location"> The location. </param>
+        public ScheduledActionData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionUpdate"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionUpdate(IDictionary<string, string> tags, ScheduledActionUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduledActionData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ScheduledActionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Tags = tags;
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionData"/> for deserialization. </summary>
+        internal ScheduledActionData()
+        {
+        }
+
         /// <summary> The resource-specific properties for this resource. </summary>
-        public ScheduledActionUpdateProperties Properties { get; set; }
+        public ScheduledActionProperties Properties { get; set; }
     }
 }

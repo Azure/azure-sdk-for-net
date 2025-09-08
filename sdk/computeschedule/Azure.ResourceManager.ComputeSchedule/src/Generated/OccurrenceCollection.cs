@@ -14,20 +14,18 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ComputeSchedule
 {
     /// <summary>
     /// A class representing a collection of <see cref="OccurrenceResource"/> and their operations.
-    /// Each <see cref="OccurrenceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="OccurrenceCollection"/> instance call the GetOccurrences method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="OccurrenceResource"/> in the collection will belong to the same instance of <see cref="ScheduledActionResource"/>.
+    /// To get an <see cref="OccurrenceCollection"/> instance call the GetOccurrences method from an instance of <see cref="ScheduledActionResource"/>.
     /// </summary>
     public partial class OccurrenceCollection : ArmCollection, IEnumerable<OccurrenceResource>, IAsyncEnumerable<OccurrenceResource>
     {
         private readonly ClientDiagnostics _occurrenceClientDiagnostics;
         private readonly OccurrencesRestOperations _occurrenceRestClient;
-        private readonly string _scheduledActionName;
 
         /// <summary> Initializes a new instance of the <see cref="OccurrenceCollection"/> class for mocking. </summary>
         protected OccurrenceCollection()
@@ -37,12 +35,8 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <summary> Initializes a new instance of the <see cref="OccurrenceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal OccurrenceCollection(ArmClient client, ResourceIdentifier id, string scheduledActionName) : base(client, id)
+        internal OccurrenceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _scheduledActionName = scheduledActionName;
             _occurrenceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule", OccurrenceResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(OccurrenceResource.ResourceType, out string occurrenceApiVersion);
             _occurrenceRestClient = new OccurrencesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, occurrenceApiVersion);
@@ -53,8 +47,8 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            if (id.ResourceType != ScheduledActionResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ScheduledActionResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -90,7 +84,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             scope.Start();
             try
             {
-                var response = await _occurrenceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _scheduledActionName, occurrenceId, cancellationToken).ConfigureAwait(false);
+                var response = await _occurrenceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, occurrenceId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OccurrenceResource(Client, response.Value), response.GetRawResponse());
@@ -135,7 +129,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             scope.Start();
             try
             {
-                var response = _occurrenceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _scheduledActionName, occurrenceId, cancellationToken);
+                var response = _occurrenceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, occurrenceId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OccurrenceResource(Client, response.Value), response.GetRawResponse());
@@ -172,8 +166,8 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <returns> An async collection of <see cref="OccurrenceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OccurrenceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _occurrenceRestClient.CreateListByScheduledActionRequest(Id.SubscriptionId, Id.ResourceGroupName, _scheduledActionName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _occurrenceRestClient.CreateListByScheduledActionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _scheduledActionName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _occurrenceRestClient.CreateListByScheduledActionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _occurrenceRestClient.CreateListByScheduledActionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OccurrenceResource(Client, OccurrenceData.DeserializeOccurrenceData(e)), _occurrenceClientDiagnostics, Pipeline, "OccurrenceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -202,8 +196,8 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <returns> A collection of <see cref="OccurrenceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OccurrenceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _occurrenceRestClient.CreateListByScheduledActionRequest(Id.SubscriptionId, Id.ResourceGroupName, _scheduledActionName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _occurrenceRestClient.CreateListByScheduledActionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _scheduledActionName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _occurrenceRestClient.CreateListByScheduledActionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _occurrenceRestClient.CreateListByScheduledActionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OccurrenceResource(Client, OccurrenceData.DeserializeOccurrenceData(e)), _occurrenceClientDiagnostics, Pipeline, "OccurrenceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -240,7 +234,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             scope.Start();
             try
             {
-                var response = await _occurrenceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _scheduledActionName, occurrenceId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _occurrenceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, occurrenceId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -283,7 +277,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             scope.Start();
             try
             {
-                var response = _occurrenceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _scheduledActionName, occurrenceId, cancellationToken: cancellationToken);
+                var response = _occurrenceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, occurrenceId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -326,7 +320,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             scope.Start();
             try
             {
-                var response = await _occurrenceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _scheduledActionName, occurrenceId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _occurrenceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, occurrenceId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<OccurrenceResource>(response.GetRawResponse());
                 return Response.FromValue(new OccurrenceResource(Client, response.Value), response.GetRawResponse());
@@ -371,7 +365,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             scope.Start();
             try
             {
-                var response = _occurrenceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _scheduledActionName, occurrenceId, cancellationToken: cancellationToken);
+                var response = _occurrenceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, occurrenceId, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<OccurrenceResource>(response.GetRawResponse());
                 return Response.FromValue(new OccurrenceResource(Client, response.Value), response.GetRawResponse());

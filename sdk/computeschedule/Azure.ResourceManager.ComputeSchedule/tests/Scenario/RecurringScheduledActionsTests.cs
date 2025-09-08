@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             string scheduledActionName = Recording.GenerateAssetName("create");
             try
             {
-                ScheduledAction sa = await CreateAndValidateScheduledAction(scheduledActionName, s_startScheduleTime);
+                ScheduledActionResource sa = await CreateAndValidateScheduledAction(scheduledActionName, s_startScheduleTime);
             }
             catch (AssertionException ex)
             {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
         [RecordedTest]
         public async Task TestRecurringScheduledAction_AttachDetach()
         {
-            ScheduledAction sa = await CreateAndValidateScheduledAction("crud-aa-", s_startScheduleTime);
-            var scheduledActionName = sa.Name;
+            ScheduledActionResource sa = await CreateAndValidateScheduledAction("crud-aa-", s_startScheduleTime);
+            var scheduledActionName = sa.Data.Name;
 
             List<ResourceIdentifier> allResourceids = [.. GetTestResourceIdentifiers(DefaultSubscription.Id.Name, DefaultResourceGroupResource.Data.Name)];
             Console.WriteLine($"Generated vmIds: {allResourceids.FormatCollection()} VMs");
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 // attach
                 ScheduledActionResourceModel[] res = RecurringScheduledActionUtils.GenerateResources(allResourceids);
                 ResourceAttachContent attachContent = new(res);
-                RecurringActionsResourceOperationResult attachResult = await DefaultResourceGroupResource.AttachResourcesScheduledActionAsync(scheduledActionName, attachContent);
+                RecurringActionsResourceOperationResult attachResult = await sa.AttachResourcesAsync(attachContent);
 
                 Assert.NotNull(attachResult);
                 foreach (ResourceStatus attachRes in attachResult.ResourcesStatuses)
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
                 //detach
                 ResourceDetachContent detachContent = new([allResourceids[0]]);
-                RecurringActionsResourceOperationResult detachResult = await DefaultResourceGroupResource.DetachResourcesScheduledActionAsync(scheduledActionName, detachContent);
+                RecurringActionsResourceOperationResult detachResult = await sa.DetachResourcesAsync(detachContent);
 
                 Assert.NotNull(detachResult);
                 foreach (ResourceStatus detachRes in detachResult.ResourcesStatuses)
@@ -91,30 +91,30 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
         [RecordedTest]
         public async Task TestRecurringScheduledAction_EnableDisable()
         {
-            ScheduledAction sa = await CreateAndValidateScheduledAction("en-dis-aa-", s_startScheduleTime);
-            var scheduledActionName = sa.Name;
+            ScheduledActionResource sa = await CreateAndValidateScheduledAction("en-dis-aa-", s_startScheduleTime);
+            var scheduledActionName = sa.Data.Name;
             try
             {
                 // enable
-                await DefaultResourceGroupResource.EnableScheduledActionAsync(scheduledActionName);
+                await sa.EnableAsync();
 
                 // check enabled
-                Response<ScheduledAction> saAfterEnable = await GetScheduledActions(DefaultSubscription.Id.Name, Client, scheduledActionName, DefaultResourceGroupResource);
+                Response<ScheduledActionResource> saAfterEnable = await GetScheduledActions(DefaultSubscription.Id.Name, Client, scheduledActionName, DefaultResourceGroupResource);
 
                 if (saAfterEnable != null)
                 {
-                    Assert.False(saAfterEnable.Value.Properties.Disabled);
+                    Assert.False(saAfterEnable.Value.Data.Properties.Disabled);
                 }
 
                 // disable
-                await DefaultResourceGroupResource.DisableScheduledActionAsync(scheduledActionName);
+                await sa.DisableAsync();
 
                 // check disabled
-                Response<ScheduledAction> saAfterDisable = await GetScheduledActions(DefaultSubscription.Id.Name, Client, scheduledActionName, DefaultResourceGroupResource);
+                Response<ScheduledActionResource> saAfterDisable = await GetScheduledActions(DefaultSubscription.Id.Name, Client, scheduledActionName, DefaultResourceGroupResource);
 
                 if (saAfterDisable != null)
                 {
-                    Assert.True(saAfterDisable.Value.Properties.Disabled);
+                    Assert.True(saAfterDisable.Value.Data.Properties.Disabled);
                 }
             }
             catch (AssertionException ex)
@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
         {
             var resourceIds = GetTestResourceIdentifiers(DefaultSubscription.Id.Name, DefaultResourceGroupResource.Data.Name).ToList();
             var scheduledAction = await CreateAndValidateScheduledAction("ca-nx-", s_startScheduleTime, isDisabled: false);
-            var scheduledActionName = scheduledAction.Name;
+            var scheduledActionName = scheduledAction.Data.Name;
 
             try
             {
                 ScheduledActionResourceModel[] resourcesToAttach = RecurringScheduledActionUtils.GenerateResources(resourceIds);
                 var attachContent = new ResourceAttachContent(resourcesToAttach);
-                Response<RecurringActionsResourceOperationResult> attachResult = await DefaultResourceGroupResource.AttachResourcesScheduledActionAsync(scheduledActionName, attachContent);
+                Response<RecurringActionsResourceOperationResult> attachResult = await scheduledAction.AttachResourcesAsync(attachContent);
 
                 Assert.NotNull(attachResult);
                 foreach (ResourceStatus status in attachResult.Value.ResourcesStatuses)
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
                 await Task.Delay(Recording.Random.Next(900, 1000));
 
-                OccurrenceCollection occurrences = DefaultResourceGroupResource.GetOccurrences(scheduledActionName);
+                OccurrenceCollection occurrences = scheduledAction.GetOccurrences();
                 var occurrenceList = new List<OccurrenceResource>();
 
                 await foreach (OccurrenceResource occurrence in occurrences.GetAllAsync())
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 if (occurrenceList.Count > 0)
                 {
                     // Cancel the next occurrence
-                    await DefaultResourceGroupResource.CancelNextOccurrenceScheduledActionAsync(scheduledActionName, new(resourceIds: []));
+                    await scheduledAction.CancelNextOccurrenceAsync(new(resourceIds: []));
 
                     // Retrieve updated occurrences
-                    OccurrenceCollection updatedOccurrences = DefaultResourceGroupResource.GetOccurrences(scheduledActionName);
+                    OccurrenceCollection updatedOccurrences = scheduledAction.GetOccurrences();
                     var updatedOccurrenceList = new List<OccurrenceResource>();
 
                     await foreach (OccurrenceResource occurrence in updatedOccurrences.GetAllAsync())
@@ -194,13 +194,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
         {
             var resourceIds = GetTestResourceIdentifiers(DefaultSubscription.Id.Name, DefaultResourceGroupResource.Data.Name).ToList();
             var scheduledAction = await CreateAndValidateScheduledAction("ca-tr-", s_startScheduleTime, isDisabled: false);
-            var scheduledActionName = scheduledAction.Name;
+            var scheduledActionName = scheduledAction.Data.Name;
 
             try
             {
                 ScheduledActionResourceModel[] resourcesToAttach = RecurringScheduledActionUtils.GenerateResources(resourceIds);
                 var attachContent = new ResourceAttachContent(resourcesToAttach);
-                Response<RecurringActionsResourceOperationResult> attachResult = await DefaultResourceGroupResource.AttachResourcesScheduledActionAsync(scheduledActionName, attachContent);
+                Response<RecurringActionsResourceOperationResult> attachResult = await scheduledAction.AttachResourcesAsync(attachContent);
 
                 Assert.NotNull(attachResult);
                 foreach (ResourceStatus status in attachResult.Value.ResourcesStatuses)
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
                 await Task.Delay(Recording.Random.Next(900, 1000));
 
-                OccurrenceCollection occurrences = DefaultResourceGroupResource.GetOccurrences(scheduledActionName);
+                OccurrenceCollection occurrences = scheduledAction.GetOccurrences();
                 var occurrenceList = new List<OccurrenceResource>();
 
                 await foreach (OccurrenceResource occurrence in occurrences.GetAllAsync())
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 if (occurrenceList.Count > 0)
                 {
                     // Trigger a manual occurrence
-                    Response<OccurrenceResource> triggeredOccurrence = await DefaultResourceGroupResource.TriggerManualOccurrenceScheduledActionAsync(scheduledActionName);
+                    Response<OccurrenceResource> triggeredOccurrence = await scheduledAction.TriggerManualOccurrenceAsync();
 
                     Assert.IsTrue(triggeredOccurrence.Value.Data.Properties.ProvisioningState != OccurrenceState.Scheduled);
 
@@ -243,15 +243,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
         public async Task TestRecurringScheduledAction_CancelOccurrence()
         {
             List<ResourceIdentifier> allResourceids = GetTestResourceIdentifiers(DefaultSubscription.Id.Name, DefaultResourceGroupResource.Data.Name).ToList();
-            ScheduledAction sa = await CreateAndValidateScheduledAction("cat-aa-", s_startScheduleTime, isDisabled: false);
-            var scheduledActionName = sa.Name;
+            ScheduledActionResource sa = await CreateAndValidateScheduledAction("cat-aa-", s_startScheduleTime, isDisabled: false);
+            var scheduledActionName = sa.Data.Name;
 
             try
             {
                 // attach
                 ScheduledActionResourceModel[] res = RecurringScheduledActionUtils.GenerateResources(allResourceids);
                 ResourceAttachContent attachContent = new(res);
-                RecurringActionsResourceOperationResult attachResult = await DefaultResourceGroupResource.AttachResourcesScheduledActionAsync(scheduledActionName, attachContent);
+                RecurringActionsResourceOperationResult attachResult = await sa.AttachResourcesAsync(attachContent);
 
                 Assert.NotNull(attachResult);
                 foreach (ResourceStatus attachRes in attachResult.ResourcesStatuses)
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 }
 
                 await Task.Delay(Recording.Random.Next(1000, 2000));
-                OccurrenceCollection occurrences = DefaultResourceGroupResource.GetOccurrences(scheduledActionName);
+                OccurrenceCollection occurrences = sa.GetOccurrences();
 
                 var occurrenceList = new List<OccurrenceResource>();
 
@@ -273,9 +273,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 {
                     IOrderedEnumerable<OccurrenceResource> sortedOccurrences = occurrenceList.OrderBy(o => o.Data.Properties.ScheduledOn);
 
-                    await CancelOccurrenceTask(sortedOccurrences.First(), allResourceids, scheduledActionName, OccurrenceState.Scheduled, "RsScheduled");
+                    await CancelOccurrenceTask(sortedOccurrences.First(), allResourceids, sa, OccurrenceState.Scheduled, "RsScheduled");
 
-                    await CancelOccurrenceTask(sortedOccurrences.Last(), allResourceids, scheduledActionName, OccurrenceState.Created, "RsCreated");
+                    await CancelOccurrenceTask(sortedOccurrences.Last(), allResourceids, sa, OccurrenceState.Created, "RsCreated");
                 }
             }
             catch (AssertionException ex)
@@ -294,14 +294,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
         public async Task TestRecurringScheduledAction_DelayOccurrence()
         {
             List<ResourceIdentifier> allResourceids = GetTestResourceIdentifiers(DefaultSubscription.Id.Name, DefaultResourceGroupResource.Data.Name).ToList();
-            ScheduledAction sa = await CreateAndValidateScheduledAction("del-sch-", s_startScheduleTime, isDisabled: false);
-            var scheduledActionName = sa.Name;
+            ScheduledActionResource sa = await CreateAndValidateScheduledAction("del-sch-", s_startScheduleTime, isDisabled: false);
+            var scheduledActionName = sa.Data.Name;
             try
             {
                 // attach
                 ScheduledActionResourceModel[] res = RecurringScheduledActionUtils.GenerateResources(allResourceids);
                 ResourceAttachContent attachContent = new(res);
-                RecurringActionsResourceOperationResult attachResult = await DefaultResourceGroupResource.AttachResourcesScheduledActionAsync(scheduledActionName, attachContent);
+                RecurringActionsResourceOperationResult attachResult = await sa.AttachResourcesAsync(attachContent);
 
                 Assert.NotNull(attachResult);
                 foreach (ResourceStatus attachRes in attachResult.ResourcesStatuses)
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 }
 
                 await Task.Delay(Recording.Random.Next(1000, 2000));
-                OccurrenceCollection occurrences = DefaultResourceGroupResource.GetOccurrences(scheduledActionName);
+                OccurrenceCollection occurrences = sa.GetOccurrences();
                 var occurrenceList = new List<OccurrenceResource>();
                 await foreach (OccurrenceResource item in occurrences.GetAllAsync())
                 {
@@ -321,8 +321,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 {
                     IOrderedEnumerable<OccurrenceResource> sortedOccurrences = occurrenceList.OrderBy(o => o.Data.Properties.ScheduledOn);
 
-                    await DelayOccurrenceTask(sortedOccurrences.First(), allResourceids, scheduledActionName, OccurrenceState.Scheduled, "RsScheduled");
-                    await DelayOccurrenceTask(sortedOccurrences.Last(), allResourceids, scheduledActionName, OccurrenceState.Created, "RsCreated");
+                    await DelayOccurrenceTask(sortedOccurrences.First(), allResourceids, sa, OccurrenceState.Scheduled, "RsScheduled");
+                    await DelayOccurrenceTask(sortedOccurrences.Last(), allResourceids, sa, OccurrenceState.Created, "RsCreated");
                 }
             }
             catch (AssertionException ex)
@@ -347,12 +347,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             return [.. resourceIds];
         }
 
-        private async Task CancelOccurrenceTask(OccurrenceResource occ, List<ResourceIdentifier> resources, string scheduledActionName, OccurrenceState occurrenceStateConfirm, string resourceStateConfirm)
+        private async Task CancelOccurrenceTask(OccurrenceResource occ, List<ResourceIdentifier> resources, ScheduledActionResource scheduledAction, OccurrenceState occurrenceStateConfirm, string resourceStateConfirm)
         {
             await occ.CancelAsync(new(resourceIds: [resources[0]]));
 
             // Validate cancel
-            OccurrenceResource cancelledOcc = await DefaultResourceGroupResource.GetOccurrences(scheduledActionName).GetAsync(occ.Data.Name);
+            OccurrenceResource cancelledOcc = await scheduledAction.GetOccurrences().GetAsync(occ.Data.Name);
             Assert.NotNull(cancelledOcc);
             Assert.True(cancelledOcc.Data.Properties.ProvisioningState == occurrenceStateConfirm);
 
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             await occ.CancelAsync(new(resourceIds: []));
 
             // Validate all cancel
-            OccurrenceResource allCancelled = await DefaultResourceGroupResource.GetOccurrences(scheduledActionName).GetAsync(occ.Data.Name);
+            OccurrenceResource allCancelled = await scheduledAction.GetOccurrences().GetAsync(occ.Data.Name);
             Assert.NotNull(allCancelled);
             Assert.True(allCancelled.Data.Properties.ProvisioningState == OccurrenceState.Canceled);
 
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             }
         }
 
-        private async Task DelayOccurrenceTask(OccurrenceResource occ, List<ResourceIdentifier> resources, string scheduledActionName, OccurrenceState occurrenceStateConfirm, string resourceStateConfirm)
+        private async Task DelayOccurrenceTask(OccurrenceResource occ, List<ResourceIdentifier> resources, ScheduledActionResource scheduledAction, OccurrenceState occurrenceStateConfirm, string resourceStateConfirm)
         {
             Assert.True(occ.Data.Properties.ProvisioningState == occurrenceStateConfirm);
 
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             await occ.DelayAsync(WaitUntil.Completed, delayContentSubset);
 
             // Validate delay
-            OccurrenceResource delayedOcc = await DefaultResourceGroupResource.GetOccurrences(scheduledActionName).GetAsync(occ.Data.Name);
+            OccurrenceResource delayedOcc = await scheduledAction.GetOccurrences().GetAsync(occ.Data.Name);
 
             Assert.NotNull(delayedOcc);
             Assert.True(delayedOcc.Data.Properties.ProvisioningState == occurrenceStateConfirm);
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             await occ.DelayAsync(WaitUntil.Completed, delayAllContent);
 
             // Validate delay
-            OccurrenceResource delayedAllOcc = await DefaultResourceGroupResource.GetOccurrences(scheduledActionName).GetAsync(occ.Data.Name);
+            OccurrenceResource delayedAllOcc = await scheduledAction.GetOccurrences().GetAsync(occ.Data.Name);
             Assert.NotNull(delayedAllOcc);
             Assert.True(delayedAllOcc.Data.Properties.ProvisioningState == occurrenceStateConfirm);
             Assert.AreEqual(delayAllTime, delayedAllOcc.Data.Properties.ScheduledOn);
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             }
         }
 
-        private async Task<ScheduledAction> CreateAndValidateScheduledAction(string saNamePrefix, TimeSpan scheduleTime, bool isDisabled = true)
+        private async Task<ScheduledActionResource> CreateAndValidateScheduledAction(string saNamePrefix, TimeSpan scheduleTime, bool isDisabled = true)
         {
             string scheduledActionName = Recording.GenerateAssetName(saNamePrefix);
             var actiontype = new ScheduledActionType("Deallocate");
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             DateTimeOffset startsOn = Recording.Now.AddMonths(-1);
             DateTimeOffset endsOn = Recording.Now.AddMonths(1);
             UserRequestRetryPolicy retryPolicy = new() { RetryCount = 3, RetryWindowInMinutes = 30 };
-            ScheduledAction resource = RecurringScheduledActionUtils.GenerateScheduledActionResourceOther(
+            ScheduledActionData data = RecurringScheduledActionUtils.GenerateScheduledActionData(
                 scheduledActionName,
                 "Eastus2euap",
                 retryPolicy,
@@ -485,25 +485,26 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 );
 
             // create scheduledaction
-            ArmOperation<ScheduledAction> lro = await DefaultResourceGroupResource.CreateOrUpdateScheduledActionAsync(WaitUntil.Completed, scheduledActionName, resource);
-            ScheduledAction result = lro.Value;
+            ScheduledActionCollection collection = DefaultResourceGroupResource.GetScheduledActions();
+            ArmOperation<ScheduledActionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scheduledActionName, data);
+            ScheduledActionResource result = lro.Value;
 
             if (isDisabled)
             {
-                Assert.True(result.Properties.Disabled);
+                Assert.True(result.Data.Properties.Disabled);
             }
             else
             {
-                Assert.False(result.Properties.Disabled);
+                Assert.False(result.Data.Properties.Disabled);
             }
 
             Assert.NotNull(result);
-            Assert.True(result.Name.Equals(scheduledActionName));
-            Assert.True(result.Properties.ActionType.Equals(actiontype));
-            Assert.True(result.Properties.Schedule.ScheduledTime.Equals(scheduleTime));
-            Assert.True(result.Properties.StartOn.Equals(startsOn));
-            Assert.True(result.Properties.EndOn.Equals(endsOn));
-            Assert.AreEqual(result.ResourceType, "microsoft.computeschedule/scheduledactions");
+            Assert.True(result.Data.Name.Equals(scheduledActionName));
+            Assert.True(result.Data.Properties.ActionType.Equals(actiontype));
+            Assert.True(result.Data.Properties.Schedule.ScheduledTime.Equals(scheduleTime));
+            Assert.True(result.Data.Properties.StartOn.Equals(startsOn));
+            Assert.True(result.Data.Properties.EndOn.Equals(endsOn));
+            Assert.AreEqual(result.Data.ResourceType, "microsoft.computeschedule/scheduledactions");
 
             return result;
         }

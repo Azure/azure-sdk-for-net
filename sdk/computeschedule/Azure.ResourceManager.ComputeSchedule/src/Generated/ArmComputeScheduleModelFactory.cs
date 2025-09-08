@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ScheduledAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeSchedule.ScheduledActionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.ScheduledAction"/> instance for mocking. </returns>
-        public static ScheduledAction ScheduledAction(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ScheduledActionProperties properties = null)
+        /// <returns> A new <see cref="ComputeSchedule.ScheduledActionData"/> instance for mocking. </returns>
+        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ScheduledActionProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ScheduledAction(
+            return new ScheduledActionData(
                 id,
                 name,
                 resourceType,

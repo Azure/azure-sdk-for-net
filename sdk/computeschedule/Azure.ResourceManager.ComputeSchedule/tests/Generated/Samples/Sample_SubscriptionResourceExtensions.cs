@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "ycipx";
+            AzureLocation locationparameter = new AzureLocation("ycipx");
             SubmitDeallocateContent content = new SubmitDeallocateContent(new UserRequestSchedule(ScheduledActionDeadlineType.Unknown)
             {
                 UserRequestDeadline = DateTimeOffset.Parse("2025-04-17T00:23:56.803Z"),
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "zrcmkxsbuxsxxulky";
+            AzureLocation locationparameter = new AzureLocation("zrcmkxsbuxsxxulky");
             SubmitDeallocateContent content = new SubmitDeallocateContent(new UserRequestSchedule(ScheduledActionDeadlineType.Unknown)
             {
                 UserRequestDeadline = DateTimeOffset.Parse("2025-04-17T00:23:56.803Z"),
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "rhadyapnyvmobwg";
+            AzureLocation locationparameter = new AzureLocation("rhadyapnyvmobwg");
             SubmitHibernateContent content = new SubmitHibernateContent(new UserRequestSchedule(ScheduledActionDeadlineType.Unknown)
             {
                 UserRequestDeadline = DateTimeOffset.Parse("2025-04-17T00:23:56.803Z"),
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "zuevcqpgdohzbjodhachtr";
+            AzureLocation locationparameter = new AzureLocation("zuevcqpgdohzbjodhachtr");
             SubmitHibernateContent content = new SubmitHibernateContent(new UserRequestSchedule(ScheduledActionDeadlineType.Unknown)
             {
                 UserRequestDeadline = DateTimeOffset.Parse("2025-04-17T00:23:56.803Z"),
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "pxtvvk";
+            AzureLocation locationparameter = new AzureLocation("pxtvvk");
             SubmitStartContent content = new SubmitStartContent(new UserRequestSchedule(ScheduledActionDeadlineType.Unknown)
             {
                 UserRequestDeadline = DateTimeOffset.Parse("2025-04-17T00:23:56.803Z"),
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "ufrcsuw";
+            AzureLocation locationparameter = new AzureLocation("ufrcsuw");
             SubmitStartContent content = new SubmitStartContent(new UserRequestSchedule(ScheduledActionDeadlineType.Unknown)
             {
                 UserRequestDeadline = DateTimeOffset.Parse("2025-04-17T00:23:56.803Z"),
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "ykcaptgboliddcfyaiuimj";
+            AzureLocation locationparameter = new AzureLocation("ykcaptgboliddcfyaiuimj");
             ExecuteDeallocateContent content = new ExecuteDeallocateContent(new ScheduledActionExecutionParameterDetail
             {
                 OptimizationPreference = ScheduledActionOptimizationPreference.Cost,
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "qqfrkswrovcice";
+            AzureLocation locationparameter = new AzureLocation("qqfrkswrovcice");
             ExecuteDeallocateContent content = new ExecuteDeallocateContent(new ScheduledActionExecutionParameterDetail(), new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource4") }), "b211f086-4b91-4686-a453-2f5c012e4d80");
             DeallocateResourceOperationResult result = await subscriptionResource.ExecuteVirtualMachineDeallocateAsync(locationparameter, content);
 
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "gztd";
+            AzureLocation locationparameter = new AzureLocation("gztd");
             ExecuteHibernateContent content = new ExecuteHibernateContent(new ScheduledActionExecutionParameterDetail
             {
                 OptimizationPreference = ScheduledActionOptimizationPreference.Cost,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "xtmm";
+            AzureLocation locationparameter = new AzureLocation("xtmm");
             ExecuteHibernateContent content = new ExecuteHibernateContent(new ScheduledActionExecutionParameterDetail(), new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource4") }), "b211f086-4b91-4686-a453-2f5c012e4d80");
             HibernateResourceOperationResult result = await subscriptionResource.ExecuteVirtualMachineHibernateAsync(locationparameter, content);
 
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "qk";
+            AzureLocation locationparameter = new AzureLocation("qk");
             ExecuteStartContent content = new ExecuteStartContent(new ScheduledActionExecutionParameterDetail
             {
                 OptimizationPreference = ScheduledActionOptimizationPreference.Cost,
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "fbdewllahrteoavajbomjc";
+            AzureLocation locationparameter = new AzureLocation("fbdewllahrteoavajbomjc");
             ExecuteStartContent content = new ExecuteStartContent(new ScheduledActionExecutionParameterDetail(), new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource4") }), "b211f086-4b91-4686-a453-2f5c012e4d80");
             StartResourceOperationResult result = await subscriptionResource.ExecuteVirtualMachineStartAsync(locationparameter, content);
 
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "oslhbouzgevzpeydssyelhw";
+            AzureLocation locationparameter = new AzureLocation("oslhbouzgevzpeydssyelhw");
             ExecuteCreateContent content = new ExecuteCreateContent(new ResourceProvisionPayload(2)
             {
                 BaseProfile =
@@ -573,7 +573,7 @@ priority = 0,
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "useast";
+            AzureLocation locationparameter = new AzureLocation("useast");
             ExecuteCreateContent content = new ExecuteCreateContent(new ResourceProvisionPayload(2)
             {
                 BaseProfile =
@@ -714,7 +714,7 @@ priority = 0,
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "east";
+            AzureLocation locationparameter = new AzureLocation("east");
             ExecuteDeleteContent content = new ExecuteDeleteContent(new ScheduledActionExecutionParameterDetail
             {
                 RetryPolicy = new UserRequestRetryPolicy
@@ -751,7 +751,7 @@ priority = 0,
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "east";
+            AzureLocation locationparameter = new AzureLocation("east");
             ExecuteDeleteContent content = new ExecuteDeleteContent(new ScheduledActionExecutionParameterDetail(), new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource3"), new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource4") }));
             DeleteResourceOperationResult result = await subscriptionResource.VirtualMachinesExecuteDeleteScheduledActionAsync(locationparameter, content);
 
@@ -777,7 +777,7 @@ priority = 0,
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "ntfcikxsmthfkdhdcjpevmydzu";
+            AzureLocation locationparameter = new AzureLocation("ntfcikxsmthfkdhdcjpevmydzu");
             GetOperationStatusContent content = new GetOperationStatusContent(new string[] { "b211f086-4b91-4686-a453-2f5c012e4d80" }, "b211f086-4b91-4686-a453-2f5c012e4d80");
             GetOperationStatusResult result = await subscriptionResource.GetVirtualMachineOperationStatusAsync(locationparameter, content);
 
@@ -803,7 +803,7 @@ priority = 0,
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "ykvvjfoopmkwznctgaiblzvea";
+            AzureLocation locationparameter = new AzureLocation("ykvvjfoopmkwznctgaiblzvea");
             GetOperationStatusContent content = new GetOperationStatusContent(new string[] { "duhqnwosjzexcfwfhryvy" }, "b211f086-4b91-4686-a453-2f5c012e4d80");
             GetOperationStatusResult result = await subscriptionResource.GetVirtualMachineOperationStatusAsync(locationparameter, content);
 
@@ -829,7 +829,7 @@ priority = 0,
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "nivsvluajruxhmsfgmxjnl";
+            AzureLocation locationparameter = new AzureLocation("nivsvluajruxhmsfgmxjnl");
             CancelOperationsContent content = new CancelOperationsContent(new string[] { "b211f086-4b91-4686-a453-2f5c012e4d80" }, "b211f086-4b91-4686-a453-2f5c012e4d80");
             CancelOperationsResult result = await subscriptionResource.CancelVirtualMachineOperationsAsync(locationparameter, content);
 
@@ -855,7 +855,7 @@ priority = 0,
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "fhdunfivmjiltaiakwhhwdgemfcld";
+            AzureLocation locationparameter = new AzureLocation("fhdunfivmjiltaiakwhhwdgemfcld");
             CancelOperationsContent content = new CancelOperationsContent(new string[] { "b211f086-4b91-4686-a453-2f5c012e4d80" }, "b211f086-4b91-4686-a453-2f5c012e4d80");
             CancelOperationsResult result = await subscriptionResource.CancelVirtualMachineOperationsAsync(locationparameter, content);
 
@@ -881,7 +881,7 @@ priority = 0,
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "ennweqswbghorrgzbet";
+            AzureLocation locationparameter = new AzureLocation("ennweqswbghorrgzbet");
             GetOperationErrorsContent content = new GetOperationErrorsContent(new string[] { "ksufjznokhsbowdupyt" });
             GetOperationErrorsResult result = await subscriptionResource.GetVirtualMachineOperationErrorsAsync(locationparameter, content);
 
@@ -907,7 +907,7 @@ priority = 0,
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string locationparameter = "gcdqwzmxtcn";
+            AzureLocation locationparameter = new AzureLocation("gcdqwzmxtcn");
             GetOperationErrorsContent content = new GetOperationErrorsContent(new string[] { "ksufjznokhsbowdupyt" });
             GetOperationErrorsResult result = await subscriptionResource.GetVirtualMachineOperationErrorsAsync(locationparameter, content);
 
@@ -916,7 +916,7 @@ priority = 0,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetScheduledActionsBySubscription_ScheduledActionsListBySubscriptionMaximumSet()
+        public async Task GetScheduledActions_ScheduledActionsListBySubscriptionMaximumSet()
         {
             // Generated from example definition: 2025-04-15-preview/ScheduledActions_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "ScheduledAction_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -933,9 +933,13 @@ priority = 0,
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ScheduledAction item in subscriptionResource.GetScheduledActionsBySubscriptionAsync())
+            await foreach (ScheduledActionResource item in subscriptionResource.GetScheduledActionsAsync())
             {
-                Console.WriteLine($"Succeeded: {item}");
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ScheduledActionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
             Console.WriteLine("Succeeded");
@@ -943,7 +947,7 @@ priority = 0,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetScheduledActionsBySubscription_ScheduledActionsListBySubscriptionMinimumSet()
+        public async Task GetScheduledActions_ScheduledActionsListBySubscriptionMinimumSet()
         {
             // Generated from example definition: 2025-04-15-preview/ScheduledActions_ListBySubscription_MinimumSet_Gen.json
             // this example is just showing the usage of "ScheduledAction_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -960,9 +964,13 @@ priority = 0,
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ScheduledAction item in subscriptionResource.GetScheduledActionsBySubscriptionAsync())
+            await foreach (ScheduledActionResource item in subscriptionResource.GetScheduledActionsAsync())
             {
-                Console.WriteLine($"Succeeded: {item}");
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ScheduledActionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
             Console.WriteLine("Succeeded");

@@ -169,6 +169,18 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => OccurrenceExtensionResourceModel.DeserializeOccurrenceExtensionResourceModel(e), OccurrenceExtensionClientDiagnostics, Pipeline, "MockableComputeScheduleArmClient.GetOccurrenceByVmsOccurrenceExtensions", "value", "nextLink", cancellationToken);
         }
         /// <summary>
+        /// Gets an object representing a <see cref="ScheduledActionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledActionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScheduledActionResource"/> object. </returns>
+        public virtual ScheduledActionResource GetScheduledActionResource(ResourceIdentifier id)
+        {
+            ScheduledActionResource.ValidateResourceId(id);
+            return new ScheduledActionResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="OccurrenceResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="OccurrenceResource.CreateResourceIdentifier" /> to create an <see cref="OccurrenceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

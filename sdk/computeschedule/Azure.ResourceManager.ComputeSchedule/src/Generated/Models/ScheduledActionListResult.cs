@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="ScheduledActionListResult"/>. </summary>
         /// <param name="value"> The ScheduledAction items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ScheduledActionListResult(IEnumerable<ScheduledAction> value)
+        internal ScheduledActionListResult(IEnumerable<ScheduledActionData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="value"> The ScheduledAction items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionListResult(IReadOnlyList<ScheduledAction> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduledActionListResult(IReadOnlyList<ScheduledActionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> The ScheduledAction items on this page. </summary>
-        public IReadOnlyList<ScheduledAction> Value { get; }
+        public IReadOnlyList<ScheduledActionData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

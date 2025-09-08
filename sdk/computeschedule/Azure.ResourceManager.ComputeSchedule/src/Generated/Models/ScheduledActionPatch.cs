@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> The scheduled action resource. </summary>
-    public partial class ScheduledAction : TrackedResourceData
+    /// <summary> The type used for update operations of the ScheduledAction. </summary>
+    public partial class ScheduledActionPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,33 +45,26 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledAction"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public ScheduledAction(AzureLocation location) : base(location)
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionPatch"/>. </summary>
+        public ScheduledActionPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledAction"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledAction(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ScheduledActionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ScheduledActionPatch(IDictionary<string, string> tags, ScheduledActionUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Tags = tags;
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledAction"/> for deserialization. </summary>
-        internal ScheduledAction()
-        {
-        }
-
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The resource-specific properties for this resource. </summary>
-        public ScheduledActionProperties Properties { get; set; }
+        public ScheduledActionUpdateProperties Properties { get; set; }
     }
 }
