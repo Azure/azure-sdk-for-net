@@ -1,4 +1,4 @@
 directory: specification/hybridkubernetes/HybridKubernetes.Management
-commit: f7c9ea960844b30baa67be4c39c33c1b2c03592b
+commit: 6d9f8c3bd6687dc954b209f7c399e971cf892d4b
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
