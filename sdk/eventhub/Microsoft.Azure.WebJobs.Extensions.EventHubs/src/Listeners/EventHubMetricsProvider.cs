@@ -55,6 +55,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
                 return metrics;
             }
 
+            // Get the PartitionRuntimeInformation for all partitions
             _logger.LogInformation($"Querying partition information for {partitions.Length} partitions.");
             var partitionPropertiesTasks = new Task<PartitionProperties>[partitions.Length];
 
@@ -66,9 +67,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             await Task.WhenAll(partitionPropertiesTasks).ConfigureAwait(false);
             EventProcessorCheckpoint[] checkpoints = null;
 
+            const int ConcurrencyLimit = 50;
             try
             {
-                using var semaphore = new SemaphoreSlim(50, 50);
+                using var semaphore = new SemaphoreSlim(ConcurrencyLimit, ConcurrencyLimit);
                 using var cts = new CancellationTokenSource();
                 var checkpointTasks = partitions.Select(async partition =>
                 {
@@ -82,10 +84,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
                             partition,
                             cts.Token).ConfigureAwait(false);
                     }
-                    catch
+                    catch (Exception e)
                     {
                         if (!cts.Token.IsCancellationRequested)
                         {
+                            _logger.LogDebug($"Requesting cancellation of other checkpoint tasks. Error encountered while getting checkpoint for eventhub '{_client.EventHubName}', partition '{partition}': {e.Message}");
                             cts.Cancel();
                         }
                         throw;
