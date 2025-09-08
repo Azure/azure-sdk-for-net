@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net8.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>CustomerServiceBot</AssemblyName>
+    <RootNamespace>Azure.AI.VoiceLive.Samples</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity"/>
+    <PackageReference Include="NAudio" VersionOverride="2.2.1"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration" VersionOverride="8.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" VersionOverride="8.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" VersionOverride="8.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Logging" VersionOverride="8.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" VersionOverride="8.0.0"/>
+    <PackageReference Include="System.CommandLine" VersionOverride="2.0.0-beta4.22272.1" />
+    <PackageReference Include="System.Threading.Channels" VersionOverride="9.0.8"/>
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Azure.AI.VoiceLive.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Target Name="OverwriteWithDevelopmentSettings" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
+    <Copy SourceFiles="appsettings.development.json"
+          DestinationFiles="$(OutputPath)appsettings.json"
+          OverwriteReadOnlyFiles="true"
+          Condition="Exists('appsettings.development.json')" />
+  </Target>
+
+</Project>

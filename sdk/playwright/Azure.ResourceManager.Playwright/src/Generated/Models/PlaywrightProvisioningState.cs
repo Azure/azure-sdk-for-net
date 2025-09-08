@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Playwright.Models
         public static PlaywrightProvisioningState Failed { get; } = new PlaywrightProvisioningState(FailedValue);
         /// <summary> Resource creation was canceled. </summary>
         public static PlaywrightProvisioningState Canceled { get; } = new PlaywrightProvisioningState(CanceledValue);
-        /// <summary> Creation in progress.. </summary>
+        /// <summary> Resource creation is in progress. </summary>
         public static PlaywrightProvisioningState Creating { get; } = new PlaywrightProvisioningState(CreatingValue);
-        /// <summary> Deletion in progress.. </summary>
+        /// <summary> Resource deletion is in progress. </summary>
         public static PlaywrightProvisioningState Deleting { get; } = new PlaywrightProvisioningState(DeletingValue);
-        /// <summary> Request accepted for processing.. </summary>
+        /// <summary> Request has been accepted for processing. </summary>
         public static PlaywrightProvisioningState Accepted { get; } = new PlaywrightProvisioningState(AcceptedValue);
         /// <summary> Determines if two <see cref="PlaywrightProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PlaywrightProvisioningState left, PlaywrightProvisioningState right) => left.Equals(right);

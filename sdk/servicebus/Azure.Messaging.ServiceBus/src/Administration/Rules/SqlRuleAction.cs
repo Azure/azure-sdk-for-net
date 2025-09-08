@@ -71,27 +71,29 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <inheritdoc/>
         public override bool Equals(RuleAction other)
         {
-            if (other is SqlRuleAction sqlRuleAction)
+            if (other is not SqlRuleAction sqlRuleAction)
             {
-                if (string.Equals(SqlExpression, sqlRuleAction.SqlExpression, StringComparison.OrdinalIgnoreCase))
+                return false;
+            }
+
+            if (string.Equals(SqlExpression, sqlRuleAction.SqlExpression, StringComparison.OrdinalIgnoreCase))
+            {
+                if (Parameters.Count != sqlRuleAction.Parameters.Count)
                 {
-                    if (Parameters.Count != sqlRuleAction.Parameters.Count)
+                    return false;
+                }
+
+                foreach (var param in Parameters)
+                {
+                    if (!sqlRuleAction.Parameters.TryGetValue(param.Key, out var otherParamValue) ||
+                        (param.Value == null ^ otherParamValue == null) ||
+                        (param.Value != null && !param.Value.Equals(otherParamValue)))
                     {
                         return false;
                     }
-
-                    foreach (var param in Parameters)
-                    {
-                        if (!sqlRuleAction.Parameters.TryGetValue(param.Key, out var otherParamValue) ||
-                            (param.Value == null ^ otherParamValue == null) ||
-                            (param.Value != null && !param.Value.Equals(otherParamValue)))
-                        {
-                            return false;
-                        }
-                    }
-
-                    return true;
                 }
+
+                return true;
             }
 
             return false;

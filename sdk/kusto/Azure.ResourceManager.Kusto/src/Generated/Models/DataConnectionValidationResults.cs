@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The list of Kusto data connection validation errors. </summary>
+        [WirePath("value")]
         public IReadOnlyList<DataConnectionValidationResult> Value { get; }
     }
 }

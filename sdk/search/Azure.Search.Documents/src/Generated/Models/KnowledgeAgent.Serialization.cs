@@ -43,17 +43,27 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("targetIndexes"u8);
+            writer.WritePropertyName("knowledgeSources"u8);
             writer.WriteStartArray();
-            foreach (var item in TargetIndexes)
+            foreach (var item in KnowledgeSources)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(OutputConfiguration))
+            {
+                writer.WritePropertyName("outputConfiguration"u8);
+                writer.WriteObjectValue(OutputConfiguration, options);
+            }
             if (Optional.IsDefined(RequestLimits))
             {
                 writer.WritePropertyName("requestLimits"u8);
                 writer.WriteObjectValue(RequestLimits, options);
+            }
+            if (Optional.IsDefined(RetrievalInstructions))
+            {
+                writer.WritePropertyName("retrievalInstructions"u8);
+                writer.WriteStringValue(RetrievalInstructions);
             }
             if (Optional.IsDefined(_eTag))
             {
@@ -116,8 +126,10 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             IList<KnowledgeAgentModel> models = default;
-            IList<KnowledgeAgentTargetIndex> targetIndexes = default;
+            IList<KnowledgeSourceReference> knowledgeSources = default;
+            KnowledgeAgentOutputConfiguration outputConfiguration = default;
             KnowledgeAgentRequestLimits requestLimits = default;
+            string retrievalInstructions = default;
             string odataEtag = default;
             SearchResourceEncryptionKey encryptionKey = default;
             string description = default;
@@ -140,14 +152,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     models = array;
                     continue;
                 }
-                if (property.NameEquals("targetIndexes"u8))
+                if (property.NameEquals("knowledgeSources"u8))
                 {
-                    List<KnowledgeAgentTargetIndex> array = new List<KnowledgeAgentTargetIndex>();
+                    List<KnowledgeSourceReference> array = new List<KnowledgeSourceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgeAgentTargetIndex.DeserializeKnowledgeAgentTargetIndex(item, options));
+                        array.Add(KnowledgeSourceReference.DeserializeKnowledgeSourceReference(item, options));
                     }
-                    targetIndexes = array;
+                    knowledgeSources = array;
+                    continue;
+                }
+                if (property.NameEquals("outputConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outputConfiguration = KnowledgeAgentOutputConfiguration.DeserializeKnowledgeAgentOutputConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("requestLimits"u8))
@@ -157,6 +178,11 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     requestLimits = KnowledgeAgentRequestLimits.DeserializeKnowledgeAgentRequestLimits(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("retrievalInstructions"u8))
+                {
+                    retrievalInstructions = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"u8))
@@ -188,8 +214,10 @@ namespace Azure.Search.Documents.Indexes.Models
             return new KnowledgeAgent(
                 name,
                 models,
-                targetIndexes,
+                knowledgeSources,
+                outputConfiguration,
                 requestLimits,
+                retrievalInstructions,
                 odataEtag,
                 encryptionKey,
                 description,
