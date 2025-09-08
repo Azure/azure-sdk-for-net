@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -93,7 +94,8 @@ internal ref struct JsonPathReader
         switch (current)
         {
             case DollarSign:
-                Current = new JsonPathToken(JsonPathTokenType.Root, _consumed++, _jsonPath.Slice(_consumed - 1, 1));
+                var tokenSlice = _jsonPath.Slice(_consumed, 1);
+                Current = new JsonPathToken(JsonPathTokenType.Root, _consumed++, tokenSlice);
                 return true;
 
             case Dot:
@@ -216,6 +218,7 @@ internal ref struct JsonPathReader
     {
         var localJsonPath = _jsonPath;
         byte quote = localJsonPath[_consumed];
+        Debug.Assert(quote == SingleQuote || quote == DoubleQuote, "ReadQuotedString should only be called if _consumed is pointing at a single or double quote character");
         int initial = ++_consumed; // Skip opening quote
 
         while (_consumed < _length)

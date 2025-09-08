@@ -650,7 +650,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var model = GetInitialModel();
 
-            Assert.Throws<Exception>(() => model.Patch.GetString("$.properties.unknownArray[0].id"u8));
+            Assert.Throws<InvalidOperationException>(() => model.Patch.GetString("$.properties.unknownArray[0].id"u8));
         }
 
         [Test]
@@ -692,6 +692,28 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             Assert.AreEqual("brazilsouth", model2.Items[2].Location.ToString());
             Assert.AreEqual("brazilsouth", model2.Patch.GetString("$[2].location"u8));
+        }
+
+        [Test]
+        public void DoubleSerializeArray()
+        {
+            var model = GetInitialModel();
+
+            model.VirtualMachines.Add(new WritableSubResource() { Id = "myExistingVmId" });
+
+            model.Patch.Append("$.properties.virtualMachines"u8, Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new { id = "myNewVmId" }, s_camelCaseOptions)));
+
+            Assert.AreEqual("[{\"id\":\"myNewVmId\"}]", model.Patch.GetJson("$.properties.virtualMachines"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myNewVmId\"}", model.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToString());
+            Assert.AreEqual("myNewVmId", model.Patch.GetString("$.properties.virtualMachines[0].id"u8));
+
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3,\"virtualMachines\":[{\"id\":\"myExistingVmId\"},{\"id\":\"myNewVmId\"}]},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}",
+                ModelReaderWriter.Write(model).ToString());
+
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3,\"virtualMachines\":[{\"id\":\"myExistingVmId\"},{\"id\":\"myNewVmId\"}]},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}",
+                ModelReaderWriter.Write(model).ToString());
         }
     }
 }

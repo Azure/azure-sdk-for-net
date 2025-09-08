@@ -6,34 +6,20 @@ namespace System.ClientModel.Primitives;
 public partial struct JsonPatch
 {
     /// <summary>
-    /// .
+    /// A patch value that has been encoded in UTF-8 bytes along with its value kind.
     /// </summary>
-    public struct EncodedValue
+    public readonly struct EncodedValue
     {
-        /// <summary>
-        /// .
-        /// </summary>
         internal static EncodedValue Empty => new(ValueKind.None, ReadOnlyMemory<byte>.Empty);
 
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="kind"></param>
-        /// <param name="value"></param>
         internal EncodedValue(ValueKind kind, ReadOnlyMemory<byte> value)
         {
             Kind = kind;
             Value = value;
         }
 
-        /// <summary>
-        /// .
-        /// </summary>
-        internal ValueKind Kind { get; set; }
+        internal ValueKind Kind { get; }
 
-        /// <summary>
-        /// .
-        /// </summary>
         internal ReadOnlyMemory<byte> Value { get; }
     }
 }

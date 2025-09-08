@@ -54,7 +54,7 @@ public partial struct JsonPatch
     /// <param name="getter">The <see cref="PropagatorSetter"/> callback to use.</param>
     /// <param name="isFlattened">The <see cref="PropagatorIsFlattened"/> callback to use.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public void SetPropagators(PropagatorSetter setter, PropagatorGetter getter, PropagatorIsFlattened isFlattened)
+    public void SetPropagators(PropagatorSetter setter, PropagatorGetter getter, PropagatorIsFlattened? isFlattened)
     {
         _propagatorSetter = setter;
         _propagatorGetter = getter;
@@ -1050,233 +1050,233 @@ public partial struct JsonPatch
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, bool value)
+    public void Append(ReadOnlySpan<byte> arrayPath, bool value)
     {
         var encodedValue = EncodeValue(value);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, byte value)
+    public void Append(ReadOnlySpan<byte> arrayPath, byte value)
     {
         var encodedValue = EncodeValue(value);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
     /// <param name="format">The format to encode the value into.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, DateTime value, StandardFormat format = default)
+    public void Append(ReadOnlySpan<byte> arrayPath, DateTime value, StandardFormat format = default)
     {
         var encodedValue = EncodeValue(value, format);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
     /// <param name="format">The format to encode the value into.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, DateTimeOffset value, StandardFormat format = default)
+    public void Append(ReadOnlySpan<byte> arrayPath, DateTimeOffset value, StandardFormat format = default)
     {
         var encodedValue = EncodeValue(value, format);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, decimal value)
+    public void Append(ReadOnlySpan<byte> arrayPath, decimal value)
     {
         var encodedValue = EncodeValue(value);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, double value)
+    public void Append(ReadOnlySpan<byte> arrayPath, double value)
     {
         var encodedValue = EncodeValue(value);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, float value)
+    public void Append(ReadOnlySpan<byte> arrayPath, float value)
     {
         var encodedValue = EncodeValue(value);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, Guid value)
+    public void Append(ReadOnlySpan<byte> arrayPath, Guid value)
     {
         var encodedValue = EncodeValue(value);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, int value)
+    public void Append(ReadOnlySpan<byte> arrayPath, int value)
     {
         var encodedValue = EncodeValue(value);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, long value)
+    public void Append(ReadOnlySpan<byte> arrayPath, long value)
     {
         var encodedValue = EncodeValue(value);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, sbyte value)
+    public void Append(ReadOnlySpan<byte> arrayPath, sbyte value)
     {
         var encodedValue = EncodeValue(value);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, short value)
+    public void Append(ReadOnlySpan<byte> arrayPath, short value)
     {
         var encodedValue = EncodeValue(value);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
     /// <param name="format">The format to encode the value into.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, TimeSpan value, StandardFormat format = default)
+    public void Append(ReadOnlySpan<byte> arrayPath, TimeSpan value, StandardFormat format = default)
     {
         var encodedValue = EncodeValue(value);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, uint value)
+    public void Append(ReadOnlySpan<byte> arrayPath, uint value)
     {
         var encodedValue = EncodeValue(value);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, ulong value)
+    public void Append(ReadOnlySpan<byte> arrayPath, ulong value)
     {
         var encodedValue = EncodeValue(value);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, ushort value)
+    public void Append(ReadOnlySpan<byte> arrayPath, ushort value)
     {
         var encodedValue = EncodeValue(value);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="value">The value to append.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, string value)
+    public void Append(ReadOnlySpan<byte> arrayPath, string value)
     {
         EncodedValue encodedValue = EncodeValue(value);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="utf8Json">The utf8 json to insert.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, byte[] utf8Json)
+    public void Append(ReadOnlySpan<byte> arrayPath, byte[] utf8Json)
     {
         var encodedValue = EncodeValue(utf8Json);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="utf8Json">The utf8 json to insert.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, BinaryData utf8Json)
+    public void Append(ReadOnlySpan<byte> arrayPath, BinaryData utf8Json)
     {
         var encodedValue = EncodeValue(utf8Json);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
     /// <param name="utf8Json">The utf8 json to insert.</param>
-    public void Append(ReadOnlySpan<byte> jsonPath, ReadOnlySpan<byte> utf8Json)
+    public void Append(ReadOnlySpan<byte> arrayPath, ReadOnlySpan<byte> utf8Json)
     {
         var encodedValue = EncodeValue(utf8Json);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+        SetInternal(arrayPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 
     /// <summary>
     /// Appends NULL to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath">The JSON path pointing at the array.</param>
-    public void AppendNull(ReadOnlySpan<byte> jsonPath)
+    /// <param name="arrayPath">The JSON path pointing at the array.</param>
+    public void AppendNull(ReadOnlySpan<byte> arrayPath)
     {
-        SetInternal(jsonPath, new(ValueKind.Null | ValueKind.ArrayItemAppend, s_nullValueArray.Value));
+        SetInternal(arrayPath, new(ValueKind.Null | ValueKind.ArrayItemAppend, s_nullValueArray.Value));
     }
     #endregion
 

@@ -11,9 +11,14 @@ namespace System.ClientModel.Primitives;
 
 internal static class JsonPathReaderExtensions
 {
+    /// <summary>
+    /// Converts JSON path RFC 9535 to JSON Pointer RFC 6901 format.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path to convert.</param>
+    /// <param name="buffer">The buffer to write the JSON pointer into.</param>
+    /// <param name="isArrayAppend">True if the jsonPath represents an array append operation.</param>
     public static int ConvertToJsonPointer(this byte[] jsonPath, Span<byte> buffer, bool isArrayAppend = false)
     {
-        //Converts JSON path RFC 9535 to JSON Pointer RFC 6901 format.
         //TODO: escape ~ to ~0 and / to ~1 in property names
         ReadOnlySpan<byte> jsonPathSpan = jsonPath.AsSpan();
         if (jsonPathSpan.SequenceEqual("$"u8))
@@ -80,6 +85,12 @@ internal static class JsonPathReaderExtensions
     public static ReadOnlySpan<byte> GetPropertyName(this byte[] jsonPath)
          => GetPropertyName(jsonPath.AsSpan());
 
+    /// <summary>
+    /// Gets the first parent path that is not an array index from the specified JSON path.
+    /// For example for the JSON path "$.store.book[0].title", this method will return "$.store.book[0].title".
+    /// If the JSON path is "$.store.book[0][1]", this method will return "$.store.book".
+    /// </summary>
+    /// <param name="jsonPath">The JSON path to process.</param>
     public static ReadOnlySpan<byte> GetFirstNonIndexParent(this byte[] jsonPath)
     {
         int index = 0;
@@ -102,26 +113,33 @@ internal static class JsonPathReaderExtensions
     public static bool IsArrayIndex(this ReadOnlySpan<byte> jsonPath)
         => IsArrayIndex(jsonPath, out _);
 
-    private static bool IsArrayIndex(this ReadOnlySpan<byte> jsonPath, out int index)
+    /// <summary>
+    /// Determines whether the specified JSON path segment represents a valid array index and extracts the index
+    /// position if it does.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path to test.</param>
+    /// <param name="indexPosition">The position of the first digit in the index.</param>
+    /// <returns>True if the <paramref name="jsonPath"/> is an array index otherwise false.</returns>
+    private static bool IsArrayIndex(this ReadOnlySpan<byte> jsonPath, out int indexPosition)
     {
-        index = 0;
+        indexPosition = 0;
         if (jsonPath.Length < 4)
             return false;
 
-        index = jsonPath.Length - 1;
-        if (jsonPath[index] != (byte)']')
+        indexPosition = jsonPath.Length - 1;
+        if (jsonPath[indexPosition] != (byte)']')
             return false;
 
-        while (--index >= 0 && jsonPath[index] != (byte)'[')
+        while (--indexPosition >= 0 && jsonPath[indexPosition] != (byte)'[')
         {
-            if (!JsonPathReader.IsDigit(jsonPath[index]))
+            if (!JsonPathReader.IsDigit(jsonPath[indexPosition]))
                 return false;
         }
 
-        if (index < 0 || jsonPath[index] != (byte)'[')
+        if (indexPosition < 0 || jsonPath[indexPosition] != (byte)'[')
             return false;
 
-        index--;
+        indexPosition--;
         return true;
     }
 
@@ -129,6 +147,12 @@ internal static class JsonPathReaderExtensions
     public static ReadOnlySpan<byte> GetFirstProperty(this ReadOnlySpan<byte> jsonPath)
         => new JsonPathReader(jsonPath).GetFirstProperty();
 
+    /// <summary>
+    /// Extracts the first property name from a JSON path slice, ignoring any leading root or array index syntax.
+    /// Does not assume we have a full JSON path, just a slice that may start with a property name.
+    /// For example, for the JSON path slice ".store.book[0].title", this method will return "store".
+    /// </summary>
+    /// <param name="slice">The slice of a JSON path to process.</param>
     public static ReadOnlySpan<byte> GetPropertyNameFromSlice(this ReadOnlySpan<byte> slice)
     {
         if (slice.IsEmpty)
@@ -164,6 +188,12 @@ internal static class JsonPathReaderExtensions
         return slice.Slice(start);
     }
 
+    /// <summary>
+    /// Gets the property name of the current JSON path.
+    /// For example for the JSON path "$.store.book[0].title", this method will return "title".
+    /// </summary>
+    /// <param name="jsonPath">The JSON path to get the property name from.</param>
+    /// <exception cref="ArgumentException">If the <paramref name="jsonPath"/> does not start with '$'.</exception>
     public static ReadOnlySpan<byte> GetPropertyName(this ReadOnlySpan<byte> jsonPath)
     {
         if (jsonPath.IsEmpty || jsonPath[0] != (byte)'$')
@@ -188,6 +218,12 @@ internal static class JsonPathReaderExtensions
     public static ReadOnlySpan<byte> GetParent(this byte[] jsonPath)
         => GetParent(jsonPath.AsSpan());
 
+    /// <summary>
+    /// Gets the parent JSON path of the specified JSON path.
+    /// For example for the JSON path "$.store.book[0].title", this method will return "$.store.book[0]".
+    /// </summary>
+    /// <param name="jsonPath">The JSON path to get the parent of.</param>
+    /// <exception cref="ArgumentException">If the <paramref name="jsonPath"/> does not start with '$'.</exception>
     public static ReadOnlySpan<byte> GetParent(this ReadOnlySpan<byte> jsonPath)
     {
         if (jsonPath.IsEmpty || jsonPath[0] != (byte)'$')
@@ -230,6 +266,12 @@ internal static class JsonPathReaderExtensions
     public static ReadOnlySpan<byte> GetIndexSpan(this byte[] jsonPath)
         => GetIndexSpan(jsonPath.AsSpan());
 
+    /// <summary>
+    /// Gets the index span of the current JSON path if it is an array index.
+    /// For example for the JSON path "$.store.book[0]", this method will return "0".
+    /// </summary>
+    /// <param name="jsonPath">The JSON path to process.</param>
+    /// <exception cref="ArgumentException">If the <paramref name="jsonPath"/> does not start with '$'.</exception>
     public static ReadOnlySpan<byte> GetIndexSpan(this ReadOnlySpan<byte> jsonPath)
     {
         if (jsonPath.IsEmpty || jsonPath[0] != (byte)'$')
@@ -254,10 +296,21 @@ internal static class JsonPathReaderExtensions
     public static bool IsRoot(this byte[] jsonPath)
         => IsRoot(jsonPath.AsSpan());
 
+    /// <summary>
+    /// Gets whether or not the specified JSON path represents the root of the JSON document.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path to test.</param>
+    /// <returns>True if <paramref name="jsonPath"/> is the root '$' otherwise false.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsRoot(this ReadOnlySpan<byte> jsonPath)
         => "$"u8.SequenceEqual(jsonPath);
 
+    /// <summary>
+    /// Removes the JSON value at the specified JSON path from the JSON byte array.
+    /// </summary>
+    /// <param name="json">The UTF8 json to modify.</param>
+    /// <param name="jsonPath">The JSON path to remove.</param>
+    /// <returns>The modified JSON excluding the value found at <paramref name="jsonPath"/>.</returns>
     public static byte[] Remove(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> jsonPath)
     {
         Find(json.Span, jsonPath, out Utf8JsonReader jsonReader);
@@ -288,12 +341,29 @@ internal static class JsonPathReaderExtensions
                jsonReader.ValueSpan.SequenceEqual(jsonPath.GetPropertyName());
     }
 
+    /// <summary>
+    /// Sets the value of the JSON at the specified JSON path to the provided replacement JSON value.
+    /// If the <paramref name="jsonPath"/> does not exist in the original JSON, it will be added with the <paramref name="jsonReplacement"/> value.
+    /// </summary>
+    /// <param name="json">The original UTF8 JSON.</param>
+    /// <param name="jsonPath">The JSON path to replace.</param>
+    /// <param name="jsonReplacement">The new UTF8 JSON to replace.</param>
+    /// <returns>The modified JSON which has the <paramref name="jsonReplacement"/> at the <paramref name="jsonPath"/>.</returns>
     public static byte[] Set(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> jsonPath, ReadOnlyMemory<byte> jsonReplacement)
     {
         bool found = TryFind(json.Span, jsonPath, out Utf8JsonReader jsonReader);
         return jsonReader.SetCurrentValue(found, jsonPath.GetPropertyName(), json, jsonReplacement);
     }
 
+    /// <summary>
+    /// Sets the value of the JSON at the current position of the <paramref name="jsonReader"/> to the provided replacement JSON value.
+    /// </summary>
+    /// <param name="jsonReader">The <see cref="Utf8JsonReader"/> pointing at the position to insert.</param>
+    /// <param name="wasFound">Indicates if the value previously existed and should be replaced.</param>
+    /// <param name="propertyName">The name of the property insert.</param>
+    /// <param name="json">The original UTF8 JSON.</param>
+    /// <param name="jsonReplacement">The new value to insert at the current position.</param>
+    /// <returns>The modified JSON which has <paramref name="jsonReplacement"/> inserted at the current position of <paramref name="jsonReader"/>.</returns>
     public static byte[] SetCurrentValue(this Utf8JsonReader jsonReader, bool wasFound, ReadOnlySpan<byte> propertyName, ReadOnlyMemory<byte> json, ReadOnlyMemory<byte> jsonReplacement)
     {
         if (wasFound)
@@ -328,6 +398,10 @@ internal static class JsonPathReaderExtensions
     internal static bool IsArrayWrapped(this ReadOnlyMemory<byte> json)
         => IsArrayWrapped(json.Span);
 
+    /// <summary>
+    /// Determines whether or not the specified JSON byte array is wrapped in an array (i.e. starts with '[' and ends with ']').
+    /// </summary>
+    /// <param name="json">The UTF8 JSON to test.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static bool IsArrayWrapped(this ReadOnlySpan<byte> json)
     {
@@ -404,6 +478,15 @@ internal static class JsonPathReaderExtensions
         return result;
     }
 
+    /// <summary>
+    /// Inserts the specified JSON value at the specified array path in the original JSON byte array.
+    /// If the array at the specified path does not exist, it will be created and filled with null values up to the specified index.
+    /// </summary>
+    /// <param name="json">The original UTF8 JSON.</param>
+    /// <param name="arrayPath">The JSON path pointing to the array index to be inserted.</param>
+    /// <param name="jsonToInsert">The UTF8 JSON to insert.</param>
+    /// <returns>The modified JSON with the <paramref name="jsonToInsert"/> inserted at the <paramref name="arrayPath"/>.</returns>
+    /// <exception cref="FormatException">If the parent of <paramref name="arrayPath"/> is not an array.</exception>
     public static byte[] InsertAt(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> arrayPath, ReadOnlyMemory<byte> jsonToInsert)
     {
         int parentIndex = 0;
@@ -469,12 +552,28 @@ internal static class JsonPathReaderExtensions
         }
     }
 
+    /// <summary>
+    /// Appends the specified JSON value to the end of the array at the specified array path in the original JSON byte array.
+    /// </summary>
+    /// <param name="json">The original UTF8 JSON.</param>
+    /// <param name="arrayPath">The JSON path to the array.</param>
+    /// <param name="jsonToInsert">The UTF8 JSON to insert.</param>
+    /// <returns>The modified JSON with the <paramref name="jsonToInsert"/> appended to the end of <paramref name="arrayPath"/>.</returns>
     public static byte[] Append(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> arrayPath, ReadOnlyMemory<byte> jsonToInsert)
     {
         Find(json.Span, arrayPath, out Utf8JsonReader jsonReader);
         return jsonReader.Insert(json, ReadOnlySpan<byte>.Empty, jsonToInsert);
     }
 
+    /// <summary>
+    /// Inserts the specified JSON value at the current position of the <paramref name="jsonReader"/> in the original JSON byte array.
+    /// </summary>
+    /// <param name="jsonReader">The <see cref="Utf8JsonReader"/> pointing at the place to insert.</param>
+    /// <param name="json">The original UTF8 JSON.</param>
+    /// <param name="propertyName">The property name to insert.</param>
+    /// <param name="jsonToInsert">The UTF8 JSON to insert.</param>
+    /// <param name="hasPreviousItems">Indicates if the array was originally empty if <paramref name="jsonReader"/> is pointing inside an array.</param>
+    /// <returns>The modified JSON with the <paramref name="jsonToInsert"/> inserted at the current position of <paramref name="jsonReader"/>.</returns>
     internal static byte[] Insert(
         ref this Utf8JsonReader jsonReader,
         ReadOnlyMemory<byte> json,
@@ -611,6 +710,13 @@ internal static class JsonPathReaderExtensions
         return false;
     }
 
+    /// <summary>
+    /// Tries to get the JSON value at the specified JSON path from the original JSON byte array.
+    /// </summary>
+    /// <param name="json">The UTF8 JSON to search in.</param>
+    /// <param name="jsonPath">The JSON path to find.</param>
+    /// <param name="target">The UTF8 JSON value at <paramref name="jsonPath"/> if it exists.</param>
+    /// <returns>True if the <paramref name="jsonPath"/> was found in <paramref name="json"/> otherwise false.</returns>
     public static bool TryGetJson(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> jsonPath, out ReadOnlyMemory<byte> target)
     {
         target = ReadOnlyMemory<byte>.Empty;
@@ -634,11 +740,17 @@ internal static class JsonPathReaderExtensions
         return true;
     }
 
+    /// <summary>
+    /// Gets the JSON value at the specified JSON path from the original JSON byte array.
+    /// </summary>
+    /// <param name="json">The UTF8 JSON to search in.</param>
+    /// <param name="jsonPath">The JSON path to find.</param>
+    /// <exception cref="InvalidOperationException">If <paramref name="jsonPath"/> was not found in <paramref name="json"/>.</exception>
     public static ReadOnlyMemory<byte> GetJson(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> jsonPath)
     {
         if (!TryGetJson(json, jsonPath, out var target))
         {
-            throw new Exception($"{Encoding.UTF8.GetString(jsonPath.ToArray())} was not found in the JSON structure.");
+            throw new InvalidOperationException($"{Encoding.UTF8.GetString(jsonPath.ToArray())} was not found in the JSON structure.");
         }
         return target;
     }
@@ -647,7 +759,7 @@ internal static class JsonPathReaderExtensions
     {
         if (!TryFind(json, jsonPath, out jsonReader))
         {
-            throw new Exception($"{Encoding.UTF8.GetString(jsonPath.ToArray())} was not found in the JSON structure.");
+            throw new InvalidOperationException($"{Encoding.UTF8.GetString(jsonPath.ToArray())} was not found in the JSON structure.");
         }
     }
 
@@ -663,16 +775,22 @@ internal static class JsonPathReaderExtensions
         return jsonReader.Advance(jsonPath);
     }
 
+    /// <summary>
+    /// Gets the length of the array at the specified JSON path from the original JSON byte array.
+    /// </summary>
+    /// <param name="jsonReader"><see cref="Utf8JsonReader"/> holding the JSON to read.</param>
+    /// <param name="arrayPath">The JSON path to search for.</param>
+    /// <exception cref="InvalidOperationException">If <paramref name="arrayPath"/> is not an array or if <paramref name="arrayPath"/> was not found in <paramref name="jsonReader"/>.</exception>
     public static int GetArrayLength(ref this Utf8JsonReader jsonReader, ReadOnlySpan<byte> arrayPath)
     {
         if (!jsonReader.Advance(arrayPath))
-            throw new Exception($"{Encoding.UTF8.GetString(arrayPath.ToArray())} was not found in the JSON structure.");
+            throw new InvalidOperationException($"{Encoding.UTF8.GetString(arrayPath.ToArray())} was not found in the JSON structure.");
 
         if (jsonReader.TokenType == JsonTokenType.PropertyName)
             jsonReader.Read(); // Move to the value after the property name
 
         if (jsonReader.TokenType != JsonTokenType.StartArray)
-            throw new Exception($"{Encoding.UTF8.GetString(arrayPath.ToArray())} is not an array.");
+            throw new InvalidOperationException($"{Encoding.UTF8.GetString(arrayPath.ToArray())} is not an array.");
 
         int length = 0;
         while (jsonReader.Read() && jsonReader.TokenType != JsonTokenType.EndArray)
@@ -684,6 +802,12 @@ internal static class JsonPathReaderExtensions
         return length;
     }
 
+    /// <summary>
+    /// Advances the <see cref="Utf8JsonReader"/> to the position specified by the provided JSON path.
+    /// </summary>
+    /// <param name="jsonReader">The <see cref="Utf8JsonReader"/> to advance.</param>
+    /// <param name="jsonPath">The JSON path to advance to.</param>
+    /// <exception cref="ArgumentException">If <paramref name="jsonPath"/> does not start with '$'.</exception>
     public static bool Advance(ref this Utf8JsonReader jsonReader, ReadOnlySpan<byte> jsonPath)
     {
         if (jsonPath.IsEmpty || jsonPath[0] != (byte)'$')
@@ -693,6 +817,11 @@ internal static class JsonPathReaderExtensions
         return jsonReader.Advance(ref pathReader);
     }
 
+    /// <summary>
+    /// Advances the <see cref="Utf8JsonReader"/> to the position specified by the provided <see cref="JsonPathReader"/>.
+    /// </summary>
+    /// <param name="jsonReader">The <see cref="Utf8JsonReader"/> to advance.</param>
+    /// <param name="pathReader">The <paramref name="pathReader"/> that holds the JSON path to find.</param>
     public static bool Advance(ref this Utf8JsonReader jsonReader, ref JsonPathReader pathReader)
     {
         while (pathReader.Read())
@@ -745,6 +874,13 @@ internal static class JsonPathReaderExtensions
         return false;
     }
 
+    /// <summary>
+    /// Given a <see cref="Utf8JsonReader"/> positioned at the start of an array, skips to the specified index in the array.
+    /// </summary>
+    /// <param name="jsonReader">The <see cref="Utf8JsonReader"/> pointed at an array.</param>
+    /// <param name="indexToFind">The index to skip to.</param>
+    /// <param name="maxIndex">The max index found.</param>
+    /// <returns>Try if the index was found otherwise false.</returns>
     internal static bool SkipToIndex(ref this Utf8JsonReader jsonReader, int indexToFind, out int maxIndex)
     {
         maxIndex = 0;

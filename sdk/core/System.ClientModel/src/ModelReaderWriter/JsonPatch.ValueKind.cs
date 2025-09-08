@@ -18,7 +18,7 @@ public partial struct JsonPatch
         BooleanTrue = 1 << 5,
         BooleanFalse = 1 << 6,
         ArrayItemAppend = 1 << 7,
-        Written = 1 << 8,
+        ModelOwned = 1 << 8,
         DateTime = 1 << 9,
         Guid = 1 << 10,
         TimeSpan = 1 << 11,

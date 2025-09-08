@@ -52,6 +52,14 @@ internal class JsonPathComparer : IEqualityComparer<byte[]>
     public byte[] Create(ReadOnlySpan<byte> alternate)
         => alternate.ToArray();
 
+    /// <summary>
+    /// There are multiple ways to represent a JSON path. This method normalizes the JSON path to a canonical form that can be used for comparison.
+    /// As an example $.x is the same as $['x'] and also the same as $["x"]. This method will convert all of these to $.x.
+    /// In the event that the property name contains a dot that single property will use ['x.y'] format to represent the property name with a dot in it.
+    /// </summary>
+    /// <param name="jsonPath">The json path to convert.</param>
+    /// <param name="buffer">Buffer to write the normalized path into.</param>
+    /// <param name="bytesWritten">The number of bytes written into <paramref name="buffer"/>.</param>
     public void Normalize(ReadOnlySpan<byte> jsonPath, Span<byte> buffer, out int bytesWritten)
     {
         ReadOnlySpan<byte> localPath = jsonPath;
@@ -114,21 +122,7 @@ internal class JsonPathComparer : IEqualityComparer<byte[]>
         Span<byte> buffer = stackalloc byte[jsonPath.Length];
         Normalize(jsonPath, buffer, out int bytesWritten);
         buffer = buffer.Slice(0, bytesWritten);
-#if NET8_0_OR_GREATER
-        var hash = new HashCode();
-        hash.AddBytes(buffer);
-        return hash.ToHashCode();
-#else
-        unchecked
-        {
-            int hash = 17;
-            for (int i = 0; i < buffer.Length; i++)
-            {
-                hash = hash * 31 + buffer[i];
-            }
-            return hash;
-        }
-#endif
+        return GetHashCode(buffer);
     }
 
     public bool NormalizedEquals(ReadOnlySpan<byte> x, ReadOnlySpan<byte> y)

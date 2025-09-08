@@ -33,7 +33,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         public void GetJson_NotFound_Throws(string jsonStr, string jsonPathStr)
         {
             ReadOnlyMemory<byte> json = Encoding.UTF8.GetBytes(jsonStr);
-            var ex = Assert.Throws<Exception>(() => json.GetJson(Encoding.UTF8.GetBytes(jsonPathStr)));
+            var ex = Assert.Throws<InvalidOperationException>(() => json.GetJson(Encoding.UTF8.GetBytes(jsonPathStr)));
             Assert.AreEqual($"{jsonPathStr} was not found in the JSON structure.", ex!.Message);
         }
 

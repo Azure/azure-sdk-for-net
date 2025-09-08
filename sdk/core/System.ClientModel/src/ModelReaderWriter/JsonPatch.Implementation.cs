@@ -459,7 +459,7 @@ public partial struct JsonPatch
 
         foreach (var kvp in _properties!)
         {
-            if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.Written))
+            if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.ModelOwned))
                 continue;
 
             ReadOnlySpan<byte> keySpan = kvp.Key;
@@ -562,7 +562,7 @@ public partial struct JsonPatch
 
             foreach (var kvp in _properties)
             {
-                if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.Written))
+                if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.ModelOwned))
                     continue;
 
                 ReadOnlySpan<byte> keySpan = kvp.Key;

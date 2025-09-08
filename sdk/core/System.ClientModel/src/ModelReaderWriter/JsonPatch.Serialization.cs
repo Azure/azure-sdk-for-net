@@ -30,8 +30,8 @@ public partial struct JsonPatch
 
             if (encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
             {
-                encodedValue.Kind |= ValueKind.Written;
-                _properties.Set(jsonPath, encodedValue);
+                EncodedValue newValue = new(encodedValue.Kind | ValueKind.ModelOwned, encodedValue.Value);
+                _properties.Set(jsonPath, newValue);
                 writer.WriteRawValue(encodedValue.Value.Span.Slice(1, encodedValue.Value.Length - 2));
             }
         }
@@ -42,7 +42,7 @@ public partial struct JsonPatch
 
         foreach (var kvp in _properties)
         {
-            if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.Written))
+            if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.ModelOwned))
                 continue;
 
             ReadOnlySpan<byte> keySpan = kvp.Key;
@@ -93,7 +93,7 @@ public partial struct JsonPatch
                 if (_propagatorIsFlattened is not null && _propagatorIsFlattened(kvp.Key))
                     continue;
 
-                if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.Written))
+                if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.ModelOwned))
                 {
                     continue;
                 }
