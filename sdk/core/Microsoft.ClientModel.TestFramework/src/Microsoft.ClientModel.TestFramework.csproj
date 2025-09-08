@@ -8,7 +8,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <NoWarn>AZC0015;AZC0007</NoWarn>
-		<IsTestProject>false</IsTestProject>
+    <IsTestProject>false</IsTestProject>
     <IncludeAutorestDependency>false</IncludeAutorestDependency>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
