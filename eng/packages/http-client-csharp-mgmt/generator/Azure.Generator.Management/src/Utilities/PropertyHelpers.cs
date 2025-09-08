@@ -122,6 +122,39 @@ namespace Azure.Generator.Management.Utilities
             return setter;
         }
 
+        public static MethodBodyStatement BuildSetterForCollectionProperty(IEnumerable<PropertyProvider> collectionTypeProperties, PropertyProvider internalProperty, PropertyProvider innerProperty)
+        {
+            var isNullableValueType = innerProperty.Type.IsValueType && innerProperty.Type.IsNullable;
+            var setter = new List<MethodBodyStatement>();
+            var internalPropertyExpression = This.Property(internalProperty.Name);
+
+            setter.Add(
+                new IfStatement(internalPropertyExpression.Is(Null))
+                {
+                        internalPropertyExpression.Assign(New.Instance(internalProperty.Type, PopulateCollectionProperties())).Terminate()
+                });
+            setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(isNullableValueType ? Value.Property(nameof(Nullable<int>.Value)) : Value).Terminate());
+            return setter;
+
+            Dictionary<ValueExpression, ValueExpression> PopulateCollectionProperties()
+            {
+                var result = new Dictionary<ValueExpression, ValueExpression>();
+                foreach (var property in collectionTypeProperties)
+                {
+                    var propertyValue = Value.Property(property.Name);
+                    if (property.Type.IsList)
+                    {
+                        result.Add(Identifier(property.Name), New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(property.Type.Arguments)));
+                    }
+                    if (property.Type.IsDictionary)
+                    {
+                        result.Add(Identifier(property.Name), New.Instance(ManagementClientGenerator.Instance.TypeFactory.DictionaryInitializationType.MakeGenericType(property.Type.Arguments)));
+                    }
+                }
+                return result;
+            }
+        }
+
         public static MethodBodyStatement BuildSetterForSafeFlatten(bool includeSetterCheck, ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty)
         {
             var isOverriddenValueType = IsOverriddenValueType(innerProperty);

@@ -26,7 +26,7 @@ namespace MgmtTypeSpec
         /// <param name="flattenedNestedPropertyMiddleProp1"> Gets or sets the MiddleProp1. </param>
         /// <param name="flattenedNestedPropertyProp2"> Gets or sets the Prop2. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="property"/>, <paramref name="anotherProperty"/> or <paramref name="flattenedNestedPropertyInnerProp2"/> is null. </exception>
-        public BarSettingsResourceData(BarQuotaProperties @property, BarQuotaProperties anotherProperty, string flattenedNestedPropertyInnerProp2 = default, int? flattenedNestedPropertyMiddleProp1 = default, int? flattenedNestedPropertyProp2 = default)
+        public BarSettingsResourceData(BarQuotaProperties @property, BarQuotaProperties anotherProperty, string flattenedNestedPropertyInnerProp2, int flattenedNestedPropertyMiddleProp1, int flattenedNestedPropertyProp2)
         {
             Argument.AssertNotNull(flattenedNestedPropertyInnerProp2, nameof(flattenedNestedPropertyInnerProp2));
 
@@ -34,8 +34,8 @@ namespace MgmtTypeSpec
             Property = @property;
             AnotherProperty = anotherProperty;
             FlattenedNestedPropertyInnerProp2 = flattenedNestedPropertyInnerProp2;
-            FlattenedNestedPropertyMiddleProp1 = flattenedNestedPropertyMiddleProp1.Value;
-            FlattenedNestedPropertyProp2 = flattenedNestedPropertyProp2.Value;
+            FlattenedNestedPropertyMiddleProp1 = flattenedNestedPropertyMiddleProp1;
+            FlattenedNestedPropertyProp2 = flattenedNestedPropertyProp2;
         }
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
@@ -130,7 +130,23 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.MiddleProp2;
+                if (FlattenedNestedProperty is null)
+                {
+                    FlattenedNestedProperty = new BarNestedQuotaProperties();
+                }
+                return FlattenedNestedProperty.MiddleProp2;
+            }
+            set
+            {
+                if (FlattenedNestedProperty is null)
+                {
+                    FlattenedNestedProperty = new BarNestedQuotaProperties
+                    {
+                        MiddleProp2 = new ChangeTrackingDictionary<string, string>(),
+                        Prop1 = new ChangeTrackingList<string>()
+                    };
+                }
+                FlattenedNestedProperty.MiddleProp2 = value;
             }
         }
 
@@ -139,7 +155,23 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.Prop1;
+                if (FlattenedNestedProperty is null)
+                {
+                    FlattenedNestedProperty = new BarNestedQuotaProperties();
+                }
+                return FlattenedNestedProperty.Prop1;
+            }
+            set
+            {
+                if (FlattenedNestedProperty is null)
+                {
+                    FlattenedNestedProperty = new BarNestedQuotaProperties
+                    {
+                        MiddleProp2 = new ChangeTrackingDictionary<string, string>(),
+                        Prop1 = new ChangeTrackingList<string>()
+                    };
+                }
+                FlattenedNestedProperty.Prop1 = value;
             }
         }
 
