@@ -379,4 +379,36 @@ directive:
           }
       };
       $.MHSMPrivateLinkServiceConnectionState.properties.actionsRequired['$ref'] = '#/definitions/MHSMActionsRequired';
+  # this directive is here to workaround a usage issue. Now all the resources in this swagger shares the same base type, and in swagger generator the usage of base type is not properly propagated to the derived types.
+  # therefore a `input` usage in one of the derived types will polute the other output only derived types with `input` usage, which is not correct.
+  # so here is a workaround that we made up a new base type that is only used as output, and let all the output only resources to derive from it.
+  # this would not affect the generated code because we recognize the base type from the shape - any model with the 3 properties of id, name and type as read-only is a resource.
+  - from: openapi.json
+    where: $.definitions
+    transform: >
+      $.OutputOnlyResource = {
+          "type": "object",
+          "description": "A resource model that is only used as output.",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "arm-id",
+              "description": "Fully qualified resource ID for the resource. E.g. \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}\"",
+              "readOnly": true
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the resource",
+              "readOnly": true
+            },
+            "type": {
+              "type": "string",
+              "description": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
+              "readOnly": true,
+              "x-ms-client-name": "resourceType"
+            }
+          }
+      };
+      $.DeletedVault.allOf[0]['$ref'] = '#/definitions/OutputOnlyResource';
+      $.DeletedManagedHsm.allOf[0]['$ref'] = '#/definitions/OutputOnlyResource';
 ```

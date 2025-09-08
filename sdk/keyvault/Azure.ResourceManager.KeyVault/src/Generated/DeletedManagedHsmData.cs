@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeletedManagedHsmData"/>. </summary>
-        public DeletedManagedHsmData()
+        internal DeletedManagedHsmData()
         {
         }
 
