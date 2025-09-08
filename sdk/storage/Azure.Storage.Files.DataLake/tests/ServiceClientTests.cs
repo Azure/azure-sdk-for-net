@@ -816,6 +816,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [PlaybackOnly("Enabling static website is not allowed on Network Security Perimeter enabled accounts.")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         [NonParallelizable]
         public async Task SetPropertiesAsync_StaticWebsite()
