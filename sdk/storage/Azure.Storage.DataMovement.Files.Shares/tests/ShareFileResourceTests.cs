@@ -2428,7 +2428,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             await destinationResource.CreateAsync(
                 overwrite: false,
                 maxSize: length,
-                properties: properties,
+                sourceProperties: properties,
                 cancellationToken: CancellationToken.None);
 
             mockDestination.Verify(b => b.CreateAsync(
@@ -2510,7 +2510,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             await destinationResource.CreateAsync(
                 overwrite: false,
                 maxSize: length,
-                properties: properties,
+                sourceProperties: properties,
                 cancellationToken: CancellationToken.None);
 
             mockDestination.Verify(b => b.CreateAsync(
@@ -2595,7 +2595,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             await destinationResource.CreateAsync(
                 overwrite: false,
                 maxSize: length,
-                properties: properties,
+                sourceProperties: properties,
                 cancellationToken: CancellationToken.None);
 
             mockDestination.Verify(b => b.CreateAsync(

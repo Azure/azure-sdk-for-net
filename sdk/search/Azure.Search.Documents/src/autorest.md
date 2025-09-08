@@ -15,9 +15,9 @@ use-model-reader-writer: true
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/1755004c92eefdc7a66b4cd90df27d0af4cb0456/specification/search/data-plane/Azure.Search/preview/2025-05-01-preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/1755004c92eefdc7a66b4cd90df27d0af4cb0456/specification/search/data-plane/Azure.Search/preview/2025-05-01-preview/searchservice.json
- - https://github.com/Azure/azure-rest-api-specs/blob/1755004c92eefdc7a66b4cd90df27d0af4cb0456/specification/search/data-plane/Azure.Search/preview/2025-05-01-preview/knowledgeagent.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/429fd8c039c5b08541df2389f8c58d1090e01127/specification/search/data-plane/Azure.Search/preview/2025-08-01-preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/429fd8c039c5b08541df2389f8c58d1090e01127/specification/search/data-plane/Azure.Search/preview/2025-08-01-preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/429fd8c039c5b08541df2389f8c58d1090e01127/specification/search/data-plane/Azure.Search/preview/2025-08-01-preview/knowledgeagent.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -71,6 +71,15 @@ directive:
   where: $.definitions.SearchIndexerDataSource.properties.indexerPermissionOptions
   transform: >
     delete $["x-nullable"]
+```
+
+### Make `KnowledgeSourceKind` internal
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.KnowledgeSourceKind
+  transform: $["x-accessibility"] = "internal"
 ```
 
 ### Move KnowledgeAgent models to Azure.Search.Documents.Agents.Models
