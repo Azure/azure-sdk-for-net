@@ -463,6 +463,7 @@ namespace Azure.Identity.Tests
                     Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
                     Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
                     Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential));
+                    Assert.IsTrue(chain.Any(cred => cred is BrokerCredential));
                     // InteractiveBrowser is always excluded by default.
                     Assert.IsFalse(chain.Any(cred => cred.GetType() == typeof(InteractiveBrowserCredential)));
                 }
@@ -521,6 +522,7 @@ namespace Azure.Identity.Tests
                     Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
                     Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
                     Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential));
+                    Assert.IsTrue(chain.Any(cred => cred is BrokerCredential));
                 }
             }
         }

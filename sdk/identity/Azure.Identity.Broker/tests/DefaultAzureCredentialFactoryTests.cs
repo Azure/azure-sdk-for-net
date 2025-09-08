@@ -100,7 +100,7 @@ namespace Azure.Identity.Broker.Tests
                 }
                 else if (credSelection == Constants.BrokerCredential)
                 {
-                    Assert.IsTrue(chain.Single(cred => cred is InteractiveBrowserCredential) is InteractiveBrowserCredential);
+                    Assert.IsTrue(chain.Single(cred => cred is BrokerCredential) is BrokerCredential);
                 }
 
                 else if (credSelection == null)
@@ -117,6 +117,7 @@ namespace Azure.Identity.Broker.Tests
                         Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential), "VisualStudioCredential should be in the chain");
                         Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential), "AzureDeveloperCliCredential should be in the chain");
                         Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential), "VisualStudioCodeCredential should be in the chain");
+                        Assert.IsTrue(chain.Any(cred => cred is BrokerCredential), "BrokerCredential should be in the chain");
                     });
                 }
             }
