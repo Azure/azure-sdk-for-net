@@ -98,6 +98,18 @@ namespace MgmtTypeSpec
             return GetMockableMgmtTypeSpecArmClient(client).GetBarQuotaResource(id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BazResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BazResource"/> object. </returns>
+        public static BazResource GetBazResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMgmtTypeSpecArmClient(client).GetBazResource(id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ZooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -210,6 +222,43 @@ namespace MgmtTypeSpec
             return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetFooSettings();
         }
 
+        /// <summary> Gets a collection of Bazs in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of Bazs and their operations over a BazResource. </returns>
+        public static BazCollection GetBazs(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetBazs();
+        }
+
+        /// <summary> Get a Baz. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="bazName"> The name of the Baz. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<BazResource>> GetBazAsync(this ResourceGroupResource resourceGroupResource, string bazName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetBazAsync(bazName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a Baz. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="bazName"> The name of the Baz. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<BazResource> GetBaz(this ResourceGroupResource resourceGroupResource, string bazName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetBaz(bazName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of Zoos in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
@@ -245,6 +294,54 @@ namespace MgmtTypeSpec
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetZoo(zooName, cancellationToken);
+        }
+
+        /// <summary> List Foo resources by subscription ID. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="FooResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<FooResource> GetFoosAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetFoosAsync(cancellationToken);
+        }
+
+        /// <summary> List Foo resources by subscription ID. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="FooResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<FooResource> GetFoos(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetFoos(cancellationToken);
+        }
+
+        /// <summary> List Baz resources by subscription ID. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="BazResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<BazResource> GetBazsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetBazsAsync(cancellationToken);
+        }
+
+        /// <summary> List Baz resources by subscription ID. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="BazResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<BazResource> GetBazs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetBazs(cancellationToken);
         }
 
         /// <summary> List Zoo resources by subscription ID. </summary>
