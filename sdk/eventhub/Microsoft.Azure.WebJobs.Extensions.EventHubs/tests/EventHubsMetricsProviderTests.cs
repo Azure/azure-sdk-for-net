@@ -52,8 +52,26 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             this._mockCheckpointStore = new Mock<BlobCheckpointStoreInternal>(MockBehavior.Strict);
 
-            _mockCheckpointStore.Setup(s => s.GetCheckpointAsync(_namespace, _eventHubName, _consumerGroup, It.IsAny<string>(), default))
-                .Returns<string, string, string, string, CancellationToken>((ns, hub, cg, partitionId, ct) => Task.FromResult(_checkpoints == null ? null : _checkpoints.SingleOrDefault(cp => cp.PartitionId == partitionId)));
+            _mockCheckpointStore
+                .Setup(s => s.GetCheckpointAsync(
+                    _namespace,
+                    _eventHubName,
+                    _consumerGroup,
+                    It.IsAny<string>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns<string, string, string, string, CancellationToken>((ns, hub, cg, partitionId, ct) =>
+                {
+                    if (ct.IsCancellationRequested)
+                    {
+                        throw new TaskCanceledException();
+                    }
+
+                    var checkpoint = _checkpoints == null
+                        ? null
+                        : _checkpoints.SingleOrDefault(cp => cp.PartitionId == partitionId);
+
+                    return Task.FromResult(checkpoint);
+                });
 
             _metricsProvider = new EventHubMetricsProvider(
                                     _functionId,
