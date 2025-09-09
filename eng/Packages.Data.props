@@ -455,13 +455,18 @@
     <PackageDownload Include="Azure.Sdk.Tools.Testproxy" Version="[$(TestProxyVersion)]" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))">
+    <PackageReference Update="NUnit" Version="4.4.0" />
+    <PackageReference Update="Castle.Core" Version="5.1.0" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageDownload Update="NETStandard.Library.Ref" Version="[2.1.0]" />
   </ItemGroup>
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250805.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20250905.2</UnbrandedGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20250908.5</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20250903.2</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>

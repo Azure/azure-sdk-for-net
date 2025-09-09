@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using Azure.Core;
 
@@ -11,8 +10,6 @@ namespace Azure.Identity
 {
     internal class DefaultAzureCredentialFactory
     {
-        private static readonly TokenCredential[] s_defaultCredentialChain = new DefaultAzureCredentialFactory(new DefaultAzureCredentialOptions()).CreateCredentialChain();
-        private bool _useDefaultCredentialChain;
         private readonly string _customEnvironmentVariableName;
         private static string _troubleshootingMessage = $" See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/defaultazurecredential/troubleshoot";
 
@@ -27,7 +24,6 @@ namespace Azure.Identity
         protected DefaultAzureCredentialFactory(DefaultAzureCredentialOptions options, CredentialPipeline pipeline)
         {
             Pipeline = pipeline;
-            _useDefaultCredentialChain = options == null;
             Options = options?.Clone<DefaultAzureCredentialOptions>() ?? new DefaultAzureCredentialOptions();
         }
 
@@ -36,7 +32,6 @@ namespace Azure.Identity
             Argument.AssertNotNullOrEmpty(customEnvironmentVariableName, nameof(customEnvironmentVariableName));
 
             Pipeline = pipeline;
-            _useDefaultCredentialChain = options == null;
             Options = options?.Clone<DefaultAzureCredentialOptions>() ?? new DefaultAzureCredentialOptions();
             _customEnvironmentVariableName = customEnvironmentVariableName;
         }
@@ -46,35 +41,24 @@ namespace Azure.Identity
 
         public TokenCredential[] CreateCredentialChain()
         {
-            string credentialSelection;
+            TokenCredential[] tokenCredentials = Array.Empty<TokenCredential>();
+            string credentialSelection = EnvironmentVariables.CredentialSelection?.Trim().ToLower();
 
             if (_customEnvironmentVariableName != null)
             {
                 // When using custom environment variable, read from that variable and validate it's set
                 credentialSelection = ValidateAndGetCustomEnvironmentVariable(_customEnvironmentVariableName);
                 // For custom environment variables, always use the token credentials logic
-                return ProcessCredentialSelection(credentialSelection, _customEnvironmentVariableName);
+                tokenCredentials = ProcessCredentialSelection(credentialSelection, _customEnvironmentVariableName);
             }
-
-            // Use the default environment variable and existing logic
-            credentialSelection = EnvironmentVariables.CredentialSelection?.Trim().ToLower();
-
-            if (_useDefaultCredentialChain)
+            else if (credentialSelection != null)
             {
-                if (credentialSelection != null)
-                {
-                    return ProcessCredentialSelection(credentialSelection, "AZURE_TOKEN_CREDENTIALS");
-                }
-                return s_defaultCredentialChain;
+                tokenCredentials = ProcessCredentialSelection(credentialSelection, "AZURE_TOKEN_CREDENTIALS");
             }
-
-            List<TokenCredential> chain = new(10);
-
-            bool _useDevCredentials = Constants.DevCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
-            bool _useProdCredentials = Constants.ProdCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
-
-            if (!_useDevCredentials)
+            else
             {
+                List<TokenCredential> chain = new(10);
+
                 if (!Options.ExcludeEnvironmentCredential)
                 {
                     chain.Add(CreateEnvironmentCredential());
@@ -89,14 +73,6 @@ namespace Azure.Identity
                 {
                     chain.Add(CreateManagedIdentityCredential());
                 }
-                if (!Options.ExcludeBrokerCredential && TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
-                {
-                    chain.Add(CreateBrokerCredential(brokerOptions));
-                }
-            }
-
-            if (!_useProdCredentials)
-            {
 #pragma warning disable CS0618 // Type of member is obsolete
                 if (!Options.ExcludeSharedTokenCacheCredential)
                 {
@@ -137,13 +113,15 @@ namespace Azure.Identity
                 {
                     chain.Add(CreateBrokerCredential(brokerOptions));
                 }
+                tokenCredentials = chain.ToArray();
             }
-            if (chain.Count == 0)
+
+            if (tokenCredentials.Length == 0)
             {
                 throw new ArgumentException("At least one credential type must be included in the authentication flow.", "options");
             }
 
-            return chain.ToArray();
+            return tokenCredentials;
         }
 
         /// <summary>
@@ -197,16 +175,29 @@ namespace Azure.Identity
         /// <returns>Array of development TokenCredential instances.</returns>
         private TokenCredential[] CreateDevelopmentCredentialChain()
         {
-            List<TokenCredential> chain =
-            [
-                CreateVisualStudioCredential(),
-                CreateVisualStudioCodeCredential(),
-                CreateAzureCliCredential(),
-                CreateAzurePowerShellCredential(),
-                CreateAzureDeveloperCliCredential()
-            ];
+            List<TokenCredential> chain = new();
+            if (!Options.ExcludeVisualStudioCredential)
+            {
+                chain.Add(CreateVisualStudioCredential());
+            }
+            if (!Options.ExcludeVisualStudioCodeCredential)
+            {
+                chain.Add(CreateVisualStudioCodeCredential());
+            }
+            if (!Options.ExcludeAzureCliCredential)
+            {
+                chain.Add(CreateAzureCliCredential());
+            }
+            if (!Options.ExcludeAzurePowerShellCredential)
+            {
+                chain.Add(CreateAzurePowerShellCredential());
+            }
+            if (!Options.ExcludeAzureDeveloperCliCredential)
+            {
+                chain.Add(CreateAzureDeveloperCliCredential());
+            }
 
-            if (TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
+            if (!Options.ExcludeBrokerCredential && TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
             {
                 chain.Add(CreateBrokerCredential(brokerOptions));
             }
@@ -219,12 +210,21 @@ namespace Azure.Identity
         /// <returns>Array of production TokenCredential instances.</returns>
         private TokenCredential[] CreateProductionCredentialChain()
         {
-            return
-            [
-                CreateEnvironmentCredential(),
-                CreateWorkloadIdentityCredential(),
-                CreateManagedIdentityCredential()
-            ];
+            List<TokenCredential> chain = new();
+
+            if (!Options.ExcludeEnvironmentCredential)
+            {
+                chain.Add(CreateEnvironmentCredential());
+            }
+            if (!Options.ExcludeWorkloadIdentityCredential)
+            {
+                chain.Add(CreateWorkloadIdentityCredential());
+            }
+            if (!Options.ExcludeManagedIdentityCredential)
+            {
+                chain.Add(CreateManagedIdentityCredential());
+            }
+            return chain.ToArray();
         }
 
         /// <summary>
