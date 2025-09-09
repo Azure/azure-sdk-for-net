@@ -10,6 +10,7 @@ using Azure;
 using Azure.AI.VoiceLive;
 using Azure.AI.VoiceLive.Tests.Infrastructure;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.VoiceLive.Tests

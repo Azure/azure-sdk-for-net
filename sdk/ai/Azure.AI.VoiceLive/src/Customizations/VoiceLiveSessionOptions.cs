@@ -1,10 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
@@ -81,7 +78,7 @@ namespace Azure.AI.VoiceLive
         /// <value>
         /// The maximum number of tokens to generate. If not specified, the service will use a default limit.
         /// </value>
-        public int? MaxOutputTokens { get; set; }
+        public ResponseMaxOutputTokensOption MaxOutputTokens { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to commit the response to the conversation.

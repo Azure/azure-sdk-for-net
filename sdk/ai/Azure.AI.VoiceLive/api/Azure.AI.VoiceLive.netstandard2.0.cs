@@ -960,6 +960,20 @@ namespace Azure.AI.VoiceLive
         public static bool operator !=(Azure.AI.VoiceLive.ResponseItemStatus left, Azure.AI.VoiceLive.ResponseItemStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ResponseMaxOutputTokensOption : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ResponseMaxOutputTokensOption>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ResponseMaxOutputTokensOption>
+    {
+        public ResponseMaxOutputTokensOption(int numberValue) { }
+        public int? NumericValue { get { throw null; } }
+        public static Azure.AI.VoiceLive.ResponseMaxOutputTokensOption CreateDefaultMaxTokensOption() { throw null; }
+        public static Azure.AI.VoiceLive.ResponseMaxOutputTokensOption CreateInfiniteMaxTokensOption() { throw null; }
+        public static Azure.AI.VoiceLive.ResponseMaxOutputTokensOption CreateNumericMaxTokensOption(int maxTokens) { throw null; }
+        public static implicit operator Azure.AI.VoiceLive.ResponseMaxOutputTokensOption (int maxTokens) { throw null; }
+        Azure.AI.VoiceLive.ResponseMaxOutputTokensOption System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ResponseMaxOutputTokensOption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ResponseMaxOutputTokensOption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.VoiceLive.ResponseMaxOutputTokensOption System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ResponseMaxOutputTokensOption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ResponseMaxOutputTokensOption>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ResponseMaxOutputTokensOption>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ResponseMessageItem : Azure.AI.VoiceLive.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ResponseMessageItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ResponseMessageItem>
     {
         internal ResponseMessageItem() { }
@@ -2098,7 +2112,7 @@ namespace Azure.AI.VoiceLive
         internal VoiceLiveResponse() { }
         public string ConversationId { get { throw null; } }
         public string Id { get { throw null; } }
-        public System.BinaryData MaxOutputTokens { get { throw null; } }
+        public Azure.AI.VoiceLive.ResponseMaxOutputTokensOption MaxOutputTokens { get { throw null; } }
         public Azure.AI.VoiceLive.SessionUpdateModality Modalities { get { throw null; } }
         public string Object { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.ResponseItem> Output { get { throw null; } }
@@ -2205,7 +2219,7 @@ namespace Azure.AI.VoiceLive
         public bool? CancelPrevious { get { throw null; } set { } }
         public bool? Commit { get { throw null; } set { } }
         public string Instructions { get { throw null; } set { } }
-        public int? MaxOutputTokens { get { throw null; } set { } }
+        public Azure.AI.VoiceLive.ResponseMaxOutputTokensOption MaxOutputTokens { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.InputModality> Modalities { get { throw null; } set { } }
         public Azure.AI.VoiceLive.AudioFormat? OutputAudioFormat { get { throw null; } set { } }
         public float? Temperature { get { throw null; } set { } }
