@@ -7,7 +7,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity.Credentials;
 using NUnit.Framework;
 
 namespace Azure.Identity.Broker.Tests

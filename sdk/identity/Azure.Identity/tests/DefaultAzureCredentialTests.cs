@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
-using Azure.Identity.Credentials;
 using Azure.Identity.Tests.Mock;
 using Moq;
 using NUnit.Framework;

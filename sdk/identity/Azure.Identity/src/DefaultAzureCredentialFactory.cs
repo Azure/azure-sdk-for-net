@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Azure.Core;
-using Azure.Identity.Credentials;
 
 namespace Azure.Identity
 {

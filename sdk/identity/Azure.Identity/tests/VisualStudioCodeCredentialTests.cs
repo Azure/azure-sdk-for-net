@@ -4,7 +4,6 @@
 using System;
 using System.IO;
 using System.Text.Json;
-using Azure.Identity.Credentials;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests

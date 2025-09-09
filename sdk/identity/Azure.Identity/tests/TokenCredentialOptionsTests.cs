@@ -12,7 +12,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.Identity.Credentials; // added for ISupportsTenantId
 
 namespace Azure.Identity.Tests
 {

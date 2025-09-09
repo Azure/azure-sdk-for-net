@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Azure.Identity.Credentials;
 using Microsoft.Identity.Client;
 
 namespace Azure.Identity

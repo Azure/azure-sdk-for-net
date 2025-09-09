@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 
-namespace Azure.Identity.Credentials;
+namespace Azure.Identity;
 
 internal class CredentialOptionsMapper
 {

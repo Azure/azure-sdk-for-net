@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Azure.Identity.Credentials; // added for ISupportsTenantId
 
 namespace Azure.Identity
 {

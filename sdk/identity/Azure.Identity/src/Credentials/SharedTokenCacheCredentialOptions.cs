@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Identity.Credentials;
 using System;
 using System.ComponentModel;
 

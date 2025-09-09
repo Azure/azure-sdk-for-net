@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Identity.Credentials
+namespace Azure.Identity
 {
     internal class BrokerCredential : InteractiveBrowserCredential
     {

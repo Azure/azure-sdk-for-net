@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity.Credentials;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -723,6 +722,29 @@ namespace Azure.Identity.Tests
             Assert.IsNotNull(chain);
             Assert.IsTrue(chain.Single(cred => cred.GetType() == expectedType).GetType() == expectedType, $"Chain does not contain expected credential type: {expectedType}");
             Assert.IsTrue(chain.Count == 1, $"Chain contains unexpected number of credentials: {chain.Count}");
+        }
+
+        [Test]
+        public void BrokerCredentialThrowsWithoutBrokerPackage()
+        {
+            var options = new DefaultAzureCredentialOptions
+            {
+                ExcludeEnvironmentCredential = true,
+                ExcludeWorkloadIdentityCredential = true,
+                ExcludeManagedIdentityCredential = true,
+                ExcludeSharedTokenCacheCredential = true,
+                ExcludeVisualStudioCredential = true,
+                ExcludeVisualStudioCodeCredential = true,
+                ExcludeAzureCliCredential = true,
+                ExcludeAzurePowerShellCredential = true,
+                ExcludeAzureDeveloperCliCredential = true,
+                ExcludeInteractiveBrowserCredential = true,
+                ExcludeBrokerCredential = false
+            };
+
+            var credential = new DefaultAzureCredential(options);
+            var exception = Assert.Throws<CredentialUnavailableException>(() => credential.GetToken(new TokenRequestContext(new[] { "scope" })));
+            Assert.AreEqual($"The {nameof(BrokerCredential)} requires the Azure.Identity.Broker package to be referenced. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/brokercredential/troubleshoot", exception.Message);
         }
     }
 }
