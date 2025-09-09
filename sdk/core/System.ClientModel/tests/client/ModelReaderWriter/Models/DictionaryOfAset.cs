@@ -190,7 +190,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             if (!Items.TryGetValue(key, out var aset))
                 return false;
 
-            return aset.Patch.TryGetEncodedValue([.. "$"u8, .. GetRemainder(jsonPath, i)], out value);
+            return aset.Patch.TryGetEncodedValue([.. "$"u8, .. SerializationHelpers.GetRemainder(jsonPath, i)], out value);
         }
 
         private bool PropagateSet(ReadOnlySpan<byte> jsonPath, JsonPatch.EncodedValue value)
@@ -200,18 +200,9 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             if (!Items.TryGetValue(key, out var aset))
                 return false;
 
-            aset.Patch.Set([.. "$"u8, .. GetRemainder(jsonPath, i)], value);
+            aset.Patch.Set([.. "$"u8, .. SerializationHelpers.GetRemainder(jsonPath, i)], value);
             return true;
         }
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-
-        private static ReadOnlySpan<byte> GetRemainder(ReadOnlySpan<byte> jsonPath, int i)
-        {
-            return i >= jsonPath.Length
-                ? ReadOnlySpan<byte>.Empty
-                : jsonPath[i] == (byte)'.'
-                    ? jsonPath.Slice(i)
-                    : jsonPath.Slice(i + 2);
-        }
     }
 }

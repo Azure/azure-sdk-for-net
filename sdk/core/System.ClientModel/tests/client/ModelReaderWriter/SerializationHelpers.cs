@@ -138,5 +138,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             return Utf8Parser.TryParse(indexSlice.Slice(0, indexEnd + 1), out index, out bytesConsumed);
         }
+
+        public static ReadOnlySpan<byte> GetRemainder(ReadOnlySpan<byte> jsonPath, int i)
+        {
+            return i >= jsonPath.Length
+                ? ReadOnlySpan<byte>.Empty
+                : jsonPath[i] == (byte)'.'
+                    ? jsonPath.Slice(i)
+                    : jsonPath.Slice(i + 2);
+        }
     }
 }
