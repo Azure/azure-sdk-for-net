@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> Product families metadata details. </summary>
-    public partial class ProductFamiliesMetadata
+    /// <summary> Holds details about product family metadata. </summary>
+    internal partial class ProductFamiliesMetadata
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,56 +47,31 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProductFamiliesMetadata"/>. </summary>
-        internal ProductFamiliesMetadata()
+        /// <param name="value"> The ProductFamiliesMetadataDetails items on this page. </param>
+        internal ProductFamiliesMetadata(IEnumerable<ProductFamiliesMetadataDetails> value)
         {
-            ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
-            FilterableProperties = new ChangeTrackingList<FilterableProperty>();
-            ProductLines = new ChangeTrackingList<ProductLine>();
-            ResourceProviderDetails = new ChangeTrackingList<ResourceProviderDetails>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProductFamiliesMetadata"/>. </summary>
-        /// <param name="displayName"> Display Name for the product system. </param>
-        /// <param name="description"> Description related to the product system. </param>
-        /// <param name="imageInformation"> Image information for the product system. </param>
-        /// <param name="costInformation"> Cost information for the product system. </param>
-        /// <param name="availabilityInformation"> Availability information of the product system. </param>
-        /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
-        /// <param name="productLines"> List of product lines supported in the product family. </param>
-        /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
+        /// <param name="value"> The ProductFamiliesMetadataDetails items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductFamiliesMetadata(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductLine> productLines, IReadOnlyList<ResourceProviderDetails> resourceProviderDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProductFamiliesMetadata(IReadOnlyList<ProductFamiliesMetadataDetails> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DisplayName = displayName;
-            Description = description;
-            ImageInformation = imageInformation;
-            CostInformation = costInformation;
-            AvailabilityInformation = availabilityInformation;
-            HierarchyInformation = hierarchyInformation;
-            FilterableProperties = filterableProperties;
-            ProductLines = productLines;
-            ResourceProviderDetails = resourceProviderDetails;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Display Name for the product system. </summary>
-        public string DisplayName { get; }
-        /// <summary> Description related to the product system. </summary>
-        public ProductDescription Description { get; }
-        /// <summary> Image information for the product system. </summary>
-        public IReadOnlyList<EdgeOrderProductImageInformation> ImageInformation { get; }
-        /// <summary> Cost information for the product system. </summary>
-        public EdgeOrderProductCostInformation CostInformation { get; }
-        /// <summary> Availability information of the product system. </summary>
-        public ProductAvailabilityInformation AvailabilityInformation { get; }
-        /// <summary> Hierarchy information of a product. </summary>
-        public HierarchyInformation HierarchyInformation { get; }
-        /// <summary> list of filters supported for a product. </summary>
-        public IReadOnlyList<FilterableProperty> FilterableProperties { get; }
-        /// <summary> List of product lines supported in the product family. </summary>
-        public IReadOnlyList<ProductLine> ProductLines { get; }
-        /// <summary> Contains details related to resource provider. </summary>
-        public IReadOnlyList<ResourceProviderDetails> ResourceProviderDetails { get; }
+        /// <summary> Initializes a new instance of <see cref="ProductFamiliesMetadata"/> for deserialization. </summary>
+        internal ProductFamiliesMetadata()
+        {
+        }
+
+        /// <summary> The ProductFamiliesMetadataDetails items on this page. </summary>
+        public IReadOnlyList<ProductFamiliesMetadataDetails> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

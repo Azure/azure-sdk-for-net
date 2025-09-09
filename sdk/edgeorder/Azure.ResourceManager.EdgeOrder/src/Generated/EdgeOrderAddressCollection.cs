@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.EdgeOrder
     /// </summary>
     public partial class EdgeOrderAddressCollection : ArmCollection, IEnumerable<EdgeOrderAddressResource>, IAsyncEnumerable<EdgeOrderAddressResource>
     {
-        private readonly ClientDiagnostics _edgeOrderAddressClientDiagnostics;
-        private readonly EdgeOrderManagementRestOperations _edgeOrderAddressRestClient;
+        private readonly ClientDiagnostics _edgeOrderAddressAddressResourcesClientDiagnostics;
+        private readonly AddressResourcesRestOperations _edgeOrderAddressAddressResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="EdgeOrderAddressCollection"/> class for mocking. </summary>
         protected EdgeOrderAddressCollection()
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal EdgeOrderAddressCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeOrderAddressClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", EdgeOrderAddressResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(EdgeOrderAddressResource.ResourceType, out string edgeOrderAddressApiVersion);
-            _edgeOrderAddressRestClient = new EdgeOrderManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeOrderAddressApiVersion);
+            _edgeOrderAddressAddressResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", EdgeOrderAddressResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(EdgeOrderAddressResource.ResourceType, out string edgeOrderAddressAddressResourcesApiVersion);
+            _edgeOrderAddressAddressResourcesRestClient = new AddressResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeOrderAddressAddressResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -53,7 +53,8 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
-        /// Creates a new address with the specified parameters. Existing address can be updated with this API
+        /// Create a new address with the specified parameters. Existing address cannot be updated with this API and should
+        /// instead be updated with the Update address API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -61,11 +62,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CreateAddress</description>
+        /// <description>AddressResource_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -79,19 +80,19 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<EdgeOrderAddressResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string addressName, EdgeOrderAddressData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string addressName, EdgeOrderAddressData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeOrderAddressClientDiagnostics.CreateScope("EdgeOrderAddressCollection.CreateOrUpdate");
+            using var scope = _edgeOrderAddressAddressResourcesClientDiagnostics.CreateScope("EdgeOrderAddressCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _edgeOrderAddressRestClient.CreateAddressAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(new EdgeOrderAddressOperationSource(Client), _edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _edgeOrderAddressAddressResourcesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new EdgeOrderArmOperation(_edgeOrderAddressAddressResourcesClientDiagnostics, Pipeline, _edgeOrderAddressAddressResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -102,7 +103,8 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
-        /// Creates a new address with the specified parameters. Existing address can be updated with this API
+        /// Create a new address with the specified parameters. Existing address cannot be updated with this API and should
+        /// instead be updated with the Update address API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -110,11 +112,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CreateAddress</description>
+        /// <description>AddressResource_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -128,19 +130,19 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<EdgeOrderAddressResource> CreateOrUpdate(WaitUntil waitUntil, string addressName, EdgeOrderAddressData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string addressName, EdgeOrderAddressData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeOrderAddressClientDiagnostics.CreateScope("EdgeOrderAddressCollection.CreateOrUpdate");
+            using var scope = _edgeOrderAddressAddressResourcesClientDiagnostics.CreateScope("EdgeOrderAddressCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _edgeOrderAddressRestClient.CreateAddress(Id.SubscriptionId, Id.ResourceGroupName, addressName, data, cancellationToken);
-                var operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(new EdgeOrderAddressOperationSource(Client), _edgeOrderAddressClientDiagnostics, Pipeline, _edgeOrderAddressRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _edgeOrderAddressAddressResourcesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, addressName, data, cancellationToken);
+                var operation = new EdgeOrderArmOperation(_edgeOrderAddressAddressResourcesClientDiagnostics, Pipeline, _edgeOrderAddressAddressResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -151,7 +153,7 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
-        /// Gets information about the specified address.
+        /// Get information about the specified address.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -159,11 +161,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetAddressByName</description>
+        /// <description>AddressResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,11 +181,11 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
-            using var scope = _edgeOrderAddressClientDiagnostics.CreateScope("EdgeOrderAddressCollection.Get");
+            using var scope = _edgeOrderAddressAddressResourcesClientDiagnostics.CreateScope("EdgeOrderAddressCollection.Get");
             scope.Start();
             try
             {
-                var response = await _edgeOrderAddressRestClient.GetAddressByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken).ConfigureAwait(false);
+                var response = await _edgeOrderAddressAddressResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EdgeOrderAddressResource(Client, response.Value), response.GetRawResponse());
@@ -196,7 +198,7 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
-        /// Gets information about the specified address.
+        /// Get information about the specified address.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -204,11 +206,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetAddressByName</description>
+        /// <description>AddressResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,11 +226,11 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
-            using var scope = _edgeOrderAddressClientDiagnostics.CreateScope("EdgeOrderAddressCollection.Get");
+            using var scope = _edgeOrderAddressAddressResourcesClientDiagnostics.CreateScope("EdgeOrderAddressCollection.Get");
             scope.Start();
             try
             {
-                var response = _edgeOrderAddressRestClient.GetAddressByName(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken);
+                var response = _edgeOrderAddressAddressResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EdgeOrderAddressResource(Client, response.Value), response.GetRawResponse());
@@ -241,7 +243,7 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
-        /// Lists all the addresses available under the given resource group.
+        /// List all the addresses available under the given resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -249,11 +251,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ListAddressesAtResourceGroupLevel</description>
+        /// <description>AddressResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -262,18 +264,19 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// </summary>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
-        /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of address. </param>
+        /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
+        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeOrderAddressResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EdgeOrderAddressResource> GetAllAsync(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EdgeOrderAddressResource> GetAllAsync(string filter = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), _edgeOrderAddressClientDiagnostics, Pipeline, "EdgeOrderAddressCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderAddressAddressResourcesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeOrderAddressAddressResourcesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), _edgeOrderAddressAddressResourcesClientDiagnostics, Pipeline, "EdgeOrderAddressCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists all the addresses available under the given resource group.
+        /// List all the addresses available under the given resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -281,11 +284,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ListAddressesAtResourceGroupLevel</description>
+        /// <description>AddressResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -294,14 +297,15 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// </summary>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
-        /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of address. </param>
+        /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
+        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderAddressResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EdgeOrderAddressResource> GetAll(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EdgeOrderAddressResource> GetAll(string filter = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeOrderAddressRestClient.CreateListAddressesAtResourceGroupLevelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), _edgeOrderAddressClientDiagnostics, Pipeline, "EdgeOrderAddressCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderAddressAddressResourcesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeOrderAddressAddressResourcesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, skipToken, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), _edgeOrderAddressAddressResourcesClientDiagnostics, Pipeline, "EdgeOrderAddressCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -313,11 +317,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetAddressByName</description>
+        /// <description>AddressResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -333,11 +337,11 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
-            using var scope = _edgeOrderAddressClientDiagnostics.CreateScope("EdgeOrderAddressCollection.Exists");
+            using var scope = _edgeOrderAddressAddressResourcesClientDiagnostics.CreateScope("EdgeOrderAddressCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _edgeOrderAddressRestClient.GetAddressByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _edgeOrderAddressAddressResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -356,11 +360,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetAddressByName</description>
+        /// <description>AddressResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -376,11 +380,11 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
-            using var scope = _edgeOrderAddressClientDiagnostics.CreateScope("EdgeOrderAddressCollection.Exists");
+            using var scope = _edgeOrderAddressAddressResourcesClientDiagnostics.CreateScope("EdgeOrderAddressCollection.Exists");
             scope.Start();
             try
             {
-                var response = _edgeOrderAddressRestClient.GetAddressByName(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken);
+                var response = _edgeOrderAddressAddressResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -399,11 +403,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetAddressByName</description>
+        /// <description>AddressResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -419,11 +423,11 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
-            using var scope = _edgeOrderAddressClientDiagnostics.CreateScope("EdgeOrderAddressCollection.GetIfExists");
+            using var scope = _edgeOrderAddressAddressResourcesClientDiagnostics.CreateScope("EdgeOrderAddressCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _edgeOrderAddressRestClient.GetAddressByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _edgeOrderAddressAddressResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<EdgeOrderAddressResource>(response.GetRawResponse());
                 return Response.FromValue(new EdgeOrderAddressResource(Client, response.Value), response.GetRawResponse());
@@ -444,11 +448,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetAddressByName</description>
+        /// <description>AddressResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -464,11 +468,11 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
-            using var scope = _edgeOrderAddressClientDiagnostics.CreateScope("EdgeOrderAddressCollection.GetIfExists");
+            using var scope = _edgeOrderAddressAddressResourcesClientDiagnostics.CreateScope("EdgeOrderAddressCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _edgeOrderAddressRestClient.GetAddressByName(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken);
+                var response = _edgeOrderAddressAddressResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<EdgeOrderAddressResource>(response.GetRawResponse());
                 return Response.FromValue(new EdgeOrderAddressResource(Client, response.Value), response.GetRawResponse());

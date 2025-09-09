@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder
 {
     /// <summary>
     /// A class representing the EdgeOrderItem data model.
-    /// Represents order item contract
+    /// Represents order item resource.
     /// </summary>
     public partial class EdgeOrderItemData : TrackedResourceData
     {
@@ -54,17 +54,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> Initializes a new instance of <see cref="EdgeOrderItemData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="orderItemDetails"> Represents order item details. </param>
-        /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
         /// <param name="orderId"> Id of the order to which order item belongs to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="orderItemDetails"/>, <paramref name="addressDetails"/> or <paramref name="orderId"/> is null. </exception>
-        public EdgeOrderItemData(AzureLocation location, EdgeOrderItemDetails orderItemDetails, EdgeOrderItemAddressDetails addressDetails, ResourceIdentifier orderId) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="orderItemDetails"/> or <paramref name="orderId"/> is null. </exception>
+        public EdgeOrderItemData(AzureLocation location, OrderItemDetails orderItemDetails, string orderId) : base(location)
         {
             Argument.AssertNotNull(orderItemDetails, nameof(orderItemDetails));
-            Argument.AssertNotNull(addressDetails, nameof(addressDetails));
             Argument.AssertNotNull(orderId, nameof(orderId));
 
             OrderItemDetails = orderItemDetails;
-            AddressDetails = addressDetails;
             OrderId = orderId;
         }
 
@@ -79,13 +76,17 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
         /// <param name="startOn"> Start time of order item. </param>
         /// <param name="orderId"> Id of the order to which order item belongs to. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="identity"> Msi identity of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EdgeOrderItemDetails orderItemDetails, EdgeOrderItemAddressDetails addressDetails, DateTimeOffset? startOn, ResourceIdentifier orderId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal EdgeOrderItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, OrderItemDetails orderItemDetails, EdgeOrderItemAddressDetails addressDetails, DateTimeOffset? startOn, string orderId, ProvisioningState? provisioningState, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             OrderItemDetails = orderItemDetails;
             AddressDetails = addressDetails;
             StartOn = startOn;
             OrderId = orderId;
+            ProvisioningState = provisioningState;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -95,12 +96,16 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary> Represents order item details. </summary>
-        public EdgeOrderItemDetails OrderItemDetails { get; set; }
+        public OrderItemDetails OrderItemDetails { get; set; }
         /// <summary> Represents shipping and return address for order item. </summary>
         public EdgeOrderItemAddressDetails AddressDetails { get; set; }
         /// <summary> Start time of order item. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> Id of the order to which order item belongs to. </summary>
-        public ResourceIdentifier OrderId { get; set; }
+        public string OrderId { get; set; }
+        /// <summary> Provisioning state. </summary>
+        public ProvisioningState? ProvisioningState { get; }
+        /// <summary> Msi identity of the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

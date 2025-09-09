@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="attributes"> Attributes for the product system. </param>
         /// <param name="links"> Links for the product system. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductDescription(ProductDescriptionType? descriptionType, string shortDescription, string longDescription, IReadOnlyList<string> keywords, IReadOnlyList<string> attributes, IReadOnlyList<ProductLink> links, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProductDescription(DescriptionType? descriptionType, string shortDescription, string longDescription, IReadOnlyList<string> keywords, IReadOnlyList<string> attributes, IReadOnlyList<ProductLink> links, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DescriptionType = descriptionType;
             ShortDescription = shortDescription;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Type of description. </summary>
-        public ProductDescriptionType? DescriptionType { get; }
+        public DescriptionType? DescriptionType { get; }
         /// <summary> Short description of the product system. </summary>
         public string ShortDescription { get; }
         /// <summary> Long description of the product system. </summary>

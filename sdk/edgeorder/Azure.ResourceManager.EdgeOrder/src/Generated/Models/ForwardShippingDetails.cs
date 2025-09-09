@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="trackingId"> TrackingId of the package. </param>
         /// <param name="trackingUri"> TrackingUrl of the package. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ForwardShippingDetails(string carrierName, string carrierDisplayName, string trackingId, Uri trackingUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ForwardShippingDetails(string carrierName, string carrierDisplayName, string trackingId, string trackingUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CarrierName = carrierName;
             CarrierDisplayName = carrierDisplayName;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> TrackingId of the package. </summary>
         public string TrackingId { get; }
         /// <summary> TrackingUrl of the package. </summary>
-        public Uri TrackingUri { get; }
+        public string TrackingUri { get; }
     }
 }

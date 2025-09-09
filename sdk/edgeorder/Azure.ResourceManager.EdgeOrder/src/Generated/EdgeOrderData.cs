@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.EdgeOrder
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderData"/>. </summary>
-        public EdgeOrderData()
+        internal EdgeOrderData()
         {
-            OrderItemIds = new ChangeTrackingList<ResourceIdentifier>();
+            OrderItemIds = new ChangeTrackingList<string>();
             OrderStageHistory = new ChangeTrackingList<EdgeOrderStageDetails>();
         }
 
@@ -66,20 +66,24 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemIds"> List of order item ARM Ids which are part of an order. </param>
         /// <param name="currentStage"> Order current status. </param>
         /// <param name="orderStageHistory"> Order status history. </param>
+        /// <param name="orderMode"> Order mode. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<ResourceIdentifier> orderItemIds, EdgeOrderStageDetails currentStage, IReadOnlyList<EdgeOrderStageDetails> orderStageHistory, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EdgeOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> orderItemIds, EdgeOrderStageDetails currentStage, IReadOnlyList<EdgeOrderStageDetails> orderStageHistory, OrderMode? orderMode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             OrderItemIds = orderItemIds;
             CurrentStage = currentStage;
             OrderStageHistory = orderStageHistory;
+            OrderMode = orderMode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of order item ARM Ids which are part of an order. </summary>
-        public IReadOnlyList<ResourceIdentifier> OrderItemIds { get; }
+        public IReadOnlyList<string> OrderItemIds { get; }
         /// <summary> Order current status. </summary>
         public EdgeOrderStageDetails CurrentStage { get; }
         /// <summary> Order status history. </summary>
         public IReadOnlyList<EdgeOrderStageDetails> OrderStageHistory { get; }
+        /// <summary> Order mode. </summary>
+        public OrderMode? OrderMode { get; }
     }
 }
