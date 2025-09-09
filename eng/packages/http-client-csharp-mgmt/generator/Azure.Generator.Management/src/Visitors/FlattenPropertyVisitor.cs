@@ -39,15 +39,29 @@ namespace Azure.Generator.Management.Visitors
                 foreach (var (internalProperty, collectionProperties) in value)
                 {
                     var innerCollectionProperties = collectionProperties.Select(x => x.InnerProperty);
+                    var initializationMethod = BuildInitializationMethod(innerCollectionProperties, internalProperty, model);
+                    model.Update(methods: [.. model.Methods, initializationMethod]);
                     // If the property is a collection type, we need to ensure that it is initialized
                     foreach (var (flattenedProperty, innerProperty) in collectionProperties)
                         flattenedProperty.Update(body: new MethodPropertyBody(
-                                PropertyHelpers.BuildGetterForCollectionProperty(innerCollectionProperties, true, internalProperty, ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[internalProperty.Type]!, innerProperty),
-                                PropertyHelpers.BuildSetterForCollectionProperty(innerCollectionProperties, internalProperty, innerProperty)));
+                                PropertyHelpers.BuildGetterForCollectionProperty(innerCollectionProperties, true, initializationMethod.Signature.Name, internalProperty, ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[internalProperty.Type]!, innerProperty),
+                                PropertyHelpers.BuildSetterForCollectionProperty(innerCollectionProperties, initializationMethod.Signature.Name, internalProperty, innerProperty)));
                 }
             }
 
             return base.PostVisitType(type);
+        }
+
+        internal const string s_initializationMethodName = "Initialize";
+        private MethodProvider BuildInitializationMethod(IEnumerable<PropertyProvider> collectionTypeProperties, PropertyProvider internalProperty, ModelProvider model)
+        {
+            var signature = new MethodSignature($"{s_initializationMethodName}{internalProperty.Type.Name}", null, MethodSignatureModifiers.Private, null, null, []);
+            MethodBodyStatement[] body = [
+                    new IfStatement(This.Property(internalProperty.Name).Is(Null))
+                    {
+                        internalProperty.Assign(New.Instance(internalProperty.Type, PropertyHelpers.PopulateCollectionProperties(collectionTypeProperties))).Terminate()
+                    },];
+            return new MethodProvider(signature, body, model);
         }
 
         private void UpdateModelFactory(ModelFactoryProvider modelFactory)

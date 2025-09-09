@@ -107,16 +107,13 @@ namespace Azure.Generator.Management.Utilities
             }
         }
 
-        public static MethodBodyStatement BuildGetterForCollectionProperty(IEnumerable<PropertyProvider> collectionTypeProperties, bool? includeGetterNullCheck, PropertyProvider internalProperty, TypeProvider innerModel, PropertyProvider singleProperty)
+        public static MethodBodyStatement BuildGetterForCollectionProperty(IEnumerable<PropertyProvider> collectionTypeProperties, bool? includeGetterNullCheck, string initializationMethodName, PropertyProvider internalProperty, TypeProvider innerModel, PropertyProvider singleProperty)
         {
             var checkNullExpression = This.Property(internalProperty.Name).Is(Null);
             if (includeGetterNullCheck == true)
             {
                 return new List<MethodBodyStatement> {
-                    new IfStatement(checkNullExpression)
-                    {
-                        internalProperty.Assign(New.Instance(innerModel.Type, PopulateCollectionProperties(collectionTypeProperties))).Terminate()
-                    },
+                    This.Invoke(initializationMethodName).Terminate(),
                     Return(new MemberExpression(internalProperty, singleProperty.Name))
                 };
             }
@@ -149,22 +146,18 @@ namespace Azure.Generator.Management.Utilities
             return setter;
         }
 
-        public static MethodBodyStatement BuildSetterForCollectionProperty(IEnumerable<PropertyProvider> collectionTypeProperties, PropertyProvider internalProperty, PropertyProvider innerProperty)
+        public static MethodBodyStatement BuildSetterForCollectionProperty(IEnumerable<PropertyProvider> collectionTypeProperties, string initializationMethodName, PropertyProvider internalProperty, PropertyProvider innerProperty)
         {
             var isNullableValueType = innerProperty.Type.IsValueType && innerProperty.Type.IsNullable;
             var setter = new List<MethodBodyStatement>();
             var internalPropertyExpression = This.Property(internalProperty.Name);
 
-            setter.Add(
-                new IfStatement(internalPropertyExpression.Is(Null))
-                {
-                        internalPropertyExpression.Assign(New.Instance(internalProperty.Type, PopulateCollectionProperties(collectionTypeProperties))).Terminate()
-                });
+            setter.Add(This.Invoke(initializationMethodName).Terminate());
             setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(isNullableValueType ? Value.Property(nameof(Nullable<int>.Value)) : Value).Terminate());
             return setter;
         }
 
-        private static Dictionary<ValueExpression, ValueExpression> PopulateCollectionProperties(IEnumerable<PropertyProvider> collectionTypeProperties)
+        public static Dictionary<ValueExpression, ValueExpression> PopulateCollectionProperties(IEnumerable<PropertyProvider> collectionTypeProperties)
         {
             var result = new Dictionary<ValueExpression, ValueExpression>();
             foreach (var property in collectionTypeProperties)

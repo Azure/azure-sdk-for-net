@@ -130,26 +130,12 @@ namespace MgmtTypeSpec
         {
             get
             {
-                if (FlattenedNestedProperty is null)
-                {
-                    FlattenedNestedProperty = new BarNestedQuotaProperties
-                    {
-                        MiddleProp2 = new ChangeTrackingDictionary<string, string>(),
-                        Prop1 = new ChangeTrackingList<string>()
-                    };
-                }
+                InitializeBarNestedQuotaProperties();
                 return FlattenedNestedProperty.MiddleProp2;
             }
             set
             {
-                if (FlattenedNestedProperty is null)
-                {
-                    FlattenedNestedProperty = new BarNestedQuotaProperties
-                    {
-                        MiddleProp2 = new ChangeTrackingDictionary<string, string>(),
-                        Prop1 = new ChangeTrackingList<string>()
-                    };
-                }
+                InitializeBarNestedQuotaProperties();
                 FlattenedNestedProperty.MiddleProp2 = value;
             }
         }
@@ -159,26 +145,12 @@ namespace MgmtTypeSpec
         {
             get
             {
-                if (FlattenedNestedProperty is null)
-                {
-                    FlattenedNestedProperty = new BarNestedQuotaProperties
-                    {
-                        MiddleProp2 = new ChangeTrackingDictionary<string, string>(),
-                        Prop1 = new ChangeTrackingList<string>()
-                    };
-                }
+                InitializeBarNestedQuotaProperties();
                 return FlattenedNestedProperty.Prop1;
             }
             set
             {
-                if (FlattenedNestedProperty is null)
-                {
-                    FlattenedNestedProperty = new BarNestedQuotaProperties
-                    {
-                        MiddleProp2 = new ChangeTrackingDictionary<string, string>(),
-                        Prop1 = new ChangeTrackingList<string>()
-                    };
-                }
+                InitializeBarNestedQuotaProperties();
                 FlattenedNestedProperty.Prop1 = value;
             }
         }
@@ -232,6 +204,18 @@ namespace MgmtTypeSpec
             set
             {
                 AnotherProperty = value.HasValue ? new BarQuotaProperties(value.Value) : default;
+            }
+        }
+
+        private void InitializeBarNestedQuotaProperties()
+        {
+            if (FlattenedNestedProperty is null)
+            {
+                FlattenedNestedProperty = new BarNestedQuotaProperties
+                {
+                    MiddleProp2 = new ChangeTrackingDictionary<string, string>(),
+                    Prop1 = new ChangeTrackingList<string>()
+                };
             }
         }
     }
