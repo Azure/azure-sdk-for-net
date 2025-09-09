@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
+                writer.WriteStringValue(TenantId);
             }
             if (options.Format != "W" && Optional.IsDefined(SiteId))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
             if (Optional.IsDefined(AppId))
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Guid? tenantId = default;
+            string tenantId = default;
             string siteId = default;
             string siteName = default;
             string key = default;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.BotService.Models
             bool? isDetailedLoggingEnabled = default;
             bool? isBlockUserUploadEnabled = default;
             bool? isNoStorageEnabled = default;
-            ETag? etag = default;
+            string etag = default;
             string appId = default;
             bool? isV1Enabled = default;
             bool? isV3Enabled = default;
@@ -197,11 +197,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 if (property.NameEquals("tenantId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tenantId = property.Value.GetGuid();
+                    tenantId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("siteId"u8))
@@ -277,11 +273,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("eTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("appId"u8))

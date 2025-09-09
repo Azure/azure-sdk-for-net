@@ -50,20 +50,13 @@ namespace Azure.ResourceManager.BotService
             }
             if (Optional.IsDefined(Kind))
             {
-                if (Kind != null)
-                {
-                    writer.WritePropertyName("kind"u8);
-                    writer.WriteStringValue(Kind.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("kind");
-                }
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
             {
@@ -100,7 +93,7 @@ namespace Azure.ResourceManager.BotService
             BotChannelProperties properties = default;
             BotServiceSku sku = default;
             BotServiceKind? kind = default;
-            ETag? etag = default;
+            string etag = default;
             IReadOnlyList<string> zones = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -134,7 +127,6 @@ namespace Azure.ResourceManager.BotService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        kind = null;
                         continue;
                     }
                     kind = new BotServiceKind(property.Value.GetString());
@@ -142,11 +134,7 @@ namespace Azure.ResourceManager.BotService
                 }
                 if (property.NameEquals("etag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
