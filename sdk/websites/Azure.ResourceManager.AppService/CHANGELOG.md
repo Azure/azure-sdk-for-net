@@ -1,5 +1,17 @@
 # Release History
 
+## 1.5.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Fixed example storage account URL in documentation example for Static Site Zip Deploy Scenario.
+
 ## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
