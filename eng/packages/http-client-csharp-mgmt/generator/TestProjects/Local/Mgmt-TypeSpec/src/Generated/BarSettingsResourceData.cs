@@ -132,7 +132,11 @@ namespace MgmtTypeSpec
             {
                 if (FlattenedNestedProperty is null)
                 {
-                    FlattenedNestedProperty = new BarNestedQuotaProperties();
+                    FlattenedNestedProperty = new BarNestedQuotaProperties
+                    {
+                        MiddleProp2 = new ChangeTrackingDictionary<string, string>(),
+                        Prop1 = new ChangeTrackingList<string>()
+                    };
                 }
                 return FlattenedNestedProperty.MiddleProp2;
             }
@@ -157,7 +161,11 @@ namespace MgmtTypeSpec
             {
                 if (FlattenedNestedProperty is null)
                 {
-                    FlattenedNestedProperty = new BarNestedQuotaProperties();
+                    FlattenedNestedProperty = new BarNestedQuotaProperties
+                    {
+                        MiddleProp2 = new ChangeTrackingDictionary<string, string>(),
+                        Prop1 = new ChangeTrackingList<string>()
+                    };
                 }
                 return FlattenedNestedProperty.Prop1;
             }

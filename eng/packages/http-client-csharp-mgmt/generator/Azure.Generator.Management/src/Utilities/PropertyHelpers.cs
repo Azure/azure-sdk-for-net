@@ -107,6 +107,33 @@ namespace Azure.Generator.Management.Utilities
             }
         }
 
+        public static MethodBodyStatement BuildGetterForCollectionProperty(IEnumerable<PropertyProvider> collectionTypeProperties, bool? includeGetterNullCheck, PropertyProvider internalProperty, TypeProvider innerModel, PropertyProvider singleProperty)
+        {
+            var checkNullExpression = This.Property(internalProperty.Name).Is(Null);
+            if (includeGetterNullCheck == true)
+            {
+                return new List<MethodBodyStatement> {
+                    new IfStatement(checkNullExpression)
+                    {
+                        internalProperty.Assign(New.Instance(innerModel.Type, PopulateCollectionProperties(collectionTypeProperties))).Terminate()
+                    },
+                    Return(new MemberExpression(internalProperty, singleProperty.Name))
+                };
+            }
+            else if (includeGetterNullCheck == false)
+            {
+                return Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalProperty, singleProperty.Name)));
+            }
+            else
+            {
+                if (innerModel.Type.IsNullable)
+                {
+                    return Return(new MemberExpression(internalProperty.AsVariableExpression.NullConditional(), singleProperty.Name));
+                }
+                return Return(new MemberExpression(internalProperty, singleProperty.Name));
+            }
+        }
+
         public static MethodBodyStatement BuildSetterForPropertyFlatten(ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty)
         {
             var isNullableValueType = innerProperty.Type.IsValueType && innerProperty.Type.IsNullable;
@@ -131,28 +158,28 @@ namespace Azure.Generator.Management.Utilities
             setter.Add(
                 new IfStatement(internalPropertyExpression.Is(Null))
                 {
-                        internalPropertyExpression.Assign(New.Instance(internalProperty.Type, PopulateCollectionProperties())).Terminate()
+                        internalPropertyExpression.Assign(New.Instance(internalProperty.Type, PopulateCollectionProperties(collectionTypeProperties))).Terminate()
                 });
             setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(isNullableValueType ? Value.Property(nameof(Nullable<int>.Value)) : Value).Terminate());
             return setter;
+        }
 
-            Dictionary<ValueExpression, ValueExpression> PopulateCollectionProperties()
+        private static Dictionary<ValueExpression, ValueExpression> PopulateCollectionProperties(IEnumerable<PropertyProvider> collectionTypeProperties)
+        {
+            var result = new Dictionary<ValueExpression, ValueExpression>();
+            foreach (var property in collectionTypeProperties)
             {
-                var result = new Dictionary<ValueExpression, ValueExpression>();
-                foreach (var property in collectionTypeProperties)
+                var propertyValue = Value.Property(property.Name);
+                if (property.Type.IsList)
                 {
-                    var propertyValue = Value.Property(property.Name);
-                    if (property.Type.IsList)
-                    {
-                        result.Add(Identifier(property.Name), New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(property.Type.Arguments)));
-                    }
-                    if (property.Type.IsDictionary)
-                    {
-                        result.Add(Identifier(property.Name), New.Instance(ManagementClientGenerator.Instance.TypeFactory.DictionaryInitializationType.MakeGenericType(property.Type.Arguments)));
-                    }
+                    result.Add(Identifier(property.Name), New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(property.Type.Arguments)));
                 }
-                return result;
+                if (property.Type.IsDictionary)
+                {
+                    result.Add(Identifier(property.Name), New.Instance(ManagementClientGenerator.Instance.TypeFactory.DictionaryInitializationType.MakeGenericType(property.Type.Arguments)));
+                }
             }
+            return result;
         }
 
         public static MethodBodyStatement BuildSetterForSafeFlatten(bool includeSetterCheck, ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty)

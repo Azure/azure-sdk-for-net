@@ -38,11 +38,12 @@ namespace Azure.Generator.Management.Visitors
             {
                 foreach (var (internalProperty, collectionProperties) in value)
                 {
+                    var innerCollectionProperties = collectionProperties.Select(x => x.InnerProperty);
                     // If the property is a collection type, we need to ensure that it is initialized
                     foreach (var (flattenedProperty, innerProperty) in collectionProperties)
                         flattenedProperty.Update(body: new MethodPropertyBody(
-                                PropertyHelpers.BuildGetter(true, internalProperty, ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[internalProperty.Type]!, innerProperty),
-                                PropertyHelpers.BuildSetterForCollectionProperty(collectionProperties.Select(x => x.InnerProperty), internalProperty, innerProperty)));
+                                PropertyHelpers.BuildGetterForCollectionProperty(innerCollectionProperties, true, internalProperty, ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[internalProperty.Type]!, innerProperty),
+                                PropertyHelpers.BuildSetterForCollectionProperty(innerCollectionProperties, internalProperty, innerProperty)));
                 }
             }
 
