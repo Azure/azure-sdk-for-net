@@ -14,24 +14,24 @@ using Azure.ResourceManager.DataBox.Models;
 
 namespace Azure.ResourceManager.DataBox
 {
-    internal partial class DataBoxManagementRestOperations
+    internal partial class DataBoxRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of DataBoxManagementRestOperations. </summary>
+        /// <summary> Initializes a new instance of DataBoxRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DataBoxManagementRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public DataBoxRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-02-01";
+            _apiVersion = apiVersion ?? "2025-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.DataBox
             uri.AppendPath("/mitigate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
@@ -76,8 +75,8 @@ namespace Azure.ResourceManager.DataBox
         }
 
         /// <summary> Request to mitigate for a given job. </summary>
-        /// <param name="subscriptionId"> The Subscription Id. </param>
-        /// <param name="resourceGroupName"> The Resource Group Name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="content"> Mitigation Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,8 +101,8 @@ namespace Azure.ResourceManager.DataBox
         }
 
         /// <summary> Request to mitigate for a given job. </summary>
-        /// <param name="subscriptionId"> The Subscription Id. </param>
-        /// <param name="resourceGroupName"> The Resource Group Name. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="content"> Mitigation Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
