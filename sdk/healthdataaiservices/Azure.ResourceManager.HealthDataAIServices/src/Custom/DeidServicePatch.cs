@@ -3,8 +3,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.HealthDataAIServices.Models
 {
     public partial class DeidServicePatch

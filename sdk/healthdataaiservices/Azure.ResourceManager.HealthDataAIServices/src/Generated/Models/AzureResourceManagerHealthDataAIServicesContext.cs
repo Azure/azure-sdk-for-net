@@ -8,34 +8,30 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.HealthDataAIServices.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HealthDataAIServices
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(DeidPropertiesUpdate))]
     [ModelReaderWriterBuildable(typeof(DeidServiceData))]
-    [ModelReaderWriterBuildable(typeof(DeidServiceListResult))]
-    [ModelReaderWriterBuildable(typeof(DeidServicePatch))]
     [ModelReaderWriterBuildable(typeof(DeidServiceProperties))]
-    [ModelReaderWriterBuildable(typeof(DeidServiceResource))]
     [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateEndpointConnection))]
-    [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateEndpointConnectionResource))]
-    [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateEndpointConnectionResourceData))]
-    [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateLinkResourceData))]
-    [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateLinkResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateLinkResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(DeidServiceListResult))]
+    [ModelReaderWriterBuildable(typeof(DeidServicePatch))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentityUpdate))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(DeidPropertiesUpdate))]
+    [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateEndpointConnectionResourceData))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateLinkResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateLinkResource))]
+    [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateLinkResourceProperties))]
     public partial class AzureResourceManagerHealthDataAIServicesContext : ModelReaderWriterContext
     {
     }
