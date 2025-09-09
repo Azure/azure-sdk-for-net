@@ -246,7 +246,7 @@ namespace Azure.Identity
                 Constants.AzureDeveloperCliCredential => [CreateAzureDeveloperCliCredential()],
                 Constants.EnvironmentCredential => [CreateEnvironmentCredential()],
                 Constants.WorkloadIdentityCredential => [CreateWorkloadIdentityCredential()],
-                Constants.ManagedIdentityCredential => [CreateManagedIdentityCredential()],
+                Constants.ManagedIdentityCredential => [CreateManagedIdentityCredential(false)],
                 Constants.InteractiveBrowserCredential => [CreateInteractiveBrowserCredential()],
                 Constants.BrokerCredential =>
                     TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions)
@@ -279,10 +279,10 @@ namespace Azure.Identity
             return new WorkloadIdentityCredential(options);
         }
 
-        public virtual TokenCredential CreateManagedIdentityCredential()
+        public virtual TokenCredential CreateManagedIdentityCredential(bool isProbeEnabled = true)
         {
             var options = Options.Clone<DefaultAzureCredentialOptions>();
-            options.IsChainedCredential = true;
+            options.IsChainedCredential = isProbeEnabled;
 
             if (options.ManagedIdentityClientId != null && options.ManagedIdentityResourceId != null)
             {

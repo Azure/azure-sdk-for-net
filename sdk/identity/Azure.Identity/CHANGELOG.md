@@ -7,6 +7,7 @@
 - Added a new `DefaultAzureCredential` constructor that accepts a custom environment variable name for credential configuration. This provides flexibility beyond the default `AZURE_TOKEN_CREDENTIALS` environment variable. The constructor accepts any environment variable name and uses the same credential selection logic as the existing `AZURE_TOKEN_CREDENTIALS` processing.
 - Added `DefaultAzureCredential.DefaultEnvironmentVariableName` constant property that returns `"AZURE_TOKEN_CREDENTIALS"` for convenience when referencing the default environment variable name.
 - `AzureCliCredential`, `AzurePowerShellCredential`, and `AzureDeveloperCliCredential` now throw an `AuthenticationFailedException` when the `TokenRequestContext` includes claims, as these credentials do not support claims challenges. The exception message includes guidance for handling such scenarios.
+- When `AZURE_TOKEN_CREDENTIALS` or the equivalent custom environment variable is configured to `ManagedIdentityCredential`, the `DefaultAzureCredential` does not issue a probe request and performs retries with exponential backoff.
 
 ### Breaking Changes
 
