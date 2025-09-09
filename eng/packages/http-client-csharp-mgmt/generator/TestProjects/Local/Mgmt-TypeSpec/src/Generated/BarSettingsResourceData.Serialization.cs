@@ -68,6 +68,8 @@ namespace MgmtTypeSpec
             writer.WriteObjectValue(Property, options);
             writer.WritePropertyName("anotherProperty"u8);
             writer.WriteObjectValue(AnotherProperty, options);
+            writer.WritePropertyName("flattenedNestedProperty"u8);
+            writer.WriteObjectValue(FlattenedNestedProperty, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -104,6 +106,7 @@ namespace MgmtTypeSpec
             IList<string> stringArray = default;
             BarQuotaProperties @property = default;
             BarQuotaProperties anotherProperty = default;
+            BarNestedQuotaProperties flattenedNestedProperty = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -178,6 +181,11 @@ namespace MgmtTypeSpec
                     anotherProperty = BarQuotaProperties.DeserializeBarQuotaProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("flattenedNestedProperty"u8))
+                {
+                    flattenedNestedProperty = BarNestedQuotaProperties.DeserializeBarNestedQuotaProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -192,7 +200,8 @@ namespace MgmtTypeSpec
                 properties,
                 stringArray ?? new ChangeTrackingList<string>(),
                 @property,
-                anotherProperty);
+                anotherProperty,
+                flattenedNestedProperty);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
