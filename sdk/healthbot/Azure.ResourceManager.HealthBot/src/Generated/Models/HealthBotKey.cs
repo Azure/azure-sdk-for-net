@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.HealthBot.Models
 {
-    /// <summary> The list of Azure Health Bot operation response. </summary>
-    internal partial class BotResponseList
+    /// <summary> An entry of HealthBotKeysResponse. </summary>
+    public partial class HealthBotKey
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,32 +45,25 @@ namespace Azure.ResourceManager.HealthBot.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BotResponseList"/>. </summary>
-        /// <param name="value"> The HealthBot items on this page. </param>
-        internal BotResponseList(IEnumerable<HealthBotData> value)
+        /// <summary> Initializes a new instance of <see cref="HealthBotKey"/>. </summary>
+        internal HealthBotKey()
         {
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BotResponseList"/>. </summary>
-        /// <param name="value"> The HealthBot items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="HealthBotKey"/>. </summary>
+        /// <param name="keyName"> The name of the key. </param>
+        /// <param name="value"> The value of the key. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotResponseList(IReadOnlyList<HealthBotData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HealthBotKey(string keyName, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            KeyName = keyName;
             Value = value;
-            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BotResponseList"/> for deserialization. </summary>
-        internal BotResponseList()
-        {
-        }
-
-        /// <summary> The HealthBot items on this page. </summary>
-        public IReadOnlyList<HealthBotData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> The name of the key. </summary>
+        public string KeyName { get; }
+        /// <summary> The value of the key. </summary>
+        public string Value { get; }
     }
 }

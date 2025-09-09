@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.HealthBot
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
-            }
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
             }
         }
 
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.HealthBot
             {
                 return null;
             }
+            HealthBotProperties properties = default;
             HealthBotSku sku = default;
             ManagedServiceIdentity identity = default;
-            HealthBotProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -85,6 +85,15 @@ namespace Azure.ResourceManager.HealthBot
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = HealthBotProperties.DeserializeHealthBotProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("sku"u8))
                 {
                     sku = HealthBotSku.DeserializeHealthBotSku(property.Value, options);
@@ -97,15 +106,6 @@ namespace Azure.ResourceManager.HealthBot
                         continue;
                     }
                     identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerHealthBotContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = HealthBotProperties.DeserializeHealthBotProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.HealthBot
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                properties,
                 sku,
                 identity,
-                properties,
                 serializedAdditionalRawData);
         }
 

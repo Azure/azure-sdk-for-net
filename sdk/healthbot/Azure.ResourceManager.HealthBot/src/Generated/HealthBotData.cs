@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.HealthBot
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="properties"> The set of properties specific to Azure Health Bot resource. </param>
         /// <param name="sku"> SKU of the Azure Health Bot. </param>
         /// <param name="identity"> The identity of the Azure Health Bot. </param>
-        /// <param name="properties"> The set of properties specific to Azure Health Bot resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthBotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthBotSku sku, ManagedServiceIdentity identity, HealthBotProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal HealthBotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthBotProperties properties, HealthBotSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             Sku = sku;
             Identity = identity;
-            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -86,6 +86,8 @@ namespace Azure.ResourceManager.HealthBot
         {
         }
 
+        /// <summary> The set of properties specific to Azure Health Bot resource. </summary>
+        public HealthBotProperties Properties { get; set; }
         /// <summary> SKU of the Azure Health Bot. </summary>
         internal HealthBotSku Sku { get; set; }
         /// <summary> The name of the Azure Health Bot SKU. </summary>
@@ -100,7 +102,5 @@ namespace Azure.ResourceManager.HealthBot
 
         /// <summary> The identity of the Azure Health Bot. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The set of properties specific to Azure Health Bot resource. </summary>
-        public HealthBotProperties Properties { get; set; }
     }
 }
