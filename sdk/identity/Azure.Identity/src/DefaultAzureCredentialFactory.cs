@@ -109,9 +109,9 @@ namespace Azure.Identity
                 {
                     chain.Add(CreateInteractiveBrowserCredential());
                 }
-                if (!Options.ExcludeBrokerCredential && TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
+                if (!Options.ExcludeBrokerCredential)
                 {
-                    chain.Add(CreateBrokerCredential(brokerOptions));
+                    chain.Add(CreateBrokerCredential());
                 }
                 tokenCredentials = chain.ToArray();
             }
@@ -196,10 +196,9 @@ namespace Azure.Identity
             {
                 chain.Add(CreateAzureDeveloperCliCredential());
             }
-
-            if (!Options.ExcludeBrokerCredential && TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
+            if (!Options.ExcludeBrokerCredential)
             {
-                chain.Add(CreateBrokerCredential(brokerOptions));
+                chain.Add(CreateBrokerCredential());
             }
             return chain.ToArray();
         }
@@ -248,10 +247,7 @@ namespace Azure.Identity
                 Constants.WorkloadIdentityCredential => [CreateWorkloadIdentityCredential()],
                 Constants.ManagedIdentityCredential => [CreateManagedIdentityCredential(false)],
                 Constants.InteractiveBrowserCredential => [CreateInteractiveBrowserCredential()],
-                Constants.BrokerCredential =>
-                    TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions)
-                        ? [CreateBrokerCredential(brokerOptions)]
-                        : throw new CredentialUnavailableException("BrokerCredential is not available without a reference to Azure.Identity.Broker."),
+                Constants.BrokerCredential => [CreateBrokerCredential()],
                 _ => throw new InvalidOperationException($"Invalid value for environment variable {environmentVariableName}: {credentialSelection}. Valid values are {validCredentials}.{_troubleshootingMessage}")
             };
         }
@@ -343,22 +339,14 @@ namespace Azure.Identity
                 Pipeline);
         }
 
-        public TokenCredential CreateBrokerCredential(InteractiveBrowserCredentialOptions brokerOptions)
+        internal TokenCredential CreateBrokerCredential()
         {
             var options = Options.Clone<DevelopmentBrokerOptions>();
-            ((IMsalSettablePublicClientInitializerOptions)options).BeforeBuildClient = ((IMsalSettablePublicClientInitializerOptions)brokerOptions).BeforeBuildClient;
-            options.RedirectUri = brokerOptions.RedirectUri;
-
             options.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
-
             options.TenantId = Options.InteractiveBrowserTenantId;
             options.IsChainedCredential = true;
 
-            return new InteractiveBrowserCredential(
-                Options.InteractiveBrowserTenantId,
-                Options.InteractiveBrowserCredentialClientId ?? Constants.DeveloperSignOnClientId,
-                options,
-                Pipeline);
+            return new BrokerCredential(options);
         }
 
         public virtual TokenCredential CreateAzureDeveloperCliCredential()
