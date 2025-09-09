@@ -129,6 +129,10 @@ namespace Azure.AI.OpenAI
         public AzureOpenAIClientOptions() { }
         public AzureOpenAIClientOptions(Azure.AI.OpenAI.AzureOpenAIClientOptions.ServiceVersion version) { }
         public Azure.AI.OpenAI.AzureOpenAIAudience? Audience { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AOAI001")]
+        public System.Collections.Generic.IDictionary<string, string> DefaultHeaders { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AOAI001")]
+        public System.Collections.Generic.IDictionary<string, string> DefaultQueryParameters { get { throw null; } set { } }
         public string UserAgentApplicationId { get { throw null; } set { } }
         public enum ServiceVersion
         {

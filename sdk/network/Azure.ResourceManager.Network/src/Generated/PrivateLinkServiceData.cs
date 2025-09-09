@@ -67,24 +67,33 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The extended location of the load balancer. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> An array of references to the load balancer IP configurations. </summary>
+        [WirePath("properties.loadBalancerFrontendIpConfigurations")]
         public IList<FrontendIPConfigurationData> LoadBalancerFrontendIPConfigurations { get; }
         /// <summary> An array of private link service IP configurations. </summary>
+        [WirePath("properties.ipConfigurations")]
         public IList<PrivateLinkServiceIPConfiguration> IPConfigurations { get; }
         /// <summary> The destination IP address of the private link service. </summary>
+        [WirePath("properties.destinationIPAddress")]
         public string DestinationIPAddress { get; set; }
         /// <summary> An array of references to the network interfaces created for this private link service. </summary>
+        [WirePath("properties.networkInterfaces")]
         public IReadOnlyList<NetworkInterfaceData> NetworkInterfaces { get; }
         /// <summary> The provisioning state of the private link service resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> An array of list about connections to the private endpoint. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<NetworkPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The visibility list of the private link service. </summary>
         internal PrivateLinkServicePropertiesVisibility Visibility { get; set; }
         /// <summary> The list of subscriptions. </summary>
+        [WirePath("properties.visibility.subscriptions")]
         public IList<string> VisibilitySubscriptions
         {
             get
@@ -98,6 +107,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The auto-approval list of the private link service. </summary>
         internal PrivateLinkServicePropertiesAutoApproval AutoApproval { get; set; }
         /// <summary> The list of subscriptions. </summary>
+        [WirePath("properties.autoApproval.subscriptions")]
         public IList<string> AutoApprovalSubscriptions
         {
             get
@@ -109,10 +119,13 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The list of Fqdn. </summary>
+        [WirePath("properties.fqdns")]
         public IList<string> Fqdns { get; }
         /// <summary> The alias of the private link service. </summary>
+        [WirePath("properties.alias")]
         public string Alias { get; }
         /// <summary> Whether the private link service is enabled for proxy protocol or not. </summary>
+        [WirePath("properties.enableProxyProtocol")]
         public bool? EnableProxyProtocol { get; set; }
     }
 }

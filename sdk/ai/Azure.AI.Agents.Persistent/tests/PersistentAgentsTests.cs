@@ -108,7 +108,10 @@ namespace Azure.AI.Agents.Persistent.Tests
             ConnectedAgent,
             FileSearch,
             AzureFunction,
-            BrowserAutomation
+            BrowserAutomation,
+            MicrosoftFabric,
+            Sharepoint,
+            CodeInterpreter,
         }
 
         public Dictionary<ToolTypes, Type> ExpectedDeltas = new()
@@ -120,7 +123,10 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.AzureAISearch, typeof(RunStepDeltaAzureAISearchToolCall)},
             {ToolTypes.ConnectedAgent, typeof(RunStepDeltaConnectedAgentToolCall)},
             {ToolTypes.FileSearch, typeof(RunStepDeltaFileSearchToolCall)},
-            {ToolTypes.AzureFunction, typeof(RunStepDeltaAzureFunctionToolCall)}
+            {ToolTypes.AzureFunction, typeof(RunStepDeltaAzureFunctionToolCall)},
+            {ToolTypes.MicrosoftFabric, typeof(RunStepDeltaMicrosoftFabricToolCall)},
+            {ToolTypes.Sharepoint, typeof(RunStepDeltaSharepointToolCall)},
+            {ToolTypes.CodeInterpreter, typeof(RunStepDeltaCodeInterpreterToolCall)},
         };
 
         public Dictionary<ToolTypes, Type> ExpectedToolCalls = new()
@@ -133,7 +139,10 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.ConnectedAgent, typeof(RunStepConnectedAgentToolCall)},
             {ToolTypes.FileSearch, typeof(RunStepFileSearchToolCall)},
             {ToolTypes.BrowserAutomation, typeof(RunStepBrowserAutomationToolCall)},
-            {ToolTypes.AzureFunction, typeof(RunStepAzureFunctionToolCall)}
+            {ToolTypes.AzureFunction, typeof(RunStepAzureFunctionToolCall)},
+            {ToolTypes.MicrosoftFabric, typeof(RunStepMicrosoftFabricToolCall)},
+            {ToolTypes.Sharepoint, typeof(RunStepSharepointToolCall)},
+            {ToolTypes.CodeInterpreter, typeof(RunStepCodeInterpreterToolCall)},
         };
 
         public Dictionary<ToolTypes, string> ToolPrompts = new()
@@ -155,6 +164,9 @@ namespace Azure.AI.Agents.Persistent.Tests
                      "Enter the value 'MSFT', to get information about the Microsoft stock price." +
                      "At the top of the resulting page you will see a default chart of Microsoft stock price." +
                      "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it."},
+            {ToolTypes.MicrosoftFabric, "What are top 3 weather events with largest revenue loss?"},
+            {ToolTypes.Sharepoint, "Hello, summarize the key points of the first document in the list."},
+            {ToolTypes.CodeInterpreter,  "What feature does Smart Eyewear offer?"},
         };
 
         public Dictionary<ToolTypes, string> ToolInstructions = new()
@@ -169,6 +181,9 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.BrowserAutomation, "You are an Agent helping with browser automation tasks. " +
                               "You can answer questions, provide information, and assist with various tasks " +
                               "related to web browsing using the Browser Automation tool available to you." },
+            {ToolTypes.MicrosoftFabric, "You are helpful agent."},
+            {ToolTypes.Sharepoint, "You are helpful agent."},
+            {ToolTypes.CodeInterpreter, "You are helpful agent."},
         };
 
         public Dictionary<ToolTypes, string> RequiredTextInResponse = new()
@@ -529,6 +544,28 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
             Assert.AreEqual(0, ids.Count);
             Assert.AreEqual(2, (await msgResp.ToListAsync()).Count);
+            // Delete message.
+            bool wasDeleted = await client.Messages.DeleteMessageAsync(threadId: thread.Id, messageId: msg1.Id);
+            Assert.IsTrue(wasDeleted);
+            ids.Add(msg1.Id);
+            ids.Add(msg2.Id);
+            msgResp = client.Messages.GetMessagesAsync(thread.Id);
+            await foreach (PersistentThreadMessage msg in msgResp)
+            {
+                ids.Remove(msg.Id);
+            }
+            Assert.AreEqual(1, ids.Count);
+            Assert.That(ids.Contains(msg1.Id));
+            // Check that we can add message to thread after deletion.
+            msg2 = await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "baz");
+            ids.Add(msg1.Id);
+            ids.Add(msg2.Id);
+            msgResp = client.Messages.GetMessagesAsync(thread.Id);
+            await foreach (PersistentThreadMessage msg in msgResp)
+            {
+                ids.Remove(msg.Id);
+            }
+            Assert.AreEqual(1, ids.Count);
         }
 
         [RecordedTest]
@@ -1906,6 +1943,9 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ToolTypes.AzureFunction)]
         [TestCase(ToolTypes.BingCustomGrounding)]
         [TestCase(ToolTypes.BrowserAutomation)]
+        [TestCase(ToolTypes.MicrosoftFabric)]
+        [TestCase(ToolTypes.Sharepoint)]
+        [TestCase(ToolTypes.CodeInterpreter)]
         public async Task TestToolCall(ToolTypes toolToTest)
         {
             PersistentAgentsClient client = GetClient();
@@ -2030,7 +2070,12 @@ namespace Azure.AI.Agents.Persistent.Tests
         }
 
         [RecordedTest]
-        public async Task TestMcpTool()
+        [TestCase(null, false, true)]
+        [TestCase("always", false, true)]
+        [TestCase("never", false, false)]
+        [TestCase("always", true, true)]
+        [TestCase("never", true, false)]
+        public async Task TestMcpTool(string trust, bool isPerTool, bool shouldApprove)
         {
             PersistentAgentsClient client = GetClient();
             MCPToolDefinition mcpTool = new("github", "https://gitmcp.io/Azure/azure-rest-api-specs");
@@ -2050,6 +2095,26 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             MCPToolResource mcpToolResource = new("github");
             mcpToolResource.UpdateHeader("SuperSecret", "123456");
+            if (trust is not null)
+            {
+                MCPApproval trustMode;
+                if (isPerTool)
+                {
+                    MCPApprovalPerTool perTool = new()
+                    {
+                        Never = new MCPToolList(
+                            string.Equals(trust, "never") ? ["search_azure_rest_api_code"] : []),
+                        Always = new MCPToolList(
+                            string.Equals(trust, "always") ? ["search_azure_rest_api_code"] : []),
+                    };
+                    trustMode = new(perToolApproval: perTool);
+                }
+                else
+                {
+                    trustMode = new(trust);
+                }
+                mcpToolResource.RequireApproval = trustMode;
+            }
             ToolResources toolResources = mcpToolResource.ToToolResources();
 
             // Run the agent with MCP tool resources
@@ -2086,7 +2151,9 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
             }
             Assert.AreEqual(RunStatus.Completed, run.Status, run.LastError?.Message);
-            Assert.IsTrue(isApprovalRequested, "The approval was not requested.");
+            Assert.AreEqual(shouldApprove, isApprovalRequested,
+                isApprovalRequested ? $"The approval was requested, but it was not expected: trust: {trust}, isPerTool: {isPerTool}, shouldApprove: {shouldApprove}." : $"The approval was not requested, but it was expected: trust: {trust}, isPerTool: {isPerTool}, shouldApprove: {shouldApprove}."
+            );
             Assert.Greater((await client.Messages.GetMessagesAsync(thread.Id).ToListAsync()).Count, 1);
             AsyncPageable<RunStep> steps = client.Runs.GetRunStepsAsync(thread.Id, run.Id);
             bool isRunStepMCPPresent = false;
@@ -2180,6 +2247,9 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ToolTypes.ConnectedAgent)]
         [TestCase(ToolTypes.FileSearch)]
         [TestCase(ToolTypes.BingCustomGrounding)]
+        [TestCase(ToolTypes.MicrosoftFabric)]
+        [TestCase(ToolTypes.Sharepoint)]
+        [TestCase(ToolTypes.CodeInterpreter)]
         // AzureAISearch is tested separately in TestAzureAiSearchStreaming.
         public async Task TestStreamDelta(ToolTypes toolToTest)
         {
@@ -2468,6 +2538,20 @@ namespace Azure.AI.Agents.Persistent.Tests
             };
         }
 
+        private ToolResources GetCodeInterpreterToolResource()
+        {
+            CodeInterpreterToolResource interpreter = new();
+            var ds = new VectorStoreDataSource(
+                assetIdentifier: TestEnvironment.AZURE_BLOB_URI,
+                assetType: VectorStoreDataSourceAssetType.UriAsset
+            );
+            interpreter.DataSources.Add(ds);
+            return new ToolResources()
+            {
+                CodeInterpreter = interpreter
+            };
+        }
+
         private async Task<ToolResources> GetToolResources(ToolTypes toolType)
             => toolType switch
             {
@@ -2476,6 +2560,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     filter: "category eq 'sleeping bag'"
                 ),
                 ToolTypes.FileSearch => await GetFileSearchToolResource(),
+                ToolTypes.CodeInterpreter => GetCodeInterpreterToolResource(),
                 _ => null
             };
 
@@ -2561,6 +2646,17 @@ namespace Azure.AI.Agents.Persistent.Tests
                            new BrowserAutomationToolConnectionParameters(id: TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
                        )
                     ),
+                    ToolTypes.MicrosoftFabric => new MicrosoftFabricToolDefinition (
+                        new FabricDataAgentToolParameters(
+                            TestEnvironment.FABRIC_CONNECTION_ID
+                        )
+                    ),
+                    ToolTypes.Sharepoint => new SharepointToolDefinition(
+                        new SharepointGroundingToolParameters(
+                            TestEnvironment.SHAREPOINT_CONNECTION_ID
+                        )
+                    ),
+                    ToolTypes.CodeInterpreter => new CodeInterpreterToolDefinition(),
                     _ => null
                 };
 

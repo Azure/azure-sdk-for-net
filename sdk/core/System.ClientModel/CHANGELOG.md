@@ -4,11 +4,19 @@
 
 ### Features Added
 
+- Added `ClientConnection` constructor, accepting credentials and metadata.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.1 (2025-08-20)
+
+### Features Added
+
+- Fix the behavior of Roslyn not properly handling partial classes with attributes in different files
 
 ## 1.6.0 (2025-08-11)
 

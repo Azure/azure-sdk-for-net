@@ -45,8 +45,38 @@ namespace Azure.Generator.Providers.Abstraction
             => Static(typeof(HttpPipelineBuilder)).Invoke(nameof(HttpPipelineBuilder.Build), [options, perRetryPolicies]);
 
         /// <inheritdoc/>
-        public override ValueExpression CreateMessage(HttpRequestOptionsApi requestOptions, ValueExpression responseClassifier)
-            => Original.Invoke(nameof(HttpPipeline.CreateMessage), requestOptions, responseClassifier).As<HttpMessage>();
+        public override MethodBodyStatement[] CreateMessage(
+            HttpRequestOptionsApi requestOptions,
+            ValueExpression uri,
+            ScopedApi<string> method,
+            ValueExpression responseClassifier,
+            out HttpMessageApi message,
+            out HttpRequestApi request)
+        {
+            var declareMessage = Declare(
+                "message",
+                InvokeCreateMessage(requestOptions, responseClassifier)
+                    .ToApi<HttpMessageApi>(),
+                out message);
+            var declareRequest = Declare("request", message.Request(), out request);
+            var requestProvider = new HttpRequestProvider(request);
+
+            return
+            [
+                declareMessage,
+                declareRequest,
+                requestProvider.SetUri(uri),
+                requestProvider.SetMethod(method),
+            ];
+        }
+
+        /// <summary>
+        /// The expression representing the HttpPipeline.CreateMessage invocation.
+        /// </summary>
+        public virtual ValueExpression InvokeCreateMessage(
+            HttpRequestOptionsApi requestOptions,
+            ValueExpression responseClassifier)
+            => Original.Invoke(nameof(HttpPipeline.CreateMessage), requestOptions, responseClassifier);
 
         /// <inheritdoc/>
         public override ClientPipelineApi FromExpression(ValueExpression expression)
@@ -64,11 +94,11 @@ namespace Azure.Generator.Providers.Abstraction
         public override ClientPipelineApi ToExpression() => this;
 
         /// <inheritdoc/>
-        public override MethodBodyStatement[] ProcessMessage(HttpMessageApi message, HttpRequestOptionsApi options)
+        public override MethodBodyStatement[] SendMessage(HttpMessageApi message, HttpRequestOptionsApi options)
             => BuildProcessMessage(message, options, false);
 
         /// <inheritdoc/>
-        public override MethodBodyStatement[] ProcessMessageAsync(HttpMessageApi message, HttpRequestOptionsApi options)
+        public override MethodBodyStatement[] SendMessageAsync(HttpMessageApi message, HttpRequestOptionsApi options)
             => BuildProcessMessage(message, options, true);
 
         private MethodBodyStatement[] BuildProcessMessage(HttpMessageApi message, HttpRequestOptionsApi options, bool isAsync)

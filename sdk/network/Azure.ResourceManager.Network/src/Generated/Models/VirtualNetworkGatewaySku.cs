@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Gateway SKU name. </summary>
+        [WirePath("name")]
         public VirtualNetworkGatewaySkuName? Name { get; set; }
         /// <summary> Gateway SKU tier. </summary>
+        [WirePath("tier")]
         public VirtualNetworkGatewaySkuTier? Tier { get; set; }
         /// <summary> The capacity. </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; }
     }
 }

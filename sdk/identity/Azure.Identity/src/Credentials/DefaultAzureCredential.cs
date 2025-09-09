@@ -69,6 +69,11 @@ namespace Azure.Identity
         internal TokenCredential[] _sources;
 
         /// <summary>
+        /// The default environment variable name used for token credential configuration.
+        /// </summary>
+        public const string DefaultEnvironmentVariableName = "AZURE_TOKEN_CREDENTIALS";
+
+        /// <summary>
         /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
         protected DefaultAzureCredential() : this(false) { }
@@ -90,6 +95,19 @@ namespace Azure.Identity
             // we call ValidateAuthorityHostOption to validate that we have a valid authority host before constructing the DAC chain
             // if we don't validate this up front it will end up throwing an exception out of a static initializer which obscures the error.
             : this(new DefaultAzureCredentialFactory(ValidateAuthorityHostOption(options)))
+        {
+        }
+
+        /// <summary>
+        /// Creates an instance of the <see cref="DefaultAzureCredential"/> class that reads credential configuration from a specified environment variable.
+        /// </summary>
+        /// <param name="configurationEnvironmentVariableName">The name of the environment variable to read credential configuration from. Pass <see cref="DefaultEnvironmentVariableName"/> or a custom environment variable name.</param>
+        /// <param name="options">Options that configure the management of the requests sent to Microsoft Entra ID, and determine which credentials are included in the <see cref="DefaultAzureCredential"/> authentication flow.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="configurationEnvironmentVariableName"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="configurationEnvironmentVariableName"/> is empty.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when the specified environment variable is not set or contains an invalid value.</exception>
+        public DefaultAzureCredential(string configurationEnvironmentVariableName, DefaultAzureCredentialOptions options = default)
+            : this(new DefaultAzureCredentialFactory(ValidateAuthorityHostOption(options), configurationEnvironmentVariableName))
         {
         }
 

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>JobRuns_Get</description>
+        /// <description>JobRun_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>JobRuns_Get</description>
+        /// <description>JobRun_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

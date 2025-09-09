@@ -83,22 +83,31 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the network rule. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Description of the rule. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Array of AzureFirewallNetworkRuleProtocols. </summary>
+        [WirePath("protocols")]
         public IList<AzureFirewallNetworkRuleProtocol> Protocols { get; }
         /// <summary> List of source IP addresses for this rule. </summary>
+        [WirePath("sourceAddresses")]
         public IList<string> SourceAddresses { get; }
         /// <summary> List of destination IP addresses. </summary>
+        [WirePath("destinationAddresses")]
         public IList<string> DestinationAddresses { get; }
         /// <summary> List of destination ports. </summary>
+        [WirePath("destinationPorts")]
         public IList<string> DestinationPorts { get; }
         /// <summary> List of destination FQDNs. </summary>
+        [WirePath("destinationFqdns")]
         public IList<string> DestinationFqdns { get; }
         /// <summary> List of source IpGroups for this rule. </summary>
+        [WirePath("sourceIpGroups")]
         public IList<string> SourceIPGroups { get; }
         /// <summary> List of destination IpGroups for this rule. </summary>
+        [WirePath("destinationIpGroups")]
         public IList<string> DestinationIPGroups { get; }
     }
 }

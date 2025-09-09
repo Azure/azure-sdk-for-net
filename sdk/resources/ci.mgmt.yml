@@ -27,3 +27,7 @@ extends:
       safeName: AzureResourceManagerResourcesDeployments
     - name: Azure.ResourceManager.Resources.DeploymentStacks
       safeName: AzureResourceManagerResourcesDeploymentStacks
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Resources
+      ExpectedWarningsFilepath: None

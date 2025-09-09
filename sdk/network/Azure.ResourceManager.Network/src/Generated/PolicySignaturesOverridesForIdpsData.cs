@@ -71,14 +71,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Contains the name of the resource (default). </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Will contain the resource id of the signature override resource. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
         /// <summary> Will contain the type of the resource: Microsoft.Network/firewallPolicies/intrusionDetectionSignaturesOverrides. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; set; }
         /// <summary> Will contain the properties of the resource (the actual signature overrides). </summary>
         internal PolicySignaturesOverridesForIdpsProperties Properties { get; set; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
+        [WirePath("properties.signatures")]
         public IDictionary<string, string> Signatures
         {
             get

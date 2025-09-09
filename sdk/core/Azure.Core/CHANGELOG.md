@@ -1,14 +1,16 @@
 # Release History
 
-## 1.48.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.48.0 (2025-09-09)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed an issue that prevented unbranded generated clients from utilizing an instance of `TokenCredential` with APIs that accept `AuthenticationTokenProvider`.
+
+## 1.47.3 (2025-08-20)
+
+### Features Added
+
+- Adopt System.ClientModel 1.6.1
 
 ## 1.47.2 (2025-08-11)
 

@@ -69,14 +69,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The id of the get troubleshoot operation. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Reason type of failure. </summary>
+        [WirePath("reasonType")]
         public string ReasonType { get; }
         /// <summary> A summary of troubleshooting. </summary>
+        [WirePath("summary")]
         public string Summary { get; }
         /// <summary> Details on troubleshooting results. </summary>
+        [WirePath("detail")]
         public string Detail { get; }
         /// <summary> List of recommended actions. </summary>
+        [WirePath("recommendedActions")]
         public IReadOnlyList<TroubleshootingRecommendedActions> RecommendedActions { get; }
     }
 }

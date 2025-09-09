@@ -1051,7 +1051,8 @@ function Get-ReleasePlanForPackage($packageName)
     $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
     $query = "SELECT ${fieldList} FROM WorkItems WHERE [Work Item Type] = 'Release Plan' AND [${packageNameFieldName}] = '${packageName}'"
     $query += " AND [${prStatusFieldName}] = 'merged'"
-    $query += " AND [System.State] IN ('In Progress') ORDER BY [System.CreatedDate]"
+    $query += " AND [System.State] IN ('In Progress')"
+    $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
     $workItems = Invoke-Query $fields $query
     return $workItems
 }
@@ -1072,4 +1073,41 @@ function Update-ReleaseStatusInReleasePlan($releasePlanWorkItemId, $status, $ver
     Write-Host "Updating Release Plan [$releasePlanWorkItemId] with status [$status] for language [$LanguageShort]."
     $workItem = UpdateWorkItem -id $releasePlanWorkItemId -fields $fields
     Write-Host "Updated release status for [$LanguageShort] in Release Plan [$releasePlanWorkItemId]"
+}
+
+function Update-PullRequestInReleasePlan($releasePlanWorkItemId, $pullRequestUrl, $status, $languageName)
+{
+    $devopsFieldLanguage = Get-LanguageDevOpsName -LanguageShort $languageName
+    if (!$devopsFieldLanguage)
+    {
+        Write-Host "Unsupported language to update release plan, language [$languageName]"
+        return $null
+    }
+
+    $fields = @()
+    $fields += "`"SDKPullRequestFor$($devopsFieldLanguage)=$pullRequestUrl`""
+    $fields += "`"SDKPullRequestStatusFor$($devopsFieldLanguage)=$status`""
+
+    Write-Host "Updating Release Plan [$releasePlanWorkItemId] with Pull Request URL for language [$languageName]."
+    $workItem = UpdateWorkItem -id $releasePlanWorkItemId -fields $fields
+    Write-Host "Updated Pull Request URL [$pullRequestUrl] for [$languageName] in Release Plan [$releasePlanWorkItemId]"
+}
+
+function Get-ReleasePlan-Link($releasePlanWorkItemId)
+{
+  $fields = @()
+  $fields += "System.Id"
+  $fields += "System.Title"
+  $fields += "Custom.ReleasePlanLink"
+  $fields += "Custom.ReleasePlanSubmittedby"
+
+  $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
+  $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.Id] = $releasePlanWorkItemId"
+  $workItem = Invoke-Query $fields $query
+  if (!$workItem)
+  {
+      Write-Host "Release plan with ID $releasePlanWorkItemId not found."
+      return $null
+  }
+  return $workItem["fields"]
 }

@@ -41,8 +41,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Deployment time string. </summary>
+        [WirePath("commitTime")]
         public DateTimeOffset? CommittedOn { get; }
         /// <summary> Deployment region. </summary>
+        [WirePath("region")]
         public AzureLocation? Region { get; }
     }
 }

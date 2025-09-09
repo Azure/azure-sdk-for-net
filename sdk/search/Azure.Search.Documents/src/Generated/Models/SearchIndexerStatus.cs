@@ -47,25 +47,29 @@ namespace Azure.Search.Documents.Indexes.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerStatus"/>. </summary>
+        /// <param name="name"> The name of the indexer. </param>
         /// <param name="status"> Overall indexer status. </param>
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
         /// <param name="limits"> The execution limits for the indexer. </param>
-        internal SearchIndexerStatus(IndexerStatus status, IEnumerable<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits)
+        internal SearchIndexerStatus(string name, IndexerStatus status, IEnumerable<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits)
         {
+            Name = name;
             Status = status;
             ExecutionHistory = executionHistory.ToList();
             Limits = limits;
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerStatus"/>. </summary>
+        /// <param name="name"> The name of the indexer. </param>
         /// <param name="status"> Overall indexer status. </param>
         /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
         /// <param name="limits"> The execution limits for the indexer. </param>
         /// <param name="currentState"> All of the state that defines and dictates the indexer's current execution. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerStatus(IndexerStatus status, IndexerExecutionResult lastResult, IReadOnlyList<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits, IndexerState currentState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchIndexerStatus(string name, IndexerStatus status, IndexerExecutionResult lastResult, IReadOnlyList<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits, IndexerState currentState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Name = name;
             Status = status;
             LastResult = lastResult;
             ExecutionHistory = executionHistory;
@@ -79,6 +83,8 @@ namespace Azure.Search.Documents.Indexes.Models
         {
         }
 
+        /// <summary> The name of the indexer. </summary>
+        public string Name { get; }
         /// <summary> Overall indexer status. </summary>
         public IndexerStatus Status { get; }
         /// <summary> The result of the most recent or an in-progress indexer execution. </summary>
