@@ -103,7 +103,7 @@ namespace Azure.Identity.Tests
                     Retry = { Delay = TimeSpan.Zero }
                 });
 
-                //First request uses a 1 second timeout and no retries
+                // When ManagedIdentityCredential is configured via environment variable, there are no timeouts and retries are performed
                 await cred.GetTokenAsync(new(new[] { "test" }));
 
                 var expectedTimeouts = new TimeSpan?[] { null, null, null, null, null, null };
@@ -156,7 +156,7 @@ namespace Azure.Identity.Tests
                     Retry = { Delay = TimeSpan.Zero }
                 });
 
-                //First request uses a 1 second timeout and no retries
+                // First request validates that there are no network timeouts and retries are performed
                 await cred.GetTokenAsync(new(new[] { "test" }));
 
                 var expectedTimeouts = new TimeSpan?[] { null, null, null, null, null, null };
