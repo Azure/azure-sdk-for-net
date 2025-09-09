@@ -21,6 +21,10 @@
     }
   },
   "packageOptions": {
-    "packageFolderFromFileSearch": false
+    "packageFolderFromFileSearch": false,
+    "buildScript": {
+      "command": "dotnet build {packagePath}",
+      "path": ""
+    }
   }
 }
