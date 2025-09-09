@@ -1,35 +1,32 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-## 2025-07-01-preview
+## 1.1.0-beta.1 (2025-09-09)
 
 ### Features Added
-Connector Templates: Create reusable templates to streamline connector configuration and deployment across Azure IoT Operations clusters.
-ADR Namespaces: Enable logical isolation and security boundaries for managing assets and devices at scale.
-Devices: Support for devices with inbound endpoints, including cross-connector capabilities.
-ONVIF Connector: Integrate ONVIF-compliant cameras and devices for video and surveillance scenarios.
-Media Connector: Ingest and process media streams from diverse sources with enhanced flexibility.
-REST Connector: Connect to any RESTful endpoint, enabling seamless integration with external systems and APIs.
-Enrich: Enhance incoming data with contextual metadata from REST endpoints to support advanced analytics.
-Discovery of Devices and Assets: Automatically detect and onboard devices and assets, reducing manual configuration.
-Regional Expansion: Azure IoT Operations is now deployable to Arc-connected clusters in the Germany West Central region. This support is available in the latest preview and backported to GA version 1.1.59
-Advanced Dataflow Operations: Dataflow graphs allow for definitions of custom workflows and transformations. Custom operations can now be performed using WASMmodules provided by customers .
+
+Upgrade to api-version 2025-07-01-preview:
+- Connector Templates: Create reusable templates to streamline connector configuration and deployment across Azure IoT Operations clusters.
+- ADR Namespaces: Enable logical isolation and security boundaries for managing assets and devices at scale.
+- Devices: Support for devices with inbound endpoints, including cross-connector capabilities.
+- ONVIF Connector: Integrate ONVIF-compliant cameras and devices for video and surveillance scenarios.
+- Media Connector: Ingest and process media streams from diverse sources with enhanced flexibility.
+- REST Connector: Connect to any RESTful endpoint, enabling seamless integration with external systems and APIs.
+- Enrich: Enhance incoming data with contextual metadata from REST endpoints to support advanced analytics.
+- Discovery of Devices and Assets: Automatically detect and onboard devices and assets, reducing manual configuration.
+- Regional Expansion: Azure IoT Operations is now deployable to Arc-connected clusters in the Germany West Central region. This support is available in the latest preview and backported to GA version 1.1.59
+- Advanced Dataflow Operations: Dataflow graphs allow for definitions of custom workflows and transformations. Custom operations can now be performed using WASMmodules provided by customers .
  
 
-### Breaking Changes
+### Other Changes
 
 ExtendedLocation is now optional in the following resources: 
-IotOperationsBroker
-IotOperationsBrokerListener
-IotOperationsBrokerAuthentication
-IotOperationsBrokerAuthorization
-IotOperationsDataflowEndpoint
-IotOperationsDataflowProfile
-IotOperationsDataflow
-
-### Bugs Fixed
-
-### Other Changes
+- IotOperationsBroker
+- IotOperationsBrokerListener
+- IotOperationsBrokerAuthentication
+- IotOperationsBrokerAuthorization
+- IotOperationsDataflowEndpoint
+- IotOperationsDataflowProfile
+- IotOperationsDataflow
 
 ## 1.0.0 (2024-11-01)
 
