@@ -639,7 +639,7 @@ namespace Azure.AI.VoiceLive
     public partial class LogProbProperties : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.LogProbProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.LogProbProperties>
     {
         internal LogProbProperties() { }
-        public System.Collections.Generic.IList<int> Bytes { get { throw null; } }
+        public System.BinaryData Bytes { get { throw null; } }
         public float Logprob { get { throw null; } }
         public string Token { get { throw null; } }
         protected virtual Azure.AI.VoiceLive.LogProbProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2017,7 +2017,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.InputTextContentPart InputTextContentPart(string text = null) { throw null; }
         public static Azure.AI.VoiceLive.InputTokenDetails InputTokenDetails(int cachedTokens = 0, int textTokens = 0, int audioTokens = 0) { throw null; }
         public static Azure.AI.VoiceLive.LlmVoice LlmVoice(string type = null, Azure.AI.VoiceLive.LlmVoiceName name = default(Azure.AI.VoiceLive.LlmVoiceName)) { throw null; }
-        public static Azure.AI.VoiceLive.LogProbProperties LogProbProperties(string token = null, float logprob = 0f, System.Collections.Generic.IEnumerable<int> bytes = null) { throw null; }
+        public static Azure.AI.VoiceLive.LogProbProperties LogProbProperties(string token = null, float logprob = 0f, System.BinaryData bytes = null) { throw null; }
         public static Azure.AI.VoiceLive.MessageItem MessageItem(string id = null, Azure.AI.VoiceLive.ItemParamStatus? status = default(Azure.AI.VoiceLive.ItemParamStatus?)) { throw null; }
         public static Azure.AI.VoiceLive.NoTurnDetection NoTurnDetection() { throw null; }
         public static Azure.AI.VoiceLive.OpenAIVoice OpenAIVoice(string type = null, Azure.AI.VoiceLive.OAIVoice name = default(Azure.AI.VoiceLive.OAIVoice)) { throw null; }
