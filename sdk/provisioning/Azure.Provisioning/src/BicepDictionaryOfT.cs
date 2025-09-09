@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -75,16 +76,72 @@ public class BicepDictionary<T> :
     /// <returns>The value.</returns>
     public BicepValue<T> this[string key]
     {
-        get => _values[key];
-        set => _values[key] = value;
+        get
+        {
+            if (!_values.TryGetValue(key, out var existingValue))
+            {
+                return new BicepDictionaryIndexer<T>(_self, key);
+            }
+            // now we have a value
+            var value = (IBicepValue)existingValue;
+            switch (value.Kind)
+            {
+                case BicepValueKind.Unset:
+                    return new BicepDictionaryIndexer<T>(_self, key);
+                case BicepValueKind.Expression:
+                    return new BicepDictionaryIndexer<T>(_self, key, value.Expression!);
+                case BicepValueKind.Literal:
+                    return new BicepDictionaryIndexer<T>(_self, key, (T)value.LiteralValue!);
+                default:
+                    throw new InvalidOperationException($"Unknown {value.Kind}!");
+            }
+        }
+        set
+        {
+            if (_kind == BicepValueKind.Expression || _isOutput)
+            {
+                throw new InvalidOperationException($"Cannot assign to {_self?.PropertyName}");
+            }
+            _values[key] = value;
+        }
     }
 
-    public void Add(string key, BicepValue<T> value) => _values.Add(key, value);
-    public void Add(KeyValuePair<string, BicepValue<T>> item) => _values.Add(item.Key, item.Value);
+    public void Add(string key, BicepValue<T> value)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot add to {_self?.PropertyName}");
+        }
+        _values.Add(key, value);
+    }
+
+    public void Add(KeyValuePair<string, BicepValue<T>> item)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot add to {_self?.PropertyName}");
+        }
+        _values.Add(item.Key, item.Value);
+    }
 
     // TODO: Decide whether it's important to "unlink" resources on removal
-    public bool Remove(string key) => _values.Remove(key);
-    public void Clear() => _values.Clear();
+    public bool Remove(string key)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot remove from {_self?.PropertyName}");
+        }
+        return _values.Remove(key);
+    }
+
+    public void Clear()
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot clear {_self?.PropertyName}");
+        }
+        _values.Clear();
+    }
 
     public ICollection<string> Keys => _values.Keys;
     public ICollection<BicepValue<T>> Values => _values.Values;
@@ -111,6 +168,7 @@ public class BicepDictionary<T> :
         get => this[key];
         set => this[key] = (BicepValue<T>)value;
     }
+
     void IDictionary<string, IBicepValue>.Add(string key, IBicepValue value) => Add(key, (BicepValue<T>)value);
     bool IDictionary<string, IBicepValue>.TryGetValue(string key, out IBicepValue value)
     {
