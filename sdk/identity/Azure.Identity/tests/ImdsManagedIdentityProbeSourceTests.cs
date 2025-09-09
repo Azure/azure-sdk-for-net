@@ -65,6 +65,112 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public async Task DefaultAzureCredentialDoesNotProbeAndAttemptsRetriesWhenMICredIsConfiguredViaEnv()
+        {
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_TOKEN_CREDENTIALS", "ManagedIdentityCredential" },
+            }))
+            {
+                int callCount = 0;
+                List<TimeSpan?> networkTimeouts = new();
+
+                var mockTransport = MockTransport.FromMessageCallback(msg =>
+                {
+                    callCount++;
+                    networkTimeouts.Add(msg.NetworkTimeout);
+                    // Validate that there is no probe request (which does not have the Metadata header)
+                    Assert.IsTrue(msg.Request.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out string val) && val == "true");
+                    return callCount switch
+                    {
+                        < 6 => CreateMockResponse(500, "{ \"Error\": \"Some error occurred\" }").WithHeader("Content-Type", "application/json"),
+                        _ => CreateMockResponse(200, "token").WithHeader("Content-Type", "application/json")
+                    };
+                });
+
+                var cred = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+                {
+                    ExcludeAzureCliCredential = true,
+                    ExcludeAzureDeveloperCliCredential = true,
+                    ExcludeAzurePowerShellCredential = true,
+                    ExcludeEnvironmentCredential = true,
+                    ExcludeSharedTokenCacheCredential = true,
+                    ExcludeVisualStudioCodeCredential = true,
+                    ExcludeVisualStudioCredential = true,
+                    ExcludeWorkloadIdentityCredential = true,
+                    Transport = mockTransport,
+                    IsForceRefreshEnabled = true,
+                    Retry = { Delay = TimeSpan.Zero }
+                });
+
+                //First request uses a 1 second timeout and no retries
+                await cred.GetTokenAsync(new(new[] { "test" }));
+
+                var expectedTimeouts = new TimeSpan?[] { null, null, null, null, null, null };
+                CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+                networkTimeouts.Clear();
+
+                await cred.GetTokenAsync(new(new[] { "test" }));
+
+                expectedTimeouts = new TimeSpan?[] { null };
+                CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+            }
+        }
+
+        [Test]
+        public async Task DefaultAzureCredentialDoesNotProbeAndAttemptsRetriesWhenMICredIsConfiguredViaCustomEnv()
+        {
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "MY_CUSTOM_ENV_VAR", "ManagedIdentityCredential" },
+            }))
+            {
+                int callCount = 0;
+                List<TimeSpan?> networkTimeouts = new();
+
+                var mockTransport = MockTransport.FromMessageCallback(msg =>
+                {
+                    callCount++;
+                    networkTimeouts.Add(msg.NetworkTimeout);
+                    // Validate that there is no probe request (which does not have the Metadata header)
+                    Assert.IsTrue(msg.Request.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out string val) && val == "true", "Expected Metadata header with value 'true'");
+                    return callCount switch
+                    {
+                        < 6 => CreateMockResponse(500, "{ \"Error\": \"Some error occurred\" }").WithHeader("Content-Type", "application/json"),
+                        _ => CreateMockResponse(200, "token").WithHeader("Content-Type", "application/json")
+                    };
+                });
+
+                var cred = new DefaultAzureCredential("MY_CUSTOM_ENV_VAR", new DefaultAzureCredentialOptions
+                {
+                    ExcludeAzureCliCredential = true,
+                    ExcludeAzureDeveloperCliCredential = true,
+                    ExcludeAzurePowerShellCredential = true,
+                    ExcludeEnvironmentCredential = true,
+                    ExcludeSharedTokenCacheCredential = true,
+                    ExcludeVisualStudioCodeCredential = true,
+                    ExcludeVisualStudioCredential = true,
+                    ExcludeWorkloadIdentityCredential = true,
+                    Transport = mockTransport,
+                    IsForceRefreshEnabled = true,
+                    Retry = { Delay = TimeSpan.Zero }
+                });
+
+                //First request uses a 1 second timeout and no retries
+                await cred.GetTokenAsync(new(new[] { "test" }));
+
+                var expectedTimeouts = new TimeSpan?[] { null, null, null, null, null, null };
+                CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+                networkTimeouts.Clear();
+
+                await cred.GetTokenAsync(new(new[] { "test" }));
+
+                expectedTimeouts = new TimeSpan?[] { null };
+                CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+            }
+        }
+
+        [Test]
         public async Task DefaultAzureCredentialUsesFirstRequestBehaviorUntilFirstResponse()
         {
             int callCount = 0;
