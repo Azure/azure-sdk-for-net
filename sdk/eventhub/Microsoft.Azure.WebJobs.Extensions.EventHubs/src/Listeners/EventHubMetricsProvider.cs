@@ -54,6 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
                 return metrics;
             }
 
+            // Get the PartitionRuntimeInformation for all partitions
             _logger.LogInformation($"Querying partition information for {partitions.Length} partitions.");
             var partitionPropertiesTasks = new Task<PartitionProperties>[partitions.Length];
 
@@ -115,6 +116,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             {
                 _logger.LogWarning($"Encountered an exception while getting checkpoints for Event Hub '{_client.EventHubName}' used for scaling. Error: {e.Message}");
             }
+
             return CreateTriggerMetrics(partitionPropertiesTasks.Select(t => t.Result).ToList(), checkpoints);
         }
 
