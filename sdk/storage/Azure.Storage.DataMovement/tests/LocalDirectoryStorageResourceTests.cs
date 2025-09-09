@@ -42,6 +42,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase("C:\\test\\path%3Dtest%26", "C:/test/path%253Dtest%2526")]
         [TestCase("C:\\test\\folder with spaces", "C:/test/folder%20with%20spaces")]
         [TestCase("X:\\testing\\test\\", "X:/testing/test")]
+        [TestCase("X:\\testing\\test\\\\", "X:/testing/test")]
         public void Ctor_String_Encoding_Windows(string path, string absolutePath)
         {
             LocalDirectoryStorageResourceContainer storageResource = new(path);
@@ -56,6 +57,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase("/test/path%3Dtest%26", "/test/path%253Dtest%2526")]
         [TestCase("/test/folder with spaces", "/test/folder%20with%20spaces")]
         [TestCase("/testing/test/", "/testing/test")]
+        [TestCase("/testing/test//", "/testing/test")]
         public void Ctor_String_Encoding_Unix(string path, string absolutePath)
         {
             LocalDirectoryStorageResourceContainer storageResource = new(path);
