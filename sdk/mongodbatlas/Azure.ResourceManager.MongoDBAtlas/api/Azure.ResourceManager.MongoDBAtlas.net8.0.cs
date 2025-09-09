@@ -12,8 +12,6 @@ namespace Azure.ResourceManager.MongoDBAtlas
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource>> GetMongoDBAtlasOrganizationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string organizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource GetMongoDBAtlasOrganizationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationCollection GetMongoDBAtlasOrganizations(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource> GetMongoDBAtlasOrganizations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource> GetMongoDBAtlasOrganizationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MongoDBAtlasOrganizationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource>, System.Collections.IEnumerable
     {
@@ -34,10 +32,13 @@ namespace Azure.ResourceManager.MongoDBAtlas
     }
     public partial class MongoDBAtlasOrganizationData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData>
     {
-        public MongoDBAtlasOrganizationData(Azure.Core.AzureLocation location) { }
+        public MongoDBAtlasOrganizationData(string location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -84,19 +85,14 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource>> GetMongoDBAtlasOrganizationAsync(string organizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationCollection GetMongoDBAtlasOrganizations() { throw null; }
     }
-    public partial class MockableMongoDBAtlasSubscriptionResource : Azure.ResourceManager.ArmResource
-    {
-        protected MockableMongoDBAtlasSubscriptionResource() { }
-        public virtual Azure.Pageable<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource> GetMongoDBAtlasOrganizations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource> GetMongoDBAtlasOrganizationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
 }
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
     public static partial class ArmMongoDBAtlasModelFactory
     {
         public static Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasMarketplaceDetails MongoDBAtlasMarketplaceDetails(string subscriptionId = null, Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus? subscriptionStatus = default(Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus?), Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOfferDetails offerDetails = null) { throw null; }
-        public static Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData MongoDBAtlasOrganizationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData MongoDBAtlasOrganizationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, string location = null, Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationPatch MongoDBAtlasOrganizationPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.MongoDBAtlas.Models.OrganizationResourceUpdateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationProperties MongoDBAtlasOrganizationProperties(Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasMarketplaceDetails marketplace = null, Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails user = null, Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState? provisioningState = default(Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState?), Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasPartnerProperties partnerProperties = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -116,6 +112,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -125,7 +122,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         public Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOfferDetails OfferDetails { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
         public Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus? SubscriptionStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasMarketplaceDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasMarketplaceDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasMarketplaceDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasMarketplaceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasMarketplaceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasMarketplaceDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasMarketplaceDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -141,7 +141,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         public string PublisherId { get { throw null; } set { } }
         public string TermId { get { throw null; } set { } }
         public string TermUnit { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOfferDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOfferDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOfferDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOfferDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOfferDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOfferDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOfferDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -152,9 +155,12 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
     {
         public MongoDBAtlasOrganizationPatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationUpdateProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.MongoDBAtlas.Models.OrganizationResourceUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -168,24 +174,19 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         public Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasPartnerProperties PartnerProperties { get { throw null; } set { } }
         public Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails User { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MongoDBAtlasOrganizationUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationUpdateProperties>
+    public partial class MongoDBAtlasOrganizationUpdateProperties
     {
         public MongoDBAtlasOrganizationUpdateProperties() { }
-        public Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasPartnerProperties PartnerProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails User { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MongoDBAtlasPartnerProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasPartnerProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasPartnerProperties>
     {
@@ -193,7 +194,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         public string OrganizationId { get { throw null; } set { } }
         public string OrganizationName { get { throw null; } set { } }
         public string RedirectUri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasPartnerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasPartnerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasPartnerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasPartnerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasPartnerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasPartnerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasPartnerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -216,6 +220,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState left, Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState left, Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -228,11 +233,29 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         public string LastName { get { throw null; } set { } }
         public string PhoneNumber { get { throw null; } set { } }
         public string Upn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OrganizationResourceUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.OrganizationResourceUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.OrganizationResourceUpdateProperties>
+    {
+        public OrganizationResourceUpdateProperties() { }
+        public Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasPartnerProperties PartnerProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails User { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.MongoDBAtlas.Models.OrganizationResourceUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.MongoDBAtlas.Models.OrganizationResourceUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.MongoDBAtlas.Models.OrganizationResourceUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.OrganizationResourceUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.Models.OrganizationResourceUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoDBAtlas.Models.OrganizationResourceUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.OrganizationResourceUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.OrganizationResourceUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.OrganizationResourceUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
