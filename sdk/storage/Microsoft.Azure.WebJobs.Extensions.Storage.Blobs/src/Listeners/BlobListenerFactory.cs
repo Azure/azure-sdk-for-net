@@ -87,6 +87,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         {
             // Note that these clients are intentionally for the storage account rather than for the dashboard account.
             // We use the storage, not dashboard, account for the blob receipt container and blob trigger queues.
+
+            var primaryBlobClient = _hostBlobServiceClient;
             // Important: We're using the storage account of the function target here, which is the account that the
             // function the listener is for is targeting. This is the account that will be used
             // to read the trigger blob.
@@ -105,7 +107,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                     new SharedBlobListenerFactory(hostId, _hostBlobServiceClient, _exceptionHandler, _blobWrittenWatcherSetter, _loggerFactory.CreateLogger<BlobListener>()));
 
                 // Register the blob container we wish to monitor with the shared blob listener.
-                await RegisterWithSharedBlobListenerAsync(hostId, sharedBlobListener, targetBlobClient,
+                await RegisterWithSharedBlobListenerAsync(hostId, sharedBlobListener, primaryBlobClient,
                     blobTriggerQueueWriter, cancellationToken).ConfigureAwait(false);
             }
 
