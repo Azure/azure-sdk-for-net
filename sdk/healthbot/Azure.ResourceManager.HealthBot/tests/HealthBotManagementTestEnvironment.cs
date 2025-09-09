@@ -1,14 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 
 namespace Azure.ResourceManager.HealthBot.Tests
 {
     public class HealthBotManagementTestEnvironment : TestEnvironment
     {
-        public override TokenCredential Credential => new AzureCliCredential();
     }
 }
