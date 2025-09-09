@@ -304,7 +304,7 @@ public partial struct JsonPatch
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowKeyNotFoundException(jsonPath);
         }
 
         if (TryDecodeValue(encodedValue, out bool boolValue))
@@ -312,7 +312,7 @@ public partial struct JsonPatch
             return boolValue;
         }
 
-        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a boolean.");
+        return ThrowFormatException<bool>(jsonPath);
     }
 
     /// <summary>
@@ -324,7 +324,7 @@ public partial struct JsonPatch
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowKeyNotFoundException(jsonPath);
         }
 
         if (TryDecodeValue(encodedValue, out byte byteValue))
@@ -332,7 +332,7 @@ public partial struct JsonPatch
             return byteValue;
         }
 
-        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a byte.");
+        return ThrowFormatException<byte>(jsonPath);
     }
 
     /// <summary>
@@ -345,7 +345,7 @@ public partial struct JsonPatch
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowKeyNotFoundException(jsonPath);
         }
 
         if (TryDecodeValue(encodedValue, out DateTime dateTimeValue, format))
@@ -353,7 +353,7 @@ public partial struct JsonPatch
             return dateTimeValue;
         }
 
-        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a DateTime.");
+        return ThrowFormatException<DateTime>(jsonPath);
     }
 
     /// <summary>
@@ -366,7 +366,7 @@ public partial struct JsonPatch
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowKeyNotFoundException(jsonPath);
         }
 
         if (TryDecodeValue(encodedValue, out DateTimeOffset dateTimeOffsetValue, format))
@@ -374,7 +374,7 @@ public partial struct JsonPatch
             return dateTimeOffsetValue;
         }
 
-        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a DateTimeOffset.");
+        return ThrowFormatException<DateTimeOffset>(jsonPath);
     }
 
     /// <summary>
@@ -386,7 +386,7 @@ public partial struct JsonPatch
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowKeyNotFoundException(jsonPath);
         }
 
         if (TryDecodeValue(encodedValue, out decimal decimalValue))
@@ -394,7 +394,7 @@ public partial struct JsonPatch
             return decimalValue;
         }
 
-        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a decimal.");
+        return ThrowFormatException<decimal>(jsonPath);
     }
 
     /// <summary>
@@ -406,7 +406,7 @@ public partial struct JsonPatch
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowKeyNotFoundException(jsonPath);
         }
 
         if (TryDecodeValue(encodedValue, out double doubleValue))
@@ -414,7 +414,7 @@ public partial struct JsonPatch
             return doubleValue;
         }
 
-        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a double.");
+        return ThrowFormatException<double>(jsonPath);
     }
 
     /// <summary>
@@ -426,7 +426,7 @@ public partial struct JsonPatch
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowKeyNotFoundException(jsonPath);
         }
 
         if (TryDecodeValue(encodedValue, out float floatValue))
@@ -434,7 +434,7 @@ public partial struct JsonPatch
             return floatValue;
         }
 
-        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a float.");
+        return ThrowFormatException<float>(jsonPath);
     }
 
     /// <summary>
@@ -446,7 +446,7 @@ public partial struct JsonPatch
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowKeyNotFoundException(jsonPath);
         }
 
         if (TryDecodeValue(encodedValue, out Guid guidValue))
@@ -454,7 +454,7 @@ public partial struct JsonPatch
             return guidValue;
         }
 
-        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a Guid.");
+        return ThrowFormatException<Guid>(jsonPath);
     }
 
     /// <summary>
@@ -466,7 +466,7 @@ public partial struct JsonPatch
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowKeyNotFoundException(jsonPath);
         }
 
         if (TryDecodeValue(encodedValue, out int intValue))
@@ -474,7 +474,7 @@ public partial struct JsonPatch
             return intValue;
         }
 
-        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a Int32.");
+        return ThrowFormatException<int>(jsonPath);
     }
 
     /// <summary>
@@ -486,7 +486,7 @@ public partial struct JsonPatch
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowKeyNotFoundException(jsonPath);
         }
 
         if (TryDecodeValue(encodedValue, out long int64Value))
@@ -494,7 +494,7 @@ public partial struct JsonPatch
             return int64Value;
         }
 
-        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a Int64.");
+        return ThrowFormatException<long>(jsonPath);
     }
 
     /// <summary>
@@ -506,7 +506,7 @@ public partial struct JsonPatch
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowKeyNotFoundException(jsonPath);
         }
 
         if (TryDecodeValue(encodedValue, out sbyte int8Value))
@@ -514,7 +514,7 @@ public partial struct JsonPatch
             return int8Value;
         }
 
-        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a Int8.");
+        return ThrowFormatException<sbyte>(jsonPath);
     }
 
     /// <summary>
@@ -526,7 +526,7 @@ public partial struct JsonPatch
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowKeyNotFoundException(jsonPath);
         }
 
         if (TryDecodeValue(encodedValue, out short int16Value))
@@ -534,7 +534,7 @@ public partial struct JsonPatch
             return int16Value;
         }
 
-        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a Int16.");
+        return ThrowFormatException<short>(jsonPath);
     }
 
     /// <summary>
@@ -547,7 +547,7 @@ public partial struct JsonPatch
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowKeyNotFoundException(jsonPath);
         }
 
         if (TryDecodeValue(encodedValue, out TimeSpan timeSpanValue, format))
@@ -555,7 +555,7 @@ public partial struct JsonPatch
             return timeSpanValue;
         }
 
-        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a TimeSpan.");
+        return ThrowFormatException<TimeSpan>(jsonPath);
     }
 
     /// <summary>
@@ -567,7 +567,7 @@ public partial struct JsonPatch
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowKeyNotFoundException(jsonPath);
         }
 
         if (TryDecodeValue(encodedValue, out uint uintValue))
@@ -575,7 +575,7 @@ public partial struct JsonPatch
             return uintValue;
         }
 
-        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a UInt32.");
+        return ThrowFormatException<uint>(jsonPath);
     }
 
     /// <summary>
@@ -587,7 +587,7 @@ public partial struct JsonPatch
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowKeyNotFoundException(jsonPath);
         }
 
         if (TryDecodeValue(encodedValue, out ulong uint64Value))
@@ -595,7 +595,7 @@ public partial struct JsonPatch
             return uint64Value;
         }
 
-        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a UInt64.");
+        return ThrowFormatException<ulong>(jsonPath);
     }
 
     /// <summary>
@@ -607,7 +607,7 @@ public partial struct JsonPatch
     {
         if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
-            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowKeyNotFoundException(jsonPath);
         }
 
         if (TryDecodeValue(encodedValue, out ushort uint16Value))
@@ -615,7 +615,7 @@ public partial struct JsonPatch
             return uint16Value;
         }
 
-        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a UInt16.");
+        return ThrowFormatException<ushort>(jsonPath);
     }
 
     /// <summary>
@@ -630,7 +630,8 @@ public partial struct JsonPatch
             return stringValue;
         }
 
-        throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+        ThrowKeyNotFoundException(jsonPath);
+        return null;
     }
 
     /// <summary>
@@ -655,7 +656,7 @@ public partial struct JsonPatch
     {
         if (!TryGetEncodedValueInternal(jsonPath, out EncodedValue encodedValue))
         {
-            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowKeyNotFoundException(jsonPath);
         }
 
         if (TryDecodeNullableValue(encodedValue, out T? value, out bool supportedType))
@@ -665,11 +666,11 @@ public partial struct JsonPatch
 
         if (supportedType)
         {
-            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a Nullable<{typeof(T).Name}>.");
+            return ThrowFormatException<T?>(jsonPath);
         }
         else
         {
-            throw new NotSupportedException($"Type '{typeof(T).FullName}' is not supported by GetNullableValue.");
+            return NullableTypeNotSupported<T>();
         }
     }
     #endregion
@@ -1060,11 +1061,11 @@ public partial struct JsonPatch
     }
 
     /// <summary>
-    /// .
+    /// Tries to get the Utf8 JSON value at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath"></param>
-    /// <param name="value"></param>
-    /// <returns></returns>
+    /// <param name="jsonPath">The JSON path of the value to get.</param>
+    /// <param name="value">The value if found.</param>
+    /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetJson(ReadOnlySpan<byte> jsonPath, out ReadOnlyMemory<byte> value)
     {
         var found = TryGetEncodedValueInternal(jsonPath, out var encodedValue);

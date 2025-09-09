@@ -44,7 +44,7 @@ public partial struct JsonPatch
             return value.Value;
         }
 
-        return ThrowPropertyNotFoundException(jsonPath);
+        return ThrowKeyNotFoundException(jsonPath);
     }
 
     private static bool TryDecodeValue(EncodedValue encodedValue, out bool value)
@@ -710,7 +710,7 @@ public partial struct JsonPatch
         }
 
         // not sure how we could ever get here.
-        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+        return ThrowEncodeFailedException(value);
     }
 
     private static EncodedValue EncodeValue(DateTime value, StandardFormat format = default)
@@ -722,7 +722,7 @@ public partial struct JsonPatch
         }
 
         // not sure how we could ever get here.
-        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+        return ThrowEncodeFailedException(value);
     }
 
     private static EncodedValue EncodeValue(DateTimeOffset value, StandardFormat format = default)
@@ -734,7 +734,7 @@ public partial struct JsonPatch
         }
 
         // not sure how we could ever get here.
-        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+        return ThrowEncodeFailedException(value);
     }
 
     private static EncodedValue EncodeValue(decimal value)
@@ -746,7 +746,7 @@ public partial struct JsonPatch
         }
 
         // not sure how we could ever get here.
-        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+        return ThrowEncodeFailedException(value);
     }
 
     private static EncodedValue EncodeValue(double value)
@@ -758,7 +758,7 @@ public partial struct JsonPatch
         }
 
         // not sure how we could ever get here.
-        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+        return ThrowEncodeFailedException(value);
     }
 
     private static EncodedValue EncodeValue(float value)
@@ -770,7 +770,7 @@ public partial struct JsonPatch
         }
 
         // not sure how we could ever get here.
-        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+        return ThrowEncodeFailedException(value);
     }
 
     private static EncodedValue EncodeValue(Guid value)
@@ -782,7 +782,7 @@ public partial struct JsonPatch
         }
 
         // not sure how we could ever get here.
-        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+        return ThrowEncodeFailedException(value);
     }
 
     private static EncodedValue EncodeValue(int value)
@@ -794,7 +794,7 @@ public partial struct JsonPatch
         }
 
         // not sure how we could ever get here.
-        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+        return ThrowEncodeFailedException(value);
     }
 
     private static EncodedValue EncodeValue(long value)
@@ -806,7 +806,7 @@ public partial struct JsonPatch
         }
 
         // not sure how we could ever get here.
-        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+        return ThrowEncodeFailedException(value);
     }
 
     private static EncodedValue EncodeValue(sbyte value)
@@ -818,7 +818,7 @@ public partial struct JsonPatch
         }
 
         // not sure how we could ever get here.
-        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+        return ThrowEncodeFailedException(value);
     }
 
     private static EncodedValue EncodeValue(short value)
@@ -830,7 +830,7 @@ public partial struct JsonPatch
         }
 
         // not sure how we could ever get here.
-        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+        return ThrowEncodeFailedException(value);
     }
 
     private static EncodedValue EncodeValue(TimeSpan value, StandardFormat format = default)
@@ -842,7 +842,7 @@ public partial struct JsonPatch
         }
 
         // not sure how we could ever get here.
-        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+        return ThrowEncodeFailedException(value);
     }
 
     private static EncodedValue EncodeValue(uint value)
@@ -854,7 +854,7 @@ public partial struct JsonPatch
         }
 
         // not sure how we could ever get here.
-        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+        return ThrowEncodeFailedException(value);
     }
 
     private static EncodedValue EncodeValue(ulong value)
@@ -866,7 +866,7 @@ public partial struct JsonPatch
         }
 
         // not sure how we could ever get here.
-        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+        return ThrowEncodeFailedException(value);
     }
 
     private static EncodedValue EncodeValue(ushort value)
@@ -878,7 +878,7 @@ public partial struct JsonPatch
         }
 
         // not sure how we could ever get here.
-        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+        return ThrowEncodeFailedException(value);
     }
 
     private static EncodedValue EncodeValue(string value)
@@ -1000,7 +1000,7 @@ public partial struct JsonPatch
         if (encodedValue.Kind == ValueKind.Removed && jsonPath.IsArrayIndex())
         {
             // we cannot remove an array index that doesn't exist
-            throw new IndexOutOfRangeException($"Cannot remove non-existing array item at path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+            ThrowIndexOutOfRangeException(jsonPath);
         }
 
         ValueKind kind = ValueKind.Json;
@@ -1262,7 +1262,8 @@ public partial struct JsonPatch
                     }
                     break;
                 default:
-                    throw new InvalidOperationException($"Unexpected token type: {pathReader.Current.TokenType}");
+                    ThrowInvalidToken(pathReader.Current.TokenType);
+                    break;
             }
         }
     }

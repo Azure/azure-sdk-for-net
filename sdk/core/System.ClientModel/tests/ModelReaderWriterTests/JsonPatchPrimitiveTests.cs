@@ -53,14 +53,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.Contains("$.nullProperty"u8));
 
             var formatException = Assert.Throws<FormatException>(() => jp.GetBoolean("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a boolean.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Boolean.", formatException!.Message);
             var keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetBoolean("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
             formatException = Assert.Throws<FormatException>(() => jp.GetBoolean("$.nullProperty"u8));
-            Assert.AreEqual("Value at '$.nullProperty' is not a boolean.", formatException!.Message);
+            Assert.AreEqual("Value at '$.nullProperty' is not a System.Boolean.", formatException!.Message);
 
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<bool>("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Nullable<Boolean>.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Nullable`1[System.Boolean].", formatException!.Message);
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<bool>("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
 
@@ -117,14 +117,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.Contains("$.nullProperty"u8));
 
             var formatException = Assert.Throws<FormatException>(() => jp.GetByte("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a byte.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Byte.", formatException!.Message);
             var keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetByte("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
             formatException = Assert.Throws<FormatException>(() => jp.GetByte("$.nullProperty"u8));
-            Assert.AreEqual("Value at '$.nullProperty' is not a byte.", formatException!.Message);
+            Assert.AreEqual("Value at '$.nullProperty' is not a System.Byte.", formatException!.Message);
 
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<byte>("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Nullable<Byte>.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Nullable`1[System.Byte].", formatException!.Message);
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<byte>("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
 
@@ -181,14 +181,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.Contains("$.nullProperty"u8));
 
             var formatException = Assert.Throws<FormatException>(() => jp.GetDateTime("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a DateTime.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.DateTime.", formatException!.Message);
             var keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetDateTime("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
             formatException = Assert.Throws<FormatException>(() => jp.GetDateTime("$.nullProperty"u8));
-            Assert.AreEqual("Value at '$.nullProperty' is not a DateTime.", formatException!.Message);
+            Assert.AreEqual("Value at '$.nullProperty' is not a System.DateTime.", formatException!.Message);
 
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<DateTime>("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Nullable<DateTime>.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Nullable`1[System.DateTime].", formatException!.Message);
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<DateTime>("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
 
@@ -245,14 +245,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.Contains("$.nullProperty"u8));
 
             var formatException = Assert.Throws<FormatException>(() => jp.GetDateTimeOffset("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a DateTimeOffset.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.DateTimeOffset.", formatException!.Message);
             var keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetDateTimeOffset("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
             formatException = Assert.Throws<FormatException>(() => jp.GetDateTimeOffset("$.nullProperty"u8));
-            Assert.AreEqual("Value at '$.nullProperty' is not a DateTimeOffset.", formatException!.Message);
+            Assert.AreEqual("Value at '$.nullProperty' is not a System.DateTimeOffset.", formatException!.Message);
 
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<DateTimeOffset>("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Nullable<DateTimeOffset>.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Nullable`1[System.DateTimeOffset].", formatException!.Message);
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<DateTimeOffset>("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
 
@@ -309,14 +309,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.Contains("$.nullProperty"u8));
 
             var formatException = Assert.Throws<FormatException>(() => jp.GetDecimal("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a decimal.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Decimal.", formatException!.Message);
             var keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetDecimal("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
             formatException = Assert.Throws<FormatException>(() => jp.GetDecimal("$.nullProperty"u8));
-            Assert.AreEqual("Value at '$.nullProperty' is not a decimal.", formatException!.Message);
+            Assert.AreEqual("Value at '$.nullProperty' is not a System.Decimal.", formatException!.Message);
 
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<decimal>("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Nullable<Decimal>.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Nullable`1[System.Decimal].", formatException!.Message);
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<decimal>("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
 
@@ -373,14 +373,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.Contains("$.nullProperty"u8));
 
             var formatException = Assert.Throws<FormatException>(() => jp.GetDouble("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a double.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Double.", formatException!.Message);
             var keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetDouble("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
             formatException = Assert.Throws<FormatException>(() => jp.GetDouble("$.nullProperty"u8));
-            Assert.AreEqual("Value at '$.nullProperty' is not a double.", formatException!.Message);
+            Assert.AreEqual("Value at '$.nullProperty' is not a System.Double.", formatException!.Message);
 
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<double>("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Nullable<Double>.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Nullable`1[System.Double].", formatException!.Message);
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<double>("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
 
@@ -437,14 +437,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.Contains("$.nullProperty"u8));
 
             var formatException = Assert.Throws<FormatException>(() => jp.GetFloat("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a float.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Single.", formatException!.Message);
             var keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetFloat("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
             formatException = Assert.Throws<FormatException>(() => jp.GetFloat("$.nullProperty"u8));
-            Assert.AreEqual("Value at '$.nullProperty' is not a float.", formatException!.Message);
+            Assert.AreEqual("Value at '$.nullProperty' is not a System.Single.", formatException!.Message);
 
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<float>("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Nullable<Single>.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Nullable`1[System.Single].", formatException!.Message);
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<float>("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
 
@@ -490,7 +490,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void GetFuid_Fail()
+        public void GetGuid_Fail()
         {
             JsonPatch jp = new();
 
@@ -501,14 +501,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.Contains("$.nullProperty"u8));
 
             var formatException = Assert.Throws<FormatException>(() => jp.GetGuid("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Guid.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Guid.", formatException!.Message);
             var keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetGuid("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
             formatException = Assert.Throws<FormatException>(() => jp.GetGuid("$.nullProperty"u8));
-            Assert.AreEqual("Value at '$.nullProperty' is not a Guid.", formatException!.Message);
+            Assert.AreEqual("Value at '$.nullProperty' is not a System.Guid.", formatException!.Message);
 
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<Guid>("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Nullable<Guid>.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Nullable`1[System.Guid].", formatException!.Message);
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<Guid>("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
 
@@ -565,14 +565,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.Contains("$.nullProperty"u8));
 
             var formatException = Assert.Throws<FormatException>(() => jp.GetInt32("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Int32.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Int32.", formatException!.Message);
             var keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetInt32("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
             formatException = Assert.Throws<FormatException>(() => jp.GetInt32("$.nullProperty"u8));
-            Assert.AreEqual("Value at '$.nullProperty' is not a Int32.", formatException!.Message);
+            Assert.AreEqual("Value at '$.nullProperty' is not a System.Int32.", formatException!.Message);
 
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<int>("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Nullable<Int32>.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Nullable`1[System.Int32].", formatException!.Message);
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<int>("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
 
@@ -629,14 +629,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.Contains("$.nullProperty"u8));
 
             var formatException = Assert.Throws<FormatException>(() => jp.GetInt64("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Int64.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Int64.", formatException!.Message);
             var keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetInt64("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
             formatException = Assert.Throws<FormatException>(() => jp.GetInt64("$.nullProperty"u8));
-            Assert.AreEqual("Value at '$.nullProperty' is not a Int64.", formatException!.Message);
+            Assert.AreEqual("Value at '$.nullProperty' is not a System.Int64.", formatException!.Message);
 
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<long>("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Nullable<Int64>.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Nullable`1[System.Int64].", formatException!.Message);
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<long>("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
 
@@ -693,14 +693,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.Contains("$.nullProperty"u8));
 
             var formatException = Assert.Throws<FormatException>(() => jp.GetInt8("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Int8.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.SByte.", formatException!.Message);
             var keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetInt8("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
             formatException = Assert.Throws<FormatException>(() => jp.GetInt8("$.nullProperty"u8));
-            Assert.AreEqual("Value at '$.nullProperty' is not a Int8.", formatException!.Message);
+            Assert.AreEqual("Value at '$.nullProperty' is not a System.SByte.", formatException!.Message);
 
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<sbyte>("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Nullable<SByte>.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Nullable`1[System.SByte].", formatException!.Message);
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<sbyte>("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
 
@@ -757,14 +757,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.Contains("$.nullProperty"u8));
 
             var formatException = Assert.Throws<FormatException>(() => jp.GetInt16("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Int16.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Int16.", formatException!.Message);
             var keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetInt16("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
             formatException = Assert.Throws<FormatException>(() => jp.GetInt16("$.nullProperty"u8));
-            Assert.AreEqual("Value at '$.nullProperty' is not a Int16.", formatException!.Message);
+            Assert.AreEqual("Value at '$.nullProperty' is not a System.Int16.", formatException!.Message);
 
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<short>("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Nullable<Int16>.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Nullable`1[System.Int16].", formatException!.Message);
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<short>("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
 
@@ -821,14 +821,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.Contains("$.nullProperty"u8));
 
             var formatException = Assert.Throws<FormatException>(() => jp.GetTimeSpan("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a TimeSpan.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.TimeSpan.", formatException!.Message);
             var keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetTimeSpan("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
             formatException = Assert.Throws<FormatException>(() => jp.GetTimeSpan("$.nullProperty"u8));
-            Assert.AreEqual("Value at '$.nullProperty' is not a TimeSpan.", formatException!.Message);
+            Assert.AreEqual("Value at '$.nullProperty' is not a System.TimeSpan.", formatException!.Message);
 
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<TimeSpan>("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Nullable<TimeSpan>.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Nullable`1[System.TimeSpan].", formatException!.Message);
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<TimeSpan>("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
 
@@ -885,14 +885,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.Contains("$.nullProperty"u8));
 
             var formatException = Assert.Throws<FormatException>(() => jp.GetUInt32("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a UInt32.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.UInt32.", formatException!.Message);
             var keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetUInt32("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
             formatException = Assert.Throws<FormatException>(() => jp.GetUInt32("$.nullProperty"u8));
-            Assert.AreEqual("Value at '$.nullProperty' is not a UInt32.", formatException!.Message);
+            Assert.AreEqual("Value at '$.nullProperty' is not a System.UInt32.", formatException!.Message);
 
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<uint>("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Nullable<UInt32>.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Nullable`1[System.UInt32].", formatException!.Message);
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<uint>("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
 
@@ -949,14 +949,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.Contains("$.nullProperty"u8));
 
             var formatException = Assert.Throws<FormatException>(() => jp.GetUInt64("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a UInt64.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.UInt64.", formatException!.Message);
             var keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetUInt64("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
             formatException = Assert.Throws<FormatException>(() => jp.GetUInt64("$.nullProperty"u8));
-            Assert.AreEqual("Value at '$.nullProperty' is not a UInt64.", formatException!.Message);
+            Assert.AreEqual("Value at '$.nullProperty' is not a System.UInt64.", formatException!.Message);
 
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<ulong>("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Nullable<UInt64>.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Nullable`1[System.UInt64].", formatException!.Message);
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<ulong>("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
 
@@ -1013,14 +1013,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsTrue(jp.Contains("$.nullProperty"u8));
 
             var formatException = Assert.Throws<FormatException>(() => jp.GetUInt16("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a UInt16.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.UInt16.", formatException!.Message);
             var keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetUInt16("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
             formatException = Assert.Throws<FormatException>(() => jp.GetUInt16("$.nullProperty"u8));
-            Assert.AreEqual("Value at '$.nullProperty' is not a UInt16.", formatException!.Message);
+            Assert.AreEqual("Value at '$.nullProperty' is not a System.UInt16.", formatException!.Message);
 
             formatException = Assert.Throws<FormatException>(() => jp.GetNullableValue<ushort>("$.property"u8));
-            Assert.AreEqual("Value at '$.property' is not a Nullable<UInt16>.", formatException!.Message);
+            Assert.AreEqual("Value at '$.property' is not a System.Nullable`1[System.UInt16].", formatException!.Message);
             keyNotFoundException = Assert.Throws<KeyNotFoundException>(() => jp.GetNullableValue<ushort>("$.notPresent"u8));
             Assert.AreEqual("No value found at JSON path '$.notPresent'.", keyNotFoundException!.Message);
 

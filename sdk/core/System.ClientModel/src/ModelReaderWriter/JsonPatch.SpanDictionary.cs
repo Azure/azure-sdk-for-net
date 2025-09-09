@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Runtime.CompilerServices;
+
 namespace System.ClientModel.Primitives;
 
 public partial struct JsonPatch
@@ -26,9 +28,8 @@ public partial struct JsonPatch
 
         public bool TryGetValue(ReadOnlySpan<byte> key, out EncodedValue value)
         {
-            Span<byte> normalizedKey = stackalloc byte[key.Length];
-            JsonPathComparer.Default.Normalize(key, normalizedKey, out int bytesWritten);
-            normalizedKey = normalizedKey.Slice(0, bytesWritten);
+            Span<byte> buffer = stackalloc byte[key.Length];
+            ReadOnlySpan<byte> normalizedKey = GetNormalizedKey(key, buffer);
 #if NET9_0_OR_GREATER
             return _inner.GetAlternateLookup<ReadOnlySpan<byte>>().TryGetValue(normalizedKey, out value);
 #else
@@ -38,9 +39,8 @@ public partial struct JsonPatch
 
         public bool ContainsKey(ReadOnlySpan<byte> key)
         {
-            Span<byte> normalizedKey = stackalloc byte[key.Length];
-            JsonPathComparer.Default.Normalize(key, normalizedKey, out int bytesWritten);
-            normalizedKey = normalizedKey.Slice(0, bytesWritten);
+            Span<byte> buffer = stackalloc byte[key.Length];
+            ReadOnlySpan<byte> normalizedKey = GetNormalizedKey(key, buffer);
 #if NET9_0_OR_GREATER
             return _inner.GetAlternateLookup<ReadOnlySpan<byte>>().ContainsKey(normalizedKey);
 #else
@@ -50,9 +50,8 @@ public partial struct JsonPatch
 
         public void Set(ReadOnlySpan<byte> key, EncodedValue value)
         {
-            Span<byte> normalizedKey = stackalloc byte[key.Length];
-            JsonPathComparer.Default.Normalize(key, normalizedKey, out int bytesWritten);
-            normalizedKey = normalizedKey.Slice(0, bytesWritten);
+            Span<byte> buffer = stackalloc byte[key.Length];
+            ReadOnlySpan<byte> normalizedKey = GetNormalizedKey(key, buffer);
             MaxKeyLength = Math.Max(MaxKeyLength, normalizedKey.Length);
 #if NET9_0_OR_GREATER
             _inner.GetAlternateLookup<ReadOnlySpan<byte>>()[normalizedKey] = value;
@@ -63,5 +62,12 @@ public partial struct JsonPatch
 
         public Dictionary<byte[], EncodedValue>.Enumerator GetEnumerator()
             => _inner.GetEnumerator();
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ReadOnlySpan<byte> GetNormalizedKey(ReadOnlySpan<byte> key, Span<byte> buffer)
+        {
+            JsonPathComparer.Default.Normalize(key, buffer, out int bytesWritten);
+            return buffer.Slice(0, bytesWritten);
+        }
     }
 }
