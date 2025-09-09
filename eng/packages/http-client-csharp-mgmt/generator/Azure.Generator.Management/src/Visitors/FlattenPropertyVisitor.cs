@@ -40,12 +40,21 @@ namespace Azure.Generator.Management.Visitors
                 {
                     var innerCollectionProperties = collectionProperties.Select(x => x.InnerProperty);
                     var initializationMethod = BuildInitializationMethod(innerCollectionProperties, internalProperty, model);
-                    model.Update(methods: [.. model.Methods, initializationMethod]);
+                    var publicConstructor = model.Constructors.SingleOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))!;
+                    var invokeInitialization = This.Invoke(initializationMethod.Signature.Name).Terminate();
+
                     // If the property is a collection type, we need to ensure that it is initialized
-                    foreach (var (flattenedProperty, innerProperty) in collectionProperties)
-                        flattenedProperty.Update(body: new MethodPropertyBody(
-                                PropertyHelpers.BuildGetterForCollectionProperty(innerCollectionProperties, true, initializationMethod.Signature.Name, internalProperty, ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[internalProperty.Type]!, innerProperty),
-                                PropertyHelpers.BuildSetterForCollectionProperty(innerCollectionProperties, initializationMethod.Signature.Name, internalProperty, innerProperty)));
+                    if (publicConstructor.BodyStatements is null)
+                    {
+                        publicConstructor.Update(bodyStatements: new List<MethodBodyStatement> { invokeInitialization });
+                    }
+                    else
+                    {
+                        var body = publicConstructor.BodyStatements.ToList();
+                        body.Add(invokeInitialization);
+                        publicConstructor.Update(bodyStatements: body);
+                    }
+                    model.Update(methods: [.. model.Methods, initializationMethod]);
                 }
             }
 
@@ -276,7 +285,7 @@ namespace Azure.Generator.Management.Visitors
                             var (_, includeGetterNullCheck, _) = PropertyHelpers.GetFlags(property, innerProperty);
                             var flattenPropertyName = innerProperty.Name; // TODO: handle name conflicts
                             var flattenPropertyBody = new MethodPropertyBody(
-                                PropertyHelpers.BuildGetter(includeGetterNullCheck, property, modelProvider, innerProperty),
+                                PropertyHelpers.BuildGetter(includeGetterNullCheck == true && !innerProperty.Type.IsCollection, property, modelProvider, innerProperty),
                                 !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(modelProvider, property, innerProperty)
                             );
 
