@@ -13,6 +13,7 @@ import {
   convertResourceMetadataToArguments,
   NonResourceMethod,
   ResourceMetadata,
+  ResourceMethod,
   ResourceOperationKind,
   ResourceScope
 } from "./resource-metadata.js";
@@ -58,6 +59,9 @@ export async function updateClients(
     sdkContext.sdkPackage.models.map((m) => [m.crossLanguageDefinitionId, m])
   );
   const resourceModels = getAllResourceModels(codeModel);
+  const resourceModelMap = new Map<string, InputModelType>(
+    resourceModels.map((m) => [m.crossLanguageDefinitionId, m])
+  );
 
   const resourceModelToMetadataMap = new Map<string, ResourceMetadata>(
     resourceModels.map((m) => [
@@ -68,7 +72,7 @@ export async function updateClients(
         singletonResourceName: getSingletonResource(
           m.decorators?.find((d) => d.name == singleton)
         ),
-        resourceScope: getResourceScope(m),
+        resourceScope: ResourceScope.ResourceGroup, // temporary default to ResourceGroup, will be properly set later after methods are populated
         methods: [],
         parentResourceId: undefined, // this will be populated later
         resourceName: m.name
@@ -136,6 +140,12 @@ export async function updateClients(
         method.operationPath,
         resourceModelToMetadataMap.values()
       );
+    }
+
+    // update the model's resourceScope based on resource scope decorator if exist or based on the Get method's scope. If neither exist, it will be set to ResourceGroup by default
+    const model = resourceModelMap.get(modelId);
+    if (model) {
+      metadata.resourceScope = getResourceScope(model, metadata.methods);
     }
   }
 
@@ -290,7 +300,8 @@ function getSingletonResource(
   return singletonResource ?? "default";
 }
 
-function getResourceScope(model: InputModelType): ResourceScope {
+function getResourceScope(model: InputModelType, methods?: ResourceMethod[]): ResourceScope {
+  // First, check for explicit scope decorators
   const decorators = model.decorators;
   if (decorators?.some((d) => d.name == tenantResource)) {
     return ResourceScope.Tenant;
@@ -299,6 +310,16 @@ function getResourceScope(model: InputModelType): ResourceScope {
   } else if (decorators?.some((d) => d.name == resourceGroupResource)) {
     return ResourceScope.ResourceGroup;
   }
+
+  // Fall back to Get method's scope only if no scope decorators are found
+  if (methods) {
+    const getMethod = methods.find(m => m.kind === ResourceOperationKind.Get);
+    if (getMethod) {
+      return getMethod.operationScope;
+    }
+  }
+
+  // Final fallback to ResourceGroup
   return ResourceScope.ResourceGroup; // all the templates work as if there is a resource group decorator when there is no such decorator
 }
 
