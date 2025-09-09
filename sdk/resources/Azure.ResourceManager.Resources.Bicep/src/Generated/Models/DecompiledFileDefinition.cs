@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Resources.Bicep.Models
 {
     /// <summary> The definition of a file along with its contents. </summary>
-    public partial class DecompiledFile
+    public partial class DecompiledFileDefinition
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DecompiledFile"/>. </summary>
-        internal DecompiledFile()
+        /// <summary> Initializes a new instance of <see cref="DecompiledFileDefinition"/>. </summary>
+        internal DecompiledFileDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DecompiledFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DecompiledFileDefinition"/>. </summary>
         /// <param name="path"> The file path of the Bicep file. </param>
         /// <param name="contents"> The contents of the Bicep file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DecompiledFile(string path, string contents, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DecompiledFileDefinition(string path, string contents, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Path = path;
             Contents = contents;

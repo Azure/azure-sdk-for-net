@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
         /// <param name="files"> An array of key-value pairs containing the entryPoint string as the key for the Bicep file decompiled from the ARM json template. </param>
         /// <param name="entryPoint"> The file path to the main Bicep file generated from the decompiled ARM json template. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="files"/> or <paramref name="entryPoint"/> is null. </exception>
-        internal DecompileOperationSuccessResult(IEnumerable<DecompiledFile> files, string entryPoint)
+        internal DecompileOperationSuccessResult(IEnumerable<DecompiledFileDefinition> files, string entryPoint)
         {
             Argument.AssertNotNull(files, nameof(files));
             Argument.AssertNotNull(entryPoint, nameof(entryPoint));
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
         /// <param name="files"> An array of key-value pairs containing the entryPoint string as the key for the Bicep file decompiled from the ARM json template. </param>
         /// <param name="entryPoint"> The file path to the main Bicep file generated from the decompiled ARM json template. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DecompileOperationSuccessResult(IReadOnlyList<DecompiledFile> files, string entryPoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DecompileOperationSuccessResult(IReadOnlyList<DecompiledFileDefinition> files, string entryPoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Files = files;
             EntryPoint = entryPoint;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
         }
 
         /// <summary> An array of key-value pairs containing the entryPoint string as the key for the Bicep file decompiled from the ARM json template. </summary>
-        public IReadOnlyList<DecompiledFile> Files { get; }
+        public IReadOnlyList<DecompiledFileDefinition> Files { get; }
         /// <summary> The file path to the main Bicep file generated from the decompiled ARM json template. </summary>
         public string EntryPoint { get; }
     }

@@ -18,20 +18,20 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
         /// <param name="files"> An array of key-value pairs containing the entryPoint string as the key for the Bicep file decompiled from the ARM json template. </param>
         /// <param name="entryPoint"> The file path to the main Bicep file generated from the decompiled ARM json template. </param>
         /// <returns> A new <see cref="Models.DecompileOperationSuccessResult"/> instance for mocking. </returns>
-        public static DecompileOperationSuccessResult DecompileOperationSuccessResult(IEnumerable<DecompiledFile> files = null, string entryPoint = null)
+        public static DecompileOperationSuccessResult DecompileOperationSuccessResult(IEnumerable<DecompiledFileDefinition> files = null, string entryPoint = null)
         {
-            files ??= new List<DecompiledFile>();
+            files ??= new List<DecompiledFileDefinition>();
 
             return new DecompileOperationSuccessResult(files?.ToList(), entryPoint, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DecompiledFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DecompiledFileDefinition"/>. </summary>
         /// <param name="path"> The file path of the Bicep file. </param>
         /// <param name="contents"> The contents of the Bicep file. </param>
-        /// <returns> A new <see cref="Models.DecompiledFile"/> instance for mocking. </returns>
-        public static DecompiledFile DecompiledFile(string path = null, string contents = null)
+        /// <returns> A new <see cref="Models.DecompiledFileDefinition"/> instance for mocking. </returns>
+        public static DecompiledFileDefinition DecompiledFileDefinition(string path = null, string contents = null)
         {
-            return new DecompiledFile(path, contents, serializedAdditionalRawData: null);
+            return new DecompiledFileDefinition(path, contents, serializedAdditionalRawData: null);
         }
     }
 }

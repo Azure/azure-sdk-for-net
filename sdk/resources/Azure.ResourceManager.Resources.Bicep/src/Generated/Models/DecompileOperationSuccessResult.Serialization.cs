@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
             {
                 return null;
             }
-            IReadOnlyList<DecompiledFile> files = default;
+            IReadOnlyList<DecompiledFileDefinition> files = default;
             string entryPoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
             {
                 if (property.NameEquals("files"u8))
                 {
-                    List<DecompiledFile> array = new List<DecompiledFile>();
+                    List<DecompiledFileDefinition> array = new List<DecompiledFileDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DecompiledFile.DeserializeDecompiledFile(item, options));
+                        array.Add(DecompiledFileDefinition.DeserializeDecompiledFileDefinition(item, options));
                     }
                     files = array;
                     continue;
