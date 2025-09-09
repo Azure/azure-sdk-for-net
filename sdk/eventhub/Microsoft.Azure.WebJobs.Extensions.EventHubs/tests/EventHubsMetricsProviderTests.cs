@@ -211,10 +211,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [Test]
         public async Task CreateTriggerMetrics_HandlesExceptions()
         {
+            const string errorMessage = "Uh oh";
             // StorageException
             _mockCheckpointStore
                 .Setup(c => c.GetCheckpointAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                .ThrowsAsync(new RequestFailedException(404, "Uh oh"));
+                .ThrowsAsync(new RequestFailedException(404, errorMessage));
             // Clear previous logs
             _loggerProvider.ClearAllLogMessages();
 
@@ -228,12 +229,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(1, metrics.PartitionCount);
             Assert.AreEqual(1, metrics.EventCount);
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
-            AssertGetCheckpointAsyncErrorLogs();
+            AssertGetCheckpointAsyncErrorLogs(_partitions.First().Id, errorMessage);
 
             // Generic Exception
             _mockCheckpointStore
                 .Setup(c => c.GetCheckpointAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                .ThrowsAsync(new Exception("Uh oh"));
+                .ThrowsAsync(new Exception(errorMessage));
             // Clear previous logs
             _loggerProvider.ClearAllLogMessages();
 
@@ -247,21 +248,20 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(1, metrics.PartitionCount);
             Assert.AreEqual(1, metrics.EventCount);
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
-            AssertGetCheckpointAsyncErrorLogs();
+            AssertGetCheckpointAsyncErrorLogs(_partitions.First().Id, errorMessage);
 
             _loggerProvider.ClearAllLogMessages();
         }
 
-        private void AssertGetCheckpointAsyncErrorLogs()
+        private void AssertGetCheckpointAsyncErrorLogs(string partitionId, string message)
         {
             var logs = _loggerProvider.GetAllLogMessages().ToList();
-            Assert.That(logs.Any(), "Requesting cancellation of other checkpoint tasks. Error while getting checkpoint for eventhub");
             Assert.That(logs.Any(l =>
                     l.Level == LogLevel.Debug),
-                "Requesting cancellation of other checkpoint tasks. Error while getting checkpoint for eventhub");
+                $"Requesting cancellation of other checkpoint tasks. Error while getting checkpoint for eventhub '{_eventHubName}', partition '{partitionId}': {message}");
             Assert.That(logs.Any(l =>
                     l.Level == LogLevel.Warning),
-                "Encountered an exception while getting checkpoints for Event Hub");
+                $"Encountered an exception while getting checkpoints for Event Hub '{_eventHubName}' used for scaling. Error: {message}");
         }
 
         [TestCase(false, 0, -1, -1, 0)] // Microsoft.Azure.Functions.Worker.Extensions.EventHubs < 5.0.0, auto created checkpoint, no events sent
