@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Redis.Models
         private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
 
-        /// <summary> Updating. </summary>
+        /// <summary> The access policy assignments are being updated *. </summary>
         public static AccessPolicyAssignmentProvisioningState Updating { get; } = new AccessPolicyAssignmentProvisioningState(UpdatingValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> The access policy assignments were successfully updated *. </summary>
         public static AccessPolicyAssignmentProvisioningState Succeeded { get; } = new AccessPolicyAssignmentProvisioningState(SucceededValue);
-        /// <summary> Deleting. </summary>
+        /// <summary> The access policy assignments are being deleted *. </summary>
         public static AccessPolicyAssignmentProvisioningState Deleting { get; } = new AccessPolicyAssignmentProvisioningState(DeletingValue);
-        /// <summary> Deleted. </summary>
+        /// <summary> The access policy assignments are considered deleted, meaning no custom access policies are applied. *. </summary>
         public static AccessPolicyAssignmentProvisioningState Deleted { get; } = new AccessPolicyAssignmentProvisioningState(DeletedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> The operation was canceled. Access policy assignments may be in a partially updated state. Update them again to have a well-defined state. *. </summary>
         public static AccessPolicyAssignmentProvisioningState Canceled { get; } = new AccessPolicyAssignmentProvisioningState(CanceledValue);
-        /// <summary> Failed. </summary>
+        /// <summary> The operation failed. Access policy assignments may be in a partially updated state. Update them again to have a well-defined state. *. </summary>
         public static AccessPolicyAssignmentProvisioningState Failed { get; } = new AccessPolicyAssignmentProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="AccessPolicyAssignmentProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AccessPolicyAssignmentProvisioningState left, AccessPolicyAssignmentProvisioningState right) => left.Equals(right);
