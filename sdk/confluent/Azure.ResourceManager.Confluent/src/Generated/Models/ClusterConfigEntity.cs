@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Confluent.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ClusterConfigEntity"/>. </summary>
-        internal ClusterConfigEntity()
+        public ClusterConfigEntity()
         {
         }
 
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.Confluent.Models
         }
 
         /// <summary> The lifecycle phase of the cluster. </summary>
-        public string Kind { get; }
+        public string Kind { get; set; }
     }
 }

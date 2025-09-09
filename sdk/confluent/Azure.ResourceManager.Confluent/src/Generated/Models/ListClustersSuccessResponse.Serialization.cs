@@ -34,20 +34,17 @@ namespace Azure.ResourceManager.Confluent.Models
                 throw new FormatException($"The model {nameof(ListClustersSuccessResponse)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Value))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,29 +83,29 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            IReadOnlyList<SCClusterRecord> value = default;
-            string nextLink = default;
+            IReadOnlyList<SCClusterRecordData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<SCClusterRecord> array = new List<SCClusterRecord>();
+                    List<SCClusterRecordData> array = new List<SCClusterRecordData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SCClusterRecord.DeserializeSCClusterRecord(item, options));
+                        array.Add(SCClusterRecordData.DeserializeSCClusterRecordData(item, options));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    nextLink = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -117,7 +114,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ListClustersSuccessResponse(value ?? new ChangeTrackingList<SCClusterRecord>(), nextLink, serializedAdditionalRawData);
+            return new ListClustersSuccessResponse(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListClustersSuccessResponse>.Write(ModelReaderWriterOptions options)
