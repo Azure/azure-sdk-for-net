@@ -259,7 +259,7 @@ namespace Azure.Generator.Management.Visitors
                         {
                             // flatten the property to public and associate it with the internal property
                             var (_, includeGetterNullCheck, _) = PropertyHelpers.GetFlags(property, innerProperty);
-                            var flattenPropertyName = PropertyHelpers.GetCombinedPropertyName(innerProperty, property); // TODO: handle name conflicts
+                            var flattenPropertyName = innerProperty.Name; // TODO: handle name conflicts
                             var flattenPropertyBody = new MethodPropertyBody(
                                 PropertyHelpers.BuildGetter(includeGetterNullCheck, property, modelProvider, innerProperty),
                                 !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(modelProvider, property, innerProperty)

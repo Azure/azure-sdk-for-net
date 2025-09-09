@@ -112,15 +112,15 @@ namespace MgmtTypeSpec.Models
         /// <param name="stringArray"></param>
         /// <param name="propertyLeft"> enabled. </param>
         /// <param name="anotherPropertyLeft"> enabled. </param>
-        /// <param name="flattenedNestedPropertyInnerProp1"> Gets or sets the InnerProp1. </param>
-        /// <param name="flattenedNestedPropertyInnerProp2"> Gets or sets the InnerProp2. </param>
-        /// <param name="flattenedNestedPropertyMiddleProp1"> Gets or sets the MiddleProp1. </param>
-        /// <param name="flattenedNestedPropertyMiddleProp2"> Gets the MiddleProp2. </param>
-        /// <param name="flattenedNestedPropertyProp1"> Gets the Prop1. </param>
-        /// <param name="flattenedNestedPropertyProp2"> Gets or sets the Prop2. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="flattenedNestedPropertyInnerProp2"/>, <paramref name="flattenedNestedPropertyMiddleProp2"/> or <paramref name="flattenedNestedPropertyProp1"/> is null. </exception>
+        /// <param name="innerProp1"> Gets or sets the InnerProp1. </param>
+        /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
+        /// <param name="middleProp1"> Gets or sets the MiddleProp1. </param>
+        /// <param name="middleProp2"> Gets the MiddleProp2. </param>
+        /// <param name="prop1"> Gets the Prop1. </param>
+        /// <param name="prop2"> Gets or sets the Prop2. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/>, <paramref name="middleProp2"/> or <paramref name="prop1"/> is null. </exception>
         /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsResourceData"/> instance for mocking. </returns>
-        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, int? flattenedNestedPropertyInnerProp1 = default, string flattenedNestedPropertyInnerProp2 = default, int? flattenedNestedPropertyMiddleProp1 = default, IDictionary<string, string> flattenedNestedPropertyMiddleProp2 = default, IList<string> flattenedNestedPropertyProp1 = default, int? flattenedNestedPropertyProp2 = default)
+        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int? middleProp1 = default, IDictionary<string, string> middleProp2 = default, IList<string> prop1 = default, int? prop2 = default)
         {
             stringArray ??= new ChangeTrackingList<string>();
 
@@ -134,14 +134,14 @@ namespace MgmtTypeSpec.Models
                 stringArray.ToList(),
                 propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, new Dictionary<string, BinaryData>()),
                 anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, new Dictionary<string, BinaryData>()),
-                flattenedNestedPropertyInnerProp1 is null || flattenedNestedPropertyInnerProp2 is null || flattenedNestedPropertyMiddleProp1 is null || flattenedNestedPropertyMiddleProp2 is null || flattenedNestedPropertyProp1 is null || flattenedNestedPropertyProp2 is null ? default : new BarNestedQuotaProperties(
-                    flattenedNestedPropertyInnerProp1,
-                    flattenedNestedPropertyInnerProp2,
+                innerProp1 is null || innerProp2 is null || middleProp1 is null || middleProp2 is null || prop1 is null || prop2 is null ? default : new BarNestedQuotaProperties(
+                    innerProp1,
+                    innerProp2,
                     null,
-                    flattenedNestedPropertyMiddleProp1.Value,
-                    flattenedNestedPropertyMiddleProp2,
-                    flattenedNestedPropertyProp1,
-                    flattenedNestedPropertyProp2.Value));
+                    middleProp1.Value,
+                    middleProp2,
+                    prop1,
+                    prop2.Value));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

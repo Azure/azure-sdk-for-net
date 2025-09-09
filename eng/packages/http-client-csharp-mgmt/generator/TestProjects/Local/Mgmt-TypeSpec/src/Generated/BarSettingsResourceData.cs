@@ -22,20 +22,20 @@ namespace MgmtTypeSpec
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
         /// <param name="property"></param>
         /// <param name="anotherProperty"></param>
-        /// <param name="flattenedNestedPropertyInnerProp2"> Gets or sets the InnerProp2. </param>
-        /// <param name="flattenedNestedPropertyMiddleProp1"> Gets or sets the MiddleProp1. </param>
-        /// <param name="flattenedNestedPropertyProp2"> Gets or sets the Prop2. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="property"/>, <paramref name="anotherProperty"/> or <paramref name="flattenedNestedPropertyInnerProp2"/> is null. </exception>
-        public BarSettingsResourceData(BarQuotaProperties @property, BarQuotaProperties anotherProperty, string flattenedNestedPropertyInnerProp2, int flattenedNestedPropertyMiddleProp1, int flattenedNestedPropertyProp2)
+        /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
+        /// <param name="middleProp1"> Gets or sets the MiddleProp1. </param>
+        /// <param name="prop2"> Gets or sets the Prop2. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="property"/>, <paramref name="anotherProperty"/> or <paramref name="innerProp2"/> is null. </exception>
+        public BarSettingsResourceData(BarQuotaProperties @property, BarQuotaProperties anotherProperty, string innerProp2, int middleProp1, int prop2)
         {
-            Argument.AssertNotNull(flattenedNestedPropertyInnerProp2, nameof(flattenedNestedPropertyInnerProp2));
+            Argument.AssertNotNull(innerProp2, nameof(innerProp2));
 
             StringArray = new ChangeTrackingList<string>();
             Property = @property;
             AnotherProperty = anotherProperty;
-            FlattenedNestedPropertyInnerProp2 = flattenedNestedPropertyInnerProp2;
-            FlattenedNestedPropertyMiddleProp1 = flattenedNestedPropertyMiddleProp1;
-            FlattenedNestedPropertyProp2 = flattenedNestedPropertyProp2;
+            InnerProp2 = innerProp2;
+            MiddleProp1 = middleProp1;
+            Prop2 = prop2;
         }
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
@@ -75,7 +75,7 @@ namespace MgmtTypeSpec
         internal BarNestedQuotaProperties FlattenedNestedProperty { get; set; }
 
         /// <summary> Gets or sets the InnerProp1. </summary>
-        public int? FlattenedNestedPropertyInnerProp1
+        public int? InnerProp1
         {
             get
             {
@@ -92,7 +92,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets or sets the InnerProp2. </summary>
-        public string FlattenedNestedPropertyInnerProp2
+        public string InnerProp2
         {
             get
             {
@@ -109,7 +109,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets or sets the MiddleProp1. </summary>
-        public int FlattenedNestedPropertyMiddleProp1
+        public int MiddleProp1
         {
             get
             {
@@ -126,7 +126,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets the MiddleProp2. </summary>
-        public IDictionary<string, string> FlattenedNestedPropertyMiddleProp2
+        public IDictionary<string, string> MiddleProp2
         {
             get
             {
@@ -151,7 +151,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets the Prop1. </summary>
-        public IList<string> FlattenedNestedPropertyProp1
+        public IList<string> Prop1
         {
             get
             {
@@ -176,7 +176,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets or sets the Prop2. </summary>
-        public int FlattenedNestedPropertyProp2
+        public int Prop2
         {
             get
             {
