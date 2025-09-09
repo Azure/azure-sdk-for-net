@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.HealthBot.Models
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(AccessControlMethod))
+            {
+                writer.WritePropertyName("accessControlMethod"u8);
+                writer.WriteStringValue(AccessControlMethod);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,6 +94,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             string provisioningState = default;
             Uri botManagementPortalLink = default;
             HealthBotKeyVaultProperties keyVaultProperties = default;
+            string accessControlMethod = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,13 +122,18 @@ namespace Azure.ResourceManager.HealthBot.Models
                     keyVaultProperties = HealthBotKeyVaultProperties.DeserializeHealthBotKeyVaultProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("accessControlMethod"u8))
+                {
+                    accessControlMethod = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties, serializedAdditionalRawData);
+            return new HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties, accessControlMethod, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthBotProperties>.Write(ModelReaderWriterOptions options)
