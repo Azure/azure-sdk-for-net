@@ -3,7 +3,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
-    <Version>5.4.0-beta.1</Version>
+    <Version>5.3.6</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>5.3.5</ApiCompatVersion>
     <RunApiCompat>false</RunApiCompat>
