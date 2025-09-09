@@ -1162,6 +1162,14 @@
 # ServiceLabel: %Weights & Biases %Mgmt
 # ServiceOwners:                                                   @aggarwalsw
 
+
+# PRLabel: %Workload Orchestration
+/sdk/workloadorchestration/Azure.ResourceManager.*/                @atharvau
+
+# ServiceLabel: %Workload Orchestration %Mgmt
+# ServiceOwners:                                                   @atharvau
+
+
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
 /eng/common/                                                       @Azure/azure-sdk-eng
