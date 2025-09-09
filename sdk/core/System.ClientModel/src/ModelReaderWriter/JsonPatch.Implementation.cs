@@ -40,7 +40,7 @@ public partial struct JsonPatch
 
     private ReadOnlyMemory<byte> GetEncodedValue(ReadOnlySpan<byte> jsonPath)
     {
-        if (TryGetEncodedValue(jsonPath, out var value))
+        if (TryGetEncodedValueInternal(jsonPath, out var value))
         {
             return value.Value;
         }
@@ -355,7 +355,7 @@ public partial struct JsonPatch
         return false;
     }
 
-    private bool TryGetEncodedValue(ReadOnlySpan<byte> jsonPath, out EncodedValue value)
+    private bool TryGetEncodedValueInternal(ReadOnlySpan<byte> jsonPath, out EncodedValue value)
     {
         value = EncodedValue.Empty;
         EncodedValue encodedValue;

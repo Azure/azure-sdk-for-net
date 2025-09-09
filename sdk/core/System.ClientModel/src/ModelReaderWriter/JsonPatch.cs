@@ -311,7 +311,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public bool GetBoolean(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
         }
@@ -331,7 +331,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public byte GetByte(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
         }
@@ -352,7 +352,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public DateTime GetDateTime(ReadOnlySpan<byte> jsonPath, StandardFormat format = default)
     {
-        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
         }
@@ -373,7 +373,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public DateTimeOffset GetDateTimeOffset(ReadOnlySpan<byte> jsonPath, StandardFormat format = default)
     {
-        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
         }
@@ -393,7 +393,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public decimal GetDecimal(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
         }
@@ -413,7 +413,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public double GetDouble(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
         }
@@ -433,7 +433,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public float GetFloat(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
         }
@@ -453,7 +453,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public Guid GetGuid(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
         }
@@ -473,7 +473,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public int GetInt32(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
         }
@@ -493,7 +493,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public long GetInt64(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
         }
@@ -513,7 +513,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public sbyte GetInt8(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
         }
@@ -533,7 +533,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public short GetInt16(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
         }
@@ -554,7 +554,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public TimeSpan GetTimeSpan(ReadOnlySpan<byte> jsonPath, StandardFormat format = default)
     {
-        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
         }
@@ -574,7 +574,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public uint GetUInt32(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
         }
@@ -594,7 +594,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public ulong GetUInt64(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
         }
@@ -614,7 +614,7 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public ushort GetUInt16(ReadOnlySpan<byte> jsonPath)
     {
-        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
         }
@@ -662,7 +662,7 @@ public partial struct JsonPatch
     public T? GetNullableValue<T>(ReadOnlySpan<byte> jsonPath)
         where T : struct
     {
-        if (!TryGetEncodedValue(jsonPath, out EncodedValue encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out EncodedValue encodedValue))
         {
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
         }
@@ -692,7 +692,7 @@ public partial struct JsonPatch
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out bool value)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue)
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
             && TryDecodeValue(encodedValue, out bool result))
         {
             value = result;
@@ -711,7 +711,7 @@ public partial struct JsonPatch
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out byte value)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue)
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
             && TryDecodeValue(encodedValue, out byte result))
         {
             value = result;
@@ -731,7 +731,7 @@ public partial struct JsonPatch
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out DateTime value, StandardFormat format = default)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue)
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
             && TryDecodeValue(encodedValue, out DateTime result, format.Symbol))
         {
             value = result;
@@ -751,7 +751,7 @@ public partial struct JsonPatch
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out DateTimeOffset value, StandardFormat format = default)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue)
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
             && TryDecodeValue(encodedValue, out DateTimeOffset result, format.Symbol))
         {
             value = result;
@@ -770,7 +770,7 @@ public partial struct JsonPatch
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out decimal value)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue)
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
             && TryDecodeValue(encodedValue, out decimal result))
         {
             value = result;
@@ -789,7 +789,7 @@ public partial struct JsonPatch
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out double value)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue)
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
             && TryDecodeValue(encodedValue, out double result))
         {
             value = result;
@@ -808,7 +808,7 @@ public partial struct JsonPatch
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out float value)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue)
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
             && TryDecodeValue(encodedValue, out float result))
         {
             value = result;
@@ -827,7 +827,7 @@ public partial struct JsonPatch
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out Guid value)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue)
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
             &&TryDecodeValue(encodedValue, out Guid result))
         {
             value = result;
@@ -846,7 +846,7 @@ public partial struct JsonPatch
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out int value)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue)
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
             && TryDecodeValue(encodedValue, out int result))
         {
             value = result;
@@ -865,7 +865,7 @@ public partial struct JsonPatch
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out long value)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue)
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
             && TryDecodeValue(encodedValue, out long result))
         {
             value = result;
@@ -884,7 +884,7 @@ public partial struct JsonPatch
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out sbyte value)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue)
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
             && TryDecodeValue(encodedValue, out sbyte result))
         {
             value = result;
@@ -903,7 +903,7 @@ public partial struct JsonPatch
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out short value)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue)
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
             && TryDecodeValue(encodedValue, out short result))
         {
             value = result;
@@ -923,7 +923,7 @@ public partial struct JsonPatch
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out TimeSpan value, StandardFormat format = default)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue)
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
             && TryDecodeValue(encodedValue, out TimeSpan result, format.Symbol))
         {
             value = result;
@@ -942,7 +942,7 @@ public partial struct JsonPatch
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out uint value)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue)
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
             && TryDecodeValue(encodedValue, out uint result))
         {
             value = result;
@@ -961,7 +961,7 @@ public partial struct JsonPatch
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out ulong value)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue)
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
             && TryDecodeValue(encodedValue, out ulong result))
         {
             value = result;
@@ -980,7 +980,7 @@ public partial struct JsonPatch
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out ushort value)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue)
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue)
             && TryDecodeValue(encodedValue, out ushort result))
         {
             value = result;
@@ -999,7 +999,7 @@ public partial struct JsonPatch
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out string? value)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (TryGetEncodedValueInternal(jsonPath, out var encodedValue))
         {
             if (s_nullValueArray.Value.Span.SequenceEqual(encodedValue.Value.Span))
             {
@@ -1037,7 +1037,7 @@ public partial struct JsonPatch
     {
         value = default;
 
-        if (!TryGetEncodedValue(jsonPath, out EncodedValue encodedValue))
+        if (!TryGetEncodedValueInternal(jsonPath, out EncodedValue encodedValue))
         {
             return false;
         }
@@ -1063,9 +1063,9 @@ public partial struct JsonPatch
     /// <param name="value">The value if found.</param>
     /// <returns>True if the value was found and parsed; otherwise, false.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public bool TryGetRawValue(ReadOnlySpan<byte> jsonPath, out EncodedValue value)
+    public bool TryGetEncodedValue(ReadOnlySpan<byte> jsonPath, out EncodedValue value)
     {
-        return TryGetEncodedValue(jsonPath, out value);
+        return TryGetEncodedValueInternal(jsonPath, out value);
     }
 
     /// <summary>
@@ -1076,7 +1076,7 @@ public partial struct JsonPatch
     /// <returns></returns>
     public bool TryGetJson(ReadOnlySpan<byte> jsonPath, out ReadOnlyMemory<byte> value)
     {
-        var found = TryGetEncodedValue(jsonPath, out var encodedValue);
+        var found = TryGetEncodedValueInternal(jsonPath, out var encodedValue);
         value = encodedValue.Value;
         return found;
     }

@@ -392,7 +392,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
             if (local.StartsWith("sku"u8))
             {
-                return Sku.Patch.TryGetRawValue([.. "$"u8, .. local.Slice("sku"u8.Length)], out value);
+                return Sku.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("sku"u8.Length)], out value);
             }
             else if (local.StartsWith("properties.virtualMachines"u8))
             {
@@ -403,7 +403,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
                 if (VirtualMachines.Count > index)
                 {
-                    return VirtualMachines[index].Patch.TryGetRawValue([.. "$"u8, .. indexSlice.Slice(bytesConsumed + 2)], out value);
+                    return VirtualMachines[index].Patch.TryGetEncodedValue([.. "$"u8, .. indexSlice.Slice(bytesConsumed + 2)], out value);
                 }
             }
 

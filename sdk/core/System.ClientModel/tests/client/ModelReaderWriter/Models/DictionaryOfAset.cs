@@ -190,7 +190,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             if (!Items.TryGetValue(key, out var aset))
                 return false;
 
-            return aset.Patch.TryGetRawValue([.. "$"u8, .. GetRemainder(jsonPath, i)], out value);
+            return aset.Patch.TryGetEncodedValue([.. "$"u8, .. GetRemainder(jsonPath, i)], out value);
         }
 
         private bool PropagateSet(ReadOnlySpan<byte> jsonPath, JsonPatch.EncodedValue value)
