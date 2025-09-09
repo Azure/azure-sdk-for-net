@@ -21,6 +21,8 @@
 ### Other Changes
 
 - The `BrokerCredential` is now always included in the `DefaultAzureCredential` chain. If the `Azure.Identity.Broker` package is not referenced, an exception will be thrown when `GetToken` is called, making its behavior consistent with the rest of the credentials in the chain.
+- Updated `Microsoft.Identity.Client` dependency to version 4.76.0.
+- Updated `Microsoft.Identity.Client.Extensions.Msal` dependency to version 4.76.0.
 
 ## 1.15.0 (2025-08-11)
 
