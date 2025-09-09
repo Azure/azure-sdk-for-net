@@ -44,6 +44,84 @@ namespace Azure.ResourceManager.StorageActions.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Properties of the storage task. </summary>
-        public StorageTaskUpdateProperties Properties { get; set; }
+        internal StorageTaskUpdateProperties Properties { get; set; }
+
+        /// <summary> Storage task version. </summary>
+        public long? TaskVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TaskVersion;
+            }
+        }
+
+        /// <summary> Storage Task is enabled when set to true and disabled when set to false. </summary>
+        public bool? Enabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Enabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageTaskUpdateProperties();
+                }
+                Properties.Enabled = value.Value;
+            }
+        }
+
+        /// <summary> Text that describes the purpose of the storage task. </summary>
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageTaskUpdateProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> The storage task action that is executed. </summary>
+        public StorageTaskAction Action
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Action;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageTaskUpdateProperties();
+                }
+                Properties.Action = value;
+            }
+        }
+
+        /// <summary> Represents the provisioning state of the storage task. </summary>
+        public StorageTaskProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The creation date and time of the storage task in UTC. </summary>
+        public DateTimeOffset? CreationTimeInUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreationTimeInUtc;
+            }
+        }
     }
 }

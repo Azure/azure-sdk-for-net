@@ -14,7 +14,7 @@ using Azure.ResourceManager.StorageActions;
 namespace Azure.ResourceManager.StorageActions.Models
 {
     /// <summary> Properties of the storage task. </summary>
-    public partial class StorageTaskUpdateProperties : IJsonModel<StorageTaskUpdateProperties>
+    internal partial class StorageTaskUpdateProperties : IJsonModel<StorageTaskUpdateProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

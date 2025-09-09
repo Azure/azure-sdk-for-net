@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.StorageActions.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskPreviewAction"/>. </summary>
-        /// <param name="properties"> Properties of the storage task preview. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public StorageTaskPreviewAction(StorageTaskPreviewActionProperties properties)
+        /// <param name="container"> Properties of a sample container to test for a match with the preview action. </param>
+        /// <param name="action"> Preview action to test. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="container"/> or <paramref name="action"/> is null. </exception>
+        public StorageTaskPreviewAction(StorageTaskPreviewContainerProperties container, StorageTaskPreviewActionCondition action)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(container, nameof(container));
+            Argument.AssertNotNull(action, nameof(action));
 
-            Properties = properties;
+            Container = container;
+            Action = action;
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskPreviewAction"/>. </summary>
@@ -37,6 +40,66 @@ namespace Azure.ResourceManager.StorageActions.Models
         }
 
         /// <summary> Properties of the storage task preview. </summary>
-        public StorageTaskPreviewActionProperties Properties { get; set; }
+        internal StorageTaskPreviewActionProperties Properties { get; set; }
+
+        /// <summary> Properties of a sample container to test for a match with the preview action. </summary>
+        public StorageTaskPreviewContainerProperties Container
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Container;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageTaskPreviewActionProperties();
+                }
+                Properties.Container = value;
+            }
+        }
+
+        /// <summary> Properties of some sample blobs in the container to test for matches with the preview action. </summary>
+        public IList<StorageTaskPreviewBlobProperties> Blobs
+        {
+            get
+            {
+                InitializeStorageTaskPreviewActionProperties();
+                return Properties.Blobs;
+            }
+            set
+            {
+                InitializeStorageTaskPreviewActionProperties();
+                Properties.Blobs = value;
+            }
+        }
+
+        /// <summary> Preview action to test. </summary>
+        public StorageTaskPreviewActionCondition Action
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Action;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageTaskPreviewActionProperties();
+                }
+                Properties.Action = value;
+            }
+        }
+
+        private void InitializeStorageTaskPreviewActionProperties()
+        {
+            if (Properties is null)
+            {
+                Properties = new StorageTaskPreviewActionProperties
+                {
+                    Blobs = new ChangeTrackingList<StorageTaskPreviewBlobProperties>()
+                };
+            }
+        }
     }
 }

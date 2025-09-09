@@ -14,7 +14,7 @@ using Azure.ResourceManager.StorageActions;
 namespace Azure.ResourceManager.StorageActions.Models
 {
     /// <summary> Properties of the storage task. </summary>
-    public partial class StorageTaskProperties : IJsonModel<StorageTaskProperties>
+    internal partial class StorageTaskProperties : IJsonModel<StorageTaskProperties>
     {
         /// <summary> Initializes a new instance of <see cref="StorageTaskProperties"/> for deserialization. </summary>
         internal StorageTaskProperties()

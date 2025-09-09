@@ -14,7 +14,7 @@ using Azure.ResourceManager.StorageActions;
 namespace Azure.ResourceManager.StorageActions.Models
 {
     /// <summary> Storage task preview action properties. </summary>
-    public partial class StorageTaskPreviewActionProperties : IJsonModel<StorageTaskPreviewActionProperties>
+    internal partial class StorageTaskPreviewActionProperties : IJsonModel<StorageTaskPreviewActionProperties>
     {
         /// <summary> Initializes a new instance of <see cref="StorageTaskPreviewActionProperties"/> for deserialization. </summary>
         internal StorageTaskPreviewActionProperties()
