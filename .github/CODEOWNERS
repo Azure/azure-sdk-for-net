@@ -897,6 +897,12 @@
 # ServiceLabel: %VideoAnalyzer
 # ServiceOwners:                                                   @giakas
 
+# PRLabel: %Voice Live
+/sdk/ai/Azure.AI.VoiceLive/                                        @rhurey @xitzhang
+
+# ServiceLabel: %Voice Live
+# ServiceOwners:                                                   @rhurey @xitzhang
+
 # ServiceLabel: %Web Apps
 # ServiceOwners:                                                   @AzureAppServiceCLI @antcp
 
@@ -1028,10 +1034,10 @@
 # ServiceOwners:                                                   @emmeliaAra
 
 # PRLabel: %HybridConnectivity
-/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @PriyankaHariharan @apmehrotra
+/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @apmehrotra
 
 # ServiceLabel: %HybridConnectivity %Mgmt
-# ServiceOwners:                                                   @PriyankaHariharan @apmehrotra
+# ServiceOwners:                                                   @apmehrotra
 
 # PRLabel: %LambdaTest HyperExecute
 /sdk/lambdatesthyperexecute/Azure.ResourceManager.*/               @aggarwalsw
