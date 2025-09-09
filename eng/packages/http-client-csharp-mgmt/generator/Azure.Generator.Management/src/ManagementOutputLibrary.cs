@@ -262,7 +262,6 @@ namespace Azure.Generator.Management
             }
             ManagementClientGenerator.Instance.AddTypeToKeep(ExtensionProvider.Name);
 
-            var baseTypes = base.BuildTypeProviders();
             return [
                 .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
                 ArmOperation,

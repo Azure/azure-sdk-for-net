@@ -41,7 +41,7 @@ namespace Azure.Generator.Management.Visitors
                     // If the property is a collection type, we need to ensure that it is initialized
                     foreach (var (flattenedProperty, innerProperty) in collectionProperties)
                         flattenedProperty.Update(body: new MethodPropertyBody(
-                                PropertyHelpers.BuildGetter(true, internalProperty, (ModelProvider)ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[internalProperty.Type]!, innerProperty),
+                                PropertyHelpers.BuildGetter(true, internalProperty, ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[internalProperty.Type]!, innerProperty),
                                 PropertyHelpers.BuildSetterForCollectionProperty(collectionProperties.Select(x => x.InnerProperty), internalProperty, innerProperty)));
                 }
             }
@@ -76,9 +76,9 @@ namespace Azure.Generator.Management.Visitors
                     {
                         // If the flattened property is a value type, we need to ensure that we handle the nullability correctly.
                         var propertyParameter = flattenedProperty.AsParameter;
-                        // The same parameter is used in public constructor, we need a new copy for model factory method.
                         if (parameterShouldBeNullable || flattenedProperty.Type.IsNullable)
                         {
+                            // The same parameter is used in public constructor, we need a new copy for model factory method with different nullability.
                             var updatedParameter = new ParameterProvider(propertyParameter.Name, propertyParameter.Description, propertyParameter.Type, propertyParameter.DefaultValue,
                                 propertyParameter.IsRef, propertyParameter.IsOut, propertyParameter.IsParams, propertyParameter.Attributes, propertyParameter.Property,
                                 propertyParameter.Field, propertyParameter.InitializationValue, propertyParameter.Location, propertyParameter.WireInfo, propertyParameter.Validation);
@@ -189,17 +189,9 @@ namespace Azure.Generator.Management.Visitors
         private ValueExpression[] BuildConstructorParameters(CSharpType propertyType, List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)> flattenedProperties, IReadOnlyDictionary<ParameterProvider, ParameterProvider> parameterMap)
         {
             var propertyModelType = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[propertyType] as ModelProvider;
-            var additionalPropertyIndex = -1;
-            var fullConstructorParmeters = propertyModelType!.FullConstructor.Signature.Parameters;
-            for (var index = 0; index < fullConstructorParmeters.Count; index++)
-            {
-                if (fullConstructorParmeters[index].Name.Equals("additionalBinaryDataProperties"))
-                {
-                    additionalPropertyIndex = index;
-                    break;
-                }
-            }
+
             var parameters = new List<ValueExpression>();
+            var additionalPropertyIndex = GetAdditionalPropertyIndex();
             for (var i = 0; i < flattenedProperties.Count; i++)
             {
                 if (i == additionalPropertyIndex)
@@ -219,6 +211,21 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
             return parameters.ToArray();
+
+            int GetAdditionalPropertyIndex()
+            {
+                var additionalPropertyIndex = -1;
+                var fullConstructorParmeters = propertyModelType!.FullConstructor.Signature.Parameters;
+                for (var index = 0; index < fullConstructorParmeters.Count; index++)
+                {
+                    if (fullConstructorParmeters[index].Name.Equals("additionalBinaryDataProperties"))
+                    {
+                        additionalPropertyIndex = index;
+                        break;
+                    }
+                }
+                return additionalPropertyIndex;
+            }
         }
 
         // This dictionary holds the flattened model types, where the key is the CSharpType of the model and the value is a dictionary of property names to flattened PropertyProvider.
