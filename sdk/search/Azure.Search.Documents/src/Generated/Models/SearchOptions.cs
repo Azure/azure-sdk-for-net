@@ -144,6 +144,8 @@ namespace Azure.Search.Documents
         public string SessionId { get; set; }
         /// <summary> The name of a scoring profile to evaluate match scores for matching documents in order to sort the results. </summary>
         public string ScoringProfile { get; set; }
+        /// <summary> Enables a debugging tool that can be used to further explore your reranked results. </summary>
+        public QueryDebugMode? Debug { get; set; }
         /// <summary> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </summary>
         public SearchMode? SearchMode { get; set; }
         /// <summary> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </summary>
