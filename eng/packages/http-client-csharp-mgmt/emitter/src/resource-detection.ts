@@ -142,7 +142,7 @@ export async function updateClients(
       );
     }
 
-    // update the model's resourceScope based on resource scope decorator if exist or based on the Get method's scope. If neither exist, it will be set to ResourceGroup by default
+    // update the model's resourceScope based on resource scope decorator if it exists or based on the Get method's scope. If neither exist, it will be set to ResourceGroup by default
     const model = resourceModelMap.get(modelId);
     if (model) {
       metadata.resourceScope = getResourceScope(model, metadata.methods);
