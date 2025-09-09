@@ -34,8 +34,7 @@ public partial struct JsonPatch
 
             if (encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
             {
-                EncodedValue newValue = new(encodedValue.Kind | ValueKind.ModelOwned, encodedValue.Value);
-                _properties.Set(jsonPath, newValue);
+                _properties.Set(jsonPath, new(encodedValue.Kind | ValueKind.ModelOwned, encodedValue.Value));
                 writer.WriteRawValue(encodedValue.Value.Span.Slice(1, encodedValue.Value.Length - 2));
             }
         }
@@ -60,6 +59,8 @@ public partial struct JsonPatch
             keySpan = keySpan.Slice(normalizedPrefix.Length);
 
             WriteEncodedValueAsJson(writer, keySpan.GetPropertyNameFromSlice(), kvp.Value);
+
+            _properties.Set(kvp.Key, new(kvp.Value.Kind | ValueKind.ModelOwned, kvp.Value.Value));
         }
     }
 
@@ -102,11 +103,6 @@ public partial struct JsonPatch
 
             foreach (var kvp in _properties)
             {
-                if (_propagatorIsFlattened is not null && _propagatorIsFlattened(kvp.Key))
-                {
-                    continue;
-                }
-
                 if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.ModelOwned))
                 {
                     continue;
@@ -261,10 +257,6 @@ public partial struct JsonPatch
         // need to add extra space for append characters and escape characters.
         Span<byte> jsonPointerBuffer = stackalloc byte[_properties.MaxKeyLength << 1];
 
-        // if we are attached to a model then we need to always write out the patch even if the values are the same as the original
-        // raw json because we don't know if the clr property was updated
-        bool isAttachedToModel = _propagatorGetter is not null || _propagatorSetter is not null || _propagatorIsFlattened is not null;
-
         foreach (var kvp in _properties)
         {
             ReadOnlySpan<byte> opType;
@@ -275,13 +267,15 @@ public partial struct JsonPatch
             }
             else
             {
-                if (isArrayItemAppend || !isSeeded || !rawJson.TryGetJson(kvp.Key, out var currentValue))
+                if (isArrayItemAppend || !isSeeded || !_rawJson.Value.TryGetJson(kvp.Key, out var currentValue))
                 {
                     opType = "add"u8;
                 }
                 else
                 {
-                    if (!isAttachedToModel && kvp.Value.Value.Span.SequenceEqual(currentValue.Span))
+                    var valueSpan = kvp.Value.Value.Span;
+                    if (valueSpan.SequenceEqual(currentValue.Span) ||
+                        (valueSpan.Length > 2 && valueSpan[0] == (byte)'"' && valueSpan[valueSpan.Length - 1] == '"' && valueSpan.Slice(1, valueSpan.Length - 2).SequenceEqual(currentValue.Span)))
                     {
                         // same value we can skip
                         continue;

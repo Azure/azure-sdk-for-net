@@ -67,7 +67,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             VirtualMachines = virtualMachines;
             ProximityPlacementGroup = proximityPlacementGroup;
             Statuses = statuses;
-            Patch.SetPropagators(PropagateSet, PropagateGet, IsFlattened);
+            Patch.SetPropagators(PropagateSet, PropagateGet);
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 

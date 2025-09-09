@@ -371,7 +371,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             {
                 int propertyLength = "properties.virtualMachines"u8.Length;
                 ReadOnlySpan<byte> indexSlice = local.Slice(propertyLength);
-                if (!TryGetIndex(propertyLength, indexSlice, out int index, out int bytesConsumed))
+                if (!SerializationHelpers.TryGetIndex(indexSlice, out int index, out int bytesConsumed))
                     return false;
 
                 if (VirtualMachines.Count > index)
@@ -384,7 +384,6 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             return false;
         }
 
-        //should i out EncodedValue here ???
         private bool PropagateGet(ReadOnlySpan<byte> jsonPath, out JsonPatch.EncodedValue value)
         {
             ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
@@ -398,7 +397,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             {
                 int propertyLength = "properties.virtualMachines"u8.Length;
                 ReadOnlySpan<byte> indexSlice = local.Slice(propertyLength);
-                if (!TryGetIndex(propertyLength, indexSlice, out int index, out int bytesConsumed))
+                if (!SerializationHelpers.TryGetIndex(indexSlice, out int index, out int bytesConsumed))
                     return false;
 
                 if (VirtualMachines.Count > index)
@@ -411,31 +410,5 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
         }
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
-        private bool IsFlattened(ReadOnlySpan<byte> jsonPath)
-        {
-            ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
-
-            return local.StartsWith("properties"u8) ||
-                local.StartsWith("tags"u8);
-        }
-
-        private static bool TryGetIndex(int propertyLength, ReadOnlySpan<byte> indexSlice, out int index, out int bytesConsumed)
-        {
-            index = -1;
-            bytesConsumed = 0;
-
-            if (indexSlice.IsEmpty || indexSlice[0] != (byte)'[')
-                return false;
-
-            indexSlice = indexSlice.Slice(1);
-            if (indexSlice.IsEmpty || indexSlice[0] == (byte)'-')
-                return false;
-
-            int indexEnd = indexSlice.Slice(1).IndexOf((byte)']');
-            if (indexEnd < 0)
-                return false;
-
-            return Utf8Parser.TryParse(indexSlice.Slice(0, indexEnd + 1), out index, out bytesConsumed);
-        }
     }
 }

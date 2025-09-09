@@ -41,7 +41,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         {
             Items = items ?? new Dictionary<string, AvailabilitySetData>();
             _patch = patch;
-            _patch.SetPropagators(PropagateSet, PropagateGet, IsFlattened);
+            _patch.SetPropagators(PropagateSet, PropagateGet);
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
@@ -203,8 +203,6 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             aset.Patch.Set([.. "$"u8, .. GetRemainder(jsonPath, i)], value);
             return true;
         }
-
-        private bool IsFlattened(ReadOnlySpan<byte> jsonPath) => false;
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
         private static ReadOnlySpan<byte> GetRemainder(ReadOnlySpan<byte> jsonPath, int i)

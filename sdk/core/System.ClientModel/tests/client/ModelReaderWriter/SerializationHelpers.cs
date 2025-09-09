@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Buffers.Text;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -117,6 +118,25 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             patch.WriteTo(writer, prefix);
             writer.WriteEndObject();
+        }
+
+        public static bool TryGetIndex(ReadOnlySpan<byte> indexSlice, out int index, out int bytesConsumed)
+        {
+            index = -1;
+            bytesConsumed = 0;
+
+            if (indexSlice.IsEmpty || indexSlice[0] != (byte)'[')
+                return false;
+
+            indexSlice = indexSlice.Slice(1);
+            if (indexSlice.IsEmpty || indexSlice[0] == (byte)'-')
+                return false;
+
+            int indexEnd = indexSlice.Slice(1).IndexOf((byte)']');
+            if (indexEnd < 0)
+                return false;
+
+            return Utf8Parser.TryParse(indexSlice.Slice(0, indexEnd + 1), out index, out bytesConsumed);
         }
     }
 }

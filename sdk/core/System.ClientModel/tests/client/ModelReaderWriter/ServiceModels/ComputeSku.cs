@@ -26,7 +26,6 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             Tier = tier;
             Capacity = capacity;
             _patch = jsonPatch;
-            _patch.SetPropagators(null, null, IsFlattened);
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 

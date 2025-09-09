@@ -339,7 +339,7 @@ namespace System.ClientModel.Primitives
         public void Set(System.ReadOnlySpan<byte> jsonPath, ulong value) { }
         public void SetNull(System.ReadOnlySpan<byte> jsonPath) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public void SetPropagators(System.ClientModel.Primitives.JsonPatch.PropagatorSetter setter, System.ClientModel.Primitives.JsonPatch.PropagatorGetter getter, System.ClientModel.Primitives.JsonPatch.PropagatorIsFlattened? isFlattened) { }
+        public void SetPropagators(System.ClientModel.Primitives.JsonPatch.PropagatorSetter setter, System.ClientModel.Primitives.JsonPatch.PropagatorGetter getter) { }
         public override string ToString() { throw null; }
         public string ToString(string format) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -376,8 +376,6 @@ namespace System.ClientModel.Primitives
         }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public delegate bool PropagatorGetter(System.ReadOnlySpan<byte> jsonPath, out System.ClientModel.Primitives.JsonPatch.EncodedValue value);
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public delegate bool PropagatorIsFlattened(System.ReadOnlySpan<byte> jsonPath);
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public delegate bool PropagatorSetter(System.ReadOnlySpan<byte> jsonPath, System.ClientModel.Primitives.JsonPatch.EncodedValue value);
     }

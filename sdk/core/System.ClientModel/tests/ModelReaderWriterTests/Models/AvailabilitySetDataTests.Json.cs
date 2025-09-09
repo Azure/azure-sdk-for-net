@@ -20,7 +20,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(5, model.Patch.GetInt32(pointer));
             Assert.AreEqual(5, model.Patch.GetNullableValue<int>(pointer));
             Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"},{\"op\":\"add\",\"path\":\"/foobar\",\"value\":5}]",
+                "[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":5}]",
                 model.Patch.ToString());
 
             var data = ModelReaderWriter.Write(model);
@@ -31,9 +31,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model2 = GetRoundTripModel(data);
             Assert.AreEqual(5, model2.Patch.GetInt32(pointer));
             Assert.AreEqual(5, model2.Patch.GetNullableValue<int>(pointer));
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"},{\"op\":\"replace\",\"path\":\"/foobar\",\"value\":5}]",
-                model2.Patch.ToString());
+            Assert.AreEqual("[]", model2.Patch.ToString());
 
             AssertCommon(model, model2);
         }
@@ -87,7 +85,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model = GetInitialModel();
             model.Patch.Set(pointer, value);
             Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"},{\"op\":\"add\",\"path\":\"/foobar\",\"value\":\"some value\"}]",
+                "[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":\"some value\"}]",
                 model.Patch.ToString());
 
             model.Patch.Set("$['foobar']"u8, "some other value");
@@ -95,7 +93,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual("some other value", model.Patch.GetString(pointer));
             Assert.AreEqual("some other value", model.Patch.GetString("$['foobar']"u8));
             Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"},{\"op\":\"add\",\"path\":\"/foobar\",\"value\":\"some other value\"}]",
+                "[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":\"some other value\"}]",
                 model.Patch.ToString());
 
             var data = ModelReaderWriter.Write(model);
@@ -106,9 +104,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model2 = GetRoundTripModel(data);
             Assert.AreEqual("some other value", model2.Patch.GetString(pointer));
             Assert.AreEqual("some other value", model2.Patch.GetString("$['foobar']"u8));
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"},{\"op\":\"replace\",\"path\":\"/foobar\",\"value\":\"some other value\"}]",
-                model2.Patch.ToString());
+            Assert.AreEqual("[]", model2.Patch.ToString());
 
             AssertCommon(model, model2);
         }
@@ -123,7 +119,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(null, model.Patch.GetString(pointer));
             Assert.AreEqual(null, model.Patch.GetNullableValue<int>(pointer));
             Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"},{\"op\":\"add\",\"path\":\"/foobar\",\"value\":null}]",
+                "[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":null}]",
                 model.Patch.ToString());
 
             var data = ModelReaderWriter.Write(model);
@@ -134,9 +130,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model2 = GetRoundTripModel(data);
             Assert.AreEqual(null, model2.Patch.GetString(pointer));
             Assert.AreEqual(null, model2.Patch.GetNullableValue<int>(pointer));
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"},{\"op\":\"replace\",\"path\":\"/foobar\",\"value\":null}]",
-                model2.Patch.ToString());
+            Assert.AreEqual("[]", model2.Patch.ToString());
 
             AssertCommon(model, model2);
         }
@@ -154,7 +148,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(expectedValue, model.Patch.GetInt32(propertyNameSpan));
             Assert.AreEqual(expectedValue, model.Patch.GetNullableValue<int>(propertyNameSpan));
             Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"},{\"op\":\"replace\",\"path\":\"/properties/platformUpdateDomainCount\",\"value\":999}]",
+                "[{\"op\":\"replace\",\"path\":\"/properties/platformUpdateDomainCount\",\"value\":999}]",
                 model.Patch.ToString());
 
             var data = ModelReaderWriter.Write(model);
@@ -166,9 +160,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             Assert.AreEqual(expectedValue, model2.Patch.GetInt32(propertyNameSpan));
             Assert.AreEqual(expectedValue, model2.PlatformUpdateDomainCount);
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"}]",
-                model2.Patch.ToString());
+            Assert.AreEqual("[]", model2.Patch.ToString());
 
             AssertCommon(model, model2, "platformUpdateDomainCount");
         }
@@ -187,7 +179,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(expectedValue, model.Patch.GetString(propertyNameSpan));
             Assert.AreEqual("eastus", model.Location);
             Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"},{\"op\":\"replace\",\"path\":\"/location\",\"value\":\"new-location\"}]",
+                "[{\"op\":\"replace\",\"path\":\"/location\",\"value\":\"new-location\"}]",
                 model.Patch.ToString());
 
             var data = ModelReaderWriter.Write(model);
@@ -198,9 +190,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model2 = GetRoundTripModel(data);
             Assert.AreEqual(expectedValue, model2.Patch.GetString(propertyNameSpan));
             Assert.AreEqual(expectedValue, model2.Location);
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"}]",
-                model2.Patch.ToString());
+            Assert.AreEqual("[]", model2.Patch.ToString());
 
             AssertCommon(model, model2, propertyName);
         }
@@ -219,9 +209,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             Assert.AreEqual(expectedValue, model.Patch.GetString(propertyNameSpan));
             Assert.AreEqual(expectedValue, model.Sku.Patch.GetString("$.name"u8));
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"}]",
-                model.Patch.ToString());
+            Assert.AreEqual("[]", model.Patch.ToString());
             Assert.AreEqual(
                 "[{\"op\":\"replace\",\"path\":\"/name\",\"value\":\"new-sku-name\"}]",
                 model.Sku.Patch.ToString());
@@ -235,9 +223,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(expectedValue, model2.Patch.GetString(propertyNameSpan));
             Assert.AreEqual(expectedValue, model2.Sku.Patch.GetString("$.name"u8));
             Assert.AreEqual(expectedValue, model2.Sku.Name);
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"}]",
-                model2.Patch.ToString());
+            Assert.AreEqual("[]", model2.Patch.ToString());
             Assert.AreEqual("[]", model2.Sku.Patch.ToString());
 
             AssertCommon(model, model2, "sku");
@@ -255,9 +241,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             Assert.AreEqual(expectedValue, model.Patch.GetString(propertyNameSpan));
             Assert.AreEqual(expectedValue, model.Sku.Patch.GetString("$.something"u8));
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"}]",
-                model.Patch.ToString());
+            Assert.AreEqual("[]", model.Patch.ToString());
             Assert.AreEqual(
                 "[{\"op\":\"add\",\"path\":\"/something\",\"value\":\"something-value\"}]",
                 model.Sku.Patch.ToString());
@@ -272,12 +256,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(expectedValue, model2.Patch.GetString(propertyNameSpan));
             Assert.AreEqual("Classic", model2.Sku.Name);
             Assert.AreEqual(expectedValue, model2.Sku.Patch.GetString("$.something"u8));
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"}]",
-                model2.Patch.ToString());
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/something\",\"value\":\"something-value\"}]",
-                model2.Sku.Patch.ToString());
+            Assert.AreEqual("[]", model2.Patch.ToString());
+            Assert.AreEqual("[]", model2.Sku.Patch.ToString());
 
             AssertCommon(model, model2, "sku");
         }
@@ -296,7 +276,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(123, model.Patch.GetInt32("$.foobar.x.y"u8));
             Assert.AreEqual(123, model.Patch.GetNullableValue<int>("$.foobar.x.y"u8));
             Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"},{\"op\":\"add\",\"path\":\"/foobar\",\"value\":{\"x\":{\"y\":123}}}]",
+                "[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":{\"x\":{\"y\":123}}}]",
                 model.Patch.ToString());
 
             var data = ModelReaderWriter.Write(model);
@@ -310,9 +290,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual("{\"y\":123}"u8.ToArray(), model2.Patch.GetJson("$.foobar.x"u8).ToArray());
             Assert.AreEqual(123, model2.Patch.GetInt32("$.foobar.x.y"u8));
             Assert.AreEqual(123, model2.Patch.GetNullableValue<int>("$.foobar.x.y"u8));
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"},{\"op\":\"replace\",\"path\":\"/foobar\",\"value\":{\"x\":{\"y\":123}}}]",
-                model2.Patch.ToString());
+            Assert.AreEqual("[]", model2.Patch.ToString());
 
             AssertCommon(model, model2);
         }
@@ -334,7 +312,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson(pointer).ToArray());
             Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"},{\"op\":\"add\",\"path\":\"/foobar\",\"value\":{\"x\":{\"y\":123}}}]",
+                "[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":{\"x\":{\"y\":123}}}]",
                 model.Patch.ToString());
 
             var data = ModelReaderWriter.Write(model);
@@ -344,9 +322,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             var model2 = GetRoundTripModel(data);
             CollectionAssert.AreEqual(expectedValue.ToArray(), model2.Patch.GetJson(pointer).ToArray());
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"},{\"op\":\"replace\",\"path\":\"/foobar\",\"value\":{\"x\":{\"y\":123}}}]",
-                model2.Patch.ToString());
+            Assert.AreEqual("[]", model2.Patch.ToString());
 
             AssertCommon(model, model2);
         }
@@ -361,9 +337,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.Set(pointer, expectedValue);
 
             CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson(pointer).ToArray());
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"}]",
-                model.Patch.ToString());
+            Assert.AreEqual("[]", model.Patch.ToString());
             Assert.AreEqual(
                 "[{\"op\":\"replace\",\"path\":\"/\",\"value\":{\"name\":\"replaced-name\",\"foo\":123}}]",
                 model.Sku.Patch.ToString());
@@ -376,10 +350,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model2 = GetRoundTripModel(data);
             Assert.AreEqual("replaced-name", model2.Sku.Name);
             Assert.AreEqual(123, model2.Sku.Patch.GetInt32("$.foo"u8));
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"}]",
-                model2.Patch.ToString());
-            Assert.AreEqual("[{\"op\":\"replace\",\"path\":\"/foo\",\"value\":123}]", model2.Sku.Patch.ToString());
+            Assert.AreEqual("[]", model2.Patch.ToString());
+            Assert.AreEqual("[]", model2.Sku.Patch.ToString());
+
+            model2.Patch.Set("$.sku.foo"u8, 999);
+            Assert.AreEqual("[{\"op\":\"replace\",\"path\":\"/foo\",\"value\":999}]", model2.Sku.Patch.ToString());
 
             AssertCommon(model, model2, "sku");
         }
@@ -394,7 +369,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             Assert.AreEqual("new-location", model.Patch.GetString(pointer));
             Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"},{\"op\":\"replace\",\"path\":\"/location\",\"value\":\"new-location\"}]",
+                "[{\"op\":\"replace\",\"path\":\"/location\",\"value\":\"new-location\"}]",
                 model.Patch.ToString());
 
             //setting the location property directly does not override the patch
@@ -410,9 +385,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model2 = GetRoundTripModel(data);
 
             Assert.AreEqual("new-location", model2.Location);
-            Assert.AreEqual(
-               "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"}]",
-               model2.Patch.ToString());
+            Assert.AreEqual("[]", model2.Patch.ToString());
         }
 
         [Test]
@@ -424,14 +397,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             Assert.AreEqual("{\"x\":\"value\"}"u8.ToArray(), model.Patch.GetJson("$.foobar"u8).ToArray());
             Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"},{\"op\":\"add\",\"path\":\"/foobar\",\"value\":{\"x\":\"value\"}}]",
+                "[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":{\"x\":\"value\"}}]",
                 model.Patch.ToString());
 
             model.Patch.Set("$.foobar.name"u8, "vmName1");
 
             Assert.AreEqual("vmName1", model.Patch.GetString("$.foobar.name"u8));
             Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"},{\"op\":\"add\",\"path\":\"/foobar\",\"value\":{\"x\":\"value\",\"name\":\"vmName1\"}}]",
+                "[{\"op\":\"add\",\"path\":\"/foobar\",\"value\":{\"x\":\"value\",\"name\":\"vmName1\"}}]",
                 model.Patch.ToString());
 
             var data = ModelReaderWriter.Write(model);
@@ -443,9 +416,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             Assert.AreEqual("{\"x\":\"value\",\"name\":\"vmName1\"}"u8.ToArray(), model2.Patch.GetJson("$.foobar"u8).ToArray());
             Assert.AreEqual("vmName1", model2.Patch.GetString("$.foobar.name"u8));
-            Assert.AreEqual(
-                "[{\"op\":\"replace\",\"path\":\"/extraSku\",\"value\":\"extraSku\"},{\"op\":\"replace\",\"path\":\"/extraRoot\",\"value\":\"extraRoot\"},{\"op\":\"replace\",\"path\":\"/foobar\",\"value\":{\"x\":\"value\",\"name\":\"vmName1\"}}]",
-                model2.Patch.ToString());
+            Assert.AreEqual("[]", model2.Patch.ToString());
 
             AssertCommon(model, model2);
         }

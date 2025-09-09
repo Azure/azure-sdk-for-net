@@ -151,7 +151,5 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
         }
 
         string IPersistableModel<ComputeSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        private bool IsFlattened(ReadOnlySpan<byte> jsonPath) => false;
     }
 }

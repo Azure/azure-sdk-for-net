@@ -32,13 +32,6 @@ public partial struct JsonPatch
     public delegate bool PropagatorGetter(ReadOnlySpan<byte> jsonPath, out EncodedValue value);
 
     /// <summary>
-    /// Delegate for determining if a property is flattened in the containing model.
-    /// </summary>
-    /// <param name="jsonPath">The JSON path of the value to be set.</param>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public delegate bool PropagatorIsFlattened(ReadOnlySpan<byte> jsonPath);
-
-    /// <summary>
     /// Initializes a new instance of <see cref="JsonPatch"/> with utf8 JSON representing the entire object.
     /// </summary>
     /// <param name="utf8Json">The utf8 JSON.</param>
@@ -52,13 +45,11 @@ public partial struct JsonPatch
     /// </summary>
     /// <param name="setter">The <see cref="PropagatorSetter"/> callback to use.</param>
     /// <param name="getter">The <see cref="PropagatorSetter"/> callback to use.</param>
-    /// <param name="isFlattened">The <see cref="PropagatorIsFlattened"/> callback to use.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public void SetPropagators(PropagatorSetter setter, PropagatorGetter getter, PropagatorIsFlattened? isFlattened)
+    public void SetPropagators(PropagatorSetter setter, PropagatorGetter getter)
     {
         _propagatorSetter = setter;
         _propagatorGetter = getter;
-        _propagatorIsFlattened = isFlattened;
     }
 
     /// <summary>

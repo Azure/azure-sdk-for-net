@@ -407,7 +407,7 @@ internal static class JsonPathReaderExtensions
             var atEnd = !jsonReader.Read();
             long startRight = atEnd ? jsonReader.BytesConsumed : jsonReader.TokenStartIndex;
 
-            if (jsonReader.TokenType == JsonTokenType.EndObject || jsonReader.TokenType == JsonTokenType.EndArray)
+            if (jsonReader.TokenType == JsonTokenType.EndObject || jsonReader.TokenType == JsonTokenType.EndArray || endLeft == jsonReader.TokenStartIndex)
             {
                 return [.. json.Slice(0, (int)endLeft).Span, .. jsonReplacement.Span, .. json.Slice((int)startRight).Span];
             }

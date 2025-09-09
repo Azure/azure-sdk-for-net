@@ -30,7 +30,6 @@ public partial struct JsonPatch
 
     private PropagatorSetter? _propagatorSetter;
     private PropagatorGetter? _propagatorGetter;
-    private PropagatorIsFlattened? _propagatorIsFlattened;
 
     // Singleton arrays for common values
     private static readonly EncodedValue s_removedValueArray = new(ValueKind.Removed, Array.Empty<byte>());
