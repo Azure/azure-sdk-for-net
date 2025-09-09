@@ -1114,7 +1114,7 @@ function Get-ReleasePlan-Link($releasePlanWorkItemId)
   return $workItem["fields"]
 }
 
-function Get-ReleasePlansForCPEXAttestation()
+function Get-ReleasePlansForCPEXAttestation($releasePlanWorkItemId = $null)
 {
   $fields = @()
   $fields += "Custom.ProductServiceTreeID"
@@ -1124,24 +1124,30 @@ function Get-ReleasePlansForCPEXAttestation()
   $fields += "Custom.MgmtScope"
 
   $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
+
   $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.WorkItemType] = 'Release Plan'"
-  $query += " AND [System.State] = 'Finished'"
-  $query += " AND [Custom.AttestationStatus] IN ('', 'Pending')"
-  $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
-  $query += " AND [System.Tags] NOT CONTAINS 'Release Planner Test App'"
-  $query += " AND [System.Tags] NOT CONTAINS 'non-APEX tracking'"
-  $query += " AND [System.Tags] NOT CONTAINS 'out of scope APEX'"
-  $query += " AND [System.Tags] NOT CONTAINS 'APEX out of scope'"
-  $query += " AND [System.Tags] NOT CONTAINS 'validate APEX out of scope'"
-  $query += " AND [Custom.ProductServiceTreeID] <> ''"
-  $query += " AND [Custom.ProductLifecycle] <> ''"
-  $query += " AND [Custom.ProductType] IN ('Feature', 'Offering', 'Sku')"
+
+  if ($releasePlanWorkItemId){
+    $query += " AND [System.Id] = '$releasePlanWorkItemId'"
+  } else {
+    $query += " AND [System.State] = 'Finished'"
+    $query += " AND [Custom.AttestationStatus] IN ('', 'Pending')"
+    $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
+    $query += " AND [System.Tags] NOT CONTAINS 'Release Planner Test App'"
+    $query += " AND [System.Tags] NOT CONTAINS 'non-APEX tracking'"
+    $query += " AND [System.Tags] NOT CONTAINS 'out of scope APEX'"
+    $query += " AND [System.Tags] NOT CONTAINS 'APEX out of scope'"
+    $query += " AND [System.Tags] NOT CONTAINS 'validate APEX out of scope'"
+    $query += " AND [Custom.ProductServiceTreeID] <> ''"
+    $query += " AND [Custom.ProductLifecycle] <> ''"
+    $query += " AND [Custom.ProductType] IN ('Feature', 'Offering', 'Sku')"
+  }
 
   $workItems = Invoke-Query $fields $query
   return $workItems
 }
 
-function Get-TriagesForCPEXAttestation()
+function Get-TriagesForCPEXAttestation($triageWorkItemId = $null)
 {
   $fields = @()
   $fields += "Custom.ProductServiceTreeID"
@@ -1153,18 +1159,24 @@ function Get-TriagesForCPEXAttestation()
   $fields += "Custom.ManagementPlaneAttestationStatus"
 
   $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
+
   $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.WorkItemType] = 'Triage'"
-  $query += " AND [System.State] IN ('Completed', 'New', 'Triage updated')"
-  $query += " AND ([Custom.DataplaneAttestationStatus] IN ('', 'Pending') OR [Custom.ManagementPlaneAttestationStatus] IN ('', 'Pending'))"
-  $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
-  $query += " AND [System.Tags] NOT CONTAINS 'Release Planner Test App'"
-  $query += " AND [System.Tags] NOT CONTAINS 'non-APEX tracking'"
-  $query += " AND [System.Tags] NOT CONTAINS 'out of scope APEX'"
-  $query += " AND [System.Tags] NOT CONTAINS 'APEX out of scope'"
-  $query += " AND [System.Tags] NOT CONTAINS 'validate APEX out of scope'"
-  $query += " AND [Custom.ProductServiceTreeID] <> ''"
-  $query += " AND [Custom.ProductLifecycle] <> ''"
-  $query += " AND [Custom.ProductType] IN ('Feature', 'Offering', 'Sku')"
+
+  if ($triageWorkItemId){
+    $query += " AND [System.Id] = '$triageWorkItemId'"
+  } else {
+    $query += " AND [System.State] IN ('Completed', 'New', 'Triage updated')"
+    $query += " AND ([Custom.DataplaneAttestationStatus] IN ('', 'Pending') OR [Custom.ManagementPlaneAttestationStatus] IN ('', 'Pending'))"
+    $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
+    $query += " AND [System.Tags] NOT CONTAINS 'Release Planner Test App'"
+    $query += " AND [System.Tags] NOT CONTAINS 'non-APEX tracking'"
+    $query += " AND [System.Tags] NOT CONTAINS 'out of scope APEX'"
+    $query += " AND [System.Tags] NOT CONTAINS 'APEX out of scope'"
+    $query += " AND [System.Tags] NOT CONTAINS 'validate APEX out of scope'"
+    $query += " AND [Custom.ProductServiceTreeID] <> ''"
+    $query += " AND [Custom.ProductLifecycle] <> ''"
+    $query += " AND [Custom.ProductType] IN ('Feature', 'Offering', 'Sku')"
+  }
 
   $workItems = Invoke-Query $fields $query
   return $workItems 
@@ -1172,9 +1184,10 @@ function Get-TriagesForCPEXAttestation()
 
 function Update-AttestationStatusInWorkItem($workItemId, $fieldName, $status)
 {
-  $fields = @()
-  $fields += "${fieldName}=${status}"
+  $fields = "`"${fieldName}=${status}`""
 
+  Write-Host "Updating Work Item [$workItemId] with status [$status] for field [$fieldName]."
   $workItem = UpdateWorkItem -id $workItemId -fields $fields
+  Write-Host "Updated attestation status for [$fieldName] in Work Item [$workItemId]"
   return $true
 }
