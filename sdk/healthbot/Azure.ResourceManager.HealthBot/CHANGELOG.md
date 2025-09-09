@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Updated API version to 2025-05-25.
+
 ## 1.1.1 (2025-03-11)
 
 ### Features Added
