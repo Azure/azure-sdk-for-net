@@ -9,8 +9,6 @@
 - `AzureCliCredential`, `AzurePowerShellCredential`, and `AzureDeveloperCliCredential` now throw an `AuthenticationFailedException` when the `TokenRequestContext` includes claims, as these credentials do not support claims challenges. The exception message includes guidance for handling such scenarios.
 - When `AZURE_TOKEN_CREDENTIALS` or the equivalent custom environment variable is configured to `ManagedIdentityCredential`, the `DefaultAzureCredential` does not issue a probe request and performs retries with exponential backoff.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Fixed `AzureDeveloperCliCredential` hanging when the `AZD_DEBUG` environment variable is set by adding the `--no-prompt` flag to prevent interactive prompts ([#52005](https://github.com/Azure/azure-sdk-for-net/issues/52005)).
