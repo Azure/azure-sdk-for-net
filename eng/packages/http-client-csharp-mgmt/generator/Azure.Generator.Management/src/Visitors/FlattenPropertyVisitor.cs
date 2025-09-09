@@ -40,7 +40,7 @@ namespace Azure.Generator.Management.Visitors
                 {
                     var innerCollectionProperties = collectionProperties.Select(x => x.InnerProperty);
                     var initializationMethod = BuildInitializationMethod(innerCollectionProperties, internalProperty, model);
-                    var publicConstructor = model.Constructors.SingleOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))!;
+                    var publicConstructor = model.Constructors.Single(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
                     var invokeInitialization = This.Invoke(initializationMethod.Signature.Name).Terminate();
 
                     // If the property is a collection type, we need to ensure that it is initialized
