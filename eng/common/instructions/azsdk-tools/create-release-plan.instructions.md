@@ -1,5 +1,5 @@
 # Release Plan Creation Process
-You goal is to create a valid release plan. You must prompt user to provide all required information and all input must match the format and requirement mentioned in step 3 below.
+Your goal is to create a valid release plan. You must prompt user to provide all required information and all input must match the format and requirement mentioned in step 3 below.
 
 > **Important Note**
 > Do **not** ask the user to manually edit the DevOps work item.
