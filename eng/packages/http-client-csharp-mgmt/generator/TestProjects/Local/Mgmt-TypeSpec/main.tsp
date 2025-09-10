@@ -8,7 +8,7 @@ import "./zoo.tsp";
 import "./routes.tsp";
 import "./endpoint.tsp";
 import "./selfhelp.tsp";
-
+import "./playwright.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
@@ -31,8 +31,8 @@ enum Versions {
   v2024_05_01: "2024-05-01",
 }
 
-@@clientLocation(Bars.get, "Bar");
-@@clientLocation(Bars.update, "Bar");
+// @@clientLocation(Bars.get, "Bar");
+// @@clientLocation(Bars.update, "Bar");
 
-#suppress "deprecated"
-@@flattenProperty(BarSettingsResource.flattenedNestedProperty);
+// #suppress "deprecated"
+// @@flattenProperty(BarSettingsResource.flattenedNestedProperty);

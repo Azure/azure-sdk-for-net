@@ -27,8 +27,6 @@ namespace MgmtTypeSpec
     {
         private readonly ClientDiagnostics _barsClientDiagnostics;
         private readonly Bars _barsRestClient;
-        private readonly ClientDiagnostics _barClientDiagnostics;
-        private readonly Bar _barRestClient;
         private readonly BarData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/foos/bars";
@@ -55,8 +53,6 @@ namespace MgmtTypeSpec
             TryGetApiVersion(ResourceType, out string barApiVersion);
             _barsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
-            _barClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
-            _barRestClient = new Bar(_barClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -94,6 +90,62 @@ namespace MgmtTypeSpec
             if (id.ResourceType != ResourceType)
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
+        }
+
+        /// <summary> Get a Bar. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<BarResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new BarResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a Bar. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<BarResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new BarResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -155,62 +207,6 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Get a Bar. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BarResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _barRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new BarResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get a Bar. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BarResource> Get(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _barRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new BarResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Update a Bar. </summary>
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -219,7 +215,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.Update");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.Update");
             scope.Start();
             try
             {
@@ -227,7 +223,7 @@ namespace MgmtTypeSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _barRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarData.ToRequestContent(data), context);
+                HttpMessage message = _barsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
                 if (response.Value == null)
@@ -251,7 +247,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.Update");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.Update");
             scope.Start();
             try
             {
@@ -259,7 +255,7 @@ namespace MgmtTypeSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _barRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarData.ToRequestContent(data), context);
+                HttpMessage message = _barsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
                 if (response.Value == null)
@@ -285,7 +281,7 @@ namespace MgmtTypeSpec
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.AddTag");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.AddTag");
             scope.Start();
             try
             {
@@ -298,7 +294,7 @@ namespace MgmtTypeSpec
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _barRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
                     return Response.FromValue(new BarResource(Client, response.Value), response.GetRawResponse());
@@ -333,7 +329,7 @@ namespace MgmtTypeSpec
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.AddTag");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.AddTag");
             scope.Start();
             try
             {
@@ -346,7 +342,7 @@ namespace MgmtTypeSpec
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _barRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
                     return Response.FromValue(new BarResource(Client, response.Value), response.GetRawResponse());
@@ -379,7 +375,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.SetTags");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.SetTags");
             scope.Start();
             try
             {
@@ -393,7 +389,7 @@ namespace MgmtTypeSpec
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _barRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
                     return Response.FromValue(new BarResource(Client, response.Value), response.GetRawResponse());
@@ -422,7 +418,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.SetTags");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.SetTags");
             scope.Start();
             try
             {
@@ -436,7 +432,7 @@ namespace MgmtTypeSpec
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _barRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
                     return Response.FromValue(new BarResource(Client, response.Value), response.GetRawResponse());
@@ -465,7 +461,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.RemoveTag");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.RemoveTag");
             scope.Start();
             try
             {
@@ -478,7 +474,7 @@ namespace MgmtTypeSpec
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _barRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
                     return Response.FromValue(new BarResource(Client, response.Value), response.GetRawResponse());
@@ -511,7 +507,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.RemoveTag");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.RemoveTag");
             scope.Start();
             try
             {
@@ -524,7 +520,7 @@ namespace MgmtTypeSpec
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _barRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
                     return Response.FromValue(new BarResource(Client, response.Value), response.GetRawResponse());

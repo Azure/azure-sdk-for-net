@@ -13,7 +13,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The BarNestedQuotaProperties. </summary>
-    internal partial class BarNestedQuotaProperties : BarMiddleNestedQuotaProperties
+    public partial class BarNestedQuotaProperties : BarMiddleNestedQuotaProperties
     {
         /// <summary> Initializes a new instance of <see cref="BarNestedQuotaProperties"/>. </summary>
         /// <param name="innerProp2"></param>

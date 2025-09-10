@@ -13,17 +13,12 @@ using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
-    /// <summary> The BarDeeplyNestedQuotaProperties. </summary>
-    public partial class BarDeeplyNestedQuotaProperties : IJsonModel<BarDeeplyNestedQuotaProperties>
+    /// <summary> Subscription-level location-based Playwright quota resource properties. </summary>
+    public partial class PlaywrightQuotaProperties : IJsonModel<PlaywrightQuotaProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="BarDeeplyNestedQuotaProperties"/> for deserialization. </summary>
-        internal BarDeeplyNestedQuotaProperties()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BarDeeplyNestedQuotaProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PlaywrightQuotaProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,18 +29,21 @@ namespace MgmtTypeSpec.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BarDeeplyNestedQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PlaywrightQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BarDeeplyNestedQuotaProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PlaywrightQuotaProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(InnerProp1))
+            if (options.Format != "W" && Optional.IsDefined(FreeTrial))
             {
-                writer.WritePropertyName("innerProp1"u8);
-                writer.WriteNumberValue(InnerProp1.Value);
+                writer.WritePropertyName("freeTrial"u8);
+                writer.WriteStringValue(FreeTrial);
             }
-            writer.WritePropertyName("innerProp2"u8);
-            writer.WriteStringValue(InnerProp2);
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -65,46 +63,42 @@ namespace MgmtTypeSpec.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BarDeeplyNestedQuotaProperties IJsonModel<BarDeeplyNestedQuotaProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PlaywrightQuotaProperties IJsonModel<PlaywrightQuotaProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BarDeeplyNestedQuotaProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PlaywrightQuotaProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BarDeeplyNestedQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PlaywrightQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BarDeeplyNestedQuotaProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PlaywrightQuotaProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBarDeeplyNestedQuotaProperties(document.RootElement, options);
+            return DeserializePlaywrightQuotaProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BarDeeplyNestedQuotaProperties DeserializeBarDeeplyNestedQuotaProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static PlaywrightQuotaProperties DeserializePlaywrightQuotaProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? innerProp1 = default;
-            string innerProp2 = default;
+            string freeTrial = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("innerProp1"u8))
+                if (prop.NameEquals("freeTrial"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    innerProp1 = prop.Value.GetInt32();
+                    freeTrial = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("innerProp2"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    innerProp2 = prop.Value.GetString();
+                    provisioningState = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,47 +106,47 @@ namespace MgmtTypeSpec.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BarDeeplyNestedQuotaProperties(innerProp1, innerProp2, additionalBinaryDataProperties);
+            return new PlaywrightQuotaProperties(freeTrial, provisioningState, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BarDeeplyNestedQuotaProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PlaywrightQuotaProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BarDeeplyNestedQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PlaywrightQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BarDeeplyNestedQuotaProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlaywrightQuotaProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BarDeeplyNestedQuotaProperties IPersistableModel<BarDeeplyNestedQuotaProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PlaywrightQuotaProperties IPersistableModel<PlaywrightQuotaProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BarDeeplyNestedQuotaProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PlaywrightQuotaProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BarDeeplyNestedQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PlaywrightQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeBarDeeplyNestedQuotaProperties(document.RootElement, options);
+                        return DeserializePlaywrightQuotaProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BarDeeplyNestedQuotaProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlaywrightQuotaProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BarDeeplyNestedQuotaProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PlaywrightQuotaProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace MgmtTypeSpec
 {
-    internal partial class Bar
+    internal partial class PlaywrightQuotas
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of Bar for mocking. </summary>
-        protected Bar()
+        /// <summary> Initializes a new instance of PlaywrightQuotas for mocking. </summary>
+        protected PlaywrightQuotas()
         {
         }
 
-        /// <summary> Initializes a new instance of Bar. </summary>
+        /// <summary> Initializes a new instance of PlaywrightQuotas. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Bar(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal PlaywrightQuotas(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,18 +41,16 @@ namespace MgmtTypeSpec
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string fooName, string barName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, AzureLocation location, string playwrightQuotaName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
-            uri.AppendPath(fooName, true);
-            uri.AppendPath("/bars/", false);
-            uri.AppendPath(barName, true);
+            uri.AppendPath("/providers/MgmtTypeSpec/locations/", false);
+            uri.AppendPath(location.ToString(), true);
+            uri.AppendPath("/playwrightQuotas/", false);
+            uri.AppendPath(playwrightQuotaName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -62,26 +60,33 @@ namespace MgmtTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string fooName, string barName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetBySubscriptionRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
-            uri.AppendPath(fooName, true);
-            uri.AppendPath("/bars/", false);
-            uri.AppendPath(barName, true);
+            uri.AppendPath("/providers/MgmtTypeSpec/locations/", false);
+            uri.AppendPath(location.ToString(), true);
+            uri.AppendPath("/playwrightQuotas", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
-            request.Headers.SetValue("Content-Type", "application/json");
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

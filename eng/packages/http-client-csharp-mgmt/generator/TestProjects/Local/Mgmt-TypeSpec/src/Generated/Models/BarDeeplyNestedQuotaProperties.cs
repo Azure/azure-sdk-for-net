@@ -12,7 +12,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The BarDeeplyNestedQuotaProperties. </summary>
-    internal partial class BarDeeplyNestedQuotaProperties
+    public partial class BarDeeplyNestedQuotaProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
