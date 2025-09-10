@@ -1,4 +1,4 @@
-directory: specification/deviceprovisioningservices/DeviceProvisioningServices.Management
+directory: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/DeviceProvisioningServices
+commit: eea84032024270075b32be486cad1b110414ff10
 repo: Azure/azure-rest-api-specs
-commit: 1454325dc8e8d8ba5414ae6a5a5b354320190193
-additionalDirectories: []
+additionalDirectories: 
