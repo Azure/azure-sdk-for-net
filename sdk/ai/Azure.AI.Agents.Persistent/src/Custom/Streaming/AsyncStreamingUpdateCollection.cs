@@ -16,7 +16,7 @@ using Azure.AI.Agents.Persistent.Telemetry;
 namespace Azure.AI.Agents.Persistent;
 
 /// <summary>
-/// Implementation of collection abstraction over streaming assistant updates.
+/// Implementation of collection abstraction over streaming agent updates.
 /// </summary>
 internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingUpdate>
 {
@@ -53,12 +53,14 @@ internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingU
     protected async override IAsyncEnumerable<StreamingUpdate> GetValuesFromPageAsync(ClientResult page)
     {
 #pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
-        await using IAsyncEnumerator<StreamingUpdate> enumerator = new AsyncStreamingUpdateEnumerator(page, _cancellationToken);
+        await using IAsyncEnumerator<StreamingUpdate> enumerator = new AsyncStreamingUpdateEnumerator(page, _cancellationToken, _scope);
 #pragma warning restore AZC0100 // ConfigureAwait(false) must be used.
         while (await enumerator.MoveNextAsync().ConfigureAwait(false))
         {
-            _scope?.RecordStreamingUpdate(enumerator.Current);
-            yield return enumerator.Current;
+            var update = enumerator.Current;
+            // Send to telemetry (if needed)
+            _scope?.RecordStreamingUpdate(update);
+            yield return update;
         }
     }
 

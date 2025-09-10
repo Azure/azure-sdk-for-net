@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 namespace Azure.AI.Agents.Persistent;
 
 /// <summary>
-/// Implementation of collection abstraction over streaming assistant updates.
+/// Implementation of collection abstraction over streaming agent updates.
 /// </summary>
 internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
 {
@@ -53,11 +53,13 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
     }
     protected override IEnumerable<StreamingUpdate> GetValuesFromPage(ClientResult page)
     {
-        using IEnumerator<StreamingUpdate> enumerator = new StreamingUpdateEnumerator(page, _cancellationToken);
+        using IEnumerator<StreamingUpdate> enumerator = new StreamingUpdateEnumerator(page, _cancellationToken, _scope);
         while (enumerator.MoveNext())
         {
-            _scope?.RecordStreamingUpdate(enumerator.Current);
-            yield return enumerator.Current;
+            var update = enumerator.Current;
+            // Send to telemetry (if needed)
+            _scope?.RecordStreamingUpdate(update);
+            yield return update;
         }
     }
 
