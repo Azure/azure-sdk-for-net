@@ -36,20 +36,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateSubmitVirtualMachineDeallocateRequestUri(string subscriptionId, AzureLocation locationparameter, SubmitDeallocateContent content)
+        internal RequestUriBuilder CreateSubmitVirtualMachineDeallocateRequestUri(string subscriptionId, AzureLocation azureLocationparameter, SubmitDeallocateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesSubmitDeallocate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateSubmitVirtualMachineDeallocateRequest(string subscriptionId, AzureLocation locationparameter, SubmitDeallocateContent content)
+        internal HttpMessage CreateSubmitVirtualMachineDeallocateRequest(string subscriptionId, AzureLocation azureLocationparameter, SubmitDeallocateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesSubmitDeallocate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesSubmitDeallocate: Schedule deallocate operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeallocateResourceOperationResult>> SubmitVirtualMachineDeallocateAsync(string subscriptionId, AzureLocation locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DeallocateResourceOperationResult>> SubmitVirtualMachineDeallocateAsync(string subscriptionId, AzureLocation azureLocationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSubmitVirtualMachineDeallocateRequest(subscriptionId, locationparameter, content);
+            using var message = CreateSubmitVirtualMachineDeallocateRequest(subscriptionId, azureLocationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,17 +102,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesSubmitDeallocate: Schedule deallocate operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeallocateResourceOperationResult> SubmitVirtualMachineDeallocate(string subscriptionId, AzureLocation locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
+        public Response<DeallocateResourceOperationResult> SubmitVirtualMachineDeallocate(string subscriptionId, AzureLocation azureLocationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSubmitVirtualMachineDeallocateRequest(subscriptionId, locationparameter, content);
+            using var message = CreateSubmitVirtualMachineDeallocateRequest(subscriptionId, azureLocationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -128,20 +128,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateSubmitVirtualMachineHibernateRequestUri(string subscriptionId, AzureLocation locationparameter, SubmitHibernateContent content)
+        internal RequestUriBuilder CreateSubmitVirtualMachineHibernateRequestUri(string subscriptionId, AzureLocation azureLocationparameter, SubmitHibernateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesSubmitHibernate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateSubmitVirtualMachineHibernateRequest(string subscriptionId, AzureLocation locationparameter, SubmitHibernateContent content)
+        internal HttpMessage CreateSubmitVirtualMachineHibernateRequest(string subscriptionId, AzureLocation azureLocationparameter, SubmitHibernateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesSubmitHibernate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -166,17 +166,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesSubmitHibernate: Schedule hibernate operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HibernateResourceOperationResult>> SubmitVirtualMachineHibernateAsync(string subscriptionId, AzureLocation locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<HibernateResourceOperationResult>> SubmitVirtualMachineHibernateAsync(string subscriptionId, AzureLocation azureLocationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSubmitVirtualMachineHibernateRequest(subscriptionId, locationparameter, content);
+            using var message = CreateSubmitVirtualMachineHibernateRequest(subscriptionId, azureLocationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -194,17 +194,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesSubmitHibernate: Schedule hibernate operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HibernateResourceOperationResult> SubmitVirtualMachineHibernate(string subscriptionId, AzureLocation locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
+        public Response<HibernateResourceOperationResult> SubmitVirtualMachineHibernate(string subscriptionId, AzureLocation azureLocationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSubmitVirtualMachineHibernateRequest(subscriptionId, locationparameter, content);
+            using var message = CreateSubmitVirtualMachineHibernateRequest(subscriptionId, azureLocationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -220,20 +220,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateSubmitVirtualMachineStartRequestUri(string subscriptionId, AzureLocation locationparameter, SubmitStartContent content)
+        internal RequestUriBuilder CreateSubmitVirtualMachineStartRequestUri(string subscriptionId, AzureLocation azureLocationparameter, SubmitStartContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesSubmitStart", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateSubmitVirtualMachineStartRequest(string subscriptionId, AzureLocation locationparameter, SubmitStartContent content)
+        internal HttpMessage CreateSubmitVirtualMachineStartRequest(string subscriptionId, AzureLocation azureLocationparameter, SubmitStartContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesSubmitStart", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -258,17 +258,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesSubmitStart: Schedule start operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StartResourceOperationResult>> SubmitVirtualMachineStartAsync(string subscriptionId, AzureLocation locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<StartResourceOperationResult>> SubmitVirtualMachineStartAsync(string subscriptionId, AzureLocation azureLocationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSubmitVirtualMachineStartRequest(subscriptionId, locationparameter, content);
+            using var message = CreateSubmitVirtualMachineStartRequest(subscriptionId, azureLocationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesSubmitStart: Schedule start operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StartResourceOperationResult> SubmitVirtualMachineStart(string subscriptionId, AzureLocation locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
+        public Response<StartResourceOperationResult> SubmitVirtualMachineStart(string subscriptionId, AzureLocation azureLocationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSubmitVirtualMachineStartRequest(subscriptionId, locationparameter, content);
+            using var message = CreateSubmitVirtualMachineStartRequest(subscriptionId, azureLocationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -312,20 +312,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateExecuteVirtualMachineDeallocateRequestUri(string subscriptionId, AzureLocation locationparameter, ExecuteDeallocateContent content)
+        internal RequestUriBuilder CreateExecuteVirtualMachineDeallocateRequestUri(string subscriptionId, AzureLocation azureLocationparameter, ExecuteDeallocateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteDeallocate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateExecuteVirtualMachineDeallocateRequest(string subscriptionId, AzureLocation locationparameter, ExecuteDeallocateContent content)
+        internal HttpMessage CreateExecuteVirtualMachineDeallocateRequest(string subscriptionId, AzureLocation azureLocationparameter, ExecuteDeallocateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteDeallocate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -350,17 +350,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeallocateResourceOperationResult>> ExecuteVirtualMachineDeallocateAsync(string subscriptionId, AzureLocation locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DeallocateResourceOperationResult>> ExecuteVirtualMachineDeallocateAsync(string subscriptionId, AzureLocation azureLocationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateExecuteVirtualMachineDeallocateRequest(subscriptionId, locationparameter, content);
+            using var message = CreateExecuteVirtualMachineDeallocateRequest(subscriptionId, azureLocationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -378,17 +378,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeallocateResourceOperationResult> ExecuteVirtualMachineDeallocate(string subscriptionId, AzureLocation locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
+        public Response<DeallocateResourceOperationResult> ExecuteVirtualMachineDeallocate(string subscriptionId, AzureLocation azureLocationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateExecuteVirtualMachineDeallocateRequest(subscriptionId, locationparameter, content);
+            using var message = CreateExecuteVirtualMachineDeallocateRequest(subscriptionId, azureLocationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -404,20 +404,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateExecuteVirtualMachineHibernateRequestUri(string subscriptionId, AzureLocation locationparameter, ExecuteHibernateContent content)
+        internal RequestUriBuilder CreateExecuteVirtualMachineHibernateRequestUri(string subscriptionId, AzureLocation azureLocationparameter, ExecuteHibernateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteHibernate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateExecuteVirtualMachineHibernateRequest(string subscriptionId, AzureLocation locationparameter, ExecuteHibernateContent content)
+        internal HttpMessage CreateExecuteVirtualMachineHibernateRequest(string subscriptionId, AzureLocation azureLocationparameter, ExecuteHibernateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteHibernate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -442,17 +442,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HibernateResourceOperationResult>> ExecuteVirtualMachineHibernateAsync(string subscriptionId, AzureLocation locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<HibernateResourceOperationResult>> ExecuteVirtualMachineHibernateAsync(string subscriptionId, AzureLocation azureLocationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateExecuteVirtualMachineHibernateRequest(subscriptionId, locationparameter, content);
+            using var message = CreateExecuteVirtualMachineHibernateRequest(subscriptionId, azureLocationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -470,17 +470,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HibernateResourceOperationResult> ExecuteVirtualMachineHibernate(string subscriptionId, AzureLocation locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
+        public Response<HibernateResourceOperationResult> ExecuteVirtualMachineHibernate(string subscriptionId, AzureLocation azureLocationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateExecuteVirtualMachineHibernateRequest(subscriptionId, locationparameter, content);
+            using var message = CreateExecuteVirtualMachineHibernateRequest(subscriptionId, azureLocationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -496,20 +496,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateExecuteVirtualMachineStartRequestUri(string subscriptionId, AzureLocation locationparameter, ExecuteStartContent content)
+        internal RequestUriBuilder CreateExecuteVirtualMachineStartRequestUri(string subscriptionId, AzureLocation azureLocationparameter, ExecuteStartContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteStart", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateExecuteVirtualMachineStartRequest(string subscriptionId, AzureLocation locationparameter, ExecuteStartContent content)
+        internal HttpMessage CreateExecuteVirtualMachineStartRequest(string subscriptionId, AzureLocation azureLocationparameter, ExecuteStartContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteStart", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -534,17 +534,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StartResourceOperationResult>> ExecuteVirtualMachineStartAsync(string subscriptionId, AzureLocation locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<StartResourceOperationResult>> ExecuteVirtualMachineStartAsync(string subscriptionId, AzureLocation azureLocationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateExecuteVirtualMachineStartRequest(subscriptionId, locationparameter, content);
+            using var message = CreateExecuteVirtualMachineStartRequest(subscriptionId, azureLocationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -562,17 +562,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StartResourceOperationResult> ExecuteVirtualMachineStart(string subscriptionId, AzureLocation locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
+        public Response<StartResourceOperationResult> ExecuteVirtualMachineStart(string subscriptionId, AzureLocation azureLocationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateExecuteVirtualMachineStartRequest(subscriptionId, locationparameter, content);
+            using var message = CreateExecuteVirtualMachineStartRequest(subscriptionId, azureLocationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -588,20 +588,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateVirtualMachinesExecuteCreateRequestUri(string subscriptionId, AzureLocation locationparameter, ExecuteCreateContent content)
+        internal RequestUriBuilder CreateVirtualMachinesExecuteCreateRequestUri(string subscriptionId, AzureLocation azureLocationparameter, ExecuteCreateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteCreate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateVirtualMachinesExecuteCreateRequest(string subscriptionId, AzureLocation locationparameter, ExecuteCreateContent content)
+        internal HttpMessage CreateVirtualMachinesExecuteCreateRequest(string subscriptionId, AzureLocation azureLocationparameter, ExecuteCreateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteCreate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -626,17 +626,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CreateResourceOperationResult>> VirtualMachinesExecuteCreateAsync(string subscriptionId, AzureLocation locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<CreateResourceOperationResult>> VirtualMachinesExecuteCreateAsync(string subscriptionId, AzureLocation azureLocationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesExecuteCreateRequest(subscriptionId, locationparameter, content);
+            using var message = CreateVirtualMachinesExecuteCreateRequest(subscriptionId, azureLocationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -654,17 +654,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CreateResourceOperationResult> VirtualMachinesExecuteCreate(string subscriptionId, AzureLocation locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
+        public Response<CreateResourceOperationResult> VirtualMachinesExecuteCreate(string subscriptionId, AzureLocation azureLocationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesExecuteCreateRequest(subscriptionId, locationparameter, content);
+            using var message = CreateVirtualMachinesExecuteCreateRequest(subscriptionId, azureLocationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -680,20 +680,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateVirtualMachinesExecuteDeleteRequestUri(string subscriptionId, AzureLocation locationparameter, ExecuteDeleteContent content)
+        internal RequestUriBuilder CreateVirtualMachinesExecuteDeleteRequestUri(string subscriptionId, AzureLocation azureLocationparameter, ExecuteDeleteContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteDelete", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateVirtualMachinesExecuteDeleteRequest(string subscriptionId, AzureLocation locationparameter, ExecuteDeleteContent content)
+        internal HttpMessage CreateVirtualMachinesExecuteDeleteRequest(string subscriptionId, AzureLocation azureLocationparameter, ExecuteDeleteContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesExecuteDelete", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -718,17 +718,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeleteResourceOperationResult>> VirtualMachinesExecuteDeleteAsync(string subscriptionId, AzureLocation locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DeleteResourceOperationResult>> VirtualMachinesExecuteDeleteAsync(string subscriptionId, AzureLocation azureLocationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesExecuteDeleteRequest(subscriptionId, locationparameter, content);
+            using var message = CreateVirtualMachinesExecuteDeleteRequest(subscriptionId, azureLocationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -746,17 +746,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesExecuteDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeleteResourceOperationResult> VirtualMachinesExecuteDelete(string subscriptionId, AzureLocation locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
+        public Response<DeleteResourceOperationResult> VirtualMachinesExecuteDelete(string subscriptionId, AzureLocation azureLocationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesExecuteDeleteRequest(subscriptionId, locationparameter, content);
+            using var message = CreateVirtualMachinesExecuteDeleteRequest(subscriptionId, azureLocationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -772,20 +772,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateGetVirtualMachineOperationStatusRequestUri(string subscriptionId, AzureLocation locationparameter, GetOperationStatusContent content)
+        internal RequestUriBuilder CreateGetVirtualMachineOperationStatusRequestUri(string subscriptionId, AzureLocation azureLocationparameter, GetOperationStatusContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesGetOperationStatus", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetVirtualMachineOperationStatusRequest(string subscriptionId, AzureLocation locationparameter, GetOperationStatusContent content)
+        internal HttpMessage CreateGetVirtualMachineOperationStatusRequest(string subscriptionId, AzureLocation azureLocationparameter, GetOperationStatusContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesGetOperationStatus", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -810,17 +810,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed on virtual machines. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GetOperationStatusResult>> GetVirtualMachineOperationStatusAsync(string subscriptionId, AzureLocation locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<GetOperationStatusResult>> GetVirtualMachineOperationStatusAsync(string subscriptionId, AzureLocation azureLocationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetVirtualMachineOperationStatusRequest(subscriptionId, locationparameter, content);
+            using var message = CreateGetVirtualMachineOperationStatusRequest(subscriptionId, azureLocationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -838,17 +838,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed on virtual machines. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GetOperationStatusResult> GetVirtualMachineOperationStatus(string subscriptionId, AzureLocation locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
+        public Response<GetOperationStatusResult> GetVirtualMachineOperationStatus(string subscriptionId, AzureLocation azureLocationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetVirtualMachineOperationStatusRequest(subscriptionId, locationparameter, content);
+            using var message = CreateGetVirtualMachineOperationStatusRequest(subscriptionId, azureLocationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -864,20 +864,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateCancelVirtualMachineOperationsRequestUri(string subscriptionId, AzureLocation locationparameter, CancelOperationsContent content)
+        internal RequestUriBuilder CreateCancelVirtualMachineOperationsRequestUri(string subscriptionId, AzureLocation azureLocationparameter, CancelOperationsContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesCancelOperations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateCancelVirtualMachineOperationsRequest(string subscriptionId, AzureLocation locationparameter, CancelOperationsContent content)
+        internal HttpMessage CreateCancelVirtualMachineOperationsRequest(string subscriptionId, AzureLocation azureLocationparameter, CancelOperationsContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesCancelOperations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -902,17 +902,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CancelOperationsResult>> CancelVirtualMachineOperationsAsync(string subscriptionId, AzureLocation locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<CancelOperationsResult>> CancelVirtualMachineOperationsAsync(string subscriptionId, AzureLocation azureLocationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCancelVirtualMachineOperationsRequest(subscriptionId, locationparameter, content);
+            using var message = CreateCancelVirtualMachineOperationsRequest(subscriptionId, azureLocationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -930,17 +930,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CancelOperationsResult> CancelVirtualMachineOperations(string subscriptionId, AzureLocation locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
+        public Response<CancelOperationsResult> CancelVirtualMachineOperations(string subscriptionId, AzureLocation azureLocationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCancelVirtualMachineOperationsRequest(subscriptionId, locationparameter, content);
+            using var message = CreateCancelVirtualMachineOperationsRequest(subscriptionId, azureLocationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -956,20 +956,20 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateGetVirtualMachineOperationErrorsRequestUri(string subscriptionId, AzureLocation locationparameter, GetOperationErrorsContent content)
+        internal RequestUriBuilder CreateGetVirtualMachineOperationErrorsRequestUri(string subscriptionId, AzureLocation azureLocationparameter, GetOperationErrorsContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesGetOperationErrors", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetVirtualMachineOperationErrorsRequest(string subscriptionId, AzureLocation locationparameter, GetOperationErrorsContent content)
+        internal HttpMessage CreateGetVirtualMachineOperationErrorsRequest(string subscriptionId, AzureLocation azureLocationparameter, GetOperationErrorsContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
+            uri.AppendPath(azureLocationparameter, true);
             uri.AppendPath("/virtualMachinesGetOperationErrors", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -994,17 +994,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesGetOperationErrors: Get error details on operation errors (like transient errors encountered, additional logs) if they exist. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GetOperationErrorsResult>> GetVirtualMachineOperationErrorsAsync(string subscriptionId, AzureLocation locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<GetOperationErrorsResult>> GetVirtualMachineOperationErrorsAsync(string subscriptionId, AzureLocation azureLocationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetVirtualMachineOperationErrorsRequest(subscriptionId, locationparameter, content);
+            using var message = CreateGetVirtualMachineOperationErrorsRequest(subscriptionId, azureLocationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1022,17 +1022,17 @@ namespace Azure.ResourceManager.ComputeSchedule
 
         /// <summary> VirtualMachinesGetOperationErrors: Get error details on operation errors (like transient errors encountered, additional logs) if they exist. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GetOperationErrorsResult> GetVirtualMachineOperationErrors(string subscriptionId, AzureLocation locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
+        public Response<GetOperationErrorsResult> GetVirtualMachineOperationErrors(string subscriptionId, AzureLocation azureLocationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGetVirtualMachineOperationErrorsRequest(subscriptionId, locationparameter, content);
+            using var message = CreateGetVirtualMachineOperationErrorsRequest(subscriptionId, azureLocationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

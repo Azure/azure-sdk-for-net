@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DeallocateResourceOperationResult>> SubmitVirtualMachineDeallocateAsync(AzureLocation locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeallocateResourceOperationResult>> SubmitVirtualMachineDeallocateAsync(AzureLocation azureLocationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.SubmitVirtualMachineDeallocateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.SubmitVirtualMachineDeallocateAsync(Id.SubscriptionId, azureLocationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DeallocateResourceOperationResult> SubmitVirtualMachineDeallocate(AzureLocation locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DeallocateResourceOperationResult> SubmitVirtualMachineDeallocate(AzureLocation azureLocationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.SubmitVirtualMachineDeallocate(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.SubmitVirtualMachineDeallocate(Id.SubscriptionId, azureLocationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<HibernateResourceOperationResult>> SubmitVirtualMachineHibernateAsync(AzureLocation locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HibernateResourceOperationResult>> SubmitVirtualMachineHibernateAsync(AzureLocation azureLocationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.SubmitVirtualMachineHibernateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.SubmitVirtualMachineHibernateAsync(Id.SubscriptionId, azureLocationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<HibernateResourceOperationResult> SubmitVirtualMachineHibernate(AzureLocation locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<HibernateResourceOperationResult> SubmitVirtualMachineHibernate(AzureLocation azureLocationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.SubmitVirtualMachineHibernate(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.SubmitVirtualMachineHibernate(Id.SubscriptionId, azureLocationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<StartResourceOperationResult>> SubmitVirtualMachineStartAsync(AzureLocation locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StartResourceOperationResult>> SubmitVirtualMachineStartAsync(AzureLocation azureLocationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.SubmitVirtualMachineStartAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.SubmitVirtualMachineStartAsync(Id.SubscriptionId, azureLocationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -278,11 +278,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<StartResourceOperationResult> SubmitVirtualMachineStart(AzureLocation locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
+        public virtual Response<StartResourceOperationResult> SubmitVirtualMachineStart(AzureLocation azureLocationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.SubmitVirtualMachineStart(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.SubmitVirtualMachineStart(Id.SubscriptionId, azureLocationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -321,11 +321,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DeallocateResourceOperationResult>> ExecuteVirtualMachineDeallocateAsync(AzureLocation locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeallocateResourceOperationResult>> ExecuteVirtualMachineDeallocateAsync(AzureLocation azureLocationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.ExecuteVirtualMachineDeallocateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.ExecuteVirtualMachineDeallocateAsync(Id.SubscriptionId, azureLocationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -364,11 +364,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DeallocateResourceOperationResult> ExecuteVirtualMachineDeallocate(AzureLocation locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DeallocateResourceOperationResult> ExecuteVirtualMachineDeallocate(AzureLocation azureLocationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.ExecuteVirtualMachineDeallocate(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.ExecuteVirtualMachineDeallocate(Id.SubscriptionId, azureLocationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -407,11 +407,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<HibernateResourceOperationResult>> ExecuteVirtualMachineHibernateAsync(AzureLocation locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HibernateResourceOperationResult>> ExecuteVirtualMachineHibernateAsync(AzureLocation azureLocationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.ExecuteVirtualMachineHibernateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.ExecuteVirtualMachineHibernateAsync(Id.SubscriptionId, azureLocationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -450,11 +450,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<HibernateResourceOperationResult> ExecuteVirtualMachineHibernate(AzureLocation locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<HibernateResourceOperationResult> ExecuteVirtualMachineHibernate(AzureLocation azureLocationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.ExecuteVirtualMachineHibernate(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.ExecuteVirtualMachineHibernate(Id.SubscriptionId, azureLocationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -493,11 +493,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<StartResourceOperationResult>> ExecuteVirtualMachineStartAsync(AzureLocation locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StartResourceOperationResult>> ExecuteVirtualMachineStartAsync(AzureLocation azureLocationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.ExecuteVirtualMachineStartAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.ExecuteVirtualMachineStartAsync(Id.SubscriptionId, azureLocationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -536,11 +536,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<StartResourceOperationResult> ExecuteVirtualMachineStart(AzureLocation locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
+        public virtual Response<StartResourceOperationResult> ExecuteVirtualMachineStart(AzureLocation azureLocationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.ExecuteVirtualMachineStart(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.ExecuteVirtualMachineStart(Id.SubscriptionId, azureLocationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -579,11 +579,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CreateResourceOperationResult>> VirtualMachinesExecuteCreateScheduledActionAsync(AzureLocation locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CreateResourceOperationResult>> VirtualMachinesExecuteCreateScheduledActionAsync(AzureLocation azureLocationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.VirtualMachinesExecuteCreateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.VirtualMachinesExecuteCreateAsync(Id.SubscriptionId, azureLocationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -622,11 +622,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CreateResourceOperationResult> VirtualMachinesExecuteCreateScheduledAction(AzureLocation locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CreateResourceOperationResult> VirtualMachinesExecuteCreateScheduledAction(AzureLocation azureLocationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.VirtualMachinesExecuteCreate(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.VirtualMachinesExecuteCreate(Id.SubscriptionId, azureLocationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -665,11 +665,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DeleteResourceOperationResult>> VirtualMachinesExecuteDeleteScheduledActionAsync(AzureLocation locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeleteResourceOperationResult>> VirtualMachinesExecuteDeleteScheduledActionAsync(AzureLocation azureLocationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.VirtualMachinesExecuteDeleteAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.VirtualMachinesExecuteDeleteAsync(Id.SubscriptionId, azureLocationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -708,11 +708,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DeleteResourceOperationResult> VirtualMachinesExecuteDeleteScheduledAction(AzureLocation locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DeleteResourceOperationResult> VirtualMachinesExecuteDeleteScheduledAction(AzureLocation azureLocationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.VirtualMachinesExecuteDelete(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.VirtualMachinesExecuteDelete(Id.SubscriptionId, azureLocationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -751,11 +751,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<GetOperationStatusResult>> GetVirtualMachineOperationStatusAsync(AzureLocation locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GetOperationStatusResult>> GetVirtualMachineOperationStatusAsync(AzureLocation azureLocationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.GetVirtualMachineOperationStatusAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.GetVirtualMachineOperationStatusAsync(Id.SubscriptionId, azureLocationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -794,11 +794,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<GetOperationStatusResult> GetVirtualMachineOperationStatus(AzureLocation locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
+        public virtual Response<GetOperationStatusResult> GetVirtualMachineOperationStatus(AzureLocation azureLocationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.GetVirtualMachineOperationStatus(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.GetVirtualMachineOperationStatus(Id.SubscriptionId, azureLocationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -837,11 +837,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CancelOperationsResult>> CancelVirtualMachineOperationsAsync(AzureLocation locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CancelOperationsResult>> CancelVirtualMachineOperationsAsync(AzureLocation azureLocationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.CancelVirtualMachineOperationsAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.CancelVirtualMachineOperationsAsync(Id.SubscriptionId, azureLocationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -880,11 +880,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CancelOperationsResult> CancelVirtualMachineOperations(AzureLocation locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CancelOperationsResult> CancelVirtualMachineOperations(AzureLocation azureLocationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.CancelVirtualMachineOperations(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.CancelVirtualMachineOperations(Id.SubscriptionId, azureLocationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -923,11 +923,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<GetOperationErrorsResult>> GetVirtualMachineOperationErrorsAsync(AzureLocation locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GetOperationErrorsResult>> GetVirtualMachineOperationErrorsAsync(AzureLocation azureLocationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.GetVirtualMachineOperationErrorsAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionRestClient.GetVirtualMachineOperationErrorsAsync(Id.SubscriptionId, azureLocationparameter, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -966,11 +966,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="azureLocationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<GetOperationErrorsResult> GetVirtualMachineOperationErrors(AzureLocation locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
+        public virtual Response<GetOperationErrorsResult> GetVirtualMachineOperationErrors(AzureLocation azureLocationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -978,7 +978,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.GetVirtualMachineOperationErrors(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                var response = ScheduledActionRestClient.GetVirtualMachineOperationErrors(Id.SubscriptionId, azureLocationparameter, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
