@@ -1229,11 +1229,43 @@
       ]
     },
     {
-      "filename": "**/sdk/provisioning/**/*.cs",
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Kusto/**/*.cs",
       "words": [
-        "Awsec",
-        "Freemium",
+        "tbps",
+        "scsv",
+        "sohsv",
+        "tsve",
+        "Openai",
+        "APACHEAVRO"
+      ]
+    },
+    {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.PostgreSql/**/*.cs",
+      "words": [
+        "awsec"
+      ]
+    },
+    {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Sql/**/*.cs",
+      "words": [
+        "Freemium"
+      ]
+    },
+    {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Storage/**/*.cs",
+      "words": [
         "Mibps"
+      ]
+    },
+    {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Network/**/*.cs",
+      "words": [
+        "Snat",
+        "Fqdns",
+        "Vxlan",
+        "Ipam",
+        "Dscp",
+        "Vnets"
       ]
     },
     {

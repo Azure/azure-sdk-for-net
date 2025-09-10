@@ -317,8 +317,10 @@ namespace Azure.Identity
         protected virtual async ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordCoreAsync(string[] scopes, string claims, string username, string password, string tenantId, bool enableCae, bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
+#pragma warning disable CS0618 // Type or member is obsolete
             var builder = client
                 .AcquireTokenByUsernamePassword(scopes, username, password);
+#pragma warning restore CS0618 // Type or member is obsolete
 
             if (!string.IsNullOrEmpty(claims))
             {

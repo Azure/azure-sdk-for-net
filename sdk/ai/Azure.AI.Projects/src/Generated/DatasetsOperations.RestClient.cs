@@ -23,17 +23,14 @@ namespace Azure.AI.Projects
 
         internal PipelineMessage CreateGetDatasetVersionsRequest(string name, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/datasets/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/versions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
@@ -41,13 +38,10 @@ namespace Azure.AI.Projects
 
         internal PipelineMessage CreateNextGetDatasetVersionsRequest(Uri nextPage, string name, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(nextPage);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
@@ -55,15 +49,12 @@ namespace Azure.AI.Projects
 
         internal PipelineMessage CreateGetDatasetsRequest(RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/datasets", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
@@ -71,13 +62,10 @@ namespace Azure.AI.Projects
 
         internal PipelineMessage CreateNextGetDatasetsRequest(Uri nextPage, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(nextPage);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
@@ -85,10 +73,6 @@ namespace Azure.AI.Projects
 
         internal PipelineMessage CreateGetDatasetRequest(string name, string version, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "GET";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/datasets/", false);
@@ -96,7 +80,8 @@ namespace Azure.AI.Projects
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
@@ -104,10 +89,6 @@ namespace Azure.AI.Projects
 
         internal PipelineMessage CreateDeleteRequest(string name, string version, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier204;
-            PipelineRequest request = message.Request;
-            request.Method = "DELETE";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/datasets/", false);
@@ -115,17 +96,14 @@ namespace Azure.AI.Projects
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "DELETE", PipelineMessageClassifier204);
+            PipelineRequest request = message.Request;
             message.Apply(options);
             return message;
         }
 
         internal PipelineMessage CreateCreateOrUpdateRequest(string name, string version, BinaryContent content, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200201;
-            PipelineRequest request = message.Request;
-            request.Method = "PATCH";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/datasets/", false);
@@ -133,7 +111,8 @@ namespace Azure.AI.Projects
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PATCH", PipelineMessageClassifier200201);
+            PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", "application/merge-patch+json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
@@ -143,10 +122,6 @@ namespace Azure.AI.Projects
 
         internal PipelineMessage CreatePendingUploadRequest(string name, string version, BinaryContent content, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/datasets/", false);
@@ -155,7 +130,8 @@ namespace Azure.AI.Projects
             uri.AppendPath(version, true);
             uri.AppendPath("/startPendingUpload", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
@@ -165,10 +141,6 @@ namespace Azure.AI.Projects
 
         internal PipelineMessage CreateGetCredentialsRequest(string name, string version, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/datasets/", false);
@@ -177,7 +149,8 @@ namespace Azure.AI.Projects
             uri.AppendPath(version, true);
             uri.AppendPath("/credentials", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;

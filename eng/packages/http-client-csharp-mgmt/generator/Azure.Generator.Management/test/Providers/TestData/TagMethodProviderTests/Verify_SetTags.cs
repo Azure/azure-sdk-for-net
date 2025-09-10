@@ -22,8 +22,9 @@ try
     else
     {
         global::Samples.Models.ResponseTypeData current = (this.Get(cancellationToken)).Value.Data;
-        current.Tags.ReplaceWith(tags);
-        global::Azure.Response<global::Samples.ResponseTypeResource> result = this.Update(current, cancellationToken);
+        global::Samples.Models.ResponseTypeData patch = new global::Samples.Models.ResponseTypeData();
+        patch.Tags.ReplaceWith(tags);
+        global::Azure.Response<global::Samples.ResponseTypeResource> result = this.Update(patch, cancellationToken);
         return global::Azure.Response.FromValue(result.Value, result.GetRawResponse());
     }
 }

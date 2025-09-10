@@ -82,6 +82,8 @@ namespace Azure.Generator.Management.Providers
         internal ResourceScope ResourceScope => _resourceMetadata.ResourceScope;
         internal string? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
 
+        internal bool IsExtensionResource => ResourceScope == ResourceScope.Extension;
+
         internal ResourceCollectionClientProvider? ResourceCollection { get; private set; }
 
         protected override string BuildName() => ResourceName.EndsWith("Resource") ? ResourceName : $"{ResourceName}Resource";
@@ -93,9 +95,6 @@ namespace Azure.Generator.Management.Providers
 
         internal ModelProvider ResourceData { get; }
         internal string ResourceName { get; }
-        // TODO -- we should not need to expose this.
-        // Instead, if some method needs more method, we should prepare them and pass it in as an argument
-        internal IEnumerable<ResourceMethod> ResourceServiceMethods => _resourceServiceMethods;
 
         internal string? SingletonResourceName => _resourceMetadata.SingletonResourceName;
 
@@ -132,6 +131,11 @@ namespace Azure.Generator.Management.Providers
 
         private CSharpType BuildTypeOfParentResource()
         {
+            if (_resourceMetadata.ResourceScope == ResourceScope.Extension)
+            {
+                return typeof(Azure.ResourceManager.ArmResource);
+            }
+
             // if the resource has a parent resource id, we can find it in the output library
             if (_resourceMetadata.ParentResourceId is not null)
             {
@@ -440,23 +444,25 @@ namespace Azure.Generator.Management.Providers
                 ResourceMethodSnippets.BuildValidateResourceIdMethod(this, _resourceTypeField)
             };
             methods.AddRange(operationMethods);
+            var getMethod = _resourceServiceMethods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Get)?.InputMethod;
 
             // Only generate tag methods if the resource model has tag properties, has get and update methods
-            if (HasTags() && _resourceMetadata.Methods.Any(m => m.Kind == ResourceOperationKind.Get) && updateMethodProvider is not null)
+            if (HasTags() && getMethod is not null && updateMethodProvider is not null)
             {
-                // Find the update method to get its rest client
-                var updateMethod = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Update || m.Kind == ResourceOperationKind.Create);
-                if (updateMethod is not null)
+                (bool isPatch, InputClient? updateClient) = PopulateUpdateClient();
+                var getClient = PopulateGetClient();
+                if (updateClient is not null && getClient is not null)
                 {
-                    var updateRestClientInfo = _clientInfos[updateMethod.InputClient];
+                    var updateRestClientInfo = _clientInfos[updateClient];
+                    var getRestClientInfo = _clientInfos[getClient];
 
                     methods.AddRange([
-                        new AddTagMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, true),
-                        new AddTagMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, false),
-                        new SetTagsMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, true),
-                        new SetTagsMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, false),
-                        new RemoveTagMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, true),
-                        new RemoveTagMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, false)
+                        new AddTagMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                        new AddTagMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
+                        new SetTagsMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                        new SetTagsMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
+                        new RemoveTagMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                        new RemoveTagMethodProvider(this, _contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, false)
                     ]);
                 }
             }
@@ -468,6 +474,23 @@ namespace Azure.Generator.Management.Providers
             }
 
             return [.. methods];
+        }
+
+        private InputClient? PopulateGetClient()
+            => _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Get)?.InputClient;
+
+        private (bool IsPatch, InputClient? UpdateClient) PopulateUpdateClient()
+        {
+            // first try to find a patch method
+            var patchClient = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Update)?.InputClient;
+            if (patchClient is not null)
+            {
+                return (true, patchClient);
+            }
+
+            // if there is no tags patch method, fall back to the put method
+            var putClient = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Create)?.InputClient;
+            return (false, putClient);
         }
 
         private MethodProvider BuildGetChildResourceMethod(ResourceClientProvider childResource)

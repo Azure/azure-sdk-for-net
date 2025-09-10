@@ -89,19 +89,19 @@
 # ServiceOwners:                                                   @mojayara @Prasanna-Padmanabhan
 
 # PRLabel: %AI Model Inference %AI Projects
-/sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper @jhakulin @nick863
+/sdk/ai/                                                           @trangevi @dargilco @glharper @nick863
 
 # PRLabel: %AI Model Inference
-/sdk/ai/Azure.AI.Inference                                         @trangevi @dargilco @jhakulin @glharper
+/sdk/ai/Azure.AI.Inference                                         @trangevi @dargilco @glharper
 
 # ServiceLabel: %AI Model Inference
-# ServiceOwners:                                                   @trangevi @dargilco @jhakulin @glharper
+# ServiceOwners:                                                   @trangevi @dargilco @glharper
 
 # PRLabel: %AI Projects
-/sdk/ai/Azure.AI.Projects                                          @dargilco @jhakulin @nick863 @trangevi
+/sdk/ai/Azure.AI.Projects                                          @dargilco @nick863 @trangevi
 
 # ServiceLabel: %AI Projects
-# ServiceOwners:                                                   @dargilco @jhakulin @nick863 @trangevi
+# ServiceOwners:                                                   @dargilco @nick863 @trangevi
 
 # ServiceLabel: %AKS
 # ServiceOwners:                                                   @Azure/aks-pm
@@ -353,10 +353,10 @@
 # ServiceOwners:                                                   @TravisCragg-MSFT @hilaryw29
 
 # PRLabel: %Confidential Ledger
-/sdk/confidentialledger/                                           @christothes @PallabPaul @amruthashree18 @andpiccione @ivarprudnikov
+/sdk/confidentialledger/                                           @christothes @PallabPaul @andpiccione @ivarprudnikov
 
 # ServiceLabel: %Confidential Ledger
-# ServiceOwners:                                                   @PallabPaul @amruthashree18 @andpiccione @ivarprudnikov
+# ServiceOwners:                                                   @PallabPaul @andpiccione @ivarprudnikov
 
 # ServiceLabel: %Connected Kubernetes
 # ServiceOwners:                                                   @akashkeshari
@@ -485,14 +485,14 @@
 # ServiceOwners:                                                   @Kishp01 @shankarsama @rajeshka
 
 # PRLabel: %Event Hubs
-/sdk/eventhub/                                                     @jsquire @m-redding
+/sdk/eventhub/                                                     @axisc @sjkwak @hmlam @jsquire
 
 # PRLabel: %Event Hubs %Functions
-/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/        @m-redding @jsquire
+/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/        @axisc @sjkwak @hmlam @jsquire
 
 # ServiceLabel: %Event Hubs
 # AzureSdkOwners:                                                  @jsquire
-# ServiceOwners:                                                   @serkantkaraca @sjkwak
+# ServiceOwners:                                                   @axisc @sjkwak @hmlam
 
 # PRLabel: %Extension - WCF
 /sdk/extension-wcf/                                                @mconnew
@@ -637,25 +637,25 @@
 # ServiceOwners:                                                   @omziv @anatse @raronen @ischrei @danhadari @azmonapplicationinsights
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @rajkumar-rangaraj
+/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @rajkumar-rangaraj @harsimar @trask @xiang17
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @rajkumar-rangaraj
+/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @rajkumar-rangaraj @harsimar @trask @xiang17
 
 # ServiceLabel: %Monitor - Distro
-# ServiceOwners:                                                   @rajkumar-rangaraj
+# ServiceOwners:                                                   @rajkumar-rangaraj @harsimar @trask @xiang17
 
 # PRLabel: %Monitor - Exporter
-/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @rajkumar-rangaraj
+/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @rajkumar-rangaraj @harsimar @trask @xiang17
 
 # ServiceLabel: %Monitor - Exporter
-# ServiceOwners:                                                   @rajkumar-rangaraj
+# ServiceOwners:                                                   @rajkumar-rangaraj @harsimar @trask @xiang17
 
 # PRLabel: %Monitor - LiveMetrics
-/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @rajkumar-rangaraj @xiang17
+/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @rajkumar-rangaraj @xiang17 @trask @harsimar
 
 # ServiceLabel: %Monitor - LiveMetrics
-# ServiceOwners:                                                   @rajkumar-rangaraj @xiang17
+# ServiceOwners:                                                   @rajkumar-rangaraj @xiang17 @trask @harsimar
 
 # PRLabel: %Monitor - Query
 /sdk/monitor/Azure.Monitor.Query/                                  @Azure/azure-sdk-write-monitor-data-plane
@@ -787,18 +787,17 @@
 # ServiceOwners:                                                   @derek1ee
 
 # PRLabel: %Schema Registry
-/sdk/schemaregistry/                                               @jsquire @m-redding
+/sdk/schemaregistry/                                               @axisc @sjkwak @hmlam
 
 # ServiceLabel: %Schema Registry
-# AzureSdkOwners:                                                  @m-redding
-# ServiceOwners:                                                   @hmlam
+# ServiceOwners:                                                   @axisc @sjkwak @hmlam
 
 # PRLabel: %Search
-/sdk/search/                                                       @ShivangiReja @Azure/azsdk-search
+/sdk/search/                                                       @Azure/azure-sdk-write-search @Azure/azsdk-search
 
 # ServiceLabel: %Search
 # AzureSdkOwners:                                                  @ShivangiReja
-# ServiceOwners:                                                   @arv100kri @bleroy @tjacobhi
+# ServiceOwners:                                                   @kuanlu95 @mattgotteiner
 
 # ServiceLabel: %Security
 # ServiceOwners:                                                   @chlahav
@@ -807,14 +806,14 @@
 # ServiceOwners:                                                   @amirkeren
 
 # PRLabel: %Service Bus
-/sdk/servicebus/                                                   @jsquire @m-redding
+/sdk/servicebus/                                                   @skarri-microsoft @EldertGrootenboer @jsquire
 
 # PRLabel: %Service Bus %Functions
-/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/     @m-redding @jsquire
+/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/     @skarri-microsoft @EldertGrootenboer @jsquire
 
 # ServiceLabel: %Service Bus
 # AzureSdkOwners:                                                  @jsquire
-# ServiceOwners:                                                   @shankarsama @EldertGrootenboer
+# ServiceOwners:                                                   @skarri-microsoft @EldertGrootenboer
 
 # PRLabel: %SignalR
 /sdk/signalr/                                                      @chenkennt @vicancy @JialinXin @Y-Sindo
@@ -897,6 +896,12 @@
 
 # ServiceLabel: %VideoAnalyzer
 # ServiceOwners:                                                   @giakas
+
+# PRLabel: %Voice Live
+/sdk/ai/Azure.AI.VoiceLive/                                        @rhurey @xitzhang
+
+# ServiceLabel: %Voice Live
+# ServiceOwners:                                                   @rhurey @xitzhang
 
 # ServiceLabel: %Web Apps
 # ServiceOwners:                                                   @AzureAppServiceCLI @antcp
@@ -1029,10 +1034,10 @@
 # ServiceOwners:                                                   @emmeliaAra
 
 # PRLabel: %HybridConnectivity
-/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @PriyankaHariharan @apmehrotra
+/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @apmehrotra
 
 # ServiceLabel: %HybridConnectivity %Mgmt
-# ServiceOwners:                                                   @PriyankaHariharan @apmehrotra
+# ServiceOwners:                                                   @apmehrotra
 
 # PRLabel: %LambdaTest HyperExecute
 /sdk/lambdatesthyperexecute/Azure.ResourceManager.*/               @aggarwalsw

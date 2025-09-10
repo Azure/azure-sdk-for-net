@@ -18,6 +18,14 @@ namespace MgmtTypeSpec.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class MgmtTypeSpecModelFactory
     {
+        /// <summary> The FooPreviewAction. </summary>
+        /// <param name="action"> The action to be performed. </param>
+        /// <param name="result"></param>
+        /// <returns> A new <see cref="Models.FooPreviewAction"/> instance for mocking. </returns>
+        public static FooPreviewAction FooPreviewAction(string action = default, string result = default)
+        {
+            return new FooPreviewAction(action, result, additionalBinaryDataProperties: null);
+        }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -104,8 +112,15 @@ namespace MgmtTypeSpec.Models
         /// <param name="stringArray"></param>
         /// <param name="propertyLeft"> enabled. </param>
         /// <param name="anotherPropertyLeft"> enabled. </param>
+        /// <param name="innerProp1"> Gets or sets the InnerProp1. </param>
+        /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
+        /// <param name="middleProp1"> Gets or sets the MiddleProp1. </param>
+        /// <param name="middleProp2"> Gets the MiddleProp2. </param>
+        /// <param name="prop1"> Gets the Prop1. </param>
+        /// <param name="prop2"> Gets or sets the Prop2. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/>, <paramref name="middleProp2"/> or <paramref name="prop1"/> is null. </exception>
         /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsResourceData"/> instance for mocking. </returns>
-        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default)
+        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int? middleProp1 = default, IDictionary<string, string> middleProp2 = default, IList<string> prop1 = default, int? prop2 = default)
         {
             stringArray ??= new ChangeTrackingList<string>();
 
@@ -118,7 +133,15 @@ namespace MgmtTypeSpec.Models
                 isEnabled is null ? default : new BarSettingsProperties(isEnabled, new Dictionary<string, BinaryData>()),
                 stringArray.ToList(),
                 propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, new Dictionary<string, BinaryData>()),
-                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, new Dictionary<string, BinaryData>()));
+                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, new Dictionary<string, BinaryData>()),
+                innerProp1 is null || innerProp2 is null || middleProp1 is null || middleProp2 is null || prop1 is null || prop2 is null ? default : new BarNestedQuotaProperties(
+                    innerProp1,
+                    innerProp2,
+                    null,
+                    middleProp1.Value,
+                    middleProp2,
+                    prop1,
+                    prop2.Value));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -136,6 +159,30 @@ namespace MgmtTypeSpec.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft.Value, new Dictionary<string, BinaryData>()));
+        }
+
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.BazData"/> instance for mocking. </returns>
+        public static BazData BazData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, BazProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BazData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -184,13 +231,21 @@ namespace MgmtTypeSpec.Models
             return new ZooAddressListListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The FooPreviewAction. </summary>
-        /// <param name="action"> The action to be performed. </param>
-        /// <param name="result"></param>
-        /// <returns> A new <see cref="Models.FooPreviewAction"/> instance for mocking. </returns>
-        public static FooPreviewAction FooPreviewAction(string action = default, string result = default)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="endpointProp"> Gets or sets the Prop. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.EndpointResourceData"/> instance for mocking. </returns>
+        public static EndpointResourceData EndpointResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string endpointProp = default)
         {
-            return new FooPreviewAction(action, result, additionalBinaryDataProperties: null);
+            return new EndpointResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                endpointProp is null ? default : new EndpointProperties(endpointProp, new Dictionary<string, BinaryData>()));
         }
 
         /// <summary> The ZooRecommendation. </summary>

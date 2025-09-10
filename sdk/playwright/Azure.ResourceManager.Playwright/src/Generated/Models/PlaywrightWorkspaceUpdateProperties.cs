@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Playwright.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PlaywrightWorkspaceUpdateProperties"/>. </summary>
-        /// <param name="regionalAffinity"> This property sets the connection region for client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created. </param>
-        /// <param name="localAuth"> When enabled, this feature allows the workspace to use local auth (through service access token) for executing operations. </param>
+        /// <param name="regionalAffinity"> Controls the connection region for client workers to cloud-hosted browsers. When enabled, workers connect to browsers in the closest Azure region for lower latency. When disabled, workers connect to browsers in the Azure region where the workspace was created. </param>
+        /// <param name="localAuth"> Enables the workspace to use local authentication through service access tokens for operations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PlaywrightWorkspaceUpdateProperties(PlaywrightEnablementStatus? regionalAffinity, PlaywrightEnablementStatus? localAuth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.Playwright.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> This property sets the connection region for client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created. </summary>
+        /// <summary> Controls the connection region for client workers to cloud-hosted browsers. When enabled, workers connect to browsers in the closest Azure region for lower latency. When disabled, workers connect to browsers in the Azure region where the workspace was created. </summary>
         public PlaywrightEnablementStatus? RegionalAffinity { get; set; }
-        /// <summary> When enabled, this feature allows the workspace to use local auth (through service access token) for executing operations. </summary>
+        /// <summary> Enables the workspace to use local authentication through service access tokens for operations. </summary>
         public PlaywrightEnablementStatus? LocalAuth { get; set; }
     }
 }

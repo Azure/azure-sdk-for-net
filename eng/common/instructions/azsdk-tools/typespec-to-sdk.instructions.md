@@ -26,17 +26,17 @@ Your goal is to guide user through the process of generating SDKs from TypeSpec 
 ## Step 3: Verify Authentication and Repository Status
 **Goal**: Ensure user is authenticated and working in correct repository
 **Actions**:
-1. Run `GetGitHubUserDetails` to verify login status
+1. Run `azsdk_get_github_user_details` to verify login status
 2. If not logged in, prompt: "Please login to GitHub using `gh auth login`"
 3. Once logged in, display user details to confirm identity
-4. Run `CheckIfSpecInPublicRepo` to verify repository
+4. Run `azsdk_check_typespec_project_in_public_repo` to verify repository
 5. If not in public repo, inform: "Please make spec changes in Azure/azure-rest-api-specs public repo to generate SDKs"
 **Success Criteria**: User authenticated and working in public Azure repo
 
 ## Step 4: Review and Commit Changes
 **Goal**: Stage and commit TypeSpec modifications
 **Actions**:
-1. Run `GetModifiedTypeSpecProjects` to identify changes
+1. Run `azsdk_get_modified_typespec_projects` to identify changes
 2. If no changes found, inform: "No TypeSpec projects were modified in current branch"
 3. Display all modified files (excluding `.github` and `.vscode` folders)
 4. Prompt user: "Please review the modified files. Do you want to commit these changes? (yes/no)"
@@ -63,7 +63,7 @@ Your goal is to guide user through the process of generating SDKs from TypeSpec 
 ## Step 6: Create Specification Pull Request
 **Goal**: Create PR for TypeSpec changes if not already created
 **Actions**:
-1. Check if spec PR already exists using `GetPullRequestForCurrentBranch`
+1. Check if spec PR already exists using `azsdk_get_pull_request_link_for_current_branch`
 2. If PR exists, display PR details and proceed to Step 7
 3. If no PR exists:
     - Refer to #file:create-spec-pullrequest.instructions.md
@@ -86,21 +86,31 @@ Your goal is to guide user through the process of generating SDKs from TypeSpec 
 ## Step 8: Show Generated SDK PRs
 **Goal**: Display all created SDK pull requests
 **Actions**:
-1. Run `GetSDKPullRequestDetails` to fetch generated SDK PR info.
+1. Run `azsdk_get_sdk_pull_request_link` to fetch generated SDK PR info.
 
-## Step 9: Create release plan
+## Step 9: Validate Label and Codeowners
+**Goal**: Validate the label and all codeowners for a service. Create new label and codeowner entry if none exist.
+**Actions**:
+1. To validate a service label refer to #file:./validate-service-label.instructions.md
+2. After service label is validated or created refer to #file:./validate-codeowners.instructions.md
+3. Handle post-validation actions based on results:
+   - **If both label and codeowners were already valid**: Prompt user "Your service label and codeowners are already properly configured. Would you like to modify the existing codeowners entry for your service?"
+   - **If new label or codeowner entries were created**: Display details of the label and codeowners PR if they were created, then prompt user "The following PRs have been created for your service configuration: [list PRs]. Would you like to make any additional modifications to these entries?"
+**Success Criteria**: Service label exists and codeowners are properly configured with at least 2 valid owners. For created entries, showcase all PR's.
+
+## Step 10: Create release plan
 **Goal**: Create a release plan for the generated SDKs
 **Actions**:
 1. Refer to #file:create-release-plan.instructions.md to create a release plan using the spec pull request.
 2. If the release plan already exists, display the existing plan details.
 
-## Step 10: Mark Spec PR as Ready for Review
+## Step 11: Mark Spec PR as Ready for Review
 **Goal**: Update spec PR to ready for review status
 **Actions**:
 1. Prompt user to change spec PR to ready for review: "Please change the spec pull request to ready for review status"
 2. Get approval and merge the spec PR
 
-## Step 11: Release SDK Package
+## Step 12: Release SDK Package
 **Goal**: Release the SDK package using the release plan
 **Actions**:
 1. Run `ReleaseSdkPackage` to release the SDK package.

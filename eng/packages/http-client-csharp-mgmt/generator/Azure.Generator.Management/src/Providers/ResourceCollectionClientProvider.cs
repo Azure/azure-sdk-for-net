@@ -70,6 +70,7 @@ namespace Azure.Generator.Management.Providers
             {
                 return new RequestPathPattern(resourceMetadata.ParentResourceId);
             }
+
             return RequestPathPattern.GetFromScope(resourceMetadata.ResourceScope);
         }
 
