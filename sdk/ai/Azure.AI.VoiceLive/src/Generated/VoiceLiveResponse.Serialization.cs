@@ -105,13 +105,13 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (Optional.IsDefined(MaxOutputTokens))
+            if (Optional.IsDefined(_MaxOutputTokens))
             {
                 writer.WritePropertyName("max_output_tokens"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(MaxOutputTokens);
+                writer.WriteRawValue(_MaxOutputTokens);
 #else
-                using (JsonDocument document = JsonDocument.Parse(MaxOutputTokens))
+                using (JsonDocument document = JsonDocument.Parse(_MaxOutputTokens))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }

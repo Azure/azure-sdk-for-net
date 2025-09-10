@@ -1200,11 +1200,9 @@ namespace Azure.AI.VoiceLive
         /// <param name="logprob"> The log probability of the token. </param>
         /// <param name="bytes"> The bytes that were used to generate the log probability. </param>
         /// <returns> A new <see cref="VoiceLive.LogProbProperties"/> instance for mocking. </returns>
-        public static LogProbProperties LogProbProperties(string token = default, float logprob = default, IEnumerable<int> bytes = default)
+        public static LogProbProperties LogProbProperties(string token = default, float logprob = default, BinaryData bytes = default)
         {
-            bytes ??= new ChangeTrackingList<int>();
-
-            return new LogProbProperties(token, logprob, bytes.ToList(), additionalBinaryDataProperties: null);
+            return new LogProbProperties(token, logprob, bytes, additionalBinaryDataProperties: null);
         }
 
         /// <summary>

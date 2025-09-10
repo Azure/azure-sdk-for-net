@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.VoiceLive
 {
@@ -21,11 +20,11 @@ namespace Azure.AI.VoiceLive
         /// <param name="token"> The token that was used to generate the log probability. </param>
         /// <param name="logprob"> The log probability of the token. </param>
         /// <param name="bytes"> The bytes that were used to generate the log probability. </param>
-        internal LogProbProperties(string token, float logprob, IEnumerable<int> bytes)
+        internal LogProbProperties(string token, float logprob, BinaryData bytes)
         {
             Token = token;
             Logprob = logprob;
-            Bytes = bytes.ToList();
+            Bytes = bytes;
         }
 
         /// <summary> Initializes a new instance of <see cref="LogProbProperties"/>. </summary>
@@ -33,7 +32,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="logprob"> The log probability of the token. </param>
         /// <param name="bytes"> The bytes that were used to generate the log probability. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogProbProperties(string token, float logprob, IList<int> bytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogProbProperties(string token, float logprob, BinaryData bytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Token = token;
             Logprob = logprob;
@@ -46,8 +45,5 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> The log probability of the token. </summary>
         public float Logprob { get; }
-
-        /// <summary> The bytes that were used to generate the log probability. </summary>
-        public IList<int> Bytes { get; }
     }
 }
