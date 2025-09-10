@@ -3,8 +3,16 @@
 ## 1.0.0-beta.12 (Unreleased)
 
 ### Features Added
+* Added convenience `CreateOrUpdate` methods for `AIProjectIndex` objects
 
 ### Breaking Changes
+* Name changes:
+  * `BlobReference` has been renamed to `AIProjectBlobReference`
+  * `SasCredential` has been renamed to `BlobReferenceSasCredential`
+  * `ConnectionProperties` has been renamed to `AIProjectConnection`
+  * `AssetDeployment` has been renamed to `AIProjectDeployment`
+  * `SearchIndex` has been renamed to `AIProjectIndex`
+* Removed `GetOpenAIClient` method. Look at Inference samples for how to get the client now.
 
 ### Bugs Fixed
 
