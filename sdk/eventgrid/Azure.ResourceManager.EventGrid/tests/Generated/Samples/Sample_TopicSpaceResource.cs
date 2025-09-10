@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_TopicSpacesGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2025-04-01-preview/examples/TopicSpaces_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2025-07-15-preview/examples/TopicSpaces_Get.json
             // this example is just showing the usage of "TopicSpaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_TopicSpacesDelete()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2025-04-01-preview/examples/TopicSpaces_Delete.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2025-07-15-preview/examples/TopicSpaces_Delete.json
             // this example is just showing the usage of "TopicSpaces_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_TopicSpacesCreateOrUpdate()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2025-04-01-preview/examples/TopicSpaces_CreateOrUpdate.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2025-07-15-preview/examples/TopicSpaces_CreateOrUpdate.json
             // this example is just showing the usage of "TopicSpaces_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

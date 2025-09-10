@@ -815,10 +815,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="source"> Source for the system topic. </param>
         /// <param name="topicType"> TopicType for the system topic. </param>
         /// <param name="metricResourceId"> Metric resource id for the system topic. </param>
+        /// <param name="customerManagedKeyEncryption"> Key encryption configuration properties of the system topic resource. This is an optional property. When not specified, no key encryption is used. </param>
+        /// <param name="confidentialComputeMode"> Represents the platform capabilities of the resource, including Azure Confidential Compute related properties. </param>
         /// <returns> A new <see cref="EventGrid.SystemTopicData"/> instance for mocking. </returns>
-        public static SystemTopicData SystemTopicData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, EventGridResourceProvisioningState? provisioningState = null, ResourceIdentifier source = null, string topicType = null, Guid? metricResourceId = null)
+        public static SystemTopicData SystemTopicData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, EventGridResourceProvisioningState? provisioningState = null, ResourceIdentifier source = null, string topicType = null, Guid? metricResourceId = null, IEnumerable<CustomerManagedKeyEncryption> customerManagedKeyEncryption = null, ConfidentialComputeMode? confidentialComputeMode = null)
         {
             tags ??= new Dictionary<string, string>();
+            customerManagedKeyEncryption ??= new List<CustomerManagedKeyEncryption>();
 
             return new SystemTopicData(
                 id,
@@ -832,7 +835,35 @@ namespace Azure.ResourceManager.EventGrid.Models
                 source,
                 topicType,
                 metricResourceId,
+                customerManagedKeyEncryption != null ? new KeyEncryption(customerManagedKeyEncryption?.ToList(), serializedAdditionalRawData: null) : null,
+                confidentialComputeMode.HasValue ? new PlatformCapabilities(new ConfidentialCompute(confidentialComputeMode.Value, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CustomerManagedKeyEncryption"/>. </summary>
+        /// <param name="keyEncryptionKeyUri">
+        /// Key encryption key URL. This URL can be either versioned (e.g., https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78), or unversioned (e.g.,
+        /// https://contosovault.vault.azure.net/keys/contosokek. When versioned URL is used, this version of the key will be used by Event Grid Runtime even if it is rotated. It is user
+        /// responsibility to update the URL with the new version by updating the namespace resource. When URL without version is used, Event Grid will query and get latest version and will
+        /// be used automatically.
+        /// </param>
+        /// <param name="keyEncryptionKeyIdentity">
+        /// All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. This is an optional property.
+        /// When not specified, the SystemAssigned identity will be used.
+        /// </param>
+        /// <param name="keyEncryptionKeyStatus">
+        /// The state of the Customer Managed Key (CMK) encryption. This is a read-only property which determines if the associated key is active and valid and used
+        /// actively by runtime as expected. When the associated CMK becomes invalid (e.g., if it is deleted, or if versioned CMK is not current anymore), Event Grid
+        /// Service will set this state to disabled to indicate that this key is not valid anymore and requires action from user.
+        /// </param>
+        /// <param name="keyEncryptionKeyStatusFriendlyDescription">
+        /// Friendly description about the Customer Managed Key (CMK) encryption state. This is a read-only property which determines why the associated key is revoked which
+        /// will help user to mitigate the issue and re-enable the CMK key.
+        /// </param>
+        /// <returns> A new <see cref="Models.CustomerManagedKeyEncryption"/> instance for mocking. </returns>
+        public static CustomerManagedKeyEncryption CustomerManagedKeyEncryption(Uri keyEncryptionKeyUri = null, KeyEncryptionKeyIdentity keyEncryptionKeyIdentity = null, KeyEncryptionKeyStatus? keyEncryptionKeyStatus = null, string keyEncryptionKeyStatusFriendlyDescription = null)
+        {
+            return new CustomerManagedKeyEncryption(keyEncryptionKeyUri, keyEncryptionKeyIdentity, keyEncryptionKeyStatus, keyEncryptionKeyStatusFriendlyDescription, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="EventGrid.EventGridTopicData"/>. </summary>
@@ -868,12 +899,15 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
         /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the topic. </param>
         /// <param name="dataResidencyBoundary"> Data Residency Boundary of the resource. </param>
+        /// <param name="customerManagedKeyEncryption"> Key encryption configuration properties of the topic resource. This is an optional property. When not specified, no key encryption is used. </param>
+        /// <param name="confidentialComputeMode"> Represents the platform capabilities of the resource, including Azure Confidential Compute related properties. </param>
         /// <returns> A new <see cref="EventGrid.EventGridTopicData"/> instance for mocking. </returns>
-        public static EventGridTopicData EventGridTopicData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EventGridSku? skuName = null, ManagedServiceIdentity identity = null, ResourceKind? kind = null, ExtendedLocation extendedLocation = null, IEnumerable<EventGridPrivateEndpointConnectionData> privateEndpointConnections = null, EventGridTopicProvisioningState? provisioningState = null, Uri endpoint = null, PartnerTopicEventTypeInfo eventTypeInfo = null, TlsVersion? minimumTlsVersionAllowed = null, EventGridInputSchema? inputSchema = null, EventGridInputSchemaMapping inputSchemaMapping = null, string metricResourceId = null, EventGridPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<EventGridInboundIPRule> inboundIPRules = null, bool? isLocalAuthDisabled = null, DataResidencyBoundary? dataResidencyBoundary = null)
+        public static EventGridTopicData EventGridTopicData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EventGridSku? skuName = null, ManagedServiceIdentity identity = null, ResourceKind? kind = null, ExtendedLocation extendedLocation = null, IEnumerable<EventGridPrivateEndpointConnectionData> privateEndpointConnections = null, EventGridTopicProvisioningState? provisioningState = null, Uri endpoint = null, PartnerTopicEventTypeInfo eventTypeInfo = null, TlsVersion? minimumTlsVersionAllowed = null, EventGridInputSchema? inputSchema = null, EventGridInputSchemaMapping inputSchemaMapping = null, string metricResourceId = null, EventGridPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<EventGridInboundIPRule> inboundIPRules = null, bool? isLocalAuthDisabled = null, DataResidencyBoundary? dataResidencyBoundary = null, IEnumerable<CustomerManagedKeyEncryption> customerManagedKeyEncryption = null, ConfidentialComputeMode? confidentialComputeMode = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<EventGridPrivateEndpointConnectionData>();
             inboundIPRules ??= new List<EventGridInboundIPRule>();
+            customerManagedKeyEncryption ??= new List<CustomerManagedKeyEncryption>();
 
             return new EventGridTopicData(
                 id,
@@ -898,6 +932,8 @@ namespace Azure.ResourceManager.EventGrid.Models
                 inboundIPRules?.ToList(),
                 isLocalAuthDisabled,
                 dataResidencyBoundary,
+                customerManagedKeyEncryption != null ? new KeyEncryption(customerManagedKeyEncryption?.ToList(), serializedAdditionalRawData: null) : null,
+                confidentialComputeMode.HasValue ? new PlatformCapabilities(new ConfidentialCompute(confidentialComputeMode.Value, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }
 
@@ -1247,7 +1283,26 @@ namespace Azure.ResourceManager.EventGrid.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static EventGridTopicData EventGridTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IEnumerable<EventGridPrivateEndpointConnectionData> privateEndpointConnections, EventGridTopicProvisioningState? provisioningState, Uri endpoint, PartnerTopicEventTypeInfo eventTypeInfo, TlsVersion? minimumTlsVersionAllowed, EventGridInputSchema? inputSchema, EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, EventGridPublicNetworkAccess? publicNetworkAccess, IEnumerable<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, DataResidencyBoundary? dataResidencyBoundary)
         {
-            return EventGridTopicData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, skuName: default, identity: identity, kind: default, extendedLocation: default, privateEndpointConnections: privateEndpointConnections, provisioningState: provisioningState, endpoint: endpoint, eventTypeInfo: eventTypeInfo, minimumTlsVersionAllowed: minimumTlsVersionAllowed, inputSchema: inputSchema, inputSchemaMapping: inputSchemaMapping, metricResourceId: metricResourceId, publicNetworkAccess: publicNetworkAccess, inboundIPRules: inboundIPRules, isLocalAuthDisabled: isLocalAuthDisabled, dataResidencyBoundary: dataResidencyBoundary);
+            return EventGridTopicData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, skuName: default, identity: identity, kind: default, extendedLocation: default, privateEndpointConnections: privateEndpointConnections, provisioningState: provisioningState, endpoint: endpoint, eventTypeInfo: eventTypeInfo, minimumTlsVersionAllowed: minimumTlsVersionAllowed, inputSchema: inputSchema, inputSchemaMapping: inputSchemaMapping, metricResourceId: metricResourceId, publicNetworkAccess: publicNetworkAccess, inboundIPRules: inboundIPRules, isLocalAuthDisabled: isLocalAuthDisabled, dataResidencyBoundary: dataResidencyBoundary, customerManagedKeyEncryption: default, confidentialComputeMode: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.EventGrid.SystemTopicData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> Identity information for the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the system topic. </param>
+        /// <param name="source"> Source for the system topic. </param>
+        /// <param name="topicType"> TopicType for the system topic. </param>
+        /// <param name="metricResourceId"> Metric resource id for the system topic. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.EventGrid.SystemTopicData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SystemTopicData SystemTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, EventGridResourceProvisioningState? provisioningState, ResourceIdentifier source, string topicType, Guid? metricResourceId)
+        {
+            return SystemTopicData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: identity, provisioningState: provisioningState, source: source, topicType: topicType, metricResourceId: metricResourceId, customerManagedKeyEncryption: default, confidentialComputeMode: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.EventGrid.VerifiedPartnerData" />. </summary>
