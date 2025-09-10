@@ -91,10 +91,12 @@ namespace Azure.ResourceManager.EventGrid
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.TopicProperties.InboundIpRules" /&gt;
         /// </param>
         /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
-        /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only AAD token will be used to authenticate if user is allowed to publish to the topic. </param>
+        /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the topic. </param>
         /// <param name="dataResidencyBoundary"> Data Residency Boundary of the resource. </param>
+        /// <param name="encryption"> Key encryption configuration properties of the topic resource. This is an optional property. When not specified, no key encryption is used. </param>
+        /// <param name="platformCapabilities"> Represents the platform capabilities of the resource, including Azure Confidential Compute related properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSku sku, ManagedServiceIdentity identity, ResourceKind? kind, ExtendedLocation extendedLocation, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, EventGridTopicProvisioningState? provisioningState, Uri endpoint, PartnerTopicEventTypeInfo eventTypeInfo, TlsVersion? minimumTlsVersionAllowed, EventGridInputSchema? inputSchema, EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, DataResidencyBoundary? dataResidencyBoundary, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal EventGridTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSku sku, ManagedServiceIdentity identity, ResourceKind? kind, ExtendedLocation extendedLocation, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, EventGridTopicProvisioningState? provisioningState, Uri endpoint, PartnerTopicEventTypeInfo eventTypeInfo, TlsVersion? minimumTlsVersionAllowed, EventGridInputSchema? inputSchema, EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, DataResidencyBoundary? dataResidencyBoundary, KeyEncryption encryption, PlatformCapabilities platformCapabilities, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -112,6 +114,8 @@ namespace Azure.ResourceManager.EventGrid
             InboundIPRules = inboundIPRules;
             IsLocalAuthDisabled = isLocalAuthDisabled;
             DataResidencyBoundary = dataResidencyBoundary;
+            Encryption = encryption;
+            PlatformCapabilities = platformCapabilities;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -184,11 +188,47 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
         [WirePath("properties.inboundIpRules")]
         public IList<EventGridInboundIPRule> InboundIPRules { get; }
-        /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only AAD token will be used to authenticate if user is allowed to publish to the topic. </summary>
+        /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the topic. </summary>
         [WirePath("properties.disableLocalAuth")]
         public bool? IsLocalAuthDisabled { get; set; }
         /// <summary> Data Residency Boundary of the resource. </summary>
         [WirePath("properties.dataResidencyBoundary")]
         public DataResidencyBoundary? DataResidencyBoundary { get; set; }
+        /// <summary> Key encryption configuration properties of the topic resource. This is an optional property. When not specified, no key encryption is used. </summary>
+        internal KeyEncryption Encryption { get; set; }
+        /// <summary> List of all customer-managed key encryption properties for the resource. However only one key is supported at a time. </summary>
+        [WirePath("properties.encryption.customerManagedKeyEncryption")]
+        public IList<CustomerManagedKeyEncryption> CustomerManagedKeyEncryption
+        {
+            get => Encryption is null ? default : Encryption.CustomerManagedKeyEncryption;
+            set => Encryption = new KeyEncryption(value);
+        }
+
+        /// <summary> Represents the platform capabilities of the resource, including Azure Confidential Compute related properties. </summary>
+        internal PlatformCapabilities PlatformCapabilities { get; set; }
+        /// <summary>
+        /// This property specifies the mode of the Azure Confidential Compute configuration.
+        /// Possible values are 'Disabled' or 'Enabled'.
+        /// This is an immutable property set at the time of resource creation and cannot be modified later.
+        /// Enabling this property ensures that messages are processed and stored in a Azure Confidential Compute environment.
+        /// </summary>
+        [WirePath("properties.platformCapabilities.confidentialCompute.mode")]
+        public ConfidentialComputeMode? ConfidentialComputeMode
+        {
+            get => PlatformCapabilities is null ? default : PlatformCapabilities.ConfidentialComputeMode;
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (PlatformCapabilities is null)
+                        PlatformCapabilities = new PlatformCapabilities();
+                    PlatformCapabilities.ConfidentialComputeMode = value.Value;
+                }
+                else
+                {
+                    PlatformCapabilities = null;
+                }
+            }
+        }
     }
 }

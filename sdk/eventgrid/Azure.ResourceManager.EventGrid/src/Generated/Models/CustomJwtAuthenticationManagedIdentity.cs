@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="identityType"> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </param>
         /// <param name="userAssignedIdentity"> The user identity associated with the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomJwtAuthenticationManagedIdentity(CustomJwtAuthenticationManagedIdentityType identityType, string userAssignedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomJwtAuthenticationManagedIdentity(CustomJwtAuthenticationManagedIdentityType identityType, ResourceIdentifier userAssignedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdentityType = identityType;
             UserAssignedIdentity = userAssignedIdentity;
@@ -73,6 +74,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         public CustomJwtAuthenticationManagedIdentityType IdentityType { get; set; }
         /// <summary> The user identity associated with the resource. </summary>
         [WirePath("userAssignedIdentity")]
-        public string UserAssignedIdentity { get; set; }
+        public ResourceIdentifier UserAssignedIdentity { get; set; }
     }
 }

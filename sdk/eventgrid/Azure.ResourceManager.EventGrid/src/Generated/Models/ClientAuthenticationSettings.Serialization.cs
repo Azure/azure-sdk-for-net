@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("customJwtAuthentication"u8);
                 writer.WriteObjectValue(CustomJwtAuthentication, options);
             }
+            if (Optional.IsDefined(WebhookAuthentication))
+            {
+                writer.WritePropertyName("webhookAuthentication"u8);
+                writer.WriteObjectValue(WebhookAuthentication, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -90,6 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             IList<AlternativeAuthenticationNameSource> alternativeAuthenticationNameSources = default;
             CustomJwtAuthenticationSettings customJwtAuthentication = default;
+            WebhookAuthenticationSettings webhookAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,13 +123,22 @@ namespace Azure.ResourceManager.EventGrid.Models
                     customJwtAuthentication = CustomJwtAuthenticationSettings.DeserializeCustomJwtAuthenticationSettings(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("webhookAuthentication"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    webhookAuthentication = WebhookAuthenticationSettings.DeserializeWebhookAuthenticationSettings(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ClientAuthenticationSettings(alternativeAuthenticationNameSources ?? new ChangeTrackingList<AlternativeAuthenticationNameSource>(), customJwtAuthentication, serializedAdditionalRawData);
+            return new ClientAuthenticationSettings(alternativeAuthenticationNameSources ?? new ChangeTrackingList<AlternativeAuthenticationNameSource>(), customJwtAuthentication, webhookAuthentication, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -172,6 +187,21 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     builder.Append("  customJwtAuthentication: ");
                     BicepSerializationHelpers.AppendChildObject(builder, CustomJwtAuthentication, options, 2, false, "  customJwtAuthentication: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebhookAuthentication), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  webhookAuthentication: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WebhookAuthentication))
+                {
+                    builder.Append("  webhookAuthentication: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, WebhookAuthentication, options, 2, false, "  webhookAuthentication: ");
                 }
             }
 
