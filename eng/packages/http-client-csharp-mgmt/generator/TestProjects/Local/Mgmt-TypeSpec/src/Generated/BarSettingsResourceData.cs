@@ -36,6 +36,7 @@ namespace MgmtTypeSpec
             InnerProp2 = innerProp2;
             MiddleProp1 = middleProp1;
             Prop2 = prop2;
+            InitializeBarNestedQuotaProperties();
         }
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
@@ -130,13 +131,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                InitializeBarNestedQuotaProperties();
-                return FlattenedNestedProperty.MiddleProp2;
-            }
-            set
-            {
-                InitializeBarNestedQuotaProperties();
-                FlattenedNestedProperty.MiddleProp2 = value;
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.MiddleProp2;
             }
         }
 
@@ -145,13 +140,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                InitializeBarNestedQuotaProperties();
-                return FlattenedNestedProperty.Prop1;
-            }
-            set
-            {
-                InitializeBarNestedQuotaProperties();
-                FlattenedNestedProperty.Prop1 = value;
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.Prop1;
             }
         }
 

@@ -541,5 +541,28 @@ namespace Azure.Storage.DataMovement.Tests
                     cancellationToken: cts.Token);
             }
         }
+
+        [RecordedTest]
+        public async Task Upload_TrailingSlash()
+        {
+            using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
+
+            List<string> files = [ "file1", "file2", "dir1/file1" ];
+
+            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(30);
+            await SetupDirectoryAsync(
+                disposingLocalDirectory.DirectoryPath,
+                files.Select(path => (path, (long)Constants.KB)).ToList(),
+                cancellationToken);
+
+            // Intentionally append trailing slash
+            string sourcePath = disposingLocalDirectory.DirectoryPath + Path.DirectorySeparatorChar;
+            await UploadDirectoryAndVerifyAsync(
+                sourcePath,
+                test.Container,
+                expectedTransfers: files.Count,
+                cancellationToken: cancellationToken);
+        }
     }
 }

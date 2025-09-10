@@ -7,7 +7,10 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Resolved memory leak issue with `CancellationTokenSource` in `TransferOperation` that could occur when the transfer was created.
+<<<<<<< HEAD
+- Fixed an issue on upload transfers where file/directory names on the destination may be incorrect. The issue could occur if the path passed to `LocalFilesStorageResourceProvider.FromDirectory` contained a trailing slash.
+- Resolved memory leak issue with `CancellationTokenSource` usage not being properly disposed, namely in the following areas:
+    - `TransferOperation` when created upon starting a transfer.
 
 ### Other Changes
 

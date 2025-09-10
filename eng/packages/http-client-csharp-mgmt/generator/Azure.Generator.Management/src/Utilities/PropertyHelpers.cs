@@ -107,30 +107,6 @@ namespace Azure.Generator.Management.Utilities
             }
         }
 
-        public static MethodBodyStatement BuildGetterForCollectionProperty(IEnumerable<PropertyProvider> collectionTypeProperties, bool? includeGetterNullCheck, string initializationMethodName, PropertyProvider internalProperty, TypeProvider innerModel, PropertyProvider singleProperty)
-        {
-            var checkNullExpression = This.Property(internalProperty.Name).Is(Null);
-            if (includeGetterNullCheck == true)
-            {
-                return new List<MethodBodyStatement> {
-                    This.Invoke(initializationMethodName).Terminate(),
-                    Return(new MemberExpression(internalProperty, singleProperty.Name))
-                };
-            }
-            else if (includeGetterNullCheck == false)
-            {
-                return Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalProperty, singleProperty.Name)));
-            }
-            else
-            {
-                if (innerModel.Type.IsNullable)
-                {
-                    return Return(new MemberExpression(internalProperty.AsVariableExpression.NullConditional(), singleProperty.Name));
-                }
-                return Return(new MemberExpression(internalProperty, singleProperty.Name));
-            }
-        }
-
         public static MethodBodyStatement BuildSetterForPropertyFlatten(ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty)
         {
             var isNullableValueType = innerProperty.Type.IsValueType && innerProperty.Type.IsNullable;
@@ -142,17 +118,6 @@ namespace Azure.Generator.Management.Utilities
                 {
                         internalPropertyExpression.Assign(New.Instance(innerModel.Type!)).Terminate()
                 });
-            setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(isNullableValueType ? Value.Property(nameof(Nullable<int>.Value)) : Value).Terminate());
-            return setter;
-        }
-
-        public static MethodBodyStatement BuildSetterForCollectionProperty(IEnumerable<PropertyProvider> collectionTypeProperties, string initializationMethodName, PropertyProvider internalProperty, PropertyProvider innerProperty)
-        {
-            var isNullableValueType = innerProperty.Type.IsValueType && innerProperty.Type.IsNullable;
-            var setter = new List<MethodBodyStatement>();
-            var internalPropertyExpression = This.Property(internalProperty.Name);
-
-            setter.Add(This.Invoke(initializationMethodName).Terminate());
             setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(isNullableValueType ? Value.Property(nameof(Nullable<int>.Value)) : Value).Terminate());
             return setter;
         }
