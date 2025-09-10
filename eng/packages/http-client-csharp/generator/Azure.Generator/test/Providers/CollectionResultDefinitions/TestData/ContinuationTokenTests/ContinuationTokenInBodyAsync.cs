@@ -50,13 +50,14 @@ namespace Samples
                 {
                     yield break;
                 }
+                global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
                 global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
-                foreach (var item in ((global::Samples.Models.Page)response).Cats)
+                foreach (var item in result.Cats)
                 {
                     items.Add(global::System.BinaryData.FromObjectAsJson(item));
                 }
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage, response);
-                nextPage = ((global::Samples.Models.Page)response).NextPage;
+                nextPage = result.NextPage;
                 if ((nextPage == null))
                 {
                     yield break;

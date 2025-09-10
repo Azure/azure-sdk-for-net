@@ -799,8 +799,9 @@
             "parameters": [
               {
                 "$id": "68",
+                "kind": "query",
                 "name": "apiVersion",
-                "nameInRequest": "api-version",
+                "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
                   "$id": "69",
@@ -809,13 +810,8 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": true,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Client",
                 "defaultValue": {
                   "type": {
                     "$id": "70",
@@ -825,13 +821,17 @@
                   },
                   "value": "2022-12-01-preview"
                 },
+                "optional": false,
+                "scope": "Client",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate.apiVersion",
+                "readOnly": false
               },
               {
                 "$id": "71",
+                "kind": "path",
                 "name": "id",
-                "nameInRequest": "id",
+                "serializedName": "id",
                 "doc": "The user's id.",
                 "type": {
                   "$id": "72",
@@ -840,68 +840,69 @@
                   "crossLanguageDefinitionId": "TypeSpec.int32",
                   "decorators": []
                 },
-                "location": "Path",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "style": "simple",
+                "allowReserved": false,
+                "skipUrlEncoding": false,
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate.id"
               },
               {
                 "$id": "73",
+                "kind": "header",
                 "name": "contentType",
-                "nameInRequest": "Content-Type",
+                "serializedName": "Content-Type",
                 "doc": "This request has a JSON Merge Patch body.",
                 "type": {
                   "$ref": "4"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": true,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate.contentType"
               },
               {
                 "$id": "74",
+                "kind": "header",
                 "name": "accept",
-                "nameInRequest": "Accept",
+                "serializedName": "Accept",
                 "type": {
                   "$ref": "6"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate.accept"
               },
               {
                 "$id": "75",
+                "kind": "body",
                 "name": "resource",
-                "nameInRequest": "resource",
+                "serializedName": "resource",
                 "doc": "The resource instance.",
                 "type": {
                   "$ref": "22"
                 },
-                "location": "Body",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "contentTypes": [
+                  "application/merge-patch+json"
+                ],
+                "defaultContentType": "application/merge-patch+json",
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate.resource"
               }
             ],
             "responses": [
@@ -947,8 +948,9 @@
           "parameters": [
             {
               "$id": "76",
+              "kind": "method",
               "name": "id",
-              "nameInRequest": "id",
+              "serializedName": "id",
               "doc": "The user's id.",
               "type": {
                 "$id": "77",
@@ -959,66 +961,65 @@
               },
               "location": "Path",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate.id",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "78",
+              "kind": "method",
               "name": "contentType",
-              "nameInRequest": "Content-Type",
+              "serializedName": "Content-Type",
               "doc": "This request has a JSON Merge Patch body.",
               "type": {
                 "$ref": "8"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": true,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "79",
+              "kind": "method",
               "name": "resource",
-              "nameInRequest": "resource",
+              "serializedName": "resource",
               "doc": "The resource instance.",
               "type": {
                 "$ref": "22"
               },
               "location": "Body",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate.resource",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "80",
+              "kind": "method",
               "name": "accept",
-              "nameInRequest": "Accept",
+              "serializedName": "Accept",
               "type": {
                 "$ref": "6"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -1051,8 +1052,9 @@
             "parameters": [
               {
                 "$id": "83",
+                "kind": "query",
                 "name": "apiVersion",
-                "nameInRequest": "api-version",
+                "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
                   "$id": "84",
@@ -1061,13 +1063,8 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": true,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Client",
                 "defaultValue": {
                   "type": {
                     "$id": "85",
@@ -1077,13 +1074,17 @@
                   },
                   "value": "2022-12-01-preview"
                 },
+                "optional": false,
+                "scope": "Client",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrReplace.apiVersion",
+                "readOnly": false
               },
               {
                 "$id": "86",
+                "kind": "path",
                 "name": "id",
-                "nameInRequest": "id",
+                "serializedName": "id",
                 "doc": "The user's id.",
                 "type": {
                   "$id": "87",
@@ -1092,68 +1093,69 @@
                   "crossLanguageDefinitionId": "TypeSpec.int32",
                   "decorators": []
                 },
-                "location": "Path",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "style": "simple",
+                "allowReserved": false,
+                "skipUrlEncoding": false,
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrReplace.id"
               },
               {
                 "$id": "88",
+                "kind": "header",
                 "name": "contentType",
-                "nameInRequest": "Content-Type",
+                "serializedName": "Content-Type",
                 "doc": "Body parameter's content type. Known values are application/json",
                 "type": {
                   "$ref": "10"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": true,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrReplace.contentType"
               },
               {
                 "$id": "89",
+                "kind": "header",
                 "name": "accept",
-                "nameInRequest": "Accept",
+                "serializedName": "Accept",
                 "type": {
                   "$ref": "12"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrReplace.accept"
               },
               {
                 "$id": "90",
+                "kind": "body",
                 "name": "resource",
-                "nameInRequest": "resource",
+                "serializedName": "resource",
                 "doc": "The resource instance.",
                 "type": {
                   "$ref": "22"
                 },
-                "location": "Body",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrReplace.resource"
               }
             ],
             "responses": [
@@ -1199,8 +1201,9 @@
           "parameters": [
             {
               "$id": "91",
+              "kind": "method",
               "name": "id",
-              "nameInRequest": "id",
+              "serializedName": "id",
               "doc": "The user's id.",
               "type": {
                 "$id": "92",
@@ -1211,66 +1214,65 @@
               },
               "location": "Path",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrReplace.id",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "93",
+              "kind": "method",
               "name": "resource",
-              "nameInRequest": "resource",
+              "serializedName": "resource",
               "doc": "The resource instance.",
               "type": {
                 "$ref": "22"
               },
               "location": "Body",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrReplace.resource",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "94",
+              "kind": "method",
               "name": "contentType",
-              "nameInRequest": "Content-Type",
+              "serializedName": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "10"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": true,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrReplace.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "95",
+              "kind": "method",
               "name": "accept",
-              "nameInRequest": "Accept",
+              "serializedName": "Accept",
               "type": {
                 "$ref": "12"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrReplace.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -1303,8 +1305,9 @@
             "parameters": [
               {
                 "$id": "98",
+                "kind": "query",
                 "name": "apiVersion",
-                "nameInRequest": "api-version",
+                "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
                   "$id": "99",
@@ -1313,13 +1316,8 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": true,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Client",
                 "defaultValue": {
                   "type": {
                     "$id": "100",
@@ -1329,13 +1327,17 @@
                   },
                   "value": "2022-12-01-preview"
                 },
+                "optional": false,
+                "scope": "Client",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.get.apiVersion",
+                "readOnly": false
               },
               {
                 "$id": "101",
+                "kind": "path",
                 "name": "id",
-                "nameInRequest": "id",
+                "serializedName": "id",
                 "doc": "The user's id.",
                 "type": {
                   "$id": "102",
@@ -1344,32 +1346,32 @@
                   "crossLanguageDefinitionId": "TypeSpec.int32",
                   "decorators": []
                 },
-                "location": "Path",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "style": "simple",
+                "allowReserved": false,
+                "skipUrlEncoding": false,
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.get.id"
               },
               {
                 "$id": "103",
+                "kind": "header",
                 "name": "accept",
-                "nameInRequest": "Accept",
+                "serializedName": "Accept",
                 "type": {
                   "$ref": "14"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.get.accept"
               }
             ],
             "responses": [
@@ -1399,8 +1401,9 @@
           "parameters": [
             {
               "$id": "104",
+              "kind": "method",
               "name": "id",
-              "nameInRequest": "id",
+              "serializedName": "id",
               "doc": "The user's id.",
               "type": {
                 "$id": "105",
@@ -1411,30 +1414,29 @@
               },
               "location": "Path",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.get.id",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "106",
+              "kind": "method",
               "name": "accept",
-              "nameInRequest": "Accept",
+              "serializedName": "Accept",
               "type": {
                 "$ref": "14"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.get.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -1467,8 +1469,9 @@
             "parameters": [
               {
                 "$id": "109",
+                "kind": "query",
                 "name": "apiVersion",
-                "nameInRequest": "api-version",
+                "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
                   "$id": "110",
@@ -1477,13 +1480,8 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": true,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Client",
                 "defaultValue": {
                   "type": {
                     "$id": "111",
@@ -1493,13 +1491,17 @@
                   },
                   "value": "2022-12-01-preview"
                 },
+                "optional": false,
+                "scope": "Client",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.apiVersion",
+                "readOnly": false
               },
               {
                 "$id": "112",
+                "kind": "query",
                 "name": "top",
-                "nameInRequest": "top",
+                "serializedName": "top",
                 "doc": "The number of result items to return.",
                 "type": {
                   "$id": "113",
@@ -1508,20 +1510,19 @@
                   "crossLanguageDefinitionId": "TypeSpec.int32",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": false,
-                "kind": "Method",
+                "optional": true,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.top",
+                "readOnly": false
               },
               {
                 "$id": "114",
+                "kind": "query",
                 "name": "skip",
-                "nameInRequest": "skip",
+                "serializedName": "skip",
                 "doc": "The number of result items to skip.",
                 "type": {
                   "$id": "115",
@@ -1530,20 +1531,19 @@
                   "crossLanguageDefinitionId": "TypeSpec.int32",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": false,
-                "kind": "Method",
+                "optional": true,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.skip",
+                "readOnly": false
               },
               {
                 "$id": "116",
+                "kind": "query",
                 "name": "maxpagesize",
-                "nameInRequest": "maxpagesize",
+                "serializedName": "maxpagesize",
                 "doc": "The maximum number of result items per page.",
                 "type": {
                   "$id": "117",
@@ -1552,20 +1552,19 @@
                   "crossLanguageDefinitionId": "TypeSpec.int32",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": false,
-                "kind": "Method",
+                "optional": true,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.maxpagesize",
+                "readOnly": false
               },
               {
                 "$id": "118",
+                "kind": "query",
                 "name": "orderby",
-                "nameInRequest": "orderby",
+                "serializedName": "orderby",
                 "doc": "Expressions that specify the order of returned results.",
                 "type": {
                   "$id": "119",
@@ -1581,20 +1580,19 @@
                   "crossLanguageDefinitionId": "TypeSpec.Array",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": true,
-                "isRequired": false,
-                "kind": "Method",
+                "optional": true,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.orderby",
+                "readOnly": false
               },
               {
                 "$id": "121",
+                "kind": "query",
                 "name": "filter",
-                "nameInRequest": "filter",
+                "serializedName": "filter",
                 "doc": "Filter the result list using the given expression.",
                 "type": {
                   "$id": "122",
@@ -1603,68 +1601,63 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": false,
-                "kind": "Method",
+                "optional": true,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.filter",
+                "readOnly": false
               },
               {
                 "$id": "123",
+                "kind": "query",
                 "name": "select",
-                "nameInRequest": "select",
+                "serializedName": "select",
                 "doc": "Select the specified fields to be included in the response.",
                 "type": {
                   "$ref": "119"
                 },
-                "location": "Query",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": true,
-                "isRequired": false,
-                "kind": "Method",
+                "optional": true,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.select",
+                "readOnly": false
               },
               {
                 "$id": "124",
+                "kind": "query",
                 "name": "expand",
-                "nameInRequest": "expand",
+                "serializedName": "expand",
                 "doc": "Expand the indicated resources into the response.",
                 "type": {
                   "$ref": "119"
                 },
-                "location": "Query",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": true,
-                "isRequired": false,
-                "kind": "Method",
+                "optional": true,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.expand",
+                "readOnly": false
               },
               {
                 "$id": "125",
+                "kind": "header",
                 "name": "accept",
-                "nameInRequest": "Accept",
+                "serializedName": "Accept",
                 "type": {
                   "$ref": "16"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.accept"
               }
             ],
             "responses": [
@@ -1694,8 +1687,9 @@
           "parameters": [
             {
               "$id": "126",
+              "kind": "method",
               "name": "top",
-              "nameInRequest": "top",
+              "serializedName": "top",
               "doc": "The number of result items to return.",
               "type": {
                 "$id": "127",
@@ -1706,18 +1700,18 @@
               },
               "location": "Query",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": false,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": true,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.top",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "128",
+              "kind": "method",
               "name": "skip",
-              "nameInRequest": "skip",
+              "serializedName": "skip",
               "doc": "The number of result items to skip.",
               "type": {
                 "$id": "129",
@@ -1728,18 +1722,18 @@
               },
               "location": "Query",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": false,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": true,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.skip",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "130",
+              "kind": "method",
               "name": "maxpagesize",
-              "nameInRequest": "maxpagesize",
+              "serializedName": "maxpagesize",
               "doc": "The maximum number of result items per page.",
               "type": {
                 "$id": "131",
@@ -1750,36 +1744,36 @@
               },
               "location": "Query",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": false,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": true,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.maxpagesize",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "132",
+              "kind": "method",
               "name": "orderby",
-              "nameInRequest": "orderby",
+              "serializedName": "orderby",
               "doc": "Expressions that specify the order of returned results.",
               "type": {
                 "$ref": "119"
               },
               "location": "Query",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": true,
-              "isRequired": false,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": true,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.orderby",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "133",
+              "kind": "method",
               "name": "filter",
-              "nameInRequest": "filter",
+              "serializedName": "filter",
               "doc": "Filter the result list using the given expression.",
               "type": {
                 "$id": "134",
@@ -1790,66 +1784,65 @@
               },
               "location": "Query",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": false,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": true,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.filter",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "135",
+              "kind": "method",
               "name": "select",
-              "nameInRequest": "select",
+              "serializedName": "select",
               "doc": "Select the specified fields to be included in the response.",
               "type": {
                 "$ref": "119"
               },
               "location": "Query",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": true,
-              "isRequired": false,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": true,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.select",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "136",
+              "kind": "method",
               "name": "expand",
-              "nameInRequest": "expand",
+              "serializedName": "expand",
               "doc": "Expand the indicated resources into the response.",
               "type": {
                 "$ref": "119"
               },
               "location": "Query",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": true,
-              "isRequired": false,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": true,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.expand",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "137",
+              "kind": "method",
               "name": "accept",
-              "nameInRequest": "Accept",
+              "serializedName": "Accept",
               "type": {
                 "$ref": "16"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -1896,8 +1889,9 @@
             "parameters": [
               {
                 "$id": "140",
+                "kind": "query",
                 "name": "apiVersion",
-                "nameInRequest": "api-version",
+                "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
                   "$id": "141",
@@ -1906,13 +1900,8 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": true,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Client",
                 "defaultValue": {
                   "type": {
                     "$id": "142",
@@ -1922,13 +1911,17 @@
                   },
                   "value": "2022-12-01-preview"
                 },
+                "optional": false,
+                "scope": "Client",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.delete.apiVersion",
+                "readOnly": false
               },
               {
                 "$id": "143",
+                "kind": "path",
                 "name": "id",
-                "nameInRequest": "id",
+                "serializedName": "id",
                 "doc": "The user's id.",
                 "type": {
                   "$id": "144",
@@ -1937,15 +1930,16 @@
                   "crossLanguageDefinitionId": "TypeSpec.int32",
                   "decorators": []
                 },
-                "location": "Path",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "style": "simple",
+                "allowReserved": false,
+                "skipUrlEncoding": false,
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.delete.id"
               }
             ],
             "responses": [
@@ -1969,8 +1963,9 @@
           "parameters": [
             {
               "$id": "145",
+              "kind": "method",
               "name": "id",
-              "nameInRequest": "id",
+              "serializedName": "id",
               "doc": "The user's id.",
               "type": {
                 "$id": "146",
@@ -1981,13 +1976,12 @@
               },
               "location": "Path",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.delete.id",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {},
@@ -2016,8 +2010,9 @@
             "parameters": [
               {
                 "$id": "149",
+                "kind": "query",
                 "name": "apiVersion",
-                "nameInRequest": "api-version",
+                "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
                   "$id": "150",
@@ -2026,13 +2021,8 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": true,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Client",
                 "defaultValue": {
                   "type": {
                     "$id": "151",
@@ -2042,13 +2032,17 @@
                   },
                   "value": "2022-12-01-preview"
                 },
+                "optional": false,
+                "scope": "Client",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.export.apiVersion",
+                "readOnly": false
               },
               {
                 "$id": "152",
+                "kind": "path",
                 "name": "id",
-                "nameInRequest": "id",
+                "serializedName": "id",
                 "doc": "The user's id.",
                 "type": {
                   "$id": "153",
@@ -2057,20 +2051,22 @@
                   "crossLanguageDefinitionId": "TypeSpec.int32",
                   "decorators": []
                 },
-                "location": "Path",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "style": "simple",
+                "allowReserved": false,
+                "skipUrlEncoding": false,
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.export.id"
               },
               {
                 "$id": "154",
+                "kind": "query",
                 "name": "format",
-                "nameInRequest": "format",
+                "serializedName": "format",
                 "doc": "The format of the data.",
                 "type": {
                   "$id": "155",
@@ -2079,32 +2075,29 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.export.format",
+                "readOnly": false
               },
               {
                 "$id": "156",
+                "kind": "header",
                 "name": "accept",
-                "nameInRequest": "Accept",
+                "serializedName": "Accept",
                 "type": {
                   "$ref": "18"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.export.accept"
               }
             ],
             "responses": [
@@ -2134,8 +2127,9 @@
           "parameters": [
             {
               "$id": "157",
+              "kind": "method",
               "name": "id",
-              "nameInRequest": "id",
+              "serializedName": "id",
               "doc": "The user's id.",
               "type": {
                 "$id": "158",
@@ -2146,18 +2140,18 @@
               },
               "location": "Path",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.export.id",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "159",
+              "kind": "method",
               "name": "format",
-              "nameInRequest": "format",
+              "serializedName": "format",
               "doc": "The format of the data.",
               "type": {
                 "$id": "160",
@@ -2168,30 +2162,29 @@
               },
               "location": "Query",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.export.format",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "161",
+              "kind": "method",
               "name": "accept",
-              "nameInRequest": "Accept",
+              "serializedName": "Accept",
               "type": {
                 "$ref": "18"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.export.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -2224,8 +2217,9 @@
             "parameters": [
               {
                 "$id": "164",
+                "kind": "query",
                 "name": "apiVersion",
-                "nameInRequest": "api-version",
+                "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
                   "$id": "165",
@@ -2234,13 +2228,8 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": true,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Client",
                 "defaultValue": {
                   "type": {
                     "$id": "166",
@@ -2250,13 +2239,17 @@
                   },
                   "value": "2022-12-01-preview"
                 },
+                "optional": false,
+                "scope": "Client",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.exportAllUsers.apiVersion",
+                "readOnly": false
               },
               {
                 "$id": "167",
+                "kind": "query",
                 "name": "format",
-                "nameInRequest": "format",
+                "serializedName": "format",
                 "doc": "The format of the data.",
                 "type": {
                   "$id": "168",
@@ -2265,32 +2258,29 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.exportAllUsers.format",
+                "readOnly": false
               },
               {
                 "$id": "169",
+                "kind": "header",
                 "name": "accept",
-                "nameInRequest": "Accept",
+                "serializedName": "Accept",
                 "type": {
                   "$ref": "20"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.exportAllUsers.accept"
               }
             ],
             "responses": [
@@ -2320,8 +2310,9 @@
           "parameters": [
             {
               "$id": "170",
+              "kind": "method",
               "name": "format",
-              "nameInRequest": "format",
+              "serializedName": "format",
               "doc": "The format of the data.",
               "type": {
                 "$id": "171",
@@ -2332,30 +2323,29 @@
               },
               "location": "Query",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.exportAllUsers.format",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "172",
+              "kind": "method",
               "name": "accept",
-              "nameInRequest": "Accept",
+              "serializedName": "Accept",
               "type": {
                 "$ref": "20"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.exportAllUsers.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -2372,8 +2362,9 @@
       "parameters": [
         {
           "$id": "173",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
             "$id": "174",
@@ -2381,14 +2372,10 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "175",
@@ -2398,7 +2385,10 @@
             },
             "value": "http://localhost:3000"
           },
-          "serverUrlTemplate": "{endpoint}"
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.endpoint"
         }
       ],
       "decorators": [],

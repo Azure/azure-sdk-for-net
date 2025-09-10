@@ -6,6 +6,10 @@ param(
 )
 
 Import-Module "$PSScriptRoot\Generation.psm1" -DisableNameChecking -Force;
+Import-Module "$PSScriptRoot\Spector-Helper.psm1" -DisableNameChecking -Force;
+
+# Start overall timer
+$totalStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
 
 Write-Host "Script root: $PSScriptRoot" -ForegroundColor Cyan
 $packageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
@@ -42,66 +46,13 @@ $specsDirectory = "$packageRoot/node_modules/@typespec/http-specs"
 $azureSpecsDirectory = "$packageRoot/node_modules/@azure-tools/azure-http-specs"
 $spectorRoot = Join-Path $packageRoot 'generator' 'TestProjects' 'Spector'
 
-function IsSpecDir {
-    param (
-        [string]$dir
-    )
-    return (Test-Path "$dir/main.tsp")
-}
-
-$failingSpecs = @(
-    Join-Path 'http' 'streaming' 'jsonl'
-    Join-Path 'http' 'payload' 'xml'
-    Join-Path 'http' 'versioning' 'added'
-    Join-Path 'http' 'versioning' 'madeOptional'
-    Join-Path 'http' 'versioning' 'removed'
-    Join-Path 'http' 'versioning' 'renamedFrom'
-    Join-Path 'http' 'versioning' 'returnTypeChangedFrom'
-    Join-Path 'http' 'versioning' 'typeChangedFrom'
-    Join-Path 'http' 'client' 'naming' # pending until https://github.com/microsoft/typespec/issues/5653 is resolved
-    Join-Path 'http' 'response' 'status-code-range' # Response namespace conflicts with Azure.Response
-    # Azure scenarios not yet buildable
-    Join-Path 'http' 'client' 'namespace'
-    Join-Path 'http' 'azure' 'client-generator-core' 'client-initialization'
-    Join-Path 'http' 'azure' 'client-generator-core' 'deserialize-empty-string-as-null' # long path issue and also not needed for Azure emitter
-    Join-Path 'http' 'azure' 'core' 'scalar'
-    Join-Path 'http' 'azure' 'core' 'traits'
-    Join-Path 'http' 'azure' 'payload' 'pageable'
-    # These scenarios will be covered in Azure.Generator.Management
-    Join-Path 'http' 'azure' 'resource-manager' 'common-properties'
-    Join-Path 'http' 'azure' 'resource-manager' 'non-resource'
-    Join-Path 'http' 'azure' 'resource-manager' 'operation-templates'
-    Join-Path 'http' 'azure' 'resource-manager' 'resources'
-    Join-Path 'http' 'azure' 'resource-manager' 'large-header'
-
-)
-
 $spectorLaunchProjects = @{}
 
-# Loop through all directories and subdirectories of the spector specs
-$directories = @(Get-ChildItem -Path "$specsDirectory/specs" -Directory -Recurse)
-$directories += @(Get-ChildItem -Path "$azureSpecsDirectory/specs" -Directory -Recurse)
-foreach ($directory in $directories) {
-    if (-not (IsSpecDir $directory.FullName)) {
-        continue
-    }
-
-    $fromAzure = $directory.FullName.Contains("azure-http-specs")
-
-    $specFile = Join-Path $directory.FullName "client.tsp"
-    if (-not (Test-Path $specFile)) {
-        $specFile = Join-Path $directory.FullName "main.tsp"
-    }
-    $subPath = if ($fromAzure) {$directory.FullName.Substring($azureSpecsDirectory.Length + 1)} else {$directory.FullName.Substring($specsDirectory.Length + 1)}
-    $subPath = $subPath -replace '^specs', 'http' # Keep consistent with the previous folder name because 'http' makes more sense then current 'specs'
+foreach ($specFile in Get-Sorted-Specs) {
+    $subPath = Get-SubPath $specFile
     $folders = $subPath.Split([System.IO.Path]::DirectorySeparatorChar)
 
     if (-not (Compare-Paths $subPath $filter)) {
-        continue
-    }
-
-    if ($failingSpecs.Contains($subPath)) {
-        Write-Host "Skipping $subPath" -ForegroundColor Yellow
         continue
     }
 
@@ -115,8 +66,10 @@ foreach ($directory in $directories) {
         New-Item -ItemType Directory -Path $generationDir | Out-Null
     }
 
+    Write-Host "Generating $subPath" -ForegroundColor Cyan
+
     if ($folders.Contains("versioning")) {
-        Generate-Versioning $directory.FullName $generationDir -generateStub $stubbed
+        Generate-Versioning (Split-Path $specFile) $generationDir -generateStub $stubbed
         $spectorLaunchProjects.Add($($folders -join "-") + "-v1", $("TestProjects/Spector/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v1")
         $spectorLaunchProjects.Add($($folders -join "-") + "-v2", $("TestProjects/Spector/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v2")
         continue
@@ -124,7 +77,7 @@ foreach ($directory in $directories) {
 
     # srv-driven contains two separate specs, for two separate clients. We need to generate both.
     if ($folders.Contains("srv-driven")) {
-        Generate-Srv-Driven $directory.FullName $generationDir -generateStub $stubbed
+        Generate-Srv-Driven (Split-Path $specFile) $generationDir -generateStub $stubbed
         $spectorLaunchProjects.Add($($folders -join "-") + "-v1", $("TestProjects/Spector/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v1")
         $spectorLaunchProjects.Add($($folders -join "-") + "-v2", $("TestProjects/Spector/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v2")
         continue
@@ -135,7 +88,6 @@ foreach ($directory in $directories) {
         continue
     }
 
-    Write-Host "Generating $subPath" -ForegroundColor Cyan
     Invoke (Get-TspCommand $specFile $generationDir $stubbed)
 
     # exit if the generation failed
@@ -185,3 +137,10 @@ if ($null -eq $filter) {
     # Write the settings to JSON and normalize line endings to Unix style (LF)
     $sortedLaunchSettings | ConvertTo-Json | ForEach-Object { ($_ -replace "`r`n", "`n") + "`n" } | Set-Content -NoNewline $launchSettingsPath
 }
+
+# Stop total timer
+$totalStopwatch.Stop()
+
+# Display timing summary
+Write-Host "`n==================== TIMING SUMMARY ====================" -ForegroundColor Cyan
+Write-Host "Total execution time: $($totalStopwatch.Elapsed.ToString('hh\:mm\:ss\.ff'))" -ForegroundColor Yellow

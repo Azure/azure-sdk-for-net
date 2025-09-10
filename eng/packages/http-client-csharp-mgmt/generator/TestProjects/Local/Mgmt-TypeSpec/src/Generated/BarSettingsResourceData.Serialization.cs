@@ -20,6 +20,11 @@ namespace MgmtTypeSpec
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class BarSettingsResourceData : IJsonModel<BarSettingsResourceData>
     {
+        /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/> for deserialization. </summary>
+        internal BarSettingsResourceData()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BarSettingsResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -59,6 +64,12 @@ namespace MgmtTypeSpec
                 }
                 writer.WriteEndArray();
             }
+            writer.WritePropertyName("property"u8);
+            writer.WriteObjectValue(Property, options);
+            writer.WritePropertyName("anotherProperty"u8);
+            writer.WriteObjectValue(AnotherProperty, options);
+            writer.WritePropertyName("flattenedNestedProperty"u8);
+            writer.WriteObjectValue(FlattenedNestedProperty, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -93,6 +104,9 @@ namespace MgmtTypeSpec
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BarSettingsProperties properties = default;
             IList<string> stringArray = default;
+            BarQuotaProperties @property = default;
+            BarQuotaProperties anotherProperty = default;
+            BarNestedQuotaProperties flattenedNestedProperty = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -157,6 +171,21 @@ namespace MgmtTypeSpec
                     stringArray = array;
                     continue;
                 }
+                if (prop.NameEquals("property"u8))
+                {
+                    @property = BarQuotaProperties.DeserializeBarQuotaProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("anotherProperty"u8))
+                {
+                    anotherProperty = BarQuotaProperties.DeserializeBarQuotaProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("flattenedNestedProperty"u8))
+                {
+                    flattenedNestedProperty = BarNestedQuotaProperties.DeserializeBarNestedQuotaProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -169,7 +198,10 @@ namespace MgmtTypeSpec
                 systemData,
                 additionalBinaryDataProperties,
                 properties,
-                stringArray ?? new ChangeTrackingList<string>());
+                stringArray ?? new ChangeTrackingList<string>(),
+                @property,
+                anotherProperty,
+                flattenedNestedProperty);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

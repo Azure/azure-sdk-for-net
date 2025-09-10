@@ -358,7 +358,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
             request.Uri = uri;
             request.Headers.Add("If-Match", ifMatch);
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }

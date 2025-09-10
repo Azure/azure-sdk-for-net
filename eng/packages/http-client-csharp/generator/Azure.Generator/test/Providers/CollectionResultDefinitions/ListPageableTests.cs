@@ -75,7 +75,7 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             [
                 InputFactory.Property("color", InputPrimitiveType.String, isRequired: true),
             ]);
-            var parameter = InputFactory.Parameter("animalKind", InputPrimitiveType.String, isRequired: true, location: InputRequestLocation.Query);
+            var parameter = InputFactory.QueryParameter("animalKind", InputPrimitiveType.String, isRequired: true);
             var pagingMetadata = InputFactory.PagingMetadata(["cats"], null, null);
             var response = InputFactory.OperationResponse(
                 [200],

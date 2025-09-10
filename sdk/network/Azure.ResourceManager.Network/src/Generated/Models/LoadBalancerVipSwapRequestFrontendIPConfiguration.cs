@@ -64,10 +64,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of frontend IP configuration resource. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> A reference to public IP address resource. </summary>
         internal WritableSubResource PublicIPAddress { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.publicIPAddress.id")]
         public ResourceIdentifier PublicIPAddressId
         {
             get => PublicIPAddress is null ? default : PublicIPAddress.Id;

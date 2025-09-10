@@ -13,7 +13,7 @@ namespace Azure.Data.AppConfiguration
     /// Configuration Setting model factory that enables mocking for the AppConfiguration client library.
     /// </summary>
     [CodeGenType("AzureDataAppConfigurationModelFactory")]
-    [CodeGenSuppress("ConfigurationSetting", typeof(string), typeof(string), typeof(string), typeof(string), typeof(ETag), typeof(DateTimeOffset?), typeof(bool?), typeof(IDictionary<string, string>))]
+    [CodeGenSuppress("ConfigurationSetting", typeof(string), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(IDictionary<string, string>), typeof(bool?), typeof(ETag))]
     public static partial class ConfigurationModelFactory
     {
         /// <summary>

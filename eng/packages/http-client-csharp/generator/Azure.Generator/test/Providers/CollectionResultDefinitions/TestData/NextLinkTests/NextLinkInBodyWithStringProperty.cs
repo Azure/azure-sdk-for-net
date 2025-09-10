@@ -42,13 +42,14 @@ namespace Samples
                 {
                     yield break;
                 }
+                global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
                 global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
-                foreach (var item in ((global::Samples.Models.Page)response).Cats)
+                foreach (var item in result.Cats)
                 {
                     items.Add(global::System.BinaryData.FromObjectAsJson(item));
                 }
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
-                string nextPageString = ((global::Samples.Models.Page)response).NextCat;
+                string nextPageString = result.NextCat;
                 if ((nextPageString == null))
                 {
                     yield break;

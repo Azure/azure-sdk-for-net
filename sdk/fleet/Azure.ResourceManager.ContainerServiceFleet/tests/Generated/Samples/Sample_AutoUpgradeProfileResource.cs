@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAnAutoUpgradeProfileResource()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/AutoUpgradeProfiles_Get.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2025-04-01-preview/examples/AutoUpgradeProfiles_Get.json
             // this example is just showing the usage of "AutoUpgradeProfiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAnAutoUpgradeProfileResourceGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/AutoUpgradeProfiles_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2025-04-01-preview/examples/AutoUpgradeProfiles_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "AutoUpgradeProfiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAnAutoUpgradeProfileResource()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/AutoUpgradeProfiles_Delete.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2025-04-01-preview/examples/AutoUpgradeProfiles_Delete.json
             // this example is just showing the usage of "AutoUpgradeProfiles_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAnAutoUpgradeProfileResourceGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/AutoUpgradeProfiles_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2025-04-01-preview/examples/AutoUpgradeProfiles_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "AutoUpgradeProfiles_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             AutoUpgradeProfileResource autoUpgradeProfile = client.GetAutoUpgradeProfileResource(autoUpgradeProfileResourceId);
 
             // invoke the operation
-            string ifMatch = "qmdsmmawj";
+            string ifMatch = "tmlfhgsu";
             await autoUpgradeProfile.DeleteAsync(WaitUntil.Completed, ifMatch: ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAnAutoUpgradeProfile()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/AutoUpgradeProfiles_CreateOrUpdate.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2025-04-01-preview/examples/AutoUpgradeProfiles_CreateOrUpdate.json
             // this example is just showing the usage of "AutoUpgradeProfiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -158,6 +158,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             AutoUpgradeProfileData data = new AutoUpgradeProfileData
             {
                 Channel = ContainerServiceFleetUpgradeChannel.Stable,
+                TargetKubernetesVersion = "",
+                LongTermSupport = false,
             };
             ArmOperation<AutoUpgradeProfileResource> lro = await autoUpgradeProfile.UpdateAsync(WaitUntil.Completed, data);
             AutoUpgradeProfileResource result = lro.Value;
@@ -173,7 +175,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAnAutoUpgradeProfileGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/AutoUpgradeProfiles_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2025-04-01-preview/examples/AutoUpgradeProfiles_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "AutoUpgradeProfiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -197,10 +199,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
                 Channel = ContainerServiceFleetUpgradeChannel.Stable,
                 SelectionType = AutoUpgradeNodeImageSelectionType.Latest,
                 Disabled = true,
-                AutoUpgradeProfileStatus = new AutoUpgradeProfileStatus(),
             };
-            string ifMatch = "teikqmg";
-            string ifNoneMatch = "ghfmmyrekxincsxklbldnvhqd";
+            string ifMatch = "uktvayathbu";
+            string ifNoneMatch = "vdjolwxnefqamimybcvxxva";
             ArmOperation<AutoUpgradeProfileResource> lro = await autoUpgradeProfile.UpdateAsync(WaitUntil.Completed, data, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch);
             AutoUpgradeProfileResource result = lro.Value;
 
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GenerateUpdateRun_AutoUpgradeProfileOperationsGenerateUpdateRunMaximumSet()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/AutoUpgradeProfileOperations_GenerateUpdateRun_MaximumSet_Gen.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2025-04-01-preview/examples/AutoUpgradeProfileOperations_GenerateUpdateRun_MaximumSet_Gen.json
             // this example is just showing the usage of "AutoUpgradeProfileOperations_GenerateUpdateRun" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

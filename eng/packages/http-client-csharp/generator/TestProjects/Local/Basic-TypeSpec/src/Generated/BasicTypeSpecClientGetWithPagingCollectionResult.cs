@@ -34,8 +34,9 @@ namespace BasicTypeSpec
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
+            PageThingModel result = (PageThingModel)response;
             List<BinaryData> items = new List<BinaryData>();
-            foreach (var item in ((PageThingModel)response).Items)
+            foreach (var item in result.Items)
             {
                 items.Add(BinaryData.FromObjectAsJson(item));
             }

@@ -53,7 +53,7 @@ namespace MgmtTypeSpec
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(ModelSerializationExtensions.WireOptions);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
         }
 

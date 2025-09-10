@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
@@ -61,11 +64,9 @@ namespace Azure.Monitor.Query.Models
         /// <summary>
         /// Gets the error that occurred during query processing. The value is <c>null</c> if the query succeeds.
         /// </summary>
-#pragma warning disable IL2026 // TODO change this to use MRW when ResponseError change is released in core - https://github.com/Azure/azure-sdk-for-net/issues/50963
-#pragma warning disable IL3050
-        public ResponseError Error => _error.ValueKind == JsonValueKind.Undefined ? null : JsonSerializer.Deserialize<ResponseError>(_error.GetRawText());
-#pragma warning restore IL2026
-#pragma warning restore IL3050
+        public ResponseError Error => _error.ValueKind == JsonValueKind.Undefined
+                    ? null
+                    : ModelReaderWriter.Read<ResponseError>(BinaryData.FromString(_error.GetRawText()), ModelReaderWriterOptions.Json, AzureMonitorQueryContext.Default);
 
         internal Exception CreateExceptionForErrorResponse(int status)
         {

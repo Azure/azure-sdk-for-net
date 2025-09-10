@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Network configuration diagnostic profile. </summary>
+        [WirePath("profile")]
         public NetworkConfigurationDiagnosticProfile Profile { get; }
         /// <summary> Network security group result. </summary>
+        [WirePath("networkSecurityGroupResult")]
         public NetworkSecurityGroupResult NetworkSecurityGroupResult { get; }
     }
 }

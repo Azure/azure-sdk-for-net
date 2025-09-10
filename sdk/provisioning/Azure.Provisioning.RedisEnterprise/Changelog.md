@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2025-08-26)
+
+### Features Added
+
+- The new Azure.Provisioning.RedisEnterprise experience.
 
 ## 1.0.0-beta.1 (2025-07-25)
 

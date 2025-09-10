@@ -334,7 +334,8 @@ namespace Azure.Storage.DataMovement
                         StorageResourceContainer sourceContainer = (StorageResourceContainer)current;
                         StorageResourceContainerProperties sourceProperties =
                             await sourceContainer.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
-                        await subContainer.CreateIfNotExistsAsync(sourceProperties, _cancellationToken).ConfigureAwait(false);
+                        bool overwrite = _creationPreference == StorageResourceCreationMode.OverwriteIfExists;
+                        await subContainer.CreateAsync(overwrite, sourceProperties, _cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {

@@ -1,0 +1,4 @@
+directory: specification/recoveryservices/RecoveryServices.Management
+repo: Azure/azure-rest-api-specs
+commit: ca2020cf5a4953c007f54135db73652bb94dd408
+additionalDirectories: []

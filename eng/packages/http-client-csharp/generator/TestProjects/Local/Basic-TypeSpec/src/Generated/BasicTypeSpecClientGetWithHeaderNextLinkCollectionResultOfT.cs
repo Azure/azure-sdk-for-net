@@ -41,7 +41,8 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
-                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)((ListWithHeaderNextLinkResponse)response).Things, nextPage?.AbsoluteUri, response);
+                ListWithHeaderNextLinkResponse result = (ListWithHeaderNextLinkResponse)response;
+                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Things, nextPage?.AbsoluteUri, response);
                 if (response.Headers.TryGetValue("next", out string value))
                 {
                     nextPage = new Uri(value);

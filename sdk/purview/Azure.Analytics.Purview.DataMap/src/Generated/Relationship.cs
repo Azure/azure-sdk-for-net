@@ -510,7 +510,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/relationship/guid/", false);
             uri.AppendPath(guid, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

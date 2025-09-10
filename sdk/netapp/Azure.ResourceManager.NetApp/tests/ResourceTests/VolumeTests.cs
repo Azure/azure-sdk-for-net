@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                         }
                         if (await volumeCollection.ExistsAsync(volume.Id.Name))
                         {
+                            await LiveDelay(3000);
                             await volume.DeleteAsync(WaitUntil.Completed);
                         }
                     }

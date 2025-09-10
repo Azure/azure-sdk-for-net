@@ -659,7 +659,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(dhcpId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -1151,7 +1150,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(dnsServiceId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -1643,7 +1641,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(dnsZoneId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -2333,7 +2330,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(portMirroringId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -2725,7 +2721,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(publicIPId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -3217,7 +3212,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(segmentId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -3907,7 +3901,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(vmGroupId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }

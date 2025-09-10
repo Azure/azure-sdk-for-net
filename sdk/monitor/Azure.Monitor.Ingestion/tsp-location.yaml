@@ -1,0 +1,4 @@
+repo: Azure/azure-rest-api-specs
+directory: specification/monitor/Monitor.Ingestion
+commit: 4081040baf95813d6ae4fac980d11d077ed113e6
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"

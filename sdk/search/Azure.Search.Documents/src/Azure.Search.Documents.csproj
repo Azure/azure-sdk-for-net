@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Search.Documents client library</AssemblyTitle>
-    <Version>11.7.0-beta.6</Version>
+    <Version>11.7.0-beta.8</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>11.6.1</ApiCompatVersion>
     <Description>

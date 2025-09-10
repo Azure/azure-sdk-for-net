@@ -20,9 +20,22 @@ namespace MgmtTypeSpec
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
-        public BarSettingsResourceData()
+        /// <param name="property"></param>
+        /// <param name="anotherProperty"></param>
+        /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
+        /// <param name="middleProp1"> Gets or sets the MiddleProp1. </param>
+        /// <param name="prop2"> Gets or sets the Prop2. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="property"/>, <paramref name="anotherProperty"/> or <paramref name="innerProp2"/> is null. </exception>
+        public BarSettingsResourceData(BarQuotaProperties @property, BarQuotaProperties anotherProperty, string innerProp2, int middleProp1, int prop2)
         {
+            Argument.AssertNotNull(innerProp2, nameof(innerProp2));
+
             StringArray = new ChangeTrackingList<string>();
+            Property = @property;
+            AnotherProperty = anotherProperty;
+            InnerProp2 = innerProp2;
+            MiddleProp1 = middleProp1;
+            Prop2 = prop2;
         }
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
@@ -33,11 +46,17 @@ namespace MgmtTypeSpec
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="stringArray"></param>
-        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray) : base(id, name, resourceType, systemData)
+        /// <param name="property"></param>
+        /// <param name="anotherProperty"></param>
+        /// <param name="flattenedNestedProperty"></param>
+        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarNestedQuotaProperties flattenedNestedProperty) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             StringArray = stringArray;
+            Property = @property;
+            AnotherProperty = anotherProperty;
+            FlattenedNestedProperty = flattenedNestedProperty;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -46,12 +65,157 @@ namespace MgmtTypeSpec
         /// <summary> Gets the StringArray. </summary>
         public IList<string> StringArray { get; }
 
+        /// <summary> Gets or sets the Property. </summary>
+        internal BarQuotaProperties Property { get; set; }
+
+        /// <summary> Gets or sets the AnotherProperty. </summary>
+        internal BarQuotaProperties AnotherProperty { get; set; }
+
+        /// <summary> Gets or sets the FlattenedNestedProperty. </summary>
+        internal BarNestedQuotaProperties FlattenedNestedProperty { get; set; }
+
+        /// <summary> Gets or sets the InnerProp1. </summary>
+        public int? InnerProp1
+        {
+            get
+            {
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.InnerProp1;
+            }
+            set
+            {
+                if (FlattenedNestedProperty is null)
+                {
+                    FlattenedNestedProperty = new BarNestedQuotaProperties();
+                }
+                FlattenedNestedProperty.InnerProp1 = value.Value;
+            }
+        }
+
+        /// <summary> Gets or sets the InnerProp2. </summary>
+        public string InnerProp2
+        {
+            get
+            {
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.InnerProp2;
+            }
+            set
+            {
+                if (FlattenedNestedProperty is null)
+                {
+                    FlattenedNestedProperty = new BarNestedQuotaProperties();
+                }
+                FlattenedNestedProperty.InnerProp2 = value;
+            }
+        }
+
+        /// <summary> Gets or sets the MiddleProp1. </summary>
+        public int MiddleProp1
+        {
+            get
+            {
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.MiddleProp1;
+            }
+            set
+            {
+                if (FlattenedNestedProperty is null)
+                {
+                    FlattenedNestedProperty = new BarNestedQuotaProperties();
+                }
+                FlattenedNestedProperty.MiddleProp1 = value;
+            }
+        }
+
+        /// <summary> Gets the MiddleProp2. </summary>
+        public IDictionary<string, string> MiddleProp2
+        {
+            get
+            {
+                InitializeBarNestedQuotaProperties();
+                return FlattenedNestedProperty.MiddleProp2;
+            }
+            set
+            {
+                InitializeBarNestedQuotaProperties();
+                FlattenedNestedProperty.MiddleProp2 = value;
+            }
+        }
+
+        /// <summary> Gets the Prop1. </summary>
+        public IList<string> Prop1
+        {
+            get
+            {
+                InitializeBarNestedQuotaProperties();
+                return FlattenedNestedProperty.Prop1;
+            }
+            set
+            {
+                InitializeBarNestedQuotaProperties();
+                FlattenedNestedProperty.Prop1 = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Prop2. </summary>
+        public int Prop2
+        {
+            get
+            {
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.Prop2;
+            }
+            set
+            {
+                if (FlattenedNestedProperty is null)
+                {
+                    FlattenedNestedProperty = new BarNestedQuotaProperties();
+                }
+                FlattenedNestedProperty.Prop2 = value;
+            }
+        }
+
         /// <summary> enabled. </summary>
         public bool? IsEnabled
         {
             get
             {
                 return Properties is null ? default : Properties.IsEnabled;
+            }
+        }
+
+        /// <summary> enabled. </summary>
+        public int? PropertyLeft
+        {
+            get
+            {
+                return Property is null ? default : Property.Left;
+            }
+            set
+            {
+                Property = value.HasValue ? new BarQuotaProperties(value.Value) : default;
+            }
+        }
+
+        /// <summary> enabled. </summary>
+        public int? AnotherPropertyLeft
+        {
+            get
+            {
+                return AnotherProperty is null ? default : AnotherProperty.Left;
+            }
+            set
+            {
+                AnotherProperty = value.HasValue ? new BarQuotaProperties(value.Value) : default;
+            }
+        }
+
+        private void InitializeBarNestedQuotaProperties()
+        {
+            if (FlattenedNestedProperty is null)
+            {
+                FlattenedNestedProperty = new BarNestedQuotaProperties
+                {
+                    MiddleProp2 = new ChangeTrackingDictionary<string, string>(),
+                    Prop1 = new ChangeTrackingList<string>()
+                };
             }
         }
     }

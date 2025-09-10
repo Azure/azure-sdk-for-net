@@ -8,9 +8,23 @@
 
 ### Bugs Fixed
 
-- Fixed an issue in `ManagedRuleSetRuleGroup` deserialization where rule IDs could be either strings or numbers in JSON, causing `InvalidOperationException` when parsing mixed-type arrays.
-
 ### Other Changes
+
+## 1.11.3 (2025-08-21)
+
+### Features Added
+
+- Added `WirePath` attributes to all properties in all models for provisioning library to consume.
+
+## 1.11.2 (2025-08-11)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Network` AOT-compatible
+
+### Bugs Fixed
+
+- Fixed an issue in `ManagedRuleSetRuleGroup` deserialization where rule IDs could be either strings or numbers in JSON, causing `InvalidOperationException` when parsing mixed-type arrays.
 
 ## 1.11.1 (2025-07-01)
 

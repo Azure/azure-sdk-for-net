@@ -46,18 +46,25 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The reference to the address space resource which represents Address space for P2S VpnClient. </summary>
+        [WirePath("properties.vpnClientAddressPool")]
         public VirtualNetworkAddressSpace VpnClientAddressPool { get; set; }
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
+        [WirePath("properties.routingConfiguration")]
         public RoutingConfiguration RoutingConfiguration { get; set; }
         /// <summary> Flag indicating whether the enable internet security flag is turned on for the P2S Connections or not. </summary>
+        [WirePath("properties.enableInternetSecurity")]
         public bool? EnableInternetSecurity { get; set; }
         /// <summary> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </summary>
+        [WirePath("properties.configurationPolicyGroupAssociations")]
         public IList<WritableSubResource> ConfigurationPolicyGroups { get; }
         /// <summary> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </summary>
+        [WirePath("properties.previousConfigurationPolicyGroupAssociations")]
         public IReadOnlyList<VpnServerConfigurationPolicyGroupData> PreviousConfigurationPolicyGroupAssociations { get; }
         /// <summary> The provisioning state of the P2SConnectionConfiguration resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

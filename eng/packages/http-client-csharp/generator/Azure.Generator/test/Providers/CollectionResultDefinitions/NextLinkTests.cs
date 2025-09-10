@@ -200,14 +200,18 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
                         InputFactory.Property("cats", InputFactory.Array(inputModel)),
                         InputFactory.Property("nextCat", InputPrimitiveType.Url)
                     ]));
-            IReadOnlyList<InputParameter> parameters =
+            IReadOnlyList<InputHeaderParameter> parameters =
             [
-                InputFactory.Parameter("$foo", InputPrimitiveType.String, isRequired: true,
+                InputFactory.HeaderParameter("$foo", InputPrimitiveType.String, isRequired: true)
+            ];
+            IReadOnlyList<InputMethodParameter> methodParameters =
+            [
+                InputFactory.MethodParameter("$foo", InputPrimitiveType.String, isRequired: true,
                     location: InputRequestLocation.Header)
             ];
             var operation = InputFactory.Operation("getCats", responses: [response], parameters: parameters);
             var inputServiceMethod = InputFactory.PagingServiceMethod("getCats", operation,
-                pagingMetadata: pagingMetadata, parameters: parameters);
+                pagingMetadata: pagingMetadata, parameters: methodParameters);
             var catClient = InputFactory.Client("catClient", methods: [inputServiceMethod], clientNamespace: "Cats");
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(catClient);
             var modelType = AzureClientGenerator.Instance.TypeFactory.CreateModel(inputModel);

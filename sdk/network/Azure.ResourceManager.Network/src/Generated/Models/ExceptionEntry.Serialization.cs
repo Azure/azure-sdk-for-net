@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -183,6 +185,142 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MatchVariable), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  matchVariable: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  matchVariable: ");
+                builder.AppendLine($"'{MatchVariable.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Values), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  values: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Values))
+                {
+                    if (Values.Any())
+                    {
+                        builder.Append("  values: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Values)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValueMatchOperator), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  valueMatchOperator: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  valueMatchOperator: ");
+                builder.AppendLine($"'{ValueMatchOperator.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SelectorMatchOperator), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  selectorMatchOperator: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SelectorMatchOperator))
+                {
+                    builder.Append("  selectorMatchOperator: ");
+                    builder.AppendLine($"'{SelectorMatchOperator.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Selector), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  selector: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Selector))
+                {
+                    builder.Append("  selector: ");
+                    if (Selector.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Selector}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Selector}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExceptionManagedRuleSets), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  exceptionManagedRuleSets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ExceptionManagedRuleSets))
+                {
+                    if (ExceptionManagedRuleSets.Any())
+                    {
+                        builder.Append("  exceptionManagedRuleSets: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ExceptionManagedRuleSets)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  exceptionManagedRuleSets: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ExceptionEntry>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExceptionEntry>)this).GetFormatFromOptions(options) : options.Format;
@@ -191,6 +329,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExceptionEntry)} does not support writing '{options.Format}' format.");
             }

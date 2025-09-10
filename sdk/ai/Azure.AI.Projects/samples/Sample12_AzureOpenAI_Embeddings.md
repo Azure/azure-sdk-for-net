@@ -18,7 +18,8 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDINGS_
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI embedding client");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-EmbeddingClient embeddingsClient = projectClient.GetAzureOpenAIEmbeddingClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
+AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
+EmbeddingClient embeddingsClient = azureOpenAIClient.GetEmbeddingClient(deploymentName: modelDeploymentName);
 
 Console.WriteLine("Generate an embedding");
 OpenAIEmbedding result = embeddingsClient.GenerateEmbedding("List all the rainbow colors");
@@ -32,7 +33,8 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDINGS_
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI embedding client");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-EmbeddingClient embeddingsClient = projectClient.GetAzureOpenAIEmbeddingClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
+AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
+EmbeddingClient embeddingsClient = azureOpenAIClient.GetEmbeddingClient(deploymentName: modelDeploymentName);
 
 Console.WriteLine("Generate an embedding");
 OpenAIEmbedding result = await embeddingsClient.GenerateEmbeddingAsync("List all the rainbow colors");

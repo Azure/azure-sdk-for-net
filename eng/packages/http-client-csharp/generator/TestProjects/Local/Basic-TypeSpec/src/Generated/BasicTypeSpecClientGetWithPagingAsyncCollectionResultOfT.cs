@@ -35,7 +35,8 @@ namespace BasicTypeSpec
         public override async IAsyncEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
-            yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)((PageThingModel)response).Items, null, response);
+            PageThingModel result = (PageThingModel)response;
+            yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Items, null, response);
         }
 
         /// <summary> Get next page. </summary>

@@ -238,28 +238,6 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// Initializes new instance of <see cref="ShareClientOptions"/>
-        /// with the same values.
-        /// </summary>
-        /// <param name="options"></param>
-        internal ShareClientOptions(ShareClientOptions options)
-            : base(options.Diagnostics)
-        {
-            Transport = options.Transport;
-            RetryPolicy = options.RetryPolicy;
-            Version = options.Version;
-            TransferValidation = options.TransferValidation;
-            AllowTrailingDot = options.AllowTrailingDot;
-            AllowSourceTrailingDot = options.AllowSourceTrailingDot;
-            ShareTokenIntent = options.ShareTokenIntent;
-            Retry.Mode = options.Retry.Mode;
-            Retry.MaxRetries = options.Retry.MaxRetries;
-            Retry.MaxDelay = options.Retry.MaxDelay;
-            Retry.NetworkTimeout = options.Retry.NetworkTimeout;
-            Retry.Delay = options.Retry.Delay;
-        }
-
-        /// <summary>
         /// Add headers and query parameters in <see cref="DiagnosticsOptions.LoggedHeaderNames"/> and <see cref="DiagnosticsOptions.LoggedQueryParameters"/>
         /// </summary>
         private void AddHeadersAndQueryParameters()

@@ -146,20 +146,19 @@
             "parameters": [
               {
                 "$id": "15",
+                "kind": "header",
                 "name": "accept",
-                "nameInRequest": "Accept",
+                "serializedName": "Accept",
                 "type": {
                   "$ref": "1"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "Client.Overload.list.accept"
               }
             ],
             "responses": [
@@ -196,20 +195,20 @@
           "parameters": [
             {
               "$id": "17",
+              "kind": "method",
               "name": "accept",
-              "nameInRequest": "Accept",
+              "serializedName": "Accept",
               "type": {
                 "$ref": "1"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Client.Overload.list.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -236,8 +235,9 @@
             "parameters": [
               {
                 "$id": "20",
+                "kind": "path",
                 "name": "scope",
-                "nameInRequest": "scope",
+                "serializedName": "scope",
                 "type": {
                   "$id": "21",
                   "kind": "string",
@@ -245,32 +245,32 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Path",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "style": "simple",
+                "allowReserved": false,
+                "skipUrlEncoding": false,
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "Client.Overload.listByScope.scope"
               },
               {
                 "$id": "22",
+                "kind": "header",
                 "name": "accept",
-                "nameInRequest": "Accept",
+                "serializedName": "Accept",
                 "type": {
                   "$ref": "3"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "Client.Overload.listByScope.accept"
               }
             ],
             "responses": [
@@ -300,8 +300,9 @@
           "parameters": [
             {
               "$id": "23",
+              "kind": "method",
               "name": "scope",
-              "nameInRequest": "scope",
+              "serializedName": "scope",
               "type": {
                 "$id": "24",
                 "kind": "string",
@@ -311,30 +312,29 @@
               },
               "location": "Path",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Client.Overload.listByScope.scope",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "25",
+              "kind": "method",
               "name": "accept",
-              "nameInRequest": "Accept",
+              "serializedName": "Accept",
               "type": {
                 "$ref": "3"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Client.Overload.listByScope.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -351,8 +351,9 @@
       "parameters": [
         {
           "$id": "26",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
             "$id": "27",
@@ -360,14 +361,10 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "28",
@@ -377,7 +374,10 @@
             },
             "value": "http://localhost:3000"
           },
-          "serverUrlTemplate": "{endpoint}"
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Client.Overload.endpoint"
         }
       ],
       "decorators": [],

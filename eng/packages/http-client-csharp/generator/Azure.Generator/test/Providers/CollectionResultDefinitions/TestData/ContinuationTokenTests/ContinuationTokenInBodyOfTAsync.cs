@@ -50,8 +50,9 @@ namespace Samples
                 {
                     yield break;
                 }
-                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)((global::Samples.Models.Page)response).Cats), nextPage, response);
-                nextPage = ((global::Samples.Models.Page)response).NextPage;
+                global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
+                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)result.Cats), nextPage, response);
+                nextPage = result.NextPage;
                 if ((nextPage == null))
                 {
                     yield break;

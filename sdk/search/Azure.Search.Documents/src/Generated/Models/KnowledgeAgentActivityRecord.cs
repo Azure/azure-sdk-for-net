@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Agents.Models
     /// <summary>
     /// Base type for activity records.
     /// Please note <see cref="KnowledgeAgentActivityRecord"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="KnowledgeAgentSearchActivityRecord"/>, <see cref="KnowledgeAgentSemanticRankerActivityRecord"/> and <see cref="KnowledgeAgentModelQueryPlanningActivityRecord"/>.
+    /// The available derived classes include <see cref="KnowledgeAgentAzureBlobActivityRecord"/>, <see cref="KnowledgeAgentRetrievalActivityRecord"/>, <see cref="KnowledgeAgentModelAnswerSynthesisActivityRecord"/>, <see cref="KnowledgeAgentModelQueryPlanningActivityRecord"/>, <see cref="KnowledgeAgentSearchIndexActivityRecord"/> and <see cref="KnowledgeAgentSemanticRerankerActivityRecord"/>.
     /// </summary>
     public abstract partial class KnowledgeAgentActivityRecord
     {
@@ -59,11 +59,13 @@ namespace Azure.Search.Documents.Agents.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeAgentActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeAgentActivityRecord(int id, string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KnowledgeAgentActivityRecord(int id, string type, int? elapsedMs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Type = type;
+            ElapsedMs = elapsedMs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,5 +78,7 @@ namespace Azure.Search.Documents.Agents.Models
         public int Id { get; }
         /// <summary> The type of the activity record. </summary>
         internal string Type { get; set; }
+        /// <summary> The elapsed time in milliseconds for the retrieval activity. </summary>
+        public int? ElapsedMs { get; }
     }
 }

@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -23,19 +24,24 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var mcpServerUrl = System.Environment.GetEnvironmentVariable("MCP_SERVER_URL");
+        var mcpServerUrl2 = System.Environment.GetEnvironmentVariable("MCP_SERVER_URL2");
         var mcpServerLabel = System.Environment.GetEnvironmentVariable("MCP_SERVER_LABEL");
+        var mcpServerLabel2 = System.Environment.GetEnvironmentVariable("MCP_SERVER_LABEL2");
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var mcpServerUrl = "https://gitmcp.io/Azure/azure-rest-api-specs";
+        var mcpServerUrl2 = "https://learn.microsoft.com/api/mcp";
         var mcpServerLabel = "github";
+        var mcpServerLabel2 = "microsoft_learn";
 #endif
         PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
 
         #region Snippet:AgentsMCP_CreateMCPTool
-        // Create MCP tool definition
+        // Create MCP tool definitions
         MCPToolDefinition mcpTool = new(mcpServerLabel, mcpServerUrl);
+        MCPToolDefinition mcpTool2 = new(mcpServerLabel2, mcpServerUrl2);
 
         // Configure allowed tools (optional)
         string searchApiCode = "search_azure_rest_api_code";
@@ -48,7 +54,7 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
            model: modelDeploymentName,
            name: "my-mcp-agent",
            instructions: "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
-           tools: [mcpTool]
+           tools: [mcpTool, mcpTool2]
            );
         #endregion
 
@@ -60,11 +66,25 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
         PersistentThreadMessage message = await agentClient.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
-            "Please summarize the Azure REST API specifications Readme");
+            "Please summarize the Azure REST API specifications Readme and give the basic information on TypeSpec.");
 
         MCPToolResource mcpToolResource = new(mcpServerLabel);
         mcpToolResource.UpdateHeader("SuperSecret", "123456");
+        // By default all the tools require approvals. To set the absolute trust for the tool please uncomment the
+        // next code.
+        // mcpToolResource.RequireApproval = new MCPApproval("never");
+        // If using multiple tools it is possible to set the trust per tool.
+        // var mcpApprovalPerTool = new MCPApprovalPerTool()
+        // {
+        //     Always= new MCPToolList(["non_trusted_tool1", "non_trusted_tool2"]),
+        //     Never = new MCPToolList(["trusted_tool1", "trusted_tool2"]),
+        // };
+        // mcpToolResource.RequireApproval = new MCPApproval(perToolApproval: mcpApprovalPerTool);
+        // Note: This functionality is available since version 1.2.0-beta.4.
+        // In older versions please use serialization into binary object as discussed in the issue
+        // https://github.com/Azure/azure-sdk-for-net/issues/52213
         ToolResources toolResources = mcpToolResource.ToToolResources();
+        toolResources.Mcp.Add(new MCPToolResource(mcpServerLabel2));
 
         // Run the agent with MCP tool resources
         ThreadRun run = await agentClient.Runs.CreateRunAsync(thread, agent, toolResources);
@@ -103,28 +123,17 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
             run.LastError?.Message);
         #endregion
 
+        #region Snippet:AgentsMCPAsync_PrintRunSteps
+        IReadOnlyList<RunStep> runSteps = [.. agentClient.Runs.GetRunSteps(run: run)];
+        PrintActivitySteps(runSteps);
+        #endregion
         #region Snippet:AgentsMCPAsync_Print
-        AsyncPageable<PersistentThreadMessage> messages = agentClient.Messages.GetMessagesAsync(
+        IReadOnlyList<PersistentThreadMessage> messages = await agentClient.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
-        );
+        ).ToListAsync();
 
-        await foreach (PersistentThreadMessage threadMessage in messages)
-        {
-            Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
-            foreach (MessageContent contentItem in threadMessage.ContentItems)
-            {
-                if (contentItem is MessageTextContent textItem)
-                {
-                    Console.Write(textItem.Text);
-                }
-                else if (contentItem is MessageImageFileContent imageFileItem)
-                {
-                    Console.Write($"<image from ID: {imageFileItem.FileId}>");
-                }
-                Console.WriteLine();
-            }
-        }
+        PrintMessages(messages);
         #endregion
 
         #region Snippet:AgentsMCPCleanupAsync
@@ -141,17 +150,22 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var mcpServerUrl = System.Environment.GetEnvironmentVariable("MCP_SERVER_URL");
+        var mcpServerUrl2 = System.Environment.GetEnvironmentVariable("MCP_SERVER_URL2");
         var mcpServerLabel = System.Environment.GetEnvironmentVariable("MCP_SERVER_LABEL");
+        var mcpServerLabel2 = System.Environment.GetEnvironmentVariable("MCP_SERVER_LABEL2");
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var mcpServerUrl = "https://gitmcp.io/Azure/azure-rest-api-specs";
+        var mcpServerUrl2 = "https://learn.microsoft.com/api/mcp";
         var mcpServerLabel = "github";
+        var mcpServerLabel2 = "microsoft_learn";
 #endif
         PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
 
-        // Create MCP tool definition
+        // Create MCP tool definitions
         MCPToolDefinition mcpTool = new(mcpServerLabel, mcpServerUrl);
+        MCPToolDefinition mcpTool2 = new(mcpServerLabel2, mcpServerUrl2);
 
         // Configure allowed tools (optional)
         string searchApiCode = "search_azure_rest_api_code";
@@ -162,7 +176,7 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
            model: modelDeploymentName,
            name: "my-mcp-agent",
            instructions: "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
-           tools: [mcpTool]);
+           tools: [mcpTool, mcpTool2]);
         #endregion
 
         // Create thread for communication
@@ -173,11 +187,25 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
         PersistentThreadMessage message = agentClient.Messages.CreateMessage(
             thread.Id,
             MessageRole.User,
-            "Please summarize the Azure REST API specifications Readme");
+            "Please summarize the Azure REST API specifications Readme and give the basic information on TypeSpec.");
 
         MCPToolResource mcpToolResource = new(mcpServerLabel);
         mcpToolResource.UpdateHeader("SuperSecret", "123456");
+        // By default all the tools require approvals. To set the absolute trust for the tool please uncomment the
+        // next code.
+        // mcpToolResource.RequireApproval = new MCPApproval("never");
+        // If using multiple tools it is possible to set the trust per tool.
+        // var mcpApprovalPerTool = new MCPApprovalPerTool()
+        // {
+        //     Always= new MCPToolList(["non_trusted_tool1", "non_trusted_tool2"]),
+        //     Never = new MCPToolList(["trusted_tool1", "trusted_tool2"]),
+        // };
+        // mcpToolResource.RequireApproval = new MCPApproval(perToolApproval: mcpApprovalPerTool);
+        // Note: This functionality is available since version 1.2.0-beta.4.
+        // In older versions please use serialization into binary object as discussed in the issue
+        // https://github.com/Azure/azure-sdk-for-net/issues/52213
         ToolResources toolResources = mcpToolResource.ToToolResources();
+        toolResources.Mcp.Add(new MCPToolResource(mcpServerLabel2));
 
         // Run the agent with MCP tool resources
         ThreadRun run = agentClient.Runs.CreateRun(thread, agent, toolResources);
@@ -216,12 +244,62 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
             run.LastError?.Message);
         #endregion
 
+        #region Snippet:AgentsMCP_PrintRunSteps
+        IReadOnlyList<RunStep> runSteps = [..agentClient.Runs.GetRunSteps(run: run)];
+        PrintActivitySteps(runSteps);
+        #endregion
         #region Snippet:AgentsMCP_Print
-        Pageable<PersistentThreadMessage> messages = agentClient.Messages.GetMessages(
+        IReadOnlyList<PersistentThreadMessage> messages = [..agentClient.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
-        );
+        )];
 
+        PrintMessages(messages);
+        #endregion
+
+        #region Snippet:AgentsMCPCleanup
+        agentClient.Threads.DeleteThread(threadId: thread.Id);
+        agentClient.Administration.DeleteAgent(agentId: agent.Id);
+        #endregion
+    }
+
+    #region Snippet:AgentsMcpPrintActivityStep
+    private static void PrintActivitySteps(IReadOnlyList<RunStep> runSteps)
+    {
+        foreach (RunStep step in runSteps)
+        {
+            if (step.StepDetails is RunStepActivityDetails activityDetails)
+            {
+                foreach (RunStepDetailsActivity activity in activityDetails.Activities)
+                {
+                    foreach (KeyValuePair<string, ActivityFunctionDefinition> activityFunction in activity.Tools)
+                    {
+                        Console.WriteLine($"The function {activityFunction.Key} with description \"{activityFunction.Value.Description}\" will be called.");
+                        if (activityFunction.Value.Parameters.Properties.Count > 0)
+                        {
+                            Console.WriteLine("Function parameters:");
+                            foreach (KeyValuePair<string, FunctionArgument> arg in activityFunction.Value.Parameters.Properties)
+                            {
+                                Console.WriteLine($"\t{arg.Key}");
+                                Console.WriteLine($"\t\tType: {arg.Value.Type}");
+                                if (!string.IsNullOrEmpty(arg.Value.Description))
+                                    Console.WriteLine($"\t\tDescription: {arg.Value.Description}");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("This function has no parameters");
+                        }
+                    }
+                }
+            }
+        }
+    }
+    #endregion
+
+    #region Snippet:AgentsMcpPrintMessages
+    private static void PrintMessages(IReadOnlyList<PersistentThreadMessage> messages)
+    {
         foreach (PersistentThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
@@ -238,11 +316,6 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
                 Console.WriteLine();
             }
         }
-        #endregion
-
-        #region Snippet:AgentsMCPCleanup
-        agentClient.Threads.DeleteThread(threadId: thread.Id);
-        agentClient.Administration.DeleteAgent(agentId: agent.Id);
-        #endregion
     }
+    #endregion
 }

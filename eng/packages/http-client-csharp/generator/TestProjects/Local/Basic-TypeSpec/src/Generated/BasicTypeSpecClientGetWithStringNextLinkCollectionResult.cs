@@ -41,13 +41,14 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
+                ListWithStringNextLinkResponse result = (ListWithStringNextLinkResponse)response;
                 List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in ((ListWithStringNextLinkResponse)response).Things)
+                foreach (var item in result.Things)
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
-                string nextPageString = ((ListWithStringNextLinkResponse)response).Next;
+                string nextPageString = result.Next;
                 if (nextPageString == null)
                 {
                     yield break;

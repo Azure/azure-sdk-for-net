@@ -5,7 +5,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestProject>true</IsTestProject>
     <Nullable>enable</Nullable>
-    <NoWarn>$(NoWarn);SCM0001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,9 +24,15 @@
     <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
     <ProjectReference Include="..\src\System.ClientModel.csproj" />
     <ProjectReference Include="client\System.ClientModel.Tests.Client.csproj" />
-    <ProjectReference Include="..\gen\System.ClientModel.SourceGeneration.csproj" ReferenceOutputAssembly="false" PackAsAnalyzer="true" />
   </ItemGroup>
 
+  <!-- We purposely have multiple ModelReaderWriterContexts in this project for samples so removing the SourceGeneration -->
+  <Target Name="RemoveAnalyzer" BeforeTargets="CoreCompile">
+    <ItemGroup>
+      <Analyzer Remove="@(Analyzer->WithMetadataValue('NuGetPackageId', 'System.ClientModel'))" />
+    </ItemGroup>
+  </Target>
+  
   <ItemGroup>
     <None Remove="client/**" />
     <Compile Remove="client/**" />

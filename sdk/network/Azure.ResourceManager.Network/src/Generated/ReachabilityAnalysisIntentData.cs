@@ -80,6 +80,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Represents the Reachability Analysis Intent properties. </summary>
+        [WirePath("properties")]
         public ReachabilityAnalysisIntentProperties Properties { get; set; }
     }
 }

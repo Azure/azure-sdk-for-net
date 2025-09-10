@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Mocking
 {
-    /// <summary></summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableMgmtTypeSpecArmClient : ArmResource
     {
         /// <summary> Initializes a new instance of MockableMgmtTypeSpecArmClient for mocking. </summary>
@@ -62,6 +66,24 @@ namespace MgmtTypeSpec.Mocking
             return new BarSettingsResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BarQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BarQuotaResource"/> object. </returns>
+        public virtual BarQuotaResource GetBarQuotaResource(ResourceIdentifier id)
+        {
+            BarQuotaResource.ValidateResourceId(id);
+            return new BarQuotaResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="BazResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BazResource"/> object. </returns>
+        public virtual BazResource GetBazResource(ResourceIdentifier id)
+        {
+            BazResource.ValidateResourceId(id);
+            return new BazResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ZooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ZooResource"/> object. </returns>
@@ -69,6 +91,51 @@ namespace MgmtTypeSpec.Mocking
         {
             ZooResource.ValidateResourceId(id);
             return new ZooResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EndpointResource"/> object. </returns>
+        public virtual EndpointResource GetEndpointResource(ResourceIdentifier id)
+        {
+            EndpointResource.ValidateResourceId(id);
+            return new EndpointResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="EndpointResourceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="EndpointResource"/> objects. </returns>
+        public virtual EndpointResourceCollection GetEndpointResources(ResourceIdentifier scope)
+        {
+            return new EndpointResourceCollection(Client, scope);
+        }
+
+        /// <summary> Gets the endpoint to the resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="endpointName"> The name of the EndpointResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EndpointResource> GetEndpointResource(ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return GetEndpointResources(scope).Get(endpointName, cancellationToken);
+        }
+
+        /// <summary> Gets the endpoint to the resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="endpointName"> The name of the EndpointResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EndpointResource>> GetEndpointResourceAsync(ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return await GetEndpointResources(scope).GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

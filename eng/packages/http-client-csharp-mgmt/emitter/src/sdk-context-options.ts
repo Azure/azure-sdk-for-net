@@ -76,10 +76,17 @@ export const resourceGroupResource =
 const resourceGroupResourceRegex =
   "Azure\\.ResourceManager\\.@resourceGroupResource";
 
+const flattenPropertyRegex =
+  "Azure\\.ClientGenerator\\.Core\\.@flattenProperty";
+
 // TODO: add this decorator to TCGC
 export const resourceMetadata = "Azure.ClientGenerator.Core.@resourceSchema";
 const resourceMetadataRegex =
   "Azure\\.ClientGenerator\\.Core\\.@resourceSchema";
+export const nonResourceMethodMetadata =
+  "Azure.ClientGenerator.Core.@nonResourceMethodSchema";
+const nonResourceMethodMetadataRegex =
+  "Azure\\.ClientGenerator\\.Core\\.@nonResourceMethodSchema";
 
 export const azureSDKContextOptions: CreateSdkContextOptions = {
   versioning: {
@@ -87,6 +94,7 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
   },
   additionalDecorators: [
     resourceMetadataRegex,
+    nonResourceMethodMetadataRegex,
     armProviderNamespaceRegex,
     armResourceActionRegex,
     armResourceCreateOrUpdateRegex,
@@ -96,6 +104,7 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
     armResourceOperationsRegex,
     armResourceUpdateRegex,
     armResourceReadRegex,
+    flattenPropertyRegex,
     parentResourceRegex,
     resourceGroupResourceRegex,
     singletonRegex,
