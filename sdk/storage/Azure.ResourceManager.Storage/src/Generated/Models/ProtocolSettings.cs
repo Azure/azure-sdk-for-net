@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Protocol settings for file service. </summary>
-    internal partial class ProtocolSettings
+    public partial class ProtocolSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,15 +52,31 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="ProtocolSettings"/>. </summary>
         /// <param name="smbSetting"> Setting for SMB protocol. </param>
+        /// <param name="nfs"> Setting for NFS protocol. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProtocolSettings(SmbSetting smbSetting, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProtocolSettings(SmbSetting smbSetting, NfsSetting nfs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SmbSetting = smbSetting;
+            Nfs = nfs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Setting for SMB protocol. </summary>
         [WirePath("smb")]
         public SmbSetting SmbSetting { get; set; }
+        /// <summary> Setting for NFS protocol. </summary>
+        internal NfsSetting Nfs { get; set; }
+        /// <summary> Indicates whether encryption in transit is required. </summary>
+        [WirePath("nfs.encryptionInTransit.required")]
+        public bool? Required
+        {
+            get => Nfs is null ? default : Nfs.Required;
+            set
+            {
+                if (Nfs is null)
+                    Nfs = new NfsSetting();
+                Nfs.Required = value;
+            }
+        }
     }
 }

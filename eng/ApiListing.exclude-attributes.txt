@@ -15,4 +15,5 @@ T:Azure.Core.CodeGenMemberSerializationAttribute
 T:Azure.Core.CodeGenMemberSerializationHooksAttribute
 T:Azure.Core.CodeGenSuppressAttribute
 T:Azure.Core.CodeGenSuppressTypeAttribute
+T:Azure.Core.CodeGenSerializationAttribute
 T:System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute

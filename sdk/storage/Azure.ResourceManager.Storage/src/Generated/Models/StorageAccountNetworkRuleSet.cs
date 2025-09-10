@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
             ResourceAccessRules = new ChangeTrackingList<StorageAccountResourceAccessRule>();
             VirtualNetworkRules = new ChangeTrackingList<StorageAccountVirtualNetworkRule>();
             IPRules = new ChangeTrackingList<StorageAccountIPRule>();
+            IPv6Rules = new ChangeTrackingList<StorageAccountIPRule>();
             DefaultAction = defaultAction;
         }
 
@@ -60,14 +61,16 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="resourceAccessRules"> Sets the resource access rules. </param>
         /// <param name="virtualNetworkRules"> Sets the virtual network rules. </param>
         /// <param name="ipRules"> Sets the IP ACL rules. </param>
+        /// <param name="ipv6Rules"> Sets the IPv6 ACL rules. </param>
         /// <param name="defaultAction"> Specifies the default action of allow or deny when no other rules match. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountNetworkRuleSet(StorageNetworkBypass? bypass, IList<StorageAccountResourceAccessRule> resourceAccessRules, IList<StorageAccountVirtualNetworkRule> virtualNetworkRules, IList<StorageAccountIPRule> ipRules, StorageNetworkDefaultAction defaultAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageAccountNetworkRuleSet(StorageNetworkBypass? bypass, IList<StorageAccountResourceAccessRule> resourceAccessRules, IList<StorageAccountVirtualNetworkRule> virtualNetworkRules, IList<StorageAccountIPRule> ipRules, IList<StorageAccountIPRule> ipv6Rules, StorageNetworkDefaultAction defaultAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Bypass = bypass;
             ResourceAccessRules = resourceAccessRules;
             VirtualNetworkRules = virtualNetworkRules;
             IPRules = ipRules;
+            IPv6Rules = ipv6Rules;
             DefaultAction = defaultAction;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -89,6 +92,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Sets the IP ACL rules. </summary>
         [WirePath("ipRules")]
         public IList<StorageAccountIPRule> IPRules { get; }
+        /// <summary> Sets the IPv6 ACL rules. </summary>
+        [WirePath("ipv6Rules")]
+        public IList<StorageAccountIPRule> IPv6Rules { get; }
         /// <summary> Specifies the default action of allow or deny when no other rules match. </summary>
         [WirePath("defaultAction")]
         public StorageNetworkDefaultAction DefaultAction { get; set; }
