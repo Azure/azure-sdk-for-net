@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary> Specifies how Tasks should be distributed across Compute Nodes. </summary>
-    public partial class BatchTaskSchedulingPolicy
+    /// <summary> Specifies particular host endpoint settings. </summary>
+    public partial class HostEndpointSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +45,25 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/>. </summary>
-        /// <param name="nodeFillType"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
-        public BatchTaskSchedulingPolicy(BatchNodeFillType nodeFillType)
+        /// <summary> Initializes a new instance of <see cref="HostEndpointSettings"/>. </summary>
+        public HostEndpointSettings()
         {
-            NodeFillType = nodeFillType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/>. </summary>
-        /// <param name="jobDefaultOrder"> The order for scheduling tasks from different jobs with the same priority. If not specified, the default is none. </param>
-        /// <param name="nodeFillType"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
+        /// <summary> Initializes a new instance of <see cref="HostEndpointSettings"/>. </summary>
+        /// <param name="inVmAccessControlProfileReferenceId"> Specifies the reference to the InVMAccessControlProfileVersion resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
+        /// <param name="mode"> Specifies the access control policy execution mode. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskSchedulingPolicy(BatchJobDefaultOrder? jobDefaultOrder, BatchNodeFillType nodeFillType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HostEndpointSettings(string inVmAccessControlProfileReferenceId, HostEndpointSettingsModeTypes? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            JobDefaultOrder = jobDefaultOrder;
-            NodeFillType = nodeFillType;
+            InVmAccessControlProfileReferenceId = inVmAccessControlProfileReferenceId;
+            Mode = mode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/> for deserialization. </summary>
-        internal BatchTaskSchedulingPolicy()
-        {
-        }
-
-        /// <summary> The order for scheduling tasks from different jobs with the same priority. If not specified, the default is none. </summary>
-        public BatchJobDefaultOrder? JobDefaultOrder { get; set; }
-        /// <summary> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </summary>
-        public BatchNodeFillType NodeFillType { get; set; }
+        /// <summary> Specifies the reference to the InVMAccessControlProfileVersion resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </summary>
+        public string InVmAccessControlProfileReferenceId { get; set; }
+        /// <summary> Specifies the access control policy execution mode. </summary>
+        public HostEndpointSettingsModeTypes? Mode { get; set; }
     }
 }

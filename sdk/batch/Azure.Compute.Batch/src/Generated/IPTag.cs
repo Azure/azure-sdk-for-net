@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary> Specifies how Tasks should be distributed across Compute Nodes. </summary>
-    public partial class BatchTaskSchedulingPolicy
+    /// <summary> Contains the IP tag associated with the public IP address. </summary>
+    public partial class IPTag
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +45,25 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/>. </summary>
-        /// <param name="nodeFillType"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
-        public BatchTaskSchedulingPolicy(BatchNodeFillType nodeFillType)
+        /// <summary> Initializes a new instance of <see cref="IPTag"/>. </summary>
+        public IPTag()
         {
-            NodeFillType = nodeFillType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/>. </summary>
-        /// <param name="jobDefaultOrder"> The order for scheduling tasks from different jobs with the same priority. If not specified, the default is none. </param>
-        /// <param name="nodeFillType"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
+        /// <summary> Initializes a new instance of <see cref="IPTag"/>. </summary>
+        /// <param name="ipTagType"> The IP Tag type. Example: FirstPartyUsage. </param>
+        /// <param name="tag"> The value of the IP tag associated with the public IP. Example: SQL. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskSchedulingPolicy(BatchJobDefaultOrder? jobDefaultOrder, BatchNodeFillType nodeFillType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IPTag(string ipTagType, string tag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            JobDefaultOrder = jobDefaultOrder;
-            NodeFillType = nodeFillType;
+            IpTagType = ipTagType;
+            Tag = tag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/> for deserialization. </summary>
-        internal BatchTaskSchedulingPolicy()
-        {
-        }
-
-        /// <summary> The order for scheduling tasks from different jobs with the same priority. If not specified, the default is none. </summary>
-        public BatchJobDefaultOrder? JobDefaultOrder { get; set; }
-        /// <summary> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </summary>
-        public BatchNodeFillType NodeFillType { get; set; }
+        /// <summary> The IP Tag type. Example: FirstPartyUsage. </summary>
+        public string IpTagType { get; set; }
+        /// <summary> The value of the IP tag associated with the public IP. Example: SQL. </summary>
+        public string Tag { get; set; }
     }
 }

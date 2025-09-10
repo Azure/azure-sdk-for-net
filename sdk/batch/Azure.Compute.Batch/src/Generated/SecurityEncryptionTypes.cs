@@ -22,12 +22,15 @@ namespace Azure.Compute.Batch
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string DiskWithVMGuestStateValue = "DiskWithVMGuestState";
         private const string NonPersistedTPMValue = "NonPersistedTPM";
         private const string VMGuestStateOnlyValue = "VMGuestStateOnly";
 
-        /// <summary> NonPersistedTPM. </summary>
+        /// <summary> EncryptionType of the managed disk is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob. It is not supported in data disks. </summary>
+        public static SecurityEncryptionTypes DiskWithVMGuestState { get; } = new SecurityEncryptionTypes(DiskWithVMGuestStateValue);
+        /// <summary> EncryptionType of the managed disk is set to NonPersistedTPM for not persisting firmware state in the VMGuestState blob. </summary>
         public static SecurityEncryptionTypes NonPersistedTPM { get; } = new SecurityEncryptionTypes(NonPersistedTPMValue);
-        /// <summary> VMGuestStateOnly. </summary>
+        /// <summary> EncryptionType of the managed disk is set to VMGuestStateOnly for encryption of just the VMGuestState blob. </summary>
         public static SecurityEncryptionTypes VMGuestStateOnly { get; } = new SecurityEncryptionTypes(VMGuestStateOnlyValue);
         /// <summary> Determines if two <see cref="SecurityEncryptionTypes"/> values are the same. </summary>
         public static bool operator ==(SecurityEncryptionTypes left, SecurityEncryptionTypes right) => left.Equals(right);

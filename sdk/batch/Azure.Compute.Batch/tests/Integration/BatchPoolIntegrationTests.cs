@@ -212,7 +212,19 @@ namespace Azure.Compute.Batch.Tests.Integration
                         {
                             SecureBootEnabled = true,
                             VTpmEnabled = true,
-                        }
+                        },
+                        ProxyAgentSettings = new ProxyAgentSettings
+                        {
+                            Imds = new HostEndpointSettings
+                            {
+                                Mode = HostEndpointSettingsModeTypes.Audit,
+                            },
+                            Enabled = false,
+                            //WireServer = new HostEndpointSettings
+                            //{
+                            //    InVmAccessControlProfileReferenceId = "id2",
+                            //},
+                        },
                     },
                     OsDisk = new BatchOsDisk()
                     {
@@ -241,6 +253,8 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.EncryptionAtHost, false);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.SecureBootEnabled, true);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.VTpmEnabled, true);
+                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Enabled, false);
+                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Imds.Mode, HostEndpointSettingsModeTypes.Audit);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.Caching, CachingType.ReadWrite);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.ManagedDisk.SecurityProfile.SecurityEncryptionType, SecurityEncryptionTypes.VMGuestStateOnly);
             }catch (RequestFailedException e)
@@ -311,9 +325,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                     new BatchMetadataItem("name", "value")
                 };
 
-                BatchCertificateReference[] certificateReferences = new BatchCertificateReference[] { };
-
-                BatchPoolReplaceOptions replaceContent = new BatchPoolReplaceOptions(certificateReferences, batchApplicationPackageReferences, metadataIems);
+                BatchPoolReplaceOptions replaceContent = new BatchPoolReplaceOptions(batchApplicationPackageReferences, metadataIems);
                 Response response = await client.ReplacePoolPropertiesAsync(poolID, replaceContent);
                 BatchPool replacePool = await client.GetPoolAsync(poolID);
                 Assert.AreEqual(replacePool.Metadata.First().Value, "value");
@@ -398,10 +410,10 @@ namespace Azure.Compute.Batch.Tests.Integration
                 }
                 );
 
-                updateContent.ResourceTags.Add("tag1", "value1");
-                updateContent.ResourceTags.Add("tag2", "value2");
-
-                updateContent.TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Pack);
+                updateContent.TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Pack)
+                {
+                    JobDefaultOrder = BatchJobDefaultOrder.CreationTime,
+                };
 
                 updateContent.UserAccounts.Add(new UserAccount("test1", nodeUserPassword));
                 updateContent.UserAccounts.Add(new UserAccount("test2", nodeUserPassword) { ElevationLevel = ElevationLevel.NonAdmin });
@@ -416,10 +428,9 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.AreEqual(updateContent.Metadata.Single().Name , patchPool.Metadata.Single().Name);
                 Assert.AreEqual(updateContent.Metadata.Single().Value, patchPool.Metadata.Single().Value);
                 Assert.AreEqual(displayName, patchPool.DisplayName);
-                Assert.AreEqual(2, patchPool.ResourceTags.Count);
-                Assert.AreEqual("value1", patchPool.ResourceTags["tag1"]);
                 Assert.AreEqual(20, patchPool.UpgradePolicy.RollingUpgradePolicy.MaxBatchInstancePercent);
                 Assert.AreEqual(BatchNodeFillType.Pack, patchPool.TaskSchedulingPolicy.NodeFillType);
+                Assert.AreEqual(BatchJobDefaultOrder.CreationTime, patchPool.TaskSchedulingPolicy.JobDefaultOrder);
                 Assert.AreEqual(4, patchPool.UserAccounts.Count);
                 Assert.AreEqual("standard_d2s_v3", patchPool.VmSize);
                 Assert.AreEqual(1, patchPool.TaskSlotsPerNode);

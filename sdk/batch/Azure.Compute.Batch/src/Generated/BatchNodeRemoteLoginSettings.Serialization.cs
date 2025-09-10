@@ -35,6 +35,16 @@ namespace Azure.Compute.Batch
                 throw new FormatException($"The model {nameof(BatchNodeRemoteLoginSettings)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(Ipv6RemoteLoginIpAddress))
+            {
+                writer.WritePropertyName("ipv6RemoteLoginIPAddress"u8);
+                writer.WriteStringValue(Ipv6RemoteLoginIpAddress.ToString());
+            }
+            if (Optional.IsDefined(Ipv6RemoteLoginPort))
+            {
+                writer.WritePropertyName("ipv6RemoteLoginPort"u8);
+                writer.WriteNumberValue(Ipv6RemoteLoginPort.Value);
+            }
             writer.WritePropertyName("remoteLoginIPAddress"u8);
             writer.WriteStringValue(RemoteLoginIpAddress.ToString());
             writer.WritePropertyName("remoteLoginPort"u8);
@@ -76,12 +86,32 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
+            IPAddress ipv6RemoteLoginIPAddress = default;
+            int? ipv6RemoteLoginPort = default;
             IPAddress remoteLoginIPAddress = default;
             int remoteLoginPort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("ipv6RemoteLoginIPAddress"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipv6RemoteLoginIPAddress = IPAddress.Parse(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("ipv6RemoteLoginPort"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipv6RemoteLoginPort = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("remoteLoginIPAddress"u8))
                 {
                     remoteLoginIPAddress = IPAddress.Parse(property.Value.GetString());
@@ -98,7 +128,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchNodeRemoteLoginSettings(remoteLoginIPAddress, remoteLoginPort, serializedAdditionalRawData);
+            return new BatchNodeRemoteLoginSettings(ipv6RemoteLoginIPAddress, ipv6RemoteLoginPort, remoteLoginIPAddress, remoteLoginPort, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchNodeRemoteLoginSettings>.Write(ModelReaderWriterOptions options)

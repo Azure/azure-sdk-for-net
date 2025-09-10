@@ -54,16 +54,6 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("startTask"u8);
                 writer.WriteObjectValue(StartTask, options);
             }
-            if (Optional.IsCollectionDefined(CertificateReferences))
-            {
-                writer.WritePropertyName("certificateReferences"u8);
-                writer.WriteStartArray();
-                foreach (var item in CertificateReferences)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsCollectionDefined(ApplicationPackageReferences))
             {
                 writer.WritePropertyName("applicationPackageReferences"u8);
@@ -89,11 +79,6 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("virtualMachineConfiguration"u8);
                 writer.WriteObjectValue(VirtualMachineConfiguration, options);
             }
-            if (Optional.IsDefined(TargetNodeCommunicationMode))
-            {
-                writer.WritePropertyName("targetNodeCommunicationMode"u8);
-                writer.WriteStringValue(TargetNodeCommunicationMode.Value.ToString());
-            }
             if (Optional.IsDefined(TaskSlotsPerNode))
             {
                 writer.WritePropertyName("taskSlotsPerNode"u8);
@@ -108,17 +93,6 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration, options);
-            }
-            if (Optional.IsCollectionDefined(ResourceTags))
-            {
-                writer.WritePropertyName("resourceTags"u8);
-                writer.WriteStartObject();
-                foreach (var item in ResourceTags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(UserAccounts))
             {
@@ -186,15 +160,12 @@ namespace Azure.Compute.Batch
             string vmSize = default;
             bool? enableInterNodeCommunication = default;
             BatchStartTask startTask = default;
-            IList<BatchCertificateReference> certificateReferences = default;
             IList<BatchApplicationPackageReference> applicationPackageReferences = default;
             IList<BatchMetadataItem> metadata = default;
             VirtualMachineConfiguration virtualMachineConfiguration = default;
-            BatchNodeCommunicationMode? targetNodeCommunicationMode = default;
             int? taskSlotsPerNode = default;
             BatchTaskSchedulingPolicy taskSchedulingPolicy = default;
             NetworkConfiguration networkConfiguration = default;
-            IDictionary<string, string> resourceTags = default;
             IList<UserAccount> userAccounts = default;
             IList<MountConfiguration> mountConfiguration = default;
             UpgradePolicy upgradePolicy = default;
@@ -228,20 +199,6 @@ namespace Azure.Compute.Batch
                         continue;
                     }
                     startTask = BatchStartTask.DeserializeBatchStartTask(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("certificateReferences"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BatchCertificateReference> array = new List<BatchCertificateReference>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
-                    }
-                    certificateReferences = array;
                     continue;
                 }
                 if (property.NameEquals("applicationPackageReferences"u8))
@@ -281,15 +238,6 @@ namespace Azure.Compute.Batch
                     virtualMachineConfiguration = VirtualMachineConfiguration.DeserializeVirtualMachineConfiguration(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("targetNodeCommunicationMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetNodeCommunicationMode = new BatchNodeCommunicationMode(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("taskSlotsPerNode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -315,20 +263,6 @@ namespace Azure.Compute.Batch
                         continue;
                     }
                     networkConfiguration = NetworkConfiguration.DeserializeNetworkConfiguration(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("resourceTags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    resourceTags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("userAccounts"u8))
@@ -379,15 +313,12 @@ namespace Azure.Compute.Batch
                 vmSize,
                 enableInterNodeCommunication,
                 startTask,
-                certificateReferences ?? new ChangeTrackingList<BatchCertificateReference>(),
                 applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
                 metadata ?? new ChangeTrackingList<BatchMetadataItem>(),
                 virtualMachineConfiguration,
-                targetNodeCommunicationMode,
                 taskSlotsPerNode,
                 taskSchedulingPolicy,
                 networkConfiguration,
-                resourceTags ?? new ChangeTrackingDictionary<string, string>(),
                 userAccounts ?? new ChangeTrackingList<UserAccount>(),
                 mountConfiguration ?? new ChangeTrackingList<MountConfiguration>(),
                 upgradePolicy,
