@@ -1,6 +1,6 @@
 {
-  "AssetsRepo": "Azure/azure-sdk-assets",
-  "AssetsRepoPrefixPath": "net",
-  "TagPrefix": "net/storage/Azure.Storage.DataMovement.Files.Shares",
-  "Tag": "net/storage/Azure.Storage.DataMovement.Files.Shares_c847746677"
+    "AssetsRepo": "Azure/azure-sdk-assets",
+    "AssetsRepoPrefixPath": "net",
+    "TagPrefix": "net/storage/Azure.Storage.DataMovement.Files.Shares",
+    "Tag": "net/storage/Azure.Storage.DataMovement.Files.Shares_b7d8da3dcc"
 }
