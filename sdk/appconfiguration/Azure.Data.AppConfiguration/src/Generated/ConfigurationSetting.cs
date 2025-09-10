@@ -36,13 +36,14 @@ namespace Azure.Data.AppConfiguration
         /// A dictionary of tags used to assign additional properties to a configuration setting.
         ///     These can be used to indicate how a configuration setting may be applied.
         /// </param>
+        /// <param name="description"> The description of the key-value. </param>
         /// <param name="isReadOnly">
         /// A value indicating whether the configuration setting is read only.
         ///     A read only configuration setting may not be modified until it is made writable.
         /// </param>
         /// <param name="eTag"> An ETag indicating the state of a configuration setting within a configuration store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationSetting(string key, string label, string contentType, string value, DateTimeOffset? lastModified, IDictionary<string, string> tags, bool? isReadOnly, ETag eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfigurationSetting(string key, string label, string contentType, string value, DateTimeOffset? lastModified, IDictionary<string, string> tags, string description, bool? isReadOnly, ETag eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Label = label;
@@ -50,9 +51,13 @@ namespace Azure.Data.AppConfiguration
             Value = value;
             LastModified = lastModified;
             Tags = tags;
+            Description = description;
             IsReadOnly = isReadOnly;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The description of the key-value. </summary>
+        public string Description { get; set; }
     }
 }
