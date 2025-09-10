@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    status = property.Value.GetString().ToRecoveryPointTierStatus();
+                    status = new RecoveryPointTierStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("extendedInfo"u8))

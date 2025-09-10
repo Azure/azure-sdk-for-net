@@ -9,7 +9,7 @@ csharp: true
 library-name: RecoveryServicesBackup
 namespace: Azure.ResourceManager.RecoveryServicesBackup
 # tag: package-2025-02
-require: https://github.com/Azure/azure-rest-api-specs/blob/97ee23a6db6078abcbec7b75bf9af8c503e9bb8b/specification/recoveryservicesbackup/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d42db6fd18ef2eb1987b4ea50ae648ecf3f76bad/specification/recoveryservicesbackup/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -18,6 +18,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 
 models-to-treat-empty-string-as-null:
@@ -303,6 +304,8 @@ rename-mapping:
   TargetDiskNetworkAccessOption: BackupTargetDiskNetworkAccessOption
   TargetDiskNetworkAccessSettings: BackupTargetDiskNetworkAccessSettings
   TargetDiskNetworkAccessSettings.targetDiskAccessId: -|arm-id
+  AzureIaaSVMJobExtendedInfo.estimatedRemainingDuration: estimatedRemainingDurationValue|duration
+  ClientDiscoveryForLogSpecification.blobDuration: -|duration
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -396,15 +399,13 @@ directive:
     where: $.definitions
     transform: >
       $.TieringPolicy.properties.duration['x-ms-client-name'] = 'durationValue';
-      $.AzureIaaSVMJobExtendedInfo.properties.estimatedRemainingDuration['x-ms-client-name'] = 'estimatedRemainingDurationValue';
       $.BMSBackupSummariesQueryObject.properties.type['x-ms-client-name'] = 'BackupManagementType';
-      $.BMSBackupSummariesQueryObject.properties.type['x-ms-enum']['name'] = 'BackupManagementType';
       $.RecoveryPointRehydrationInfo.properties.rehydrationRetentionDuration['format'] = 'duration';
-  - from: bms.json
-    where: $.parameters
-    transform: >
-      $.AzureRegion['x-ms-format'] = 'azure-location';
-      $.AzureRegion['x-ms-client-name'] = 'location';
+  #- from: bms.json
+  #  where: $.parameters
+  #  transform: >
+  #    $.AzureRegion['x-ms-format'] = 'azure-location';
+  #    $.AzureRegion['x-ms-client-name'] = 'location';
   # Autorest.CSharp can't find `nextLink` from parent (allOf), so here workaround.
   # Issues filed here: https://github.com/Azure/autorest.csharp/issues/2740.
   - from: bms.json
@@ -474,7 +475,7 @@ directive:
   # Issue filed here: https://github.com/Azure/autorest.csharp/issues/2741.
   # This directive just pass the build, but the operation may still not work.
   - from: bms.json
-    where: $.paths['/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig']
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig']
     transform: >
       $.patch.responses['200'] = {
             'description': 'OK',

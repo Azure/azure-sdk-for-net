@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="estimatedRemainingDurationValue"> Time remaining for execution of this job. </param>
         /// <param name="dynamicErrorMessage"> Non localized error message on job execution. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IaasVmBackupJobExtendedInfo(IList<IaasVmBackupJobTaskDetails> tasksList, IDictionary<string, string> propertyBag, IDictionary<string, string> internalPropertyBag, double? progressPercentage, string estimatedRemainingDurationValue, string dynamicErrorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IaasVmBackupJobExtendedInfo(IList<IaasVmBackupJobTaskDetails> tasksList, IDictionary<string, string> propertyBag, IDictionary<string, string> internalPropertyBag, double? progressPercentage, TimeSpan? estimatedRemainingDurationValue, string dynamicErrorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TasksList = tasksList;
             PropertyBag = propertyBag;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Indicates progress of the job. Null if it has not started or completed. </summary>
         public double? ProgressPercentage { get; set; }
         /// <summary> Time remaining for execution of this job. </summary>
-        public string EstimatedRemainingDurationValue { get; set; }
+        public TimeSpan? EstimatedRemainingDurationValue { get; set; }
         /// <summary> Non localized error message on job execution. </summary>
         public string DynamicErrorMessage { get; set; }
     }

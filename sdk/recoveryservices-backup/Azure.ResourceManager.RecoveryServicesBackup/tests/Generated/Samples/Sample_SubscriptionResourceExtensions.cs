@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            AzureLocation location = new AzureLocation("southeastasia");
+            string azureRegion = "southeastasia";
             PreValidateEnableBackupContent content = new PreValidateEnableBackupContent
             {
                 ResourceType = BackupDataSourceType.Vm,
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                 VaultId = new ResourceIdentifier("/Subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.RecoveryServices/Vaults/myVault"),
                 Properties = "",
             };
-            PreValidateEnableBackupResult result = await subscriptionResource.ValidateProtectionIntentAsync(location, content);
+            PreValidateEnableBackupResult result = await subscriptionResource.ValidateProtectionIntentAsync(azureRegion, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            AzureLocation location = new AzureLocation("southeastasia");
+            string azureRegion = "southeastasia";
             BackupStatusContent content = new BackupStatusContent
             {
                 ResourceType = BackupDataSourceType.Vm,
                 ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Compute/VirtualMachines/testVm"),
             };
-            BackupStatusResult result = await subscriptionResource.GetBackupStatusAsync(location, content);
+            BackupStatusResult result = await subscriptionResource.GetBackupStatusAsync(azureRegion, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -98,13 +98,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            AzureLocation location = new AzureLocation("southeastasia");
+            string azureRegion = "southeastasia";
             FeatureSupportContent content = new VmResourceFeatureSupportContent
             {
                 VmSize = "Basic_A0",
                 VmSku = "Premium",
             };
-            VmResourceFeatureSupportResult result = await subscriptionResource.ValidateFeatureSupportAsync(location, content);
+            VmResourceFeatureSupportResult result = await subscriptionResource.ValidateFeatureSupportAsync(azureRegion, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

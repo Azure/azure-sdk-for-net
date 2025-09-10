@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Error Detail class which encapsulates Code, Message and Recommendations. </summary>
-    public partial class BackupErrorDetail
+    /// <summary> Base for all lists of resources. </summary>
+    internal partial class ResourceList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,32 +43,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BackupErrorDetail"/>. </summary>
-        public BackupErrorDetail()
+        /// <summary> Initializes a new instance of <see cref="ResourceList"/>. </summary>
+        internal ResourceList()
         {
-            Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupErrorDetail"/>. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error Message related to the Code. </param>
-        /// <param name="recommendations"> List of recommendation strings. </param>
+        /// <summary> Initializes a new instance of <see cref="ResourceList"/>. </summary>
+        /// <param name="nextLink"> The URI to fetch the next page of resources, with each API call returning up to 200 resources per page. Use ListNext() to fetch the next page if the total number of resources exceeds 200. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupErrorDetail(string code, string message, IReadOnlyList<string> recommendations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceList(string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Code = code;
-            Message = message;
-            Recommendations = recommendations;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Error code. </summary>
-        public string Code { get; }
-        /// <summary> Error Message related to the Code. </summary>
-        public string Message { get; }
-        /// <summary> List of recommendation strings. </summary>
-        public IReadOnlyList<string> Recommendations { get; }
+        /// <summary> The URI to fetch the next page of resources, with each API call returning up to 200 resources per page. Use ListNext() to fetch the next page if the total number of resources exceeds 200. </summary>
+        public string NextLink { get; }
     }
 }

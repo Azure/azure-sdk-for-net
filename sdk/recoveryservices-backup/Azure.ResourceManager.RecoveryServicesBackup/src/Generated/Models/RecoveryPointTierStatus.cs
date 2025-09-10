@@ -5,20 +5,56 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Recovery point tier status. </summary>
-    public enum RecoveryPointTierStatus
+    public readonly partial struct RecoveryPointTierStatus : IEquatable<RecoveryPointTierStatus>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointTierStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RecoveryPointTierStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string InvalidValue = "Invalid";
+        private const string ValidValue = "Valid";
+        private const string DisabledValue = "Disabled";
+        private const string DeletedValue = "Deleted";
+        private const string RehydratedValue = "Rehydrated";
+
         /// <summary> Invalid. </summary>
-        Invalid,
+        public static RecoveryPointTierStatus Invalid { get; } = new RecoveryPointTierStatus(InvalidValue);
         /// <summary> Valid. </summary>
-        Valid,
+        public static RecoveryPointTierStatus Valid { get; } = new RecoveryPointTierStatus(ValidValue);
         /// <summary> Disabled. </summary>
-        Disabled,
+        public static RecoveryPointTierStatus Disabled { get; } = new RecoveryPointTierStatus(DisabledValue);
         /// <summary> Deleted. </summary>
-        Deleted,
+        public static RecoveryPointTierStatus Deleted { get; } = new RecoveryPointTierStatus(DeletedValue);
         /// <summary> Rehydrated. </summary>
-        Rehydrated
+        public static RecoveryPointTierStatus Rehydrated { get; } = new RecoveryPointTierStatus(RehydratedValue);
+        /// <summary> Determines if two <see cref="RecoveryPointTierStatus"/> values are the same. </summary>
+        public static bool operator ==(RecoveryPointTierStatus left, RecoveryPointTierStatus right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="RecoveryPointTierStatus"/> values are not the same. </summary>
+        public static bool operator !=(RecoveryPointTierStatus left, RecoveryPointTierStatus right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryPointTierStatus"/>. </summary>
+        public static implicit operator RecoveryPointTierStatus(string value) => new RecoveryPointTierStatus(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is RecoveryPointTierStatus other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(RecoveryPointTierStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

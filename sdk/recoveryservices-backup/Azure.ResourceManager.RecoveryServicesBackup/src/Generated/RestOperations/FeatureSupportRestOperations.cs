@@ -36,30 +36,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateValidateRequestUri(string subscriptionId, AzureLocation location, FeatureSupportContent content)
+        internal RequestUriBuilder CreateValidateRequestUri(string subscriptionId, string azureRegion, FeatureSupportContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/Subscriptions/", false);
+            uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(azureRegion, true);
             uri.AppendPath("/backupValidateFeatures", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateValidateRequest(string subscriptionId, AzureLocation location, FeatureSupportContent content)
+        internal HttpMessage CreateValidateRequest(string subscriptionId, string azureRegion, FeatureSupportContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/Subscriptions/", false);
+            uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(azureRegion, true);
             uri.AppendPath("/backupValidateFeatures", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -73,18 +73,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> It will validate if given feature with resource properties is supported in service. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="location"> Azure region to hit Api. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="azureRegion"> Azure region to hit Api. </param>
         /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmResourceFeatureSupportResult>> ValidateAsync(string subscriptionId, AzureLocation location, FeatureSupportContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VmResourceFeatureSupportResult>> ValidateAsync(string subscriptionId, string azureRegion, FeatureSupportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateRequest(subscriptionId, location, content);
+            using var message = CreateValidateRequest(subscriptionId, azureRegion, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -101,18 +102,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> It will validate if given feature with resource properties is supported in service. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="location"> Azure region to hit Api. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="azureRegion"> Azure region to hit Api. </param>
         /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmResourceFeatureSupportResult> Validate(string subscriptionId, AzureLocation location, FeatureSupportContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VmResourceFeatureSupportResult> Validate(string subscriptionId, string azureRegion, FeatureSupportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateRequest(subscriptionId, location, content);
+            using var message = CreateValidateRequest(subscriptionId, azureRegion, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
