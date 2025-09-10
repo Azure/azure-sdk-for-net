@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary>
-    /// Holds details about billing type and its meter guids
+    /// Holds details about billing type and its meter guids.
     /// Please note <see cref="EdgeOrderProductMeterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="Pav2MeterDetails"/> and <see cref="PurchaseMeterDetails"/>.
     /// </summary>

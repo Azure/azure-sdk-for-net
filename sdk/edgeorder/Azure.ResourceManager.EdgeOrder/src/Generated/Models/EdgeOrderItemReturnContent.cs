@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderItemReturnContent"/>. </summary>
-        /// <param name="returnAddress"> customer return address. </param>
+        /// <param name="returnAddress"> Customer return address. </param>
         /// <param name="returnReason"> Return Reason. </param>
         /// <param name="serviceTag"> Service tag (located on the bottom-right corner of the device). </param>
         /// <param name="isShippingBoxRequired"> Shipping Box required. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
         }
 
-        /// <summary> customer return address. </summary>
+        /// <summary> Customer return address. </summary>
         public EdgeOrderItemAddressProperties ReturnAddress { get; set; }
         /// <summary> Return Reason. </summary>
         public string ReturnReason { get; }

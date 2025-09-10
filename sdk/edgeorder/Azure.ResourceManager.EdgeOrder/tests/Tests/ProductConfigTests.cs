@@ -65,8 +65,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             ConfigurationFilters configurationFilters = new(GetHierarchyInformation());
             configurationFilters.FilterableProperty.Add(new FilterableProperty(SupportedFilterType.ShipToCountries,
                 new List<string>() { "US" }));
-            ConfigurationsContent configurationsRequest = new(
-                new List<ConfigurationFilters>() { configurationFilters });
+            var configurationsRequest = new ConfigurationsContent() { ConfigurationFilter = configurationFilters };
             AsyncPageable<ProductConfiguration> configurations = EdgeOrderExtensions.GetConfigurationsAsync(Subscription,
                 configurationsRequest);
             List<ProductConfiguration> configurationsResult = await configurations.ToEnumerableAsync();

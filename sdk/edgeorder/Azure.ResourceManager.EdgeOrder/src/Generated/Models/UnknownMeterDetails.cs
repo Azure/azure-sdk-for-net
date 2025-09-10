@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> Unknown version of MeterDetails. </summary>
+    /// <summary> Unknown version of EdgeOrderProductMeterDetails. </summary>
     internal partial class UnknownMeterDetails : EdgeOrderProductMeterDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMeterDetails"/>. </summary>
