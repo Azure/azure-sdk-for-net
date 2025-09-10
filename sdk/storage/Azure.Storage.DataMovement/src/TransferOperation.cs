@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement
     /// Containers information about the transfer and its status as well as provides
     /// hooks to perform operations on the transfer.
     /// </summary>
-    public class TransferOperation : IDisposable
+    public class TransferOperation
     {
         /// <summary>
         /// Defines whether the transfer has completed.
@@ -68,12 +68,13 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Disposes the TransferOperation,
+        /// Disposes the TransferOperation.
         /// </summary>
         public void Dispose()
         {
+            // Set TransferManager to null to break the reference cycle.
+            // We cannot dispose TransferManager here as it may still be in use.
             TransferManager = null;
-            _state?.Dispose();
             GC.SuppressFinalize(this);
         }
 

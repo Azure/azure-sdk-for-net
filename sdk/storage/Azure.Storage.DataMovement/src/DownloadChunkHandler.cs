@@ -105,7 +105,7 @@ namespace Azure.Storage.DataMovement
             await _downloadRangeProcessor.QueueAsync(args).ConfigureAwait(false);
         }
 
-        private async Task ProcessDownloadRange(QueueDownloadChunkArgs args, CancellationToken cancellationToken = default)
+        private async Task ProcessDownloadRange(QueueDownloadChunkArgs args)
         {
             try
             {

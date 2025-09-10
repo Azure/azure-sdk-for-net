@@ -10,11 +10,11 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement;
 
-internal delegate Task ProcessAsync<T>(T item, CancellationToken cancellationToken);
+internal delegate Task ProcessAsync<T>(T item);
 
 internal interface IProcessor<TItem>
 {
-    ValueTask QueueAsync(TItem item, CancellationToken cancellationToken = default);
+    ValueTask QueueAsync(TItem item);
     Task<bool> TryCompleteAsync();
     ProcessAsync<TItem> Process { get; set; }
 }
@@ -59,12 +59,6 @@ internal static class ChannelProcessing
         /// </summary>
         protected readonly Channel<TItem, TItem> _channel;
 
-        /// <summary>
-        /// Cancellation token for disposal.
-        /// </summary>
-        private CancellationTokenSource _cancellationTokenSource;
-        protected CancellationToken _cancellationToken => _cancellationTokenSource.Token;
-
         private ProcessAsync<TItem> _process;
         public ProcessAsync<TItem> Process
         {
@@ -83,15 +77,14 @@ internal static class ChannelProcessing
         {
             Argument.AssertNotNull(channel, nameof(channel));
             _channel = channel;
-            _cancellationTokenSource = new();
             _processorTaskCompletionSource = new TaskCompletionSource<bool>(
                 false,
                 TaskCreationOptions.RunContinuationsAsynchronously);
         }
 
-        public async ValueTask QueueAsync(TItem item, CancellationToken cancellationToken = default)
+        public async ValueTask QueueAsync(TItem item)
         {
-            await _channel.Writer.WriteAsync(item, cancellationToken).ConfigureAwait(false);
+            await _channel.Writer.WriteAsync(item).ConfigureAwait(false);
         }
 
         public async Task<bool> TryCompleteAsync()
@@ -115,10 +108,10 @@ internal static class ChannelProcessing
             try
             {
                 // Process all available items in the queue.
-                while (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
+                while (await _channel.Reader.WaitToReadAsync().ConfigureAwait(false))
                 {
-                    TItem item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
-                    await Process(item, _cancellationToken).ConfigureAwait(false);
+                    TItem item = await _channel.Reader.ReadAsync().ConfigureAwait(false);
+                    await Process(item).ConfigureAwait(false);
                 }
             }
             finally
@@ -149,9 +142,9 @@ internal static class ChannelProcessing
             List<Task> chunkRunners = new List<Task>(_maxConcurrentProcessing);
             try
             {
-                while (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
+                while (await _channel.Reader.WaitToReadAsync().ConfigureAwait(false))
                 {
-                    TItem item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
+                    TItem item = await _channel.Reader.ReadAsync().ConfigureAwait(false);
                     if (chunkRunners.Count >= _maxConcurrentProcessing)
                     {
                         // Clear any completed blocks from the task list
@@ -164,7 +157,7 @@ internal static class ChannelProcessing
                             chunkRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);
                         }
                     }
-                    chunkRunners.Add(Task.Run(async () => await Process(item, _cancellationToken).ConfigureAwait(false)));
+                    chunkRunners.Add(Task.Run(async () => await Process(item).ConfigureAwait(false)));
                 }
             }
             finally
