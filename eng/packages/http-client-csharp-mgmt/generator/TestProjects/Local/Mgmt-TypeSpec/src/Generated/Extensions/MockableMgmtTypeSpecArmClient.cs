@@ -5,10 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using MgmtTypeSpec;
@@ -30,112 +26,13 @@ namespace MgmtTypeSpec.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="FooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="PlaywrightQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FooResource"/> object. </returns>
-        public virtual FooResource GetFooResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PlaywrightQuotaResource"/> object. </returns>
+        public virtual PlaywrightQuotaResource GetPlaywrightQuotaResource(ResourceIdentifier id)
         {
-            FooResource.ValidateResourceId(id);
-            return new FooResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
-        public virtual FooSettingsResource GetFooSettingsResource(ResourceIdentifier id)
-        {
-            FooSettingsResource.ValidateResourceId(id);
-            return new FooSettingsResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BarResource"/> object. </returns>
-        public virtual BarResource GetBarResource(ResourceIdentifier id)
-        {
-            BarResource.ValidateResourceId(id);
-            return new BarResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="BarSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BarSettingsResource"/> object. </returns>
-        public virtual BarSettingsResource GetBarSettingsResource(ResourceIdentifier id)
-        {
-            BarSettingsResource.ValidateResourceId(id);
-            return new BarSettingsResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="BarQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BarQuotaResource"/> object. </returns>
-        public virtual BarQuotaResource GetBarQuotaResource(ResourceIdentifier id)
-        {
-            BarQuotaResource.ValidateResourceId(id);
-            return new BarQuotaResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="BazResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BazResource"/> object. </returns>
-        public virtual BazResource GetBazResource(ResourceIdentifier id)
-        {
-            BazResource.ValidateResourceId(id);
-            return new BazResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ZooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ZooResource"/> object. </returns>
-        public virtual ZooResource GetZooResource(ResourceIdentifier id)
-        {
-            ZooResource.ValidateResourceId(id);
-            return new ZooResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="EndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EndpointResource"/> object. </returns>
-        public virtual EndpointResource GetEndpointResource(ResourceIdentifier id)
-        {
-            EndpointResource.ValidateResourceId(id);
-            return new EndpointResource(Client, id);
-        }
-
-        /// <summary> Gets a collection of <see cref="EndpointResourceCollection"/> objects within the specified scope. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="EndpointResource"/> objects. </returns>
-        public virtual EndpointResourceCollection GetEndpointResources(ResourceIdentifier scope)
-        {
-            return new EndpointResourceCollection(Client, scope);
-        }
-
-        /// <summary> Gets the endpoint to the resource. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="endpointName"> The name of the EndpointResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EndpointResource> GetEndpointResource(ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
-
-            return GetEndpointResources(scope).Get(endpointName, cancellationToken);
-        }
-
-        /// <summary> Gets the endpoint to the resource. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="endpointName"> The name of the EndpointResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EndpointResource>> GetEndpointResourceAsync(ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
-
-            return await GetEndpointResources(scope).GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+            PlaywrightQuotaResource.ValidateResourceId(id);
+            return new PlaywrightQuotaResource(Client, id);
         }
     }
 }
