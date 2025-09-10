@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> NIC type - PublicNic, PrivateNic, or AdditionalNic. </summary>
+    /// <summary> NIC type - PublicNic, PrivateNic, or AdditionalNic; AdditionalPrivateNic and AdditionalPublicNic are only supported for NVAs deployed in VNets. </summary>
     public readonly partial struct NicTypeInResponse : IEquatable<NicTypeInResponse>
     {
         private readonly string _value;

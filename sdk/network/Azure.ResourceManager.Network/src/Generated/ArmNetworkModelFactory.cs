@@ -1594,9 +1594,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="affinityCookieName"> Cookie name to use for the affinity cookie. </param>
         /// <param name="probeEnabled"> Whether the probe is enabled. Default value is false. </param>
         /// <param name="path"> Path which should be used as a prefix for all HTTP requests. Null means no path will be prefixed. Default value is null. </param>
+        /// <param name="dedicatedBackendConnection"> Enable or disable dedicated connection per backend server. Default is set to false. </param>
+        /// <param name="validateCertChainAndExpiry"> Verify or skip both chain and expiry validations of the certificate on the backend server. Default is set to true. </param>
+        /// <param name="validateSNI"> When enabled, verifies if the Common Name of the certificate provided by the backend server matches the Server Name Indication (SNI) value. Default value is true. </param>
+        /// <param name="sniName"> Specify an SNI value to match the common name of the certificate on the backend. By default, the application gateway uses the incoming request’s host header as the SNI. Default value is null. </param>
         /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayBackendHttpSettings"/> instance for mocking. </returns>
-        public static ApplicationGatewayBackendHttpSettings ApplicationGatewayBackendHttpSettings(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, int? port = null, ApplicationGatewayProtocol? protocol = null, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity = null, int? requestTimeoutInSeconds = null, ResourceIdentifier probeId = null, IEnumerable<WritableSubResource> authenticationCertificates = null, IEnumerable<WritableSubResource> trustedRootCertificates = null, ApplicationGatewayConnectionDraining connectionDraining = null, string hostName = null, bool? pickHostNameFromBackendAddress = null, string affinityCookieName = null, bool? probeEnabled = null, string path = null, NetworkProvisioningState? provisioningState = null)
+        public static ApplicationGatewayBackendHttpSettings ApplicationGatewayBackendHttpSettings(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, int? port = null, ApplicationGatewayProtocol? protocol = null, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity = null, int? requestTimeoutInSeconds = null, ResourceIdentifier probeId = null, IEnumerable<WritableSubResource> authenticationCertificates = null, IEnumerable<WritableSubResource> trustedRootCertificates = null, ApplicationGatewayConnectionDraining connectionDraining = null, string hostName = null, bool? pickHostNameFromBackendAddress = null, string affinityCookieName = null, bool? probeEnabled = null, string path = null, bool? dedicatedBackendConnection = null, bool? validateCertChainAndExpiry = null, bool? validateSNI = null, string sniName = null, NetworkProvisioningState? provisioningState = null)
         {
             authenticationCertificates ??= new List<WritableSubResource>();
             trustedRootCertificates ??= new List<WritableSubResource>();
@@ -1620,6 +1624,10 @@ namespace Azure.ResourceManager.Network.Models
                 affinityCookieName,
                 probeEnabled,
                 path,
+                dedicatedBackendConnection,
+                validateCertChainAndExpiry,
+                validateSNI,
+                sniName,
                 provisioningState);
         }
 
@@ -2311,6 +2319,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="extendedLocation"> The extended location of type local virtual network gateway. </param>
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="applicationRuleCollections"> Collection of application rule collections used by Azure Firewall. </param>
@@ -2328,7 +2337,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="additionalProperties"> The additional properties used to further config this azure firewall. </param>
         /// <param name="autoscaleConfiguration"> Properties to provide a custom autoscale configuration to this azure firewall. </param>
         /// <returns> A new <see cref="Network.AzureFirewallData"/> instance for mocking. </returns>
-        public static AzureFirewallData AzureFirewallData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, IEnumerable<string> zones = null, ETag? etag = null, IEnumerable<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections = null, IEnumerable<AzureFirewallNatRuleCollectionData> natRuleCollections = null, IEnumerable<AzureFirewallNetworkRuleCollectionData> networkRuleCollections = null, IEnumerable<AzureFirewallIPConfiguration> ipConfigurations = null, AzureFirewallIPConfiguration managementIPConfiguration = null, NetworkProvisioningState? provisioningState = null, AzureFirewallThreatIntelMode? threatIntelMode = null, ResourceIdentifier virtualHubId = null, ResourceIdentifier firewallPolicyId = null, HubIPAddresses hubIPAddresses = null, IEnumerable<AzureFirewallIPGroups> ipGroups = null, AzureFirewallSku sku = null, IDictionary<string, string> additionalProperties = null, AzureFirewallAutoscaleConfiguration autoscaleConfiguration = null)
+        public static AzureFirewallData AzureFirewallData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ExtendedLocation extendedLocation = null, IEnumerable<string> zones = null, ETag? etag = null, IEnumerable<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections = null, IEnumerable<AzureFirewallNatRuleCollectionData> natRuleCollections = null, IEnumerable<AzureFirewallNetworkRuleCollectionData> networkRuleCollections = null, IEnumerable<AzureFirewallIPConfiguration> ipConfigurations = null, AzureFirewallIPConfiguration managementIPConfiguration = null, NetworkProvisioningState? provisioningState = null, AzureFirewallThreatIntelMode? threatIntelMode = null, ResourceIdentifier virtualHubId = null, ResourceIdentifier firewallPolicyId = null, HubIPAddresses hubIPAddresses = null, IEnumerable<AzureFirewallIPGroups> ipGroups = null, AzureFirewallSku sku = null, IDictionary<string, string> additionalProperties = null, AzureFirewallAutoscaleConfiguration autoscaleConfiguration = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
@@ -2346,6 +2355,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags,
                 serializedAdditionalRawData: null,
+                extendedLocation,
                 zones?.ToList(),
                 etag,
                 applicationRuleCollections?.ToList(),
@@ -2483,6 +2493,15 @@ namespace Azure.ResourceManager.Network.Models
             ipPrefixes ??= new List<string>();
 
             return new LearnedIPPrefixesListResult(ipPrefixes?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AzureFirewallPacketCaptureResponse"/>. </summary>
+        /// <param name="statusCode"> The response code of the performed packet capture operation. </param>
+        /// <param name="message"> Localized Message String of The Result Of The Azure Firewall Packet Capture Operation. </param>
+        /// <returns> A new <see cref="Models.AzureFirewallPacketCaptureResponse"/> instance for mocking. </returns>
+        public static AzureFirewallPacketCaptureResponse AzureFirewallPacketCaptureResponse(AzureFirewallPacketCaptureResponseCode? statusCode = null, string message = null)
+        {
+            return new AzureFirewallPacketCaptureResponse(statusCode, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureFirewallFqdnTag"/>. </summary>
@@ -5297,6 +5316,16 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterServiceTagsResource"/>. </summary>
+        /// <param name="serviceTags"> NSP service tags. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterServiceTagsResource"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterServiceTagsResource NetworkSecurityPerimeterServiceTagsResource(IEnumerable<string> serviceTags = null)
+        {
+            serviceTags ??= new List<string>();
+
+            return new NetworkSecurityPerimeterServiceTagsResource(serviceTags?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Network.ReachabilityAnalysisIntentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -5408,17 +5437,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sshPublicKey"> Public key for SSH login. </param>
         /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
         /// <param name="networkInterfaceConfigurations"> Network Profile containing configurations for Public and Private NIC. </param>
-        /// <param name="additionalNics"> Details required for Additional Network Interface. </param>
+        /// <param name="additionalNics"> Details required for Additional Network Interface. This property is not compatible with the NVA deployed in VNets. </param>
         /// <param name="internetIngressPublicIPs"> List of Resource Uri of Public IPs for Internet Ingress Scenario. </param>
         /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
         /// <param name="virtualApplianceConnections"> List of references to VirtualApplianceConnections. </param>
         /// <param name="inboundSecurityRules"> List of references to InboundSecurityRules. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="deploymentType"> The deployment type. PartnerManaged for the SaaS NVA. </param>
-        /// <param name="delegation"> The delegation for the Virtual Appliance. </param>
+        /// <param name="delegation"> The delegation for the Virtual Appliance. Only appliable for SaaS NVA. </param>
         /// <param name="partnerManagedResource"> The delegation for the Virtual Appliance. </param>
+        /// <param name="nvaInterfaceConfigurations"> The NVA in VNet interface configurations. </param>
+        /// <param name="privateIPAddress"> A Internal Load Balancer's HA port frontend IP address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. </param>
         /// <returns> A new <see cref="Network.NetworkVirtualApplianceData"/> instance for mocking. </returns>
-        public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, ETag? etag = null, VirtualApplianceSkuProperties nvaSku = null, string addressPrefix = null, IEnumerable<string> bootStrapConfigurationBlobs = null, ResourceIdentifier virtualHubId = null, IEnumerable<string> cloudInitConfigurationBlobs = null, string cloudInitConfiguration = null, long? virtualApplianceAsn = null, string sshPublicKey = null, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics = null, IEnumerable<VirtualApplianceNetworkInterfaceConfiguration> networkInterfaceConfigurations = null, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics = null, IEnumerable<WritableSubResource> internetIngressPublicIPs = null, IEnumerable<WritableSubResource> virtualApplianceSites = null, IEnumerable<WritableSubResource> virtualApplianceConnections = null, IEnumerable<WritableSubResource> inboundSecurityRules = null, NetworkProvisioningState? provisioningState = null, string deploymentType = null, VirtualApplianceDelegationProperties delegation = null, PartnerManagedResourceProperties partnerManagedResource = null)
+        public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, ETag? etag = null, VirtualApplianceSkuProperties nvaSku = null, string addressPrefix = null, IEnumerable<string> bootStrapConfigurationBlobs = null, ResourceIdentifier virtualHubId = null, IEnumerable<string> cloudInitConfigurationBlobs = null, string cloudInitConfiguration = null, long? virtualApplianceAsn = null, string sshPublicKey = null, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics = null, IEnumerable<VirtualApplianceNetworkInterfaceConfiguration> networkInterfaceConfigurations = null, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics = null, IEnumerable<WritableSubResource> internetIngressPublicIPs = null, IEnumerable<WritableSubResource> virtualApplianceSites = null, IEnumerable<WritableSubResource> virtualApplianceConnections = null, IEnumerable<WritableSubResource> inboundSecurityRules = null, NetworkProvisioningState? provisioningState = null, string deploymentType = null, VirtualApplianceDelegationProperties delegation = null, PartnerManagedResourceProperties partnerManagedResource = null, IEnumerable<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations = null, string privateIPAddress = null)
         {
             tags ??= new Dictionary<string, string>();
             bootStrapConfigurationBlobs ??= new List<string>();
@@ -5430,6 +5461,7 @@ namespace Azure.ResourceManager.Network.Models
             virtualApplianceSites ??= new List<WritableSubResource>();
             virtualApplianceConnections ??= new List<WritableSubResource>();
             inboundSecurityRules ??= new List<WritableSubResource>();
+            nvaInterfaceConfigurations ??= new List<NvaInterfaceConfigurationsProperties>();
 
             return new NetworkVirtualApplianceData(
                 id,
@@ -5458,11 +5490,13 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState,
                 deploymentType,
                 delegation,
-                partnerManagedResource);
+                partnerManagedResource,
+                nvaInterfaceConfigurations?.ToList(),
+                privateIPAddress);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualApplianceNicProperties"/>. </summary>
-        /// <param name="nicType"> NIC type - PublicNic, PrivateNic, or AdditionalNic. </param>
+        /// <param name="nicType"> NIC type - PublicNic, PrivateNic, or AdditionalNic; AdditionalPrivateNic and AdditionalPublicNic are only supported for NVAs deployed in VNets. </param>
         /// <param name="name"> NIC name. </param>
         /// <param name="publicIPAddress"> Public IP address. </param>
         /// <param name="privateIPAddress"> Private IP address. </param>
@@ -7079,7 +7113,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectionProtocol"> Connection protocol used for this connection. </param>
         /// <param name="routingWeight"> The routing weight. </param>
         /// <param name="connectionMode"> The connection mode for this connection. </param>
-        /// <param name="sharedKey"> The IPSec shared key. </param>
+        /// <param name="sharedKey"> The IPSec shared key. We will no longer return sharedKey in VirtualNetworkGatewayConnection Create/Update/Get/List/UpdateTags APIs response. Please use VirtualNetworkGatewayConnection GetSharedKey API to fetch connection sharedKey. </param>
         /// <param name="connectionStatus"> Virtual Network Gateway connection status. </param>
         /// <param name="tunnelConnectionStatus"> Collection of all tunnels' connection health status. </param>
         /// <param name="egressBytesTransferred"> The egress bytes transferred in this connection. </param>
@@ -7186,6 +7220,15 @@ namespace Azure.ResourceManager.Network.Models
                 messagesSent,
                 messagesReceived,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RadiusAuthServer"/>. </summary>
+        /// <param name="radiusServerAddress"> Radius server IPAddress. </param>
+        /// <param name="radiusServerSecret"> Radius server secret. </param>
+        /// <returns> A new <see cref="Models.RadiusAuthServer"/> instance for mocking. </returns>
+        public static RadiusAuthServer RadiusAuthServer(string radiusServerAddress = null, string radiusServerSecret = null)
+        {
+            return new RadiusAuthServer(radiusServerAddress, radiusServerSecret, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GatewayRouteListResult"/>. </summary>
@@ -7805,7 +7848,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="radiusClientRootCertificates"> Radius client root certificate of VpnServerConfiguration. </param>
         /// <param name="vpnClientIPsecPolicies"> VpnClientIpsecPolicies for VpnServerConfiguration. </param>
         /// <param name="radiusServerAddress"> The radius server address property of the VpnServerConfiguration resource for point to site client connection. </param>
-        /// <param name="radiusServerSecret"> The radius secret property of the VpnServerConfiguration resource for point to site client connection. </param>
+        /// <param name="radiusServerSecret"> The radius secret property of the VpnServerConfiguration resource for point to site client connection. We will no longer return radiusServerSecret in VpnServerConfiguration Create/Update/Get/List/UpdateTags APIs response. Please use VpnServerConfiguration ListRadiusSecrets API to fetch radius server secrets. </param>
         /// <param name="radiusServers"> Multiple Radius Server configuration for VpnServerConfiguration. </param>
         /// <param name="aadAuthenticationParameters"> The set of aad vpn authentication parameters. </param>
         /// <param name="provisioningState"> The provisioning state of the VpnServerConfiguration resource. Possible values are: 'Updating', 'Deleting', and 'Failed'. </param>
@@ -8198,7 +8241,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ingressBytesTransferred"> Ingress bytes transferred. </param>
         /// <param name="egressBytesTransferred"> Egress bytes transferred. </param>
         /// <param name="connectionBandwidth"> Expected bandwidth in MBPS. </param>
-        /// <param name="sharedKey"> SharedKey for the vpn connection. </param>
+        /// <param name="sharedKey"> Deprecated: SharedKey for the vpn connection. This is no more used. </param>
         /// <param name="enableBgp"> EnableBgp flag. </param>
         /// <param name="usePolicyBasedTrafficSelectors"> Enable policy-based traffic selectors. </param>
         /// <param name="ipsecPolicies"> The IPSec Policies to be considered by this connection. </param>
@@ -8256,7 +8299,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ingressBytesTransferred"> Ingress bytes transferred. </param>
         /// <param name="egressBytesTransferred"> Egress bytes transferred. </param>
         /// <param name="connectionBandwidth"> Expected bandwidth in MBPS. </param>
-        /// <param name="sharedKey"> SharedKey for the vpn connection. </param>
+        /// <param name="sharedKey"> SharedKey for the vpn link connection. We will no longer return sharedKey in any Create/Update/Get/List/UpdateTags VpnGateway/VpnConnection/VpnLinkConnection APIs response. Please use 'Vpn Link Connections - List Default Shared Key' API to fetch Vpn link connection sharedKey. </param>
         /// <param name="enableBgp"> EnableBgp flag. </param>
         /// <param name="vpnGatewayCustomBgpAddresses"> vpnGatewayCustomBgpAddresses used by this connection. </param>
         /// <param name="usePolicyBasedTrafficSelectors"> Enable policy-based traffic selectors. </param>
@@ -9107,6 +9150,95 @@ namespace Azure.ResourceManager.Network.Models
             return new ConnectionMonitorQueryResult(sourceStatus, states?.ToList(), serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHttpSettings" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="port"> The destination port on the backend. </param>
+        /// <param name="protocol"> The protocol used to communicate with the backend. </param>
+        /// <param name="cookieBasedAffinity"> Cookie based affinity. </param>
+        /// <param name="requestTimeoutInSeconds"> Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1 second to 86400 seconds. </param>
+        /// <param name="probeId"> Probe resource of an application gateway. </param>
+        /// <param name="authenticationCertificates"> Array of references to application gateway authentication certificates. </param>
+        /// <param name="trustedRootCertificates"> Array of references to application gateway trusted root certificates. </param>
+        /// <param name="connectionDraining"> Connection draining of the backend http settings resource. </param>
+        /// <param name="hostName"> Host header to be sent to the backend servers. </param>
+        /// <param name="pickHostNameFromBackendAddress"> Whether to pick host header should be picked from the host name of the backend server. Default value is false. </param>
+        /// <param name="affinityCookieName"> Cookie name to use for the affinity cookie. </param>
+        /// <param name="probeEnabled"> Whether the probe is enabled. Default value is false. </param>
+        /// <param name="path"> Path which should be used as a prefix for all HTTP requests. Null means no path will be prefixed. Default value is null. </param>
+        /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHttpSettings" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApplicationGatewayBackendHttpSettings ApplicationGatewayBackendHttpSettings(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? port, ApplicationGatewayProtocol? protocol, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeoutInSeconds, ResourceIdentifier probeId, IEnumerable<WritableSubResource> authenticationCertificates, IEnumerable<WritableSubResource> trustedRootCertificates, ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, NetworkProvisioningState? provisioningState)
+        {
+            return ApplicationGatewayBackendHttpSettings(id: id, name: name, resourceType: resourceType, etag: etag, port: port, protocol: protocol, cookieBasedAffinity: cookieBasedAffinity, requestTimeoutInSeconds: requestTimeoutInSeconds, probeId: probeId, authenticationCertificates: authenticationCertificates, trustedRootCertificates: trustedRootCertificates, connectionDraining: connectionDraining, hostName: hostName, pickHostNameFromBackendAddress: pickHostNameFromBackendAddress, affinityCookieName: affinityCookieName, probeEnabled: probeEnabled, path: path, dedicatedBackendConnection: default, validateCertChainAndExpiry: default, validateSNI: default, sniName: default, provisioningState: provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.AzureFirewallData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="applicationRuleCollections"> Collection of application rule collections used by Azure Firewall. </param>
+        /// <param name="natRuleCollections"> Collection of NAT rule collections used by Azure Firewall. </param>
+        /// <param name="networkRuleCollections"> Collection of network rule collections used by Azure Firewall. </param>
+        /// <param name="ipConfigurations"> IP configuration of the Azure Firewall resource. </param>
+        /// <param name="managementIPConfiguration"> IP configuration of the Azure Firewall used for management traffic. </param>
+        /// <param name="provisioningState"> The provisioning state of the Azure firewall resource. </param>
+        /// <param name="threatIntelMode"> The operation mode for Threat Intelligence. </param>
+        /// <param name="virtualHubId"> The virtualHub to which the firewall belongs. </param>
+        /// <param name="firewallPolicyId"> The firewallPolicy associated with this azure firewall. </param>
+        /// <param name="hubIPAddresses"> IP addresses associated with AzureFirewall. </param>
+        /// <param name="ipGroups"> IpGroups associated with AzureFirewall. </param>
+        /// <param name="sku"> The Azure Firewall Resource SKU. </param>
+        /// <param name="additionalProperties"> The additional properties used to further config this azure firewall. </param>
+        /// <param name="autoscaleConfiguration"> Properties to provide a custom autoscale configuration to this azure firewall. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.AzureFirewallData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AzureFirewallData AzureFirewallData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<string> zones, ETag? etag, IEnumerable<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, IEnumerable<AzureFirewallNatRuleCollectionData> natRuleCollections, IEnumerable<AzureFirewallNetworkRuleCollectionData> networkRuleCollections, IEnumerable<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIPConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, ResourceIdentifier virtualHubId, ResourceIdentifier firewallPolicyId, HubIPAddresses hubIPAddresses, IEnumerable<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties, AzureFirewallAutoscaleConfiguration autoscaleConfiguration)
+        {
+            return AzureFirewallData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, extendedLocation: default, zones: zones, etag: etag, applicationRuleCollections: applicationRuleCollections, natRuleCollections: natRuleCollections, networkRuleCollections: networkRuleCollections, ipConfigurations: ipConfigurations, managementIPConfiguration: managementIPConfiguration, provisioningState: provisioningState, threatIntelMode: threatIntelMode, virtualHubId: virtualHubId, firewallPolicyId: firewallPolicyId, hubIPAddresses: hubIPAddresses, ipGroups: ipGroups, sku: sku, additionalProperties: additionalProperties, autoscaleConfiguration: autoscaleConfiguration);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.NetworkVirtualApplianceData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The service principal that has read access to cloud-init and config blob. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="nvaSku"> Network Virtual Appliance SKU. </param>
+        /// <param name="addressPrefix"> Address Prefix. </param>
+        /// <param name="bootStrapConfigurationBlobs"> BootStrapConfigurationBlobs storage URLs. </param>
+        /// <param name="virtualHubId"> The Virtual Hub where Network Virtual Appliance is being deployed. </param>
+        /// <param name="cloudInitConfigurationBlobs"> CloudInitConfigurationBlob storage URLs. </param>
+        /// <param name="cloudInitConfiguration"> CloudInitConfiguration string in plain text. </param>
+        /// <param name="virtualApplianceAsn"> VirtualAppliance ASN. Microsoft private, public and IANA reserved ASN are not supported. </param>
+        /// <param name="sshPublicKey"> Public key for SSH login. </param>
+        /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
+        /// <param name="networkInterfaceConfigurations"> Network Profile containing configurations for Public and Private NIC. </param>
+        /// <param name="additionalNics"> Details required for Additional Network Interface. </param>
+        /// <param name="internetIngressPublicIPs"> List of Resource Uri of Public IPs for Internet Ingress Scenario. </param>
+        /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
+        /// <param name="virtualApplianceConnections"> List of references to VirtualApplianceConnections. </param>
+        /// <param name="inboundSecurityRules"> List of references to InboundSecurityRules. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="deploymentType"> The deployment type. PartnerManaged for the SaaS NVA. </param>
+        /// <param name="delegation"> The delegation for the Virtual Appliance. </param>
+        /// <param name="partnerManagedResource"> The delegation for the Virtual Appliance. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.NetworkVirtualApplianceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IEnumerable<string> bootStrapConfigurationBlobs, ResourceIdentifier virtualHubId, IEnumerable<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics, IEnumerable<VirtualApplianceNetworkInterfaceConfiguration> networkInterfaceConfigurations, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics, IEnumerable<WritableSubResource> internetIngressPublicIPs, IEnumerable<WritableSubResource> virtualApplianceSites, IEnumerable<WritableSubResource> virtualApplianceConnections, IEnumerable<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource)
+        {
+            return NetworkVirtualApplianceData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, identity: identity, etag: etag, nvaSku: nvaSku, addressPrefix: addressPrefix, bootStrapConfigurationBlobs: bootStrapConfigurationBlobs, virtualHubId: virtualHubId, cloudInitConfigurationBlobs: cloudInitConfigurationBlobs, cloudInitConfiguration: cloudInitConfiguration, virtualApplianceAsn: virtualApplianceAsn, sshPublicKey: sshPublicKey, virtualApplianceNics: virtualApplianceNics, networkInterfaceConfigurations: networkInterfaceConfigurations, additionalNics: additionalNics, internetIngressPublicIPs: internetIngressPublicIPs, virtualApplianceSites: virtualApplianceSites, virtualApplianceConnections: virtualApplianceConnections, inboundSecurityRules: inboundSecurityRules, provisioningState: provisioningState, deploymentType: deploymentType, delegation: delegation, partnerManagedResource: partnerManagedResource, nvaInterfaceConfigurations: default, privateIPAddress: default);
+        }
+
         /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -9308,7 +9440,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IEnumerable<string> bootStrapConfigurationBlobs, ResourceIdentifier virtualHubId, IEnumerable<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics, IEnumerable<WritableSubResource> virtualApplianceSites, IEnumerable<WritableSubResource> virtualApplianceConnections, IEnumerable<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource)
         {
-            return NetworkVirtualApplianceData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, identity: identity, etag: etag, nvaSku: nvaSku, addressPrefix: addressPrefix, bootStrapConfigurationBlobs: bootStrapConfigurationBlobs, virtualHubId: virtualHubId, cloudInitConfigurationBlobs: cloudInitConfigurationBlobs, cloudInitConfiguration: cloudInitConfiguration, virtualApplianceAsn: virtualApplianceAsn, sshPublicKey: sshPublicKey, virtualApplianceNics: virtualApplianceNics, networkInterfaceConfigurations: default, additionalNics: additionalNics, internetIngressPublicIPs: default, virtualApplianceSites: virtualApplianceSites, virtualApplianceConnections: virtualApplianceConnections, inboundSecurityRules: inboundSecurityRules, provisioningState: provisioningState, deploymentType: deploymentType, delegation: delegation, partnerManagedResource: partnerManagedResource);
+            return NetworkVirtualApplianceData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, identity: identity, etag: etag, nvaSku: nvaSku, addressPrefix: addressPrefix, bootStrapConfigurationBlobs: bootStrapConfigurationBlobs, virtualHubId: virtualHubId, cloudInitConfigurationBlobs: cloudInitConfigurationBlobs, cloudInitConfiguration: cloudInitConfiguration, virtualApplianceAsn: virtualApplianceAsn, sshPublicKey: sshPublicKey, virtualApplianceNics: virtualApplianceNics, networkInterfaceConfigurations: default, additionalNics: additionalNics, internetIngressPublicIPs: default, virtualApplianceSites: virtualApplianceSites, virtualApplianceConnections: virtualApplianceConnections, inboundSecurityRules: inboundSecurityRules, provisioningState: provisioningState, deploymentType: deploymentType, delegation: delegation, partnerManagedResource: partnerManagedResource, nvaInterfaceConfigurations: default, privateIPAddress: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.NatGatewayData" />. </summary>
@@ -9770,7 +9902,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AzureFirewallData AzureFirewallData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<string> zones, ETag? etag, IEnumerable<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, IEnumerable<AzureFirewallNatRuleCollectionData> natRuleCollections, IEnumerable<AzureFirewallNetworkRuleCollectionData> networkRuleCollections, IEnumerable<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIPConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, ResourceIdentifier virtualHubId, ResourceIdentifier firewallPolicyId, HubIPAddresses hubIPAddresses, IEnumerable<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties)
         {
-            return AzureFirewallData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, zones: zones, etag: etag, applicationRuleCollections: applicationRuleCollections, natRuleCollections: natRuleCollections, networkRuleCollections: networkRuleCollections, ipConfigurations: ipConfigurations, managementIPConfiguration: managementIPConfiguration, provisioningState: provisioningState, threatIntelMode: threatIntelMode, virtualHubId: virtualHubId, firewallPolicyId: firewallPolicyId, hubIPAddresses: hubIPAddresses, ipGroups: ipGroups, sku: sku, additionalProperties: additionalProperties, autoscaleConfiguration: default);
+            return AzureFirewallData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, extendedLocation: default, zones: zones, etag: etag, applicationRuleCollections: applicationRuleCollections, natRuleCollections: natRuleCollections, networkRuleCollections: networkRuleCollections, ipConfigurations: ipConfigurations, managementIPConfiguration: managementIPConfiguration, provisioningState: provisioningState, threatIntelMode: threatIntelMode, virtualHubId: virtualHubId, firewallPolicyId: firewallPolicyId, hubIPAddresses: hubIPAddresses, ipGroups: ipGroups, sku: sku, additionalProperties: additionalProperties, autoscaleConfiguration: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.BastionHostData" />. </summary>
@@ -10005,7 +10137,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IEnumerable<string> bootStrapConfigurationBlobs, ResourceIdentifier virtualHubId, IEnumerable<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics, IEnumerable<WritableSubResource> internetIngressPublicIPs, IEnumerable<WritableSubResource> virtualApplianceSites, IEnumerable<WritableSubResource> virtualApplianceConnections, IEnumerable<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource)
         {
-            return NetworkVirtualApplianceData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, identity: identity, etag: etag, nvaSku: nvaSku, addressPrefix: addressPrefix, bootStrapConfigurationBlobs: bootStrapConfigurationBlobs, virtualHubId: virtualHubId, cloudInitConfigurationBlobs: cloudInitConfigurationBlobs, cloudInitConfiguration: cloudInitConfiguration, virtualApplianceAsn: virtualApplianceAsn, sshPublicKey: sshPublicKey, virtualApplianceNics: virtualApplianceNics, networkInterfaceConfigurations: default, additionalNics: additionalNics, internetIngressPublicIPs: internetIngressPublicIPs, virtualApplianceSites: virtualApplianceSites, virtualApplianceConnections: virtualApplianceConnections, inboundSecurityRules: inboundSecurityRules, provisioningState: provisioningState, deploymentType: deploymentType, delegation: delegation, partnerManagedResource: partnerManagedResource);
+            return NetworkVirtualApplianceData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, identity: identity, etag: etag, nvaSku: nvaSku, addressPrefix: addressPrefix, bootStrapConfigurationBlobs: bootStrapConfigurationBlobs, virtualHubId: virtualHubId, cloudInitConfigurationBlobs: cloudInitConfigurationBlobs, cloudInitConfiguration: cloudInitConfiguration, virtualApplianceAsn: virtualApplianceAsn, sshPublicKey: sshPublicKey, virtualApplianceNics: virtualApplianceNics, networkInterfaceConfigurations: default, additionalNics: additionalNics, internetIngressPublicIPs: internetIngressPublicIPs, virtualApplianceSites: virtualApplianceSites, virtualApplianceConnections: virtualApplianceConnections, inboundSecurityRules: inboundSecurityRules, provisioningState: provisioningState, deploymentType: deploymentType, delegation: delegation, partnerManagedResource: partnerManagedResource, nvaInterfaceConfigurations: default, privateIPAddress: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.Models.VirtualApplianceNicProperties" />. </summary>
