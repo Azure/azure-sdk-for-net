@@ -46,12 +46,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AdministrativeCredentials"/>. </summary>
+        /// <param name="password"> The password of the administrator of the device used during initialization. </param>
         /// <param name="username"> The username of the administrator of the device used during initialization. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
-        public AdministrativeCredentials(string username)
+        /// <exception cref="ArgumentNullException"> <paramref name="password"/> or <paramref name="username"/> is null. </exception>
+        public AdministrativeCredentials(string password, string username)
         {
+            Argument.AssertNotNull(password, nameof(password));
             Argument.AssertNotNull(username, nameof(username));
 
+            Password = password;
             Username = username;
         }
 

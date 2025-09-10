@@ -533,8 +533,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
-                extendedLocation,
                 adminUsername,
                 availabilityZone,
                 bareMetalMachineId,
@@ -560,6 +558,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 vmImage,
                 vmImageRepositoryCredentials,
                 volumes ?? new ChangeTrackingList<ResourceIdentifier>(),
+                etag,
+                extendedLocation,
                 serializedAdditionalRawData);
         }
 

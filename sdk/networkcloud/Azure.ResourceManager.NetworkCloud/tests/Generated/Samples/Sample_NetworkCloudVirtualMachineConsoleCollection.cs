@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateVirtualMachineConsole()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Consoles_Create.json
-            // this example is just showing the usage of "Consoles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/Consoles_Create.json
+            // this example is just showing the usage of "Console_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,9 +41,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // invoke the operation
             string consoleName = "default";
-            NetworkCloudVirtualMachineConsoleData data = new NetworkCloudVirtualMachineConsoleData(new AzureLocation("location"), new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterManagerExtendedLocationName", "CustomLocation"), ConsoleEnabled.True, new NetworkCloudSshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm"))
+            NetworkCloudVirtualMachineConsoleData data = new NetworkCloudVirtualMachineConsoleData(new AzureLocation("location"), default, null, new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterManagerExtendedLocationName", "CustomLocation"))
             {
-                ExpireOn = DateTimeOffset.Parse("2022-06-01T01:27:03.008Z"),
                 Tags =
 {
 ["key1"] = "myvalue1",
@@ -64,8 +63,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualMachineConsole()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Consoles_Get.json
-            // this example is just showing the usage of "Consoles_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/Consoles_Get.json
+            // this example is just showing the usage of "Console_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -98,8 +97,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListConsolesOfTheVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Consoles_ListByVirtualMachine.json
-            // this example is just showing the usage of "Consoles_ListByVirtualMachine" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/Consoles_ListByVirtualMachine.json
+            // this example is just showing the usage of "Console_ListByVirtualMachine" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -134,8 +133,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetVirtualMachineConsole()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Consoles_Get.json
-            // this example is just showing the usage of "Consoles_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/Consoles_Get.json
+            // this example is just showing the usage of "Console_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -164,8 +163,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetVirtualMachineConsole()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Consoles_Get.json
-            // this example is just showing the usage of "Consoles_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/Consoles_Get.json
+            // this example is just showing the usage of "Console_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

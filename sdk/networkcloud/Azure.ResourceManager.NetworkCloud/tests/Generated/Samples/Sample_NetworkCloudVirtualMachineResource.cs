@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/VirtualMachines_Get.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/VirtualMachines_Get.json
+            // this example is just showing the usage of "VirtualMachine_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -48,10 +48,37 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteVirtualMachine()
+        {
+            // Generated from example definition: 2025-02-01/VirtualMachines_Delete.json
+            // this example is just showing the usage of "VirtualMachine_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkCloudVirtualMachineResource created on azure
+            // for more information of creating NetworkCloudVirtualMachineResource, please refer to the document of NetworkCloudVirtualMachineResource
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string resourceGroupName = "resourceGroupName";
+            string virtualMachineName = "virtualMachineName";
+            ResourceIdentifier networkCloudVirtualMachineResourceId = NetworkCloudVirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName);
+            NetworkCloudVirtualMachineResource networkCloudVirtualMachine = client.GetNetworkCloudVirtualMachineResource(networkCloudVirtualMachineResourceId);
+
+            // invoke the operation
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudVirtualMachine.DeleteAsync(WaitUntil.Completed);
+            NetworkCloudOperationStatusResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/VirtualMachines_Patch.json
-            // this example is just showing the usage of "VirtualMachines_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/VirtualMachines_Patch.json
+            // this example is just showing the usage of "VirtualMachine_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -74,10 +101,6 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 ["key1"] = "myvalue1",
 ["key2"] = "myvalue2"
 },
-                VmImageRepositoryCredentials = new ImageRepositoryCredentials("myacr.azurecr.io", "myuser")
-                {
-                    Password = "{password}",
-                },
             };
             ArmOperation<NetworkCloudVirtualMachineResource> lro = await networkCloudVirtualMachine.UpdateAsync(WaitUntil.Completed, patch);
             NetworkCloudVirtualMachineResource result = lro.Value;
@@ -93,7 +116,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task PowerOff_PowerOffVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/VirtualMachines_PowerOff.json
+            // Generated from example definition: 2025-02-01/VirtualMachines_PowerOff.json
             // this example is just showing the usage of "VirtualMachines_PowerOff" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -124,7 +147,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Reimage_ReimageVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/VirtualMachines_Reimage.json
+            // Generated from example definition: 2025-02-01/VirtualMachines_Reimage.json
             // this example is just showing the usage of "VirtualMachines_Reimage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,7 +174,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Restart_RestartVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/VirtualMachines_Restart.json
+            // Generated from example definition: 2025-02-01/VirtualMachines_Restart.json
             // this example is just showing the usage of "VirtualMachines_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,7 +201,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Start_StartVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/VirtualMachines_Start.json
+            // Generated from example definition: 2025-02-01/VirtualMachines_Start.json
             // this example is just showing the usage of "VirtualMachines_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <summary> Initializes a new instance of AgentPoolsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public AgentPoolsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -34,100 +34,6 @@ namespace Azure.ResourceManager.NetworkCloud
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2025-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
-        }
-
-        internal RequestUriBuilder CreateListByKubernetesClusterRequestUri(string subscriptionId, string resourceGroupName, string kubernetesClusterName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.NetworkCloud/kubernetesClusters/", false);
-            uri.AppendPath(kubernetesClusterName, true);
-            uri.AppendPath("/agentPools", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByKubernetesClusterRequest(string subscriptionId, string resourceGroupName, string kubernetesClusterName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.NetworkCloud/kubernetesClusters/", false);
-            uri.AppendPath(kubernetesClusterName, true);
-            uri.AppendPath("/agentPools", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get a list of agent pools for the provided Kubernetes cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AgentPoolList>> ListByKubernetesClusterAsync(string subscriptionId, string resourceGroupName, string kubernetesClusterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
-
-            using var message = CreateListByKubernetesClusterRequest(subscriptionId, resourceGroupName, kubernetesClusterName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AgentPoolList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AgentPoolList.DeserializeAgentPoolList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a list of agent pools for the provided Kubernetes cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AgentPoolList> ListByKubernetesCluster(string subscriptionId, string resourceGroupName, string kubernetesClusterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
-
-            using var message = CreateListByKubernetesClusterRequest(subscriptionId, resourceGroupName, kubernetesClusterName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AgentPoolList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AgentPoolList.DeserializeAgentPoolList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName)
@@ -346,112 +252,6 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName, string ifMatch, string ifNoneMatch)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.NetworkCloud/kubernetesClusters/", false);
-            uri.AppendPath(kubernetesClusterName, true);
-            uri.AppendPath("/agentPools/", false);
-            uri.AppendPath(agentPoolName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName, string ifMatch, string ifNoneMatch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.NetworkCloud/kubernetesClusters/", false);
-            uri.AppendPath(kubernetesClusterName, true);
-            uri.AppendPath("/agentPools/", false);
-            uri.AppendPath(agentPoolName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            if (ifMatch != null)
-            {
-                request.Headers.Add("If-Match", ifMatch);
-            }
-            if (ifNoneMatch != null)
-            {
-                request.Headers.Add("If-None-Match", ifNoneMatch);
-            }
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Delete the provided Kubernetes cluster agent pool. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
-        /// <param name="agentPoolName"> The name of the Kubernetes cluster agent pool. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="kubernetesClusterName"/> or <paramref name="agentPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="kubernetesClusterName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, kubernetesClusterName, agentPoolName, ifMatch, ifNoneMatch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Delete the provided Kubernetes cluster agent pool. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
-        /// <param name="agentPoolName"> The name of the Kubernetes cluster agent pool. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="kubernetesClusterName"/> or <paramref name="agentPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="kubernetesClusterName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, kubernetesClusterName, agentPoolName, ifMatch, ifNoneMatch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName, NetworkCloudAgentPoolPatch patch, string ifMatch, string ifNoneMatch)
         {
             var uri = new RawRequestUriBuilder();
@@ -559,6 +359,204 @@ namespace Azure.ResourceManager.NetworkCloud
                 case 200:
                 case 202:
                     return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName, string ifMatch, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/kubernetesClusters/", false);
+            uri.AppendPath(kubernetesClusterName, true);
+            uri.AppendPath("/agentPools/", false);
+            uri.AppendPath(agentPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName, string ifMatch, string ifNoneMatch)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/kubernetesClusters/", false);
+            uri.AppendPath(kubernetesClusterName, true);
+            uri.AppendPath("/agentPools/", false);
+            uri.AppendPath(agentPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Delete the provided Kubernetes cluster agent pool. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
+        /// <param name="agentPoolName"> The name of the Kubernetes cluster agent pool. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="kubernetesClusterName"/> or <paramref name="agentPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="kubernetesClusterName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, kubernetesClusterName, agentPoolName, ifMatch, ifNoneMatch);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Delete the provided Kubernetes cluster agent pool. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
+        /// <param name="agentPoolName"> The name of the Kubernetes cluster agent pool. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="kubernetesClusterName"/> or <paramref name="agentPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="kubernetesClusterName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, kubernetesClusterName, agentPoolName, ifMatch, ifNoneMatch);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByKubernetesClusterRequestUri(string subscriptionId, string resourceGroupName, string kubernetesClusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/kubernetesClusters/", false);
+            uri.AppendPath(kubernetesClusterName, true);
+            uri.AppendPath("/agentPools", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByKubernetesClusterRequest(string subscriptionId, string resourceGroupName, string kubernetesClusterName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkCloud/kubernetesClusters/", false);
+            uri.AppendPath(kubernetesClusterName, true);
+            uri.AppendPath("/agentPools", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get a list of agent pools for the provided Kubernetes cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AgentPoolList>> ListByKubernetesClusterAsync(string subscriptionId, string resourceGroupName, string kubernetesClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+
+            using var message = CreateListByKubernetesClusterRequest(subscriptionId, resourceGroupName, kubernetesClusterName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AgentPoolList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = AgentPoolList.DeserializeAgentPoolList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get a list of agent pools for the provided Kubernetes cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AgentPoolList> ListByKubernetesCluster(string subscriptionId, string resourceGroupName, string kubernetesClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+
+            using var message = CreateListByKubernetesClusterRequest(subscriptionId, resourceGroupName, kubernetesClusterName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AgentPoolList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = AgentPoolList.DeserializeAgentPoolList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudClusterMetricsConfigurationCollection : ArmCollection, IEnumerable<NetworkCloudClusterMetricsConfigurationResource>, IAsyncEnumerable<NetworkCloudClusterMetricsConfigurationResource>
     {
-        private readonly ClientDiagnostics _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics;
-        private readonly MetricsConfigurationsRestOperations _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient;
+        private readonly ClientDiagnostics _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics;
+        private readonly ClusterMetricsConfigurationsRestOperations _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudClusterMetricsConfigurationCollection"/> class for mocking. </summary>
         protected NetworkCloudClusterMetricsConfigurationCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal NetworkCloudClusterMetricsConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudClusterMetricsConfigurationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NetworkCloudClusterMetricsConfigurationResource.ResourceType, out string networkCloudClusterMetricsConfigurationMetricsConfigurationsApiVersion);
-            _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient = new MetricsConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudClusterMetricsConfigurationMetricsConfigurationsApiVersion);
+            _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudClusterMetricsConfigurationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NetworkCloudClusterMetricsConfigurationResource.ResourceType, out string networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsApiVersion);
+            _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient = new ClusterMetricsConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_CreateOrUpdate</description>
+        /// <description>ClusterMetricsConfiguration_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.CreateOrUpdate");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudClusterMetricsConfigurationResource>(new NetworkCloudClusterMetricsConfigurationOperationSource(Client), _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics, Pipeline, _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkCloudArmOperation<NetworkCloudClusterMetricsConfigurationResource>(new NetworkCloudClusterMetricsConfigurationOperationSource(Client), _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics, Pipeline, _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_CreateOrUpdate</description>
+        /// <description>ClusterMetricsConfiguration_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.CreateOrUpdate");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudClusterMetricsConfigurationResource>(new NetworkCloudClusterMetricsConfigurationOperationSource(Client), _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics, Pipeline, _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new NetworkCloudArmOperation<NetworkCloudClusterMetricsConfigurationResource>(new NetworkCloudClusterMetricsConfigurationOperationSource(Client), _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics, Pipeline, _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
+        /// <description>ClusterMetricsConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -182,11 +182,11 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
 
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.Get");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, cancellationToken).ConfigureAwait(false);
+                var response = await _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkCloudClusterMetricsConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
+        /// <description>ClusterMetricsConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -227,11 +227,11 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
 
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.Get");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, cancellationToken);
+                var response = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkCloudClusterMetricsConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_ListByCluster</description>
+        /// <description>ClusterMetricsConfiguration_ListByCluster</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -268,9 +268,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudClusterMetricsConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudClusterMetricsConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterMetricsConfigurationResource(Client, NetworkCloudClusterMetricsConfigurationData.DeserializeNetworkCloudClusterMetricsConfigurationData(e)), _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics, Pipeline, "NetworkCloudClusterMetricsConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterMetricsConfigurationResource(Client, NetworkCloudClusterMetricsConfigurationData.DeserializeNetworkCloudClusterMetricsConfigurationData(e)), _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics, Pipeline, "NetworkCloudClusterMetricsConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_ListByCluster</description>
+        /// <description>ClusterMetricsConfiguration_ListByCluster</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudClusterMetricsConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudClusterMetricsConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterMetricsConfigurationResource(Client, NetworkCloudClusterMetricsConfigurationData.DeserializeNetworkCloudClusterMetricsConfigurationData(e)), _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics, Pipeline, "NetworkCloudClusterMetricsConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterMetricsConfigurationResource(Client, NetworkCloudClusterMetricsConfigurationData.DeserializeNetworkCloudClusterMetricsConfigurationData(e)), _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics, Pipeline, "NetworkCloudClusterMetricsConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
+        /// <description>ClusterMetricsConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -332,11 +332,11 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
 
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.Exists");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
+        /// <description>ClusterMetricsConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -375,11 +375,11 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
 
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.Exists");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, cancellationToken: cancellationToken);
+                var response = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
+        /// <description>ClusterMetricsConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -418,11 +418,11 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
 
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.GetIfExists");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<NetworkCloudClusterMetricsConfigurationResource>(response.GetRawResponse());
                 return Response.FromValue(new NetworkCloudClusterMetricsConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
+        /// <description>ClusterMetricsConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -463,11 +463,11 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
 
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.GetIfExists");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, cancellationToken: cancellationToken);
+                var response = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metricsConfigurationName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<NetworkCloudClusterMetricsConfigurationResource>(response.GetRawResponse());
                 return Response.FromValue(new NetworkCloudClusterMetricsConfigurationResource(Client, response.Value), response.GetRawResponse());

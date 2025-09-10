@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/VirtualMachines_Create.json
-            // this example is just showing the usage of "VirtualMachines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/VirtualMachines_Create.json
+            // this example is just showing the usage of "VirtualMachine_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -43,38 +43,14 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             string virtualMachineName = "virtualMachineName";
             NetworkCloudVirtualMachineData data = new NetworkCloudVirtualMachineData(
                 new AzureLocation("location"),
-                new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"),
-                "username",
-                new NetworkAttachment(new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/cloudServicesNetworks/cloudServicesNetworkName"), VirtualMachineIPAllocationMethod.Dynamic),
-                2L,
-                8L,
-                new NetworkCloudStorageProfile(new NetworkCloudOSDisk(120L)
-                {
-                    CreateOption = OSDiskCreateOption.Ephemeral,
-                    DeleteOption = OSDiskDeleteOption.Delete,
-                })
-                {
-                    VolumeAttachments = { new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/volumes/volumeName") },
-                },
-                "myacr.azurecr.io/foobar:latest")
+                null,
+                null,
+                default,
+                default,
+                null,
+                null,
+                new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"))
             {
-                BootMethod = VirtualMachineBootMethod.Uefi,
-                NetworkAttachments = {new NetworkAttachment(new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/l3Networks/l3NetworkName"), VirtualMachineIPAllocationMethod.Dynamic)
-{
-DefaultGateway = DefaultGateway.True,
-IPv4Address = "198.51.100.1",
-IPv6Address = "2001:0db8:0000:0000:0000:0000:0000:0000",
-NetworkAttachmentName = "netAttachName01",
-}},
-                NetworkData = "bmV0d29ya0RhdGVTYW1wbGU=",
-                PlacementHints = { new VirtualMachinePlacementHint(VirtualMachinePlacementHintType.Affinity, new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/racks/rackName"), VirtualMachineSchedulingExecution.Hard, new VirtualMachinePlacementHintPodAffinityScope("")) },
-                SshPublicKeys = { new NetworkCloudSshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm") },
-                UserData = "dXNlckRhdGVTYW1wbGU=",
-                VmDeviceModel = VirtualMachineDeviceModelType.T2,
-                VmImageRepositoryCredentials = new ImageRepositoryCredentials("myacr.azurecr.io", "myuser")
-                {
-                    Password = "{password}",
-                },
                 Tags =
 {
 ["key1"] = "myvalue1",
@@ -95,8 +71,8 @@ NetworkAttachmentName = "netAttachName01",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/VirtualMachines_Get.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/VirtualMachines_Get.json
+            // this example is just showing the usage of "VirtualMachine_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -128,8 +104,8 @@ NetworkAttachmentName = "netAttachName01",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListVirtualMachinesForResourceGroup()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/VirtualMachines_ListByResourceGroup.json
-            // this example is just showing the usage of "VirtualMachines_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/VirtualMachines_ListByResourceGroup.json
+            // this example is just showing the usage of "VirtualMachine_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -163,8 +139,8 @@ NetworkAttachmentName = "netAttachName01",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/VirtualMachines_Get.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/VirtualMachines_Get.json
+            // this example is just showing the usage of "VirtualMachine_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -192,8 +168,8 @@ NetworkAttachmentName = "netAttachName01",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/VirtualMachines_Get.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/VirtualMachines_Get.json
+            // this example is just showing the usage of "VirtualMachine_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

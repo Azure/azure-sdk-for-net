@@ -394,8 +394,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
-                extendedLocation,
                 administratorCredentials,
                 capacity,
                 capacityUsed,
@@ -414,6 +412,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 serialNumber,
                 storageApplianceSkuId,
                 version,
+                etag,
+                extendedLocation,
                 serializedAdditionalRawData);
         }
 

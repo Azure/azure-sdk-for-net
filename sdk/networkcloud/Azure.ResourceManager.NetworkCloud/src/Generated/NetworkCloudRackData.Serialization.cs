@@ -252,8 +252,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
-                extendedLocation,
                 availabilityZone,
                 clusterId,
                 detailedStatus,
@@ -262,6 +260,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 rackLocation,
                 rackSerialNumber,
                 rackSkuId,
+                etag,
+                extendedLocation,
                 serializedAdditionalRawData);
         }
 

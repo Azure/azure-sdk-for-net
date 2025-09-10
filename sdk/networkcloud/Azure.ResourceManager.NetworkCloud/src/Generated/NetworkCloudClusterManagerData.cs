@@ -71,8 +71,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="identity"> The identity of the cluster manager. </param>
         /// <param name="analyticsWorkspaceId"> The resource ID of the Log Analytics workspace that is used for the logs collection. </param>
         /// <param name="availabilityZones"> Field deprecated, this value will no longer influence the cluster manager allocation process and will be removed in a future version. The Azure availability zones within the region that will be used to support the cluster manager resource. </param>
         /// <param name="clusterVersions"> The list of the cluster versions the manager supports. It is used as input in clusterVersion property of a cluster resource. </param>
@@ -83,11 +81,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="managerExtendedLocation"> The extended location (custom location) that represents the cluster manager's control plane location. This extended location is used when creating cluster and rack manifest resources. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster manager. </param>
         /// <param name="vmSize"> Field deprecated, this value will no longer influence the cluster manager allocation process and will be removed in a future version. The size of the Azure virtual machines to use for hosting the cluster manager resource. </param>
+        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudClusterManagerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, ResourceIdentifier analyticsWorkspaceId, IList<string> availabilityZones, IReadOnlyList<ClusterAvailableVersion> clusterVersions, ClusterManagerDetailedStatus? detailedStatus, string detailedStatusMessage, ResourceIdentifier fabricControllerId, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ExtendedLocation managerExtendedLocation, ClusterManagerProvisioningState? provisioningState, string vmSize, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudClusterManagerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier analyticsWorkspaceId, IList<string> availabilityZones, IReadOnlyList<ClusterAvailableVersion> clusterVersions, ClusterManagerDetailedStatus? detailedStatus, string detailedStatusMessage, ResourceIdentifier fabricControllerId, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ExtendedLocation managerExtendedLocation, ClusterManagerProvisioningState? provisioningState, string vmSize, ETag? etag, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
-            Identity = identity;
             AnalyticsWorkspaceId = analyticsWorkspaceId;
             AvailabilityZones = availabilityZones;
             ClusterVersions = clusterVersions;
@@ -98,6 +96,8 @@ namespace Azure.ResourceManager.NetworkCloud
             ManagerExtendedLocation = managerExtendedLocation;
             ProvisioningState = provisioningState;
             VmSize = vmSize;
+            ETag = etag;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -106,10 +106,6 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Resource ETag. </summary>
-        public ETag? ETag { get; }
-        /// <summary> The identity of the cluster manager. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The resource ID of the Log Analytics workspace that is used for the logs collection. </summary>
         public ResourceIdentifier AnalyticsWorkspaceId { get; set; }
         /// <summary> Field deprecated, this value will no longer influence the cluster manager allocation process and will be removed in a future version. The Azure availability zones within the region that will be used to support the cluster manager resource. </summary>
@@ -130,5 +126,9 @@ namespace Azure.ResourceManager.NetworkCloud
         public ClusterManagerProvisioningState? ProvisioningState { get; }
         /// <summary> Field deprecated, this value will no longer influence the cluster manager allocation process and will be removed in a future version. The size of the Azure virtual machines to use for hosting the cluster manager resource. </summary>
         public string VmSize { get; set; }
+        /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
+        public ETag? ETag { get; }
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

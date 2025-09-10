@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkCloudBareMetalMachines_ListBareMetalMachinesForSubscription()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/BareMetalMachines_ListBySubscription.json
-            // this example is just showing the usage of "BareMetalMachines_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/BareMetalMachines_ListBySubscription.json
+            // this example is just showing the usage of "BareMetalMachine_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkCloudCloudServicesNetworks_ListCloudServicesNetworksForSubscription()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/CloudServicesNetworks_ListBySubscription.json
-            // this example is just showing the usage of "CloudServicesNetworks_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/CloudServicesNetworks_ListBySubscription.json
+            // this example is just showing the usage of "CloudServicesNetwork_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkCloudClusterManagers_ListClusterManagersForSubscription()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/ClusterManagers_ListBySubscription.json
-            // this example is just showing the usage of "ClusterManagers_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/ClusterManagers_ListBySubscription.json
+            // this example is just showing the usage of "ClusterManager_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkCloudClusters_ListClustersForSubscription()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Clusters_ListBySubscription.json
-            // this example is just showing the usage of "Clusters_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/Clusters_ListBySubscription.json
+            // this example is just showing the usage of "Cluster_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkCloudKubernetesClusters_ListKubernetesClustersForSubscription()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/KubernetesClusters_ListBySubscription.json
-            // this example is just showing the usage of "KubernetesClusters_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/KubernetesClusters_ListBySubscription.json
+            // this example is just showing the usage of "KubernetesCluster_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkCloudL2Networks_ListL2NetworksForSubscription()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/L2Networks_ListBySubscription.json
-            // this example is just showing the usage of "L2Networks_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/L2Networks_ListBySubscription.json
+            // this example is just showing the usage of "L2Network_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -206,8 +206,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkCloudL3Networks_ListL3NetworksForSubscription()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/L3Networks_ListBySubscription.json
-            // this example is just showing the usage of "L3Networks_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/L3Networks_ListBySubscription.json
+            // this example is just showing the usage of "L3Network_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -237,8 +237,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkCloudRacks_ListRacksForSubscription()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Racks_ListBySubscription.json
-            // this example is just showing the usage of "Racks_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/Racks_ListBySubscription.json
+            // this example is just showing the usage of "Rack_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -268,8 +268,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkCloudStorageAppliances_ListStorageAppliancesForSubscription()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/StorageAppliances_ListBySubscription.json
-            // this example is just showing the usage of "StorageAppliances_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/StorageAppliances_ListBySubscription.json
+            // this example is just showing the usage of "StorageAppliance_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -299,8 +299,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkCloudTrunkedNetworks_ListTrunkedNetworksForSubscription()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/TrunkedNetworks_ListBySubscription.json
-            // this example is just showing the usage of "TrunkedNetworks_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/TrunkedNetworks_ListBySubscription.json
+            // this example is just showing the usage of "TrunkedNetwork_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -330,8 +330,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkCloudVirtualMachines_ListVirtualMachinesForSubscription()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/VirtualMachines_ListBySubscription.json
-            // this example is just showing the usage of "VirtualMachines_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/VirtualMachines_ListBySubscription.json
+            // this example is just showing the usage of "VirtualMachine_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -361,8 +361,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkCloudVolumes_ListVolumeForSubscription()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Volumes_ListBySubscription.json
-            // this example is just showing the usage of "Volumes_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/Volumes_ListBySubscription.json
+            // this example is just showing the usage of "Volume_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

@@ -52,25 +52,25 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachinePatch"/>. </summary>
-        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
         /// <param name="machineDetails">
         /// The details provided by the customer during the creation of rack manifests
         /// that allows for custom data to be associated with this machine.
         /// </param>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudBareMetalMachinePatch(IDictionary<string, string> tags, string machineDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkCloudBareMetalMachinePatch(string machineDetails, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
             MachineDetails = machineDetails;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary>
         /// The details provided by the customer during the creation of rack manifests
         /// that allows for custom data to be associated with this machine.
         /// </summary>
         public string MachineDetails { get; set; }
+        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

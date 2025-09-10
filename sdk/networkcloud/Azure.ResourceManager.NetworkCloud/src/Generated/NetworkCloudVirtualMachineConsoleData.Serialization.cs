@@ -266,8 +266,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
-                extendedLocation,
                 detailedStatus,
                 detailedStatusMessage,
                 enabled,
@@ -276,6 +274,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 provisioningState,
                 sshPublicKey,
                 virtualMachineAccessId,
+                etag,
+                extendedLocation,
                 serializedAdditionalRawData);
         }
 
