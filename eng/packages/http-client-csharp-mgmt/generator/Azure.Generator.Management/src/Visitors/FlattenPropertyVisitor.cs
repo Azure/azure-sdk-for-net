@@ -36,7 +36,7 @@ namespace Azure.Generator.Management.Visitors
 
             if (type is ModelProvider model && _collectionTypeProperties.TryGetValue(model, out var value))
             {
-                foreach (var internalProperty  in value)
+                foreach (var internalProperty in value)
                 {
                     var publicConstructor = model.Constructors.Single(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
                     var internalPropertyTypeConstructor = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[internalProperty.Type]!.Constructors.Single(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
