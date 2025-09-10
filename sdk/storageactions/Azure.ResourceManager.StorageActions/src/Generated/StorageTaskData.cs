@@ -22,15 +22,19 @@ namespace Azure.ResourceManager.StorageActions
         /// <summary> Initializes a new instance of <see cref="StorageTaskData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed service identity of the resource. </param>
-        /// <param name="properties"> Properties of the storage task. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="identity"/> or <paramref name="properties"/> is null. </exception>
-        public StorageTaskData(AzureLocation location, ManagedServiceIdentity identity, StorageTaskProperties properties) : base(location)
+        /// <param name="isEnabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
+        /// <param name="description"> Text that describes the purpose of the storage task. </param>
+        /// <param name="action"> The storage task action that is executed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="identity"/>, <paramref name="description"/> or <paramref name="action"/> is null. </exception>
+        public StorageTaskData(AzureLocation location, ManagedServiceIdentity identity, bool isEnabled, string description, StorageTaskAction action) : base(location)
         {
-            Argument.AssertNotNull(identity, nameof(identity));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(description, nameof(description));
+            Argument.AssertNotNull(action, nameof(action));
 
             Identity = identity;
-            Properties = properties;
+            IsEnabled = isEnabled;
+            Description = description;
+            Action = action;
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskData"/>. </summary>
@@ -54,6 +58,84 @@ namespace Azure.ResourceManager.StorageActions
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Properties of the storage task. </summary>
-        public StorageTaskProperties Properties { get; set; }
+        internal StorageTaskProperties Properties { get; set; }
+
+        /// <summary> Storage task version. </summary>
+        public long? TaskVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TaskVersion;
+            }
+        }
+
+        /// <summary> Storage Task is enabled when set to true and disabled when set to false. </summary>
+        public bool IsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageTaskProperties();
+                }
+                Properties.IsEnabled = value;
+            }
+        }
+
+        /// <summary> Text that describes the purpose of the storage task. </summary>
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageTaskProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> The storage task action that is executed. </summary>
+        public StorageTaskAction Action
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Action;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageTaskProperties();
+                }
+                Properties.Action = value;
+            }
+        }
+
+        /// <summary> Represents the provisioning state of the storage task. </summary>
+        public StorageTaskProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The creation date and time of the storage task in UTC. </summary>
+        public DateTimeOffset? CreationTimeInUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreationTimeInUtc;
+            }
+        }
     }
 }

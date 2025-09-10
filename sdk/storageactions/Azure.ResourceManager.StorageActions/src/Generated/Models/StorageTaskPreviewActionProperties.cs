@@ -13,7 +13,7 @@ using Azure.ResourceManager.StorageActions;
 namespace Azure.ResourceManager.StorageActions.Models
 {
     /// <summary> Storage task preview action properties. </summary>
-    public partial class StorageTaskPreviewActionProperties
+    internal partial class StorageTaskPreviewActionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         public StorageTaskPreviewContainerProperties Container { get; set; }
 
         /// <summary> Properties of some sample blobs in the container to test for matches with the preview action. </summary>
-        public IList<StorageTaskPreviewBlobProperties> Blobs { get; }
+        public IList<StorageTaskPreviewBlobProperties> Blobs { get; internal set; }
 
         /// <summary> Preview action to test. </summary>
         public StorageTaskPreviewActionCondition Action { get; set; }

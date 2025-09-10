@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.StorageActions.Models
     public static partial class ArmStorageActionsModelFactory
     {
 
-        /// <summary> Represents Storage Task. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -27,9 +26,15 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed service identity of the resource. </param>
-        /// <param name="properties"> Properties of the storage task. </param>
+        /// <param name="taskVersion"> Storage task version. </param>
+        /// <param name="isEnabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
+        /// <param name="description"> Text that describes the purpose of the storage task. </param>
+        /// <param name="action"> The storage task action that is executed. </param>
+        /// <param name="provisioningState"> Represents the provisioning state of the storage task. </param>
+        /// <param name="creationTimeInUtc"> The creation date and time of the storage task in UTC. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="description"/> or <paramref name="action"/> is null. </exception>
         /// <returns> A new <see cref="StorageActions.StorageTaskData"/> instance for mocking. </returns>
-        public static StorageTaskData StorageTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, StorageTaskProperties properties = default)
+        public static StorageTaskData StorageTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, long? taskVersion = default, bool? isEnabled = default, string description = default, StorageTaskAction action = default, StorageTaskProvisioningState? provisioningState = default, DateTimeOffset? creationTimeInUtc = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -42,27 +47,13 @@ namespace Azure.ResourceManager.StorageActions.Models
                 tags,
                 location,
                 identity,
-                properties);
-        }
-
-        /// <summary> Properties of the storage task. </summary>
-        /// <param name="taskVersion"> Storage task version. </param>
-        /// <param name="isEnabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
-        /// <param name="description"> Text that describes the purpose of the storage task. </param>
-        /// <param name="action"> The storage task action that is executed. </param>
-        /// <param name="provisioningState"> Represents the provisioning state of the storage task. </param>
-        /// <param name="creationTimeInUtc"> The creation date and time of the storage task in UTC. </param>
-        /// <returns> A new <see cref="Models.StorageTaskProperties"/> instance for mocking. </returns>
-        public static StorageTaskProperties StorageTaskProperties(long? taskVersion = default, bool isEnabled = default, string description = default, StorageTaskAction action = default, StorageTaskProvisioningState? provisioningState = default, DateTimeOffset? creationTimeInUtc = default)
-        {
-            return new StorageTaskProperties(
-                taskVersion,
-                isEnabled,
-                description,
-                action,
-                provisioningState,
-                creationTimeInUtc,
-                additionalBinaryDataProperties: null);
+                taskVersion is null || isEnabled is null || description is null || action is null || provisioningState is null || creationTimeInUtc is null ? default : new StorageTaskProperties(
+                    taskVersion,
+                    isEnabled.Value,
+                    description,
+                    action,
+                    provisioningState,
+                    creationTimeInUtc));
         }
 
         /// <summary> The if block of storage task operation. </summary>
@@ -89,48 +80,36 @@ namespace Azure.ResourceManager.StorageActions.Models
             return new StorageTaskOperationInfo(name, parameters, onSuccess, onFailure, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Parameters of the storage task update request. </summary>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="tags"> Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater in length than 128 characters and a value no greater in length than 256 characters. </param>
-        /// <param name="properties"> Properties of the storage task. </param>
-        /// <returns> A new <see cref="Models.StorageTaskPatch"/> instance for mocking. </returns>
-        public static StorageTaskPatch StorageTaskPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, StorageTaskUpdateProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new StorageTaskPatch(identity, tags, properties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Properties of the storage task. </summary>
         /// <param name="taskVersion"> Storage task version. </param>
         /// <param name="enabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
         /// <param name="description"> Text that describes the purpose of the storage task. </param>
         /// <param name="action"> The storage task action that is executed. </param>
         /// <param name="provisioningState"> Represents the provisioning state of the storage task. </param>
         /// <param name="creationTimeInUtc"> The creation date and time of the storage task in UTC. </param>
-        /// <returns> A new <see cref="Models.StorageTaskUpdateProperties"/> instance for mocking. </returns>
-        public static StorageTaskUpdateProperties StorageTaskUpdateProperties(long? taskVersion = default, bool? enabled = default, string description = default, StorageTaskAction action = default, StorageTaskProvisioningState? provisioningState = default, DateTimeOffset? creationTimeInUtc = default)
+        /// <returns> A new <see cref="Models.StorageTaskPatch"/> instance for mocking. </returns>
+        public static StorageTaskPatch StorageTaskPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, long? taskVersion = default, bool? enabled = default, string description = default, StorageTaskAction action = default, StorageTaskProvisioningState? provisioningState = default, DateTimeOffset? creationTimeInUtc = default)
         {
-            return new StorageTaskUpdateProperties(
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new StorageTaskPatch(identity, tags, taskVersion is null || enabled is null || description is null || action is null || provisioningState is null || creationTimeInUtc is null ? default : new StorageTaskUpdateProperties(
                 taskVersion,
                 enabled,
                 description,
                 action,
                 provisioningState,
-                creationTimeInUtc,
-                additionalBinaryDataProperties: null);
+                creationTimeInUtc), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Storage task preview action properties. </summary>
         /// <param name="container"> Properties of a sample container to test for a match with the preview action. </param>
         /// <param name="blobs"> Properties of some sample blobs in the container to test for matches with the preview action. </param>
         /// <param name="action"> Preview action to test. </param>
-        /// <returns> A new <see cref="Models.StorageTaskPreviewActionProperties"/> instance for mocking. </returns>
-        public static StorageTaskPreviewActionProperties StorageTaskPreviewActionProperties(StorageTaskPreviewContainerProperties container = default, IEnumerable<StorageTaskPreviewBlobProperties> blobs = default, StorageTaskPreviewActionCondition action = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="container"/>, <paramref name="blobs"/> or <paramref name="action"/> is null. </exception>
+        /// <returns> A new <see cref="Models.StorageTaskPreviewAction"/> instance for mocking. </returns>
+        public static StorageTaskPreviewAction StorageTaskPreviewAction(StorageTaskPreviewContainerProperties container, IList<StorageTaskPreviewBlobProperties> blobs, StorageTaskPreviewActionCondition action)
         {
-            blobs ??= new ChangeTrackingList<StorageTaskPreviewBlobProperties>();
-
-            return new StorageTaskPreviewActionProperties(container, blobs.ToList(), action, additionalBinaryDataProperties: null);
+            return new StorageTaskPreviewAction(container is null || blobs is null || action is null ? default : new StorageTaskPreviewActionProperties(container, blobs, action), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Storage task preview container properties. </summary>
