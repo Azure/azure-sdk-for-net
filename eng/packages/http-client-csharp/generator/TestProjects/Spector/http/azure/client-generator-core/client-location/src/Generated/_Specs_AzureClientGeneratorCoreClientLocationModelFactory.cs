@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
 using _Specs_.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient;
 
 namespace _Specs_.Azure.ClientGenerator.Core.ClientLocation
 {
-    [ModelReaderWriterBuildable(typeof(Blob))]
-    public partial class _Specs_AzureClientGeneratorCoreClientLocationContext : ModelReaderWriterContext
+    public static partial class _Specs_AzureClientGeneratorCoreClientLocationModelFactory
     {
+        public static Blob Blob(string id = default, string name = default, int size = default, string path = default) => throw null;
     }
 }
