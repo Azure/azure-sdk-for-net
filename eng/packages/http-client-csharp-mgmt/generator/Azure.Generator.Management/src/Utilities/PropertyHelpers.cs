@@ -80,9 +80,15 @@ namespace Azure.Generator.Management.Utilities
             return false;
         }
 
-        public static MethodBodyStatement BuildGetter(bool? includeGetterNullCheck, PropertyProvider internalProperty, TypeProvider innerModel, PropertyProvider singleProperty)
+        public static MethodBodyStatement BuildGetter(bool? includeGetterNullCheck, PropertyProvider internalProperty, TypeProvider innerModel, PropertyProvider innerProperty)
         {
             var checkNullExpression = This.Property(internalProperty.Name).Is(Null);
+            // For collection types, we do not do null check and initialization in getter, they have been initialized in constructor.
+            if (innerProperty.Type.IsCollection)
+            {
+                return new List<MethodBodyStatement>() { Return(new MemberExpression(internalProperty, innerProperty.Name)) };
+            }
+
             if (includeGetterNullCheck == true)
             {
                 return new List<MethodBodyStatement> {
@@ -90,20 +96,20 @@ namespace Azure.Generator.Management.Utilities
                     {
                         internalProperty.Assign(New.Instance(innerModel.Type)).Terminate()
                     },
-                    Return(new MemberExpression(internalProperty, singleProperty.Name))
+                    Return(new MemberExpression(internalProperty, innerProperty.Name))
                 };
             }
             else if (includeGetterNullCheck == false)
             {
-                return Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalProperty, singleProperty.Name)));
+                return Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalProperty, innerProperty.Name)));
             }
             else
             {
                 if (innerModel.Type.IsNullable)
                 {
-                    return Return(new MemberExpression(internalProperty.AsVariableExpression.NullConditional(), singleProperty.Name));
+                    return Return(new MemberExpression(internalProperty.AsVariableExpression.NullConditional(), innerProperty.Name));
                 }
-                return Return(new MemberExpression(internalProperty, singleProperty.Name));
+                return Return(new MemberExpression(internalProperty, innerProperty.Name));
             }
         }
 
@@ -120,24 +126,6 @@ namespace Azure.Generator.Management.Utilities
                 });
             setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(isNullableValueType ? Value.Property(nameof(Nullable<int>.Value)) : Value).Terminate());
             return setter;
-        }
-
-        public static Dictionary<ValueExpression, ValueExpression> PopulateCollectionProperties(IEnumerable<PropertyProvider> collectionTypeProperties)
-        {
-            var result = new Dictionary<ValueExpression, ValueExpression>();
-            foreach (var property in collectionTypeProperties)
-            {
-                var propertyValue = Value.Property(property.Name);
-                if (property.Type.IsList)
-                {
-                    result.Add(Identifier(property.Name), New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(property.Type.Arguments)));
-                }
-                if (property.Type.IsDictionary)
-                {
-                    result.Add(Identifier(property.Name), New.Instance(ManagementClientGenerator.Instance.TypeFactory.DictionaryInitializationType.MakeGenericType(property.Type.Arguments)));
-                }
-            }
-            return result;
         }
 
         public static MethodBodyStatement BuildSetterForSafeFlatten(bool includeSetterCheck, ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty)
