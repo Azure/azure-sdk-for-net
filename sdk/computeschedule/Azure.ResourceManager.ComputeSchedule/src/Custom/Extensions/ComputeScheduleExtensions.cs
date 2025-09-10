@@ -7,13 +7,13 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.ResourceManager.ComputeSchedule.Mocking;
 using Azure.ResourceManager.ComputeSchedule.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ComputeSchedule
 {
+    // Add the following overrides to resolve api-compat issue, the locationparameter changed from to string AzureLocation
     public static partial class ComputeScheduleExtensions
     {
         /// <summary>

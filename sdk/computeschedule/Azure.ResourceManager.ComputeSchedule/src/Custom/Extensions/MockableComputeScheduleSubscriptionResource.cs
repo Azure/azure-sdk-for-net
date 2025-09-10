@@ -7,13 +7,12 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager.ComputeSchedule.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule.Mocking
 {
+    // Add the following overrides to resolve api-compat issue, the locationparameter changed from to string AzureLocation
     public partial class MockableComputeScheduleSubscriptionResource
     {
         /// <summary>
