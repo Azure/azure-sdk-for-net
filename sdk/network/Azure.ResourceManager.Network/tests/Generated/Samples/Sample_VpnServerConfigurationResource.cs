@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VpnServerConfigurationGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VpnServerConfigurationGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VpnServerConfigurationGet.json
             // this example is just showing the usage of "VpnServerConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_VpnServerConfigurationDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VpnServerConfigurationDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VpnServerConfigurationDelete.json
             // this example is just showing the usage of "VpnServerConfigurations_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_VpnServerConfigurationUpdate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/VpnServerConfigurationUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VpnServerConfigurationUpdateTags.json
             // this example is just showing the usage of "VpnServerConfigurations_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,6 +108,35 @@ namespace Azure.ResourceManager.Network.Samples
             VpnServerConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetRadiusSecrets_ListAllVpnServerConfigurationRadiusServerSecrets()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/AllVpnServerConfigurationRadiusServerSecretsList.json
+            // this example is just showing the usage of "vpnServerConfigurations_ListRadiusSecrets" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VpnServerConfigurationResource created on azure
+            // for more information of creating VpnServerConfigurationResource, please refer to the document of VpnServerConfigurationResource
+            string subscriptionId = "72f988bf-86f1-41af-91ab-2d7cd0dddd4";
+            string resourceGroupName = "rg1";
+            string vpnServerConfigurationName = "vpnserverconfig";
+            ResourceIdentifier vpnServerConfigurationResourceId = VpnServerConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vpnServerConfigurationName);
+            VpnServerConfigurationResource vpnServerConfiguration = client.GetVpnServerConfigurationResource(vpnServerConfigurationResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (RadiusAuthServer item in vpnServerConfiguration.GetRadiusSecretsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
     }
 }
