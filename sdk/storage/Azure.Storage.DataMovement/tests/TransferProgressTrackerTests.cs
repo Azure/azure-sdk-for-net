@@ -51,10 +51,10 @@ namespace Azure.Storage.DataMovement.Tests
         {
             public ProcessAsync<Args> Process { get; set; }
 
-            public async ValueTask QueueAsync(Args item, CancellationToken cancellationToken = default)
+            public async ValueTask QueueAsync(Args item)
             {
                 // Just call the process method immediately so it can be tested
-                await Process(item, cancellationToken);
+                await Process(item);
             }
 
             public bool TryComplete() => true;
@@ -109,11 +109,11 @@ namespace Azure.Storage.DataMovement.Tests
             await RunSampleUpdates(progressTracker);
 
             // BytesTransferred events are not queued if not enabled in options
-            progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _queuedArgs)), It.IsAny<CancellationToken>()), Times.Exactly(5));
-            progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _inProgressArgs)), It.IsAny<CancellationToken>()), Times.Exactly(5));
-            progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _CompletedArgs)), It.IsAny<CancellationToken>()), Times.Exactly(3));
-            progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _FailedArgs)), It.IsAny<CancellationToken>()), Times.Exactly(1));
-            progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _SkippedArgs)), It.IsAny<CancellationToken>()), Times.Exactly(1));
+            progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _queuedArgs))), Times.Exactly(5));
+            progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _inProgressArgs))), Times.Exactly(5));
+            progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _CompletedArgs))), Times.Exactly(3));
+            progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _FailedArgs))), Times.Exactly(1));
+            progressProcessor.Verify(p => p.QueueAsync(It.Is<Args>(a => ArgsEqual(a, _SkippedArgs))), Times.Exactly(1));
 
             progressProcessor.VerifyNoOtherCalls();
         }

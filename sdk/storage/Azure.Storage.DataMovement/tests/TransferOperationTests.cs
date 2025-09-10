@@ -25,7 +25,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
 
             // Act
-            using TransferOperation transfer = new TransferOperation(
+            TransferOperation transfer = new TransferOperation(
                 removeTransferDelegate: _removeTransferDelegate,
                 id: transferId);
 
@@ -48,7 +48,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
 
             // Act
-            using TransferOperation transfer = new TransferOperation(
+            TransferOperation transfer = new TransferOperation(
                 removeTransferDelegate: _removeTransferDelegate,
                 id: transferId,
                 status: new TransferStatus(status, hasFailedItems, false));
@@ -72,7 +72,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
 
             // Act
-            using TransferOperation transfer = new TransferOperation(
+            TransferOperation transfer = new TransferOperation(
                 removeTransferDelegate: _removeTransferDelegate,
                 id: transferId,
                 status: new TransferStatus(state, hasFailedItems, hasSkippedItems));
@@ -128,7 +128,6 @@ namespace Azure.Storage.DataMovement.Tests
                 removeTransferDelegate: _removeTransferDelegate,
                 id: transferId,
                 status: InProgressStatus);
-            transfer.TransferManager = new TransferManager();
 
             // Act
             Task pauseTask = transfer.PauseAsync();

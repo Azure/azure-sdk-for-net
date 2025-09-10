@@ -550,11 +550,11 @@ namespace Azure.Storage.DataMovement.Tests
 
             List<string> files = [ "file1", "file2", "dir1/file1" ];
 
-            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(30);
+            using CancellationTokenSource cancellationTokenSource = TestHelper.GetTimeoutTokenSource(30);
             await SetupDirectoryAsync(
                 disposingLocalDirectory.DirectoryPath,
                 files.Select(path => (path, (long)Constants.KB)).ToList(),
-                cancellationToken);
+                cancellationTokenSource.Token);
 
             // Intentionally append trailing slash
             string sourcePath = disposingLocalDirectory.DirectoryPath + Path.DirectorySeparatorChar;
@@ -562,7 +562,7 @@ namespace Azure.Storage.DataMovement.Tests
                 sourcePath,
                 test.Container,
                 expectedTransfers: files.Count,
-                cancellationToken: cancellationToken);
+                cancellationToken: cancellationTokenSource.Token);
         }
     }
 }
