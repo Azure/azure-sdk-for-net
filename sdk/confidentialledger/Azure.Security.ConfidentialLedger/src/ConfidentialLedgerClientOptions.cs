@@ -25,6 +25,12 @@ namespace Azure.Security.ConfidentialLedger
         /// <value></value>
         public bool VerifyConnection { get; set; }
 
+        /// <summary>
+        /// The secondary ledger endpoint URL for failover scenarios.
+        /// </summary>
+        /// <value></value>
+        public Uri SecondaryLedgerEndpoint { get; set; }
+
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
