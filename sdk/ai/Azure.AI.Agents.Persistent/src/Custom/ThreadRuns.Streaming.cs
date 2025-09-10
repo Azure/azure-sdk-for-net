@@ -129,7 +129,7 @@ namespace Azure.AI.Agents.Persistent
             async Task<Response> sendRequestAsync() =>
                 await CreateRunStreamingAsync(threadId, createRunRequest.ToRequestContent(), context, include:options?.Include).ConfigureAwait(false);
 
-            return new AsyncStreamingUpdateCollection(sendRequestAsync, cancellationToken);
+            return new AsyncStreamingUpdateCollection(sendRequestAsync, cancellationToken, scope: scope);
         }
         /// <summary>
         /// Begins a new streaming <see cref="ThreadRun"/> that evaluates a <see cref="PersistentAgentThread"/> using a specified
@@ -242,7 +242,7 @@ namespace Azure.AI.Agents.Persistent
             RequestContext context = FromCancellationToken(cancellationToken);
 
             Response sendRequest() => CreateRunStreaming(threadId, createRunRequest.ToRequestContent(), context, include: options?.Include);
-            return new StreamingUpdateCollection(sendRequest, cancellationToken);
+            return new StreamingUpdateCollection(sendRequest, cancellationToken, scope: scope);
         }
         /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
         /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>

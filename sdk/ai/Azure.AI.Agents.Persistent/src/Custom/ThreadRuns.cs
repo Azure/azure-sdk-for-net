@@ -520,17 +520,18 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="context"> Options that can be used to control the request. </param>
         internal virtual Response SubmitToolOutputsInternal(string threadId, string runId, bool stream, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.SubmitToolOutputsInternal");
-            scope.Start();
+            using OpenTelemetryScope otelScope = OpenTelemetryScope.StartSubmitToolOutputs(threadId, runId, content, _endpoint);
             try
             {
                 using HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, content, context);
                 message.BufferResponse = !stream;
-                return _pipeline.ProcessMessage(message, context, CancellationToken.None);
+                var response = _pipeline.ProcessMessage(message, context, CancellationToken.None);
+                otelScope?.RecordSubmitToolOutputsResponse(response, stream);
+                return response;
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                otelScope?.RecordError(e);
                 throw;
             }
         }
@@ -543,17 +544,18 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="context"> Options that can be used to control the request. </param>
         internal virtual async Task<Response> SubmitToolOutputsInternalAsync(string threadId, string runId, bool stream, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.SubmitToolOutputsInternalAsync");
-            scope.Start();
+            using OpenTelemetryScope otelScope = OpenTelemetryScope.StartSubmitToolOutputs(threadId, runId, content, _endpoint);
             try
             {
                 using HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, content, context);
                 message.BufferResponse = !stream;
-                return await _pipeline.ProcessMessageAsync(message, context, CancellationToken.None).ConfigureAwait(false);
+                var response = await _pipeline.ProcessMessageAsync(message, context, CancellationToken.None).ConfigureAwait(false);
+                otelScope?.RecordSubmitToolOutputsResponse(response, stream);
+                return response;
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                otelScope?.RecordError(e);
                 throw;
             }
         }
