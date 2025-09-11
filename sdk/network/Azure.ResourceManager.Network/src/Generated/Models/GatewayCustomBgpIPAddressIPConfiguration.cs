@@ -75,8 +75,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The IpconfigurationId of ipconfiguration which belongs to gateway. </summary>
+        [WirePath("ipConfigurationId")]
         public string IPConfigurationId { get; set; }
         /// <summary> The custom BgpPeeringAddress which belongs to IpconfigurationId. </summary>
+        [WirePath("customBgpIpAddress")]
         public string CustomBgpIPAddress { get; set; }
     }
 }

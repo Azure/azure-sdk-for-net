@@ -23,9 +23,10 @@ var datasetVersion1 = System.Environment.GetEnvironmentVariable("DATASET_VERSION
 var datasetVersion2 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_2") ?? "2.0";
 var filePath = System.Environment.GetEnvironmentVariable("SAMPLE_FILE_PATH") ?? "sample_folder/sample_file1.txt";
 var folderPath = System.Environment.GetEnvironmentVariable("SAMPLE_FOLDER_PATH") ?? "sample_folder";
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
-Console.WriteLine($"Uploading a single file to create Dataset version {datasetVersion1}:");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+
+Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion1}:");
 FileDatasetVersion fileDataset = projectClient.Datasets.UploadFile(
     name: datasetName,
     version: datasetVersion1,
@@ -46,27 +47,28 @@ Console.WriteLine(folderDataset);
 
 Console.WriteLine($"Retrieving Dataset version {datasetVersion1}:");
 DatasetVersion dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion1);
-Console.WriteLine(dataset);
+Console.WriteLine(dataset.Id);
 
 Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
-AssetCredentialResponse credentials = projectClient.Datasets.GetCredentials(datasetName, datasetVersion1);
+DatasetCredential credentials = projectClient.Datasets.GetCredentials(datasetName, datasetVersion1);
 Console.WriteLine(credentials);
 
 Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
-foreach (DatasetVersion ds in projectClient.Datasets.GetVersions(datasetName))
+foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersions(datasetName))
 {
     Console.WriteLine(ds);
     Console.WriteLine(ds.Version);
 }
 
 Console.WriteLine($"Listing latest versions for all datasets:");
-foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersions())
+foreach (DatasetVersion ds in projectClient.Datasets.GetDatasets())
 {
-    Console.WriteLine(ds);
+    Console.WriteLine($"{ds.Name}, {ds.Version}, {ds.Id}");
 }
 
 Console.WriteLine($"Deleting Dataset versions {datasetVersion1} and {datasetVersion2}:");
 projectClient.Datasets.Delete(datasetName, datasetVersion1);
+
 projectClient.Datasets.Delete(datasetName, datasetVersion2);
 ```
 
@@ -80,9 +82,10 @@ var datasetVersion1 = System.Environment.GetEnvironmentVariable("DATASET_VERSION
 var datasetVersion2 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_2") ?? "2.0";
 var filePath = System.Environment.GetEnvironmentVariable("SAMPLE_FILE_PATH") ?? "sample_folder/sample_file1.txt";
 var folderPath = System.Environment.GetEnvironmentVariable("SAMPLE_FOLDER_PATH") ?? "sample_folder";
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
-Console.WriteLine($"Uploading a single file to create Dataset version {datasetVersion1}...");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+
+Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion1}:");
 FileDatasetVersion fileDataset = await projectClient.Datasets.UploadFileAsync(
     name: datasetName,
     version: datasetVersion1,
@@ -91,7 +94,7 @@ FileDatasetVersion fileDataset = await projectClient.Datasets.UploadFileAsync(
     );
 Console.WriteLine(fileDataset);
 
-Console.WriteLine($"Uploading folder to create Dataset version {datasetVersion2}...");
+Console.WriteLine($"Uploading folder to create Dataset version {datasetVersion2}:");
 FolderDatasetVersion folderDataset = await projectClient.Datasets.UploadFolderAsync(
     name: datasetName,
     version: datasetVersion2,
@@ -101,27 +104,29 @@ FolderDatasetVersion folderDataset = await projectClient.Datasets.UploadFolderAs
 );
 Console.WriteLine(folderDataset);
 
-Console.WriteLine($"Retrieving Dataset version {datasetVersion1}...");
+Console.WriteLine($"Retrieving Dataset version {datasetVersion1}:");
 DatasetVersion dataset = await projectClient.Datasets.GetDatasetAsync(datasetName, datasetVersion1);
-Console.WriteLine(dataset);
+Console.WriteLine(dataset.Id);
 
 Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
-AssetCredentialResponse credentials = await projectClient.Datasets.GetCredentialsAsync(datasetName, datasetVersion1);
+DatasetCredential credentials = await projectClient.Datasets.GetCredentialsAsync(datasetName, datasetVersion1);
 Console.WriteLine(credentials);
 
 Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
-await foreach (DatasetVersion ds in projectClient.Datasets.GetVersionsAsync(datasetName))
+await foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersionsAsync(datasetName))
 {
+    Console.WriteLine(ds);
     Console.WriteLine(ds.Version);
 }
 
 Console.WriteLine($"Listing latest versions for all datasets:");
-await foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersionsAsync())
+await foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetsAsync())
 {
-    Console.WriteLine(ds);
+    Console.WriteLine($"{ds.Name}, {ds.Version}, {ds.Id}");
 }
 
-Console.WriteLine($"Deleting Dataset versions {datasetVersion1} and {datasetVersion2}...");
+Console.WriteLine($"Deleting Dataset versions {datasetVersion1} and {datasetVersion2}:");
 await projectClient.Datasets.DeleteAsync(datasetName, datasetVersion1);
+
 await projectClient.Datasets.DeleteAsync(datasetName, datasetVersion2);
 ```

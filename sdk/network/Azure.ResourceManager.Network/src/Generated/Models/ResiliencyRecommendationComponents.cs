@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the Resiliency based Recommendation Component. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Current Score of the gateway. </summary>
+        [WirePath("currentScore")]
         public string CurrentScore { get; }
         /// <summary> Max score that the gateway can achieve if the specified recommendation is applied. </summary>
+        [WirePath("maxScore")]
         public string MaxScore { get; }
         /// <summary> List of Gateway Resiliency based Recommendations. </summary>
+        [WirePath("recommendations")]
         public IReadOnlyList<GatewayResiliencyRecommendation> Recommendations { get; }
     }
 }

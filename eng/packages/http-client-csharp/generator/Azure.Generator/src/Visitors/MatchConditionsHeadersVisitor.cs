@@ -195,12 +195,15 @@ namespace Azure.Generator.Visitors
 
             foreach (var parameter in allParameters)
             {
-                if (parameter.IsRequired || parameter.Location != InputRequestLocation.Header)
+                // skip optional or non-header parameters
+                if (parameter.IsRequired ||
+                    ((parameter is InputMethodParameter inputParameter && inputParameter.Location != InputRequestLocation.Header) ||
+                     (parameter is not InputMethodParameter && parameter is not InputHeaderParameter)))
                 {
                     continue;
                 }
 
-                var headerName = parameter.NameInRequest;
+                var headerName = parameter.SerializedName;
                 if (!_conditionalHeaders.Contains(headerName))
                 {
                     continue;
@@ -531,8 +534,9 @@ namespace Azure.Generator.Visitors
         {
             return inputServiceMethod.Parameters.Concat(inputServiceMethod.Operation.Parameters)
                 .Any(parameter => !parameter.IsRequired &&
-                    parameter.Location == InputRequestLocation.Header &&
-                    _conditionalHeaders.Contains(parameter.NameInRequest));
+                    ((parameter is InputMethodParameter inputMethodParameter && inputMethodParameter.Location == InputRequestLocation.Header) ||
+                     parameter is InputHeaderParameter) &&
+                    _conditionalHeaders.Contains(parameter.SerializedName));
         }
 
         [Flags]

@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The partner managed resource id. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> The partner managed ILB resource id. </summary>
+        [WirePath("internalLoadBalancerId")]
         public ResourceIdentifier InternalLoadBalancerId { get; }
         /// <summary> The partner managed SLB resource id. </summary>
+        [WirePath("standardLoadBalancerId")]
         public ResourceIdentifier StandardLoadBalancerId { get; }
     }
 }

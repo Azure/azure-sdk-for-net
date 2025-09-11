@@ -124,6 +124,69 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             return new StartResourceOperationResult(description, resourceType, location, results?.ToList(), serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ExecuteCreateContent"/>. </summary>
+        /// <param name="resourceConfigParameters"> resource creation payload. </param>
+        /// <param name="executionParameters"> The execution parameters for the request. </param>
+        /// <param name="correlationId"> CorrelationId item. </param>
+        /// <returns> A new <see cref="Models.ExecuteCreateContent"/> instance for mocking. </returns>
+        public static ExecuteCreateContent ExecuteCreateContent(ResourceProvisionPayload resourceConfigParameters = null, ScheduledActionExecutionParameterDetail executionParameters = null, string correlationId = null)
+        {
+            return new ExecuteCreateContent(resourceConfigParameters, executionParameters, correlationId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceProvisionPayload"/>. </summary>
+        /// <param name="baseProfile"> JSON object that contains VM properties that are common across all VMs in this batch (if you want to create 100 VMs in this request, and they all have same vmSize, then include vmSize in baseProfile). </param>
+        /// <param name="resourceOverrides"> JSON array, that contains VM properties that should to be overridden for each VM in the batch (if you want to create 100 VMs, they all need a distinct computerName property, you pass computerNames for each VM in batch in this array), service will merge baseProfile with VM specific overrides and create a merged VMProfile. </param>
+        /// <param name="resourceCount"> Number of VMs to be created. </param>
+        /// <param name="resourcePrefix"> if resourceOverrides doesn't contain "name", service will create name based of prefix and ResourceCount e.g. resourceprefix-0,resourceprefix-1.. </param>
+        /// <returns> A new <see cref="Models.ResourceProvisionPayload"/> instance for mocking. </returns>
+        public static ResourceProvisionPayload ResourceProvisionPayload(IDictionary<string, BinaryData> baseProfile = null, IEnumerable<IDictionary<string, BinaryData>> resourceOverrides = null, int resourceCount = default, string resourcePrefix = null)
+        {
+            baseProfile ??= new Dictionary<string, BinaryData>();
+            resourceOverrides ??= new List<IDictionary<string, BinaryData>>();
+
+            return new ResourceProvisionPayload(baseProfile, resourceOverrides?.ToList(), resourceCount, resourcePrefix, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CreateResourceOperationResult"/>. </summary>
+        /// <param name="description"> The description of the operation response. </param>
+        /// <param name="type"> The type of resources used in the create request eg virtual machines. </param>
+        /// <param name="location"> The location of the start request eg westus. </param>
+        /// <param name="results"> The results from the start request if no errors exist. </param>
+        /// <returns> A new <see cref="Models.CreateResourceOperationResult"/> instance for mocking. </returns>
+        public static CreateResourceOperationResult CreateResourceOperationResult(string description = null, string type = null, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = null)
+        {
+            results ??= new List<ResourceOperationResult>();
+
+            return new CreateResourceOperationResult(description, type, location, results?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExecuteDeleteContent"/>. </summary>
+        /// <param name="executionParameters"> The execution parameters for the request. </param>
+        /// <param name="resourcesIds"> The resources for the request. </param>
+        /// <param name="correlationId"> CorrelationId item. </param>
+        /// <param name="isForceDeletion"> Forced delete resource item. </param>
+        /// <returns> A new <see cref="Models.ExecuteDeleteContent"/> instance for mocking. </returns>
+        public static ExecuteDeleteContent ExecuteDeleteContent(ScheduledActionExecutionParameterDetail executionParameters = null, IEnumerable<ResourceIdentifier> resourcesIds = null, string correlationId = null, bool? isForceDeletion = null)
+        {
+            resourcesIds ??= new List<ResourceIdentifier>();
+
+            return new ExecuteDeleteContent(executionParameters, resourcesIds != null ? new UserRequestResources(resourcesIds?.ToList(), serializedAdditionalRawData: null) : null, correlationId, isForceDeletion, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeleteResourceOperationResult"/>. </summary>
+        /// <param name="description"> The description of the operation response. </param>
+        /// <param name="type"> The type of resources used in the delete request eg virtual machines. </param>
+        /// <param name="location"> The location of the start request eg westus. </param>
+        /// <param name="results"> The results from the start request if no errors exist. </param>
+        /// <returns> A new <see cref="Models.DeleteResourceOperationResult"/> instance for mocking. </returns>
+        public static DeleteResourceOperationResult DeleteResourceOperationResult(string description = null, string type = null, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = null)
+        {
+            results ??= new List<ResourceOperationResult>();
+
+            return new DeleteResourceOperationResult(description, type, location, results?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.GetOperationStatusResult"/>. </summary>
         /// <param name="results"> An array of resource operations based on their operation ids. </param>
         /// <returns> A new <see cref="Models.GetOperationStatusResult"/> instance for mocking. </returns>

@@ -59,6 +59,18 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ContainerServiceFleetGateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerServiceFleetGateResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetGateResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerServiceFleetGateResource"/> object. </returns>
+        public virtual ContainerServiceFleetGateResource GetContainerServiceFleetGateResource(ResourceIdentifier id)
+        {
+            ContainerServiceFleetGateResource.ValidateResourceId(id);
+            return new ContainerServiceFleetGateResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerServiceFleetMemberResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerServiceFleetMemberResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetMemberResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

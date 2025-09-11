@@ -104,7 +104,8 @@ jobs:
             componentgovernance:
               enabled: true
             codeql:
-              binaryLanguages: csharp # Need to specify the language because we clone after the codeql initialize step
+              # Need to specify the language because we clone after the codeql initialize step
+              language: csharp, javascript
               compiled:
                 enabled: true
 
@@ -172,11 +173,6 @@ jobs:
             SourceDirectory: $(Build.SourcesDirectory)
 
         - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
-
-        - template: /eng/common/pipelines/templates/steps/credscan.yml
-          parameters:
-            BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
-            ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:

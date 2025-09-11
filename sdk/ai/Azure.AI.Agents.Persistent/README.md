@@ -374,7 +374,7 @@ PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential(
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-agent",
-   instructions: "You are a helpful agent.",
+   instructions: "You are a helpful agent capable to perform Azure AI Search using attached resources.",
    tools: [ new AzureAISearchToolDefinition() ],
    toolResources: toolResource);
 ```

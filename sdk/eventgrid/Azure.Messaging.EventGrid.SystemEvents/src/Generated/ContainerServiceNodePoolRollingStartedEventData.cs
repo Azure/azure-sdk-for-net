@@ -15,21 +15,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingStartedEventData"/>. </summary>
         /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nodePoolName"/> is null. </exception>
         internal ContainerServiceNodePoolRollingStartedEventData(string nodePoolName) : base(nodePoolName)
         {
-            Argument.AssertNotNull(nodePoolName, nameof(nodePoolName));
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingStartedEventData"/>. </summary>
         /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceNodePoolRollingStartedEventData(string nodePoolName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(nodePoolName, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingStartedEventData"/> for deserialization. </summary>
-        internal ContainerServiceNodePoolRollingStartedEventData()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceNodePoolRollingStartedEventData(string nodePoolName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(nodePoolName, additionalBinaryDataProperties)
         {
         }
     }

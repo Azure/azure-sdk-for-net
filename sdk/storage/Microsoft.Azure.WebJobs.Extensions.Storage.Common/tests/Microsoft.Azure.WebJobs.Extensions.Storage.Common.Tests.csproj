@@ -5,6 +5,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
   </ItemGroup>
 
   <ItemGroup>

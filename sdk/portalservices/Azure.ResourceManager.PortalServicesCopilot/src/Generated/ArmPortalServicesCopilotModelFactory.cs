@@ -10,37 +10,39 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PortalServicesCopilot;
 
 namespace Azure.ResourceManager.PortalServicesCopilot.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmPortalServicesCopilotModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilot.PortalServicesCopilotSettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+
+        /// <summary> The copilot settings tenant resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="PortalServicesCopilot.PortalServicesCopilotSettingData"/> instance for mocking. </returns>
-        public static PortalServicesCopilotSettingData PortalServicesCopilotSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PortalServicesCopilotSettingsProperties properties = null)
+        public static PortalServicesCopilotSettingData PortalServicesCopilotSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PortalServicesCopilotSettingsProperties properties = default)
         {
             return new PortalServicesCopilotSettingData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PortalServicesCopilotSettingsProperties"/>. </summary>
+        /// <summary> The Copilot Settings properties. </summary>
         /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <returns> A new <see cref="Models.PortalServicesCopilotSettingsProperties"/> instance for mocking. </returns>
-        public static PortalServicesCopilotSettingsProperties PortalServicesCopilotSettingsProperties(bool accessControlEnabled = default, PortalServicesResourceProvisioningState? provisioningState = null)
+        public static PortalServicesCopilotSettingsProperties PortalServicesCopilotSettingsProperties(bool accessControlEnabled = default, PortalServicesResourceProvisioningState? provisioningState = default)
         {
-            return new PortalServicesCopilotSettingsProperties(accessControlEnabled, provisioningState, serializedAdditionalRawData: null);
+            return new PortalServicesCopilotSettingsProperties(accessControlEnabled, provisioningState, additionalBinaryDataProperties: null);
         }
     }
 }

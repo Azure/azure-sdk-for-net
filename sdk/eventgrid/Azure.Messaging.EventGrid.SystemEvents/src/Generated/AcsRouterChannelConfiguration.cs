@@ -13,37 +13,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Router Channel Configuration. </summary>
     public partial class AcsRouterChannelConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterChannelConfiguration"/>. </summary>
         internal AcsRouterChannelConfiguration()
@@ -54,19 +25,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="channelId"> Channel ID for Router Job. </param>
         /// <param name="capacityCostPerJob"> Capacity Cost Per Job for Router Job. </param>
         /// <param name="maxNumberOfJobs"> Max Number of Jobs for Router Job. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsRouterChannelConfiguration(string channelId, int? capacityCostPerJob, int? maxNumberOfJobs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AcsRouterChannelConfiguration(string channelId, int? capacityCostPerJob, int? maxNumberOfJobs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ChannelId = channelId;
             CapacityCostPerJob = capacityCostPerJob;
             MaxNumberOfJobs = maxNumberOfJobs;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Channel ID for Router Job. </summary>
         public string ChannelId { get; }
+
         /// <summary> Capacity Cost Per Job for Router Job. </summary>
         public int? CapacityCostPerJob { get; }
+
         /// <summary> Max Number of Jobs for Router Job. </summary>
         public int? MaxNumberOfJobs { get; }
     }

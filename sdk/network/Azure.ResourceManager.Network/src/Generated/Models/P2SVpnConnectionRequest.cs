@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of p2s vpn connection Ids. </summary>
+        [WirePath("vpnConnectionIds")]
         public IList<string> VpnConnectionIds { get; }
     }
 }

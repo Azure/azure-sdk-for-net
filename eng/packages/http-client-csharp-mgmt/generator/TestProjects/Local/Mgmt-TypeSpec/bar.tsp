@@ -37,17 +37,50 @@ interface Bars {
 
   delete is ArmResourceDeleteWithoutOkAsync<Bar>;
 
-  update is ArmCustomPatchAsync<Bar, Bar>;
+  update is ArmCustomPatchSync<Bar, Bar>;
 
   list is ArmResourceListByParent<Bar>;
 }
 
 @singleton("current")
 @parentResource(Bar)
-model BarSettings is ProxyResource<BarSettingsProperties> {
-  ...ResourceNameParameter<BarSettings, SegmentName = "settings">;
+model BarSettingsResource is ProxyResource<BarSettingsProperties> {
+  ...ResourceNameParameter<BarSettingsResource, SegmentName = "settings">;
 
   stringArray?: string[];
+  property: BarQuotaProperties;
+  anotherProperty: BarQuotaProperties;
+  flattenedNestedProperty: BarNestedQuotaProperties;
+  optionalFlattenProperty?: optionalFlattenPropertyType;
+}
+
+@parentResource(Bar)
+model BarQuotaResource is ProxyResource<BarQuotaProperties> {
+  ...ResourceNameParameter<BarQuotaResource, SegmentName = "quotas", Type = QuotaName>;
+}
+
+model BarNestedQuotaProperties extends BarMiddleNestedQuotaProperties {
+  prop1: string[];
+  prop2: int32;
+}
+
+model BarMiddleNestedQuotaProperties extends BarDeeplyNestedQuotaProperties {
+  middleProp1: int32;
+  middleProp2: Record<string>;
+}
+
+model optionalFlattenPropertyType {
+  randomCollectionProp: string[];
+}
+
+model BarDeeplyNestedQuotaProperties {
+  innerProp1?: int32;
+  innerProp2: string;
+}
+
+model BarQuotaProperties {
+  /** enabled */
+  left: int32;
 }
 
 model BarSettingsProperties {
@@ -56,9 +89,23 @@ model BarSettingsProperties {
   isEnabled?: boolean;
 }
 
+@doc("Available Playwright quota types.")
+union QuotaName {
+  string,
+
+  @doc("Quota for execution duration in minutes.")
+  ExecutionMinutes: "ExecutionMinutes",
+}
+
 @armResourceOperations
 interface BarSettingsOperations {
-  createOrUpdate is ArmResourceCreateOrUpdateAsync<BarSettings>;
+  createOrUpdate is ArmResourceCreateOrUpdateAsync<BarSettingsResource>;
   
-  get is ArmResourceRead<BarSettings>;
+  get is ArmResourceRead<BarSettingsResource>;
+}
+
+@armResourceOperations
+interface BarQuotaOperations {
+  get is ArmResourceRead<BarQuotaResource>;
+  update is ArmCustomPatchAsync<BarQuotaResource, BarQuotaResource>;
 }

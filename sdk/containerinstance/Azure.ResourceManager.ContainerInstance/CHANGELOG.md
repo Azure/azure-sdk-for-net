@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.3.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.3 (2025-08-11)
+
+### Features Added
+
+- Make `Azure.ResourceManager.ContainerInstance` AOT-compatible
 
 ## 1.3.0-beta.2 (2025-06-13)
 

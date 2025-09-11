@@ -47,18 +47,21 @@ namespace Azure.Health.Deidentification
         public override IEnumerable<Page<DeidentificationDocumentDetails>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            do
+            while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                PagedDeidentificationDocumentDetails responseWithType = (PagedDeidentificationDocumentDetails)response;
-                nextPage = responseWithType.NextLink;
-                yield return Page<DeidentificationDocumentDetails>.FromValues((IReadOnlyList<DeidentificationDocumentDetails>)responseWithType.Value, nextPage?.AbsoluteUri, response);
+                PagedDeidentificationDocumentDetails result = (PagedDeidentificationDocumentDetails)response;
+                yield return Page<DeidentificationDocumentDetails>.FromValues((IReadOnlyList<DeidentificationDocumentDetails>)result.Value, nextPage?.AbsoluteUri, response);
+                nextPage = result.NextLink;
+                if (nextPage == null)
+                {
+                    yield break;
+                }
             }
-            while (nextPage != null);
         }
 
         /// <summary> Get next page. </summary>

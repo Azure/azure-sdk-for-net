@@ -27,9 +27,6 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateGetKeysRequest(string name, string after, string syncToken, string acceptDatetime, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/keys", false);
@@ -42,7 +39,10 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("After", after, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -57,21 +57,18 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateNextGetKeysRequest(Uri nextPage, string name, string after, string syncToken, string acceptDatetime, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.keyset+json");
             return message;
         }
 
         internal HttpMessage CreateCheckKeysRequest(string name, string after, string syncToken, string acceptDatetime, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Head;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/keys", false);
@@ -84,7 +81,10 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("After", after, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Head;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -93,15 +93,11 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.SetValue("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateGetConfigurationSettingsRequest(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, string snapshot, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/kv", false);
@@ -133,7 +129,10 @@ namespace Azure.Data.AppConfiguration
                     uri.AppendQuery("tags", @param, true);
                 }
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -152,21 +151,18 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateNextGetConfigurationSettingsRequest(Uri nextPage, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, string snapshot, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.kvset+json");
             return message;
         }
 
         internal HttpMessage CreateCheckKeyValuesRequest(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, string snapshot, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Head;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/kv", false);
@@ -198,7 +194,10 @@ namespace Azure.Data.AppConfiguration
                     uri.AppendQuery("tags", @param, true);
                 }
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Head;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -211,15 +210,11 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add(matchConditions);
             }
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateGetConfigurationSettingRequest(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/kv/", false);
@@ -240,7 +235,10 @@ namespace Azure.Data.AppConfiguration
                     uri.AppendQuery("tags", @param, true);
                 }
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -259,9 +257,6 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateSetConfigurationSettingInternalRequest(string key, string contentType, RequestContent content, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Put;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/kv/", false);
@@ -271,7 +266,10 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("label", label, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Put;
             request.Headers.SetValue("Content-Type", contentType);
             if (syncToken != null)
             {
@@ -288,9 +286,6 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateDeleteConfigurationSettingRequest(string key, string label, string syncToken, ETag? ifMatch, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200204);
-            Request request = message.Request;
-            request.Method = RequestMethod.Delete;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/kv/", false);
@@ -300,7 +295,10 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("label", label, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200204);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Delete;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -315,9 +313,6 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateCheckKeyValueRequest(string key, string label, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Head;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/kv/", false);
@@ -338,7 +333,10 @@ namespace Azure.Data.AppConfiguration
                     uri.AppendQuery("tags", @param, true);
                 }
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Head;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -351,15 +349,11 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add(matchConditions);
             }
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateGetSnapshotsRequest(string name, string after, IEnumerable<SnapshotFields> @select, IEnumerable<ConfigurationSnapshotStatus> status, string syncToken, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/snapshots", false);
@@ -380,7 +374,10 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQueryDelimited("status", status, ",", null, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -391,21 +388,18 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateNextGetSnapshotsRequest(Uri nextPage, string name, string after, IEnumerable<SnapshotFields> @select, IEnumerable<ConfigurationSnapshotStatus> status, string syncToken, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.snapshotset+json");
             return message;
         }
 
         internal HttpMessage CreateCheckSnapshotsRequest(string syncToken, string after, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Head;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/snapshots", false);
@@ -414,20 +408,19 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("After", after, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Head;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
             }
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateGetSnapshotRequest(string name, IEnumerable<SnapshotFields> @select, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/snapshots/", false);
@@ -437,7 +430,10 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQueryDelimited("$Select", @select, ",", null, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -452,30 +448,30 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateGetOperationDetailsRequest(string snapshot, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/operations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("snapshot", snapshot, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateCreateSnapshotRequest(string name, string contentType, RequestContent content, string syncToken, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
-            Request request = message.Request;
-            request.Method = RequestMethod.Put;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/snapshots/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Put;
             request.Headers.SetValue("Content-Type", contentType);
             if (syncToken != null)
             {
@@ -488,15 +484,15 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateUpdateSnapshotStatusRequest(string name, string contentType, RequestContent content, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Patch;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/snapshots/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", contentType);
             if (syncToken != null)
             {
@@ -513,15 +509,15 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateCheckSnapshotRequest(string name, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Head;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/snapshots/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Head;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -530,15 +526,11 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add(matchConditions);
             }
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateGetLabelsRequest(string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/labels", false);
@@ -555,7 +547,10 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQueryDelimited("$Select", @select, ",", null, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -570,21 +565,18 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateNextGetLabelsRequest(Uri nextPage, string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.labelset+json");
             return message;
         }
 
         internal HttpMessage CreateCheckLabelsRequest(string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Head;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/labels", false);
@@ -601,7 +593,10 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQueryDelimited("$Select", @select, ",", null, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Head;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -610,15 +605,11 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.SetValue("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateCreateReadOnlyLockRequest(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Put;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/locks/", false);
@@ -628,7 +619,10 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("label", label, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Put;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -643,9 +637,6 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateDeleteReadOnlyLockRequest(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Delete;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/locks/", false);
@@ -655,7 +646,10 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("label", label, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Delete;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -670,9 +664,6 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateGetRevisionsRequest(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, IEnumerable<string> tags, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/revisions", false);
@@ -700,7 +691,10 @@ namespace Azure.Data.AppConfiguration
                     uri.AppendQuery("tags", @param, true);
                 }
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -715,21 +709,18 @@ namespace Azure.Data.AppConfiguration
 
         internal HttpMessage CreateNextGetRevisionsRequest(Uri nextPage, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, IEnumerable<string> tags, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.kvset+json");
             return message;
         }
 
         internal HttpMessage CreateCheckRevisionsRequest(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, IEnumerable<string> tags, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Head;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/revisions", false);
@@ -757,7 +748,10 @@ namespace Azure.Data.AppConfiguration
                     uri.AppendQuery("tags", @param, true);
                 }
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Head;
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
@@ -766,7 +760,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.SetValue("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

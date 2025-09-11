@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataBoxJobPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, details, serializedAdditionalRawData);
+            return new DataBoxJobPatch(details, tags ?? new ChangeTrackingDictionary<string, string>(), identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxJobPatch>.Write(ModelReaderWriterOptions options)

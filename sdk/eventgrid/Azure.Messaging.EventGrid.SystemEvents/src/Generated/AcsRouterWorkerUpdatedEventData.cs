@@ -13,51 +13,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerUpdated event. </summary>
     public partial class AcsRouterWorkerUpdatedEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerUpdatedEventData"/>. </summary>
-        /// <param name="labels"> Router Worker Updated Labels. </param>
-        /// <param name="tags"> Router Worker Updated Tags. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labels"/> or <paramref name="tags"/> is null. </exception>
-        internal AcsRouterWorkerUpdatedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags)
+        internal AcsRouterWorkerUpdatedEventData()
         {
-            Argument.AssertNotNull(labels, nameof(labels));
-            Argument.AssertNotNull(tags, nameof(tags));
-
             QueueAssignments = new ChangeTrackingList<AcsRouterQueueDetails>();
             ChannelConfigurations = new ChangeTrackingList<AcsRouterChannelConfiguration>();
-            Labels = labels;
-            Tags = tags;
+            Labels = new ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
             UpdatedWorkerProperties = new ChangeTrackingList<AcsRouterUpdatedWorkerProperty>();
         }
 
@@ -69,8 +34,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="labels"> Router Worker Updated Labels. </param>
         /// <param name="tags"> Router Worker Updated Tags. </param>
         /// <param name="updatedWorkerProperties"> Router Worker Properties Updated. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsRouterWorkerUpdatedEventData(string workerId, IReadOnlyList<AcsRouterQueueDetails> queueAssignments, IReadOnlyList<AcsRouterChannelConfiguration> channelConfigurations, int? totalCapacity, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IReadOnlyList<AcsRouterUpdatedWorkerProperty> updatedWorkerProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AcsRouterWorkerUpdatedEventData(string workerId, IReadOnlyList<AcsRouterQueueDetails> queueAssignments, IReadOnlyList<AcsRouterChannelConfiguration> channelConfigurations, int? totalCapacity, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IReadOnlyList<AcsRouterUpdatedWorkerProperty> updatedWorkerProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkerId = workerId;
             QueueAssignments = queueAssignments;
@@ -79,26 +44,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Labels = labels;
             Tags = tags;
             UpdatedWorkerProperties = updatedWorkerProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerUpdatedEventData"/> for deserialization. </summary>
-        internal AcsRouterWorkerUpdatedEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Router Worker Updated Worker Id. </summary>
         public string WorkerId { get; }
+
         /// <summary> Router Worker Updated Queue Info. </summary>
         public IReadOnlyList<AcsRouterQueueDetails> QueueAssignments { get; }
+
         /// <summary> Router Worker Updated Channel Configuration. </summary>
         public IReadOnlyList<AcsRouterChannelConfiguration> ChannelConfigurations { get; }
+
         /// <summary> Router Worker Updated Total Capacity. </summary>
         public int? TotalCapacity { get; }
+
         /// <summary> Router Worker Updated Labels. </summary>
         public IReadOnlyDictionary<string, string> Labels { get; }
+
         /// <summary> Router Worker Updated Tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
+
         /// <summary> Router Worker Properties Updated. </summary>
         public IReadOnlyList<AcsRouterUpdatedWorkerProperty> UpdatedWorkerProperties { get; }
     }

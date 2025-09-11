@@ -43,11 +43,11 @@ Evaluation evaluationResponse = projectClient.Evaluations.Create(evaluation: eva
 Console.WriteLine(evaluationResponse);
 
 Console.WriteLine("Get evaluation");
-Evaluation getEvaluationResponse = projectClient.Evaluations.GetEvaluation(evaluationResponse.Name);
+Evaluation getEvaluationResponse = projectClient.Evaluations.Get(evaluationResponse.Name);
 Console.WriteLine(getEvaluationResponse);
 
 Console.WriteLine("List evaluations");
-foreach (var eval in projectClient.Evaluations.GetEvaluations())
+foreach (var eval in projectClient.Evaluations.GetAll())
 {
     Console.WriteLine(eval);
 }
@@ -87,11 +87,11 @@ Evaluation evaluationResponse = await projectClient.Evaluations.CreateAsync(eval
 Console.WriteLine(evaluationResponse);
 
 Console.WriteLine("Get evaluation");
-Evaluation getEvaluationResponse = await projectClient.Evaluations.GetEvaluationAsync(evaluationResponse.Name);
+Evaluation getEvaluationResponse = await projectClient.Evaluations.GetAsync(evaluationResponse.Name);
 Console.WriteLine(getEvaluationResponse);
 
 Console.WriteLine("List evaluations");
-await foreach (var eval in projectClient.Evaluations.GetEvaluationsAsync())
+await foreach (var eval in projectClient.Evaluations.GetAllAsync())
 {
     Console.WriteLine(eval);
 }

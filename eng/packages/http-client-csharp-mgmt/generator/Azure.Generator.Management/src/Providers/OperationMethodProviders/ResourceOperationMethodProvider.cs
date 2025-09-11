@@ -26,6 +26,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     /// </summary>
     internal class ResourceOperationMethodProvider
     {
+        public bool IsLongRunningOperation { get; }
+
         protected readonly TypeProvider _enclosingType;
         protected readonly RequestPathPattern _contextualPath;
         protected readonly ClientProvider _restClient;
@@ -41,7 +43,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private protected readonly CSharpType? _originalBodyType;
         private protected readonly CSharpType? _returnBodyType;
         private protected readonly ResourceClientProvider? _returnBodyResourceClient;
-        private readonly bool _isLongRunningOperation;
         private readonly bool _isFakeLongRunningOperation;
         private readonly FormattableString? _description;
 
@@ -72,11 +73,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _serviceMethod = method;
             _isAsync = isAsync;
             _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
+            bool isLongRunningOperation = false;
             InitializeLroFlags(
                 _serviceMethod,
                 forceLro: forceLro,
-                ref _isLongRunningOperation,
+                ref isLongRunningOperation,
                 ref _isFakeLongRunningOperation);
+            IsLongRunningOperation = isLongRunningOperation;
             _methodName = methodName ?? _convenienceMethod.Signature.Name;
             _description = description ?? _convenienceMethod.Signature.Description;
             InitializeTypeInfo(
@@ -84,8 +87,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 ref _originalBodyType,
                 ref _returnBodyType,
                 ref _returnBodyResourceClient);
-            _clientDiagnosticsField = restClientInfo.DiagnosticsField;
-            _restClientField = restClientInfo.RestClientField;
+            _clientDiagnosticsField = restClientInfo.Diagnostics;
+            _restClientField = restClientInfo.RestClient;
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
         }
@@ -121,7 +124,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected virtual CSharpType BuildReturnType()
         {
-            return _returnBodyType.WrapResponse(_isLongRunningOperation || _isFakeLongRunningOperation).WrapAsync(_isAsync);
+            return _returnBodyType.WrapResponse(IsLongRunningOperation || _isFakeLongRunningOperation).WrapAsync(_isAsync);
         }
 
         public static implicit operator MethodProvider(ResourceOperationMethodProvider resourceOperationMethodProvider)
@@ -134,7 +137,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected virtual MethodBodyStatement[] BuildBodyStatements()
         {
-            var scopeStatements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_enclosingType, _clientDiagnosticsField, _signature.Name, out var scopeVariable);
+            var scopeName = _signature.Name.EndsWith("Async") ? _signature.Name.Substring(0, _signature.Name.Length - "Async".Length) : _signature.Name;
+            var scopeStatements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_enclosingType, _clientDiagnosticsField, scopeName, out var scopeVariable);
             return [
                 .. scopeStatements,
                 new TryCatchFinallyStatement(
@@ -174,7 +178,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             {
                 ResourceMethodSnippets.CreateRequestContext(cancellationTokenParameter, out var contextVariable)
             };
-
             // Populate arguments for the REST client method call
             var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
 
@@ -182,7 +185,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
-            if (_isLongRunningOperation || _isFakeLongRunningOperation)
+            if (IsLongRunningOperation || _isFakeLongRunningOperation)
             {
                 tryStatements.AddRange(
                     _isFakeLongRunningOperation ?
@@ -201,7 +204,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             VariableExpression contextVariable,
             out ScopedApi<Response> responseVariable)
         {
-            if (_originalBodyType != null && !_isLongRunningOperation)
+            if (_originalBodyType != null && !IsLongRunningOperation)
             {
                 return ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                     messageVariable,

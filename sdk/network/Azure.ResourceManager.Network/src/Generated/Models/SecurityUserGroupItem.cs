@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Network manager group Id. </summary>
+        [WirePath("networkGroupId")]
         public string NetworkGroupId { get; set; }
     }
 }

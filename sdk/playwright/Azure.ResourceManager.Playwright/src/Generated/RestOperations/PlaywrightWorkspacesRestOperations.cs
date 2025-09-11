@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Playwright
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-07-01-preview";
+            _apiVersion = apiVersion ?? "2025-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Playwright
             return message;
         }
 
-        /// <summary> Update a PlaywrightWorkspace. </summary>
+        /// <summary> Updates a Playwright workspace resource synchronously. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> Update a PlaywrightWorkspace. </summary>
+        /// <summary> Updates a Playwright workspace resource synchronously. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
@@ -353,12 +353,11 @@ namespace Azure.ResourceManager.Playwright
             uri.AppendPath(playwrightWorkspaceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Delete a PlaywrightWorkspace. </summary>
+        /// <summary> Deletes a Playwright workspace resource asynchronously. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
@@ -383,7 +382,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> Delete a PlaywrightWorkspace. </summary>
+        /// <summary> Deletes a Playwright workspace resource asynchronously. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
@@ -604,7 +603,7 @@ namespace Azure.ResourceManager.Playwright
             return message;
         }
 
-        /// <summary> Implements global CheckNameAvailability operations. </summary>
+        /// <summary> Checks if a Playwright workspace name is available globally. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -631,7 +630,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> Implements global CheckNameAvailability operations. </summary>
+        /// <summary> Checks if a Playwright workspace name is available globally. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

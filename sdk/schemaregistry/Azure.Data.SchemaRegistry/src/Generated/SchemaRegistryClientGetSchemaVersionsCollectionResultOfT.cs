@@ -46,18 +46,21 @@ namespace Azure.Data.SchemaRegistry
         public override IEnumerable<Page<int>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            do
+            while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                SchemaVersions responseWithType = (SchemaVersions)response;
-                nextPage = responseWithType.NextLink;
-                yield return Page<int>.FromValues((IReadOnlyList<int>)responseWithType.Value, nextPage?.AbsoluteUri, response);
+                SchemaVersions result = (SchemaVersions)response;
+                yield return Page<int>.FromValues((IReadOnlyList<int>)result.Value, nextPage?.AbsoluteUri, response);
+                nextPage = result.NextLink;
+                if (nextPage == null)
+                {
+                    yield break;
+                }
             }
-            while (nextPage != null);
         }
 
         /// <summary> Get next page. </summary>

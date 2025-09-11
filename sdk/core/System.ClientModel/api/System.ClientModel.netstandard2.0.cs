@@ -124,6 +124,7 @@ namespace System.ClientModel.Primitives
         private readonly int _dummyPrimitive;
         public ClientConnection(string id, string locator) { throw null; }
         public ClientConnection(string id, string locator, object credential, System.ClientModel.Primitives.CredentialKind credentialKind) { throw null; }
+        public ClientConnection(string id, string locator, object? credential, System.ClientModel.Primitives.CredentialKind credentialKind, System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata) { throw null; }
         public object? Credential { get { throw null; } }
         public System.ClientModel.Primitives.CredentialKind CredentialKind { get { throw null; } }
         public string Id { get { throw null; } }
@@ -449,7 +450,7 @@ namespace System.ClientModel.Primitives
         public UserAgentPolicy(System.Reflection.Assembly callerAssembly, string? applicationId = null) { }
         public string? ApplicationId { get { throw null; } }
         public System.Reflection.Assembly Assembly { get { throw null; } }
-        public static string GenerateUserAgentString(System.Reflection.Assembly callerAssembly, string? applicationId = null) { throw null; }
+        public string UserAgentValue { get { throw null; } }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }

@@ -85,9 +85,11 @@ namespace Azure.Search.Documents
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.SearchResults<T>>> SearchAsync<T>(Azure.Search.Documents.SearchOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.SearchResults<T>>> SearchAsync<T>(string searchText, Azure.Search.Documents.SearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.SearchResults<T>>> SearchAsync<T>(string searchText, string querySourceAuthorization, Azure.Search.Documents.SearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.SearchResults<T>>> SearchAsync<T>(string searchText, System.Text.Json.Serialization.Metadata.JsonTypeInfo<T> typeInfo, Azure.Search.Documents.SearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Models.SearchResults<T>> Search<T>(Azure.Search.Documents.SearchOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Models.SearchResults<T>> Search<T>(string searchText, Azure.Search.Documents.SearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Models.SearchResults<T>> Search<T>(string searchText, string querySourceAuthorization, Azure.Search.Documents.SearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Search.Documents.Models.SearchResults<T>> Search<T>(string searchText, System.Text.Json.Serialization.Metadata.JsonTypeInfo<T> typeInfo, Azure.Search.Documents.SearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.SuggestResults<T>>> SuggestAsync<T>(string searchText, string suggesterName, Azure.Search.Documents.SuggestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Models.SuggestResults<T>> Suggest<T>(string searchText, string suggesterName, Azure.Search.Documents.SuggestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.IndexDocumentsResult>> UploadDocumentsAsync<T>(System.Collections.Generic.IEnumerable<T> documents, Azure.Search.Documents.IndexDocumentsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -95,7 +97,7 @@ namespace Azure.Search.Documents
     }
     public partial class SearchClientOptions : Azure.Core.ClientOptions
     {
-        public SearchClientOptions(Azure.Search.Documents.SearchClientOptions.ServiceVersion version = Azure.Search.Documents.SearchClientOptions.ServiceVersion.V2025_05_01_Preview) { }
+        public SearchClientOptions(Azure.Search.Documents.SearchClientOptions.ServiceVersion version = Azure.Search.Documents.SearchClientOptions.ServiceVersion.V2025_08_01_Preview) { }
         public Azure.Search.Documents.SearchAudience? Audience { get { throw null; } set { } }
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
         public Azure.Search.Documents.SearchClientOptions.ServiceVersion Version { get { throw null; } }
@@ -104,7 +106,7 @@ namespace Azure.Search.Documents
             V2020_06_30 = 1,
             V2023_11_01 = 2,
             V2024_07_01 = 3,
-            V2025_05_01_Preview = 4,
+            V2025_08_01_Preview = 4,
         }
     }
     public static partial class SearchExtensions
@@ -169,6 +171,7 @@ namespace Azure.Search.Documents
     public partial class SearchOptions : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.SearchOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.SearchOptions>
     {
         public SearchOptions() { }
+        public Azure.Search.Documents.Models.QueryDebugMode? Debug { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Facets { get { throw null; } }
         public string Filter { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> HighlightFields { get { throw null; } }
@@ -240,6 +243,7 @@ namespace Azure.Search.Documents.Agents.Models
     public abstract partial class KnowledgeAgentActivityRecord : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentActivityRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentActivityRecord>
     {
         protected KnowledgeAgentActivityRecord(int id) { }
+        public int? ElapsedMs { get { throw null; } }
         public int Id { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Search.Documents.Agents.Models.KnowledgeAgentActivityRecord System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentActivityRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -248,36 +252,42 @@ namespace Azure.Search.Documents.Agents.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentActivityRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentActivityRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KnowledgeAgentAzureSearchDocReference : Azure.Search.Documents.Agents.Models.KnowledgeAgentReference, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureSearchDocReference>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureSearchDocReference>
+    public partial class KnowledgeAgentAzureBlobActivityArguments : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityArguments>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityArguments>
     {
-        internal KnowledgeAgentAzureSearchDocReference() : base (default(string), default(int)) { }
-        public string DocKey { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, object> SourceData { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureSearchDocReference System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureSearchDocReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureSearchDocReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureSearchDocReference System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureSearchDocReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureSearchDocReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureSearchDocReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class KnowledgeAgentIndexParams : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentIndexParams>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentIndexParams>
-    {
-        public KnowledgeAgentIndexParams() { }
-        public string FilterAddOn { get { throw null; } set { } }
-        public bool? IncludeReferenceSourceData { get { throw null; } set { } }
-        public string IndexName { get { throw null; } set { } }
-        public int? MaxDocsForReranker { get { throw null; } set { } }
-        public float? RerankerThreshold { get { throw null; } set { } }
+        internal KnowledgeAgentAzureBlobActivityArguments() { }
+        public string Search { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Search.Documents.Agents.Models.KnowledgeAgentIndexParams System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentIndexParams>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentIndexParams>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Search.Documents.Agents.Models.KnowledgeAgentIndexParams System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentIndexParams>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentIndexParams>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentIndexParams>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityArguments System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityArguments>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityArguments>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityArguments System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityArguments>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityArguments>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityArguments>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class KnowledgeAgentAzureBlobActivityRecord : Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalActivityRecord, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityRecord>
+    {
+        internal KnowledgeAgentAzureBlobActivityRecord() { }
+        public Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityArguments AzureBlobArguments { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityRecord System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityRecord System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class KnowledgeAgentAzureBlobReference : Azure.Search.Documents.Agents.Models.KnowledgeAgentReference, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobReference>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobReference>
+    {
+        internal KnowledgeAgentAzureBlobReference() : base (default(string), default(int)) { }
+        public string BlobUrl { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobReference System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobReference System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class KnowledgeAgentMessage : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentMessage>
     {
-        public KnowledgeAgentMessage(string role, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Agents.Models.KnowledgeAgentMessageContent> content) { }
+        public KnowledgeAgentMessage(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Agents.Models.KnowledgeAgentMessageContent> content) { }
         public System.Collections.Generic.IList<Azure.Search.Documents.Agents.Models.KnowledgeAgentMessageContent> Content { get { throw null; } }
         public string Role { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -337,10 +347,21 @@ namespace Azure.Search.Documents.Agents.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentMessageTextContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentMessageTextContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class KnowledgeAgentModelAnswerSynthesisActivityRecord : Azure.Search.Documents.Agents.Models.KnowledgeAgentActivityRecord, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentModelAnswerSynthesisActivityRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentModelAnswerSynthesisActivityRecord>
+    {
+        internal KnowledgeAgentModelAnswerSynthesisActivityRecord() : base (default(int)) { }
+        public int? InputTokens { get { throw null; } }
+        public int? OutputTokens { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentModelAnswerSynthesisActivityRecord System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentModelAnswerSynthesisActivityRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentModelAnswerSynthesisActivityRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentModelAnswerSynthesisActivityRecord System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentModelAnswerSynthesisActivityRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentModelAnswerSynthesisActivityRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentModelAnswerSynthesisActivityRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class KnowledgeAgentModelQueryPlanningActivityRecord : Azure.Search.Documents.Agents.Models.KnowledgeAgentActivityRecord, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentModelQueryPlanningActivityRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentModelQueryPlanningActivityRecord>
     {
         internal KnowledgeAgentModelQueryPlanningActivityRecord() : base (default(int)) { }
-        public int? ElapsedMs { get { throw null; } }
         public int? InputTokens { get { throw null; } }
         public int? OutputTokens { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -355,6 +376,8 @@ namespace Azure.Search.Documents.Agents.Models
         protected KnowledgeAgentReference(string id, int activitySource) { }
         public int ActivitySource { get { throw null; } }
         public string Id { get { throw null; } }
+        public float? RerankerScore { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> SourceData { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Search.Documents.Agents.Models.KnowledgeAgentReference System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -362,11 +385,24 @@ namespace Azure.Search.Documents.Agents.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class KnowledgeAgentRetrievalActivityRecord : Azure.Search.Documents.Agents.Models.KnowledgeAgentActivityRecord, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalActivityRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalActivityRecord>
+    {
+        internal KnowledgeAgentRetrievalActivityRecord() : base (default(int)) { }
+        public int? Count { get { throw null; } }
+        public string KnowledgeSourceName { get { throw null; } }
+        public System.DateTimeOffset? QueryTime { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalActivityRecord System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalActivityRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalActivityRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalActivityRecord System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalActivityRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalActivityRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalActivityRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class KnowledgeAgentRetrievalRequest : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalRequest>
     {
         public KnowledgeAgentRetrievalRequest(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Agents.Models.KnowledgeAgentMessage> messages) { }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Agents.Models.KnowledgeSourceParams> KnowledgeSourceParams { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Agents.Models.KnowledgeAgentMessage> Messages { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Agents.Models.KnowledgeAgentIndexParams> TargetIndexParams { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalRequest System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -387,32 +423,72 @@ namespace Azure.Search.Documents.Agents.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KnowledgeAgentSearchActivityRecord : Azure.Search.Documents.Agents.Models.KnowledgeAgentActivityRecord, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchActivityRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchActivityRecord>
+    public partial class KnowledgeAgentSearchIndexActivityArguments : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityArguments>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityArguments>
     {
-        internal KnowledgeAgentSearchActivityRecord() : base (default(int)) { }
-        public int? Count { get { throw null; } }
-        public int? ElapsedMs { get { throw null; } }
-        public Azure.Search.Documents.Models.KnowledgeAgentSearchActivityRecordQuery Query { get { throw null; } }
-        public System.DateTimeOffset? QueryTime { get { throw null; } }
-        public string TargetIndex { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchActivityRecord System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchActivityRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchActivityRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchActivityRecord System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchActivityRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchActivityRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchActivityRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        internal KnowledgeAgentSearchIndexActivityArguments() { }
+        public string Filter { get { throw null; } }
+        public string Search { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityArguments System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityArguments>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityArguments>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityArguments System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityArguments>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityArguments>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityArguments>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KnowledgeAgentSemanticRankerActivityRecord : Azure.Search.Documents.Agents.Models.KnowledgeAgentActivityRecord, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRankerActivityRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRankerActivityRecord>
+    public partial class KnowledgeAgentSearchIndexActivityRecord : Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalActivityRecord, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityRecord>
     {
-        internal KnowledgeAgentSemanticRankerActivityRecord() : base (default(int)) { }
-        public int? ElapsedMs { get { throw null; } }
+        internal KnowledgeAgentSearchIndexActivityRecord() { }
+        public Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityArguments SearchIndexArguments { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityRecord System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityRecord System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class KnowledgeAgentSearchIndexReference : Azure.Search.Documents.Agents.Models.KnowledgeAgentReference, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexReference>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexReference>
+    {
+        internal KnowledgeAgentSearchIndexReference() : base (default(string), default(int)) { }
+        public string DocKey { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexReference System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexReference System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class KnowledgeAgentSemanticRerankerActivityRecord : Azure.Search.Documents.Agents.Models.KnowledgeAgentActivityRecord, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRerankerActivityRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRerankerActivityRecord>
+    {
+        internal KnowledgeAgentSemanticRerankerActivityRecord() : base (default(int)) { }
         public int? InputTokens { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRankerActivityRecord System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRankerActivityRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRankerActivityRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRankerActivityRecord System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRankerActivityRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRankerActivityRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRankerActivityRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRerankerActivityRecord System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRerankerActivityRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRerankerActivityRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRerankerActivityRecord System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRerankerActivityRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRerankerActivityRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRerankerActivityRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class KnowledgeSourceParams : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeSourceParams>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeSourceParams>
+    {
+        protected KnowledgeSourceParams(string knowledgeSourceName) { }
+        public string KnowledgeSourceName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeSourceParams System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeSourceParams>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.KnowledgeSourceParams>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.KnowledgeSourceParams System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeSourceParams>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeSourceParams>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.KnowledgeSourceParams>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SearchIndexKnowledgeSourceParams : Azure.Search.Documents.Agents.Models.KnowledgeSourceParams, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.SearchIndexKnowledgeSourceParams>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.SearchIndexKnowledgeSourceParams>
+    {
+        public SearchIndexKnowledgeSourceParams(string knowledgeSourceName) : base (default(string)) { }
+        public string FilterAddOn { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.SearchIndexKnowledgeSourceParams System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.SearchIndexKnowledgeSourceParams>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Agents.Models.SearchIndexKnowledgeSourceParams>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Agents.Models.SearchIndexKnowledgeSourceParams System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.SearchIndexKnowledgeSourceParams>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.SearchIndexKnowledgeSourceParams>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Agents.Models.SearchIndexKnowledgeSourceParams>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.Search.Documents.Indexes
@@ -455,12 +531,16 @@ namespace Azure.Search.Documents.Indexes
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndex>> CreateIndexAsync(Azure.Search.Documents.Indexes.Models.SearchIndex index, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeAgent> CreateKnowledgeAgent(Azure.Search.Documents.Indexes.Models.KnowledgeAgent knowledgeAgent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeAgent>> CreateKnowledgeAgentAsync(Azure.Search.Documents.Indexes.Models.KnowledgeAgent knowledgeAgent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeSource> CreateKnowledgeSource(Azure.Search.Documents.Indexes.Models.KnowledgeSource knowledgeSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeSource>> CreateKnowledgeSourceAsync(Azure.Search.Documents.Indexes.Models.KnowledgeSource knowledgeSource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchAlias> CreateOrUpdateAlias(string aliasName, Azure.Search.Documents.Indexes.Models.SearchAlias alias, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchAlias>> CreateOrUpdateAliasAsync(string aliasName, Azure.Search.Documents.Indexes.Models.SearchAlias alias, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndex> CreateOrUpdateIndex(Azure.Search.Documents.Indexes.Models.SearchIndex index, bool allowIndexDowntime = false, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndex>> CreateOrUpdateIndexAsync(Azure.Search.Documents.Indexes.Models.SearchIndex index, bool allowIndexDowntime = false, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeAgent> CreateOrUpdateKnowledgeAgent(Azure.Search.Documents.Indexes.Models.KnowledgeAgent knowledgeAgent, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeAgent>> CreateOrUpdateKnowledgeAgentAsync(Azure.Search.Documents.Indexes.Models.KnowledgeAgent knowledgeAgent, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeSource> CreateOrUpdateKnowledgeSource(Azure.Search.Documents.Indexes.Models.KnowledgeSource knowledgeSource, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeSource>> CreateOrUpdateKnowledgeSourceAsync(Azure.Search.Documents.Indexes.Models.KnowledgeSource knowledgeSource, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SynonymMap> CreateOrUpdateSynonymMap(Azure.Search.Documents.Indexes.Models.SynonymMap synonymMap, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SynonymMap>> CreateOrUpdateSynonymMapAsync(Azure.Search.Documents.Indexes.Models.SynonymMap synonymMap, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SynonymMap> CreateSynonymMap(Azure.Search.Documents.Indexes.Models.SynonymMap synonymMap, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -475,6 +555,10 @@ namespace Azure.Search.Documents.Indexes
         public virtual Azure.Response DeleteKnowledgeAgent(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteKnowledgeAgentAsync(Azure.Search.Documents.Indexes.Models.KnowledgeAgent knowledgeAgent, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteKnowledgeAgentAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteKnowledgeSource(Azure.Search.Documents.Indexes.Models.KnowledgeSource knowledgeSource, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteKnowledgeSource(string sourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteKnowledgeSourceAsync(Azure.Search.Documents.Indexes.Models.KnowledgeSource knowledgeSource, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteKnowledgeSourceAsync(string sourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteSynonymMap(Azure.Search.Documents.Indexes.Models.SynonymMap synonymMap, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteSynonymMap(string synonymMapName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteSynonymMapAsync(Azure.Search.Documents.Indexes.Models.SynonymMap synonymMap, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -497,6 +581,10 @@ namespace Azure.Search.Documents.Indexes
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeAgent>> GetKnowledgeAgentAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Search.Documents.Indexes.Models.KnowledgeAgent> GetKnowledgeAgents(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Search.Documents.Indexes.Models.KnowledgeAgent> GetKnowledgeAgentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeSource> GetKnowledgeSource(string sourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeSource>> GetKnowledgeSourceAsync(string sourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Search.Documents.Indexes.Models.KnowledgeSource> GetKnowledgeSources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Search.Documents.Indexes.Models.KnowledgeSource> GetKnowledgeSourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Search.Documents.SearchClient GetSearchClient(string indexName) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchServiceStatistics> GetServiceStatistics(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchServiceStatistics>> GetServiceStatisticsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -732,6 +820,36 @@ namespace Azure.Search.Documents.Indexes.Models
         Azure.Search.Documents.Indexes.Models.AsciiFoldingTokenFilter System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AsciiFoldingTokenFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AsciiFoldingTokenFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AsciiFoldingTokenFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AzureBlobKnowledgeSource : Azure.Search.Documents.Indexes.Models.KnowledgeSource, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSource>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSource>
+    {
+        public AzureBlobKnowledgeSource(string name, Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters azureBlobParameters) : base (default(string)) { }
+        public Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters AzureBlobParameters { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSource System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSource System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AzureBlobKnowledgeSourceParameters : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>
+    {
+        public AzureBlobKnowledgeSourceParameters(string connectionString, string containerName) { }
+        public Azure.Search.Documents.Indexes.Models.KnowledgeAgentModel ChatCompletionModel { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
+        public string ContainerName { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> CreatedResources { get { throw null; } }
+        public bool? DisableImageVerbalization { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer EmbeddingModel { get { throw null; } set { } }
+        public string FolderPath { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity Identity { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.IndexingSchedule IngestionSchedule { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AzureMachineLearningParameters : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters>
     {
@@ -2180,14 +2298,16 @@ namespace Azure.Search.Documents.Indexes.Models
     }
     public partial class KnowledgeAgent : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgent>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgent>
     {
-        public KnowledgeAgent(string name, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.KnowledgeAgentModel> models, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.KnowledgeAgentTargetIndex> targetIndexes) { }
+        public KnowledgeAgent(string name, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.KnowledgeAgentModel> models, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.KnowledgeSourceReference> knowledgeSources) { }
         public string Description { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey EncryptionKey { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.KnowledgeSourceReference> KnowledgeSources { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.KnowledgeAgentModel> Models { get { throw null; } }
         public string Name { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.KnowledgeAgentOutputConfiguration OutputConfiguration { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.KnowledgeAgentRequestLimits RequestLimits { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.KnowledgeAgentTargetIndex> TargetIndexes { get { throw null; } }
+        public string RetrievalInstructions { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Search.Documents.Indexes.Models.KnowledgeAgent System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2233,6 +2353,20 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.KnowledgeAgentModelKind left, Azure.Search.Documents.Indexes.Models.KnowledgeAgentModelKind right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class KnowledgeAgentOutputConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentOutputConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentOutputConfiguration>
+    {
+        public KnowledgeAgentOutputConfiguration() { }
+        public string AnswerInstructions { get { throw null; } set { } }
+        public bool? AttemptFastPath { get { throw null; } set { } }
+        public bool? IncludeActivity { get { throw null; } set { } }
+        public Azure.Search.Documents.Models.KnowledgeAgentOutputConfigurationModality? Modality { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Indexes.Models.KnowledgeAgentOutputConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentOutputConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentOutputConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Indexes.Models.KnowledgeAgentOutputConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentOutputConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentOutputConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentOutputConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class KnowledgeAgentRequestLimits : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentRequestLimits>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentRequestLimits>
     {
         public KnowledgeAgentRequestLimits() { }
@@ -2245,19 +2379,35 @@ namespace Azure.Search.Documents.Indexes.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentRequestLimits>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentRequestLimits>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KnowledgeAgentTargetIndex : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentTargetIndex>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentTargetIndex>
+    public abstract partial class KnowledgeSource : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.KnowledgeSource>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeSource>
     {
-        public KnowledgeAgentTargetIndex(string indexName) { }
-        public bool? DefaultIncludeReferenceSourceData { get { throw null; } set { } }
-        public int? DefaultMaxDocsForReranker { get { throw null; } set { } }
-        public float? DefaultRerankerThreshold { get { throw null; } set { } }
-        public string IndexName { get { throw null; } set { } }
+        protected KnowledgeSource(string name) { }
+        public string Description { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey EncryptionKey { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Search.Documents.Indexes.Models.KnowledgeAgentTargetIndex System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentTargetIndex>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentTargetIndex>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Search.Documents.Indexes.Models.KnowledgeAgentTargetIndex System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentTargetIndex>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentTargetIndex>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeAgentTargetIndex>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Search.Documents.Indexes.Models.KnowledgeSource System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.KnowledgeSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.KnowledgeSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Indexes.Models.KnowledgeSource System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class KnowledgeSourceReference : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.KnowledgeSourceReference>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeSourceReference>
+    {
+        public KnowledgeSourceReference(string name) { }
+        public bool? AlwaysQuerySource { get { throw null; } set { } }
+        public bool? IncludeReferences { get { throw null; } set { } }
+        public bool? IncludeReferenceSourceData { get { throw null; } set { } }
+        public int? MaxSubQueries { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public float? RerankerThreshold { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Indexes.Models.KnowledgeSourceReference System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.KnowledgeSourceReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.KnowledgeSourceReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Indexes.Models.KnowledgeSourceReference System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeSourceReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeSourceReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeSourceReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class KnowledgeStore : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.KnowledgeStore>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.KnowledgeStore>
     {
@@ -3664,6 +3814,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.IndexerPermissionOption> IndexerPermissionOptions { get { throw null; } }
         public string Name { get { throw null; } set { } }
+        public string SubType { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType Type { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3825,6 +3976,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.IndexerExecutionResult> ExecutionHistory { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.IndexerExecutionResult LastResult { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.SearchIndexerLimits Limits { get { throw null; } }
+        public string Name { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.IndexerStatus Status { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Search.Documents.Indexes.Models.SearchIndexerStatus System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.SearchIndexerStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3847,6 +3999,29 @@ namespace Azure.Search.Documents.Indexes.Models
         Azure.Search.Documents.Indexes.Models.SearchIndexerWarning System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.SearchIndexerWarning>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.SearchIndexerWarning>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.SearchIndexerWarning>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SearchIndexKnowledgeSource : Azure.Search.Documents.Indexes.Models.KnowledgeSource, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSource>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSource>
+    {
+        public SearchIndexKnowledgeSource(string name, Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSourceParameters searchIndexParameters) : base (default(string)) { }
+        public Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSourceParameters SearchIndexParameters { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSource System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSource System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SearchIndexKnowledgeSourceParameters : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSourceParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSourceParameters>
+    {
+        public SearchIndexKnowledgeSourceParameters(string searchIndexName) { }
+        public string SearchIndexName { get { throw null; } set { } }
+        public string SourceDataSelect { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSourceParameters System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSourceParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSourceParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSourceParameters System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSourceParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSourceParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.SearchIndexKnowledgeSourceParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SearchIndexStatistics : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.SearchIndexStatistics>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.SearchIndexStatistics>
     {
@@ -5186,8 +5361,8 @@ namespace Azure.Search.Documents.Models
     }
     public partial class KnowledgeAgentMessageImageContentImage : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Models.KnowledgeAgentMessageImageContentImage>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Models.KnowledgeAgentMessageImageContentImage>
     {
-        public KnowledgeAgentMessageImageContentImage(string url) { }
-        public string Url { get { throw null; } set { } }
+        public KnowledgeAgentMessageImageContentImage(System.Uri url) { }
+        public System.Uri Url { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Search.Documents.Models.KnowledgeAgentMessageImageContentImage System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Models.KnowledgeAgentMessageImageContentImage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Models.KnowledgeAgentMessageImageContentImage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5195,17 +5370,23 @@ namespace Azure.Search.Documents.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Models.KnowledgeAgentMessageImageContentImage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Models.KnowledgeAgentMessageImageContentImage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KnowledgeAgentSearchActivityRecordQuery : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Models.KnowledgeAgentSearchActivityRecordQuery>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Models.KnowledgeAgentSearchActivityRecordQuery>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KnowledgeAgentOutputConfigurationModality : System.IEquatable<Azure.Search.Documents.Models.KnowledgeAgentOutputConfigurationModality>
     {
-        internal KnowledgeAgentSearchActivityRecordQuery() { }
-        public string Filter { get { throw null; } }
-        public string Search { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Search.Documents.Models.KnowledgeAgentSearchActivityRecordQuery System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Models.KnowledgeAgentSearchActivityRecordQuery>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Models.KnowledgeAgentSearchActivityRecordQuery>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Search.Documents.Models.KnowledgeAgentSearchActivityRecordQuery System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Models.KnowledgeAgentSearchActivityRecordQuery>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Models.KnowledgeAgentSearchActivityRecordQuery>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Models.KnowledgeAgentSearchActivityRecordQuery>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KnowledgeAgentOutputConfigurationModality(string value) { throw null; }
+        public static Azure.Search.Documents.Models.KnowledgeAgentOutputConfigurationModality AnswerSynthesis { get { throw null; } }
+        public static Azure.Search.Documents.Models.KnowledgeAgentOutputConfigurationModality ExtractiveData { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Models.KnowledgeAgentOutputConfigurationModality other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Models.KnowledgeAgentOutputConfigurationModality left, Azure.Search.Documents.Models.KnowledgeAgentOutputConfigurationModality right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Models.KnowledgeAgentOutputConfigurationModality (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Models.KnowledgeAgentOutputConfigurationModality left, Azure.Search.Documents.Models.KnowledgeAgentOutputConfigurationModality right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class QueryAnswer
     {
@@ -5616,6 +5797,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.AutocompleteResults AutocompleteResults(double? coverage = default(double?), System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.AutocompleteItem> results = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Models.AutocompleteResults AutocompleteResults(double? coverage, System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.AutocompleteItem> results) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters AzureBlobKnowledgeSourceParameters(Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity identity = null, string connectionString = null, string containerName = null, string folderPath = null, Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer embeddingModel = null, Azure.Search.Documents.Indexes.Models.KnowledgeAgentModel chatCompletionModel = null, Azure.Search.Documents.Indexes.Models.IndexingSchedule ingestionSchedule = null, System.Collections.Generic.IReadOnlyDictionary<string, string> createdResources = null, bool? disableImageVerbalization = default(bool?)) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.CharFilter CharFilter(string oDataType, string name) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.CognitiveServicesAccount CognitiveServicesAccount(string oDataType, string description) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.DataChangeDetectionPolicy DataChangeDetectionPolicy(string oDataType) { throw null; }
@@ -5636,14 +5818,19 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.IndexerState IndexerState(Azure.Search.Documents.Indexes.Models.IndexingMode? mode = default(Azure.Search.Documents.Indexes.Models.IndexingMode?), string allDocsInitialTrackingState = null, string allDocsFinalTrackingState = null, string resetDocsInitialTrackingState = null, string resetDocsFinalTrackingState = null, System.Collections.Generic.IEnumerable<string> resetDocumentKeys = null, System.Collections.Generic.IEnumerable<string> resetDataSourceDocumentIds = null, string resyncInitialTrackingState = null, string resyncFinalTrackingState = null) { throw null; }
         public static Azure.Search.Documents.Models.IndexingResult IndexingResult(string key, string errorMessage, bool succeeded, int status) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.IndexStatisticsSummary IndexStatisticsSummary(string name = null, long documentCount = (long)0, long storageSize = (long)0, long vectorIndexSize = (long)0) { throw null; }
-        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentActivityRecord KnowledgeAgentActivityRecord(int id = 0, string type = null) { throw null; }
-        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureSearchDocReference KnowledgeAgentAzureSearchDocReference(string id = null, int activitySource = 0, string docKey = null, System.Collections.Generic.IReadOnlyDictionary<string, object> sourceData = null) { throw null; }
-        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentModelQueryPlanningActivityRecord KnowledgeAgentModelQueryPlanningActivityRecord(int id = 0, int? inputTokens = default(int?), int? outputTokens = default(int?), int? elapsedMs = default(int?)) { throw null; }
-        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentReference KnowledgeAgentReference(string type = null, string id = null, int activitySource = 0) { throw null; }
+        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentActivityRecord KnowledgeAgentActivityRecord(int id = 0, string type = null, int? elapsedMs = default(int?)) { throw null; }
+        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityArguments KnowledgeAgentAzureBlobActivityArguments(string search = null) { throw null; }
+        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityRecord KnowledgeAgentAzureBlobActivityRecord(int id = 0, int? elapsedMs = default(int?), string knowledgeSourceName = null, System.DateTimeOffset? queryTime = default(System.DateTimeOffset?), int? count = default(int?), Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobActivityArguments azureBlobArguments = null) { throw null; }
+        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentAzureBlobReference KnowledgeAgentAzureBlobReference(string id = null, int activitySource = 0, System.Collections.Generic.IReadOnlyDictionary<string, object> sourceData = null, float? rerankerScore = default(float?), string blobUrl = null) { throw null; }
+        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentModelAnswerSynthesisActivityRecord KnowledgeAgentModelAnswerSynthesisActivityRecord(int id = 0, int? elapsedMs = default(int?), int? inputTokens = default(int?), int? outputTokens = default(int?)) { throw null; }
+        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentModelQueryPlanningActivityRecord KnowledgeAgentModelQueryPlanningActivityRecord(int id = 0, int? elapsedMs = default(int?), int? inputTokens = default(int?), int? outputTokens = default(int?)) { throw null; }
+        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentReference KnowledgeAgentReference(string type = null, string id = null, int activitySource = 0, System.Collections.Generic.IReadOnlyDictionary<string, object> sourceData = null, float? rerankerScore = default(float?)) { throw null; }
+        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalActivityRecord KnowledgeAgentRetrievalActivityRecord(int id = 0, int? elapsedMs = default(int?), string knowledgeSourceName = null, System.DateTimeOffset? queryTime = default(System.DateTimeOffset?), int? count = default(int?)) { throw null; }
         public static Azure.Search.Documents.Agents.Models.KnowledgeAgentRetrievalResponse KnowledgeAgentRetrievalResponse(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Agents.Models.KnowledgeAgentMessage> response = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Agents.Models.KnowledgeAgentActivityRecord> activity = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Agents.Models.KnowledgeAgentReference> references = null) { throw null; }
-        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchActivityRecord KnowledgeAgentSearchActivityRecord(int id = 0, string targetIndex = null, Azure.Search.Documents.Models.KnowledgeAgentSearchActivityRecordQuery query = null, System.DateTimeOffset? queryTime = default(System.DateTimeOffset?), int? count = default(int?), int? elapsedMs = default(int?)) { throw null; }
-        public static Azure.Search.Documents.Models.KnowledgeAgentSearchActivityRecordQuery KnowledgeAgentSearchActivityRecordQuery(string search = null, string filter = null) { throw null; }
-        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRankerActivityRecord KnowledgeAgentSemanticRankerActivityRecord(int id = 0, int? inputTokens = default(int?), int? elapsedMs = default(int?)) { throw null; }
+        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityArguments KnowledgeAgentSearchIndexActivityArguments(string search = null, string filter = null) { throw null; }
+        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityRecord KnowledgeAgentSearchIndexActivityRecord(int id = 0, int? elapsedMs = default(int?), string knowledgeSourceName = null, System.DateTimeOffset? queryTime = default(System.DateTimeOffset?), int? count = default(int?), Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexActivityArguments searchIndexArguments = null) { throw null; }
+        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentSearchIndexReference KnowledgeAgentSearchIndexReference(string id = null, int activitySource = 0, System.Collections.Generic.IReadOnlyDictionary<string, object> sourceData = null, float? rerankerScore = default(float?), string docKey = null) { throw null; }
+        public static Azure.Search.Documents.Agents.Models.KnowledgeAgentSemanticRerankerActivityRecord KnowledgeAgentSemanticRerankerActivityRecord(int id = 0, int? elapsedMs = default(int?), int? inputTokens = default(int?)) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.LexicalAnalyzer LexicalAnalyzer(string oDataType, string name) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.LexicalTokenizer LexicalTokenizer(string oDataType, string name) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.ListIndexStatsSummary ListIndexStatsSummary(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.IndexStatisticsSummary> indexesStatistics = null) { throw null; }
@@ -5661,9 +5848,9 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerSkill SearchIndexerSkill(string oDataType, string name, string description, string context, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerStatus SearchIndexerStatus(Azure.Search.Documents.Indexes.Models.IndexerStatus status = Azure.Search.Documents.Indexes.Models.IndexerStatus.Unknown, Azure.Search.Documents.Indexes.Models.IndexerExecutionResult lastResult = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.IndexerExecutionResult> executionHistory = null, Azure.Search.Documents.Indexes.Models.SearchIndexerLimits limits = null) { throw null; }
-        public static Azure.Search.Documents.Indexes.Models.SearchIndexerStatus SearchIndexerStatus(Azure.Search.Documents.Indexes.Models.IndexerStatus status = Azure.Search.Documents.Indexes.Models.IndexerStatus.Unknown, Azure.Search.Documents.Indexes.Models.IndexerExecutionResult lastResult = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.IndexerExecutionResult> executionHistory = null, Azure.Search.Documents.Indexes.Models.SearchIndexerLimits limits = null, Azure.Search.Documents.Indexes.Models.IndexerState currentState = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerStatus SearchIndexerStatus(Azure.Search.Documents.Indexes.Models.IndexerStatus status, Azure.Search.Documents.Indexes.Models.IndexerExecutionResult lastResult, System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.IndexerExecutionResult> executionHistory, Azure.Search.Documents.Indexes.Models.SearchIndexerLimits limits) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.SearchIndexerStatus SearchIndexerStatus(string name = null, Azure.Search.Documents.Indexes.Models.IndexerStatus status = Azure.Search.Documents.Indexes.Models.IndexerStatus.Unknown, Azure.Search.Documents.Indexes.Models.IndexerExecutionResult lastResult = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.IndexerExecutionResult> executionHistory = null, Azure.Search.Documents.Indexes.Models.SearchIndexerLimits limits = null, Azure.Search.Documents.Indexes.Models.IndexerState currentState = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerWarning SearchIndexerWarning(string key, string message, string name, string details, string documentationLink) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchIndexStatistics SearchIndexStatistics(long documentCount, long storageSize) { throw null; }
@@ -5724,7 +5911,7 @@ namespace Azure.Search.Documents.Models
         public override System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.SearchResult<T>> Values { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
     }
-    public partial class SearchResults<T>
+    public abstract partial class SearchResults<T>
     {
         internal SearchResults() { }
         public double? Coverage { get { throw null; } }
@@ -5851,7 +6038,6 @@ namespace Azure.Search.Documents.Models
     public partial class SemanticSearchOptions
     {
         public SemanticSearchOptions() { }
-        public Azure.Search.Documents.Models.QueryDebugMode? Debug { get { throw null; } set { } }
         public Azure.Search.Documents.Models.SemanticErrorMode? ErrorMode { get { throw null; } set { } }
         public System.TimeSpan? MaxWait { get { throw null; } set { } }
         public Azure.Search.Documents.Models.QueryAnswer QueryAnswer { get { throw null; } set { } }
@@ -5937,6 +6123,7 @@ namespace Azure.Search.Documents.Models
         public VectorFilterMode(string value) { throw null; }
         public static Azure.Search.Documents.Models.VectorFilterMode PostFilter { get { throw null; } }
         public static Azure.Search.Documents.Models.VectorFilterMode PreFilter { get { throw null; } }
+        public static Azure.Search.Documents.Models.VectorFilterMode StrictPostFilter { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Models.VectorFilterMode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

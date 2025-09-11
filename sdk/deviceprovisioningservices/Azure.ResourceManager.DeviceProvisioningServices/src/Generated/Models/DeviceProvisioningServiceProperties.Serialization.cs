@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(DeviceRegistryNamespace))
+            {
+                writer.WritePropertyName("deviceRegistryNamespace"u8);
+                writer.WriteObjectValue(DeviceRegistryNamespace, options);
+            }
             if (Optional.IsDefined(AllocationPolicy))
             {
                 writer.WritePropertyName("allocationPolicy"u8);
@@ -162,6 +167,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             IList<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
             string provisioningState = default;
             IList<IotHubDefinitionDescription> iotHubs = default;
+            DeviceRegistryNamespaceDescription deviceRegistryNamespace = default;
             DeviceProvisioningServicesAllocationPolicy? allocationPolicy = default;
             string serviceOperationsHostName = default;
             string deviceProvisioningHostName = default;
@@ -238,6 +244,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     iotHubs = array;
                     continue;
                 }
+                if (property.NameEquals("deviceRegistryNamespace"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deviceRegistryNamespace = DeviceRegistryNamespaceDescription.DeserializeDeviceRegistryNamespaceDescription(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("allocationPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -303,6 +318,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 privateEndpointConnections ?? new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>(),
                 provisioningState,
                 iotHubs ?? new ChangeTrackingList<IotHubDefinitionDescription>(),
+                deviceRegistryNamespace,
                 allocationPolicy,
                 serviceOperationsHostName,
                 deviceProvisioningHostName,

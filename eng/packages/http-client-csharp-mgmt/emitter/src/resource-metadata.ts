@@ -60,9 +60,47 @@ export function convertResourceMetadataToArguments(
   };
 }
 
+export interface NonResourceMethod {
+  methodId: string;
+  operationPath: string;
+  operationScope: ResourceScope;
+}
+
+export function convertMethodMetadataToArguments(
+  metadata: NonResourceMethod[]
+): Record<string, any> {
+  return {
+    nonResourceMethods: metadata.map((m) => ({
+      methodId: m.methodId,
+      operationPath: m.operationPath,
+      operationScope: m.operationScope
+    }))
+  };
+}
+
 export interface ResourceMethod {
-  id: string;
+  /**
+   * the crossLanguageDefinitionId of the corresponding input method
+   */
+  methodId: string;
+  /**
+   * the kind of this resource method
+   */
   kind: ResourceOperationKind;
+  /**
+   * the path of this resource method
+   */
+  operationPath: string;
+  /**
+   * the scope of this resource method, it could be tenant/resource group/subscription/management group
+   */
+  operationScope: ResourceScope;
+  /**
+   * The maximum scope of this resource method.
+   * The value of this could be a resource path pattern of an existing resource
+   * or undefined
+   */
+  resourceScope?: string;
 }
 
 export enum ResourceOperationKind {
@@ -72,5 +110,4 @@ export enum ResourceOperationKind {
   Get = "Get",
   List = "List",
   Update = "Update"
-  // ListBySubscription = "ListBySubscription",
 }

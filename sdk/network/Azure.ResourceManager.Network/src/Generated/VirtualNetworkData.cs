@@ -76,14 +76,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The extended location of the virtual network. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The AddressSpace that contains an array of IP address ranges that can be used by subnets. </summary>
+        [WirePath("properties.addressSpace")]
         public VirtualNetworkAddressSpace AddressSpace { get; set; }
         /// <summary> The dhcpOptions that contains an array of DNS servers available to VMs deployed in the virtual network. </summary>
         internal DhcpOptions DhcpOptions { get; set; }
         /// <summary> The list of DNS servers IP addresses. </summary>
+        [WirePath("properties.dhcpOptions.dnsServers")]
         public IList<string> DhcpOptionsDnsServers
         {
             get
@@ -95,22 +99,30 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The FlowTimeout value (in minutes) for the Virtual Network. </summary>
+        [WirePath("properties.flowTimeoutInMinutes")]
         public int? FlowTimeoutInMinutes { get; set; }
         /// <summary> A list of subnets in a Virtual Network. </summary>
+        [WirePath("properties.subnets")]
         public IList<SubnetData> Subnets { get; }
         /// <summary> A list of peerings in a Virtual Network. </summary>
+        [WirePath("properties.virtualNetworkPeerings")]
         public IList<VirtualNetworkPeeringData> VirtualNetworkPeerings { get; }
         /// <summary> The resourceGuid property of the Virtual Network resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the virtual network resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Indicates if DDoS protection is enabled for all the protected resources in the virtual network. It requires a DDoS protection plan associated with the resource. </summary>
+        [WirePath("properties.enableDdosProtection")]
         public bool? EnableDdosProtection { get; set; }
         /// <summary> Indicates if VM protection is enabled for all the subnets in the virtual network. </summary>
+        [WirePath("properties.enableVmProtection")]
         public bool? EnableVmProtection { get; set; }
         /// <summary> The DDoS protection plan associated with the virtual network. </summary>
         internal WritableSubResource DdosProtectionPlan { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.ddosProtectionPlan.id")]
         public ResourceIdentifier DdosProtectionPlanId
         {
             get => DdosProtectionPlan is null ? default : DdosProtectionPlan.Id;
@@ -123,18 +135,24 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </summary>
+        [WirePath("properties.bgpCommunities")]
         public VirtualNetworkBgpCommunities BgpCommunities { get; set; }
         /// <summary> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </summary>
+        [WirePath("properties.encryption")]
         public VirtualNetworkEncryption Encryption { get; set; }
         /// <summary> Array of IpAllocation which reference this VNET. </summary>
+        [WirePath("properties.ipAllocations")]
         public IList<WritableSubResource> IPAllocations { get; }
         /// <summary> A collection of references to flow log resources. </summary>
+        [WirePath("properties.flowLogs")]
         public IReadOnlyList<FlowLogData> FlowLogs { get; }
         /// <summary> Private Endpoint VNet Policies. </summary>
+        [WirePath("properties.privateEndpointVNetPolicies")]
         public PrivateEndpointVnetPolicy? PrivateEndpointVnetPolicy { get; set; }
         /// <summary> A reference to the default public nat gateway being used by this virtual network resource. </summary>
         internal WritableSubResource DefaultPublicNatGateway { get; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.defaultPublicNatGateway.id")]
         public ResourceIdentifier DefaultPublicNatGatewayId
         {
             get => DefaultPublicNatGateway?.Id;

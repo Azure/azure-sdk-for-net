@@ -6,8 +6,10 @@
 using System;
 using System.ClientModel;
 using System.Threading.Tasks;
+using Azure.AI.OpenAI;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using OpenAI.Chat;
 using OpenAI.Embeddings;
 
 namespace Azure.AI.Projects.Tests;
@@ -29,7 +31,7 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
         var connectionName = "";
         try
         {
-            connectionName = TestEnvironment.CONNECTIONNAME;
+            connectionName = TestEnvironment.AOAICONNECTIONNAME;
         }
         catch
         {
@@ -39,7 +41,8 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
 #endif
         Console.WriteLine("Create the Azure OpenAI embedding client");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        EmbeddingClient embeddingsClient = projectClient.GetAzureOpenAIEmbeddingClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
+        AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
+        EmbeddingClient embeddingsClient = azureOpenAIClient.GetEmbeddingClient(deploymentName: modelDeploymentName);
 
         Console.WriteLine("Generate an embedding");
         OpenAIEmbedding result = embeddingsClient.GenerateEmbedding("List all the rainbow colors");
@@ -62,7 +65,7 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
         var connectionName = "";
         try
         {
-            connectionName = TestEnvironment.CONNECTIONNAME;
+            connectionName = TestEnvironment.AOAICONNECTIONNAME;
         }
         catch
         {
@@ -72,7 +75,8 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
 #endif
         Console.WriteLine("Create the Azure OpenAI embedding client");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        EmbeddingClient embeddingsClient = projectClient.GetAzureOpenAIEmbeddingClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
+        AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
+        EmbeddingClient embeddingsClient = azureOpenAIClient.GetEmbeddingClient(deploymentName: modelDeploymentName);
 
         Console.WriteLine("Generate an embedding");
         OpenAIEmbedding result = await embeddingsClient.GenerateEmbeddingAsync("List all the rainbow colors");

@@ -13,37 +13,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.HealthcareApis.DicomImageUpdated event. </summary>
     public partial class HealthcareDicomImageUpdatedEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HealthcareDicomImageUpdatedEventData"/>. </summary>
         /// <param name="partitionName"> Data partition name. </param>
@@ -51,15 +22,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="imageSeriesInstanceUid"> Unique identifier for the Series. </param>
         /// <param name="imageSopInstanceUid"> Unique identifier for the DICOM Image. </param>
         /// <param name="serviceHostName"> Domain name of the DICOM account for this image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="partitionName"/>, <paramref name="imageStudyInstanceUid"/>, <paramref name="imageSeriesInstanceUid"/>, <paramref name="imageSopInstanceUid"/> or <paramref name="serviceHostName"/> is null. </exception>
         internal HealthcareDicomImageUpdatedEventData(string partitionName, string imageStudyInstanceUid, string imageSeriesInstanceUid, string imageSopInstanceUid, string serviceHostName)
         {
-            Argument.AssertNotNull(partitionName, nameof(partitionName));
-            Argument.AssertNotNull(imageStudyInstanceUid, nameof(imageStudyInstanceUid));
-            Argument.AssertNotNull(imageSeriesInstanceUid, nameof(imageSeriesInstanceUid));
-            Argument.AssertNotNull(imageSopInstanceUid, nameof(imageSopInstanceUid));
-            Argument.AssertNotNull(serviceHostName, nameof(serviceHostName));
-
             PartitionName = partitionName;
             ImageStudyInstanceUid = imageStudyInstanceUid;
             ImageSeriesInstanceUid = imageSeriesInstanceUid;
@@ -74,8 +38,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="imageSopInstanceUid"> Unique identifier for the DICOM Image. </param>
         /// <param name="serviceHostName"> Domain name of the DICOM account for this image. </param>
         /// <param name="sequenceNumber"> Sequence number of the DICOM Service within Azure Health Data Services. It is unique for every image creation, updation and deletion within the service. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthcareDicomImageUpdatedEventData(string partitionName, string imageStudyInstanceUid, string imageSeriesInstanceUid, string imageSopInstanceUid, string serviceHostName, long? sequenceNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareDicomImageUpdatedEventData(string partitionName, string imageStudyInstanceUid, string imageSeriesInstanceUid, string imageSopInstanceUid, string serviceHostName, long? sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PartitionName = partitionName;
             ImageStudyInstanceUid = imageStudyInstanceUid;
@@ -83,24 +47,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ImageSopInstanceUid = imageSopInstanceUid;
             ServiceHostName = serviceHostName;
             SequenceNumber = sequenceNumber;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HealthcareDicomImageUpdatedEventData"/> for deserialization. </summary>
-        internal HealthcareDicomImageUpdatedEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Data partition name. </summary>
         public string PartitionName { get; }
+
         /// <summary> Unique identifier for the Study. </summary>
         public string ImageStudyInstanceUid { get; }
+
         /// <summary> Unique identifier for the Series. </summary>
         public string ImageSeriesInstanceUid { get; }
+
         /// <summary> Unique identifier for the DICOM Image. </summary>
         public string ImageSopInstanceUid { get; }
+
         /// <summary> Domain name of the DICOM account for this image. </summary>
         public string ServiceHostName { get; }
+
         /// <summary> Sequence number of the DICOM Service within Azure Health Data Services. It is unique for every image creation, updation and deletion within the service. </summary>
         public long? SequenceNumber { get; }
     }
