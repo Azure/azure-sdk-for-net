@@ -19,7 +19,7 @@ namespace Azure.Storage.DataMovement
         private TransferStatus _status;
 
         public delegate bool RemoveTransferDelegate(string transferId);
-        private RemoveTransferDelegate _removeTransfer;
+        private readonly RemoveTransferDelegate _removeTransfer;
 
         public TaskCompletionSource<TransferStatus> CompletionSource;
 
@@ -109,7 +109,7 @@ namespace Azure.Storage.DataMovement
                     CompletionSource.TrySetResult(_status);
 
                     // Tell the transfer manager to clean up the completed/paused job.
-                    _removeTransfer(_id);
+                    _removeTransfer?.Invoke(_id);
                 }
                 return true;
             }

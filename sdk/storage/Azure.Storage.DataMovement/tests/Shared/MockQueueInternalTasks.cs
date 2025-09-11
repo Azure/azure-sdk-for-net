@@ -14,8 +14,8 @@ namespace Azure.Storage.DataMovement.Tests
         {
             var mock = new Mock<JobPartInternal.QueueChunkDelegate>(MockBehavior.Strict);
             mock.Setup(del => del(It.IsAny<Func<Task>>()))
-                .Callback<Func<Task>, CancellationToken>(
-                async (funcTask, _) =>
+                .Callback<Func<Task>>(
+                async (funcTask) =>
                 {
                     await funcTask().ConfigureAwait(false);
                 })
