@@ -14,26 +14,32 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class IListOperationSource : IOperationSource<IList<ExpressRouteFailoverSingleTestDetails>>
+    internal class IListOperationSource : IOperationSource<IList<ExpressRouteFailoverTestDetails>>
     {
-        IList<ExpressRouteFailoverSingleTestDetails> IOperationSource<IList<ExpressRouteFailoverSingleTestDetails>>.CreateResult(Response response, CancellationToken cancellationToken)
+        IList<ExpressRouteFailoverTestDetails> IOperationSource<IList<ExpressRouteFailoverTestDetails>>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<ExpressRouteFailoverSingleTestDetails> array = new List<ExpressRouteFailoverSingleTestDetails>();
+            List<ExpressRouteFailoverTestDetails> array = new List<ExpressRouteFailoverTestDetails>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(ExpressRouteFailoverSingleTestDetails.DeserializeExpressRouteFailoverSingleTestDetails(item));
+                array.Add(ExpressRouteFailoverTestDetails.DeserializeExpressRouteFailoverTestDetails(item));
             }
             return array;
         }
 
-        async ValueTask<IList<ExpressRouteFailoverSingleTestDetails>> IOperationSource<IList<ExpressRouteFailoverSingleTestDetails>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IList<ExpressRouteFailoverTestDetails>> IOperationSource<IList<ExpressRouteFailoverTestDetails>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<ExpressRouteFailoverSingleTestDetails> array = new List<ExpressRouteFailoverSingleTestDetails>();
+            List<ExpressRouteFailoverTestDetails> array = new List<ExpressRouteFailoverTestDetails>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(ExpressRouteFailoverSingleTestDetails.DeserializeExpressRouteFailoverSingleTestDetails(item));
+                array.Add(ExpressRouteFailoverTestDetails.DeserializeExpressRouteFailoverTestDetails(item));
+            }
+            return array;
+        }
+    }
+}
+tails(item));
             }
             return array;
         }
