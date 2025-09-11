@@ -38,7 +38,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected readonly bool _isLongRunningUpdateOperation;
         protected static readonly ParameterProvider _keyParameter = new ParameterProvider("key", $"The key for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
         protected static readonly ParameterProvider _valueParameter = new ParameterProvider("value", $"The value for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
-        protected readonly List<FieldProvider> _pathParameterFields;
 
         // TODO: make a struct to group the input parameters
         protected BaseTagMethodProvider(
@@ -46,7 +45,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             RequestPathPattern contextualPath,
             ResourceOperationMethodProvider updateMethodProvider,
             InputServiceMethod getMethod,
-            List<FieldProvider> pathParameterFields,
             RestClientInfo updateRestClientInfo,
             RestClientInfo getRestClientInfo,
             bool isPatch,
@@ -66,7 +64,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             _isLongRunningUpdateOperation = updateMethodProvider.IsLongRunningOperation;
             _updateClientDiagnosticsField = updateRestClientInfo.DiagnosticsField;
             _getRestClientField = getRestClientInfo.RestClientField;
-            _pathParameterFields = pathParameterFields;
 
             _signature = CreateMethodSignature(methodName, methodDescription);
             _bodyStatements = BuildBodyStatements();

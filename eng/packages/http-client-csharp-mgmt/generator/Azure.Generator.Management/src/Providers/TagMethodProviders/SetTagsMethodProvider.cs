@@ -20,12 +20,11 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             RequestPathPattern contextualPath,
             ResourceOperationMethodProvider updateMethodProvider,
             InputServiceMethod getMethod,
-            List<FieldProvider> pathParameterFields,
             RestClientInfo updateRestClientInfo,
             RestClientInfo getRestClientInfo,
             bool isPatch,
             bool isAsync)
-            : base(resource, contextualPath, updateMethodProvider, getMethod, pathParameterFields, updateRestClientInfo, getRestClientInfo, isPatch, isAsync,
+            : base(resource, contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, isAsync,
                    isAsync ? "SetTagsAsync" : "SetTags",
                    "Replace the tags on the resource with the given set.")
         {
