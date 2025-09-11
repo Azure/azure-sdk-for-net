@@ -118,6 +118,16 @@ namespace Azure.Generator.Management.Providers
         public IReadOnlyList<FieldProvider> PathParameterFields => _pathParameterFields;
         public RequestPathPattern ContextualPath => _contextualPath;
 
+        public List<ParameterProvider> GetPathParameterProviders()
+        {
+            return PathParameterFields
+                .Select(f => new ParameterProvider(
+                    f.Name,
+                    f.Description ?? $"The {f.Name.Substring(1)} for the parent resource.",
+                    f.Type))
+                .ToList();
+        }
+
         internal string ResourceName => _resource.ResourceName;
         internal ResourceScope ResourceScope => _resource.ResourceScope;
 
