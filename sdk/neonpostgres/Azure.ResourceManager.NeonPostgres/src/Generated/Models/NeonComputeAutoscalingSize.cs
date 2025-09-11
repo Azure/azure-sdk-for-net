@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
     /// <summary> Represents the compute units size range for autoscaling. </summary>
-    public partial class AutoscalingSize
+    public partial class NeonComputeAutoscalingSize
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,28 +45,28 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AutoscalingSize"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeonComputeAutoscalingSize"/>. </summary>
         /// <param name="autoscalingLimitMinCu"> The minimum compute units for autoscaling. </param>
         /// <param name="autoscalingLimitMaxCu"> The maximum compute units for autoscaling. </param>
-        public AutoscalingSize(float autoscalingLimitMinCu, float autoscalingLimitMaxCu)
+        public NeonComputeAutoscalingSize(float autoscalingLimitMinCu, float autoscalingLimitMaxCu)
         {
             AutoscalingLimitMinCu = autoscalingLimitMinCu;
             AutoscalingLimitMaxCu = autoscalingLimitMaxCu;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutoscalingSize"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeonComputeAutoscalingSize"/>. </summary>
         /// <param name="autoscalingLimitMinCu"> The minimum compute units for autoscaling. </param>
         /// <param name="autoscalingLimitMaxCu"> The maximum compute units for autoscaling. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoscalingSize(float autoscalingLimitMinCu, float autoscalingLimitMaxCu, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeonComputeAutoscalingSize(float autoscalingLimitMinCu, float autoscalingLimitMaxCu, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AutoscalingLimitMinCu = autoscalingLimitMinCu;
             AutoscalingLimitMaxCu = autoscalingLimitMaxCu;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutoscalingSize"/> for deserialization. </summary>
-        internal AutoscalingSize()
+        /// <summary> Initializes a new instance of <see cref="NeonComputeAutoscalingSize"/> for deserialization. </summary>
+        internal NeonComputeAutoscalingSize()
         {
         }
 

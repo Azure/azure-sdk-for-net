@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.NeonPostgres
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(Attributes))]
-    [ModelReaderWriterBuildable(typeof(AutoscalingSize))]
     [ModelReaderWriterBuildable(typeof(BranchListResult))]
     [ModelReaderWriterBuildable(typeof(ComputeListResult))]
     [ModelReaderWriterBuildable(typeof(ConnectionUriProperties))]
@@ -27,6 +26,7 @@ namespace Azure.ResourceManager.NeonPostgres
     [ModelReaderWriterBuildable(typeof(NeonBranchResource))]
     [ModelReaderWriterBuildable(typeof(NeonCompanyDetails))]
     [ModelReaderWriterBuildable(typeof(NeonCompute))]
+    [ModelReaderWriterBuildable(typeof(NeonComputeAutoscalingSize))]
     [ModelReaderWriterBuildable(typeof(NeonComputeProperties))]
     [ModelReaderWriterBuildable(typeof(NeonDatabase))]
     [ModelReaderWriterBuildable(typeof(NeonDatabaseListResult))]
@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.NeonPostgres
     [ModelReaderWriterBuildable(typeof(NeonMarketplaceDetails))]
     [ModelReaderWriterBuildable(typeof(NeonOfferDetails))]
     [ModelReaderWriterBuildable(typeof(NeonOrganizationData))]
+    [ModelReaderWriterBuildable(typeof(NeonOrganizationPatch))]
     [ModelReaderWriterBuildable(typeof(NeonOrganizationProperties))]
     [ModelReaderWriterBuildable(typeof(NeonOrganizationResource))]
     [ModelReaderWriterBuildable(typeof(NeonProjectData))]
@@ -47,6 +48,7 @@ namespace Azure.ResourceManager.NeonPostgres
     [ModelReaderWriterBuildable(typeof(NeonSingleSignOnProperties))]
     [ModelReaderWriterBuildable(typeof(NeonUserDetails))]
     [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(OrganizationResourceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(PartnerOrganizationProperties))]
     [ModelReaderWriterBuildable(typeof(PgVersion))]
     [ModelReaderWriterBuildable(typeof(PgVersionsResult))]

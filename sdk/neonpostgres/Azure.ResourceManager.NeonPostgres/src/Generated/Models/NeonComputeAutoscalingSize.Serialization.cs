@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
-    public partial class AutoscalingSize : IUtf8JsonSerializable, IJsonModel<AutoscalingSize>
+    public partial class NeonComputeAutoscalingSize : IUtf8JsonSerializable, IJsonModel<NeonComputeAutoscalingSize>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoscalingSize>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NeonComputeAutoscalingSize>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AutoscalingSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NeonComputeAutoscalingSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoscalingSize>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NeonComputeAutoscalingSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscalingSize)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NeonComputeAutoscalingSize)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("autoscalingLimitMinCu"u8);
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             }
         }
 
-        AutoscalingSize IJsonModel<AutoscalingSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NeonComputeAutoscalingSize IJsonModel<NeonComputeAutoscalingSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoscalingSize>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NeonComputeAutoscalingSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscalingSize)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NeonComputeAutoscalingSize)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAutoscalingSize(document.RootElement, options);
+            return DeserializeNeonComputeAutoscalingSize(document.RootElement, options);
         }
 
-        internal static AutoscalingSize DeserializeAutoscalingSize(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NeonComputeAutoscalingSize DeserializeNeonComputeAutoscalingSize(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,38 +97,38 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AutoscalingSize(autoscalingLimitMinCu, autoscalingLimitMaxCu, serializedAdditionalRawData);
+            return new NeonComputeAutoscalingSize(autoscalingLimitMinCu, autoscalingLimitMaxCu, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AutoscalingSize>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NeonComputeAutoscalingSize>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoscalingSize>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NeonComputeAutoscalingSize>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNeonPostgresContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AutoscalingSize)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NeonComputeAutoscalingSize)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AutoscalingSize IPersistableModel<AutoscalingSize>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NeonComputeAutoscalingSize IPersistableModel<NeonComputeAutoscalingSize>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoscalingSize>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NeonComputeAutoscalingSize>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAutoscalingSize(document.RootElement, options);
+                        return DeserializeNeonComputeAutoscalingSize(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoscalingSize)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NeonComputeAutoscalingSize)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AutoscalingSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NeonComputeAutoscalingSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

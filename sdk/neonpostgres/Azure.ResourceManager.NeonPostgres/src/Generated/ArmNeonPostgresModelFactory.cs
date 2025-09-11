@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="lastActive"> The timestamp when the compute endpoint was last active. </param>
         /// <param name="size"> The compute units size range for autoscaling (MinCU-MaxCU). </param>
         /// <returns> A new <see cref="Models.NeonEndpointProperties"/> instance for mocking. </returns>
-        public static NeonEndpointProperties NeonEndpointProperties(string entityId = null, string entityName = null, string createdAt = null, NeonResourceProvisioningState? provisioningState = null, IEnumerable<Attributes> attributes = null, string projectId = null, string branchId = null, EndpointType? endpointType = null, string endpointId = null, string computeName = null, EndpointStatus? status = null, string lastActive = null, AutoscalingSize size = null)
+        public static NeonEndpointProperties NeonEndpointProperties(string entityId = null, string entityName = null, string createdAt = null, NeonResourceProvisioningState? provisioningState = null, IEnumerable<Attributes> attributes = null, string projectId = null, string branchId = null, EndpointType? endpointType = null, string endpointId = null, string computeName = null, EndpointStatus? status = null, string lastActive = null, NeonComputeAutoscalingSize size = null)
         {
             attributes ??= new List<Attributes>();
 
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static NeonEndpointProperties NeonEndpointProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IEnumerable<Attributes> attributes, string projectId, string branchId, EndpointType? endpointType)
     {
-        return NeonEndpointProperties(entityId: entityId, entityName: entityName, createdAt: createdAt, provisioningState: provisioningState, attributes: attributes, projectId: projectId, branchId: branchId, endpointType: endpointType, endpointId: (string)default, computeName: (string)default, status: (EndpointStatus?)default, lastActive: (string)default, size: (AutoscalingSize)default);
+        return NeonEndpointProperties(entityId: entityId, entityName: entityName, createdAt: createdAt, provisioningState: provisioningState, attributes: attributes, projectId: projectId, branchId: branchId, endpointType: endpointType, endpointId: (string)default, computeName: (string)default, status: (EndpointStatus?)default, lastActive: (string)default, size: (NeonComputeAutoscalingSize)default);
     }
 }
 }

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="lastActive"> The timestamp when the compute endpoint was last active. </param>
         /// <param name="size"> The compute units size range for autoscaling (MinCU-MaxCU). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonEndpointProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string projectId, string branchId, EndpointType? endpointType, string endpointId, string computeName, EndpointStatus? status, string lastActive, AutoscalingSize size, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeonEndpointProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string projectId, string branchId, EndpointType? endpointType, string endpointId, string computeName, EndpointStatus? status, string lastActive, NeonComputeAutoscalingSize size, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EntityId = entityId;
             EntityName = entityName;
@@ -109,6 +109,6 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <summary> The timestamp when the compute endpoint was last active. </summary>
         public string LastActive { get; }
         /// <summary> The compute units size range for autoscaling (MinCU-MaxCU). </summary>
-        public AutoscalingSize Size { get; set; }
+        public NeonComputeAutoscalingSize Size { get; set; }
     }
 }

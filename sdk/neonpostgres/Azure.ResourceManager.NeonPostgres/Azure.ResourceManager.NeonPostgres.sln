@@ -7,8 +7,6 @@ Project("{DC66E3A5-C735-4ACF-AA46-DF24977B6507}") = "Azure.ResourceManager.NeonP
 EndProject
 Project("{DC66E3A5-C735-4ACF-AA46-DF24977B6507}") = "Azure.ResourceManager.NeonPostgres.Tests", "tests\Azure.ResourceManager.NeonPostgres.Tests.csproj", "{2D0669AC-F251-4B23-B4DD-4C4F90925FDA}"
 EndProject
-Project("{DC66E3A5-C735-4ACF-AA46-DF24977B6507}") = "Azure.ResourceManager.NeonPostgres.Samples", "samples\Azure.ResourceManager.NeonPostgres.Samples.csproj", "{407D624B-0C78-4E03-A55D-6FA3E9F96676}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

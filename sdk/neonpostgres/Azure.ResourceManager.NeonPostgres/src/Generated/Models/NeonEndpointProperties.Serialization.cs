@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             string computeName = default;
             EndpointStatus? status = default;
             string lastActive = default;
-            AutoscalingSize size = default;
+            NeonComputeAutoscalingSize size = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                     {
                         continue;
                     }
-                    size = AutoscalingSize.DeserializeAutoscalingSize(property.Value, options);
+                    size = NeonComputeAutoscalingSize.DeserializeNeonComputeAutoscalingSize(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
