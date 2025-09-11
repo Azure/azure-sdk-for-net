@@ -281,7 +281,6 @@ namespace Azure.Generator.Management.Visitors
             {
                 foreach (var property in propertiesToFlatten)
                 {
-                    Console.WriteLine($"Flatten model {model.Name} with property {property.Name}");
                     var flattenedProperties = new List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)>();
                     if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(property.Type, out var typeProvider)
                         && typeProvider is ModelProvider modelProvider)

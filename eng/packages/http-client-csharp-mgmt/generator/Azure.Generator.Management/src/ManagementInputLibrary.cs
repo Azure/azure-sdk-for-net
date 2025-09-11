@@ -3,7 +3,6 @@
 
 using Azure.Generator.Management.Models;
 using Microsoft.TypeSpec.Generator.Input;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -50,7 +49,6 @@ namespace Azure.Generator.Management
                     }
                 }
             }
-            Console.WriteLine($"Found {result.Count} models with flattened properties.");
             return result;
         }
 
