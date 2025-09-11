@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.BotService
 {
     public partial class BotConnectionSettingResource : IJsonModel<BotConnectionSettingData>
     {
+        private static BotConnectionSettingData s_dataDeserializationInstance;
+        private static BotConnectionSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BotConnectionSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BotConnectionSettingData>)Data).Write(writer, options);
 
-        BotConnectionSettingData IJsonModel<BotConnectionSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BotConnectionSettingData>)Data).Create(ref reader, options);
+        BotConnectionSettingData IJsonModel<BotConnectionSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BotConnectionSettingData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<BotConnectionSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BotConnectionSettingData>(Data, options, AzureResourceManagerBotServiceContext.Default);
 
         BotConnectionSettingData IPersistableModel<BotConnectionSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BotConnectionSettingData>(data, options, AzureResourceManagerBotServiceContext.Default);
 
-        string IPersistableModel<BotConnectionSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BotConnectionSettingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BotConnectionSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BotConnectionSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

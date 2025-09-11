@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ExpressRouteCrossConnectionResource : IJsonModel<ExpressRouteCrossConnectionData>
     {
+        private static ExpressRouteCrossConnectionData s_dataDeserializationInstance;
+        private static ExpressRouteCrossConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ExpressRouteCrossConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteCrossConnectionData>)Data).Write(writer, options);
 
-        ExpressRouteCrossConnectionData IJsonModel<ExpressRouteCrossConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteCrossConnectionData>)Data).Create(ref reader, options);
+        ExpressRouteCrossConnectionData IJsonModel<ExpressRouteCrossConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteCrossConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ExpressRouteCrossConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExpressRouteCrossConnectionData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         ExpressRouteCrossConnectionData IPersistableModel<ExpressRouteCrossConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteCrossConnectionData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<ExpressRouteCrossConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRouteCrossConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ExpressRouteCrossConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRouteCrossConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

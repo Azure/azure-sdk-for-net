@@ -3,7 +3,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -11,9 +10,11 @@ using Azure.AI.OpenAI;
 
 namespace Azure.AI.OpenAI.Chat
 {
-    /// <summary></summary>
+    /// <summary> The MongoDBChatDataSource. </summary>
     public partial class MongoDBChatDataSource : IJsonModel<MongoDBChatDataSource>
     {
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MongoDBChatDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -38,6 +39,8 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MongoDBChatDataSource IJsonModel<MongoDBChatDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MongoDBChatDataSource)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -53,20 +56,22 @@ namespace Azure.AI.OpenAI.Chat
             return DeserializeMongoDBChatDataSource(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static MongoDBChatDataSource DeserializeMongoDBChatDataSource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @type = "mongo_db";
+            InternalAzureChatDataSourceKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             InternalMongoDBChatDataSourceParameters internalParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    kind = new InternalAzureChatDataSourceKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))
@@ -79,9 +84,10 @@ namespace Azure.AI.OpenAI.Chat
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MongoDBChatDataSource(@type, additionalBinaryDataProperties, internalParameters);
+            return new MongoDBChatDataSource(kind, additionalBinaryDataProperties, internalParameters);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MongoDBChatDataSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -91,12 +97,14 @@ namespace Azure.AI.OpenAI.Chat
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MongoDBChatDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MongoDBChatDataSource IPersistableModel<MongoDBChatDataSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (MongoDBChatDataSource)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -116,24 +124,7 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MongoDBChatDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="mongoDBChatDataSource"> The <see cref="MongoDBChatDataSource"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(MongoDBChatDataSource mongoDBChatDataSource)
-        {
-            if (mongoDBChatDataSource == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(mongoDBChatDataSource, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="MongoDBChatDataSource"/> from. </param>
-        public static explicit operator MongoDBChatDataSource(ClientResult result)
-        {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeMongoDBChatDataSource(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

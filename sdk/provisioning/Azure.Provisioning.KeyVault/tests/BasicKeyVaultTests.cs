@@ -2,24 +2,20 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.KeyVault.Tests;
 
-public class BasicKeyVaultTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicKeyVaultTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.keyvault/key-vault-create/main.bicep")]
-    public async Task CreateKeyVaultAndSecret()
+    internal static Trycep CreateKeyVaultAndSecretTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
+                #region Snippet:KeyVaultBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter skuName =
@@ -53,7 +49,7 @@ public class BasicKeyVaultTests(bool async)
                 infra.Add(tenantId);
 
                 KeyVaultService kv =
-                    new(nameof(kv))
+                    new(nameof(kv), KeyVaultService.ResourceVersions.V2023_07_01)
                     {
                         Properties =
                             new KeyVaultProperties
@@ -87,7 +83,7 @@ public class BasicKeyVaultTests(bool async)
                 infra.Add(kv);
 
                 KeyVaultSecret secret =
-                    new(nameof(secret))
+                    new(nameof(secret), KeyVaultSecret.ResourceVersions.V2023_07_01)
                     {
                         Parent = kv,
                         Name = "myDarkNecessities",
@@ -98,10 +94,18 @@ public class BasicKeyVaultTests(bool async)
                 infra.Add(new ProvisioningOutput("name", typeof(string)) { Value = kv.Name });
                 infra.Add(new ProvisioningOutput("resourceId", typeof(string)) { Value = kv.Id });
                 infra.Add(new ProvisioningOutput("vaultUri", typeof(string)) { Value = kv.Properties.VaultUri });
+                #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.keyvault/key-vault-create/main.bicep")]
+    public async Task CreateKeyVaultAndSecret()
+    {
+        await using Trycep test = CreateKeyVaultAndSecretTest();
+        test.Compare(
             """
             @description('Vault type')
             param skuName string = 'standard'
@@ -163,8 +167,6 @@ public class BasicKeyVaultTests(bool async)
             output resourceId string = kv.id
 
             output vaultUri string = kv.properties.vaultUri
-            """)
-        .Lint()
-        .ValidateAndDeployAsync();
+            """);
     }
 }

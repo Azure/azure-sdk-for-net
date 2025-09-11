@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class TemplateSpecVersionResource : IJsonModel<TemplateSpecVersionData>
     {
+        private static TemplateSpecVersionData s_dataDeserializationInstance;
+        private static TemplateSpecVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<TemplateSpecVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TemplateSpecVersionData>)Data).Write(writer, options);
 
-        TemplateSpecVersionData IJsonModel<TemplateSpecVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TemplateSpecVersionData>)Data).Create(ref reader, options);
+        TemplateSpecVersionData IJsonModel<TemplateSpecVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TemplateSpecVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<TemplateSpecVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TemplateSpecVersionData>(Data, options, AzureResourceManagerResourcesContext.Default);
 
         TemplateSpecVersionData IPersistableModel<TemplateSpecVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TemplateSpecVersionData>(data, options, AzureResourceManagerResourcesContext.Default);
 
-        string IPersistableModel<TemplateSpecVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TemplateSpecVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<TemplateSpecVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TemplateSpecVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

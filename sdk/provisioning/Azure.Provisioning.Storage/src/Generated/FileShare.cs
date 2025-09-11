@@ -58,6 +58,16 @@ public partial class FileShare : ProvisionableResource
     private BicepValue<FileShareEnabledProtocol>? _enabledProtocol;
 
     /// <summary>
+    /// File Share Paid Bursting properties.
+    /// </summary>
+    public FileSharePropertiesFileSharePaidBursting FileSharePaidBursting 
+    {
+        get { Initialize(); return _fileSharePaidBursting!; }
+        set { Initialize(); AssignOrReplace(ref _fileSharePaidBursting, value); }
+    }
+    private FileSharePropertiesFileSharePaidBursting? _fileSharePaidBursting;
+
+    /// <summary>
     /// A name-value pair to associate with the share as metadata.
     /// </summary>
     public BicepDictionary<string> Metadata 
@@ -66,6 +76,32 @@ public partial class FileShare : ProvisionableResource
         set { Initialize(); _metadata!.Assign(value); }
     }
     private BicepDictionary<string>? _metadata;
+
+    /// <summary>
+    /// The provisioned bandwidth of the share, in mebibytes per second. This
+    /// property is only for file shares created under Files Provisioned v2
+    /// account type. Please refer to the GetFileServiceUsage API response for
+    /// the minimum and maximum allowed value for provisioned bandwidth.
+    /// </summary>
+    public BicepValue<int> ProvisionedBandwidthMibps 
+    {
+        get { Initialize(); return _provisionedBandwidthMibps!; }
+        set { Initialize(); _provisionedBandwidthMibps!.Assign(value); }
+    }
+    private BicepValue<int>? _provisionedBandwidthMibps;
+
+    /// <summary>
+    /// The provisioned IOPS of the share. This property is only for file
+    /// shares created under Files Provisioned v2 account type. Please refer
+    /// to the GetFileServiceUsage API response for the minimum and maximum
+    /// allowed value for provisioned IOPS.
+    /// </summary>
+    public BicepValue<int> ProvisionedIops 
+    {
+        get { Initialize(); return _provisionedIops!; }
+        set { Initialize(); _provisionedIops!.Assign(value); }
+    }
+    private BicepValue<int>? _provisionedIops;
 
     /// <summary>
     /// The property is for NFS share only. The default is NoRootSquash.
@@ -78,9 +114,12 @@ public partial class FileShare : ProvisionableResource
     private BicepValue<RootSquashType>? _rootSquash;
 
     /// <summary>
-    /// The maximum size of the share, in gigabytes. Must be greater than 0,
-    /// and less than or equal to 5TB (5120). For Large File Shares, the
-    /// maximum size is 102400.
+    /// The provisioned size of the share, in gibibytes. Must be greater than
+    /// 0, and less than or equal to 5TB (5120). For Large File Shares, the
+    /// maximum size is 102400. For file shares created under Files
+    /// Provisioned v2 account type, please refer to the GetFileServiceUsage
+    /// API response for the minimum and maximum allowed provisioned storage
+    /// size.
     /// </summary>
     public BicepValue<int> ShareQuota 
     {
@@ -145,6 +184,16 @@ public partial class FileShare : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
+    /// The calculated burst IOPS of the share. This property is only for file
+    /// shares created under Files Provisioned v2 account type.
+    /// </summary>
+    public BicepValue<int> IncludedBurstIops 
+    {
+        get { Initialize(); return _includedBurstIops!; }
+    }
+    private BicepValue<int>? _includedBurstIops;
+
+    /// <summary>
     /// Indicates whether the share was deleted.
     /// </summary>
     public BicepValue<bool> IsDeleted 
@@ -189,6 +238,49 @@ public partial class FileShare : ProvisionableResource
         get { Initialize(); return _leaseStatus!; }
     }
     private BicepValue<StorageLeaseStatus>? _leaseStatus;
+
+    /// <summary>
+    /// The calculated maximum burst credits for the share. This property is
+    /// only for file shares created under Files Provisioned v2 account type.
+    /// </summary>
+    public BicepValue<long> MaxBurstCreditsForIops 
+    {
+        get { Initialize(); return _maxBurstCreditsForIops!; }
+    }
+    private BicepValue<long>? _maxBurstCreditsForIops;
+
+    /// <summary>
+    /// Returns the next allowed provisioned bandwidth downgrade time for the
+    /// share. This property is only for file shares created under Files
+    /// Provisioned v2 account type.
+    /// </summary>
+    public BicepValue<DateTimeOffset> NextAllowedProvisionedBandwidthDowngradeOn 
+    {
+        get { Initialize(); return _nextAllowedProvisionedBandwidthDowngradeOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _nextAllowedProvisionedBandwidthDowngradeOn;
+
+    /// <summary>
+    /// Returns the next allowed provisioned IOPS downgrade time for the share.
+    /// This property is only for file shares created under Files Provisioned
+    /// v2 account type.
+    /// </summary>
+    public BicepValue<DateTimeOffset> NextAllowedProvisionedIopsDowngradeOn 
+    {
+        get { Initialize(); return _nextAllowedProvisionedIopsDowngradeOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _nextAllowedProvisionedIopsDowngradeOn;
+
+    /// <summary>
+    /// Returns the next allowed provisioned storage size downgrade time for
+    /// the share. This property is only for file shares created under Files
+    /// Provisioned v1 SSD and Files Provisioned v2 account type.
+    /// </summary>
+    public BicepValue<DateTimeOffset> NextAllowedQuotaDowngradeOn 
+    {
+        get { Initialize(); return _nextAllowedQuotaDowngradeOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _nextAllowedQuotaDowngradeOn;
 
     /// <summary>
     /// Remaining retention days for share that was soft deleted.
@@ -267,10 +359,14 @@ public partial class FileShare : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _accessTier = DefineProperty<FileShareAccessTier>("AccessTier", ["properties", "accessTier"]);
         _enabledProtocol = DefineProperty<FileShareEnabledProtocol>("EnabledProtocol", ["properties", "enabledProtocols"]);
+        _fileSharePaidBursting = DefineModelProperty<FileSharePropertiesFileSharePaidBursting>("FileSharePaidBursting", ["properties", "fileSharePaidBursting"]);
         _metadata = DefineDictionaryProperty<string>("Metadata", ["properties", "metadata"]);
+        _provisionedBandwidthMibps = DefineProperty<int>("ProvisionedBandwidthMibps", ["properties", "provisionedBandwidthMibps"]);
+        _provisionedIops = DefineProperty<int>("ProvisionedIops", ["properties", "provisionedIops"]);
         _rootSquash = DefineProperty<RootSquashType>("RootSquash", ["properties", "rootSquash"]);
         _shareQuota = DefineProperty<int>("ShareQuota", ["properties", "shareQuota"]);
         _signedIdentifiers = DefineListProperty<StorageSignedIdentifier>("SignedIdentifiers", ["properties", "signedIdentifiers"]);
@@ -279,11 +375,16 @@ public partial class FileShare : ProvisionableResource
         _deletedOn = DefineProperty<DateTimeOffset>("DeletedOn", ["properties", "deletedTime"], isOutput: true);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _includedBurstIops = DefineProperty<int>("IncludedBurstIops", ["properties", "includedBurstIops"], isOutput: true);
         _isDeleted = DefineProperty<bool>("IsDeleted", ["properties", "deleted"], isOutput: true);
         _lastModifiedOn = DefineProperty<DateTimeOffset>("LastModifiedOn", ["properties", "lastModifiedTime"], isOutput: true);
         _leaseDuration = DefineProperty<StorageLeaseDurationType>("LeaseDuration", ["properties", "leaseDuration"], isOutput: true);
         _leaseState = DefineProperty<StorageLeaseState>("LeaseState", ["properties", "leaseState"], isOutput: true);
         _leaseStatus = DefineProperty<StorageLeaseStatus>("LeaseStatus", ["properties", "leaseStatus"], isOutput: true);
+        _maxBurstCreditsForIops = DefineProperty<long>("MaxBurstCreditsForIops", ["properties", "maxBurstCreditsForIops"], isOutput: true);
+        _nextAllowedProvisionedBandwidthDowngradeOn = DefineProperty<DateTimeOffset>("NextAllowedProvisionedBandwidthDowngradeOn", ["properties", "nextAllowedProvisionedBandwidthDowngradeTime"], isOutput: true);
+        _nextAllowedProvisionedIopsDowngradeOn = DefineProperty<DateTimeOffset>("NextAllowedProvisionedIopsDowngradeOn", ["properties", "nextAllowedProvisionedIopsDowngradeTime"], isOutput: true);
+        _nextAllowedQuotaDowngradeOn = DefineProperty<DateTimeOffset>("NextAllowedQuotaDowngradeOn", ["properties", "nextAllowedQuotaDowngradeTime"], isOutput: true);
         _remainingRetentionDays = DefineProperty<int>("RemainingRetentionDays", ["properties", "remainingRetentionDays"], isOutput: true);
         _shareUsageBytes = DefineProperty<long>("ShareUsageBytes", ["properties", "shareUsageBytes"], isOutput: true);
         _snapshotOn = DefineProperty<DateTimeOffset>("SnapshotOn", ["properties", "snapshotTime"], isOutput: true);

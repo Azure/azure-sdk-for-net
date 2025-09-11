@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabUserResource : IJsonModel<DevTestLabUserData>
     {
+        private static DevTestLabUserData s_dataDeserializationInstance;
+        private static DevTestLabUserData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevTestLabUserData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabUserData>)Data).Write(writer, options);
 
-        DevTestLabUserData IJsonModel<DevTestLabUserData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabUserData>)Data).Create(ref reader, options);
+        DevTestLabUserData IJsonModel<DevTestLabUserData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabUserData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DevTestLabUserData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabUserData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
         DevTestLabUserData IPersistableModel<DevTestLabUserData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabUserData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        string IPersistableModel<DevTestLabUserData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabUserData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevTestLabUserData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabUserData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

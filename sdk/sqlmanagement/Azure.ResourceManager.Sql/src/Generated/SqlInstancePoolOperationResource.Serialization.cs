@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlInstancePoolOperationResource : IJsonModel<SqlInstancePoolOperationData>
     {
+        private static SqlInstancePoolOperationData s_dataDeserializationInstance;
+        private static SqlInstancePoolOperationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlInstancePoolOperationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlInstancePoolOperationData>)Data).Write(writer, options);
 
-        SqlInstancePoolOperationData IJsonModel<SqlInstancePoolOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlInstancePoolOperationData>)Data).Create(ref reader, options);
+        SqlInstancePoolOperationData IJsonModel<SqlInstancePoolOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlInstancePoolOperationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SqlInstancePoolOperationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlInstancePoolOperationData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         SqlInstancePoolOperationData IPersistableModel<SqlInstancePoolOperationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlInstancePoolOperationData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlInstancePoolOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlInstancePoolOperationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlInstancePoolOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlInstancePoolOperationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

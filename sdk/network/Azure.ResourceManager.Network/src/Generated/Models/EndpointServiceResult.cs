@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the endpoint service. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Type of the endpoint service. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; }
         /// <summary> Resource ID. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
     }
 }

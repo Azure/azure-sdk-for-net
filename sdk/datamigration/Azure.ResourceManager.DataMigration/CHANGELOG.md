@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.6 (2025-08-04)
+
+### Features Added
+
+- Upgraded the API version to 2025-03-15-preview.
+- Added support for Azure Blob to SQL MI migrations using Managed Identities.
 
 ## 1.0.0-beta.5 (2025-03-11)
 

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>
+    /// <summary>
+    /// Protocol this rule will use when forwarding traffic to backends.
+    /// Serialized Name: ForwardingProtocol
+    /// </summary>
     public readonly partial struct ForwardingProtocol : IEquatable<ForwardingProtocol>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string HttpsOnlyValue = "HttpsOnly";
         private const string MatchRequestValue = "MatchRequest";
 
-        /// <summary> HttpOnly. </summary>
+        /// <summary>
+        /// HttpOnly
+        /// Serialized Name: ForwardingProtocol.HttpOnly
+        /// </summary>
         public static ForwardingProtocol HttpOnly { get; } = new ForwardingProtocol(HttpOnlyValue);
-        /// <summary> HttpsOnly. </summary>
+        /// <summary>
+        /// HttpsOnly
+        /// Serialized Name: ForwardingProtocol.HttpsOnly
+        /// </summary>
         public static ForwardingProtocol HttpsOnly { get; } = new ForwardingProtocol(HttpsOnlyValue);
-        /// <summary> MatchRequest. </summary>
+        /// <summary>
+        /// MatchRequest
+        /// Serialized Name: ForwardingProtocol.MatchRequest
+        /// </summary>
         public static ForwardingProtocol MatchRequest { get; } = new ForwardingProtocol(MatchRequestValue);
         /// <summary> Determines if two <see cref="ForwardingProtocol"/> values are the same. </summary>
         public static bool operator ==(ForwardingProtocol left, ForwardingProtocol right) => left.Equals(right);

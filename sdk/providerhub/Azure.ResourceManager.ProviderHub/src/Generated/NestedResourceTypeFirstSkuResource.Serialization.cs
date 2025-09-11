@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ProviderHub
 {
     public partial class NestedResourceTypeFirstSkuResource : IJsonModel<ResourceTypeSkuData>
     {
+        private static ResourceTypeSkuData s_dataDeserializationInstance;
+        private static ResourceTypeSkuData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ResourceTypeSkuData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceTypeSkuData>)Data).Write(writer, options);
 
-        ResourceTypeSkuData IJsonModel<ResourceTypeSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceTypeSkuData>)Data).Create(ref reader, options);
+        ResourceTypeSkuData IJsonModel<ResourceTypeSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceTypeSkuData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ResourceTypeSkuData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceTypeSkuData>(Data, options, AzureResourceManagerProviderHubContext.Default);
 
         ResourceTypeSkuData IPersistableModel<ResourceTypeSkuData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceTypeSkuData>(data, options, AzureResourceManagerProviderHubContext.Default);
 
-        string IPersistableModel<ResourceTypeSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceTypeSkuData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ResourceTypeSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceTypeSkuData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

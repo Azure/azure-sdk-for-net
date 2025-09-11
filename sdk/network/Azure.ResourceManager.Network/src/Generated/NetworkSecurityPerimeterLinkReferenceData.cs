@@ -75,9 +75,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. ['*'] value implies outbound is allowed from all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </param>
         /// <param name="description"> A message sent by the remote NSP link admin for connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. </param>
         /// <param name="status"> The NSP linkReference state. It cannot be changed if link is created in auto-approval mode. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterLinkReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterLinkProvisioningState? provisioningState, string remotePerimeterResourceId, Guid? remotePerimeterGuid, string remotePerimeterLocation, IList<string> localInboundProfiles, IReadOnlyList<string> localOutboundProfiles, IReadOnlyList<string> remoteInboundProfiles, IReadOnlyList<string> remoteOutboundProfiles, string description, NetworkSecurityPerimeterLinkStatus? status, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkSecurityPerimeterLinkReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterLinkProvisioningState? provisioningState, ResourceIdentifier remotePerimeterResourceId, Guid? remotePerimeterGuid, string remotePerimeterLocation, IList<string> localInboundProfiles, IReadOnlyList<string> localOutboundProfiles, IReadOnlyList<string> remoteInboundProfiles, IReadOnlyList<string> remoteOutboundProfiles, string description, NetworkSecurityPerimeterLinkStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             RemotePerimeterResourceId = remotePerimeterResourceId;
@@ -89,31 +88,38 @@ namespace Azure.ResourceManager.Network
             RemoteOutboundProfiles = remoteOutboundProfiles;
             Description = description;
             Status = status;
-            ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the NSP LinkReference resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkSecurityPerimeterLinkProvisioningState? ProvisioningState { get; }
         /// <summary> Perimeter ARM Id for the remote NSP with which the link is created. </summary>
-        public string RemotePerimeterResourceId { get; }
+        [WirePath("properties.remotePerimeterResourceId")]
+        public ResourceIdentifier RemotePerimeterResourceId { get; }
         /// <summary> Remote NSP Guid with which the link is created. </summary>
+        [WirePath("properties.remotePerimeterGuid")]
         public Guid? RemotePerimeterGuid { get; }
         /// <summary> Remote NSP location with which the link gets created. </summary>
+        [WirePath("properties.remotePerimeterLocation")]
         public string RemotePerimeterLocation { get; }
         /// <summary> Local Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. </summary>
+        [WirePath("properties.localInboundProfiles")]
         public IList<string> LocalInboundProfiles { get; }
         /// <summary> Local Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </summary>
+        [WirePath("properties.localOutboundProfiles")]
         public IReadOnlyList<string> LocalOutboundProfiles { get; }
         /// <summary> Remote Inbound profile names to which Inbound is allowed. ['*'] value implies inbound is allowed to all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </summary>
+        [WirePath("properties.remoteInboundProfiles")]
         public IReadOnlyList<string> RemoteInboundProfiles { get; }
         /// <summary> Remote Outbound profile names from which Outbound is allowed. ['*'] value implies outbound is allowed from all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </summary>
+        [WirePath("properties.remoteOutboundProfiles")]
         public IReadOnlyList<string> RemoteOutboundProfiles { get; }
         /// <summary> A message sent by the remote NSP link admin for connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> The NSP linkReference state. It cannot be changed if link is created in auto-approval mode. </summary>
+        [WirePath("properties.status")]
         public NetworkSecurityPerimeterLinkStatus? Status { get; set; }
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? ETag { get; }
     }
 }

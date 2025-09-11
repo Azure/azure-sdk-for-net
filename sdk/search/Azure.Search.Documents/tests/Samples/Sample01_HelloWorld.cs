@@ -18,7 +18,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2025_05_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_05_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2025_08_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
     public partial class HelloWorld : SearchTestBase
     {
         public HelloWorld(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -167,7 +167,6 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [AsyncOnly]
-        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/48588")]
         public async Task CreateIndexerAsync()
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAsync(this, populate: true, true);

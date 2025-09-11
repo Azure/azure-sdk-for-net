@@ -56,13 +56,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="EventGridDomainPatch"/>. </summary>
         /// <param name="tags"> Tags of the domains resource. </param>
         /// <param name="identity"> Identity information for the resource. </param>
+        /// <param name="sku"> The Sku pricing tier for the domain. </param>
         /// <param name="publicNetworkAccess">
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainUpdateParameterProperties.InboundIpRules" /&gt;
         /// </param>
         /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this domain. </param>
-        /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only AAD token will be used to authenticate if user is allowed to publish to the domain. </param>
+        /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the domain. </param>
         /// <param name="autoCreateTopicWithFirstSubscription">
         /// This Boolean is used to specify the creation mechanism for 'all' the Event Grid Domain Topics associated with this Event Grid Domain resource.
         /// In this context, creation of domain topic can be auto-managed (when true) or self-managed (when false). The default value for this property is true.
@@ -84,10 +85,11 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="dataResidencyBoundary"> The data residency boundary for the domain. </param>
         /// <param name="eventTypeInfo"> The eventTypeInfo for the domain. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridDomainPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, TlsVersion? minimumTlsVersionAllowed, bool? isLocalAuthDisabled, bool? autoCreateTopicWithFirstSubscription, bool? autoDeleteTopicWithLastSubscription, DataResidencyBoundary? dataResidencyBoundary, PartnerTopicEventTypeInfo eventTypeInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EventGridDomainPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ResourceSku sku, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, TlsVersion? minimumTlsVersionAllowed, bool? isLocalAuthDisabled, bool? autoCreateTopicWithFirstSubscription, bool? autoDeleteTopicWithLastSubscription, DataResidencyBoundary? dataResidencyBoundary, PartnerTopicEventTypeInfo eventTypeInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Identity = identity;
+            Sku = sku;
             PublicNetworkAccess = publicNetworkAccess;
             InboundIPRules = inboundIPRules;
             MinimumTlsVersionAllowed = minimumTlsVersionAllowed;
@@ -105,6 +107,21 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Identity information for the resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> The Sku pricing tier for the domain. </summary>
+        internal ResourceSku Sku { get; set; }
+        /// <summary> The Sku name of the resource. The possible values are: Basic or Premium. </summary>
+        [WirePath("sku.name")]
+        public EventGridSku? SkuName
+        {
+            get => Sku is null ? default : Sku.Name;
+            set
+            {
+                if (Sku is null)
+                    Sku = new ResourceSku();
+                Sku.Name = value;
+            }
+        }
+
         /// <summary>
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainUpdateParameterProperties.InboundIpRules" /&gt;
@@ -117,7 +134,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Minimum TLS version of the publisher allowed to publish to this domain. </summary>
         [WirePath("properties.minimumTlsVersionAllowed")]
         public TlsVersion? MinimumTlsVersionAllowed { get; set; }
-        /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only AAD token will be used to authenticate if user is allowed to publish to the domain. </summary>
+        /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the domain. </summary>
         [WirePath("properties.disableLocalAuth")]
         public bool? IsLocalAuthDisabled { get; set; }
         /// <summary>

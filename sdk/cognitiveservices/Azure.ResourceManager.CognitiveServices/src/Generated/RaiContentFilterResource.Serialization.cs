@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     public partial class RaiContentFilterResource : IJsonModel<RaiContentFilterData>
     {
+        private static RaiContentFilterData s_dataDeserializationInstance;
+        private static RaiContentFilterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RaiContentFilterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RaiContentFilterData>)Data).Write(writer, options);
 
-        RaiContentFilterData IJsonModel<RaiContentFilterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RaiContentFilterData>)Data).Create(ref reader, options);
+        RaiContentFilterData IJsonModel<RaiContentFilterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RaiContentFilterData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<RaiContentFilterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RaiContentFilterData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
         RaiContentFilterData IPersistableModel<RaiContentFilterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RaiContentFilterData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        string IPersistableModel<RaiContentFilterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RaiContentFilterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RaiContentFilterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RaiContentFilterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

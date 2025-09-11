@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// Properties for generating an upload URL
-    /// Serialized Name: GenerateUploadUrlRequest
-    /// </summary>
+    /// <summary> Properties for generating an upload URL. </summary>
     public partial class FirmwareUploadUriContent
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FirmwareUploadUriContent"/>. </summary>
-        /// <param name="firmwareId">
-        /// A unique ID for the firmware to be uploaded.
-        /// Serialized Name: GenerateUploadUrlRequest.firmwareId
-        /// </param>
+        /// <param name="firmwareId"> A unique ID for the firmware to be uploaded. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FirmwareUploadUriContent(string firmwareId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A unique ID for the firmware to be uploaded.
-        /// Serialized Name: GenerateUploadUrlRequest.firmwareId
-        /// </summary>
+        /// <summary> A unique ID for the firmware to be uploaded. </summary>
         public string FirmwareId { get; set; }
     }
 }

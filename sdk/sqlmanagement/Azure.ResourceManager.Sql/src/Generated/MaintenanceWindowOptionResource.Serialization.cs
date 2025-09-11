@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class MaintenanceWindowOptionResource : IJsonModel<MaintenanceWindowOptionData>
     {
+        private static MaintenanceWindowOptionData s_dataDeserializationInstance;
+        private static MaintenanceWindowOptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MaintenanceWindowOptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceWindowOptionData>)Data).Write(writer, options);
 
-        MaintenanceWindowOptionData IJsonModel<MaintenanceWindowOptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceWindowOptionData>)Data).Create(ref reader, options);
+        MaintenanceWindowOptionData IJsonModel<MaintenanceWindowOptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceWindowOptionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MaintenanceWindowOptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MaintenanceWindowOptionData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         MaintenanceWindowOptionData IPersistableModel<MaintenanceWindowOptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenanceWindowOptionData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<MaintenanceWindowOptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MaintenanceWindowOptionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MaintenanceWindowOptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MaintenanceWindowOptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

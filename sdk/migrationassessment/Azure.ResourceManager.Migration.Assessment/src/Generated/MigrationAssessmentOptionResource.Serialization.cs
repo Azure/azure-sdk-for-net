@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Migration.Assessment
 {
     public partial class MigrationAssessmentOptionResource : IJsonModel<MigrationAssessmentOptionData>
     {
+        private static MigrationAssessmentOptionData s_dataDeserializationInstance;
+        private static MigrationAssessmentOptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MigrationAssessmentOptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessmentOptionData>)Data).Write(writer, options);
 
-        MigrationAssessmentOptionData IJsonModel<MigrationAssessmentOptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessmentOptionData>)Data).Create(ref reader, options);
+        MigrationAssessmentOptionData IJsonModel<MigrationAssessmentOptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessmentOptionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MigrationAssessmentOptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationAssessmentOptionData>(Data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
         MigrationAssessmentOptionData IPersistableModel<MigrationAssessmentOptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationAssessmentOptionData>(data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
-        string IPersistableModel<MigrationAssessmentOptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessmentOptionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MigrationAssessmentOptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessmentOptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

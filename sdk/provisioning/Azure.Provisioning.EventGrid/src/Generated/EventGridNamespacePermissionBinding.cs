@@ -119,7 +119,7 @@ public partial class EventGridNamespacePermissionBinding : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridNamespacePermissionBinding.</param>
     public EventGridNamespacePermissionBinding(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/permissionBindings", resourceVersion)
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/permissionBindings", resourceVersion ?? "2025-02-15")
     {
     }
 
@@ -145,7 +145,12 @@ public partial class EventGridNamespacePermissionBinding : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-02-15.
+        /// </summary>
+        public static readonly string V2025_02_15 = "2025-02-15";
     }
+
     /// <summary>
     /// Creates a reference to an existing EventGridNamespacePermissionBinding.
     /// </summary>

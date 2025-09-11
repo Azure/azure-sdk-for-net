@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class HybridRunbookWorkerGroupResource : IJsonModel<HybridRunbookWorkerGroupData>
     {
+        private static HybridRunbookWorkerGroupData s_dataDeserializationInstance;
+        private static HybridRunbookWorkerGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HybridRunbookWorkerGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridRunbookWorkerGroupData>)Data).Write(writer, options);
 
-        HybridRunbookWorkerGroupData IJsonModel<HybridRunbookWorkerGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridRunbookWorkerGroupData>)Data).Create(ref reader, options);
+        HybridRunbookWorkerGroupData IJsonModel<HybridRunbookWorkerGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridRunbookWorkerGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<HybridRunbookWorkerGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridRunbookWorkerGroupData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
         HybridRunbookWorkerGroupData IPersistableModel<HybridRunbookWorkerGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridRunbookWorkerGroupData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<HybridRunbookWorkerGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridRunbookWorkerGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HybridRunbookWorkerGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridRunbookWorkerGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

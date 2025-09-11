@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DiskList"/>. </summary>
-        /// <param name="value"> A list of disks. </param>
+        /// <param name="value"> The Disk items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiskList(IEnumerable<ManagedDiskData> value)
         {
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DiskList"/>. </summary>
-        /// <param name="value"> A list of disks. </param>
-        /// <param name="nextLink"> The uri to fetch the next page of disks. Call ListNext() with this to fetch the next page of disks. </param>
+        /// <param name="value"> The Disk items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskList(IReadOnlyList<ManagedDiskData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiskList(IReadOnlyList<ManagedDiskData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        /// <summary> A list of disks. </summary>
+        /// <summary> The Disk items on this page. </summary>
         public IReadOnlyList<ManagedDiskData> Value { get; }
-        /// <summary> The uri to fetch the next page of disks. Call ListNext() with this to fetch the next page of disks. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsOfficeConsentResource : IJsonModel<SecurityInsightsOfficeConsentData>
     {
+        private static SecurityInsightsOfficeConsentData s_dataDeserializationInstance;
+        private static SecurityInsightsOfficeConsentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityInsightsOfficeConsentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsOfficeConsentData>)Data).Write(writer, options);
 
-        SecurityInsightsOfficeConsentData IJsonModel<SecurityInsightsOfficeConsentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsOfficeConsentData>)Data).Create(ref reader, options);
+        SecurityInsightsOfficeConsentData IJsonModel<SecurityInsightsOfficeConsentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsOfficeConsentData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SecurityInsightsOfficeConsentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsOfficeConsentData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         SecurityInsightsOfficeConsentData IPersistableModel<SecurityInsightsOfficeConsentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsOfficeConsentData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsOfficeConsentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsOfficeConsentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsOfficeConsentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsOfficeConsentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

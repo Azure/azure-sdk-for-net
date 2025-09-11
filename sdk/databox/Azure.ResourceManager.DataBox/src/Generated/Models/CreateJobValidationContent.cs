@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             Argument.AssertNotNull(individualRequestDetails, nameof(individualRequestDetails));
 
-            ValidationCategory = DataBoxValidationCategory.JobCreationValidation;
+            ValidationCategory = "JobCreationValidation";
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateJobValidationContent"/>. </summary>
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.DataBox.Models
         /// The available derived classes include <see cref="DataBoxValidateAddressContent"/>, <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataTransferDetailsValidationContent"/>, <see cref="PreferencesValidationContent"/>, <see cref="SkuAvailabilityValidationContent"/> and <see cref="SubscriptionIsAllowedToCreateJobValidationContent"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateJobValidationContent(DataBoxValidationCategory validationCategory, IList<DataBoxValidationInputContent> individualRequestDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(validationCategory, individualRequestDetails, serializedAdditionalRawData)
+        internal CreateJobValidationContent(string validationCategory, IList<DataBoxValidationInputContent> individualRequestDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(validationCategory, individualRequestDetails, serializedAdditionalRawData)
         {
-            ValidationCategory = validationCategory;
+            ValidationCategory = validationCategory ?? "JobCreationValidation";
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateJobValidationContent"/> for deserialization. </summary>

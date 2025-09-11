@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="defaultDatabase"> The default database for the login. </param>
         /// <param name="isEnabled"> The state of the login. </param>
         /// <param name="migrationEligibility"> Information about eligibility of login for migration. </param>
-        internal ConnectToSourceSqlServerTaskOutputLoginLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, LoginType? loginType, string defaultDatabase, bool? isEnabled, MigrationEligibilityInfo migrationEligibility) : base(id, resultType, serializedAdditionalRawData)
+        internal ConnectToSourceSqlServerTaskOutputLoginLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, DataMigrationLoginType? loginType, string defaultDatabase, bool? isEnabled, MigrationEligibilityInfo migrationEligibility) : base(id, resultType, serializedAdditionalRawData)
         {
             Name = name;
             LoginType = loginType;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Login name. </summary>
         public string Name { get; }
         /// <summary> The type of login. </summary>
-        public LoginType? LoginType { get; }
+        public DataMigrationLoginType? LoginType { get; }
         /// <summary> The default database for the login. </summary>
         public string DefaultDatabase { get; }
         /// <summary> The state of the login. </summary>

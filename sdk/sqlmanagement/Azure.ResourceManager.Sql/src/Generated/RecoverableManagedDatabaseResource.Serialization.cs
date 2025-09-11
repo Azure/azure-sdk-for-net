@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class RecoverableManagedDatabaseResource : IJsonModel<RecoverableManagedDatabaseData>
     {
+        private static RecoverableManagedDatabaseData s_dataDeserializationInstance;
+        private static RecoverableManagedDatabaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RecoverableManagedDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RecoverableManagedDatabaseData>)Data).Write(writer, options);
 
-        RecoverableManagedDatabaseData IJsonModel<RecoverableManagedDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecoverableManagedDatabaseData>)Data).Create(ref reader, options);
+        RecoverableManagedDatabaseData IJsonModel<RecoverableManagedDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecoverableManagedDatabaseData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<RecoverableManagedDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RecoverableManagedDatabaseData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         RecoverableManagedDatabaseData IPersistableModel<RecoverableManagedDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecoverableManagedDatabaseData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<RecoverableManagedDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecoverableManagedDatabaseData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RecoverableManagedDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecoverableManagedDatabaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

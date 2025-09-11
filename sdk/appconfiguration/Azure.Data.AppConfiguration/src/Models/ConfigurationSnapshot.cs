@@ -8,20 +8,13 @@ using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
+    // CUSTOM:
+    // - Renamed.
+    // - Renamed properties.
     /// <summary> The Snapshot. </summary>
+    [CodeGenType("Snapshot")]
     public partial class ConfigurationSnapshot
     {
-        /// <summary> Initializes a new instance of Snapshot. </summary>
-        /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filters"/> is null. </exception>
-        public ConfigurationSnapshot(IEnumerable<ConfigurationSettingsFilter> filters)
-        {
-            Argument.AssertNotNull(filters, nameof(filters));
-
-            Filters = filters.ToList();
-            Tags = new ChangeTrackingDictionary<string, string>();
-        }
-
         /// <summary> Initializes a new instance of Snapshot. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="status"> The current status of the snapshot. </param>
@@ -55,11 +48,17 @@ namespace Azure.Data.AppConfiguration
         public ConfigurationSnapshotStatus? Status { get; }
         /// <summary> A list of filters used to filter the key-values included in the snapshot. </summary>
         public IList<ConfigurationSettingsFilter> Filters { get; }
+
         /// <summary> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </summary>
+        [CodeGenMember("CompositionType")]
         public SnapshotComposition? SnapshotComposition { get; set; }
+
         /// <summary> The time that the snapshot was created. </summary>
+        [CodeGenMember("Created")]
         public DateTimeOffset? CreatedOn { get; }
+
         /// <summary> The time that the snapshot will expire. </summary>
+        [CodeGenMember("Expires")]
         public DateTimeOffset? ExpiresOn { get; }
         private long? _retentionPeriod;
         /// <summary> The amount of time that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </summary>
@@ -85,12 +84,17 @@ namespace Azure.Data.AppConfiguration
             }
         }
         /// <summary> The size in bytes of the snapshot. </summary>
+        [CodeGenMember("Size")]
         public long? SizeInBytes { get; }
+
         /// <summary> The amount of key-values in the snapshot. </summary>
+        [CodeGenMember("ItemsCount")]
         public long? ItemCount { get; }
         /// <summary> The tags of the snapshot. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> A value representing the current state of the snapshot. </summary>
+        [CodeGenMember("Etag")]
         public ETag ETag { get; }
     }
 }

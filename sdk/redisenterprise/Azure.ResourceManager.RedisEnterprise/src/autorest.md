@@ -8,12 +8,12 @@ azure-arm: true
 csharp: true
 library-name: RedisEnterprise
 namespace: Azure.ResourceManager.RedisEnterprise
-require: https://github.com/Azure/azure-rest-api-specs/blob/29bc17223449e7a865a6f38552eacfd213d812fd/specification/redisenterprise/resource-manager/readme.md
-#tag-package-preview-2025-05-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/e22d3642ca152418d8658c2547ce2179d15317b6/specification/redisenterprise/resource-manager/readme.md
+tag: package-2025-04-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -47,7 +47,7 @@ rename-mapping:
   FlushParameters: FlushRedisEnterpriseDatabaseParameters
   ForceUnlinkParameters.ids: -|arm-id
   ForceUnlinkParameters: ForceUnlinkRedisEnterpriseDatabaseParameters
-  HighAvailability: RedisEnterpriseHighAvailability 
+  HighAvailability: RedisEnterpriseHighAvailability
   ImportClusterParameters: ImportRedisEnterpriseDatabaseParameters
   LinkedDatabase.id: -|arm-id
   LinkedDatabase: RedisEnterpriseLinkedDatabase

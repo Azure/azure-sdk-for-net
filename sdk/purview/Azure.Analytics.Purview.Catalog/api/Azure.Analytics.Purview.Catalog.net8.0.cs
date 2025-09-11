@@ -1,11 +1,5 @@
 namespace Azure.Analytics.Purview.Catalog
 {
-    public partial class AzureAnalyticsPurviewCatalogContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureAnalyticsPurviewCatalogContext() { }
-        public static Azure.Analytics.Purview.Catalog.AzureAnalyticsPurviewCatalogContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class PurviewCatalogClient
     {
         protected PurviewCatalogClient() { }
@@ -279,6 +273,7 @@ namespace Microsoft.Extensions.Azure
     public static partial class AnalyticsPurviewCatalogClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Catalog.PurviewCatalogClient, Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions> AddPurviewCatalogClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Catalog.PurviewCatalogClient, Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions> AddPurviewCatalogClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

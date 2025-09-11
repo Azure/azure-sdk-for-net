@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class OutboundFirewallRuleResource : IJsonModel<OutboundFirewallRuleData>
     {
+        private static OutboundFirewallRuleData s_dataDeserializationInstance;
+        private static OutboundFirewallRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<OutboundFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OutboundFirewallRuleData>)Data).Write(writer, options);
 
-        OutboundFirewallRuleData IJsonModel<OutboundFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OutboundFirewallRuleData>)Data).Create(ref reader, options);
+        OutboundFirewallRuleData IJsonModel<OutboundFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OutboundFirewallRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<OutboundFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OutboundFirewallRuleData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         OutboundFirewallRuleData IPersistableModel<OutboundFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OutboundFirewallRuleData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<OutboundFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OutboundFirewallRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<OutboundFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OutboundFirewallRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

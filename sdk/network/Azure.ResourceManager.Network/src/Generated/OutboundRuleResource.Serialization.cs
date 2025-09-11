@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class OutboundRuleResource : IJsonModel<OutboundRuleData>
     {
+        private static OutboundRuleData s_dataDeserializationInstance;
+        private static OutboundRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<OutboundRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OutboundRuleData>)Data).Write(writer, options);
 
-        OutboundRuleData IJsonModel<OutboundRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OutboundRuleData>)Data).Create(ref reader, options);
+        OutboundRuleData IJsonModel<OutboundRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OutboundRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<OutboundRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OutboundRuleData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         OutboundRuleData IPersistableModel<OutboundRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OutboundRuleData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<OutboundRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OutboundRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<OutboundRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OutboundRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

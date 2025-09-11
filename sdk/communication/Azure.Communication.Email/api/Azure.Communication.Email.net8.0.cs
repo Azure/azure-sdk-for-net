@@ -1,11 +1,5 @@
 namespace Azure.Communication.Email
 {
-    public partial class AzureCommunicationEmailContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureCommunicationEmailContext() { }
-        public static Azure.Communication.Email.AzureCommunicationEmailContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EmailAddress
     {
@@ -132,6 +126,7 @@ namespace Microsoft.Extensions.Azure
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Email.EmailClient, Azure.Communication.Email.EmailClientOptions> AddEmailClient<TBuilder>(this TBuilder builder, string connectionString) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Email.EmailClient, Azure.Communication.Email.EmailClientOptions> AddEmailClient<TBuilder>(this TBuilder builder, System.Uri serviceUri) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Email.EmailClient, Azure.Communication.Email.EmailClientOptions> AddEmailClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.AzureKeyCredential azureKeyCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Email.EmailClient, Azure.Communication.Email.EmailClientOptions> AddEmailClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

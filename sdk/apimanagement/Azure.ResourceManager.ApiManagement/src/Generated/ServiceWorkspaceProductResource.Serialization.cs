@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ServiceWorkspaceProductResource : IJsonModel<ApiManagementProductData>
     {
+        private static ApiManagementProductData s_dataDeserializationInstance;
+        private static ApiManagementProductData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiManagementProductData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementProductData>)Data).Write(writer, options);
 
-        ApiManagementProductData IJsonModel<ApiManagementProductData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementProductData>)Data).Create(ref reader, options);
+        ApiManagementProductData IJsonModel<ApiManagementProductData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementProductData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ApiManagementProductData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementProductData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         ApiManagementProductData IPersistableModel<ApiManagementProductData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementProductData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementProductData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementProductData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementProductData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementProductData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

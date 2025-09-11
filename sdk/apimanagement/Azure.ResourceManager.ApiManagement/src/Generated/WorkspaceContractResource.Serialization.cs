@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class WorkspaceContractResource : IJsonModel<WorkspaceContractData>
     {
+        private static WorkspaceContractData s_dataDeserializationInstance;
+        private static WorkspaceContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkspaceContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkspaceContractData>)Data).Write(writer, options);
 
-        WorkspaceContractData IJsonModel<WorkspaceContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkspaceContractData>)Data).Create(ref reader, options);
+        WorkspaceContractData IJsonModel<WorkspaceContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkspaceContractData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<WorkspaceContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkspaceContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         WorkspaceContractData IPersistableModel<WorkspaceContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkspaceContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<WorkspaceContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkspaceContractData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkspaceContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkspaceContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

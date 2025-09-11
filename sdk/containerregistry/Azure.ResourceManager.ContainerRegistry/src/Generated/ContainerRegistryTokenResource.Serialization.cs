@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     public partial class ContainerRegistryTokenResource : IJsonModel<ContainerRegistryTokenData>
     {
+        private static ContainerRegistryTokenData s_dataDeserializationInstance;
+        private static ContainerRegistryTokenData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ContainerRegistryTokenData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryTokenData>)Data).Write(writer, options);
 
-        ContainerRegistryTokenData IJsonModel<ContainerRegistryTokenData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryTokenData>)Data).Create(ref reader, options);
+        ContainerRegistryTokenData IJsonModel<ContainerRegistryTokenData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryTokenData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ContainerRegistryTokenData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerRegistryTokenData>(Data, options, AzureResourceManagerContainerRegistryContext.Default);
 
         ContainerRegistryTokenData IPersistableModel<ContainerRegistryTokenData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerRegistryTokenData>(data, options, AzureResourceManagerContainerRegistryContext.Default);
 
-        string IPersistableModel<ContainerRegistryTokenData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerRegistryTokenData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ContainerRegistryTokenData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerRegistryTokenData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

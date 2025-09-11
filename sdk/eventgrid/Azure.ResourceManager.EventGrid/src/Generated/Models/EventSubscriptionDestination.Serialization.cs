@@ -84,6 +84,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     case "HybridConnection": return HybridConnectionEventSubscriptionDestination.DeserializeHybridConnectionEventSubscriptionDestination(element, options);
                     case "MonitorAlert": return MonitorAlertEventSubscriptionDestination.DeserializeMonitorAlertEventSubscriptionDestination(element, options);
                     case "NamespaceTopic": return NamespaceTopicEventSubscriptionDestination.DeserializeNamespaceTopicEventSubscriptionDestination(element, options);
+                    case "PartnerDestination": return PartnerEventSubscriptionDestination.DeserializePartnerEventSubscriptionDestination(element, options);
                     case "ServiceBusQueue": return ServiceBusQueueEventSubscriptionDestination.DeserializeServiceBusQueueEventSubscriptionDestination(element, options);
                     case "ServiceBusTopic": return ServiceBusTopicEventSubscriptionDestination.DeserializeServiceBusTopicEventSubscriptionDestination(element, options);
                     case "StorageQueue": return StorageQueueEventSubscriptionDestination.DeserializeStorageQueueEventSubscriptionDestination(element, options);

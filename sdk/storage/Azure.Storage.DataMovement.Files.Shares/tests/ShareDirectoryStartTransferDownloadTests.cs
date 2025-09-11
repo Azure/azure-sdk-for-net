@@ -13,6 +13,10 @@ using Azure.Storage.DataMovement.Tests;
 using BaseShares::Azure.Storage.Files.Shares;
 using Azure.Storage.Test.Shared;
 using DMShare::Azure.Storage.DataMovement.Files.Shares;
+using NUnit.Framework;
+using Azure.Core.TestFramework;
+using BaseShares::Azure.Storage.Files.Shares.Models;
+using System.Linq;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -60,6 +64,74 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 await fileClient.UploadAsync(contents, cancellationToken: cancellationToken);
             }
+        }
+
+        private async Task CreateDirectoryAsync(ShareClient container,
+            string directoryPath,
+            CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            ShareDirectoryClient directory = container.GetRootDirectoryClient().GetSubdirectoryClient(directoryPath);
+            await directory.CreateIfNotExistsAsync(cancellationToken: cancellationToken);
+        }
+
+        private async Task CreateShareFileNfsAndHardLinkAsync(
+            ShareClient container,
+            long? objectLength = null,
+            string objectName = null,
+            CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            objectName ??= GetNewObjectName();
+            if (!objectLength.HasValue)
+            {
+                throw new InvalidOperationException($"Cannot create share file without size specified. Specify {nameof(objectLength)}.");
+            }
+            ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(objectName);
+
+            await fileClient.CreateAsync(
+                maxSize: objectLength.Value,
+                cancellationToken: cancellationToken);
+
+            ShareFileClient hardlinkClient = InstrumentClient(container.GetRootDirectoryClient().GetFileClient($"{objectName}-hardlink"));
+
+            // Create Hardlink
+            await hardlinkClient.CreateHardLinkAsync(
+                targetFile: $"{container.GetRootDirectoryClient().Name}/{objectName}");
+
+            // Assert hardlink was successfully created
+            ShareFileProperties properties = await hardlinkClient.GetPropertiesAsync();
+            Assert.AreEqual(2, properties.PosixProperties.LinkCount);
+            Assert.AreEqual(NfsFileType.Regular, properties.PosixProperties.FileType);
+        }
+
+        private async Task CreateShareFileNfsAndSymLinkAsync(
+            ShareClient container,
+            long? objectLength = null,
+            string objectName = null,
+            CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            objectName ??= GetNewObjectName();
+            if (!objectLength.HasValue)
+            {
+                throw new InvalidOperationException($"Cannot create share file without size specified. Specify {nameof(objectLength)}.");
+            }
+            ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(objectName);
+
+            await fileClient.CreateAsync(
+                maxSize: objectLength.Value,
+                cancellationToken: cancellationToken);
+
+            ShareFileClient symlinkClient = InstrumentClient(container.GetRootDirectoryClient().GetFileClient($"{objectName}-symlink"));
+
+            // Create Symlink
+            await symlinkClient.CreateSymbolicLinkAsync(linkText: fileClient.Uri.AbsolutePath);
+
+            // Assert symlink was successfully created
+            ShareFileProperties properties = await symlinkClient.GetPropertiesAsync();
+            Assert.AreEqual(1, properties.PosixProperties.LinkCount);
+            Assert.AreEqual(NfsFileType.SymLink, properties.PosixProperties.FileType);
         }
 
         protected override TransferValidator.ListFilesAsync GetSourceLister(ShareClient container, string prefix)
@@ -119,6 +191,145 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     }
                 }
             }
+        }
+
+        [RecordedTest]
+        public async Task ShareDirectoryToLocalDirectory_NfsHardLink()
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await ClientBuilder.GetTestShareSasNfsAsync();
+            using DisposingLocalDirectory destination = DisposingLocalDirectory.GetTestDirectory();
+
+            TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            string sourcePrefix = "sourceFolder";
+
+            // setup source
+            await CreateDirectoryAsync(source.Container, sourcePrefix);
+            string itemName1 = string.Join("/", sourcePrefix, "item1");
+            await CreateShareFileNfsAndHardLinkAsync(source.Container, DataMovementTestConstants.KB, itemName1);
+
+            // Create storage resource containers
+            StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
+                source.Container.GetDirectoryClient(sourcePrefix),
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs });
+
+            StorageResource destinationResource = LocalFilesStorageResourceProvider.FromDirectory(destination.DirectoryPath);
+
+            // Create Transfer Manager with single threaded operation
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
+            {
+                MaximumConcurrency = 1,
+            };
+            TransferManager transferManager = new TransferManager(managerOptions);
+
+            // Start transfer and await for completion.
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options).ConfigureAwait(false);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            testEventsRaised.AssertUnexpectedFailureCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            await testEventsRaised.AssertContainerCompletedCheck(2);
+
+            // Get source files
+            List<string> sourceFileNames = new List<string>();
+            ShareDirectoryClient sourceDirectory = source.Container.GetDirectoryClient(sourcePrefix);
+            await foreach (Page<ShareFileItem> page in sourceDirectory.GetFilesAndDirectoriesAsync().AsPages())
+            {
+                sourceFileNames.AddRange(page.Values.Where((ShareFileItem item) => !item.IsDirectory).Select((ShareFileItem item) => item.Name));
+            }
+            // Get dest files
+            List<string> destFileNames = Directory
+                .EnumerateFiles(destination.DirectoryPath, "*", SearchOption.TopDirectoryOnly)
+                .Select(Path.GetFileName)
+                .ToList();
+
+            // Assert all files (including hardlink) were copied over to dest
+            Assert.AreEqual(sourceFileNames.Count, destFileNames.Count);
+            Assert.That(sourceFileNames, Is.EquivalentTo(destFileNames));
+        }
+
+        [RecordedTest]
+        public async Task ShareDirectoryToLocalDirectory_NfsSymbolicLink()
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await ClientBuilder.GetTestShareSasNfsAsync();
+            using DisposingLocalDirectory destination = DisposingLocalDirectory.GetTestDirectory();
+
+            TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            string sourcePrefix = "sourceFolder";
+
+            // setup source
+            await CreateDirectoryAsync(source.Container, sourcePrefix);
+            string itemName1 = string.Join("/", sourcePrefix, "item1");
+            await CreateShareFileNfsAndSymLinkAsync(source.Container, DataMovementTestConstants.KB, itemName1);
+
+            // Create storage resource containers
+            StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
+                source.Container.GetDirectoryClient(sourcePrefix),
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs });
+
+            StorageResource destinationResource = LocalFilesStorageResourceProvider.FromDirectory(destination.DirectoryPath);
+
+            // Create Transfer Manager with single threaded operation
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
+            {
+                MaximumConcurrency = 1,
+            };
+            TransferManager transferManager = new TransferManager(managerOptions);
+
+            // Start transfer and await for completion.
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options).ConfigureAwait(false);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            testEventsRaised.AssertUnexpectedFailureCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            await testEventsRaised.AssertContainerCompletedCheck(2);
+
+            // Get source files
+            List<string> sourceFileNames = new List<string>();
+            ShareDirectoryClient sourceDirectory = source.Container.GetDirectoryClient(sourcePrefix);
+            await foreach (Page<ShareFileItem> page in sourceDirectory.GetFilesAndDirectoriesAsync().AsPages())
+            {
+                sourceFileNames.AddRange(page.Values.Where((ShareFileItem item) => !item.IsDirectory).Select((ShareFileItem item) => item.Name));
+            }
+            // Get dest files
+            List<string> destFileNames = Directory
+                .EnumerateFiles(destination.DirectoryPath, "*", SearchOption.TopDirectoryOnly)
+                .Select(Path.GetFileName)
+                .ToList();
+
+            // Ensure the Symlink file was skipped and not copied
+            Assert.AreEqual(2, sourceFileNames.Count);
+            Assert.AreEqual(1, destFileNames.Count);
+            Assert.Contains("item1-symlink", sourceFileNames);
+            Assert.False(destFileNames.Contains("item1-symlink"));
+            Assert.AreEqual("item1", destFileNames[0]);
         }
     }
 }

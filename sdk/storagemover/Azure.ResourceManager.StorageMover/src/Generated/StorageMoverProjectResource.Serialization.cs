@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.StorageMover
 {
     public partial class StorageMoverProjectResource : IJsonModel<StorageMoverProjectData>
     {
+        private static StorageMoverProjectData s_dataDeserializationInstance;
+        private static StorageMoverProjectData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StorageMoverProjectData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageMoverProjectData>)Data).Write(writer, options);
 
-        StorageMoverProjectData IJsonModel<StorageMoverProjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageMoverProjectData>)Data).Create(ref reader, options);
+        StorageMoverProjectData IJsonModel<StorageMoverProjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageMoverProjectData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<StorageMoverProjectData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageMoverProjectData>(Data, options, AzureResourceManagerStorageMoverContext.Default);
 
         StorageMoverProjectData IPersistableModel<StorageMoverProjectData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageMoverProjectData>(data, options, AzureResourceManagerStorageMoverContext.Default);
 
-        string IPersistableModel<StorageMoverProjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageMoverProjectData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StorageMoverProjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageMoverProjectData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

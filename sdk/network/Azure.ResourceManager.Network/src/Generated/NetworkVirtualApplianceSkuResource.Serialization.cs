@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkVirtualApplianceSkuResource : IJsonModel<NetworkVirtualApplianceSkuData>
     {
+        private static NetworkVirtualApplianceSkuData s_dataDeserializationInstance;
+        private static NetworkVirtualApplianceSkuData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkVirtualApplianceSkuData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkVirtualApplianceSkuData>)Data).Write(writer, options);
 
-        NetworkVirtualApplianceSkuData IJsonModel<NetworkVirtualApplianceSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkVirtualApplianceSkuData>)Data).Create(ref reader, options);
+        NetworkVirtualApplianceSkuData IJsonModel<NetworkVirtualApplianceSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkVirtualApplianceSkuData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkVirtualApplianceSkuData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkVirtualApplianceSkuData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         NetworkVirtualApplianceSkuData IPersistableModel<NetworkVirtualApplianceSkuData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkVirtualApplianceSkuData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkVirtualApplianceSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkVirtualApplianceSkuData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkVirtualApplianceSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkVirtualApplianceSkuData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

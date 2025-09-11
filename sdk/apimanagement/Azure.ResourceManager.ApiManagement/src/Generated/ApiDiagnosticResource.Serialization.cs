@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiDiagnosticResource : IJsonModel<DiagnosticContractData>
     {
+        private static DiagnosticContractData s_dataDeserializationInstance;
+        private static DiagnosticContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DiagnosticContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticContractData>)Data).Write(writer, options);
 
-        DiagnosticContractData IJsonModel<DiagnosticContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticContractData>)Data).Create(ref reader, options);
+        DiagnosticContractData IJsonModel<DiagnosticContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticContractData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DiagnosticContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiagnosticContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         DiagnosticContractData IPersistableModel<DiagnosticContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiagnosticContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<DiagnosticContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiagnosticContractData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DiagnosticContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiagnosticContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

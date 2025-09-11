@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class CaCertificateResource : IJsonModel<CaCertificateData>
     {
+        private static CaCertificateData s_dataDeserializationInstance;
+        private static CaCertificateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CaCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CaCertificateData>)Data).Write(writer, options);
 
-        CaCertificateData IJsonModel<CaCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CaCertificateData>)Data).Create(ref reader, options);
+        CaCertificateData IJsonModel<CaCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CaCertificateData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<CaCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CaCertificateData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
         CaCertificateData IPersistableModel<CaCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CaCertificateData>(data, options, AzureResourceManagerEventGridContext.Default);
 
-        string IPersistableModel<CaCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CaCertificateData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CaCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CaCertificateData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

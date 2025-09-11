@@ -8,19 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsBillingStatisticResource : IJsonModel<SecurityInsightsBillingStatisticData>
     {
+        private static UnknownBillingStatistic s_dataDeserializationInstance;
+        private static UnknownBillingStatistic DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityInsightsBillingStatisticData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsBillingStatisticData>)Data).Write(writer, options);
 
-        SecurityInsightsBillingStatisticData IJsonModel<SecurityInsightsBillingStatisticData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsBillingStatisticData>)Data).Create(ref reader, options);
+        SecurityInsightsBillingStatisticData IJsonModel<SecurityInsightsBillingStatisticData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsBillingStatisticData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SecurityInsightsBillingStatisticData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsBillingStatisticData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         SecurityInsightsBillingStatisticData IPersistableModel<SecurityInsightsBillingStatisticData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsBillingStatisticData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsBillingStatisticData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsBillingStatisticData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsBillingStatisticData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsBillingStatisticData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.ComputeSchedule.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule
 {
@@ -13,6 +14,36 @@ namespace Azure.ResourceManager.ComputeSchedule
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CancelOperationsContent))]
+    [ModelReaderWriterBuildable(typeof(CancelOperationsResult))]
+    [ModelReaderWriterBuildable(typeof(CreateResourceOperationResult))]
+    [ModelReaderWriterBuildable(typeof(DeallocateResourceOperationResult))]
+    [ModelReaderWriterBuildable(typeof(DeleteResourceOperationResult))]
+    [ModelReaderWriterBuildable(typeof(ExecuteCreateContent))]
+    [ModelReaderWriterBuildable(typeof(ExecuteDeallocateContent))]
+    [ModelReaderWriterBuildable(typeof(ExecuteDeleteContent))]
+    [ModelReaderWriterBuildable(typeof(ExecuteHibernateContent))]
+    [ModelReaderWriterBuildable(typeof(ExecuteStartContent))]
+    [ModelReaderWriterBuildable(typeof(GetOperationErrorsContent))]
+    [ModelReaderWriterBuildable(typeof(GetOperationErrorsResult))]
+    [ModelReaderWriterBuildable(typeof(GetOperationStatusContent))]
+    [ModelReaderWriterBuildable(typeof(GetOperationStatusResult))]
+    [ModelReaderWriterBuildable(typeof(HibernateResourceOperationResult))]
+    [ModelReaderWriterBuildable(typeof(OperationErrorDetails))]
+    [ModelReaderWriterBuildable(typeof(OperationErrorsResult))]
+    [ModelReaderWriterBuildable(typeof(ResourceOperationDetails))]
+    [ModelReaderWriterBuildable(typeof(ResourceOperationError))]
+    [ModelReaderWriterBuildable(typeof(ResourceOperationResult))]
+    [ModelReaderWriterBuildable(typeof(ResourceProvisionPayload))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(ScheduledActionExecutionParameterDetail))]
+    [ModelReaderWriterBuildable(typeof(StartResourceOperationResult))]
+    [ModelReaderWriterBuildable(typeof(SubmitDeallocateContent))]
+    [ModelReaderWriterBuildable(typeof(SubmitHibernateContent))]
+    [ModelReaderWriterBuildable(typeof(SubmitStartContent))]
+    [ModelReaderWriterBuildable(typeof(UserRequestResources))]
+    [ModelReaderWriterBuildable(typeof(UserRequestRetryPolicy))]
+    [ModelReaderWriterBuildable(typeof(UserRequestSchedule))]
     public partial class AzureResourceManagerComputeScheduleContext : ModelReaderWriterContext
     {
     }

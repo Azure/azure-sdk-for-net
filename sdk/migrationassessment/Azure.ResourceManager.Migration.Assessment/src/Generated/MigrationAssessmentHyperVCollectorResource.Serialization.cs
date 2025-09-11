@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Migration.Assessment
 {
     public partial class MigrationAssessmentHyperVCollectorResource : IJsonModel<MigrationAssessmentHyperVCollectorData>
     {
+        private static MigrationAssessmentHyperVCollectorData s_dataDeserializationInstance;
+        private static MigrationAssessmentHyperVCollectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MigrationAssessmentHyperVCollectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessmentHyperVCollectorData>)Data).Write(writer, options);
 
-        MigrationAssessmentHyperVCollectorData IJsonModel<MigrationAssessmentHyperVCollectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessmentHyperVCollectorData>)Data).Create(ref reader, options);
+        MigrationAssessmentHyperVCollectorData IJsonModel<MigrationAssessmentHyperVCollectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessmentHyperVCollectorData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MigrationAssessmentHyperVCollectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationAssessmentHyperVCollectorData>(Data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
         MigrationAssessmentHyperVCollectorData IPersistableModel<MigrationAssessmentHyperVCollectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationAssessmentHyperVCollectorData>(data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
-        string IPersistableModel<MigrationAssessmentHyperVCollectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessmentHyperVCollectorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MigrationAssessmentHyperVCollectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessmentHyperVCollectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

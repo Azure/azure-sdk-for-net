@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PostgreSql
 {
     public partial class PostgreSqlServerAdministratorResource : IJsonModel<PostgreSqlServerAdministratorData>
     {
+        private static PostgreSqlServerAdministratorData s_dataDeserializationInstance;
+        private static PostgreSqlServerAdministratorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PostgreSqlServerAdministratorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlServerAdministratorData>)Data).Write(writer, options);
 
-        PostgreSqlServerAdministratorData IJsonModel<PostgreSqlServerAdministratorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlServerAdministratorData>)Data).Create(ref reader, options);
+        PostgreSqlServerAdministratorData IJsonModel<PostgreSqlServerAdministratorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlServerAdministratorData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PostgreSqlServerAdministratorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlServerAdministratorData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         PostgreSqlServerAdministratorData IPersistableModel<PostgreSqlServerAdministratorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlServerAdministratorData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        string IPersistableModel<PostgreSqlServerAdministratorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlServerAdministratorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PostgreSqlServerAdministratorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlServerAdministratorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

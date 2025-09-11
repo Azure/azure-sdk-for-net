@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ServiceWorkspaceTagProductLinkResource : IJsonModel<TagProductLinkContractData>
     {
+        private static TagProductLinkContractData s_dataDeserializationInstance;
+        private static TagProductLinkContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<TagProductLinkContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TagProductLinkContractData>)Data).Write(writer, options);
 
-        TagProductLinkContractData IJsonModel<TagProductLinkContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TagProductLinkContractData>)Data).Create(ref reader, options);
+        TagProductLinkContractData IJsonModel<TagProductLinkContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TagProductLinkContractData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<TagProductLinkContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TagProductLinkContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         TagProductLinkContractData IPersistableModel<TagProductLinkContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TagProductLinkContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<TagProductLinkContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TagProductLinkContractData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<TagProductLinkContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TagProductLinkContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

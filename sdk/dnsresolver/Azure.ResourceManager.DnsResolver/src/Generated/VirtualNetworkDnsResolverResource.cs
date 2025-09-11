@@ -6,8 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Globalization;
-using System.Text.Json;
+using System.Text;
 using System.Threading;
 using Autorest.CSharp.Core;
 using Azure.Core;
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverRestClient.CreateListByVirtualNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverRestClient.CreateListByVirtualNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<WritableSubResource>(e.GetRawText()), _dnsResolverClientDiagnostics, Pipeline, "VirtualNetworkDnsResolverResource.GetDnsResolvers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(e.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsResolverContext.Default), _dnsResolverClientDiagnostics, Pipeline, "VirtualNetworkDnsResolverResource.GetDnsResolvers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverRestClient.CreateListByVirtualNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverRestClient.CreateListByVirtualNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<WritableSubResource>(e.GetRawText()), _dnsResolverClientDiagnostics, Pipeline, "VirtualNetworkDnsResolverResource.GetDnsResolvers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(e.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsResolverContext.Default), _dnsResolverClientDiagnostics, Pipeline, "VirtualNetworkDnsResolverResource.GetDnsResolvers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,7 +225,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverPolicyRestClient.CreateListByVirtualNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverPolicyRestClient.CreateListByVirtualNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<WritableSubResource>(e.GetRawText()), _dnsResolverPolicyClientDiagnostics, Pipeline, "VirtualNetworkDnsResolverResource.GetDnsResolverPoliciesByVirtualNetwork", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(e.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsResolverContext.Default), _dnsResolverPolicyClientDiagnostics, Pipeline, "VirtualNetworkDnsResolverResource.GetDnsResolverPoliciesByVirtualNetwork", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,7 +255,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverPolicyRestClient.CreateListByVirtualNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverPolicyRestClient.CreateListByVirtualNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<WritableSubResource>(e.GetRawText()), _dnsResolverPolicyClientDiagnostics, Pipeline, "VirtualNetworkDnsResolverResource.GetDnsResolverPoliciesByVirtualNetwork", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(e.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsResolverContext.Default), _dnsResolverPolicyClientDiagnostics, Pipeline, "VirtualNetworkDnsResolverResource.GetDnsResolverPoliciesByVirtualNetwork", "value", "nextLink", cancellationToken);
         }
     }
 }

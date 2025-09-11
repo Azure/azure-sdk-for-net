@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class GovernanceRuleResource : IJsonModel<GovernanceRuleData>
     {
+        private static GovernanceRuleData s_dataDeserializationInstance;
+        private static GovernanceRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GovernanceRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GovernanceRuleData>)Data).Write(writer, options);
 
-        GovernanceRuleData IJsonModel<GovernanceRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GovernanceRuleData>)Data).Create(ref reader, options);
+        GovernanceRuleData IJsonModel<GovernanceRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GovernanceRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<GovernanceRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GovernanceRuleData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         GovernanceRuleData IPersistableModel<GovernanceRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GovernanceRuleData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<GovernanceRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GovernanceRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GovernanceRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GovernanceRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

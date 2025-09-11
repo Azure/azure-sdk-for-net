@@ -65,14 +65,16 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="organizationName"> Official name of the Partner. </param>
         /// <param name="partnerDisplayName"> Display name of the verified partner. </param>
         /// <param name="partnerTopicDetails"> Details of the partner topic scenario. </param>
+        /// <param name="partnerDestinationDetails"> Details of the partner destination scenario. </param>
         /// <param name="provisioningState"> Provisioning state of the verified partner. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VerifiedPartnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? partnerRegistrationImmutableId, string organizationName, string partnerDisplayName, PartnerDetails partnerTopicDetails, VerifiedPartnerProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal VerifiedPartnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? partnerRegistrationImmutableId, string organizationName, string partnerDisplayName, PartnerDetails partnerTopicDetails, PartnerDetails partnerDestinationDetails, VerifiedPartnerProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PartnerRegistrationImmutableId = partnerRegistrationImmutableId;
             OrganizationName = organizationName;
             PartnerDisplayName = partnerDisplayName;
             PartnerTopicDetails = partnerTopicDetails;
+            PartnerDestinationDetails = partnerDestinationDetails;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -89,6 +91,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Details of the partner topic scenario. </summary>
         [WirePath("properties.partnerTopicDetails")]
         public PartnerDetails PartnerTopicDetails { get; set; }
+        /// <summary> Details of the partner destination scenario. </summary>
+        [WirePath("properties.partnerDestinationDetails")]
+        public PartnerDetails PartnerDestinationDetails { get; set; }
         /// <summary> Provisioning state of the verified partner. </summary>
         [WirePath("properties.provisioningState")]
         public VerifiedPartnerProvisioningState? ProvisioningState { get; set; }

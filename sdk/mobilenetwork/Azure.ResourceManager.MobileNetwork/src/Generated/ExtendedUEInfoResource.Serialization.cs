@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class ExtendedUEInfoResource : IJsonModel<ExtendedUEInfoData>
     {
+        private static ExtendedUEInfoData s_dataDeserializationInstance;
+        private static ExtendedUEInfoData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ExtendedUEInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedUEInfoData>)Data).Write(writer, options);
 
-        ExtendedUEInfoData IJsonModel<ExtendedUEInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedUEInfoData>)Data).Create(ref reader, options);
+        ExtendedUEInfoData IJsonModel<ExtendedUEInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedUEInfoData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ExtendedUEInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExtendedUEInfoData>(Data, options, AzureResourceManagerMobileNetworkContext.Default);
 
         ExtendedUEInfoData IPersistableModel<ExtendedUEInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExtendedUEInfoData>(data, options, AzureResourceManagerMobileNetworkContext.Default);
 
-        string IPersistableModel<ExtendedUEInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExtendedUEInfoData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ExtendedUEInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExtendedUEInfoData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

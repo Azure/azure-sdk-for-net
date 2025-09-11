@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagedServices
 {
     public partial class ManagedServicesMarketplaceRegistrationResource : IJsonModel<ManagedServicesMarketplaceRegistrationData>
     {
+        private static ManagedServicesMarketplaceRegistrationData s_dataDeserializationInstance;
+        private static ManagedServicesMarketplaceRegistrationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ManagedServicesMarketplaceRegistrationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedServicesMarketplaceRegistrationData>)Data).Write(writer, options);
 
-        ManagedServicesMarketplaceRegistrationData IJsonModel<ManagedServicesMarketplaceRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedServicesMarketplaceRegistrationData>)Data).Create(ref reader, options);
+        ManagedServicesMarketplaceRegistrationData IJsonModel<ManagedServicesMarketplaceRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedServicesMarketplaceRegistrationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ManagedServicesMarketplaceRegistrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedServicesMarketplaceRegistrationData>(Data, options, AzureResourceManagerManagedServicesContext.Default);
 
         ManagedServicesMarketplaceRegistrationData IPersistableModel<ManagedServicesMarketplaceRegistrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedServicesMarketplaceRegistrationData>(data, options, AzureResourceManagerManagedServicesContext.Default);
 
-        string IPersistableModel<ManagedServicesMarketplaceRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedServicesMarketplaceRegistrationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ManagedServicesMarketplaceRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedServicesMarketplaceRegistrationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

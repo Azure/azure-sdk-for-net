@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class ProximityPlacementGroupResource : IJsonModel<ProximityPlacementGroupData>
     {
+        private static ProximityPlacementGroupData s_dataDeserializationInstance;
+        private static ProximityPlacementGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ProximityPlacementGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProximityPlacementGroupData>)Data).Write(writer, options);
 
-        ProximityPlacementGroupData IJsonModel<ProximityPlacementGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProximityPlacementGroupData>)Data).Create(ref reader, options);
+        ProximityPlacementGroupData IJsonModel<ProximityPlacementGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProximityPlacementGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ProximityPlacementGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProximityPlacementGroupData>(Data, options, AzureResourceManagerComputeContext.Default);
 
         ProximityPlacementGroupData IPersistableModel<ProximityPlacementGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProximityPlacementGroupData>(data, options, AzureResourceManagerComputeContext.Default);
 
-        string IPersistableModel<ProximityPlacementGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProximityPlacementGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ProximityPlacementGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProximityPlacementGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

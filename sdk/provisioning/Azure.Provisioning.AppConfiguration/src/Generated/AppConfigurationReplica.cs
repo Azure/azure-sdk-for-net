@@ -95,7 +95,7 @@ public partial class AppConfigurationReplica : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the AppConfigurationReplica.</param>
     public AppConfigurationReplica(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.AppConfiguration/configurationStores/replicas", resourceVersion ?? "2024-05-01")
+        : base(bicepIdentifier, "Microsoft.AppConfiguration/configurationStores/replicas", resourceVersion ?? "2024-06-01")
     {
     }
 
@@ -118,6 +118,11 @@ public partial class AppConfigurationReplica : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-06-01.
+        /// </summary>
+        public static readonly string V2024_06_01 = "2024-06-01";
+
         /// <summary>
         /// 2024-05-01.
         /// </summary>

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     public partial class LocalRulestackCertificateObjectResource : IJsonModel<LocalRulestackCertificateObjectData>
     {
+        private static LocalRulestackCertificateObjectData s_dataDeserializationInstance;
+        private static LocalRulestackCertificateObjectData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<LocalRulestackCertificateObjectData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LocalRulestackCertificateObjectData>)Data).Write(writer, options);
 
-        LocalRulestackCertificateObjectData IJsonModel<LocalRulestackCertificateObjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LocalRulestackCertificateObjectData>)Data).Create(ref reader, options);
+        LocalRulestackCertificateObjectData IJsonModel<LocalRulestackCertificateObjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LocalRulestackCertificateObjectData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<LocalRulestackCertificateObjectData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LocalRulestackCertificateObjectData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
         LocalRulestackCertificateObjectData IPersistableModel<LocalRulestackCertificateObjectData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LocalRulestackCertificateObjectData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        string IPersistableModel<LocalRulestackCertificateObjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LocalRulestackCertificateObjectData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<LocalRulestackCertificateObjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LocalRulestackCertificateObjectData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

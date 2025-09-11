@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SqlVirtualMachine.Models;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
@@ -13,6 +15,40 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AdditionalFeaturesServerConfigurations))]
+    [ModelReaderWriterBuildable(typeof(AvailabilityGroupConfiguration))]
+    [ModelReaderWriterBuildable(typeof(AvailabilityGroupListenerData))]
+    [ModelReaderWriterBuildable(typeof(AvailabilityGroupListenerListResult))]
+    [ModelReaderWriterBuildable(typeof(AvailabilityGroupListenerLoadBalancerConfiguration))]
+    [ModelReaderWriterBuildable(typeof(AvailabilityGroupListenerPrivateIPAddress))]
+    [ModelReaderWriterBuildable(typeof(AvailabilityGroupListenerResource))]
+    [ModelReaderWriterBuildable(typeof(AvailabilityGroupReplica))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(MultiSubnetIPConfiguration))]
+    [ModelReaderWriterBuildable(typeof(SqlConnectivityUpdateSettings))]
+    [ModelReaderWriterBuildable(typeof(SqlInstanceSettings))]
+    [ModelReaderWriterBuildable(typeof(SqlServerConfigurationsManagementSettings))]
+    [ModelReaderWriterBuildable(typeof(SqlStorageSettings))]
+    [ModelReaderWriterBuildable(typeof(SqlStorageUpdateSettings))]
+    [ModelReaderWriterBuildable(typeof(SqlTempDBSettings))]
+    [ModelReaderWriterBuildable(typeof(SqlVmAssessmentSchedule))]
+    [ModelReaderWriterBuildable(typeof(SqlVmAssessmentSettings))]
+    [ModelReaderWriterBuildable(typeof(SqlVmAutoBackupSettings))]
+    [ModelReaderWriterBuildable(typeof(SqlVmAutoPatchingSettings))]
+    [ModelReaderWriterBuildable(typeof(SqlVmData))]
+    [ModelReaderWriterBuildable(typeof(SqlVmGroupData))]
+    [ModelReaderWriterBuildable(typeof(SqlVmGroupListResult))]
+    [ModelReaderWriterBuildable(typeof(SqlVmGroupPatch))]
+    [ModelReaderWriterBuildable(typeof(SqlVmGroupResource))]
+    [ModelReaderWriterBuildable(typeof(SqlVmKeyVaultCredentialSettings))]
+    [ModelReaderWriterBuildable(typeof(SqlVmListResult))]
+    [ModelReaderWriterBuildable(typeof(SqlVmPatch))]
+    [ModelReaderWriterBuildable(typeof(SqlVmResource))]
+    [ModelReaderWriterBuildable(typeof(SqlVmStorageConfigurationSettings))]
+    [ModelReaderWriterBuildable(typeof(SqlWorkloadTypeUpdateSettings))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(WindowsServerFailoverClusterDomainCredentials))]
+    [ModelReaderWriterBuildable(typeof(WindowsServerFailoverClusterDomainProfile))]
     public partial class AzureResourceManagerSqlVirtualMachineContext : ModelReaderWriterContext
     {
     }

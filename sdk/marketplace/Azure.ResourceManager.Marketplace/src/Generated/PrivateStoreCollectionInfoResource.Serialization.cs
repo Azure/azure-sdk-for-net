@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Marketplace
 {
     public partial class PrivateStoreCollectionInfoResource : IJsonModel<PrivateStoreCollectionInfoData>
     {
+        private static PrivateStoreCollectionInfoData s_dataDeserializationInstance;
+        private static PrivateStoreCollectionInfoData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PrivateStoreCollectionInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PrivateStoreCollectionInfoData>)Data).Write(writer, options);
 
-        PrivateStoreCollectionInfoData IJsonModel<PrivateStoreCollectionInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateStoreCollectionInfoData>)Data).Create(ref reader, options);
+        PrivateStoreCollectionInfoData IJsonModel<PrivateStoreCollectionInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateStoreCollectionInfoData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PrivateStoreCollectionInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PrivateStoreCollectionInfoData>(Data, options, AzureResourceManagerMarketplaceContext.Default);
 
         PrivateStoreCollectionInfoData IPersistableModel<PrivateStoreCollectionInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateStoreCollectionInfoData>(data, options, AzureResourceManagerMarketplaceContext.Default);
 
-        string IPersistableModel<PrivateStoreCollectionInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateStoreCollectionInfoData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PrivateStoreCollectionInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateStoreCollectionInfoData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

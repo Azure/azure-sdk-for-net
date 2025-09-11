@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
 {
     public partial class SapDiscoveryServerInstanceResource : IJsonModel<SapDiscoveryServerInstanceData>
     {
+        private static SapDiscoveryServerInstanceData s_dataDeserializationInstance;
+        private static SapDiscoveryServerInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SapDiscoveryServerInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SapDiscoveryServerInstanceData>)Data).Write(writer, options);
 
-        SapDiscoveryServerInstanceData IJsonModel<SapDiscoveryServerInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SapDiscoveryServerInstanceData>)Data).Create(ref reader, options);
+        SapDiscoveryServerInstanceData IJsonModel<SapDiscoveryServerInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SapDiscoveryServerInstanceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SapDiscoveryServerInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SapDiscoveryServerInstanceData>(Data, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
 
         SapDiscoveryServerInstanceData IPersistableModel<SapDiscoveryServerInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SapDiscoveryServerInstanceData>(data, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
 
-        string IPersistableModel<SapDiscoveryServerInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SapDiscoveryServerInstanceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SapDiscoveryServerInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SapDiscoveryServerInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

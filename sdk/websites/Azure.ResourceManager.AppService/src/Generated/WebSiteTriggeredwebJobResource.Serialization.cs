@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class WebSiteTriggeredwebJobResource : IJsonModel<TriggeredWebJobData>
     {
+        private static TriggeredWebJobData s_dataDeserializationInstance;
+        private static TriggeredWebJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<TriggeredWebJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TriggeredWebJobData>)Data).Write(writer, options);
 
-        TriggeredWebJobData IJsonModel<TriggeredWebJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TriggeredWebJobData>)Data).Create(ref reader, options);
+        TriggeredWebJobData IJsonModel<TriggeredWebJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TriggeredWebJobData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<TriggeredWebJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TriggeredWebJobData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         TriggeredWebJobData IPersistableModel<TriggeredWebJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TriggeredWebJobData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<TriggeredWebJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TriggeredWebJobData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<TriggeredWebJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TriggeredWebJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

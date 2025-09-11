@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class PrivateEndpointResource : IJsonModel<PrivateEndpointData>
     {
+        private static PrivateEndpointData s_dataDeserializationInstance;
+        private static PrivateEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PrivateEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PrivateEndpointData>)Data).Write(writer, options);
 
-        PrivateEndpointData IJsonModel<PrivateEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateEndpointData>)Data).Create(ref reader, options);
+        PrivateEndpointData IJsonModel<PrivateEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateEndpointData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PrivateEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PrivateEndpointData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         PrivateEndpointData IPersistableModel<PrivateEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateEndpointData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<PrivateEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateEndpointData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PrivateEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

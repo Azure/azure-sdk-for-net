@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RedisEnterprise
 {
     public partial class RedisEnterpriseDatabaseResource : IJsonModel<RedisEnterpriseDatabaseData>
     {
+        private static RedisEnterpriseDatabaseData s_dataDeserializationInstance;
+        private static RedisEnterpriseDatabaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RedisEnterpriseDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RedisEnterpriseDatabaseData>)Data).Write(writer, options);
 
-        RedisEnterpriseDatabaseData IJsonModel<RedisEnterpriseDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisEnterpriseDatabaseData>)Data).Create(ref reader, options);
+        RedisEnterpriseDatabaseData IJsonModel<RedisEnterpriseDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisEnterpriseDatabaseData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<RedisEnterpriseDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisEnterpriseDatabaseData>(Data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
         RedisEnterpriseDatabaseData IPersistableModel<RedisEnterpriseDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisEnterpriseDatabaseData>(data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
-        string IPersistableModel<RedisEnterpriseDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisEnterpriseDatabaseData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RedisEnterpriseDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisEnterpriseDatabaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

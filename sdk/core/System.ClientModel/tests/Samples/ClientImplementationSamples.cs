@@ -22,10 +22,10 @@ public class ClientImplementationSamples
         IJsonModel<SampleResource> jsonModel = resource;
 
         BinaryData persistableModelData = persistableModel.Write(ModelReaderWriterOptions.Json);
-        SampleResource persistableModelResource = persistableModel.Create(persistableModelData, ModelReaderWriterOptions.Json);
+        SampleResource? persistableModelResource = persistableModel.Create(persistableModelData, ModelReaderWriterOptions.Json);
 
         Assert.AreEqual("""{"id":"123"}""", persistableModelData.ToString());
-        Assert.AreEqual("123", persistableModelResource.Id);
+        Assert.AreEqual("123", persistableModelResource?.Id);
 
         using MemoryStream stream = new();
         using Utf8JsonWriter writer = new(stream);
@@ -34,10 +34,10 @@ public class ClientImplementationSamples
 
         BinaryData jsonModelData = BinaryData.FromBytes(stream.ToArray());
         Utf8JsonReader reader = new(jsonModelData);
-        SampleResource jsonModelResource = jsonModel.Create(ref reader, ModelReaderWriterOptions.Json);
+        SampleResource? jsonModelResource = jsonModel.Create(ref reader, ModelReaderWriterOptions.Json);
 
         Assert.AreEqual("""{"id":"123"}""", jsonModelData.ToString());
-        Assert.AreEqual("123", persistableModelResource.Id);
+        Assert.AreEqual("123", jsonModelResource?.Id);
     }
 
     [Test]

@@ -1,10 +1,10 @@
 namespace Azure.Communication.Sms
 {
-    public partial class AzureCommunicationSmsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    public partial class MessagingConnectOptions
     {
-        internal AzureCommunicationSmsContext() { }
-        public static Azure.Communication.Sms.AzureCommunicationSmsContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public MessagingConnectOptions(string apiKey, string partner) { }
+        public string ApiKey { get { throw null; } }
+        public string Partner { get { throw null; } }
     }
     public partial class OptOutsClient
     {
@@ -31,11 +31,11 @@ namespace Azure.Communication.Sms
     }
     public partial class SmsClientOptions : Azure.Core.ClientOptions
     {
-        public SmsClientOptions(Azure.Communication.Sms.SmsClientOptions.ServiceVersion version = Azure.Communication.Sms.SmsClientOptions.ServiceVersion.V2024_12_10_Preview) { }
+        public SmsClientOptions(Azure.Communication.Sms.SmsClientOptions.ServiceVersion version = Azure.Communication.Sms.SmsClientOptions.ServiceVersion.V2025_05_29_Preview) { }
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
-            V2024_12_10_Preview = 2,
+            V2025_05_29_Preview = 2,
         }
     }
     public partial class SmsSendOptions
@@ -43,6 +43,7 @@ namespace Azure.Communication.Sms
         public SmsSendOptions(bool enableDeliveryReport) { }
         public int? DeliveryReportTimeoutInSeconds { get { throw null; } set { } }
         public bool EnableDeliveryReport { get { throw null; } }
+        public Azure.Communication.Sms.MessagingConnectOptions MessagingConnect { get { throw null; } set { } }
         public string Tag { get { throw null; } set { } }
     }
     public partial class SmsSendResult

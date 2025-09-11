@@ -14,35 +14,52 @@ namespace Azure.Security.KeyVault.Administration
     public readonly partial struct KeyVaultSettingType : IEquatable<KeyVaultSettingType>
     {
         private readonly string _value;
+        /// <summary> A boolean setting value. </summary>
+        private const string BooleanValue = "boolean";
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultSettingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyVaultSettingType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BooleanValue = "boolean";
+            _value = value;
+        }
 
         /// <summary> A boolean setting value. </summary>
         public static KeyVaultSettingType Boolean { get; } = new KeyVaultSettingType(BooleanValue);
+
         /// <summary> Determines if two <see cref="KeyVaultSettingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KeyVaultSettingType left, KeyVaultSettingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KeyVaultSettingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KeyVaultSettingType left, KeyVaultSettingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KeyVaultSettingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KeyVaultSettingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KeyVaultSettingType(string value) => new KeyVaultSettingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KeyVaultSettingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KeyVaultSettingType?(string value) => value == null ? null : new KeyVaultSettingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KeyVaultSettingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KeyVaultSettingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

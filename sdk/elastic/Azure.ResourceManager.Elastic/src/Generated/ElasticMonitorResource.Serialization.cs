@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Elastic
 {
     public partial class ElasticMonitorResource : IJsonModel<ElasticMonitorData>
     {
+        private static ElasticMonitorData s_dataDeserializationInstance;
+        private static ElasticMonitorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ElasticMonitorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ElasticMonitorData>)Data).Write(writer, options);
 
-        ElasticMonitorData IJsonModel<ElasticMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticMonitorData>)Data).Create(ref reader, options);
+        ElasticMonitorData IJsonModel<ElasticMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticMonitorData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ElasticMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticMonitorData>(Data, options, AzureResourceManagerElasticContext.Default);
 
         ElasticMonitorData IPersistableModel<ElasticMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticMonitorData>(data, options, AzureResourceManagerElasticContext.Default);
 
-        string IPersistableModel<ElasticMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticMonitorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ElasticMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticMonitorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

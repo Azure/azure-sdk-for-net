@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class HostingEnvironmentWorkerPoolResource : IJsonModel<AppServiceWorkerPoolData>
     {
+        private static AppServiceWorkerPoolData s_dataDeserializationInstance;
+        private static AppServiceWorkerPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppServiceWorkerPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceWorkerPoolData>)Data).Write(writer, options);
 
-        AppServiceWorkerPoolData IJsonModel<AppServiceWorkerPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceWorkerPoolData>)Data).Create(ref reader, options);
+        AppServiceWorkerPoolData IJsonModel<AppServiceWorkerPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceWorkerPoolData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AppServiceWorkerPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppServiceWorkerPoolData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         AppServiceWorkerPoolData IPersistableModel<AppServiceWorkerPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceWorkerPoolData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<AppServiceWorkerPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppServiceWorkerPoolData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppServiceWorkerPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppServiceWorkerPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

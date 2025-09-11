@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppContainers
 {
     public partial class ContainerAppManagedEnvironmentDaprComponentResource : IJsonModel<ContainerAppDaprComponentData>
     {
+        private static ContainerAppDaprComponentData s_dataDeserializationInstance;
+        private static ContainerAppDaprComponentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ContainerAppDaprComponentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppDaprComponentData>)Data).Write(writer, options);
 
-        ContainerAppDaprComponentData IJsonModel<ContainerAppDaprComponentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppDaprComponentData>)Data).Create(ref reader, options);
+        ContainerAppDaprComponentData IJsonModel<ContainerAppDaprComponentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppDaprComponentData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ContainerAppDaprComponentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerAppDaprComponentData>(Data, options, AzureResourceManagerAppContainersContext.Default);
 
         ContainerAppDaprComponentData IPersistableModel<ContainerAppDaprComponentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppDaprComponentData>(data, options, AzureResourceManagerAppContainersContext.Default);
 
-        string IPersistableModel<ContainerAppDaprComponentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppDaprComponentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ContainerAppDaprComponentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppDaprComponentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

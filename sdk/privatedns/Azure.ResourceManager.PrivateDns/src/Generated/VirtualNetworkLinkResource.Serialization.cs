@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PrivateDns
 {
     public partial class VirtualNetworkLinkResource : IJsonModel<VirtualNetworkLinkData>
     {
+        private static VirtualNetworkLinkData s_dataDeserializationInstance;
+        private static VirtualNetworkLinkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VirtualNetworkLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkLinkData>)Data).Write(writer, options);
 
-        VirtualNetworkLinkData IJsonModel<VirtualNetworkLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkLinkData>)Data).Create(ref reader, options);
+        VirtualNetworkLinkData IJsonModel<VirtualNetworkLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkLinkData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<VirtualNetworkLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualNetworkLinkData>(Data, options, AzureResourceManagerPrivateDnsContext.Default);
 
         VirtualNetworkLinkData IPersistableModel<VirtualNetworkLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkLinkData>(data, options, AzureResourceManagerPrivateDnsContext.Default);
 
-        string IPersistableModel<VirtualNetworkLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkLinkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VirtualNetworkLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkLinkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

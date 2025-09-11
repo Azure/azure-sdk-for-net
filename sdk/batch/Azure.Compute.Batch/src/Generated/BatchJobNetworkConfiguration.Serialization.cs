@@ -36,8 +36,11 @@ namespace Azure.Compute.Batch
 
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
-            writer.WritePropertyName("skipWithdrawFromVNet"u8);
-            writer.WriteBooleanValue(SkipWithdrawFromVNet);
+            if (Optional.IsDefined(SkipWithdrawFromVnet))
+            {
+                writer.WritePropertyName("skipWithdrawFromVNet"u8);
+                writer.WriteBooleanValue(SkipWithdrawFromVnet.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -76,7 +79,7 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string subnetId = default;
-            bool skipWithdrawFromVNet = default;
+            bool? skipWithdrawFromVNet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,6 +91,10 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("skipWithdrawFromVNet"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     skipWithdrawFromVNet = property.Value.GetBoolean();
                     continue;
                 }

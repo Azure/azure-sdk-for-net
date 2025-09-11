@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VirtualRouterResource : IJsonModel<VirtualRouterData>
     {
+        private static VirtualRouterData s_dataDeserializationInstance;
+        private static VirtualRouterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VirtualRouterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualRouterData>)Data).Write(writer, options);
 
-        VirtualRouterData IJsonModel<VirtualRouterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualRouterData>)Data).Create(ref reader, options);
+        VirtualRouterData IJsonModel<VirtualRouterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualRouterData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<VirtualRouterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualRouterData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         VirtualRouterData IPersistableModel<VirtualRouterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualRouterData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<VirtualRouterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualRouterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VirtualRouterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualRouterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

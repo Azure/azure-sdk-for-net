@@ -2,25 +2,20 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.CognitiveServices.Tests;
 
-public class BasicCognitiveServicesTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicCognitiveServicesTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.cognitiveservices/cognitive-services-translate/main.bicep")]
-    public async Task CreateTranslation()
+    internal static Trycep CreateTranslationTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
+                #region Snippet:CognitiveServicesBasic
                 Infrastructure infra = new();
 
                 CognitiveServicesAccount account =
@@ -40,10 +35,17 @@ public class BasicCognitiveServicesTests(bool async)
                         }
                     };
                 infra.Add(account);
+                #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.cognitiveservices/cognitive-services-translate/main.bicep")]
+    public async Task CreateTranslation()
+    {
+        await using Trycep test = CreateTranslationTest();
+        test.Compare(
             """
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
@@ -66,8 +68,6 @@ public class BasicCognitiveServicesTests(bool async)
                 name: 'S1'
               }
             }
-            """)
-        .Lint()
-        .ValidateAndDeployAsync();
+            """);
     }
 }

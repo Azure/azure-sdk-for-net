@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ElasticSan
 {
     public partial class ElasticSanPrivateEndpointConnectionResource : IJsonModel<ElasticSanPrivateEndpointConnectionData>
     {
+        private static ElasticSanPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static ElasticSanPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ElasticSanPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        ElasticSanPrivateEndpointConnectionData IJsonModel<ElasticSanPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        ElasticSanPrivateEndpointConnectionData IJsonModel<ElasticSanPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ElasticSanPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticSanPrivateEndpointConnectionData>(Data, options, AzureResourceManagerElasticSanContext.Default);
 
         ElasticSanPrivateEndpointConnectionData IPersistableModel<ElasticSanPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticSanPrivateEndpointConnectionData>(data, options, AzureResourceManagerElasticSanContext.Default);
 
-        string IPersistableModel<ElasticSanPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticSanPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ElasticSanPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticSanPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -198,7 +198,11 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             ShareFileClient objectClient,
             TransferPropertiesTestType type = TransferPropertiesTestType.Default)
         {
-            ShareFileStorageResourceOptions options = default;
+            // Blob to Share File does not require checking if the destination requires NFS
+            ShareFileStorageResourceOptions options = new()
+            {
+                SkipProtocolValidation = true,
+            };
             if (type == TransferPropertiesTestType.NewProperties)
             {
                 options = new ShareFileStorageResourceOptions()
@@ -210,7 +214,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     FileMetadata = _defaultMetadata,
                     FileCreatedOn = _defaultFileCreatedOn,
                     FileLastWrittenOn = _defaultFileLastWrittenOn,
-                    FileChangedOn = _defaultFileChangedOn
+                    FileChangedOn = _defaultFileChangedOn,
+                    SkipProtocolValidation = true,
                 };
             }
             else if (type == TransferPropertiesTestType.Preserve)
@@ -218,6 +223,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 options = new ShareFileStorageResourceOptions()
                 {
                     FilePermissions = true,
+                    SkipProtocolValidation = true,
                 };
             }
             else if (type == TransferPropertiesTestType.NoPreserve)
@@ -231,7 +237,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     FileMetadata = default,
                     FileCreatedOn = default,
                     FileLastWrittenOn = default,
-                    FileChangedOn = default
+                    FileChangedOn = default,
+                    SkipProtocolValidation = true,
                 };
             }
             return new ShareFileStorageResource(objectClient, options);

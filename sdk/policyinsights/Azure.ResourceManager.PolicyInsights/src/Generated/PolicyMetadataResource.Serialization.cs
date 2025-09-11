@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PolicyInsights
 {
     public partial class PolicyMetadataResource : IJsonModel<PolicyMetadataData>
     {
+        private static PolicyMetadataData s_dataDeserializationInstance;
+        private static PolicyMetadataData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PolicyMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PolicyMetadataData>)Data).Write(writer, options);
 
-        PolicyMetadataData IJsonModel<PolicyMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicyMetadataData>)Data).Create(ref reader, options);
+        PolicyMetadataData IJsonModel<PolicyMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicyMetadataData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PolicyMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PolicyMetadataData>(Data, options, AzureResourceManagerPolicyInsightsContext.Default);
 
         PolicyMetadataData IPersistableModel<PolicyMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicyMetadataData>(data, options, AzureResourceManagerPolicyInsightsContext.Default);
 
-        string IPersistableModel<PolicyMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicyMetadataData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PolicyMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicyMetadataData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -1,4 +1,4 @@
-# Azure.Provisioning.ContainerRegistry client library for .NET
+# Azure Provisioning ContainerRegistry client library for .NET
 
 Azure.Provisioning.ContainerRegistry simplifies declarative resource provisioning in .NET.
 
@@ -21,6 +21,28 @@ dotnet add package Azure.Provisioning.ContainerRegistry
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
+
+## Examples
+
+### Create A Container Registry
+
+This example demonstrates how to create a Container Registry with standard SKU and custom tags, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.containerregistry/container-registry/main.bicep).
+
+```C# Snippet:ContainerRegistryBasic
+Infrastructure infra = new();
+
+ContainerRegistryService registry =
+    new(nameof(registry), ContainerRegistryService.ResourceVersions.V2023_07_01)
+    {
+        Sku = new ContainerRegistrySku { Name = ContainerRegistrySkuName.Standard },
+        IsAdminUserEnabled = false,
+        Tags = { { "displayName", "ContainerRegistry" } }
+    };
+registry.Tags.Add("container.registry", registry.Name);
+infra.Add(registry);
+
+infra.Add(new ProvisioningOutput("registryLoginServer", typeof(string)) { Value = registry.LoginServer });
+```
 
 ## Troubleshooting
 

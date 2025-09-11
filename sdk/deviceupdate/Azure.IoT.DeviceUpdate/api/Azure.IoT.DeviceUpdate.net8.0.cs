@@ -1,11 +1,5 @@
 namespace Azure.IoT.DeviceUpdate
 {
-    public partial class AzureIoTDeviceUpdateContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureIoTDeviceUpdateContext() { }
-        public static Azure.IoT.DeviceUpdate.AzureIoTDeviceUpdateContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class DeviceManagementClient
     {
         protected DeviceManagementClient() { }
@@ -134,8 +128,10 @@ namespace Microsoft.Extensions.Azure
     public static partial class IoTDeviceUpdateClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.IoT.DeviceUpdate.DeviceManagementClient, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions> AddDeviceManagementClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string instanceId) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.IoT.DeviceUpdate.DeviceManagementClient, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions> AddDeviceManagementClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.IoT.DeviceUpdate.DeviceUpdateClient, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions> AddDeviceUpdateClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string instanceId) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.IoT.DeviceUpdate.DeviceUpdateClient, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions> AddDeviceUpdateClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

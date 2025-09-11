@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     public partial class DataReplicationProtectedItemResource : IJsonModel<DataReplicationProtectedItemData>
     {
+        private static DataReplicationProtectedItemData s_dataDeserializationInstance;
+        private static DataReplicationProtectedItemData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataReplicationProtectedItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationProtectedItemData>)Data).Write(writer, options);
 
-        DataReplicationProtectedItemData IJsonModel<DataReplicationProtectedItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationProtectedItemData>)Data).Create(ref reader, options);
+        DataReplicationProtectedItemData IJsonModel<DataReplicationProtectedItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationProtectedItemData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DataReplicationProtectedItemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataReplicationProtectedItemData>(Data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
         DataReplicationProtectedItemData IPersistableModel<DataReplicationProtectedItemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataReplicationProtectedItemData>(data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
-        string IPersistableModel<DataReplicationProtectedItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataReplicationProtectedItemData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataReplicationProtectedItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataReplicationProtectedItemData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

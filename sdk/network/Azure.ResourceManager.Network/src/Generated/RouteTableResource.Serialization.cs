@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class RouteTableResource : IJsonModel<RouteTableData>
     {
+        private static RouteTableData s_dataDeserializationInstance;
+        private static RouteTableData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RouteTableData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RouteTableData>)Data).Write(writer, options);
 
-        RouteTableData IJsonModel<RouteTableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RouteTableData>)Data).Create(ref reader, options);
+        RouteTableData IJsonModel<RouteTableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RouteTableData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<RouteTableData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RouteTableData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         RouteTableData IPersistableModel<RouteTableData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RouteTableData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<RouteTableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RouteTableData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RouteTableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RouteTableData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

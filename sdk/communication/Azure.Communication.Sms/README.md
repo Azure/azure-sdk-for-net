@@ -56,7 +56,7 @@ Console.WriteLine($"Sms id: {sendResult.MessageId}");
 ```
 #### Send a 1:N SMS Message
 To send a SMS message to a list of recipients, call the `Send` or `SendAsync` function from the `SmsClient` with a list of recipient's phone numbers.
-You may also add pass in an options object to specify whether the delivery report should be enabled and set custom tags.
+You can also provide an options object to configure various settings, such as enabling the delivery report, adding custom tags, or specifying parameters for connecting with the Messaging Connect Partner to deliver SMS.
 ```C# Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptionsAsync
 var response = await smsClient.SendAsync(
     from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS

@@ -13,7 +13,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/700bd7b4e10d2bd83672
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -101,7 +101,7 @@ rename-mapping:
   VMIngestionDetailsResponse: VmIngestionDetailsResult
   VMResources: ElasticVMResourceInfo
   VMResources.vmResourceId: -|arm-id
- 
+
 prepend-rp-prefix:
   - MonitoringStatus
   - MonitorProperties

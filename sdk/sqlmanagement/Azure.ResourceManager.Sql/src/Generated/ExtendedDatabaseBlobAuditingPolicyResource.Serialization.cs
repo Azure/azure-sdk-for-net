@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class ExtendedDatabaseBlobAuditingPolicyResource : IJsonModel<ExtendedDatabaseBlobAuditingPolicyData>
     {
+        private static ExtendedDatabaseBlobAuditingPolicyData s_dataDeserializationInstance;
+        private static ExtendedDatabaseBlobAuditingPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ExtendedDatabaseBlobAuditingPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedDatabaseBlobAuditingPolicyData>)Data).Write(writer, options);
 
-        ExtendedDatabaseBlobAuditingPolicyData IJsonModel<ExtendedDatabaseBlobAuditingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedDatabaseBlobAuditingPolicyData>)Data).Create(ref reader, options);
+        ExtendedDatabaseBlobAuditingPolicyData IJsonModel<ExtendedDatabaseBlobAuditingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedDatabaseBlobAuditingPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ExtendedDatabaseBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExtendedDatabaseBlobAuditingPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         ExtendedDatabaseBlobAuditingPolicyData IPersistableModel<ExtendedDatabaseBlobAuditingPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExtendedDatabaseBlobAuditingPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ExtendedDatabaseBlobAuditingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExtendedDatabaseBlobAuditingPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ExtendedDatabaseBlobAuditingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExtendedDatabaseBlobAuditingPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

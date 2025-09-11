@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
 {
     public partial class ArizeAIObservabilityEvalOrganizationResource : IJsonModel<ArizeAIObservabilityEvalOrganizationData>
     {
+        private static ArizeAIObservabilityEvalOrganizationData s_dataDeserializationInstance;
+        private static ArizeAIObservabilityEvalOrganizationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ArizeAIObservabilityEvalOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ArizeAIObservabilityEvalOrganizationData>)Data).Write(writer, options);
 
-        ArizeAIObservabilityEvalOrganizationData IJsonModel<ArizeAIObservabilityEvalOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArizeAIObservabilityEvalOrganizationData>)Data).Create(ref reader, options);
+        ArizeAIObservabilityEvalOrganizationData IJsonModel<ArizeAIObservabilityEvalOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArizeAIObservabilityEvalOrganizationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ArizeAIObservabilityEvalOrganizationData>(Data, options, AzureResourceManagerArizeAIObservabilityEvalContext.Default);
 
         ArizeAIObservabilityEvalOrganizationData IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArizeAIObservabilityEvalOrganizationData>(data, options, AzureResourceManagerArizeAIObservabilityEvalContext.Default);
 
-        string IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArizeAIObservabilityEvalOrganizationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArizeAIObservabilityEvalOrganizationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

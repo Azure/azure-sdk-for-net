@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class WorkloadNetworkDhcpResource : IJsonModel<WorkloadNetworkDhcpData>
     {
+        private static WorkloadNetworkDhcpData s_dataDeserializationInstance;
+        private static WorkloadNetworkDhcpData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkloadNetworkDhcpData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkDhcpData>)Data).Write(writer, options);
 
-        WorkloadNetworkDhcpData IJsonModel<WorkloadNetworkDhcpData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkDhcpData>)Data).Create(ref reader, options);
+        WorkloadNetworkDhcpData IJsonModel<WorkloadNetworkDhcpData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkDhcpData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<WorkloadNetworkDhcpData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkDhcpData>(Data, options, AzureResourceManagerAvsContext.Default);
 
         WorkloadNetworkDhcpData IPersistableModel<WorkloadNetworkDhcpData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkDhcpData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<WorkloadNetworkDhcpData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkDhcpData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkloadNetworkDhcpData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkDhcpData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

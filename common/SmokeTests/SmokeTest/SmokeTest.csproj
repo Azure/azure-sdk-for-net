@@ -29,9 +29,6 @@
     <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.12.1" />
     <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.7.0" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.24.0" />
-    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.6.11" />
-    <PackageReference Include="Microsoft.Azure.Devices" Version="1.40.0" />
-    <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.22.0" />
     <PackageReference Include="Azure.Template" Version="1.0.3-beta.1218030" />
 
     <!-- This is needed to resolve a build conflict and force the correct version -->

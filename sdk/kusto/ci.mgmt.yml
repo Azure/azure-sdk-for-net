@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Kusto
       safeName: AzureResourceManagerKusto
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Kusto
+      ExpectedWarningsFilepath: None

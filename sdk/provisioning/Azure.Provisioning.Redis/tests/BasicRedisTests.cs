@@ -2,24 +2,19 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.Redis.Tests;
 
-public class BasicRedisTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicRedisTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.cache/redis-cache/main.bicep")]
-    public async Task CreateRedisCache()
+    internal static Trycep CreateRedisCacheTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
+                #region Snippet:RedisBasic
                 Infrastructure infra = new();
 
                 RedisResource cache =
@@ -36,10 +31,18 @@ public class BasicRedisTests(bool async)
                             },
                     };
                 infra.Add(cache);
+                #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.cache/redis-cache/main.bicep")]
+    public async Task CreateRedisCache()
+    {
+        await using Trycep test = CreateRedisCacheTest();
+        test.Compare(
             """
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
@@ -57,8 +60,6 @@ public class BasicRedisTests(bool async)
                 minimumTlsVersion: '1.2'
               }
             }
-            """)
-        .Lint()
-        .ValidateAsync(); // Just validate...  Deploying takes a hot minute.
+            """);
     }
 }

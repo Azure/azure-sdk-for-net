@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -15,27 +14,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterJobClassifiedEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassifiedEventData"/>. </summary>
-        /// <param name="labels"> Router Job events Labels. </param>
-        /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="queueDetails"> Router Job Queue Info. </param>
-        /// <param name="attachedWorkerSelectors"> Router Job Attached Worker Selector. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labels"/>, <paramref name="tags"/>, <paramref name="queueDetails"/> or <paramref name="attachedWorkerSelectors"/> is null. </exception>
-        internal AcsRouterJobClassifiedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterQueueDetails queueDetails, IEnumerable<AcsRouterWorkerSelector> attachedWorkerSelectors) : base(labels, tags)
+        internal AcsRouterJobClassifiedEventData(AcsRouterQueueDetails queueDetails)
         {
-            Argument.AssertNotNull(labels, nameof(labels));
-            Argument.AssertNotNull(tags, nameof(tags));
-            Argument.AssertNotNull(queueDetails, nameof(queueDetails));
-            Argument.AssertNotNull(attachedWorkerSelectors, nameof(attachedWorkerSelectors));
-
             QueueDetails = queueDetails;
-            AttachedWorkerSelectors = attachedWorkerSelectors.ToList();
+            AttachedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassifiedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="queueId"> Router Job events Queue Id. </param>
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
@@ -43,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="classificationPolicyId"> Router Job Classification Policy Id. </param>
         /// <param name="priority"> Router Job Priority. </param>
         /// <param name="attachedWorkerSelectors"> Router Job Attached Worker Selector. </param>
-        internal AcsRouterJobClassifiedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterQueueDetails queueDetails, string classificationPolicyId, int? priority, IReadOnlyList<AcsRouterWorkerSelector> attachedWorkerSelectors) : base(jobId, channelReference, channelId, serializedAdditionalRawData, queueId, labels, tags)
+        internal AcsRouterJobClassifiedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterQueueDetails queueDetails, string classificationPolicyId, int? priority, IReadOnlyList<AcsRouterWorkerSelector> attachedWorkerSelectors) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
         {
             QueueDetails = queueDetails;
             ClassificationPolicyId = classificationPolicyId;
@@ -51,17 +41,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             AttachedWorkerSelectors = attachedWorkerSelectors;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassifiedEventData"/> for deserialization. </summary>
-        internal AcsRouterJobClassifiedEventData()
-        {
-        }
-
         /// <summary> Router Job Queue Info. </summary>
         public AcsRouterQueueDetails QueueDetails { get; }
+
         /// <summary> Router Job Classification Policy Id. </summary>
         public string ClassificationPolicyId { get; }
+
         /// <summary> Router Job Priority. </summary>
         public int? Priority { get; }
+
         /// <summary> Router Job Attached Worker Selector. </summary>
         public IReadOnlyList<AcsRouterWorkerSelector> AttachedWorkerSelectors { get; }
     }

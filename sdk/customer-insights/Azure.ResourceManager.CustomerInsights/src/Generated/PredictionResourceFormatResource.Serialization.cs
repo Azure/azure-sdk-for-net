@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     public partial class PredictionResourceFormatResource : IJsonModel<PredictionResourceFormatData>
     {
+        private static PredictionResourceFormatData s_dataDeserializationInstance;
+        private static PredictionResourceFormatData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PredictionResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PredictionResourceFormatData>)Data).Write(writer, options);
 
-        PredictionResourceFormatData IJsonModel<PredictionResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PredictionResourceFormatData>)Data).Create(ref reader, options);
+        PredictionResourceFormatData IJsonModel<PredictionResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PredictionResourceFormatData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PredictionResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PredictionResourceFormatData>(Data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
         PredictionResourceFormatData IPersistableModel<PredictionResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PredictionResourceFormatData>(data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
-        string IPersistableModel<PredictionResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PredictionResourceFormatData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PredictionResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PredictionResourceFormatData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

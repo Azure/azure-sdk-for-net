@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseSqlPoolConnectionPolicyResource : IJsonModel<SynapseSqlPoolConnectionPolicyData>
     {
+        private static SynapseSqlPoolConnectionPolicyData s_dataDeserializationInstance;
+        private static SynapseSqlPoolConnectionPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseSqlPoolConnectionPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSqlPoolConnectionPolicyData>)Data).Write(writer, options);
 
-        SynapseSqlPoolConnectionPolicyData IJsonModel<SynapseSqlPoolConnectionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSqlPoolConnectionPolicyData>)Data).Create(ref reader, options);
+        SynapseSqlPoolConnectionPolicyData IJsonModel<SynapseSqlPoolConnectionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSqlPoolConnectionPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SynapseSqlPoolConnectionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseSqlPoolConnectionPolicyData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
         SynapseSqlPoolConnectionPolicyData IPersistableModel<SynapseSqlPoolConnectionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseSqlPoolConnectionPolicyData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseSqlPoolConnectionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseSqlPoolConnectionPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseSqlPoolConnectionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseSqlPoolConnectionPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

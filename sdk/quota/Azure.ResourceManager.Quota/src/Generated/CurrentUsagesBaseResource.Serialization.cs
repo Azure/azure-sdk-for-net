@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Quota
 {
     public partial class CurrentUsagesBaseResource : IJsonModel<CurrentUsagesBaseData>
     {
+        private static CurrentUsagesBaseData s_dataDeserializationInstance;
+        private static CurrentUsagesBaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CurrentUsagesBaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CurrentUsagesBaseData>)Data).Write(writer, options);
 
-        CurrentUsagesBaseData IJsonModel<CurrentUsagesBaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CurrentUsagesBaseData>)Data).Create(ref reader, options);
+        CurrentUsagesBaseData IJsonModel<CurrentUsagesBaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CurrentUsagesBaseData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<CurrentUsagesBaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CurrentUsagesBaseData>(Data, options, AzureResourceManagerQuotaContext.Default);
 
         CurrentUsagesBaseData IPersistableModel<CurrentUsagesBaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CurrentUsagesBaseData>(data, options, AzureResourceManagerQuotaContext.Default);
 
-        string IPersistableModel<CurrentUsagesBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CurrentUsagesBaseData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CurrentUsagesBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CurrentUsagesBaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

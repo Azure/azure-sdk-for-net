@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Hci
 {
     public partial class HciSkuResource : IJsonModel<HciSkuData>
     {
+        private static HciSkuData s_dataDeserializationInstance;
+        private static HciSkuData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HciSkuData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HciSkuData>)Data).Write(writer, options);
 
-        HciSkuData IJsonModel<HciSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciSkuData>)Data).Create(ref reader, options);
+        HciSkuData IJsonModel<HciSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciSkuData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<HciSkuData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciSkuData>(Data, options, AzureResourceManagerHciContext.Default);
 
         HciSkuData IPersistableModel<HciSkuData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciSkuData>(data, options, AzureResourceManagerHciContext.Default);
 
-        string IPersistableModel<HciSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciSkuData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HciSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciSkuData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

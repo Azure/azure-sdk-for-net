@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.EventHubs
 {
     public partial class EventHubsPrivateEndpointConnectionResource : IJsonModel<EventHubsPrivateEndpointConnectionData>
     {
+        private static EventHubsPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static EventHubsPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<EventHubsPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        EventHubsPrivateEndpointConnectionData IJsonModel<EventHubsPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        EventHubsPrivateEndpointConnectionData IJsonModel<EventHubsPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<EventHubsPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventHubsPrivateEndpointConnectionData>(Data, options, AzureResourceManagerEventHubsContext.Default);
 
         EventHubsPrivateEndpointConnectionData IPersistableModel<EventHubsPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsPrivateEndpointConnectionData>(data, options, AzureResourceManagerEventHubsContext.Default);
 
-        string IPersistableModel<EventHubsPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<EventHubsPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

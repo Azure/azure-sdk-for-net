@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Grafana
 {
     public partial class GrafanaPrivateEndpointConnectionResource : IJsonModel<GrafanaPrivateEndpointConnectionData>
     {
+        private static GrafanaPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static GrafanaPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GrafanaPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GrafanaPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        GrafanaPrivateEndpointConnectionData IJsonModel<GrafanaPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GrafanaPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        GrafanaPrivateEndpointConnectionData IJsonModel<GrafanaPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GrafanaPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<GrafanaPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GrafanaPrivateEndpointConnectionData>(Data, options, AzureResourceManagerGrafanaContext.Default);
 
         GrafanaPrivateEndpointConnectionData IPersistableModel<GrafanaPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GrafanaPrivateEndpointConnectionData>(data, options, AzureResourceManagerGrafanaContext.Default);
 
-        string IPersistableModel<GrafanaPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GrafanaPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GrafanaPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GrafanaPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

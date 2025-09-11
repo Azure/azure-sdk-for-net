@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Orbital
 {
     public partial class OrbitalContactProfileResource : IJsonModel<OrbitalContactProfileData>
     {
+        private static OrbitalContactProfileData s_dataDeserializationInstance;
+        private static OrbitalContactProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<OrbitalContactProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OrbitalContactProfileData>)Data).Write(writer, options);
 
-        OrbitalContactProfileData IJsonModel<OrbitalContactProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OrbitalContactProfileData>)Data).Create(ref reader, options);
+        OrbitalContactProfileData IJsonModel<OrbitalContactProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OrbitalContactProfileData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<OrbitalContactProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OrbitalContactProfileData>(Data, options, AzureResourceManagerOrbitalContext.Default);
 
         OrbitalContactProfileData IPersistableModel<OrbitalContactProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OrbitalContactProfileData>(data, options, AzureResourceManagerOrbitalContext.Default);
 
-        string IPersistableModel<OrbitalContactProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OrbitalContactProfileData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<OrbitalContactProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OrbitalContactProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

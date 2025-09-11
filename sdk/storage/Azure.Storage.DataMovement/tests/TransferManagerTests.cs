@@ -644,6 +644,8 @@ internal static partial class MockExtensions
         items.Destination.SetupGet(r => r.MaxSupportedChunkSize).Returns(Constants.GB);
         items.Destination.SetupGet(r => r.MaxSupportedChunkCount).Returns(int.MaxValue);
 
+        items.Source.Setup(r => r.ShouldItemTransferAsync(It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
+
         items.Source.Setup(r => r.GetPropertiesAsync(It.IsAny<CancellationToken>()))
             .Returns((CancellationToken cancellationToken) =>
             {
@@ -655,6 +657,8 @@ internal static partial class MockExtensions
             });
 
         items.Destination.Setup(r => r.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+        items.Destination.Setup(r => r.SetPermissionsAsync(It.IsAny<StorageResourceItem>(), It.IsAny<StorageResourceItemProperties>(), It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
 
         items.Source.Setup(r => r.ReadStreamAsync(It.IsAny<long>(), It.IsAny<long?>(), It.IsAny<CancellationToken>()))

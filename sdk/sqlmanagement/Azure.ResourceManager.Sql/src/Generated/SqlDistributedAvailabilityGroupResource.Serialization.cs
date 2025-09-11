@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlDistributedAvailabilityGroupResource : IJsonModel<SqlDistributedAvailabilityGroupData>
     {
+        private static SqlDistributedAvailabilityGroupData s_dataDeserializationInstance;
+        private static SqlDistributedAvailabilityGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlDistributedAvailabilityGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlDistributedAvailabilityGroupData>)Data).Write(writer, options);
 
-        SqlDistributedAvailabilityGroupData IJsonModel<SqlDistributedAvailabilityGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlDistributedAvailabilityGroupData>)Data).Create(ref reader, options);
+        SqlDistributedAvailabilityGroupData IJsonModel<SqlDistributedAvailabilityGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlDistributedAvailabilityGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SqlDistributedAvailabilityGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlDistributedAvailabilityGroupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         SqlDistributedAvailabilityGroupData IPersistableModel<SqlDistributedAvailabilityGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlDistributedAvailabilityGroupData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlDistributedAvailabilityGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlDistributedAvailabilityGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlDistributedAvailabilityGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlDistributedAvailabilityGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

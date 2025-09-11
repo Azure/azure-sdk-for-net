@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataFactory
 {
     public partial class DataFactoryPipelineResource : IJsonModel<DataFactoryPipelineData>
     {
+        private static DataFactoryPipelineData s_dataDeserializationInstance;
+        private static DataFactoryPipelineData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataFactoryPipelineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryPipelineData>)Data).Write(writer, options);
 
-        DataFactoryPipelineData IJsonModel<DataFactoryPipelineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryPipelineData>)Data).Create(ref reader, options);
+        DataFactoryPipelineData IJsonModel<DataFactoryPipelineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryPipelineData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DataFactoryPipelineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataFactoryPipelineData>(Data, options, AzureResourceManagerDataFactoryContext.Default);
 
         DataFactoryPipelineData IPersistableModel<DataFactoryPipelineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryPipelineData>(data, options, AzureResourceManagerDataFactoryContext.Default);
 
-        string IPersistableModel<DataFactoryPipelineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryPipelineData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataFactoryPipelineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryPipelineData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

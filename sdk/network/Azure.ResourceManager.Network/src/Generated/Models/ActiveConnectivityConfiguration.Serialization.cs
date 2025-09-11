@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -75,6 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             ConnectivityTopology? connectivityTopology = default;
             IReadOnlyList<ConnectivityHub> hubs = default;
             GlobalMeshSupportFlag? isGlobal = default;
+            ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities = default;
             IReadOnlyList<ConnectivityGroupItem> appliesToGroups = default;
             NetworkProvisioningState? provisioningState = default;
             DeleteExistingPeering? deleteExistingPeering = default;
@@ -166,6 +169,15 @@ namespace Azure.ResourceManager.Network.Models
                             isGlobal = new GlobalMeshSupportFlag(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("connectivityCapabilities"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            connectivityCapabilities = ConnectivityConfigurationPropertiesConnectivityCapabilities.DeserializeConnectivityConfigurationPropertiesConnectivityCapabilities(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("appliesToGroups"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -223,6 +235,7 @@ namespace Azure.ResourceManager.Network.Models
                 connectivityTopology,
                 hubs ?? new ChangeTrackingList<ConnectivityHub>(),
                 isGlobal,
+                connectivityCapabilities,
                 appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(),
                 provisioningState,
                 deleteExistingPeering,
@@ -230,6 +243,260 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData,
                 commitTime,
                 region);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommittedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  commitTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CommittedOn))
+                {
+                    builder.Append("  commitTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CommittedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Region), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  region: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Region))
+                {
+                    builder.Append("  region: ");
+                    builder.AppendLine($"'{Region.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigurationGroups), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  configurationGroups: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ConfigurationGroups))
+                {
+                    if (ConfigurationGroups.Any())
+                    {
+                        builder.Append("  configurationGroups: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ConfigurationGroups)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  configurationGroups: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("    description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectivityTopology), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    connectivityTopology: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectivityTopology))
+                {
+                    builder.Append("    connectivityTopology: ");
+                    builder.AppendLine($"'{ConnectivityTopology.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Hubs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    hubs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Hubs))
+                {
+                    if (Hubs.Any())
+                    {
+                        builder.Append("    hubs: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Hubs)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    hubs: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsGlobal), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isGlobal: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsGlobal))
+                {
+                    builder.Append("    isGlobal: ");
+                    builder.AppendLine($"'{IsGlobal.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectivityCapabilities), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    connectivityCapabilities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectivityCapabilities))
+                {
+                    builder.Append("    connectivityCapabilities: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ConnectivityCapabilities, options, 4, false, "    connectivityCapabilities: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppliesToGroups), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    appliesToGroups: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AppliesToGroups))
+                {
+                    if (AppliesToGroups.Any())
+                    {
+                        builder.Append("    appliesToGroups: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AppliesToGroups)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    appliesToGroups: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeleteExistingPeering), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    deleteExistingPeering: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeleteExistingPeering))
+                {
+                    builder.Append("    deleteExistingPeering: ");
+                    builder.AppendLine($"'{DeleteExistingPeering.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGuid), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    resourceGuid: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceGuid))
+                {
+                    builder.Append("    resourceGuid: ");
+                    builder.AppendLine($"'{ResourceGuid.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ActiveConnectivityConfiguration>.Write(ModelReaderWriterOptions options)
@@ -240,6 +507,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ActiveConnectivityConfiguration)} does not support writing '{options.Format}' format.");
             }

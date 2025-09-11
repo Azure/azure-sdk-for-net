@@ -121,17 +121,11 @@ namespace Azure.Messaging.EventGrid
                 return false;
             }
 
-            try
-            {
-                JsonDocument requestDocument = JsonDocument.Parse(Data.ToMemory());
-                eventData = SystemEventExtensions.AsSystemEventData(EventType, requestDocument.RootElement);
-                return eventData != null;
-            }
-            catch
-            {
-                eventData = null;
-                return false;
-            }
+            // We use a dummy CloudEvent to deserialize the system event data. This is necessary so that we can
+            // avoid maintaining two sets of system events in both Azure.Messaging.EventGrid and Azure.Messaging.EventGrid.SystemEvents
+            // libraries.
+            var cloudEvent = new CloudEvent("source", EventType, Data, null, CloudEventDataFormat.Json);
+            return cloudEvent.TryGetSystemEventData(out eventData);
         }
 
         /// <summary>

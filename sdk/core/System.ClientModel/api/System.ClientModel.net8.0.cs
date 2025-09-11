@@ -12,11 +12,23 @@ namespace System.ClientModel
         public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected abstract System.Collections.Generic.IAsyncEnumerable<T> GetValuesFromPageAsync(System.ClientModel.ClientResult page);
     }
+    public abstract partial class AuthenticationTokenProvider
+    {
+        protected AuthenticationTokenProvider() { }
+        public abstract System.ClientModel.Primitives.GetTokenOptions? CreateTokenOptions(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
+        public abstract System.ClientModel.Primitives.AuthenticationToken GetToken(System.ClientModel.Primitives.GetTokenOptions options, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.AuthenticationToken> GetTokenAsync(System.ClientModel.Primitives.GetTokenOptions options, System.Threading.CancellationToken cancellationToken);
+    }
     public abstract partial class BinaryContent : System.IDisposable
     {
         protected BinaryContent() { }
+        public string? MediaType { get { throw null; } protected set { } }
         public static System.ClientModel.BinaryContent Create(System.BinaryData value) { throw null; }
         public static System.ClientModel.BinaryContent Create(System.IO.Stream stream) { throw null; }
+        public static System.ClientModel.BinaryContent CreateJson(string jsonString, bool validate = false) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("JSON serialization and deserialization might require types that cannot be statically analyzed and might need runtime code generation.")]
+        public static System.ClientModel.BinaryContent CreateJson<T>(T jsonSerializable, System.Text.Json.JsonSerializerOptions? options = null) { throw null; }
+        public static System.ClientModel.BinaryContent CreateJson<T>(T jsonSerializable, System.Text.Json.Serialization.Metadata.JsonTypeInfo<T> jsonTypeInfo) { throw null; }
         public static System.ClientModel.BinaryContent Create<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public abstract void Dispose();
         public abstract bool TryComputeLength(out long length);
@@ -67,7 +79,7 @@ namespace System.ClientModel.Primitives
         public static System.Diagnostics.Activity MarkClientActivityFailed(this System.Diagnostics.Activity activity, System.Exception? exception) { throw null; }
         public static System.Diagnostics.Activity? StartClientActivity(this System.Diagnostics.ActivitySource activitySource, System.ClientModel.Primitives.ClientPipelineOptions options, string name, System.Diagnostics.ActivityKind kind = System.Diagnostics.ActivityKind.Internal, System.Diagnostics.ActivityContext parentContext = default(System.Diagnostics.ActivityContext), System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object?>>? tags = null) { throw null; }
     }
-    public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
+    public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.AuthenticationPolicy
     {
         internal ApiKeyAuthenticationPolicy() { }
         public static System.ClientModel.Primitives.ApiKeyAuthenticationPolicy CreateBasicAuthorizationPolicy(System.ClientModel.ApiKeyCredential credential) { throw null; }
@@ -82,6 +94,25 @@ namespace System.ClientModel.Primitives
         public abstract System.ClientModel.ContinuationToken? GetContinuationToken(System.ClientModel.ClientResult page);
         public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientResult> GetRawPagesAsync();
     }
+    public abstract partial class AuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        protected AuthenticationPolicy() { }
+    }
+    public partial class AuthenticationToken
+    {
+        public AuthenticationToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) { }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
+        public System.DateTimeOffset? RefreshOn { get { throw null; } }
+        public string TokenType { get { throw null; } }
+        public string TokenValue { get { throw null; } }
+    }
+    public partial class BearerTokenPolicy : System.ClientModel.Primitives.AuthenticationPolicy
+    {
+        public BearerTokenPolicy(System.ClientModel.AuthenticationTokenProvider tokenProvider, System.Collections.Generic.IEnumerable<System.Collections.Generic.IReadOnlyDictionary<string, object>> contexts) { }
+        public BearerTokenPolicy(System.ClientModel.AuthenticationTokenProvider tokenProvider, string scope) { }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
+    }
     public partial class ClientCache
     {
         public ClientCache(int maxSize) { }
@@ -94,10 +125,12 @@ namespace System.ClientModel.Primitives
         private readonly int _dummyPrimitive;
         public ClientConnection(string id, string locator) { throw null; }
         public ClientConnection(string id, string locator, object credential, System.ClientModel.Primitives.CredentialKind credentialKind) { throw null; }
+        public ClientConnection(string id, string locator, object? credential, System.ClientModel.Primitives.CredentialKind credentialKind, System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata) { throw null; }
         public object? Credential { get { throw null; } }
         public System.ClientModel.Primitives.CredentialKind CredentialKind { get { throw null; } }
         public string Id { get { throw null; } }
         public string Locator { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } }
         public override string ToString() { throw null; }
         public bool TryGetLocatorAsUri(out System.Uri? uri) { throw null; }
     }
@@ -140,6 +173,7 @@ namespace System.ClientModel.Primitives
         public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.Primitives.ClientPipelineOptions? options = null) { throw null; }
         public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.Primitives.ClientPipelineOptions options, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perTryPolicies, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> beforeTransportPolicies) { throw null; }
         public System.ClientModel.Primitives.PipelineMessage CreateMessage() { throw null; }
+        public System.ClientModel.Primitives.PipelineMessage CreateMessage(System.Uri uri, string method, System.ClientModel.Primitives.PipelineMessageClassifier? classifier = null) { throw null; }
         public void Send(System.ClientModel.Primitives.PipelineMessage message) { }
         public System.Threading.Tasks.ValueTask SendAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
@@ -186,6 +220,15 @@ namespace System.ClientModel.Primitives
         ApiKeyString = 1,
         TokenCredential = 2,
     }
+    public partial class GetTokenOptions
+    {
+        public const string AuthorizationUrlPropertyName = "authorizationUrl";
+        public const string RefreshUrlPropertyName = "refreshUrl";
+        public const string ScopesPropertyName = "scopes";
+        public const string TokenUrlPropertyName = "tokenUrl";
+        public GetTokenOptions(System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> Properties { get { throw null; } }
+    }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {
         public HttpClientPipelineTransport() { }
@@ -202,12 +245,12 @@ namespace System.ClientModel.Primitives
     }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
     {
-        T Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options);
+        T? Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options);
         void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options);
     }
     public partial interface IPersistableModel<out T>
     {
-        T Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
+        T? Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
         string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
         System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
     }
@@ -217,7 +260,7 @@ namespace System.ClientModel.Primitives
         public JsonModelConverter(System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public JsonModelConverter(System.ClientModel.Primitives.ModelReaderWriterOptions options, System.ClientModel.Primitives.ModelReaderWriterContext context) { }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
-        public override System.ClientModel.Primitives.IJsonModel<object> Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public override System.ClientModel.Primitives.IJsonModel<object>? Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
     }
     public partial class MessageLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
@@ -249,6 +292,12 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.ModelReaderWriterTypeBuilder GetTypeBuilder(System.Type type) { throw null; }
         public bool TryGetTypeBuilder(System.Type type, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
         protected virtual bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
+    }
+    [System.AttributeUsageAttribute(System.AttributeTargets.Assembly)]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    public sealed partial class ModelReaderWriterContextTypeAttribute : System.Attribute
+    {
+        public ModelReaderWriterContextTypeAttribute(System.Type contextType) { }
     }
     public partial class ModelReaderWriterOptions
     {
@@ -397,5 +446,14 @@ namespace System.ClientModel.Primitives
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }
         public void SetHeader(string name, string value) { }
+    }
+    public partial class UserAgentPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        public UserAgentPolicy(System.Reflection.Assembly callerAssembly, string? applicationId = null) { }
+        public string? ApplicationId { get { throw null; } }
+        public System.Reflection.Assembly Assembly { get { throw null; } }
+        public string UserAgentValue { get { throw null; } }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
 }

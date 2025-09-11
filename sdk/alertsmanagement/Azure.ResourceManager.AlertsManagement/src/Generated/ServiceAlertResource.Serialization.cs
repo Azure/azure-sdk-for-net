@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AlertsManagement
 {
     public partial class ServiceAlertResource : IJsonModel<ServiceAlertData>
     {
+        private static ServiceAlertData s_dataDeserializationInstance;
+        private static ServiceAlertData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ServiceAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceAlertData>)Data).Write(writer, options);
 
-        ServiceAlertData IJsonModel<ServiceAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceAlertData>)Data).Create(ref reader, options);
+        ServiceAlertData IJsonModel<ServiceAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceAlertData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ServiceAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceAlertData>(Data, options, AzureResourceManagerAlertsManagementContext.Default);
 
         ServiceAlertData IPersistableModel<ServiceAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceAlertData>(data, options, AzureResourceManagerAlertsManagementContext.Default);
 
-        string IPersistableModel<ServiceAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceAlertData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ServiceAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceAlertData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

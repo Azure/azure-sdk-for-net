@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Search
 {
     public partial class SearchPrivateEndpointConnectionResource : IJsonModel<SearchPrivateEndpointConnectionData>
     {
+        private static SearchPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static SearchPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SearchPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SearchPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        SearchPrivateEndpointConnectionData IJsonModel<SearchPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SearchPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        SearchPrivateEndpointConnectionData IJsonModel<SearchPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SearchPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SearchPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SearchPrivateEndpointConnectionData>(Data, options, AzureResourceManagerSearchContext.Default);
 
         SearchPrivateEndpointConnectionData IPersistableModel<SearchPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SearchPrivateEndpointConnectionData>(data, options, AzureResourceManagerSearchContext.Default);
 
-        string IPersistableModel<SearchPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SearchPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SearchPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SearchPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

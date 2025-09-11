@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,17 @@
 
 ### Other Changes
 
+## 1.1.0 (2025-05-22)
+
+### Features Added
+
+ - Update API version to 2025-01-01.
+
 ## 1.1.0-beta.3 (2025-05-01)
 
 ### Features Added
 
-- Exposed new property in Capability Type resource: "requiredAzureRoleDefinitionIds"
+- Exposed new property in Capability Type resource: "requiredAzureRoleDefinitionIds".
 
 ## 1.1.0-beta.2 (2025-03-11)
 
@@ -26,8 +32,8 @@
 
 ### Features Added
 
- - Update API version to 2024-01-01
- - Add Tags Support for Experiment resource
+ - Update API version to 2024-01-01.
+ - Add Tags Support for Experiment resource.
 
 ## 1.0.0 (2024-01-17)
 
@@ -35,7 +41,7 @@ This is the first stable release of Chaos client library.
 
 ### Features Added
 
-- Update API version to 2023-11-01
+- Update API version to 2023-11-01.
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Other Changes

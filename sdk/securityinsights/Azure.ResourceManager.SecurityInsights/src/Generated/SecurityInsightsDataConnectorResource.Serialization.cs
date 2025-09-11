@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsDataConnectorResource : IJsonModel<SecurityInsightsDataConnectorData>
     {
+        private static SecurityInsightsDataConnectorData s_dataDeserializationInstance;
+        private static SecurityInsightsDataConnectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityInsightsDataConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsDataConnectorData>)Data).Write(writer, options);
 
-        SecurityInsightsDataConnectorData IJsonModel<SecurityInsightsDataConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsDataConnectorData>)Data).Create(ref reader, options);
+        SecurityInsightsDataConnectorData IJsonModel<SecurityInsightsDataConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsDataConnectorData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SecurityInsightsDataConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsDataConnectorData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         SecurityInsightsDataConnectorData IPersistableModel<SecurityInsightsDataConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsDataConnectorData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsDataConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsDataConnectorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsDataConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsDataConnectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

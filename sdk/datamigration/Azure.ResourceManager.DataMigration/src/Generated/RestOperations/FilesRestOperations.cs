@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-30-preview";
+            _apiVersion = apiVersion ?? "2025-03-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProjectFileData>> GetAsync(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataMigrationProjectFileData>> GetAsync(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -203,13 +203,13 @@ namespace Azure.ResourceManager.DataMigration
             {
                 case 200:
                     {
-                        ProjectFileData value = default;
+                        DataMigrationProjectFileData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ProjectFileData.DeserializeProjectFileData(document.RootElement);
+                        value = DataMigrationProjectFileData.DeserializeDataMigrationProjectFileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProjectFileData)null, message.Response);
+                    return Response.FromValue((DataMigrationProjectFileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProjectFileData> Get(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
+        public Response<DataMigrationProjectFileData> Get(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -238,19 +238,19 @@ namespace Azure.ResourceManager.DataMigration
             {
                 case 200:
                     {
-                        ProjectFileData value = default;
+                        DataMigrationProjectFileData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ProjectFileData.DeserializeProjectFileData(document.RootElement);
+                        value = DataMigrationProjectFileData.DeserializeDataMigrationProjectFileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProjectFileData)null, message.Response);
+                    return Response.FromValue((DataMigrationProjectFileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, ProjectFileData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, DataMigrationProjectFileData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DataMigration
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, ProjectFileData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, DataMigrationProjectFileData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/>, <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProjectFileData>> CreateOrUpdateAsync(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, ProjectFileData data, CancellationToken cancellationToken = default)
+        public async Task<Response<DataMigrationProjectFileData>> CreateOrUpdateAsync(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, DataMigrationProjectFileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -322,9 +322,9 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                 case 201:
                     {
-                        ProjectFileData value = default;
+                        DataMigrationProjectFileData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ProjectFileData.DeserializeProjectFileData(document.RootElement);
+                        value = DataMigrationProjectFileData.DeserializeDataMigrationProjectFileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/>, <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProjectFileData> CreateOrUpdate(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, ProjectFileData data, CancellationToken cancellationToken = default)
+        public Response<DataMigrationProjectFileData> CreateOrUpdate(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, DataMigrationProjectFileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -358,9 +358,9 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                 case 201:
                     {
-                        ProjectFileData value = default;
+                        DataMigrationProjectFileData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ProjectFileData.DeserializeProjectFileData(document.RootElement);
+                        value = DataMigrationProjectFileData.DeserializeDataMigrationProjectFileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, ProjectFileData data)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, DataMigrationProjectFileData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.DataMigration
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, ProjectFileData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, DataMigrationProjectFileData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/>, <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProjectFileData>> UpdateAsync(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, ProjectFileData data, CancellationToken cancellationToken = default)
+        public async Task<Response<DataMigrationProjectFileData>> UpdateAsync(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, DataMigrationProjectFileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -539,9 +539,9 @@ namespace Azure.ResourceManager.DataMigration
             {
                 case 200:
                     {
-                        ProjectFileData value = default;
+                        DataMigrationProjectFileData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ProjectFileData.DeserializeProjectFileData(document.RootElement);
+                        value = DataMigrationProjectFileData.DeserializeDataMigrationProjectFileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/>, <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProjectFileData> Update(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, ProjectFileData data, CancellationToken cancellationToken = default)
+        public Response<DataMigrationProjectFileData> Update(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, DataMigrationProjectFileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -574,9 +574,9 @@ namespace Azure.ResourceManager.DataMigration
             {
                 case 200:
                     {
-                        ProjectFileData value = default;
+                        DataMigrationProjectFileData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ProjectFileData.DeserializeProjectFileData(document.RootElement);
+                        value = DataMigrationProjectFileData.DeserializeDataMigrationProjectFileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FileStorageInfo>> ReadAsync(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataMigrationFileStorageInfo>> ReadAsync(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -651,9 +651,9 @@ namespace Azure.ResourceManager.DataMigration
             {
                 case 200:
                     {
-                        FileStorageInfo value = default;
+                        DataMigrationFileStorageInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = FileStorageInfo.DeserializeFileStorageInfo(document.RootElement);
+                        value = DataMigrationFileStorageInfo.DeserializeDataMigrationFileStorageInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FileStorageInfo> Read(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
+        public Response<DataMigrationFileStorageInfo> Read(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -684,9 +684,9 @@ namespace Azure.ResourceManager.DataMigration
             {
                 case 200:
                     {
-                        FileStorageInfo value = default;
+                        DataMigrationFileStorageInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = FileStorageInfo.DeserializeFileStorageInfo(document.RootElement);
+                        value = DataMigrationFileStorageInfo.DeserializeDataMigrationFileStorageInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FileStorageInfo>> ReadWriteAsync(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataMigrationFileStorageInfo>> ReadWriteAsync(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -761,9 +761,9 @@ namespace Azure.ResourceManager.DataMigration
             {
                 case 200:
                     {
-                        FileStorageInfo value = default;
+                        DataMigrationFileStorageInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = FileStorageInfo.DeserializeFileStorageInfo(document.RootElement);
+                        value = DataMigrationFileStorageInfo.DeserializeDataMigrationFileStorageInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/>, <paramref name="projectName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FileStorageInfo> ReadWrite(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
+        public Response<DataMigrationFileStorageInfo> ReadWrite(string subscriptionId, string groupName, string serviceName, string projectName, string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -794,9 +794,9 @@ namespace Azure.ResourceManager.DataMigration
             {
                 case 200:
                     {
-                        FileStorageInfo value = default;
+                        DataMigrationFileStorageInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = FileStorageInfo.DeserializeFileStorageInfo(document.RootElement);
+                        value = DataMigrationFileStorageInfo.DeserializeDataMigrationFileStorageInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -68,6 +69,18 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("utilizedThroughputMibps"u8);
                 writer.WriteNumberValue(UtilizedThroughputMibps.Value);
             }
+            if (Optional.IsDefined(CustomThroughputMibps))
+            {
+                if (CustomThroughputMibps != null)
+                {
+                    writer.WritePropertyName("customThroughputMibps"u8);
+                    writer.WriteNumberValue(CustomThroughputMibps.Value);
+                }
+                else
+                {
+                    writer.WriteNull("customThroughputMibps");
+                }
+            }
             if (Optional.IsDefined(QosType))
             {
                 writer.WritePropertyName("qosType"u8);
@@ -126,6 +139,7 @@ namespace Azure.ResourceManager.NetApp
             string provisioningState = default;
             float? totalThroughputMibps = default;
             float? utilizedThroughputMibps = default;
+            float? customThroughputMibps = default;
             CapacityPoolQosType? qosType = default;
             bool? coolAccess = default;
             CapacityPoolEncryptionType? encryptionType = default;
@@ -182,7 +196,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -236,6 +250,16 @@ namespace Azure.ResourceManager.NetApp
                             utilizedThroughputMibps = property0.Value.GetSingle();
                             continue;
                         }
+                        if (property0.NameEquals("customThroughputMibps"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                customThroughputMibps = null;
+                                continue;
+                            }
+                            customThroughputMibps = property0.Value.GetSingle();
+                            continue;
+                        }
                         if (property0.NameEquals("qosType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -287,6 +311,7 @@ namespace Azure.ResourceManager.NetApp
                 provisioningState,
                 totalThroughputMibps,
                 utilizedThroughputMibps,
+                customThroughputMibps,
                 qosType,
                 coolAccess,
                 encryptionType,

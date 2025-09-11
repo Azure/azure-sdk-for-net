@@ -14,9 +14,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsSmsReceivedEventData : AcsSmsEventBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsSmsReceivedEventData"/>. </summary>
+        /// <param name="messageId"> The identity of the SMS message. </param>
+        /// <param name="from"> The identity of SMS message sender. </param>
+        /// <param name="to"> The identity of SMS message receiver. </param>
+        /// <param name="message"> The SMS content. </param>
         /// <param name="segmentCount"> Number of segments in the message. </param>
-        internal AcsSmsReceivedEventData(int segmentCount)
+        internal AcsSmsReceivedEventData(string messageId, string @from, string to, string message, int segmentCount) : base(messageId, @from, to)
         {
+            Message = message;
             SegmentCount = segmentCount;
         }
 
@@ -24,26 +29,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="message"> The SMS content. </param>
         /// <param name="receivedTimestamp"> The time at which the SMS was received. </param>
         /// <param name="segmentCount"> Number of segments in the message. </param>
-        internal AcsSmsReceivedEventData(string messageId, string @from, string to, IDictionary<string, BinaryData> serializedAdditionalRawData, string message, DateTimeOffset? receivedTimestamp, int segmentCount) : base(messageId, @from, to, serializedAdditionalRawData)
+        internal AcsSmsReceivedEventData(string messageId, string @from, string to, IDictionary<string, BinaryData> additionalBinaryDataProperties, string message, DateTimeOffset? receivedTimestamp, int segmentCount) : base(messageId, @from, to, additionalBinaryDataProperties)
         {
             Message = message;
             ReceivedTimestamp = receivedTimestamp;
             SegmentCount = segmentCount;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsSmsReceivedEventData"/> for deserialization. </summary>
-        internal AcsSmsReceivedEventData()
-        {
-        }
-
         /// <summary> The SMS content. </summary>
         public string Message { get; }
+
         /// <summary> The time at which the SMS was received. </summary>
         public DateTimeOffset? ReceivedTimestamp { get; }
+
         /// <summary> Number of segments in the message. </summary>
         public int SegmentCount { get; }
     }

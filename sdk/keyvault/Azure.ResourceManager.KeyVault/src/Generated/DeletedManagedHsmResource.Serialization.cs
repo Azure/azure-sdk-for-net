@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.KeyVault
 {
     public partial class DeletedManagedHsmResource : IJsonModel<DeletedManagedHsmData>
     {
+        private static DeletedManagedHsmData s_dataDeserializationInstance;
+        private static DeletedManagedHsmData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DeletedManagedHsmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeletedManagedHsmData>)Data).Write(writer, options);
 
-        DeletedManagedHsmData IJsonModel<DeletedManagedHsmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedManagedHsmData>)Data).Create(ref reader, options);
+        DeletedManagedHsmData IJsonModel<DeletedManagedHsmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedManagedHsmData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DeletedManagedHsmData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeletedManagedHsmData>(Data, options, AzureResourceManagerKeyVaultContext.Default);
 
         DeletedManagedHsmData IPersistableModel<DeletedManagedHsmData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedManagedHsmData>(data, options, AzureResourceManagerKeyVaultContext.Default);
 
-        string IPersistableModel<DeletedManagedHsmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedManagedHsmData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DeletedManagedHsmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedManagedHsmData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

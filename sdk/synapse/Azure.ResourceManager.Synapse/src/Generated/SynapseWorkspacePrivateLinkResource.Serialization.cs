@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseWorkspacePrivateLinkResource : IJsonModel<SynapsePrivateLinkResourceData>
     {
+        private static SynapsePrivateLinkResourceData s_dataDeserializationInstance;
+        private static SynapsePrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapsePrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapsePrivateLinkResourceData>)Data).Write(writer, options);
 
-        SynapsePrivateLinkResourceData IJsonModel<SynapsePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapsePrivateLinkResourceData>)Data).Create(ref reader, options);
+        SynapsePrivateLinkResourceData IJsonModel<SynapsePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapsePrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SynapsePrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapsePrivateLinkResourceData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
         SynapsePrivateLinkResourceData IPersistableModel<SynapsePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapsePrivateLinkResourceData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapsePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapsePrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapsePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapsePrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

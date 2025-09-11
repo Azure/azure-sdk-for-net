@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class ScriptPackageResource : IJsonModel<ScriptPackageData>
     {
+        private static ScriptPackageData s_dataDeserializationInstance;
+        private static ScriptPackageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ScriptPackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScriptPackageData>)Data).Write(writer, options);
 
-        ScriptPackageData IJsonModel<ScriptPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScriptPackageData>)Data).Create(ref reader, options);
+        ScriptPackageData IJsonModel<ScriptPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScriptPackageData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ScriptPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScriptPackageData>(Data, options, AzureResourceManagerAvsContext.Default);
 
         ScriptPackageData IPersistableModel<ScriptPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScriptPackageData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<ScriptPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScriptPackageData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ScriptPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScriptPackageData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

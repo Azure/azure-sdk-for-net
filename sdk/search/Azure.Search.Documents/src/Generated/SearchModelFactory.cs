@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Models.DebugInfo"/> instance for mocking. </returns>
         public static DebugInfo DebugInfo(QueryRewritesDebugInfo queryRewrites = null)
         {
-            return new DebugInfo(queryRewrites);
+            return new DebugInfo(queryRewrites, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryRewritesDebugInfo"/>. </summary>
@@ -60,7 +60,7 @@ namespace Azure.Search.Documents.Models
         {
             vectors ??= new List<QueryRewritesValuesDebugInfo>();
 
-            return new QueryRewritesDebugInfo(text, vectors?.ToList());
+            return new QueryRewritesDebugInfo(text, vectors?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryRewritesValuesDebugInfo"/>. </summary>
@@ -71,7 +71,7 @@ namespace Azure.Search.Documents.Models
         {
             rewrites ??= new List<string>();
 
-            return new QueryRewritesValuesDebugInfo(inputQuery, rewrites?.ToList());
+            return new QueryRewritesValuesDebugInfo(inputQuery, rewrites?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryCaptionResult"/>. </summary>
@@ -95,7 +95,7 @@ namespace Azure.Search.Documents.Models
         {
             innerHits ??= new Dictionary<string, IList<QueryResultDocumentInnerHit>>();
 
-            return new DocumentDebugInfo(semantic, vectors, innerHits);
+            return new DocumentDebugInfo(semantic, vectors, innerHits, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SemanticDebugInfo"/>. </summary>
@@ -109,7 +109,7 @@ namespace Azure.Search.Documents.Models
             contentFields ??= new List<QueryResultDocumentSemanticField>();
             keywordFields ??= new List<QueryResultDocumentSemanticField>();
 
-            return new SemanticDebugInfo(titleField, contentFields?.ToList(), keywordFields?.ToList(), rerankerInput);
+            return new SemanticDebugInfo(titleField, contentFields?.ToList(), keywordFields?.ToList(), rerankerInput, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryResultDocumentSemanticField"/>. </summary>
@@ -118,7 +118,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Models.QueryResultDocumentSemanticField"/> instance for mocking. </returns>
         public static QueryResultDocumentSemanticField QueryResultDocumentSemanticField(string name = null, SemanticFieldState? state = null)
         {
-            return new QueryResultDocumentSemanticField(name, state);
+            return new QueryResultDocumentSemanticField(name, state, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryResultDocumentRerankerInput"/>. </summary>
@@ -128,7 +128,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Models.QueryResultDocumentRerankerInput"/> instance for mocking. </returns>
         public static QueryResultDocumentRerankerInput QueryResultDocumentRerankerInput(string title = null, string content = null, string keywords = null)
         {
-            return new QueryResultDocumentRerankerInput(title, content, keywords);
+            return new QueryResultDocumentRerankerInput(title, content, keywords, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VectorsDebugInfo"/>. </summary>
@@ -136,7 +136,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Models.VectorsDebugInfo"/> instance for mocking. </returns>
         public static VectorsDebugInfo VectorsDebugInfo(QueryResultDocumentSubscores subscores = null)
         {
-            return new VectorsDebugInfo(subscores);
+            return new VectorsDebugInfo(subscores, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryResultDocumentSubscores"/>. </summary>
@@ -148,7 +148,7 @@ namespace Azure.Search.Documents.Models
         {
             vectors ??= new List<IDictionary<string, SingleVectorFieldResult>>();
 
-            return new QueryResultDocumentSubscores(text, vectors?.ToList(), documentBoost);
+            return new QueryResultDocumentSubscores(text, vectors?.ToList(), documentBoost, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TextResult"/>. </summary>
@@ -156,7 +156,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Models.TextResult"/> instance for mocking. </returns>
         public static TextResult TextResult(double? searchScore = null)
         {
-            return new TextResult(searchScore);
+            return new TextResult(searchScore, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SingleVectorFieldResult"/>. </summary>
@@ -165,7 +165,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Models.SingleVectorFieldResult"/> instance for mocking. </returns>
         public static SingleVectorFieldResult SingleVectorFieldResult(double? searchScore = null, double? vectorSimilarity = null)
         {
-            return new SingleVectorFieldResult(searchScore, vectorSimilarity);
+            return new SingleVectorFieldResult(searchScore, vectorSimilarity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryResultDocumentInnerHit"/>. </summary>
@@ -176,7 +176,7 @@ namespace Azure.Search.Documents.Models
         {
             vectors ??= new List<IDictionary<string, SingleVectorFieldResult>>();
 
-            return new QueryResultDocumentInnerHit(ordinal, vectors?.ToList());
+            return new QueryResultDocumentInnerHit(ordinal, vectors?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutocompleteResults"/>. </summary>
@@ -187,21 +187,29 @@ namespace Azure.Search.Documents.Models
         {
             results ??= new List<AutocompleteItem>();
 
-            return new AutocompleteResults(coverage, results?.ToList());
+            return new AutocompleteResults(coverage, results?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerStatus"/>. </summary>
+        /// <param name="name"> The name of the indexer. </param>
         /// <param name="status"> Overall indexer status. </param>
         /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
         /// <param name="limits"> The execution limits for the indexer. </param>
         /// <param name="currentState"> All of the state that defines and dictates the indexer's current execution. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexerStatus"/> instance for mocking. </returns>
-        public static SearchIndexerStatus SearchIndexerStatus(IndexerStatus status = default, IndexerExecutionResult lastResult = null, IEnumerable<IndexerExecutionResult> executionHistory = null, SearchIndexerLimits limits = null, IndexerState currentState = null)
+        public static SearchIndexerStatus SearchIndexerStatus(string name = null, IndexerStatus status = default, IndexerExecutionResult lastResult = null, IEnumerable<IndexerExecutionResult> executionHistory = null, SearchIndexerLimits limits = null, IndexerState currentState = null)
         {
             executionHistory ??= new List<IndexerExecutionResult>();
 
-            return new SearchIndexerStatus(status, lastResult, executionHistory?.ToList(), limits, currentState);
+            return new SearchIndexerStatus(
+                name,
+                status,
+                lastResult,
+                executionHistory?.ToList(),
+                limits,
+                currentState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.IndexerExecutionResult"/>. </summary>
@@ -235,7 +243,8 @@ namespace Azure.Search.Documents.Models
                 itemCount,
                 failedItemCount,
                 initialTrackingState,
-                finalTrackingState);
+                finalTrackingState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.IndexerState"/>. </summary>
@@ -263,7 +272,8 @@ namespace Azure.Search.Documents.Models
                 resetDocumentKeys?.ToList(),
                 resetDataSourceDocumentIds?.ToList(),
                 resyncInitialTrackingState,
-                resyncFinalTrackingState);
+                resyncFinalTrackingState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexStatistics"/>. </summary>
@@ -273,7 +283,30 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Indexes.Models.SearchIndexStatistics"/> instance for mocking. </returns>
         public static SearchIndexStatistics SearchIndexStatistics(long documentCount = default, long storageSize = default, long vectorIndexSize = default)
         {
-            return new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize);
+            return new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.AnalyzeTextOptions"/>. </summary>
+        /// <param name="text"> The text to break into tokens. </param>
+        /// <param name="analyzerName"> The name of the analyzer to use to break the given text. If this parameter is not specified, you must specify a tokenizer instead. The tokenizer and analyzer parameters are mutually exclusive. </param>
+        /// <param name="tokenizerName"> The name of the tokenizer to use to break the given text. If this parameter is not specified, you must specify an analyzer instead. The tokenizer and analyzer parameters are mutually exclusive. </param>
+        /// <param name="normalizerName"> The name of the normalizer to use to normalize the given text. </param>
+        /// <param name="tokenFilters"> An optional list of token filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </param>
+        /// <param name="charFilters"> An optional list of character filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </param>
+        /// <returns> A new <see cref="Indexes.Models.AnalyzeTextOptions"/> instance for mocking. </returns>
+        public static AnalyzeTextOptions AnalyzeTextOptions(string text = null, LexicalAnalyzerName? analyzerName = null, LexicalTokenizerName? tokenizerName = null, LexicalNormalizerName? normalizerName = null, IEnumerable<TokenFilterName> tokenFilters = null, IEnumerable<string> charFilters = null)
+        {
+            tokenFilters ??= new List<TokenFilterName>();
+            charFilters ??= new List<string>();
+
+            return new AnalyzeTextOptions(
+                text,
+                analyzerName,
+                tokenizerName,
+                normalizerName,
+                tokenFilters?.ToList(),
+                charFilters?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchServiceCounters"/>. </summary>
@@ -286,47 +319,9 @@ namespace Azure.Search.Documents.Models
         /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
         /// <param name="skillsetCounter"> Total number of skillsets. </param>
         /// <param name="vectorIndexSizeCounter"> Total memory consumption of all vector indexes within the service, in bytes. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aliasCounter"/>, <paramref name="documentCounter"/>, <paramref name="indexCounter"/>, <paramref name="indexerCounter"/>, <paramref name="dataSourceCounter"/>, <paramref name="storageSizeCounter"/>, <paramref name="synonymMapCounter"/>, <paramref name="skillsetCounter"/> or <paramref name="vectorIndexSizeCounter"/> is null. </exception>
         /// <returns> A new <see cref="Indexes.Models.SearchServiceCounters"/> instance for mocking. </returns>
         public static SearchServiceCounters SearchServiceCounters(SearchResourceCounter aliasCounter = null, SearchResourceCounter documentCounter = null, SearchResourceCounter indexCounter = null, SearchResourceCounter indexerCounter = null, SearchResourceCounter dataSourceCounter = null, SearchResourceCounter storageSizeCounter = null, SearchResourceCounter synonymMapCounter = null, SearchResourceCounter skillsetCounter = null, SearchResourceCounter vectorIndexSizeCounter = null)
         {
-            if (aliasCounter == null)
-            {
-                throw new ArgumentNullException(nameof(aliasCounter));
-            }
-            if (documentCounter == null)
-            {
-                throw new ArgumentNullException(nameof(documentCounter));
-            }
-            if (indexCounter == null)
-            {
-                throw new ArgumentNullException(nameof(indexCounter));
-            }
-            if (indexerCounter == null)
-            {
-                throw new ArgumentNullException(nameof(indexerCounter));
-            }
-            if (dataSourceCounter == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceCounter));
-            }
-            if (storageSizeCounter == null)
-            {
-                throw new ArgumentNullException(nameof(storageSizeCounter));
-            }
-            if (synonymMapCounter == null)
-            {
-                throw new ArgumentNullException(nameof(synonymMapCounter));
-            }
-            if (skillsetCounter == null)
-            {
-                throw new ArgumentNullException(nameof(skillsetCounter));
-            }
-            if (vectorIndexSizeCounter == null)
-            {
-                throw new ArgumentNullException(nameof(vectorIndexSizeCounter));
-            }
-
             return new SearchServiceCounters(
                 aliasCounter,
                 documentCounter,
@@ -336,7 +331,8 @@ namespace Azure.Search.Documents.Models
                 storageSizeCounter,
                 synonymMapCounter,
                 skillsetCounter,
-                vectorIndexSizeCounter);
+                vectorIndexSizeCounter,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchServiceLimits"/>. </summary>
@@ -348,7 +344,13 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Indexes.Models.SearchServiceLimits"/> instance for mocking. </returns>
         public static SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex = null, int? maxFieldNestingDepthPerIndex = null, int? maxComplexCollectionFieldsPerIndex = null, int? maxComplexObjectsInCollectionsPerDocument = null, long? maxStoragePerIndexInBytes = null)
         {
-            return new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes);
+            return new SearchServiceLimits(
+                maxFieldsPerIndex,
+                maxFieldNestingDepthPerIndex,
+                maxComplexCollectionFieldsPerIndex,
+                maxComplexObjectsInCollectionsPerDocument,
+                maxStoragePerIndexInBytes,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.ListIndexStatsSummary"/>. </summary>
@@ -358,7 +360,7 @@ namespace Azure.Search.Documents.Models
         {
             indexesStatistics ??= new List<IndexStatisticsSummary>();
 
-            return new ListIndexStatsSummary(indexesStatistics?.ToList());
+            return new ListIndexStatsSummary(indexesStatistics?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.IndexStatisticsSummary"/>. </summary>
@@ -366,16 +368,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="documentCount"> The number of documents in the index. </param>
         /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
         /// <param name="vectorIndexSize"> The amount of memory in bytes consumed by vectors in the index. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <returns> A new <see cref="Indexes.Models.IndexStatisticsSummary"/> instance for mocking. </returns>
         public static IndexStatisticsSummary IndexStatisticsSummary(string name = null, long documentCount = default, long storageSize = default, long vectorIndexSize = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            return new IndexStatisticsSummary(name, documentCount, storageSize, vectorIndexSize);
+            return new IndexStatisticsSummary(name, documentCount, storageSize, vectorIndexSize, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentRetrievalResponse"/>. </summary>
@@ -383,12 +379,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="activity">
         /// The activity records for tracking progress and billing implications.
         /// Please note <see cref="Agents.Models.KnowledgeAgentActivityRecord"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Agents.Models.KnowledgeAgentSearchActivityRecord"/>, <see cref="Agents.Models.KnowledgeAgentSemanticRankerActivityRecord"/> and <see cref="Agents.Models.KnowledgeAgentModelQueryPlanningActivityRecord"/>.
+        /// The available derived classes include <see cref="Agents.Models.KnowledgeAgentAzureBlobActivityRecord"/>, <see cref="Agents.Models.KnowledgeAgentRetrievalActivityRecord"/>, <see cref="Agents.Models.KnowledgeAgentModelAnswerSynthesisActivityRecord"/>, <see cref="Agents.Models.KnowledgeAgentModelQueryPlanningActivityRecord"/>, <see cref="Agents.Models.KnowledgeAgentSearchIndexActivityRecord"/> and <see cref="Agents.Models.KnowledgeAgentSemanticRerankerActivityRecord"/>.
         /// </param>
         /// <param name="references">
         /// The references for the retrieval data used in the response.
         /// Please note <see cref="Agents.Models.KnowledgeAgentReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Agents.Models.KnowledgeAgentAzureSearchDocReference"/>.
+        /// The available derived classes include <see cref="Agents.Models.KnowledgeAgentAzureBlobReference"/> and <see cref="Agents.Models.KnowledgeAgentSearchIndexReference"/>.
         /// </param>
         /// <returns> A new <see cref="Agents.Models.KnowledgeAgentRetrievalResponse"/> instance for mocking. </returns>
         public static KnowledgeAgentRetrievalResponse KnowledgeAgentRetrievalResponse(IEnumerable<KnowledgeAgentMessage> response = null, IEnumerable<KnowledgeAgentActivityRecord> activity = null, IEnumerable<KnowledgeAgentReference> references = null)
@@ -397,89 +393,241 @@ namespace Azure.Search.Documents.Models
             activity ??= new List<KnowledgeAgentActivityRecord>();
             references ??= new List<KnowledgeAgentReference>();
 
-            return new KnowledgeAgentRetrievalResponse(response?.ToList(), activity?.ToList(), references?.ToList());
+            return new KnowledgeAgentRetrievalResponse(response?.ToList(), activity?.ToList(), references?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <returns> A new <see cref="Agents.Models.KnowledgeAgentActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeAgentActivityRecord KnowledgeAgentActivityRecord(int id = default, string type = null)
+        public static KnowledgeAgentActivityRecord KnowledgeAgentActivityRecord(int id = default, string type = null, int? elapsedMs = null)
         {
-            return new UnknownKnowledgeAgentActivityRecord(id, type);
+            return new UnknownKnowledgeAgentActivityRecord(id, type, elapsedMs, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentReference"/>. </summary>
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
+        /// <param name="sourceData"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <returns> A new <see cref="Agents.Models.KnowledgeAgentReference"/> instance for mocking. </returns>
-        public static KnowledgeAgentReference KnowledgeAgentReference(string type = null, string id = null, int activitySource = default)
+        public static KnowledgeAgentReference KnowledgeAgentReference(string type = null, string id = null, int activitySource = default, IReadOnlyDictionary<string, object> sourceData = null, float? rerankerScore = null)
         {
-            return new UnknownKnowledgeAgentReference(type, id, activitySource);
+            sourceData ??= new Dictionary<string, object>();
+
+            return new UnknownKnowledgeAgentReference(
+                type,
+                id,
+                activitySource,
+                sourceData,
+                rerankerScore,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentSearchActivityRecord"/>. </summary>
-        /// <param name="id"> The ID of the activity record. </param>
-        /// <param name="targetIndex"> The target index for the retrieval activity. </param>
-        /// <param name="query"> The query details for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
-        /// <param name="count"> The count of documents retrieved. </param>
-        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
-        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentSearchActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeAgentSearchActivityRecord KnowledgeAgentSearchActivityRecord(int id = default, string targetIndex = null, KnowledgeAgentSearchActivityRecordQuery query = null, DateTimeOffset? queryTime = null, int? count = null, int? elapsedMs = null)
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.AzureBlobKnowledgeSourceParameters"/>. </summary>
+        /// <param name="identity">
+        /// An explicit identity to use for this knowledge source.
+        /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
+        /// </param>
+        /// <param name="connectionString"> Key-based connection string or the ResourceId format if using a managed identity. </param>
+        /// <param name="containerName"> The name of the blob storage container. </param>
+        /// <param name="folderPath"> Optional folder path within the container. </param>
+        /// <param name="embeddingModel">
+        /// Optional vectorizer configuration for vectorizing content.
+        /// Please note <see cref="VectorSearchVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AIServicesVisionVectorizer"/>, <see cref="AzureMachineLearningVectorizer"/>, <see cref="AzureOpenAIVectorizer"/> and <see cref="WebApiVectorizer"/>.
+        /// </param>
+        /// <param name="chatCompletionModel">
+        /// Optional chat completion model for image verbalization or context extraction.
+        /// Please note <see cref="KnowledgeAgentModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="KnowledgeAgentAzureOpenAIModel"/>.
+        /// </param>
+        /// <param name="ingestionSchedule"> Optional schedule for data ingestion. </param>
+        /// <param name="createdResources"> Resources created by the knowledge source. </param>
+        /// <param name="disableImageVerbalization"> Indicates whether image verbalization should be disabled. </param>
+        /// <returns> A new <see cref="Indexes.Models.AzureBlobKnowledgeSourceParameters"/> instance for mocking. </returns>
+        public static AzureBlobKnowledgeSourceParameters AzureBlobKnowledgeSourceParameters(SearchIndexerDataIdentity identity = null, string connectionString = null, string containerName = null, string folderPath = null, VectorSearchVectorizer embeddingModel = null, KnowledgeAgentModel chatCompletionModel = null, IndexingSchedule ingestionSchedule = null, IReadOnlyDictionary<string, string> createdResources = null, bool? disableImageVerbalization = null)
         {
-            return new KnowledgeAgentSearchActivityRecord(
+            createdResources ??= new Dictionary<string, string>();
+
+            return new AzureBlobKnowledgeSourceParameters(
+                identity,
+                connectionString,
+                containerName,
+                folderPath,
+                embeddingModel,
+                chatCompletionModel,
+                ingestionSchedule,
+                createdResources,
+                disableImageVerbalization,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentRetrievalActivityRecord"/>. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
+        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
+        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentRetrievalActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeAgentRetrievalActivityRecord KnowledgeAgentRetrievalActivityRecord(int id = default, int? elapsedMs = null, string knowledgeSourceName = null, DateTimeOffset? queryTime = null, int? count = null)
+        {
+            return new KnowledgeAgentRetrievalActivityRecord(
                 id,
-                "AzureSearchQuery",
-                targetIndex,
-                query,
+                "KnowledgeAgentRetrievalActivityRecord",
+                elapsedMs,
+                serializedAdditionalRawData: null,
+                knowledgeSourceName,
+                queryTime,
+                count);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentSearchIndexActivityRecord"/>. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
+        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
+        /// <param name="searchIndexArguments"> The search index arguments for the retrieval activity. </param>
+        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentSearchIndexActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeAgentSearchIndexActivityRecord KnowledgeAgentSearchIndexActivityRecord(int id = default, int? elapsedMs = null, string knowledgeSourceName = null, DateTimeOffset? queryTime = null, int? count = null, KnowledgeAgentSearchIndexActivityArguments searchIndexArguments = null)
+        {
+            return new KnowledgeAgentSearchIndexActivityRecord(
+                id,
+                "searchIndex",
+                elapsedMs,
+                serializedAdditionalRawData: null,
+                knowledgeSourceName,
                 queryTime,
                 count,
-                elapsedMs);
+                searchIndexArguments);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.KnowledgeAgentSearchActivityRecordQuery"/>. </summary>
-        /// <param name="search"> The search string. </param>
+        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentSearchIndexActivityArguments"/>. </summary>
+        /// <param name="search"> The search string used to query the search index. </param>
         /// <param name="filter"> The filter string. </param>
-        /// <returns> A new <see cref="Models.KnowledgeAgentSearchActivityRecordQuery"/> instance for mocking. </returns>
-        public static KnowledgeAgentSearchActivityRecordQuery KnowledgeAgentSearchActivityRecordQuery(string search = null, string filter = null)
+        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentSearchIndexActivityArguments"/> instance for mocking. </returns>
+        public static KnowledgeAgentSearchIndexActivityArguments KnowledgeAgentSearchIndexActivityArguments(string search = null, string filter = null)
         {
-            return new KnowledgeAgentSearchActivityRecordQuery(search, filter);
+            return new KnowledgeAgentSearchIndexActivityArguments(search, filter, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentAzureBlobActivityRecord"/>. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
+        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
+        /// <param name="azureBlobArguments"> The azure blob arguments for the retrieval activity. </param>
+        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentAzureBlobActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeAgentAzureBlobActivityRecord KnowledgeAgentAzureBlobActivityRecord(int id = default, int? elapsedMs = null, string knowledgeSourceName = null, DateTimeOffset? queryTime = null, int? count = null, KnowledgeAgentAzureBlobActivityArguments azureBlobArguments = null)
+        {
+            return new KnowledgeAgentAzureBlobActivityRecord(
+                id,
+                "azureBlob",
+                elapsedMs,
+                serializedAdditionalRawData: null,
+                knowledgeSourceName,
+                queryTime,
+                count,
+                azureBlobArguments);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentAzureBlobActivityArguments"/>. </summary>
+        /// <param name="search"> The search string used to query blob contents. </param>
+        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentAzureBlobActivityArguments"/> instance for mocking. </returns>
+        public static KnowledgeAgentAzureBlobActivityArguments KnowledgeAgentAzureBlobActivityArguments(string search = null)
+        {
+            return new KnowledgeAgentAzureBlobActivityArguments(search, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentModelQueryPlanningActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="inputTokens"> The number of input tokens for the LLM query planning activity. </param>
         /// <param name="outputTokens"> The number of output tokens for the LLM query planning activity. </param>
-        /// <param name="elapsedMs"> The elapsed time in milliseconds for the model activity. </param>
         /// <returns> A new <see cref="Agents.Models.KnowledgeAgentModelQueryPlanningActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeAgentModelQueryPlanningActivityRecord KnowledgeAgentModelQueryPlanningActivityRecord(int id = default, int? inputTokens = null, int? outputTokens = null, int? elapsedMs = null)
+        public static KnowledgeAgentModelQueryPlanningActivityRecord KnowledgeAgentModelQueryPlanningActivityRecord(int id = default, int? elapsedMs = null, int? inputTokens = null, int? outputTokens = null)
         {
-            return new KnowledgeAgentModelQueryPlanningActivityRecord(id, "ModelQueryPlanning", inputTokens, outputTokens, elapsedMs);
+            return new KnowledgeAgentModelQueryPlanningActivityRecord(
+                id,
+                "modelQueryPlanning",
+                elapsedMs,
+                serializedAdditionalRawData: null,
+                inputTokens,
+                outputTokens);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentSemanticRankerActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentModelAnswerSynthesisActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
-        /// <param name="inputTokens"> The number of input tokens for the semantic ranker activity. </param>
-        /// <param name="elapsedMs"> The elapsed time in milliseconds for the model activity. </param>
-        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentSemanticRankerActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeAgentSemanticRankerActivityRecord KnowledgeAgentSemanticRankerActivityRecord(int id = default, int? inputTokens = null, int? elapsedMs = null)
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="inputTokens"> The number of input tokens for the LLM answer synthesis activity. </param>
+        /// <param name="outputTokens"> The number of output tokens for the LLM answer synthesis activity. </param>
+        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentModelAnswerSynthesisActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeAgentModelAnswerSynthesisActivityRecord KnowledgeAgentModelAnswerSynthesisActivityRecord(int id = default, int? elapsedMs = null, int? inputTokens = null, int? outputTokens = null)
         {
-            return new KnowledgeAgentSemanticRankerActivityRecord(id, "AzureSearchSemanticRanker", inputTokens, elapsedMs);
+            return new KnowledgeAgentModelAnswerSynthesisActivityRecord(
+                id,
+                "modelAnswerSynthesis",
+                elapsedMs,
+                serializedAdditionalRawData: null,
+                inputTokens,
+                outputTokens);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentAzureSearchDocReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentSemanticRerankerActivityRecord"/>. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="inputTokens"> The number of input tokens for the semantic ranker activity. </param>
+        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentSemanticRerankerActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeAgentSemanticRerankerActivityRecord KnowledgeAgentSemanticRerankerActivityRecord(int id = default, int? elapsedMs = null, int? inputTokens = null)
+        {
+            return new KnowledgeAgentSemanticRerankerActivityRecord(id, "semanticReranker", elapsedMs, serializedAdditionalRawData: null, inputTokens);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentSearchIndexReference"/>. </summary>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
-        /// <param name="docKey"> The document key for the reference. </param>
         /// <param name="sourceData"> Dictionary of &lt;any&gt;. </param>
-        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentAzureSearchDocReference"/> instance for mocking. </returns>
-        public static KnowledgeAgentAzureSearchDocReference KnowledgeAgentAzureSearchDocReference(string id = null, int activitySource = default, string docKey = null, IReadOnlyDictionary<string, object> sourceData = null)
+        /// <param name="rerankerScore"> The reranker score for the document reference. </param>
+        /// <param name="docKey"> The document key for the reference. </param>
+        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentSearchIndexReference"/> instance for mocking. </returns>
+        public static KnowledgeAgentSearchIndexReference KnowledgeAgentSearchIndexReference(string id = null, int activitySource = default, IReadOnlyDictionary<string, object> sourceData = null, float? rerankerScore = null, string docKey = null)
         {
             sourceData ??= new Dictionary<string, object>();
 
-            return new KnowledgeAgentAzureSearchDocReference("AzureSearchDoc", id, activitySource, docKey, sourceData);
+            return new KnowledgeAgentSearchIndexReference(
+                "searchIndex",
+                id,
+                activitySource,
+                sourceData,
+                rerankerScore,
+                serializedAdditionalRawData: null,
+                docKey);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentAzureBlobReference"/>. </summary>
+        /// <param name="id"> The ID of the reference. </param>
+        /// <param name="activitySource"> The source activity ID for the reference. </param>
+        /// <param name="sourceData"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="rerankerScore"> The reranker score for the document reference. </param>
+        /// <param name="blobUrl"> The blob URL for the reference. </param>
+        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentAzureBlobReference"/> instance for mocking. </returns>
+        public static KnowledgeAgentAzureBlobReference KnowledgeAgentAzureBlobReference(string id = null, int activitySource = default, IReadOnlyDictionary<string, object> sourceData = null, float? rerankerScore = null, string blobUrl = null)
+        {
+            sourceData ??= new Dictionary<string, object>();
+
+            return new KnowledgeAgentAzureBlobReference(
+                "azureBlob",
+                id,
+                activitySource,
+                sourceData,
+                rerankerScore,
+                serializedAdditionalRawData: null,
+                blobUrl);
         }
     }
 }

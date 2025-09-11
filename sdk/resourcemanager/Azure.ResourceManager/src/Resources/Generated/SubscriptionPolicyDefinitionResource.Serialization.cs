@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class SubscriptionPolicyDefinitionResource : IJsonModel<PolicyDefinitionData>
     {
+        private static PolicyDefinitionData s_dataDeserializationInstance;
+        private static PolicyDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PolicyDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PolicyDefinitionData>)Data).Write(writer, options);
 
-        PolicyDefinitionData IJsonModel<PolicyDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicyDefinitionData>)Data).Create(ref reader, options);
+        PolicyDefinitionData IJsonModel<PolicyDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicyDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PolicyDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PolicyDefinitionData>(Data, options, AzureResourceManagerContext.Default);
+        BinaryData IPersistableModel<PolicyDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options, AzureResourceManagerContext.Default);
 
         PolicyDefinitionData IPersistableModel<PolicyDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicyDefinitionData>(data, options, AzureResourceManagerContext.Default);
 
-        string IPersistableModel<PolicyDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicyDefinitionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PolicyDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicyDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

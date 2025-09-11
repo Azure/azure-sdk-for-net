@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Maintenance
 {
     public partial class MaintenanceApplyUpdateResource : IJsonModel<MaintenanceApplyUpdateData>
     {
+        private static MaintenanceApplyUpdateData s_dataDeserializationInstance;
+        private static MaintenanceApplyUpdateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MaintenanceApplyUpdateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceApplyUpdateData>)Data).Write(writer, options);
 
-        MaintenanceApplyUpdateData IJsonModel<MaintenanceApplyUpdateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceApplyUpdateData>)Data).Create(ref reader, options);
+        MaintenanceApplyUpdateData IJsonModel<MaintenanceApplyUpdateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceApplyUpdateData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MaintenanceApplyUpdateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MaintenanceApplyUpdateData>(Data, options, AzureResourceManagerMaintenanceContext.Default);
 
         MaintenanceApplyUpdateData IPersistableModel<MaintenanceApplyUpdateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenanceApplyUpdateData>(data, options, AzureResourceManagerMaintenanceContext.Default);
 
-        string IPersistableModel<MaintenanceApplyUpdateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MaintenanceApplyUpdateData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MaintenanceApplyUpdateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MaintenanceApplyUpdateData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

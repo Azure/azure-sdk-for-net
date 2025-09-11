@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Network security perimeter identifier. </param>
         /// <param name="tags"> List of tags for Network Security Perimeter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterPatch(string id, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterPatch(ResourceIdentifier id, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Tags = tags;
@@ -63,8 +64,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Network security perimeter identifier. </summary>
-        public string Id { get; }
+        [WirePath("id")]
+        public ResourceIdentifier Id { get; }
         /// <summary> List of tags for Network Security Perimeter. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

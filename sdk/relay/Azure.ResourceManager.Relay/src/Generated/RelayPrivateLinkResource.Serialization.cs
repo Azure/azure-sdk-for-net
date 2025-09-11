@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Relay
 {
     public partial class RelayPrivateLinkResource : IJsonModel<RelayPrivateLinkResourceData>
     {
+        private static RelayPrivateLinkResourceData s_dataDeserializationInstance;
+        private static RelayPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RelayPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RelayPrivateLinkResourceData>)Data).Write(writer, options);
 
-        RelayPrivateLinkResourceData IJsonModel<RelayPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayPrivateLinkResourceData>)Data).Create(ref reader, options);
+        RelayPrivateLinkResourceData IJsonModel<RelayPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<RelayPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RelayPrivateLinkResourceData>(Data, options, AzureResourceManagerRelayContext.Default);
 
         RelayPrivateLinkResourceData IPersistableModel<RelayPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayPrivateLinkResourceData>(data, options, AzureResourceManagerRelayContext.Default);
 
-        string IPersistableModel<RelayPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RelayPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

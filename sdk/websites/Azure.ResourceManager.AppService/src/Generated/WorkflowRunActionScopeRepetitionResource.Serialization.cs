@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class WorkflowRunActionScopeRepetitionResource : IJsonModel<WorkflowRunActionRepetitionDefinitionData>
     {
+        private static WorkflowRunActionRepetitionDefinitionData s_dataDeserializationInstance;
+        private static WorkflowRunActionRepetitionDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkflowRunActionRepetitionDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowRunActionRepetitionDefinitionData>)Data).Write(writer, options);
 
-        WorkflowRunActionRepetitionDefinitionData IJsonModel<WorkflowRunActionRepetitionDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowRunActionRepetitionDefinitionData>)Data).Create(ref reader, options);
+        WorkflowRunActionRepetitionDefinitionData IJsonModel<WorkflowRunActionRepetitionDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowRunActionRepetitionDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<WorkflowRunActionRepetitionDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowRunActionRepetitionDefinitionData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         WorkflowRunActionRepetitionDefinitionData IPersistableModel<WorkflowRunActionRepetitionDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowRunActionRepetitionDefinitionData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<WorkflowRunActionRepetitionDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowRunActionRepetitionDefinitionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkflowRunActionRepetitionDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowRunActionRepetitionDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

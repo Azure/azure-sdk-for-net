@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityMLAnalyticsSettingResource : IJsonModel<SecurityMLAnalyticsSettingData>
     {
+        private static SecurityMLAnalyticsSettingData s_dataDeserializationInstance;
+        private static SecurityMLAnalyticsSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityMLAnalyticsSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityMLAnalyticsSettingData>)Data).Write(writer, options);
 
-        SecurityMLAnalyticsSettingData IJsonModel<SecurityMLAnalyticsSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityMLAnalyticsSettingData>)Data).Create(ref reader, options);
+        SecurityMLAnalyticsSettingData IJsonModel<SecurityMLAnalyticsSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityMLAnalyticsSettingData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SecurityMLAnalyticsSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityMLAnalyticsSettingData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         SecurityMLAnalyticsSettingData IPersistableModel<SecurityMLAnalyticsSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityMLAnalyticsSettingData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityMLAnalyticsSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityMLAnalyticsSettingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityMLAnalyticsSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityMLAnalyticsSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

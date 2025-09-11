@@ -1,17 +1,39 @@
 # Release History
 
-## 12.2.0-beta.1 (Unreleased)
+## 12.3.0-beta.1 (Unreleased)
 
 ### Features Added
-- Explicitly setting `BlobStorageResourceOptions.AccessTier` to `null` will disable preserving the access tier value from the source blob to the destination blob.
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed bug where AccessTier for Premium Page Blobs were not being preserved.
-- Fixed some issues when transferring virtual directories with Blob Storage as the source.
+- Fixed an issue on upload transfers where file/directory names on the destination may be incorrect. The issue could occur if the path passed to `LocalFilesStorageResourceProvider.FromDirectory` contained a trailing slash.
 
 ### Other Changes
+
+## 12.2.1 (2025-08-06)
+
+### Bugs Fixed
+- Fixed an issue that could cause an exception when trying to resume a transfer that contained resources with special characters in the name.
+
+## 12.2.0 (2025-07-21)
+
+### Features Added
+- Includes all features from 12.2.0-beta.1
+
+### Bugs Fixed
+- Fixed an issue with Copy transfers where if the source file/directory name contained certain special characters, the destination file name would incorrectly contain the encoded version of these characters.
+- Fixed an issue with Upload transfers where file/directory names containing certain URL-encoded characters could cause the transfer to fail.
+
+
+## 12.2.0-beta.1 (2025-06-17)
+
+### Features Added
+- Explicitly setting `BlobStorageResourceOptions.AccessTier` to `null` will disable preserving the access tier value from the source blob to the destination blob.
+
+### Bugs Fixed
+- Fixed bug where AccessTier for Premium Page Blobs were not being preserved.
+- Fixed some issues when transferring virtual directories with Blob Storage as the source.
 
 ## 12.1.0 (2025-02-27)
 

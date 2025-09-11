@@ -35,90 +35,6 @@ namespace Azure.ResourceManager.Network.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkSecurityPerimeterResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkSecurityPerimeterResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkSecurityPerimeterResource"/> object. </returns>
-        public virtual NetworkSecurityPerimeterResource GetNetworkSecurityPerimeterResource(ResourceIdentifier id)
-        {
-            NetworkSecurityPerimeterResource.ValidateResourceId(id);
-            return new NetworkSecurityPerimeterResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkSecurityPerimeterProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkSecurityPerimeterProfileResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkSecurityPerimeterProfileResource"/> object. </returns>
-        public virtual NetworkSecurityPerimeterProfileResource GetNetworkSecurityPerimeterProfileResource(ResourceIdentifier id)
-        {
-            NetworkSecurityPerimeterProfileResource.ValidateResourceId(id);
-            return new NetworkSecurityPerimeterProfileResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkSecurityPerimeterAccessRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkSecurityPerimeterAccessRuleResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterAccessRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkSecurityPerimeterAccessRuleResource"/> object. </returns>
-        public virtual NetworkSecurityPerimeterAccessRuleResource GetNetworkSecurityPerimeterAccessRuleResource(ResourceIdentifier id)
-        {
-            NetworkSecurityPerimeterAccessRuleResource.ValidateResourceId(id);
-            return new NetworkSecurityPerimeterAccessRuleResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkSecurityPerimeterAssociationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkSecurityPerimeterAssociationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterAssociationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkSecurityPerimeterAssociationResource"/> object. </returns>
-        public virtual NetworkSecurityPerimeterAssociationResource GetNetworkSecurityPerimeterAssociationResource(ResourceIdentifier id)
-        {
-            NetworkSecurityPerimeterAssociationResource.ValidateResourceId(id);
-            return new NetworkSecurityPerimeterAssociationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkSecurityPerimeterLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkSecurityPerimeterLinkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkSecurityPerimeterLinkResource"/> object. </returns>
-        public virtual NetworkSecurityPerimeterLinkResource GetNetworkSecurityPerimeterLinkResource(ResourceIdentifier id)
-        {
-            NetworkSecurityPerimeterLinkResource.ValidateResourceId(id);
-            return new NetworkSecurityPerimeterLinkResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkSecurityPerimeterLinkReferenceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkSecurityPerimeterLinkReferenceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterLinkReferenceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkSecurityPerimeterLinkReferenceResource"/> object. </returns>
-        public virtual NetworkSecurityPerimeterLinkReferenceResource GetNetworkSecurityPerimeterLinkReferenceResource(ResourceIdentifier id)
-        {
-            NetworkSecurityPerimeterLinkReferenceResource.ValidateResourceId(id);
-            return new NetworkSecurityPerimeterLinkReferenceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkSecurityPerimeterLoggingConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/> object. </returns>
-        public virtual NetworkSecurityPerimeterLoggingConfigurationResource GetNetworkSecurityPerimeterLoggingConfigurationResource(ResourceIdentifier id)
-        {
-            NetworkSecurityPerimeterLoggingConfigurationResource.ValidateResourceId(id);
-            return new NetworkSecurityPerimeterLoggingConfigurationResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing an <see cref="ApplicationGatewayResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApplicationGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -884,6 +800,90 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             DefaultSecurityRuleResource.ValidateResourceId(id);
             return new DefaultSecurityRuleResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterResource"/> object. </returns>
+        public virtual NetworkSecurityPerimeterResource GetNetworkSecurityPerimeterResource(ResourceIdentifier id)
+        {
+            NetworkSecurityPerimeterResource.ValidateResourceId(id);
+            return new NetworkSecurityPerimeterResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterProfileResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterProfileResource"/> object. </returns>
+        public virtual NetworkSecurityPerimeterProfileResource GetNetworkSecurityPerimeterProfileResource(ResourceIdentifier id)
+        {
+            NetworkSecurityPerimeterProfileResource.ValidateResourceId(id);
+            return new NetworkSecurityPerimeterProfileResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterAccessRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterAccessRuleResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterAccessRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterAccessRuleResource"/> object. </returns>
+        public virtual NetworkSecurityPerimeterAccessRuleResource GetNetworkSecurityPerimeterAccessRuleResource(ResourceIdentifier id)
+        {
+            NetworkSecurityPerimeterAccessRuleResource.ValidateResourceId(id);
+            return new NetworkSecurityPerimeterAccessRuleResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterAssociationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterAssociationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterAssociationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterAssociationResource"/> object. </returns>
+        public virtual NetworkSecurityPerimeterAssociationResource GetNetworkSecurityPerimeterAssociationResource(ResourceIdentifier id)
+        {
+            NetworkSecurityPerimeterAssociationResource.ValidateResourceId(id);
+            return new NetworkSecurityPerimeterAssociationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterLinkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterLinkResource"/> object. </returns>
+        public virtual NetworkSecurityPerimeterLinkResource GetNetworkSecurityPerimeterLinkResource(ResourceIdentifier id)
+        {
+            NetworkSecurityPerimeterLinkResource.ValidateResourceId(id);
+            return new NetworkSecurityPerimeterLinkResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterLinkReferenceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterLinkReferenceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterLinkReferenceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterLinkReferenceResource"/> object. </returns>
+        public virtual NetworkSecurityPerimeterLinkReferenceResource GetNetworkSecurityPerimeterLinkReferenceResource(ResourceIdentifier id)
+        {
+            NetworkSecurityPerimeterLinkReferenceResource.ValidateResourceId(id);
+            return new NetworkSecurityPerimeterLinkReferenceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterLoggingConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/> object. </returns>
+        public virtual NetworkSecurityPerimeterLoggingConfigurationResource GetNetworkSecurityPerimeterLoggingConfigurationResource(ResourceIdentifier id)
+        {
+            NetworkSecurityPerimeterLoggingConfigurationResource.ValidateResourceId(id);
+            return new NetworkSecurityPerimeterLoggingConfigurationResource(Client, id);
         }
 
         /// <summary>

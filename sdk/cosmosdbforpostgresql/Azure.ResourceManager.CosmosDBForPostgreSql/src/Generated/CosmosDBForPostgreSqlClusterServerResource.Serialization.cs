@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
     public partial class CosmosDBForPostgreSqlClusterServerResource : IJsonModel<CosmosDBForPostgreSqlClusterServerData>
     {
+        private static CosmosDBForPostgreSqlClusterServerData s_dataDeserializationInstance;
+        private static CosmosDBForPostgreSqlClusterServerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CosmosDBForPostgreSqlClusterServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBForPostgreSqlClusterServerData>)Data).Write(writer, options);
 
-        CosmosDBForPostgreSqlClusterServerData IJsonModel<CosmosDBForPostgreSqlClusterServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBForPostgreSqlClusterServerData>)Data).Create(ref reader, options);
+        CosmosDBForPostgreSqlClusterServerData IJsonModel<CosmosDBForPostgreSqlClusterServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBForPostgreSqlClusterServerData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlClusterServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBForPostgreSqlClusterServerData>(Data, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
 
         CosmosDBForPostgreSqlClusterServerData IPersistableModel<CosmosDBForPostgreSqlClusterServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBForPostgreSqlClusterServerData>(data, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
 
-        string IPersistableModel<CosmosDBForPostgreSqlClusterServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBForPostgreSqlClusterServerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CosmosDBForPostgreSqlClusterServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBForPostgreSqlClusterServerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

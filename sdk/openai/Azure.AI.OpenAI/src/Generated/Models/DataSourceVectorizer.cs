@@ -16,19 +16,24 @@ namespace Azure.AI.OpenAI.Chat
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        private protected DataSourceVectorizer(string @type)
+        /// <summary> Initializes a new instance of <see cref="DataSourceVectorizer"/>. </summary>
+        /// <param name="kind"> The differentiating identifier for the concrete vectorization source. </param>
+        private protected DataSourceVectorizer(InternalAzureChatDataSourceVectorizationSourceType kind)
         {
-            Type = @type;
+            Kind = kind;
         }
 
-        internal DataSourceVectorizer(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <summary> Initializes a new instance of <see cref="DataSourceVectorizer"/>. </summary>
+        /// <param name="kind"> The differentiating identifier for the concrete vectorization source. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataSourceVectorizer(InternalAzureChatDataSourceVectorizationSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The differentiating identifier for the concrete vectorization source. </summary>
-        internal string Type { get; set; }
+        internal InternalAzureChatDataSourceVectorizationSourceType Kind { get; set; }
 
         /// <summary></summary>
         internal IDictionary<string, BinaryData> SerializedAdditionalRawData

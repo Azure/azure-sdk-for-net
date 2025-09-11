@@ -1,21 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36203.30 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{5F376386-75AD-496D-8569-999968CFB50F}") = "Azure.ResourceManager.StorageActions", "src\Azure.ResourceManager.StorageActions.csproj", "{53E45AD1-63C9-433C-92AA-4D36A63EDD74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.StorageActions", "src\Azure.ResourceManager.StorageActions.csproj", "{53E45AD1-63C9-433C-92AA-4D36A63EDD74}"
 EndProject
-Project("{5F376386-75AD-496D-8569-999968CFB50F}") = "Azure.ResourceManager.StorageActions.Tests", "tests\Azure.ResourceManager.StorageActions.Tests.csproj", "{8FD24E40-327A-4987-AD55-64224CD01E1C}"
-EndProject
-Project("{5F376386-75AD-496D-8569-999968CFB50F}") = "Azure.ResourceManager.StorageActions.Samples", "samples\Azure.ResourceManager.StorageActions.Samples.csproj", "{F7CC6D3E-9717-4658-8718-E010436D164B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.StorageActions.Tests", "tests\Azure.ResourceManager.StorageActions.Tests.csproj", "{8FD24E40-327A-4987-AD55-64224CD01E1C}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E3FBD5BA-D8B4-4129-8F54-DB939EBA9AC2}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,17 +41,11 @@ Global
 		{8FD24E40-327A-4987-AD55-64224CD01E1C}.Release|x64.Build.0 = Release|Any CPU
 		{8FD24E40-327A-4987-AD55-64224CD01E1C}.Release|x86.ActiveCfg = Release|Any CPU
 		{8FD24E40-327A-4987-AD55-64224CD01E1C}.Release|x86.Build.0 = Release|Any CPU
-		{F7CC6D3E-9717-4658-8718-E010436D164B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F7CC6D3E-9717-4658-8718-E010436D164B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F7CC6D3E-9717-4658-8718-E010436D164B}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{F7CC6D3E-9717-4658-8718-E010436D164B}.Debug|x64.Build.0 = Debug|Any CPU
-		{F7CC6D3E-9717-4658-8718-E010436D164B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F7CC6D3E-9717-4658-8718-E010436D164B}.Debug|x86.Build.0 = Debug|Any CPU
-		{F7CC6D3E-9717-4658-8718-E010436D164B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F7CC6D3E-9717-4658-8718-E010436D164B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F7CC6D3E-9717-4658-8718-E010436D164B}.Release|x64.ActiveCfg = Release|Any CPU
-		{F7CC6D3E-9717-4658-8718-E010436D164B}.Release|x64.Build.0 = Release|Any CPU
-		{F7CC6D3E-9717-4658-8718-E010436D164B}.Release|x86.ActiveCfg = Release|Any CPU
-		{F7CC6D3E-9717-4658-8718-E010436D164B}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E3FBD5BA-D8B4-4129-8F54-DB939EBA9AC2}
 	EndGlobalSection
 EndGlobal

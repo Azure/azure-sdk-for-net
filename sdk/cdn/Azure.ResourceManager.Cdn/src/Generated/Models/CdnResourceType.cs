@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Type of CDN resource used in CheckNameAvailability. </summary>
+    /// <summary>
+    /// Type of CDN resource used in CheckNameAvailability.
+    /// Serialized Name: ResourceType
+    /// </summary>
     public readonly partial struct CdnResourceType : IEquatable<CdnResourceType>
     {
         private readonly string _value;

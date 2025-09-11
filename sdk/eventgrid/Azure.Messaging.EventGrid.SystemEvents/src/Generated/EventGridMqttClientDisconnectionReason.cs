@@ -14,65 +14,99 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct EventGridMqttClientDisconnectionReason : IEquatable<EventGridMqttClientDisconnectionReason>
     {
         private readonly string _value;
+        /// <summary> The client got disconnected for any authentication reasons (for example, certificate expired, client got disabled, or client configuration changed). </summary>
+        private const string ClientAuthenticationErrorValue = "ClientAuthenticationError";
+        /// <summary> The client got disconnected for any authorization reasons (for example, because of a change in the configuration of topic spaces, permission bindings, or client groups). </summary>
+        private const string ClientAuthorizationErrorValue = "ClientAuthorizationError";
+        /// <summary> The client sent a bad request or used one of the unsupported features that resulted in a connection termination by the service. </summary>
+        private const string ClientErrorValue = "ClientError";
+        /// <summary> The client initiated a graceful disconnect through a DISCONNECT packet for MQTT or a close frame for MQTT over WebSocket. </summary>
+        private const string ClientInitiatedDisconnectValue = "ClientInitiatedDisconnect";
+        /// <summary> The client-server connection is lost. (EXCHANGE ONLINE PROTECTION). </summary>
+        private const string ConnectionLostValue = "ConnectionLost";
+        /// <summary> The client's IP address is blocked by IP filter or Private links configuration. </summary>
+        private const string IpForbiddenValue = "IpForbidden";
+        /// <summary> The client exceeded one or more of the throttling limits that resulted in a connection termination by the service. </summary>
+        private const string QuotaExceededValue = "QuotaExceeded";
+        /// <summary> The connection got terminated due to an unexpected server error. </summary>
+        private const string ServerErrorValue = "ServerError";
+        /// <summary> The server initiates a graceful disconnect for any operational reason. </summary>
+        private const string ServerInitiatedDisconnectValue = "ServerInitiatedDisconnect";
+        /// <summary> The client's queue for unacknowledged QoS1 messages reached its limit, which resulted in a connection termination by the server. </summary>
+        private const string SessionOverflowValue = "SessionOverflow";
+        /// <summary> The client reconnected with the same authentication name, which resulted in the termination of the previous connection. </summary>
+        private const string SessionTakenOverValue = "SessionTakenOver";
 
         /// <summary> Initializes a new instance of <see cref="EventGridMqttClientDisconnectionReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EventGridMqttClientDisconnectionReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ClientAuthenticationErrorValue = "ClientAuthenticationError";
-        private const string ClientAuthorizationErrorValue = "ClientAuthorizationError";
-        private const string ClientErrorValue = "ClientError";
-        private const string ClientInitiatedDisconnectValue = "ClientInitiatedDisconnect";
-        private const string ConnectionLostValue = "ConnectionLost";
-        private const string IpForbiddenValue = "IpForbidden";
-        private const string QuotaExceededValue = "QuotaExceeded";
-        private const string ServerErrorValue = "ServerError";
-        private const string ServerInitiatedDisconnectValue = "ServerInitiatedDisconnect";
-        private const string SessionOverflowValue = "SessionOverflow";
-        private const string SessionTakenOverValue = "SessionTakenOver";
+            _value = value;
+        }
 
         /// <summary> The client got disconnected for any authentication reasons (for example, certificate expired, client got disabled, or client configuration changed). </summary>
         public static EventGridMqttClientDisconnectionReason ClientAuthenticationError { get; } = new EventGridMqttClientDisconnectionReason(ClientAuthenticationErrorValue);
+
         /// <summary> The client got disconnected for any authorization reasons (for example, because of a change in the configuration of topic spaces, permission bindings, or client groups). </summary>
         public static EventGridMqttClientDisconnectionReason ClientAuthorizationError { get; } = new EventGridMqttClientDisconnectionReason(ClientAuthorizationErrorValue);
+
         /// <summary> The client sent a bad request or used one of the unsupported features that resulted in a connection termination by the service. </summary>
         public static EventGridMqttClientDisconnectionReason ClientError { get; } = new EventGridMqttClientDisconnectionReason(ClientErrorValue);
+
         /// <summary> The client initiated a graceful disconnect through a DISCONNECT packet for MQTT or a close frame for MQTT over WebSocket. </summary>
         public static EventGridMqttClientDisconnectionReason ClientInitiatedDisconnect { get; } = new EventGridMqttClientDisconnectionReason(ClientInitiatedDisconnectValue);
+
         /// <summary> The client-server connection is lost. (EXCHANGE ONLINE PROTECTION). </summary>
         public static EventGridMqttClientDisconnectionReason ConnectionLost { get; } = new EventGridMqttClientDisconnectionReason(ConnectionLostValue);
-        /// <summary> The client's IP address is blocked by IP filter or Private links configuration. </summary>
-        public static EventGridMqttClientDisconnectionReason IpForbidden { get; } = new EventGridMqttClientDisconnectionReason(IpForbiddenValue);
+
         /// <summary> The client exceeded one or more of the throttling limits that resulted in a connection termination by the service. </summary>
         public static EventGridMqttClientDisconnectionReason QuotaExceeded { get; } = new EventGridMqttClientDisconnectionReason(QuotaExceededValue);
+
         /// <summary> The connection got terminated due to an unexpected server error. </summary>
         public static EventGridMqttClientDisconnectionReason ServerError { get; } = new EventGridMqttClientDisconnectionReason(ServerErrorValue);
+
         /// <summary> The server initiates a graceful disconnect for any operational reason. </summary>
         public static EventGridMqttClientDisconnectionReason ServerInitiatedDisconnect { get; } = new EventGridMqttClientDisconnectionReason(ServerInitiatedDisconnectValue);
+
         /// <summary> The client's queue for unacknowledged QoS1 messages reached its limit, which resulted in a connection termination by the server. </summary>
         public static EventGridMqttClientDisconnectionReason SessionOverflow { get; } = new EventGridMqttClientDisconnectionReason(SessionOverflowValue);
+
         /// <summary> The client reconnected with the same authentication name, which resulted in the termination of the previous connection. </summary>
         public static EventGridMqttClientDisconnectionReason SessionTakenOver { get; } = new EventGridMqttClientDisconnectionReason(SessionTakenOverValue);
+
         /// <summary> Determines if two <see cref="EventGridMqttClientDisconnectionReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventGridMqttClientDisconnectionReason left, EventGridMqttClientDisconnectionReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventGridMqttClientDisconnectionReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventGridMqttClientDisconnectionReason left, EventGridMqttClientDisconnectionReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventGridMqttClientDisconnectionReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventGridMqttClientDisconnectionReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventGridMqttClientDisconnectionReason(string value) => new EventGridMqttClientDisconnectionReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventGridMqttClientDisconnectionReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventGridMqttClientDisconnectionReason?(string value) => value == null ? null : new EventGridMqttClientDisconnectionReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventGridMqttClientDisconnectionReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventGridMqttClientDisconnectionReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

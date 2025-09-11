@@ -62,6 +62,17 @@ public partial class SearchService : ProvisionableResource
     private SearchAadAuthDataPlaneAuthOptions? _authOptions;
 
     /// <summary>
+    /// Configure this property to support the search service using either the
+    /// default compute or Azure Confidential Compute.
+    /// </summary>
+    public BicepValue<SearchServiceComputeType> ComputeType 
+    {
+        get { Initialize(); return _computeType!; }
+        set { Initialize(); _computeType!.Assign(value); }
+    }
+    private BicepValue<SearchServiceComputeType>? _computeType;
+
+    /// <summary>
     /// A list of data exfiltration scenarios that are explicitly disallowed
     /// for the search service. Currently, the only supported value is
     /// &apos;All&apos; to disable all possible data export scenarios with
@@ -84,6 +95,16 @@ public partial class SearchService : ProvisionableResource
         set { Initialize(); AssignOrReplace(ref _encryptionWithCmk, value); }
     }
     private SearchEncryptionWithCmk? _encryptionWithCmk;
+
+    /// <summary>
+    /// The endpoint of the Azure AI Search service.
+    /// </summary>
+    public BicepValue<Uri> Endpoint 
+    {
+        get { Initialize(); return _endpoint!; }
+        set { Initialize(); _endpoint!.Assign(value); }
+    }
+    private BicepValue<Uri>? _endpoint;
 
     /// <summary>
     /// Applicable only for the standard3 SKU. You can set this property to
@@ -246,6 +267,15 @@ public partial class SearchService : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
+    /// Indicates whether or not the search service has an upgrade available.
+    /// </summary>
+    public BicepValue<bool> IsUpgradeAvailable 
+    {
+        get { Initialize(); return _isUpgradeAvailable!; }
+    }
+    private BicepValue<bool>? _isUpgradeAvailable;
+
+    /// <summary>
     /// The list of private endpoint connections to the Azure AI Search service.
     /// </summary>
     public BicepList<SearchPrivateEndpointConnectionData> PrivateEndpointConnections 
@@ -258,12 +288,12 @@ public partial class SearchService : ProvisionableResource
     /// The state of the last provisioning operation performed on the search
     /// service. Provisioning is an intermediate state that occurs while
     /// service capacity is being established. After capacity is set up,
-    /// provisioningState changes to either &apos;succeeded&apos; or
-    /// &apos;failed&apos;. Client applications can poll provisioning status
+    /// provisioningState changes to either &apos;Succeeded&apos; or
+    /// &apos;Failed&apos;. Client applications can poll provisioning status
     /// (the recommended polling interval is from 30 seconds to one minute) by
     /// using the Get Search Service operation to see when an operation is
     /// completed. If you are using the free service, this value tends to come
-    /// back as &apos;succeeded&apos; directly in the call to Create search
+    /// back as &apos;Succeeded&apos; directly in the call to Create search
     /// service. This is because the free service uses capacity that is
     /// already set up.
     /// </summary>
@@ -272,6 +302,16 @@ public partial class SearchService : ProvisionableResource
         get { Initialize(); return _provisioningState!; }
     }
     private BicepValue<SearchServiceProvisioningState>? _provisioningState;
+
+    /// <summary>
+    /// The date and time the search service was last upgraded. This field will
+    /// be null until the service gets upgraded for the first time.
+    /// </summary>
+    public BicepValue<DateTimeOffset> ServiceUpgradeOn 
+    {
+        get { Initialize(); return _serviceUpgradeOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _serviceUpgradeOn;
 
     /// <summary>
     /// The list of shared private link resources managed by the Azure AI
@@ -348,8 +388,10 @@ public partial class SearchService : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _authOptions = DefineModelProperty<SearchAadAuthDataPlaneAuthOptions>("AuthOptions", ["properties", "authOptions"]);
+        _computeType = DefineProperty<SearchServiceComputeType>("ComputeType", ["properties", "computeType"]);
         _disabledDataExfiltrationOptions = DefineListProperty<SearchDisabledDataExfiltrationOption>("DisabledDataExfiltrationOptions", ["properties", "disabledDataExfiltrationOptions"]);
         _encryptionWithCmk = DefineModelProperty<SearchEncryptionWithCmk>("EncryptionWithCmk", ["properties", "encryptionWithCmk"]);
+        _endpoint = DefineProperty<Uri>("Endpoint", ["properties", "endpoint"]);
         _hostingMode = DefineProperty<SearchServiceHostingMode>("HostingMode", ["properties", "hostingMode"]);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _iPRules = DefineListProperty<SearchServiceIPRule>("IPRules", ["properties", "networkRuleSet", "ipRules"]);
@@ -363,8 +405,10 @@ public partial class SearchService : ProvisionableResource
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _eTag = DefineProperty<ETag>("ETag", ["properties", "eTag"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _isUpgradeAvailable = DefineProperty<bool>("IsUpgradeAvailable", ["properties", "upgradeAvailable"], isOutput: true);
         _privateEndpointConnections = DefineListProperty<SearchPrivateEndpointConnectionData>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
         _provisioningState = DefineProperty<SearchServiceProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _serviceUpgradeOn = DefineProperty<DateTimeOffset>("ServiceUpgradeOn", ["properties", "serviceUpgradeDate"], isOutput: true);
         _sharedPrivateLinkResources = DefineListProperty<SharedSearchServicePrivateLinkResourceData>("SharedPrivateLinkResources", ["properties", "sharedPrivateLinkResources"], isOutput: true);
         _status = DefineProperty<SearchServiceStatus>("Status", ["properties", "status"], isOutput: true);
         _statusDetails = DefineProperty<string>("StatusDetails", ["properties", "statusDetails"], isOutput: true);
@@ -377,16 +421,6 @@ public partial class SearchService : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-06-01-Preview.
-        /// </summary>
-        public static readonly string V2024_06_01_Preview = "2024-06-01-Preview";
-
-        /// <summary>
-        /// 2024-03-01-Preview.
-        /// </summary>
-        public static readonly string V2024_03_01_Preview = "2024-03-01-Preview";
-
-        /// <summary>
         /// 2023-11-01.
         /// </summary>
         public static readonly string V2023_11_01 = "2023-11-01";
@@ -395,21 +429,6 @@ public partial class SearchService : ProvisionableResource
         /// 2022-09-01.
         /// </summary>
         public static readonly string V2022_09_01 = "2022-09-01";
-
-        /// <summary>
-        /// 2021-06-06-Preview.
-        /// </summary>
-        public static readonly string V2021_06_06_Preview = "2021-06-06-Preview";
-
-        /// <summary>
-        /// 2021-04-01-Preview.
-        /// </summary>
-        public static readonly string V2021_04_01_Preview = "2021-04-01-Preview";
-
-        /// <summary>
-        /// 2020-08-01-Preview.
-        /// </summary>
-        public static readonly string V2020_08_01_Preview = "2020-08-01-Preview";
 
         /// <summary>
         /// 2020-08-01.
@@ -422,11 +441,6 @@ public partial class SearchService : ProvisionableResource
         public static readonly string V2020_03_13 = "2020-03-13";
 
         /// <summary>
-        /// 2019-10-01-Preview.
-        /// </summary>
-        public static readonly string V2019_10_01_Preview = "2019-10-01-Preview";
-
-        /// <summary>
         /// 2015-08-19.
         /// </summary>
         public static readonly string V2015_08_19 = "2015-08-19";
@@ -437,8 +451,51 @@ public partial class SearchService : ProvisionableResource
         public static readonly string V2015_02_28 = "2015-02-28";
 
         /// <summary>
+        /// 2025-02-01-Preview.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2025_02_01_Preview = "2025-02-01-Preview";
+
+        /// <summary>
+        /// 2024-06-01-Preview.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2024_06_01_Preview = "2024-06-01-Preview";
+
+        /// <summary>
+        /// 2024-03-01-Preview.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2024_03_01_Preview = "2024-03-01-Preview";
+
+        /// <summary>
+        /// 2021-06-06-Preview.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2021_06_06_Preview = "2021-06-06-Preview";
+
+        /// <summary>
+        /// 2021-04-01-Preview.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2021_04_01_Preview = "2021-04-01-Preview";
+
+        /// <summary>
+        /// 2020-08-01-Preview.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2020_08_01_Preview = "2020-08-01-Preview";
+
+        /// <summary>
+        /// 2019-10-01-Preview.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2019_10_01_Preview = "2019-10-01-Preview";
+
+        /// <summary>
         /// 2014-07-31-Preview.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static readonly string V2014_07_31_Preview = "2014-07-31-Preview";
     }
 

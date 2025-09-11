@@ -13,69 +13,30 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Custom Context of Incoming Call. </summary>
     public partial class AcsIncomingCallCustomContext
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AcsIncomingCallCustomContext"/>. </summary>
-        /// <param name="sipHeaders"> Sip Headers for incoming call. </param>
-        /// <param name="voipHeaders"> Voip Headers for incoming call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sipHeaders"/> or <paramref name="voipHeaders"/> is null. </exception>
-        internal AcsIncomingCallCustomContext(IReadOnlyDictionary<string, string> sipHeaders, IReadOnlyDictionary<string, string> voipHeaders)
-        {
-            Argument.AssertNotNull(sipHeaders, nameof(sipHeaders));
-            Argument.AssertNotNull(voipHeaders, nameof(voipHeaders));
-
-            SipHeaders = sipHeaders;
-            VoipHeaders = voipHeaders;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcsIncomingCallCustomContext"/>. </summary>
-        /// <param name="sipHeaders"> Sip Headers for incoming call. </param>
-        /// <param name="voipHeaders"> Voip Headers for incoming call. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsIncomingCallCustomContext(IReadOnlyDictionary<string, string> sipHeaders, IReadOnlyDictionary<string, string> voipHeaders, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            SipHeaders = sipHeaders;
-            VoipHeaders = voipHeaders;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcsIncomingCallCustomContext"/> for deserialization. </summary>
         internal AcsIncomingCallCustomContext()
         {
+            SipHeaders = new ChangeTrackingDictionary<string, string>();
+            VoipHeaders = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AcsIncomingCallCustomContext"/>. </summary>
+        /// <param name="sipHeaders"> Sip Headers for incoming call. </param>
+        /// <param name="voipHeaders"> Voip Headers for incoming call. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AcsIncomingCallCustomContext(IReadOnlyDictionary<string, string> sipHeaders, IReadOnlyDictionary<string, string> voipHeaders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            SipHeaders = sipHeaders;
+            VoipHeaders = voipHeaders;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Sip Headers for incoming call. </summary>
         public IReadOnlyDictionary<string, string> SipHeaders { get; }
+
         /// <summary> Voip Headers for incoming call. </summary>
         public IReadOnlyDictionary<string, string> VoipHeaders { get; }
     }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NewRelicObservability
 {
     public partial class NewRelicObservabilityTagRuleResource : IJsonModel<NewRelicObservabilityTagRuleData>
     {
+        private static NewRelicObservabilityTagRuleData s_dataDeserializationInstance;
+        private static NewRelicObservabilityTagRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NewRelicObservabilityTagRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NewRelicObservabilityTagRuleData>)Data).Write(writer, options);
 
-        NewRelicObservabilityTagRuleData IJsonModel<NewRelicObservabilityTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NewRelicObservabilityTagRuleData>)Data).Create(ref reader, options);
+        NewRelicObservabilityTagRuleData IJsonModel<NewRelicObservabilityTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NewRelicObservabilityTagRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NewRelicObservabilityTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NewRelicObservabilityTagRuleData>(Data, options, AzureResourceManagerNewRelicObservabilityContext.Default);
 
         NewRelicObservabilityTagRuleData IPersistableModel<NewRelicObservabilityTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NewRelicObservabilityTagRuleData>(data, options, AzureResourceManagerNewRelicObservabilityContext.Default);
 
-        string IPersistableModel<NewRelicObservabilityTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NewRelicObservabilityTagRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NewRelicObservabilityTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NewRelicObservabilityTagRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

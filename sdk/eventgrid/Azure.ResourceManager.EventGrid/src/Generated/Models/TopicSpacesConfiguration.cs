@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// </param>
         /// <param name="hostname"> The endpoint for the topic spaces configuration. This is a read-only property. </param>
         /// <param name="routingEnrichments"> Routing enrichments for topic spaces configuration. </param>
+        /// <param name="clientAuthentication"> Client authentication settings for topic spaces configuration. </param>
         /// <param name="maximumSessionExpiryInHours">
         /// The maximum session expiry in hours. The property default value is 1 hour.
         /// Min allowed value is 1 hour and max allowed value is 8 hours.
@@ -71,12 +72,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="routingIdentityInfo"> Routing identity info for topic spaces configuration. </param>
         /// <param name="customDomains"> List of custom domain configurations for the namespace. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TopicSpacesConfiguration(TopicSpacesConfigurationState? state, string routeTopicResourceId, string hostname, RoutingEnrichments routingEnrichments, int? maximumSessionExpiryInHours, int? maximumClientSessionsPerAuthenticationName, RoutingIdentityInfo routingIdentityInfo, IList<CustomDomainConfiguration> customDomains, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TopicSpacesConfiguration(TopicSpacesConfigurationState? state, string routeTopicResourceId, string hostname, RoutingEnrichments routingEnrichments, ClientAuthenticationSettings clientAuthentication, int? maximumSessionExpiryInHours, int? maximumClientSessionsPerAuthenticationName, RoutingIdentityInfo routingIdentityInfo, IList<CustomDomainConfiguration> customDomains, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             RouteTopicResourceId = routeTopicResourceId;
             Hostname = hostname;
             RoutingEnrichments = routingEnrichments;
+            ClientAuthentication = clientAuthentication;
             MaximumSessionExpiryInHours = maximumSessionExpiryInHours;
             MaximumClientSessionsPerAuthenticationName = maximumClientSessionsPerAuthenticationName;
             RoutingIdentityInfo = routingIdentityInfo;
@@ -100,6 +102,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Routing enrichments for topic spaces configuration. </summary>
         [WirePath("routingEnrichments")]
         public RoutingEnrichments RoutingEnrichments { get; set; }
+        /// <summary> Client authentication settings for topic spaces configuration. </summary>
+        [WirePath("clientAuthentication")]
+        public ClientAuthenticationSettings ClientAuthentication { get; set; }
         /// <summary>
         /// The maximum session expiry in hours. The property default value is 1 hour.
         /// Min allowed value is 1 hour and max allowed value is 8 hours.

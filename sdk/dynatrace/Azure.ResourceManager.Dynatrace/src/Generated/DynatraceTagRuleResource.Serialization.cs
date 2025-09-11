@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Dynatrace
 {
     public partial class DynatraceTagRuleResource : IJsonModel<DynatraceTagRuleData>
     {
+        private static DynatraceTagRuleData s_dataDeserializationInstance;
+        private static DynatraceTagRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DynatraceTagRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceTagRuleData>)Data).Write(writer, options);
 
-        DynatraceTagRuleData IJsonModel<DynatraceTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceTagRuleData>)Data).Create(ref reader, options);
+        DynatraceTagRuleData IJsonModel<DynatraceTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceTagRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DynatraceTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DynatraceTagRuleData>(Data, options, AzureResourceManagerDynatraceContext.Default);
 
         DynatraceTagRuleData IPersistableModel<DynatraceTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DynatraceTagRuleData>(data, options, AzureResourceManagerDynatraceContext.Default);
 
-        string IPersistableModel<DynatraceTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DynatraceTagRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DynatraceTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DynatraceTagRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Purview
 {
     public partial class PurviewPrivateLinkResource : IJsonModel<PurviewPrivateLinkResourceData>
     {
+        private static PurviewPrivateLinkResourceData s_dataDeserializationInstance;
+        private static PurviewPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PurviewPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PurviewPrivateLinkResourceData>)Data).Write(writer, options);
 
-        PurviewPrivateLinkResourceData IJsonModel<PurviewPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PurviewPrivateLinkResourceData>)Data).Create(ref reader, options);
+        PurviewPrivateLinkResourceData IJsonModel<PurviewPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PurviewPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PurviewPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PurviewPrivateLinkResourceData>(Data, options, AzureResourceManagerPurviewContext.Default);
 
         PurviewPrivateLinkResourceData IPersistableModel<PurviewPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PurviewPrivateLinkResourceData>(data, options, AzureResourceManagerPurviewContext.Default);
 
-        string IPersistableModel<PurviewPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PurviewPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PurviewPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PurviewPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkSecurityPerimeterAccessRuleResource : IJsonModel<NetworkSecurityPerimeterAccessRuleData>
     {
+        private static NetworkSecurityPerimeterAccessRuleData s_dataDeserializationInstance;
+        private static NetworkSecurityPerimeterAccessRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkSecurityPerimeterAccessRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityPerimeterAccessRuleData>)Data).Write(writer, options);
 
-        NetworkSecurityPerimeterAccessRuleData IJsonModel<NetworkSecurityPerimeterAccessRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityPerimeterAccessRuleData>)Data).Create(ref reader, options);
+        NetworkSecurityPerimeterAccessRuleData IJsonModel<NetworkSecurityPerimeterAccessRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityPerimeterAccessRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterAccessRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkSecurityPerimeterAccessRuleData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         NetworkSecurityPerimeterAccessRuleData IPersistableModel<NetworkSecurityPerimeterAccessRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkSecurityPerimeterAccessRuleData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkSecurityPerimeterAccessRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkSecurityPerimeterAccessRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkSecurityPerimeterAccessRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkSecurityPerimeterAccessRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

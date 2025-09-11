@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -525,6 +526,48 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNull(body, nameof(body));
 
             using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return Import(waitUntil, content, format, context);
+        }
+
+        /// <summary>
+        /// Triggers a job to import a project using raw JSON string input.
+        /// This is an alternative to the structured import method, and is useful when importing directly from exported project files.
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectJson">
+        /// A raw JSON string representing the entire project to import.
+        /// This string should match the format of an exported Text Authoring project.
+        /// </param>
+        /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectJson, string format = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(projectJson, nameof(projectJson));
+
+            using RequestContent content = RequestContent.Create(Encoding.UTF8.GetBytes(projectJson));
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await ImportAsync(waitUntil, content, format, context).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Triggers a job to import a project using raw JSON string input.
+        /// This is an alternative to the structured import method, and is useful when importing directly from exported project files.
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectJson">
+        /// A raw JSON string representing the entire project to import.
+        /// This string should match the format of an exported Text Authoring project.
+        /// </param>
+        /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Operation Import(WaitUntil waitUntil, string projectJson, string format = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(projectJson, nameof(projectJson));
+
+            using RequestContent content = RequestContentHelper.FromObject(projectJson);
             RequestContext context = FromCancellationToken(cancellationToken);
             return Import(waitUntil, content, format, context);
         }
@@ -1646,14 +1689,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TextAuthoringAssignDeploymentResourcesState>> GetAssignDeploymentResourcesStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAuthoringDeploymentResourcesState>> GetAssignDeploymentResourcesStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetAssignDeploymentResourcesStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringAssignDeploymentResourcesState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringDeploymentResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing assign deployment resources job. </summary>
@@ -1661,14 +1704,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TextAuthoringAssignDeploymentResourcesState> GetAssignDeploymentResourcesStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<TextAuthoringDeploymentResourcesState> GetAssignDeploymentResourcesStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetAssignDeploymentResourcesStatus(jobId, context);
-            return Response.FromValue(TextAuthoringAssignDeploymentResourcesState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringDeploymentResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing unassign deployment resources job. </summary>
@@ -1676,14 +1719,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TextAuthoringUnassignDeploymentResourcesState>> GetUnassignDeploymentResourcesStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAuthoringDeploymentResourcesState>> GetUnassignDeploymentResourcesStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetUnassignDeploymentResourcesStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringUnassignDeploymentResourcesState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringDeploymentResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing unassign deployment resources job. </summary>
@@ -1691,14 +1734,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TextAuthoringUnassignDeploymentResourcesState> GetUnassignDeploymentResourcesStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<TextAuthoringDeploymentResourcesState> GetUnassignDeploymentResourcesStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetUnassignDeploymentResourcesStatus(jobId, context);
-            return Response.FromValue(TextAuthoringUnassignDeploymentResourcesState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringDeploymentResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. </summary>

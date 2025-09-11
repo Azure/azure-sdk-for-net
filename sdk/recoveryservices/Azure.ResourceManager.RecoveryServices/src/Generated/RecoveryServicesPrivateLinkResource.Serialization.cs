@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServices
 {
     public partial class RecoveryServicesPrivateLinkResource : IJsonModel<RecoveryServicesPrivateLinkResourceData>
     {
+        private static RecoveryServicesPrivateLinkResourceData s_dataDeserializationInstance;
+        private static RecoveryServicesPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RecoveryServicesPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RecoveryServicesPrivateLinkResourceData>)Data).Write(writer, options);
 
-        RecoveryServicesPrivateLinkResourceData IJsonModel<RecoveryServicesPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecoveryServicesPrivateLinkResourceData>)Data).Create(ref reader, options);
+        RecoveryServicesPrivateLinkResourceData IJsonModel<RecoveryServicesPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecoveryServicesPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<RecoveryServicesPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RecoveryServicesPrivateLinkResourceData>(Data, options, AzureResourceManagerRecoveryServicesContext.Default);
 
         RecoveryServicesPrivateLinkResourceData IPersistableModel<RecoveryServicesPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecoveryServicesPrivateLinkResourceData>(data, options, AzureResourceManagerRecoveryServicesContext.Default);
 
-        string IPersistableModel<RecoveryServicesPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecoveryServicesPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RecoveryServicesPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecoveryServicesPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseEncryptionProtectorResource : IJsonModel<SynapseEncryptionProtectorData>
     {
+        private static SynapseEncryptionProtectorData s_dataDeserializationInstance;
+        private static SynapseEncryptionProtectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseEncryptionProtectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseEncryptionProtectorData>)Data).Write(writer, options);
 
-        SynapseEncryptionProtectorData IJsonModel<SynapseEncryptionProtectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseEncryptionProtectorData>)Data).Create(ref reader, options);
+        SynapseEncryptionProtectorData IJsonModel<SynapseEncryptionProtectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseEncryptionProtectorData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SynapseEncryptionProtectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseEncryptionProtectorData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
         SynapseEncryptionProtectorData IPersistableModel<SynapseEncryptionProtectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseEncryptionProtectorData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseEncryptionProtectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseEncryptionProtectorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseEncryptionProtectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseEncryptionProtectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -491,5 +491,60 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedTransfers: 1,
                 cancellationToken: cancellationToken);
         }
+
+        [RecordedTest]
+        [TestCase("source=path@#%")]
+        [TestCase("source%21path%40%23%25")]
+        public async Task Upload_SpecialChars(string prefix)
+        {
+            // Arrange
+            string directoryName = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName(), prefix);
+            using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory(directoryName);
+            await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
+
+            List<string> files =
+            [
+                string.Join("/", "file=test!@#$%"),
+                string.Join("/", "file%3Dtest%26"),  // Already encoded
+                string.Join("/", "folder=bar", "subfile=test!@#$%"),
+                string.Join("/", "folder=bar", "subfile%3Dtest%26"),
+                string.Join("/", "folder%40bar", "different!file"),
+                string.Join("/", "space folder", "space file"),
+            ];
+
+            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(30);
+            await SetupDirectoryAsync(
+                disposingLocalDirectory.DirectoryPath,
+                files.Select(path => (path, (long)Constants.KB)).ToList(),
+                cancellationToken);
+            await UploadDirectoryAndVerifyAsync(
+                disposingLocalDirectory.DirectoryPath,
+                test.Container,
+                expectedTransfers: files.Count,
+                cancellationToken: cancellationToken);
+        }
+
+        [RecordedTest]
+        public async Task Upload_TrailingSlash()
+        {
+            using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
+
+            List<string> files = [ "file1", "file2", "dir1/file1" ];
+
+            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(30);
+            await SetupDirectoryAsync(
+                disposingLocalDirectory.DirectoryPath,
+                files.Select(path => (path, (long)Constants.KB)).ToList(),
+                cancellationToken);
+
+            // Intentionally append trailing slash
+            string sourcePath = disposingLocalDirectory.DirectoryPath + Path.DirectorySeparatorChar;
+            await UploadDirectoryAndVerifyAsync(
+                sourcePath,
+                test.Container,
+                expectedTransfers: files.Count,
+                cancellationToken: cancellationToken);
+        }
     }
 }

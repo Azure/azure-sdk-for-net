@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class ExtendedServerBlobAuditingPolicyResource : IJsonModel<ExtendedServerBlobAuditingPolicyData>
     {
+        private static ExtendedServerBlobAuditingPolicyData s_dataDeserializationInstance;
+        private static ExtendedServerBlobAuditingPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ExtendedServerBlobAuditingPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedServerBlobAuditingPolicyData>)Data).Write(writer, options);
 
-        ExtendedServerBlobAuditingPolicyData IJsonModel<ExtendedServerBlobAuditingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedServerBlobAuditingPolicyData>)Data).Create(ref reader, options);
+        ExtendedServerBlobAuditingPolicyData IJsonModel<ExtendedServerBlobAuditingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedServerBlobAuditingPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ExtendedServerBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExtendedServerBlobAuditingPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         ExtendedServerBlobAuditingPolicyData IPersistableModel<ExtendedServerBlobAuditingPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExtendedServerBlobAuditingPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ExtendedServerBlobAuditingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExtendedServerBlobAuditingPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ExtendedServerBlobAuditingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExtendedServerBlobAuditingPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -83,7 +83,9 @@ public class PlaywrightServiceOptions
         }
         else if (azureTokenCredentialType == AzureTokenCredentialType.SharedTokenCacheCredential)
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             return new SharedTokenCacheCredential();
+#pragma warning restore CS0618 // Type or member is obsolete
         }
         else if (azureTokenCredentialType == AzureTokenCredentialType.VisualStudioCredential)
         {

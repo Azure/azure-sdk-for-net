@@ -10,16 +10,37 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines a rate limiting rule that can be included in a waf policy. </summary>
+    /// <summary>
+    /// Defines a rate limiting rule that can be included in a waf policy
+    /// Serialized Name: RateLimitRule
+    /// </summary>
     public partial class RateLimitRule : CustomRule
     {
         /// <summary> Initializes a new instance of <see cref="RateLimitRule"/>. </summary>
-        /// <param name="name"> Defines the name of the custom rule. </param>
-        /// <param name="priority"> Defines in what order this rule be evaluated in the overall list of custom rules. </param>
-        /// <param name="matchConditions"> List of match conditions. </param>
-        /// <param name="action"> Describes what action to be applied when rule matches. </param>
-        /// <param name="rateLimitThreshold"> Defines rate limit threshold. </param>
-        /// <param name="rateLimitDurationInMinutes"> Defines rate limit duration. Default is 1 minute. </param>
+        /// <param name="name">
+        /// Defines the name of the custom rule
+        /// Serialized Name: CustomRule.name
+        /// </param>
+        /// <param name="priority">
+        /// Defines in what order this rule be evaluated in the overall list of custom rules
+        /// Serialized Name: CustomRule.priority
+        /// </param>
+        /// <param name="matchConditions">
+        /// List of match conditions.
+        /// Serialized Name: CustomRule.matchConditions
+        /// </param>
+        /// <param name="action">
+        /// Describes what action to be applied when rule matches
+        /// Serialized Name: CustomRule.action
+        /// </param>
+        /// <param name="rateLimitThreshold">
+        /// Defines rate limit threshold.
+        /// Serialized Name: RateLimitRule.rateLimitThreshold
+        /// </param>
+        /// <param name="rateLimitDurationInMinutes">
+        /// Defines rate limit duration. Default is 1 minute.
+        /// Serialized Name: RateLimitRule.rateLimitDurationInMinutes
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="matchConditions"/> is null. </exception>
         public RateLimitRule(string name, int priority, IEnumerable<CustomRuleMatchCondition> matchConditions, OverrideActionType action, int rateLimitThreshold, int rateLimitDurationInMinutes) : base(name, priority, matchConditions, action)
         {
@@ -31,14 +52,35 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RateLimitRule"/>. </summary>
-        /// <param name="name"> Defines the name of the custom rule. </param>
-        /// <param name="enabledState"> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </param>
-        /// <param name="priority"> Defines in what order this rule be evaluated in the overall list of custom rules. </param>
-        /// <param name="matchConditions"> List of match conditions. </param>
-        /// <param name="action"> Describes what action to be applied when rule matches. </param>
+        /// <param name="name">
+        /// Defines the name of the custom rule
+        /// Serialized Name: CustomRule.name
+        /// </param>
+        /// <param name="enabledState">
+        /// Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified.
+        /// Serialized Name: CustomRule.enabledState
+        /// </param>
+        /// <param name="priority">
+        /// Defines in what order this rule be evaluated in the overall list of custom rules
+        /// Serialized Name: CustomRule.priority
+        /// </param>
+        /// <param name="matchConditions">
+        /// List of match conditions.
+        /// Serialized Name: CustomRule.matchConditions
+        /// </param>
+        /// <param name="action">
+        /// Describes what action to be applied when rule matches
+        /// Serialized Name: CustomRule.action
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="rateLimitThreshold"> Defines rate limit threshold. </param>
-        /// <param name="rateLimitDurationInMinutes"> Defines rate limit duration. Default is 1 minute. </param>
+        /// <param name="rateLimitThreshold">
+        /// Defines rate limit threshold.
+        /// Serialized Name: RateLimitRule.rateLimitThreshold
+        /// </param>
+        /// <param name="rateLimitDurationInMinutes">
+        /// Defines rate limit duration. Default is 1 minute.
+        /// Serialized Name: RateLimitRule.rateLimitDurationInMinutes
+        /// </param>
         internal RateLimitRule(string name, CustomRuleEnabledState? enabledState, int priority, IList<CustomRuleMatchCondition> matchConditions, OverrideActionType action, IDictionary<string, BinaryData> serializedAdditionalRawData, int rateLimitThreshold, int rateLimitDurationInMinutes) : base(name, enabledState, priority, matchConditions, action, serializedAdditionalRawData)
         {
             RateLimitThreshold = rateLimitThreshold;
@@ -50,9 +92,15 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Defines rate limit threshold. </summary>
+        /// <summary>
+        /// Defines rate limit threshold.
+        /// Serialized Name: RateLimitRule.rateLimitThreshold
+        /// </summary>
         public int RateLimitThreshold { get; set; }
-        /// <summary> Defines rate limit duration. Default is 1 minute. </summary>
+        /// <summary>
+        /// Defines rate limit duration. Default is 1 minute.
+        /// Serialized Name: RateLimitRule.rateLimitDurationInMinutes
+        /// </summary>
         public int RateLimitDurationInMinutes { get; set; }
     }
 }

@@ -9,14 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class StorageDirectoryDeletedEventData : IUtf8JsonSerializable, IJsonModel<StorageDirectoryDeletedEventData>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.DirectoryDeleted event. </summary>
+    [JsonConverter(typeof(StorageDirectoryDeletedEventDataConverter))]
+    public partial class StorageDirectoryDeletedEventData : IJsonModel<StorageDirectoryDeletedEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageDirectoryDeletedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="StorageDirectoryDeletedEventData"/> for deserialization. </summary>
+        internal StorageDirectoryDeletedEventData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageDirectoryDeletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageDirectoryDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDirectoryDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageDirectoryDeletedEventData)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Api))
             {
                 writer.WritePropertyName("api"u8);
@@ -54,10 +60,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url);
             }
-            if (Optional.IsDefined(Recursive))
+            if (Optional.IsDefined(RecursiveString))
             {
                 writer.WritePropertyName("recursive"u8);
-                writer.WriteStringValue(Recursive);
+                writer.WriteStringValue(RecursiveString);
             }
             if (Optional.IsDefined(Sequencer))
             {
@@ -70,34 +76,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(Identity);
             }
             writer.WritePropertyName("storageDiagnostics"u8);
-            writer.WriteStartObject();
-            foreach (var item in StorageDiagnostics)
+            writer.WriteObjectValue<object>(StorageDiagnostics, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,22 +94,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        StorageDirectoryDeletedEventData IJsonModel<StorageDirectoryDeletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageDirectoryDeletedEventData IJsonModel<StorageDirectoryDeletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StorageDirectoryDeletedEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageDirectoryDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDirectoryDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageDirectoryDeletedEventData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStorageDirectoryDeletedEventData(document.RootElement, options);
         }
 
-        internal static StorageDirectoryDeletedEventData DeserializeStorageDirectoryDeletedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static StorageDirectoryDeletedEventData DeserializeStorageDirectoryDeletedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -130,88 +123,77 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string clientRequestId = default;
             string requestId = default;
             string url = default;
-            string recursive = default;
+            string recursiveString = default;
             string sequencer = default;
             string identity = default;
-            IReadOnlyDictionary<string, BinaryData> storageDiagnostics = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            object storageDiagnostics = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("api"u8))
+                if (prop.NameEquals("api"u8))
                 {
-                    api = property.Value.GetString();
+                    api = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientRequestId"u8))
+                if (prop.NameEquals("clientRequestId"u8))
                 {
-                    clientRequestId = property.Value.GetString();
+                    clientRequestId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestId"u8))
+                if (prop.NameEquals("requestId"u8))
                 {
-                    requestId = property.Value.GetString();
+                    requestId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"u8))
+                if (prop.NameEquals("url"u8))
                 {
-                    url = property.Value.GetString();
+                    url = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recursive"u8))
+                if (prop.NameEquals("recursive"u8))
                 {
-                    recursive = property.Value.GetString();
+                    recursiveString = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sequencer"u8))
+                if (prop.NameEquals("sequencer"u8))
                 {
-                    sequencer = property.Value.GetString();
+                    sequencer = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    identity = property.Value.GetString();
+                    identity = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageDiagnostics"u8))
+                if (prop.NameEquals("storageDiagnostics"u8))
                 {
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
-                    }
-                    storageDiagnostics = dictionary;
+                    storageDiagnostics = prop.Value.GetObject();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new StorageDirectoryDeletedEventData(
                 api,
                 clientRequestId,
                 requestId,
                 url,
-                recursive,
+                recursiveString,
                 sequencer,
                 identity,
                 storageDiagnostics,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<StorageDirectoryDeletedEventData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageDirectoryDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StorageDirectoryDeletedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDirectoryDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -221,15 +203,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        StorageDirectoryDeletedEventData IPersistableModel<StorageDirectoryDeletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageDirectoryDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageDirectoryDeletedEventData IPersistableModel<StorageDirectoryDeletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StorageDirectoryDeletedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDirectoryDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageDirectoryDeletedEventData(document.RootElement, options);
                     }
                 default:
@@ -237,22 +224,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StorageDirectoryDeletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static StorageDirectoryDeletedEventData FromResponse(Response response)
+        internal partial class StorageDirectoryDeletedEventDataConverter : JsonConverter<StorageDirectoryDeletedEventData>
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeStorageDirectoryDeletedEventData(document.RootElement);
-        }
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override void Write(Utf8JsonWriter writer, StorageDirectoryDeletedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue<IJsonModel<StorageDirectoryDeletedEventData>>(model, ModelSerializationExtensions.WireOptions);
+            }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override StorageDirectoryDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeStorageDirectoryDeletedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            }
         }
     }
 }

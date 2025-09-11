@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Edgenode is a global Point of Presence (POP) location used to deliver CDN content to end users. </summary>
+    /// <summary>
+    /// Edgenode is a global Point of Presence (POP) location used to deliver CDN content to end users.
+    /// Serialized Name: EdgeNode
+    /// </summary>
     public partial class EdgeNode : ResourceData
     {
         /// <summary>
@@ -58,7 +61,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="ipAddressGroups"> List of ip address groups. </param>
+        /// <param name="ipAddressGroups">
+        /// List of ip address groups.
+        /// Serialized Name: EdgeNode.properties.ipAddressGroups
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EdgeNode(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<IPAddressGroup> ipAddressGroups, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -66,7 +72,10 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of ip address groups. </summary>
+        /// <summary>
+        /// List of ip address groups.
+        /// Serialized Name: EdgeNode.properties.ipAddressGroups
+        /// </summary>
         public IList<IPAddressGroup> IPAddressGroups { get; }
     }
 }

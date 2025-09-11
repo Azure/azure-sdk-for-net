@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DigitalTwins
 {
     public partial class DigitalTwinsPrivateEndpointConnectionResource : IJsonModel<DigitalTwinsPrivateEndpointConnectionData>
     {
+        private static DigitalTwinsPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static DigitalTwinsPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DigitalTwinsPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DigitalTwinsPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        DigitalTwinsPrivateEndpointConnectionData IJsonModel<DigitalTwinsPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DigitalTwinsPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        DigitalTwinsPrivateEndpointConnectionData IJsonModel<DigitalTwinsPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DigitalTwinsPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DigitalTwinsPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DigitalTwinsPrivateEndpointConnectionData>(Data, options, AzureResourceManagerDigitalTwinsContext.Default);
 
         DigitalTwinsPrivateEndpointConnectionData IPersistableModel<DigitalTwinsPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DigitalTwinsPrivateEndpointConnectionData>(data, options, AzureResourceManagerDigitalTwinsContext.Default);
 
-        string IPersistableModel<DigitalTwinsPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DigitalTwinsPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DigitalTwinsPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DigitalTwinsPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

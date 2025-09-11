@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.InformaticaDataManagement
 {
     public partial class InformaticaServerlessRuntimeResource : IJsonModel<InformaticaServerlessRuntimeData>
     {
+        private static InformaticaServerlessRuntimeData s_dataDeserializationInstance;
+        private static InformaticaServerlessRuntimeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<InformaticaServerlessRuntimeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaServerlessRuntimeData>)Data).Write(writer, options);
 
-        InformaticaServerlessRuntimeData IJsonModel<InformaticaServerlessRuntimeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaServerlessRuntimeData>)Data).Create(ref reader, options);
+        InformaticaServerlessRuntimeData IJsonModel<InformaticaServerlessRuntimeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaServerlessRuntimeData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<InformaticaServerlessRuntimeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<InformaticaServerlessRuntimeData>(Data, options, AzureResourceManagerInformaticaDataManagementContext.Default);
 
         InformaticaServerlessRuntimeData IPersistableModel<InformaticaServerlessRuntimeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InformaticaServerlessRuntimeData>(data, options, AzureResourceManagerInformaticaDataManagementContext.Default);
 
-        string IPersistableModel<InformaticaServerlessRuntimeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InformaticaServerlessRuntimeData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<InformaticaServerlessRuntimeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InformaticaServerlessRuntimeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

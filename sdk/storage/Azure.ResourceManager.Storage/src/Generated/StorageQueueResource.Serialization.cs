@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class StorageQueueResource : IJsonModel<StorageQueueData>
     {
+        private static StorageQueueData s_dataDeserializationInstance;
+        private static StorageQueueData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StorageQueueData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageQueueData>)Data).Write(writer, options);
 
-        StorageQueueData IJsonModel<StorageQueueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageQueueData>)Data).Create(ref reader, options);
+        StorageQueueData IJsonModel<StorageQueueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageQueueData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<StorageQueueData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageQueueData>(Data, options, AzureResourceManagerStorageContext.Default);
 
         StorageQueueData IPersistableModel<StorageQueueData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageQueueData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<StorageQueueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageQueueData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StorageQueueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageQueueData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

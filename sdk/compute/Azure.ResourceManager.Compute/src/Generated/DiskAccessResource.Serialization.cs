@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class DiskAccessResource : IJsonModel<DiskAccessData>
     {
+        private static DiskAccessData s_dataDeserializationInstance;
+        private static DiskAccessData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DiskAccessData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DiskAccessData>)Data).Write(writer, options);
 
-        DiskAccessData IJsonModel<DiskAccessData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiskAccessData>)Data).Create(ref reader, options);
+        DiskAccessData IJsonModel<DiskAccessData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiskAccessData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DiskAccessData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiskAccessData>(Data, options, AzureResourceManagerComputeContext.Default);
 
         DiskAccessData IPersistableModel<DiskAccessData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskAccessData>(data, options, AzureResourceManagerComputeContext.Default);
 
-        string IPersistableModel<DiskAccessData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiskAccessData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DiskAccessData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiskAccessData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ResourceHealth
 {
     public partial class TenantResourceHealthEventImpactedResource : IJsonModel<ResourceHealthEventImpactedResourceData>
     {
+        private static ResourceHealthEventImpactedResourceData s_dataDeserializationInstance;
+        private static ResourceHealthEventImpactedResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ResourceHealthEventImpactedResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceHealthEventImpactedResourceData>)Data).Write(writer, options);
 
-        ResourceHealthEventImpactedResourceData IJsonModel<ResourceHealthEventImpactedResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceHealthEventImpactedResourceData>)Data).Create(ref reader, options);
+        ResourceHealthEventImpactedResourceData IJsonModel<ResourceHealthEventImpactedResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceHealthEventImpactedResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ResourceHealthEventImpactedResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceHealthEventImpactedResourceData>(Data, options, AzureResourceManagerResourceHealthContext.Default);
 
         ResourceHealthEventImpactedResourceData IPersistableModel<ResourceHealthEventImpactedResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceHealthEventImpactedResourceData>(data, options, AzureResourceManagerResourceHealthContext.Default);
 
-        string IPersistableModel<ResourceHealthEventImpactedResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceHealthEventImpactedResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ResourceHealthEventImpactedResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceHealthEventImpactedResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

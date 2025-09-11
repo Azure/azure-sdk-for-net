@@ -1,6 +1,6 @@
 # Release History
 
-## 11.7.0-beta.5 (Unreleased)
+## 11.7.0-beta.8 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,33 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 11.7.0-beta.7 (2025-09-05)
+
+### Features Added
+- Added support for Knowledge Agent knowledge sources.
+- Added support for Knowledge Agent answer synthesis.
+- Added `VectorFilterMode.StrictPostFilter`.
+
+### Breaking Changes
+- Dropped support for Knowledge Agent target index. Use knowledge sources instead.
+- Moved `QueryDebugMode` from `SemanticSearchOptions` to `SearchOptions` as it is no longer tied only to semantic queries.
+
+## 11.7.0-beta.6 (2025-08-11)
+
+### Features Added
+- Enable the new model serialization using System.ClientModel, refer to this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added new AOT-compatible overloads for `Search<T>` and `SearchAsync<T>` that take `JsonTypeInfo<T>`.
+
+## 11.7.0-beta.5 (2025-06-17)
+
+### Bugs Fixed
+- Fixed a failure in the search response when the service returned a 206(Partial Content) status code.
+
+## 11.6.1 (2025-06-17)
+
+### Bugs Fixed
+- Added support for HTTP status code 206 (Partial Content) in the `Search` method to handle partial results returned by the service.
 
 ## 11.7.0-beta.4 (2025-05-14)
 

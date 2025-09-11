@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ProviderHub
 {
     public partial class ResourceTypeRegistrationResource : IJsonModel<ResourceTypeRegistrationData>
     {
+        private static ResourceTypeRegistrationData s_dataDeserializationInstance;
+        private static ResourceTypeRegistrationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ResourceTypeRegistrationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceTypeRegistrationData>)Data).Write(writer, options);
 
-        ResourceTypeRegistrationData IJsonModel<ResourceTypeRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceTypeRegistrationData>)Data).Create(ref reader, options);
+        ResourceTypeRegistrationData IJsonModel<ResourceTypeRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceTypeRegistrationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ResourceTypeRegistrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceTypeRegistrationData>(Data, options, AzureResourceManagerProviderHubContext.Default);
 
         ResourceTypeRegistrationData IPersistableModel<ResourceTypeRegistrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceTypeRegistrationData>(data, options, AzureResourceManagerProviderHubContext.Default);
 
-        string IPersistableModel<ResourceTypeRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceTypeRegistrationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ResourceTypeRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceTypeRegistrationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

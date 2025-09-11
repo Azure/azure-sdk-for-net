@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class IntegrationServiceEnvironmentManagedApiResource : IJsonModel<IntegrationServiceEnvironmentManagedApiData>
     {
+        private static IntegrationServiceEnvironmentManagedApiData s_dataDeserializationInstance;
+        private static IntegrationServiceEnvironmentManagedApiData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<IntegrationServiceEnvironmentManagedApiData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationServiceEnvironmentManagedApiData>)Data).Write(writer, options);
 
-        IntegrationServiceEnvironmentManagedApiData IJsonModel<IntegrationServiceEnvironmentManagedApiData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationServiceEnvironmentManagedApiData>)Data).Create(ref reader, options);
+        IntegrationServiceEnvironmentManagedApiData IJsonModel<IntegrationServiceEnvironmentManagedApiData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationServiceEnvironmentManagedApiData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentManagedApiData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IntegrationServiceEnvironmentManagedApiData>(Data, options, AzureResourceManagerLogicContext.Default);
 
         IntegrationServiceEnvironmentManagedApiData IPersistableModel<IntegrationServiceEnvironmentManagedApiData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IntegrationServiceEnvironmentManagedApiData>(data, options, AzureResourceManagerLogicContext.Default);
 
-        string IPersistableModel<IntegrationServiceEnvironmentManagedApiData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IntegrationServiceEnvironmentManagedApiData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<IntegrationServiceEnvironmentManagedApiData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IntegrationServiceEnvironmentManagedApiData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

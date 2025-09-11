@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     public partial class ProvisionedClusterUpgradeProfileResource : IJsonModel<ProvisionedClusterUpgradeProfileData>
     {
+        private static ProvisionedClusterUpgradeProfileData s_dataDeserializationInstance;
+        private static ProvisionedClusterUpgradeProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ProvisionedClusterUpgradeProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProvisionedClusterUpgradeProfileData>)Data).Write(writer, options);
 
-        ProvisionedClusterUpgradeProfileData IJsonModel<ProvisionedClusterUpgradeProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProvisionedClusterUpgradeProfileData>)Data).Create(ref reader, options);
+        ProvisionedClusterUpgradeProfileData IJsonModel<ProvisionedClusterUpgradeProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProvisionedClusterUpgradeProfileData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ProvisionedClusterUpgradeProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProvisionedClusterUpgradeProfileData>(Data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
         ProvisionedClusterUpgradeProfileData IPersistableModel<ProvisionedClusterUpgradeProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProvisionedClusterUpgradeProfileData>(data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
-        string IPersistableModel<ProvisionedClusterUpgradeProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProvisionedClusterUpgradeProfileData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ProvisionedClusterUpgradeProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProvisionedClusterUpgradeProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

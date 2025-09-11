@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class DomainTopicResource : IJsonModel<DomainTopicData>
     {
+        private static DomainTopicData s_dataDeserializationInstance;
+        private static DomainTopicData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DomainTopicData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DomainTopicData>)Data).Write(writer, options);
 
-        DomainTopicData IJsonModel<DomainTopicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DomainTopicData>)Data).Create(ref reader, options);
+        DomainTopicData IJsonModel<DomainTopicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DomainTopicData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DomainTopicData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DomainTopicData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
         DomainTopicData IPersistableModel<DomainTopicData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DomainTopicData>(data, options, AzureResourceManagerEventGridContext.Default);
 
-        string IPersistableModel<DomainTopicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DomainTopicData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DomainTopicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DomainTopicData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

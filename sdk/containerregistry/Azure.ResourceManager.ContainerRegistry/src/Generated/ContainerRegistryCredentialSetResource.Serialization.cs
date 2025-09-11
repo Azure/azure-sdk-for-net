@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     public partial class ContainerRegistryCredentialSetResource : IJsonModel<ContainerRegistryCredentialSetData>
     {
+        private static ContainerRegistryCredentialSetData s_dataDeserializationInstance;
+        private static ContainerRegistryCredentialSetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ContainerRegistryCredentialSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryCredentialSetData>)Data).Write(writer, options);
 
-        ContainerRegistryCredentialSetData IJsonModel<ContainerRegistryCredentialSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryCredentialSetData>)Data).Create(ref reader, options);
+        ContainerRegistryCredentialSetData IJsonModel<ContainerRegistryCredentialSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryCredentialSetData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ContainerRegistryCredentialSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerRegistryCredentialSetData>(Data, options, AzureResourceManagerContainerRegistryContext.Default);
 
         ContainerRegistryCredentialSetData IPersistableModel<ContainerRegistryCredentialSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerRegistryCredentialSetData>(data, options, AzureResourceManagerContainerRegistryContext.Default);
 
-        string IPersistableModel<ContainerRegistryCredentialSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerRegistryCredentialSetData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ContainerRegistryCredentialSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerRegistryCredentialSetData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

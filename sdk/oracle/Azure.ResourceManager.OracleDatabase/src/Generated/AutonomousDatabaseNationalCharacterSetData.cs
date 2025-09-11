@@ -52,11 +52,6 @@ namespace Azure.ResourceManager.OracleDatabase
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseNationalCharacterSetData"/>. </summary>
-        public AutonomousDatabaseNationalCharacterSetData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseNationalCharacterSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -70,12 +65,6 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal AutonomousDatabaseNationalCharacterSetProperties Properties { get; set; }
-        /// <summary> The Oracle Autonomous Database supported national character sets. </summary>
-        public string AutonomousDatabaseNationalCharacterSet
-        {
-            get => Properties is null ? default : Properties.CharacterSet;
-            set => Properties = new AutonomousDatabaseNationalCharacterSetProperties(value);
-        }
+        internal AutonomousDatabaseNationalCharacterSetProperties Properties { get; }
     }
 }

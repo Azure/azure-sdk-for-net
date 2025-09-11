@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CostManagement
 {
     public partial class TenantScheduledActionResource : IJsonModel<ScheduledActionData>
     {
+        private static ScheduledActionData s_dataDeserializationInstance;
+        private static ScheduledActionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ScheduledActionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScheduledActionData>)Data).Write(writer, options);
 
-        ScheduledActionData IJsonModel<ScheduledActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScheduledActionData>)Data).Create(ref reader, options);
+        ScheduledActionData IJsonModel<ScheduledActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScheduledActionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ScheduledActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScheduledActionData>(Data, options, AzureResourceManagerCostManagementContext.Default);
 
         ScheduledActionData IPersistableModel<ScheduledActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScheduledActionData>(data, options, AzureResourceManagerCostManagementContext.Default);
 
-        string IPersistableModel<ScheduledActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScheduledActionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ScheduledActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScheduledActionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

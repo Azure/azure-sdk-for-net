@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.IotCentral
 {
     public partial class IotCentralAppResource : IJsonModel<IotCentralAppData>
     {
+        private static IotCentralAppData s_dataDeserializationInstance;
+        private static IotCentralAppData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<IotCentralAppData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotCentralAppData>)Data).Write(writer, options);
 
-        IotCentralAppData IJsonModel<IotCentralAppData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotCentralAppData>)Data).Create(ref reader, options);
+        IotCentralAppData IJsonModel<IotCentralAppData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotCentralAppData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<IotCentralAppData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotCentralAppData>(Data, options, AzureResourceManagerIotCentralContext.Default);
 
         IotCentralAppData IPersistableModel<IotCentralAppData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotCentralAppData>(data, options, AzureResourceManagerIotCentralContext.Default);
 
-        string IPersistableModel<IotCentralAppData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotCentralAppData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<IotCentralAppData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotCentralAppData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

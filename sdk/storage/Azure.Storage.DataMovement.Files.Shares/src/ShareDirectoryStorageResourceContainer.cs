@@ -25,6 +25,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public override string ProviderId => "share";
 
+        internal bool _isResourcePropertiesFullySet = false;
+
         internal ShareDirectoryStorageResourceContainer(ShareDirectoryClient shareDirectoryClient, ShareFileStorageResourceOptions options)
         {
             ShareDirectoryClient = shareDirectoryClient;
@@ -66,7 +68,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     = destinationContainer as ShareDirectoryStorageResourceContainer;
                 ShareFileStorageResourceOptions destinationOptions = destinationStorageResourceContainer.ResourceOptions;
                 // both source and destination must be SMB
-                if ((!ResourceOptions?.IsNfs ?? true) && (!destinationOptions?.IsNfs ?? true))
+                ShareProtocol sourceShareProtocol = ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb;
+                ShareProtocol destinationShareProtocol = destinationOptions?.ShareProtocol ?? ShareProtocol.Smb;
+                if (sourceShareProtocol == ShareProtocol.Smb && destinationShareProtocol == ShareProtocol.Smb)
                 {
                     traits = ShareFileTraits.Attributes;
                     if (destinationOptions?.FilePermissions ?? false)
@@ -93,7 +97,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new ShareFileSourceCheckpointDetails();
+            return new ShareFileSourceCheckpointDetails(shareProtocol: ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb);
         }
 
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
@@ -121,19 +125,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 isFileMetadataSet: ResourceOptions?._isFileMetadataSet ?? false,
                 fileMetadata: ResourceOptions?.FileMetadata,
                 isDirectoryMetadataSet: ResourceOptions?._isDirectoryMetadataSet ?? false,
-                directoryMetadata: ResourceOptions?.DirectoryMetadata)
+                directoryMetadata: ResourceOptions?.DirectoryMetadata,
+                shareProtocol: ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb)
             {
             };
         }
 
-        protected override async Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
-        {
-            await ShareDirectoryClient.CreateIfNotExistsAsync(
-                metadata: default,
-                smbProperties: default,
-                filePermission: default,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
-        }
+        protected override Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
 
         protected override StorageResourceContainer GetChildStorageResourceContainer(string path)
             => new ShareDirectoryStorageResourceContainer(ShareDirectoryClient.GetSubdirectoryClient(path), ResourceOptions);
@@ -141,6 +140,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
         protected override async Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
+            if (_isResourcePropertiesFullySet)
+            {
+                return ResourceProperties;
+            }
             Response<ShareDirectoryProperties> response = await ShareDirectoryClient.GetPropertiesAsync(
                 cancellationToken: cancellationToken).ConfigureAwait(false);
             if (ResourceProperties != default)
@@ -151,30 +155,57 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ResourceProperties = response.Value.ToStorageResourceContainerProperties();
             }
-            ResourceProperties.Uri = Uri;
+            ResourceProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ShareProtocol, ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb);
+            _isResourcePropertiesFullySet = true;
             return ResourceProperties;
         }
 
-        protected override async Task CreateIfNotExistsAsync(
+        protected override Task CreateIfNotExistsAsync(
+            StorageResourceContainerProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
+
+        protected override async Task CreateAsync(
+            bool overwrite,
             StorageResourceContainerProperties sourceProperties,
             CancellationToken cancellationToken = default)
         {
-            IDictionary<string, string> metadata = ResourceOptions?.GetFileMetadata(sourceProperties?.RawProperties);
-            string filePermission = ResourceOptions?.GetFilePermission(sourceProperties);
-            FileSmbProperties smbProperties = ResourceOptions?.GetFileSmbProperties(sourceProperties);
-            FilePosixProperties filePosixProperties = ResourceOptions?.GetFilePosixProperties(sourceProperties);
-
-            ShareDirectoryCreateOptions options = new ShareDirectoryCreateOptions
+            bool exists = await ShareDirectoryClient.ExistsAsync(cancellationToken).ConfigureAwait(false);
+            if (!overwrite && exists)
             {
-                Metadata = metadata,
-                SmbProperties = smbProperties,
-                FilePermission = new() { Permission = filePermission },
-                PosixProperties = filePosixProperties
-            };
+                throw Errors.ShareDirectoryAlreadyExists(ShareDirectoryClient.Path);
+            }
 
-            await ShareDirectoryClient.CreateIfNotExistsAsync(
-                options: options,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+            IDictionary<string, string> metadata = ResourceOptions?.GetDirectoryMetadata(sourceProperties?.RawProperties);
+            string directoryPermission = ResourceOptions?.GetDirectoryPermission(sourceProperties);
+            FileSmbProperties smbProperties = ResourceOptions?.GetFileSmbProperties(sourceProperties);
+            FilePosixProperties posixProperties = ResourceOptions?.GetFilePosixProperties(sourceProperties);
+
+            // If overwrite mode set and directory exists, then just set Properties, Permissions, and Metadata for preservation.
+            if (overwrite && exists)
+            {
+                await ShareDirectoryClient.SetMetadataAsync(metadata: metadata, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await ShareDirectoryClient.SetHttpHeadersAsync(new()
+                {
+                    FilePermission = new() { Permission = directoryPermission },
+                    SmbProperties = smbProperties,
+                    PosixProperties = posixProperties
+                }, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                ShareDirectoryCreateOptions options = new ShareDirectoryCreateOptions
+                {
+                    Metadata = metadata,
+                    FilePermission = new() { Permission = directoryPermission },
+                    SmbProperties = smbProperties,
+                    PosixProperties = posixProperties
+                };
+
+                await ShareDirectoryClient.CreateIfNotExistsAsync(
+                    options: options,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
         }
 
         protected override async Task ValidateTransferAsync(
@@ -184,12 +215,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
+            // ShareDirectory to ShareDirectory Copy transfer
             if (sourceResource is ShareDirectoryStorageResourceContainer sourceShareDirectoryResource)
             {
-                // Ensure the transfer is supported (NFS -> NFS and SMB -> SMB)
-                if ((ResourceOptions?.IsNfs ?? false) != (sourceShareDirectoryResource.ResourceOptions?.IsNfs ?? false))
+                ShareProtocol sourceProtocol = sourceShareDirectoryResource.ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb;
+                ShareProtocol destinationProtocol = ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb;
+                bool destinationFilePermissions = ResourceOptions?.FilePermissions ?? false;
+                // if NFS <-> SMB and attempting to preserve permissions
+                if (destinationProtocol != sourceProtocol && destinationFilePermissions)
                 {
-                    throw Errors.ShareTransferNotSupported();
+                    throw Errors.HeterogenousTransferPermissionPreservationNotSupported();
                 }
 
                 // Validate the source protocol
@@ -200,16 +235,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     "source",
                     sourceResource.Uri.AbsoluteUri,
                     cancellationToken).ConfigureAwait(false);
-            }
 
-            // Validate the destination protocol
-            await DataMovementSharesExtensions.ValidateProtocolAsync(
-                ShareDirectoryClient.GetParentShareClient(),
-                ResourceOptions,
-                transferId,
-                "destination",
-                Uri.AbsoluteUri,
-                cancellationToken).ConfigureAwait(false);
+                // Validate the destination protocol
+                await DataMovementSharesExtensions.ValidateProtocolAsync(
+                    ShareDirectoryClient.GetParentShareClient(),
+                    ResourceOptions,
+                    transferId,
+                    "destination",
+                    Uri.AbsoluteUri,
+                    cancellationToken).ConfigureAwait(false);
+            }
         }
     }
 }

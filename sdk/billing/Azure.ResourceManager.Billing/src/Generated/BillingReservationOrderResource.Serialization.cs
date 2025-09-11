@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class BillingReservationOrderResource : IJsonModel<BillingReservationOrderData>
     {
+        private static BillingReservationOrderData s_dataDeserializationInstance;
+        private static BillingReservationOrderData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BillingReservationOrderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BillingReservationOrderData>)Data).Write(writer, options);
 
-        BillingReservationOrderData IJsonModel<BillingReservationOrderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingReservationOrderData>)Data).Create(ref reader, options);
+        BillingReservationOrderData IJsonModel<BillingReservationOrderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingReservationOrderData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<BillingReservationOrderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingReservationOrderData>(Data, options, AzureResourceManagerBillingContext.Default);
 
         BillingReservationOrderData IPersistableModel<BillingReservationOrderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingReservationOrderData>(data, options, AzureResourceManagerBillingContext.Default);
 
-        string IPersistableModel<BillingReservationOrderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingReservationOrderData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BillingReservationOrderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingReservationOrderData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -21,14 +21,26 @@ param (
 )
 
 . $PSScriptRoot/job-matrix-functions.ps1
+. $PSScriptRoot/../logging.ps1
 
 if (!(Test-Path $ConfigPath)) {
     Write-Error "ConfigPath '$ConfigPath' does not exist."
     exit 1
 }
-$config = GetMatrixConfigFromFile (Get-Content $ConfigPath -Raw)
+$rawConfig = Get-Content $ConfigPath -Raw
+$config = GetMatrixConfigFromFile $rawConfig
 # Strip empty string filters in order to be able to use azure pipelines yaml join()
 $Filters = $Filters | Where-Object { $_ }
+
+LogGroupStart "Matrix generation configuration"
+Write-Host "Configuration File: $ConfigPath"
+Write-Host $rawConfig
+Write-Host "SelectionType: $Selection"
+Write-Host "DisplayNameFilter: $DisplayNameFilter"
+Write-Host "Filters: $Filters"
+Write-Host "Replace: $Replace"
+Write-Host "NonSparseParameters: $NonSparseParameters"
+LogGroupEnd
 
 [array]$matrix = GenerateMatrix `
     -config $config `
@@ -41,7 +53,8 @@ $Filters = $Filters | Where-Object { $_ }
 
 $serialized = SerializePipelineMatrix $matrix
 
-Write-Output $serialized.pretty
+Write-Host "Generated matrix:"
+Write-Host $serialized.pretty
 
 if ($CI) {
     Write-Output "##vso[task.setVariable variable=matrix;isOutput=true]$($serialized.compressed)"

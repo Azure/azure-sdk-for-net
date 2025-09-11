@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class CommunityGalleryImageVersionResource : IJsonModel<CommunityGalleryImageVersionData>
     {
+        private static CommunityGalleryImageVersionData s_dataDeserializationInstance;
+        private static CommunityGalleryImageVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CommunityGalleryImageVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CommunityGalleryImageVersionData>)Data).Write(writer, options);
 
-        CommunityGalleryImageVersionData IJsonModel<CommunityGalleryImageVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommunityGalleryImageVersionData>)Data).Create(ref reader, options);
+        CommunityGalleryImageVersionData IJsonModel<CommunityGalleryImageVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommunityGalleryImageVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<CommunityGalleryImageVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CommunityGalleryImageVersionData>(Data, options, AzureResourceManagerComputeContext.Default);
 
         CommunityGalleryImageVersionData IPersistableModel<CommunityGalleryImageVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommunityGalleryImageVersionData>(data, options, AzureResourceManagerComputeContext.Default);
 
-        string IPersistableModel<CommunityGalleryImageVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommunityGalleryImageVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CommunityGalleryImageVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommunityGalleryImageVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

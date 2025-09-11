@@ -7,31 +7,16 @@
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT.
-    /// Serialized Name: SkuTier
-    /// </summary>
+    /// <summary> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </summary>
     public enum IotFirmwareDefenseSkuTier
     {
-        /// <summary>
-        /// Free
-        /// Serialized Name: SkuTier.Free
-        /// </summary>
+        /// <summary> Free. </summary>
         Free,
-        /// <summary>
-        /// Basic
-        /// Serialized Name: SkuTier.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         Basic,
-        /// <summary>
-        /// Standard
-        /// Serialized Name: SkuTier.Standard
-        /// </summary>
+        /// <summary> Standard. </summary>
         Standard,
-        /// <summary>
-        /// Premium
-        /// Serialized Name: SkuTier.Premium
-        /// </summary>
+        /// <summary> Premium. </summary>
         Premium
     }
 }

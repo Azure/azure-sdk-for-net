@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppPlatform
 {
     public partial class AppPlatformBuildServiceResource : IJsonModel<AppPlatformBuildServiceData>
     {
+        private static AppPlatformBuildServiceData s_dataDeserializationInstance;
+        private static AppPlatformBuildServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppPlatformBuildServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformBuildServiceData>)Data).Write(writer, options);
 
-        AppPlatformBuildServiceData IJsonModel<AppPlatformBuildServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformBuildServiceData>)Data).Create(ref reader, options);
+        AppPlatformBuildServiceData IJsonModel<AppPlatformBuildServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformBuildServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AppPlatformBuildServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppPlatformBuildServiceData>(Data, options, AzureResourceManagerAppPlatformContext.Default);
 
         AppPlatformBuildServiceData IPersistableModel<AppPlatformBuildServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformBuildServiceData>(data, options, AzureResourceManagerAppPlatformContext.Default);
 
-        string IPersistableModel<AppPlatformBuildServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformBuildServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppPlatformBuildServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformBuildServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

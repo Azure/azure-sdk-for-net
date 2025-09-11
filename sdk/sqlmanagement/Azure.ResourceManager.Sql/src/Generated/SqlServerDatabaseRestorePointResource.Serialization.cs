@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerDatabaseRestorePointResource : IJsonModel<SqlServerDatabaseRestorePointData>
     {
+        private static SqlServerDatabaseRestorePointData s_dataDeserializationInstance;
+        private static SqlServerDatabaseRestorePointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlServerDatabaseRestorePointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDatabaseRestorePointData>)Data).Write(writer, options);
 
-        SqlServerDatabaseRestorePointData IJsonModel<SqlServerDatabaseRestorePointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDatabaseRestorePointData>)Data).Create(ref reader, options);
+        SqlServerDatabaseRestorePointData IJsonModel<SqlServerDatabaseRestorePointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDatabaseRestorePointData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SqlServerDatabaseRestorePointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerDatabaseRestorePointData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         SqlServerDatabaseRestorePointData IPersistableModel<SqlServerDatabaseRestorePointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerDatabaseRestorePointData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerDatabaseRestorePointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerDatabaseRestorePointData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlServerDatabaseRestorePointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerDatabaseRestorePointData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

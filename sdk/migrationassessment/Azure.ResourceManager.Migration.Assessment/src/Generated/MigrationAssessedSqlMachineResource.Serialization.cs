@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Migration.Assessment
 {
     public partial class MigrationAssessedSqlMachineResource : IJsonModel<MigrationAssessedSqlMachineData>
     {
+        private static MigrationAssessedSqlMachineData s_dataDeserializationInstance;
+        private static MigrationAssessedSqlMachineData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MigrationAssessedSqlMachineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessedSqlMachineData>)Data).Write(writer, options);
 
-        MigrationAssessedSqlMachineData IJsonModel<MigrationAssessedSqlMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessedSqlMachineData>)Data).Create(ref reader, options);
+        MigrationAssessedSqlMachineData IJsonModel<MigrationAssessedSqlMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessedSqlMachineData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MigrationAssessedSqlMachineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationAssessedSqlMachineData>(Data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
         MigrationAssessedSqlMachineData IPersistableModel<MigrationAssessedSqlMachineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationAssessedSqlMachineData>(data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
-        string IPersistableModel<MigrationAssessedSqlMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessedSqlMachineData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MigrationAssessedSqlMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessedSqlMachineData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

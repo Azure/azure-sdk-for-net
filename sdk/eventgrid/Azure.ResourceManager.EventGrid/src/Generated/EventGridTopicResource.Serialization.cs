@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class EventGridTopicResource : IJsonModel<EventGridTopicData>
     {
+        private static EventGridTopicData s_dataDeserializationInstance;
+        private static EventGridTopicData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<EventGridTopicData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventGridTopicData>)Data).Write(writer, options);
 
-        EventGridTopicData IJsonModel<EventGridTopicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridTopicData>)Data).Create(ref reader, options);
+        EventGridTopicData IJsonModel<EventGridTopicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridTopicData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<EventGridTopicData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventGridTopicData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
         EventGridTopicData IPersistableModel<EventGridTopicData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridTopicData>(data, options, AzureResourceManagerEventGridContext.Default);
 
-        string IPersistableModel<EventGridTopicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridTopicData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<EventGridTopicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridTopicData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

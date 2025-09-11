@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HDInsight
 {
     public partial class HDInsightPrivateLinkResource : IJsonModel<HDInsightPrivateLinkResourceData>
     {
+        private static HDInsightPrivateLinkResourceData s_dataDeserializationInstance;
+        private static HDInsightPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HDInsightPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HDInsightPrivateLinkResourceData>)Data).Write(writer, options);
 
-        HDInsightPrivateLinkResourceData IJsonModel<HDInsightPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HDInsightPrivateLinkResourceData>)Data).Create(ref reader, options);
+        HDInsightPrivateLinkResourceData IJsonModel<HDInsightPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HDInsightPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<HDInsightPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HDInsightPrivateLinkResourceData>(Data, options, AzureResourceManagerHDInsightContext.Default);
 
         HDInsightPrivateLinkResourceData IPersistableModel<HDInsightPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HDInsightPrivateLinkResourceData>(data, options, AzureResourceManagerHDInsightContext.Default);
 
-        string IPersistableModel<HDInsightPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HDInsightPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HDInsightPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HDInsightPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

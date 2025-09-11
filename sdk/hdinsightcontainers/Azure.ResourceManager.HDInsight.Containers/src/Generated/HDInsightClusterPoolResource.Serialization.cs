@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HDInsight.Containers
 {
     public partial class HDInsightClusterPoolResource : IJsonModel<HDInsightClusterPoolData>
     {
+        private static HDInsightClusterPoolData s_dataDeserializationInstance;
+        private static HDInsightClusterPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HDInsightClusterPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HDInsightClusterPoolData>)Data).Write(writer, options);
 
-        HDInsightClusterPoolData IJsonModel<HDInsightClusterPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HDInsightClusterPoolData>)Data).Create(ref reader, options);
+        HDInsightClusterPoolData IJsonModel<HDInsightClusterPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HDInsightClusterPoolData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<HDInsightClusterPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HDInsightClusterPoolData>(Data, options, AzureResourceManagerHDInsightContainersContext.Default);
 
         HDInsightClusterPoolData IPersistableModel<HDInsightClusterPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HDInsightClusterPoolData>(data, options, AzureResourceManagerHDInsightContainersContext.Default);
 
-        string IPersistableModel<HDInsightClusterPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HDInsightClusterPoolData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HDInsightClusterPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HDInsightClusterPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     public partial class NetworkFunctionDefinitionGroupResource : IJsonModel<NetworkFunctionDefinitionGroupData>
     {
+        private static NetworkFunctionDefinitionGroupData s_dataDeserializationInstance;
+        private static NetworkFunctionDefinitionGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkFunctionDefinitionGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFunctionDefinitionGroupData>)Data).Write(writer, options);
 
-        NetworkFunctionDefinitionGroupData IJsonModel<NetworkFunctionDefinitionGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFunctionDefinitionGroupData>)Data).Create(ref reader, options);
+        NetworkFunctionDefinitionGroupData IJsonModel<NetworkFunctionDefinitionGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFunctionDefinitionGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkFunctionDefinitionGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFunctionDefinitionGroupData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
 
         NetworkFunctionDefinitionGroupData IPersistableModel<NetworkFunctionDefinitionGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFunctionDefinitionGroupData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        string IPersistableModel<NetworkFunctionDefinitionGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFunctionDefinitionGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkFunctionDefinitionGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFunctionDefinitionGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

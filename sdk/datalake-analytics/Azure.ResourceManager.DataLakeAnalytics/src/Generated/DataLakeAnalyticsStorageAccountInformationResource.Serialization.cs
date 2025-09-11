@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 {
     public partial class DataLakeAnalyticsStorageAccountInformationResource : IJsonModel<DataLakeAnalyticsStorageAccountInformationData>
     {
+        private static DataLakeAnalyticsStorageAccountInformationData s_dataDeserializationInstance;
+        private static DataLakeAnalyticsStorageAccountInformationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataLakeAnalyticsStorageAccountInformationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeAnalyticsStorageAccountInformationData>)Data).Write(writer, options);
 
-        DataLakeAnalyticsStorageAccountInformationData IJsonModel<DataLakeAnalyticsStorageAccountInformationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeAnalyticsStorageAccountInformationData>)Data).Create(ref reader, options);
+        DataLakeAnalyticsStorageAccountInformationData IJsonModel<DataLakeAnalyticsStorageAccountInformationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeAnalyticsStorageAccountInformationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DataLakeAnalyticsStorageAccountInformationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataLakeAnalyticsStorageAccountInformationData>(Data, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
 
         DataLakeAnalyticsStorageAccountInformationData IPersistableModel<DataLakeAnalyticsStorageAccountInformationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeAnalyticsStorageAccountInformationData>(data, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
 
-        string IPersistableModel<DataLakeAnalyticsStorageAccountInformationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeAnalyticsStorageAccountInformationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataLakeAnalyticsStorageAccountInformationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeAnalyticsStorageAccountInformationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningMarketplaceSubscriptionResource : IJsonModel<MachineLearningMarketplaceSubscriptionData>
     {
+        private static MachineLearningMarketplaceSubscriptionData s_dataDeserializationInstance;
+        private static MachineLearningMarketplaceSubscriptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MachineLearningMarketplaceSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningMarketplaceSubscriptionData>)Data).Write(writer, options);
 
-        MachineLearningMarketplaceSubscriptionData IJsonModel<MachineLearningMarketplaceSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningMarketplaceSubscriptionData>)Data).Create(ref reader, options);
+        MachineLearningMarketplaceSubscriptionData IJsonModel<MachineLearningMarketplaceSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningMarketplaceSubscriptionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MachineLearningMarketplaceSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningMarketplaceSubscriptionData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
         MachineLearningMarketplaceSubscriptionData IPersistableModel<MachineLearningMarketplaceSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningMarketplaceSubscriptionData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningMarketplaceSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningMarketplaceSubscriptionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MachineLearningMarketplaceSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningMarketplaceSubscriptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

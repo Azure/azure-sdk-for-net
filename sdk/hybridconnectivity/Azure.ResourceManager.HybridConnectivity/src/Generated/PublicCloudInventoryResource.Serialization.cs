@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridConnectivity
 {
     public partial class PublicCloudInventoryResource : IJsonModel<PublicCloudInventoryData>
     {
+        private static PublicCloudInventoryData s_dataDeserializationInstance;
+        private static PublicCloudInventoryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PublicCloudInventoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PublicCloudInventoryData>)Data).Write(writer, options);
 
-        PublicCloudInventoryData IJsonModel<PublicCloudInventoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublicCloudInventoryData>)Data).Create(ref reader, options);
+        PublicCloudInventoryData IJsonModel<PublicCloudInventoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublicCloudInventoryData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PublicCloudInventoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PublicCloudInventoryData>(Data, options, AzureResourceManagerHybridConnectivityContext.Default);
 
         PublicCloudInventoryData IPersistableModel<PublicCloudInventoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublicCloudInventoryData>(data, options, AzureResourceManagerHybridConnectivityContext.Default);
 
-        string IPersistableModel<PublicCloudInventoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublicCloudInventoryData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PublicCloudInventoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublicCloudInventoryData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

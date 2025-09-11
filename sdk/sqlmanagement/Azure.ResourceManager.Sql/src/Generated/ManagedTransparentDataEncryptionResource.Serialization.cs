@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class ManagedTransparentDataEncryptionResource : IJsonModel<ManagedTransparentDataEncryptionData>
     {
+        private static ManagedTransparentDataEncryptionData s_dataDeserializationInstance;
+        private static ManagedTransparentDataEncryptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ManagedTransparentDataEncryptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedTransparentDataEncryptionData>)Data).Write(writer, options);
 
-        ManagedTransparentDataEncryptionData IJsonModel<ManagedTransparentDataEncryptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedTransparentDataEncryptionData>)Data).Create(ref reader, options);
+        ManagedTransparentDataEncryptionData IJsonModel<ManagedTransparentDataEncryptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedTransparentDataEncryptionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ManagedTransparentDataEncryptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedTransparentDataEncryptionData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         ManagedTransparentDataEncryptionData IPersistableModel<ManagedTransparentDataEncryptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedTransparentDataEncryptionData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ManagedTransparentDataEncryptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedTransparentDataEncryptionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ManagedTransparentDataEncryptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedTransparentDataEncryptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

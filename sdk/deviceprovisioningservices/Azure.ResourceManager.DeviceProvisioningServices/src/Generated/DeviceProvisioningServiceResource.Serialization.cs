@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     public partial class DeviceProvisioningServiceResource : IJsonModel<DeviceProvisioningServiceData>
     {
+        private static DeviceProvisioningServiceData s_dataDeserializationInstance;
+        private static DeviceProvisioningServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DeviceProvisioningServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeviceProvisioningServiceData>)Data).Write(writer, options);
 
-        DeviceProvisioningServiceData IJsonModel<DeviceProvisioningServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceProvisioningServiceData>)Data).Create(ref reader, options);
+        DeviceProvisioningServiceData IJsonModel<DeviceProvisioningServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceProvisioningServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DeviceProvisioningServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceProvisioningServiceData>(Data, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
 
         DeviceProvisioningServiceData IPersistableModel<DeviceProvisioningServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceProvisioningServiceData>(data, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
 
-        string IPersistableModel<DeviceProvisioningServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceProvisioningServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DeviceProvisioningServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceProvisioningServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

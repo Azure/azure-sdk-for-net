@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 {
     public partial class FirmwareAnalysisWorkspaceResource : IJsonModel<FirmwareAnalysisWorkspaceData>
     {
+        private static FirmwareAnalysisWorkspaceData s_dataDeserializationInstance;
+        private static FirmwareAnalysisWorkspaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FirmwareAnalysisWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FirmwareAnalysisWorkspaceData>)Data).Write(writer, options);
 
-        FirmwareAnalysisWorkspaceData IJsonModel<FirmwareAnalysisWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FirmwareAnalysisWorkspaceData>)Data).Create(ref reader, options);
+        FirmwareAnalysisWorkspaceData IJsonModel<FirmwareAnalysisWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FirmwareAnalysisWorkspaceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<FirmwareAnalysisWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FirmwareAnalysisWorkspaceData>(Data, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
 
         FirmwareAnalysisWorkspaceData IPersistableModel<FirmwareAnalysisWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FirmwareAnalysisWorkspaceData>(data, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
 
-        string IPersistableModel<FirmwareAnalysisWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FirmwareAnalysisWorkspaceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FirmwareAnalysisWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FirmwareAnalysisWorkspaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

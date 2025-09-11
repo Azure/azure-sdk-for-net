@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudBmcKeySetResource : IJsonModel<NetworkCloudBmcKeySetData>
     {
+        private static NetworkCloudBmcKeySetData s_dataDeserializationInstance;
+        private static NetworkCloudBmcKeySetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkCloudBmcKeySetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudBmcKeySetData>)Data).Write(writer, options);
 
-        NetworkCloudBmcKeySetData IJsonModel<NetworkCloudBmcKeySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudBmcKeySetData>)Data).Create(ref reader, options);
+        NetworkCloudBmcKeySetData IJsonModel<NetworkCloudBmcKeySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudBmcKeySetData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkCloudBmcKeySetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudBmcKeySetData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
 
         NetworkCloudBmcKeySetData IPersistableModel<NetworkCloudBmcKeySetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudBmcKeySetData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        string IPersistableModel<NetworkCloudBmcKeySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudBmcKeySetData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkCloudBmcKeySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudBmcKeySetData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

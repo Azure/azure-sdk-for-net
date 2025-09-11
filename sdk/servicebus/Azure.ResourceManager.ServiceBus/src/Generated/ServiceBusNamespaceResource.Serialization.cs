@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ServiceBus
 {
     public partial class ServiceBusNamespaceResource : IJsonModel<ServiceBusNamespaceData>
     {
+        private static ServiceBusNamespaceData s_dataDeserializationInstance;
+        private static ServiceBusNamespaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ServiceBusNamespaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusNamespaceData>)Data).Write(writer, options);
 
-        ServiceBusNamespaceData IJsonModel<ServiceBusNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusNamespaceData>)Data).Create(ref reader, options);
+        ServiceBusNamespaceData IJsonModel<ServiceBusNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusNamespaceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ServiceBusNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceBusNamespaceData>(Data, options, AzureResourceManagerServiceBusContext.Default);
 
         ServiceBusNamespaceData IPersistableModel<ServiceBusNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusNamespaceData>(data, options, AzureResourceManagerServiceBusContext.Default);
 
-        string IPersistableModel<ServiceBusNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceBusNamespaceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ServiceBusNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceBusNamespaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

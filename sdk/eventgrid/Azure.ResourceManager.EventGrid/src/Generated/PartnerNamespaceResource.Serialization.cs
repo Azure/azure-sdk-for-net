@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class PartnerNamespaceResource : IJsonModel<PartnerNamespaceData>
     {
+        private static PartnerNamespaceData s_dataDeserializationInstance;
+        private static PartnerNamespaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PartnerNamespaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PartnerNamespaceData>)Data).Write(writer, options);
 
-        PartnerNamespaceData IJsonModel<PartnerNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PartnerNamespaceData>)Data).Create(ref reader, options);
+        PartnerNamespaceData IJsonModel<PartnerNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PartnerNamespaceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PartnerNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PartnerNamespaceData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
         PartnerNamespaceData IPersistableModel<PartnerNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PartnerNamespaceData>(data, options, AzureResourceManagerEventGridContext.Default);
 
-        string IPersistableModel<PartnerNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PartnerNamespaceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PartnerNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PartnerNamespaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class OperationalInsightsWorkspaceResource : IJsonModel<OperationalInsightsWorkspaceData>
     {
+        private static OperationalInsightsWorkspaceData s_dataDeserializationInstance;
+        private static OperationalInsightsWorkspaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<OperationalInsightsWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsWorkspaceData>)Data).Write(writer, options);
 
-        OperationalInsightsWorkspaceData IJsonModel<OperationalInsightsWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsWorkspaceData>)Data).Create(ref reader, options);
+        OperationalInsightsWorkspaceData IJsonModel<OperationalInsightsWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsWorkspaceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<OperationalInsightsWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OperationalInsightsWorkspaceData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
         OperationalInsightsWorkspaceData IPersistableModel<OperationalInsightsWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalInsightsWorkspaceData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        string IPersistableModel<OperationalInsightsWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsWorkspaceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<OperationalInsightsWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsWorkspaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

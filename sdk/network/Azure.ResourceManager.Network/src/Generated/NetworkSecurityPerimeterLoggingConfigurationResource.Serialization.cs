@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkSecurityPerimeterLoggingConfigurationResource : IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData>
     {
+        private static NetworkSecurityPerimeterLoggingConfigurationData s_dataDeserializationInstance;
+        private static NetworkSecurityPerimeterLoggingConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData>)Data).Write(writer, options);
 
-        NetworkSecurityPerimeterLoggingConfigurationData IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData>)Data).Create(ref reader, options);
+        NetworkSecurityPerimeterLoggingConfigurationData IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkSecurityPerimeterLoggingConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         NetworkSecurityPerimeterLoggingConfigurationData IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkSecurityPerimeterLoggingConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

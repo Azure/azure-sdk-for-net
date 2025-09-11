@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.Identity;
+
+#pragma warning disable AZC0007
 
 namespace Azure.AI.Projects
 {
@@ -14,94 +17,136 @@ namespace Azure.AI.Projects
     /// <summary> The AzureAI service client. </summary>
     public partial class AIProjectClient : ClientConnectionProvider
     {
+        private const int _defaultMaxCacheSize = 100;
         private readonly ConnectionCacheManager _cacheManager;
-        private readonly ConnectionsClient _connectionsClient;
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = ["https://ai.azure.com/.default"];
 
         /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
-        protected AIProjectClient() : base(maxCacheSize: 100)
-        {
-        }
-
-        /// <summary> Initializes a new instance of AzureAIClient. </summary>
-        /// <param name="connectionString">The Azure AI Foundry project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="connectionString"/> </exception>
-        public AIProjectClient(string connectionString, TokenCredential credential = null) : this(connectionString, BuildCredential(credential), new AIProjectClientOptions())
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of AzureAIClient.
-        /// </summary>
-        /// <param name="connectionString">The Azure AI Foundry project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="connectionString"/> is an empty string. </exception>
-        public AIProjectClient(string connectionString, TokenCredential credential, AIProjectClientOptions options)
-             : this(new Uri(ClientHelper.ParseConnectionString(connectionString, "endpoint")),
-                  ClientHelper.ParseConnectionString(connectionString, "subscriptionId"),
-                  ClientHelper.ParseConnectionString(connectionString, "ResourceGroupName"),
-                  ClientHelper.ParseConnectionString(connectionString, "ProjectName"),
-                  credential,
-                  options)
+        protected AIProjectClient() : base(maxCacheSize: _defaultMaxCacheSize)
         {
         }
 
         /// <summary> Initializes a new instance of AIProjectClient. </summary>
-        /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
-        /// <param name="projectName"> The Azure AI Foundry project name. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public AIProjectClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential, AIProjectClientOptions options)
+        internal AIProjectClient(Uri endpoint, AIProjectClientOptions options) : base(_defaultMaxCacheSize)
+        {
+            options ??= new AIProjectClientOptions();
+
+            _endpoint = endpoint;
+            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), Array.Empty<PipelinePolicy>(), Array.Empty<PipelinePolicy>());
+            _apiVersion = options.Version;
+        }
+
+        /// <summary> Initializes a new instance of AIProjectClient. </summary>
+        /// <param name="endpoint">
+        /// Project endpoint. In the form "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/_project"
+        /// if your Foundry Hub has only one Project, or to use the default Project in your Hub. Or in the form
+        /// "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/&lt;your-project-name&gt;" if you want to explicitly
+        /// specify the Foundry Project name.
+        /// </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public AIProjectClient(Uri endpoint, TokenCredential credential = null) : this(endpoint, credential, new AIProjectClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of AIProjectClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> Service credential. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public AIProjectClient(Uri endpoint, TokenCredential credential, AIProjectClientOptions options)
+            : base(options.ClientCacheSize)
+        {
+            options ??= new AIProjectClientOptions();
+
+            _endpoint = endpoint;
+            Pipeline = CreatePipeline(credential, options);
+            _apiVersion = options.Version;
+            _tokenCredential = credential;
+
+            _cacheManager = new ConnectionCacheManager(_endpoint, credential);
+        }
+
+        public AIProjectClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AIProjectClientOptions())
+        {
+        }
+
+        public AIProjectClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AIProjectClientOptions options)
             : base(options.ClientCacheSize)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(tokenProvider, nameof(tokenProvider));
+
             options ??= new AIProjectClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
-            _subscriptionId = subscriptionId;
-            _resourceGroupName = resourceGroupName;
-            _projectName = projectName;
-
-            _connectionsClient = GetConnectionsClient();
-            _cacheManager = new ConnectionCacheManager(_connectionsClient, _tokenCredential);
+            _tokenProvider = tokenProvider;
+            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new BearerTokenPolicy(_tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
+            _apiVersion = options.Version;
         }
 
         /// <summary>
         /// Retrieves the connection options for a specified client type and instance ID.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override ClientConnection GetConnection(string connectionId) => _cacheManager.GetConnection(connectionId);
 
         /// <summary>
         /// Retrieves all connection options.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override IEnumerable<ClientConnection> GetAllConnections() => _cacheManager.GetAllConnections();
 
-        private static TokenCredential BuildCredential(TokenCredential credential)
+        /// <summary> Initializes a new instance of DatasetsOperations. </summary>
+        public virtual DatasetsOperations GetDatasetsOperationsClient()
         {
-            if (credential != null)
-            {
-                return credential;
-            }
-
-            string clientId = Environment.GetEnvironmentVariable("CLOUDMACHINE_MANAGED_IDENTITY_CLIENT_ID");
-
-            return !string.IsNullOrEmpty(clientId)
-                ? new ManagedIdentityCredential(clientId)
-                : new ChainedTokenCredential(new AzureCliCredential(), new AzureDeveloperCliCredential());
+            // Custom method to allow for passing of credential used when SAS is not provided.
+            return Volatile.Read(ref _cachedDatasetsOperations) ?? Interlocked.CompareExchange(ref _cachedDatasetsOperations, new DatasetsOperations(Pipeline, _endpoint, _apiVersion, _tokenProvider), null) ?? _cachedDatasetsOperations;
         }
+
+        /// <summary> Gets the client for managing connections. </summary>
+        public virtual ConnectionsOperations Connections { get => GetConnectionsOperationsClient(); }
+        /// <summary> Gets the client for managing datasets. </summary>
+        public virtual DatasetsOperations Datasets { get => GetDatasetsOperationsClient(); }
+        /// <summary> Gets the client for managing deployments. </summary>
+        public virtual DeploymentsOperations Deployments { get => GetDeploymentsOperationsClient(); }
+        /// <summary> Gets the client for evaluations operations. </summary>
+        public virtual Evaluations Evaluations { get => GetEvaluationsClient(); }
+        /// <summary> Gets the client for managing indexes. </summary>
+        public virtual IndexesOperations Indexes { get => GetIndexesOperationsClient(); }
+        /// <summary> Gets the client for telemetry operations. </summary>
+        public virtual Telemetry Telemetry { get => new Telemetry(this); }
+
+        private static ClientPipeline CreatePipeline(PipelinePolicy authenticationPolicy, AIProjectClientOptions options)
+        => ClientPipeline.Create(
+            options ?? new(),
+            perCallPolicies:
+            [
+                // CreateAddUserAgentHeaderPolicy(options),
+                // CreateAddClientRequestIdHeaderPolicy(),
+            ],
+            perTryPolicies:
+            [
+                authenticationPolicy,
+            ],
+            beforeTransportPolicies: []);
+
+        internal static ClientPipeline CreatePipeline(ApiKeyCredential credential, AIProjectClientOptions options = null)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+            return CreatePipeline(ApiKeyAuthenticationPolicy.CreateHeaderApiKeyPolicy(credential, "api-key"), options);
+        }
+
+        internal static ClientPipeline CreatePipeline(TokenCredential credential, AIProjectClientOptions options = null)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+            return CreatePipeline(new AzureTokenAuthenticationPolicy(credential, AuthorizationScopes), options);
+        }
+
+        private static PipelineMessageClassifier s_pipelineMessageClassifier;
+        internal static PipelineMessageClassifier PipelineMessageClassifier
+            => s_pipelineMessageClassifier ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
     }
 }

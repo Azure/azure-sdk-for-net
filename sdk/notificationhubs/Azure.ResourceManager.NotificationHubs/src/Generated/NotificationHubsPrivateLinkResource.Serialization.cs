@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NotificationHubs
 {
     public partial class NotificationHubsPrivateLinkResource : IJsonModel<NotificationHubsPrivateLinkResourceData>
     {
+        private static NotificationHubsPrivateLinkResourceData s_dataDeserializationInstance;
+        private static NotificationHubsPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NotificationHubsPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NotificationHubsPrivateLinkResourceData>)Data).Write(writer, options);
 
-        NotificationHubsPrivateLinkResourceData IJsonModel<NotificationHubsPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NotificationHubsPrivateLinkResourceData>)Data).Create(ref reader, options);
+        NotificationHubsPrivateLinkResourceData IJsonModel<NotificationHubsPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NotificationHubsPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NotificationHubsPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NotificationHubsPrivateLinkResourceData>(Data, options, AzureResourceManagerNotificationHubsContext.Default);
 
         NotificationHubsPrivateLinkResourceData IPersistableModel<NotificationHubsPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NotificationHubsPrivateLinkResourceData>(data, options, AzureResourceManagerNotificationHubsContext.Default);
 
-        string IPersistableModel<NotificationHubsPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NotificationHubsPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NotificationHubsPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NotificationHubsPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

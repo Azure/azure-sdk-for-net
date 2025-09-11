@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlNetworkSecurityPerimeterConfigurationResource : IJsonModel<SqlNetworkSecurityPerimeterConfigurationData>
     {
+        private static SqlNetworkSecurityPerimeterConfigurationData s_dataDeserializationInstance;
+        private static SqlNetworkSecurityPerimeterConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlNetworkSecurityPerimeterConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlNetworkSecurityPerimeterConfigurationData>)Data).Write(writer, options);
 
-        SqlNetworkSecurityPerimeterConfigurationData IJsonModel<SqlNetworkSecurityPerimeterConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlNetworkSecurityPerimeterConfigurationData>)Data).Create(ref reader, options);
+        SqlNetworkSecurityPerimeterConfigurationData IJsonModel<SqlNetworkSecurityPerimeterConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlNetworkSecurityPerimeterConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SqlNetworkSecurityPerimeterConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlNetworkSecurityPerimeterConfigurationData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         SqlNetworkSecurityPerimeterConfigurationData IPersistableModel<SqlNetworkSecurityPerimeterConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlNetworkSecurityPerimeterConfigurationData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlNetworkSecurityPerimeterConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlNetworkSecurityPerimeterConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlNetworkSecurityPerimeterConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlNetworkSecurityPerimeterConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

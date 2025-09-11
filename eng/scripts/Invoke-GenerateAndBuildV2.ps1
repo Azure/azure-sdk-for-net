@@ -129,7 +129,7 @@ if ($relatedTypeSpecProjectFolder) {
         }
         $repo = $repoHttpsUrl -replace "https://github.com/", ""
         Write-host "Start to call tsp-client to generate package:$packageName"
-        $tspclientCommand = "npx --package=@azure-tools/typespec-client-generator-cli --yes tsp-client init --tsp-config $tspConfigFile --repo $repo --commit $commitid"
+        $tspclientCommand = "npx --package=@azure-tools/typespec-client-generator-cli --yes tsp-client init --update-if-exists --tsp-config $tspConfigFile --repo $repo --commit $commitid"
         if ($swaggerDir) {
             $tspclientCommand += " --local-spec-repo $typespecFolder"
         }

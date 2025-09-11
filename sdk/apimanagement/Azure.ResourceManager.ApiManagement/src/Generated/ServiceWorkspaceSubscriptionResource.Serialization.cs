@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ServiceWorkspaceSubscriptionResource : IJsonModel<SubscriptionContractData>
     {
+        private static SubscriptionContractData s_dataDeserializationInstance;
+        private static SubscriptionContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SubscriptionContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionContractData>)Data).Write(writer, options);
 
-        SubscriptionContractData IJsonModel<SubscriptionContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionContractData>)Data).Create(ref reader, options);
+        SubscriptionContractData IJsonModel<SubscriptionContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionContractData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SubscriptionContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SubscriptionContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         SubscriptionContractData IPersistableModel<SubscriptionContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SubscriptionContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<SubscriptionContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SubscriptionContractData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SubscriptionContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SubscriptionContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

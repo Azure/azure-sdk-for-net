@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Quota
 {
     public partial class QuotaAllocationRequestStatusResource : IJsonModel<QuotaAllocationRequestStatusData>
     {
+        private static QuotaAllocationRequestStatusData s_dataDeserializationInstance;
+        private static QuotaAllocationRequestStatusData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<QuotaAllocationRequestStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<QuotaAllocationRequestStatusData>)Data).Write(writer, options);
 
-        QuotaAllocationRequestStatusData IJsonModel<QuotaAllocationRequestStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<QuotaAllocationRequestStatusData>)Data).Create(ref reader, options);
+        QuotaAllocationRequestStatusData IJsonModel<QuotaAllocationRequestStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<QuotaAllocationRequestStatusData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<QuotaAllocationRequestStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<QuotaAllocationRequestStatusData>(Data, options, AzureResourceManagerQuotaContext.Default);
 
         QuotaAllocationRequestStatusData IPersistableModel<QuotaAllocationRequestStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<QuotaAllocationRequestStatusData>(data, options, AzureResourceManagerQuotaContext.Default);
 
-        string IPersistableModel<QuotaAllocationRequestStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<QuotaAllocationRequestStatusData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<QuotaAllocationRequestStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<QuotaAllocationRequestStatusData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

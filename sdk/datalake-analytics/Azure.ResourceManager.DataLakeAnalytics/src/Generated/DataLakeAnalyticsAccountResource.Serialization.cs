@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 {
     public partial class DataLakeAnalyticsAccountResource : IJsonModel<DataLakeAnalyticsAccountData>
     {
+        private static DataLakeAnalyticsAccountData s_dataDeserializationInstance;
+        private static DataLakeAnalyticsAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataLakeAnalyticsAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeAnalyticsAccountData>)Data).Write(writer, options);
 
-        DataLakeAnalyticsAccountData IJsonModel<DataLakeAnalyticsAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeAnalyticsAccountData>)Data).Create(ref reader, options);
+        DataLakeAnalyticsAccountData IJsonModel<DataLakeAnalyticsAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeAnalyticsAccountData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DataLakeAnalyticsAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataLakeAnalyticsAccountData>(Data, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
 
         DataLakeAnalyticsAccountData IPersistableModel<DataLakeAnalyticsAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeAnalyticsAccountData>(data, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
 
-        string IPersistableModel<DataLakeAnalyticsAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeAnalyticsAccountData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataLakeAnalyticsAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeAnalyticsAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

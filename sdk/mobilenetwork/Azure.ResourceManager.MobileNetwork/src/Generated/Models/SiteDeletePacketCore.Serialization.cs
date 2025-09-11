@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(PacketCore))
             {
                 writer.WritePropertyName("packetCore"u8);
-                JsonSerializer.Serialize(writer, PacketCore);
+                ((IJsonModel<SubResource>)PacketCore).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    packetCore = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    packetCore = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

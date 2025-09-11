@@ -2,16 +2,15 @@
 // Licensed under the MIT License.
 extern alias BaseShares;
 extern alias DMShare;
-
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
+using BaseShares::Azure.Storage.Files.Shares.Models;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using DMShare::Azure.Storage.DataMovement.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -62,7 +61,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 false,
                 default,
                 false,
-                default);
+                default,
+                ShareProtocol.Smb);
 
         private ShareFileDestinationCheckpointDetails CreateNoPreserveValues()
         => new ShareFileDestinationCheckpointDetails(
@@ -88,7 +88,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 true,
                 default,
                 true,
-                default);
+                default,
+                ShareProtocol.Smb);
 
         private ShareFileDestinationCheckpointDetails CreatePreserveValues()
         => new ShareFileDestinationCheckpointDetails(
@@ -114,7 +115,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 false,
                 default,
                 false,
-                default);
+                default,
+                ShareProtocol.Smb);
 
         private ShareFileDestinationCheckpointDetails CreateSetSampleValues()
         => new ShareFileDestinationCheckpointDetails(
@@ -140,7 +142,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 isFileMetadataSet: true,
                 fileMetadata: DefaultFileMetadata,
                 isDirectoryMetadataSet: true,
-                directoryMetadata: DefaultDirectoryMetadata);
+                directoryMetadata: DefaultDirectoryMetadata,
+                shareProtocol: ShareProtocol.Nfs);
 
         private void AssertEquals(ShareFileDestinationCheckpointDetails left, ShareFileDestinationCheckpointDetails right)
         {
@@ -212,6 +215,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 Assert.That(left.DirectoryMetadata, Is.EqualTo(right.DirectoryMetadata));
             }
+
+            Assert.That(left.ShareProtocol, Is.EqualTo(right.ShareProtocol));
         }
 
         private byte[] CreateSerializedPreserve()
@@ -233,9 +238,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.Write((byte)ShareProtocol.Smb);
 
             return stream.ToArray();
         }
@@ -259,14 +262,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
+            writer.Write((byte)ShareProtocol.Smb);
 
             return stream.ToArray();
         }
 
-        private byte[] CreateSerializedSetValues()
+        private byte[] CreateSerializedSetValues_LatestVersion()
         {
             using MemoryStream stream = new();
             using BinaryWriter writer = new(stream);
@@ -297,6 +298,54 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             writer.WritePreservablePropertyOffset(true, cacheControl.Length, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(true, fileMetadata.Length, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(true, directoryMetadata.Length, ref currentVariableLengthIndex);
+            writer.Write((byte)ShareProtocol.Nfs);
+            writer.Write((int)DefaultFileAttributes);
+            writer.Write(fileCreatedOn);
+            writer.Write(fileLastWrittenOn);
+            writer.Write(fileChangedOn);
+            writer.Write(contentType);
+            writer.Write(contentEncoding);
+            writer.Write(contentLanguage);
+            writer.Write(contentDisposition);
+            writer.Write(cacheControl);
+            writer.Write(fileMetadata);
+            writer.Write(directoryMetadata);
+
+            return stream.ToArray();
+        }
+
+        private byte[] CreateSerializedSetValues_Version3()
+        {
+            using MemoryStream stream = new();
+            using BinaryWriter writer = new(stream);
+
+            bool preserveFilePermission = false;
+            byte[] fileCreatedOn = Encoding.UTF8.GetBytes(DefaultFileCreatedOn.Value.ToString("o"));
+            byte[] fileLastWrittenOn = Encoding.UTF8.GetBytes(DefaultFileLastWrittenOn.Value.ToString("o"));
+            byte[] fileChangedOn = Encoding.UTF8.GetBytes(DefaultFileChangedOn.Value.ToString("o"));
+            byte[] contentType = Encoding.UTF8.GetBytes(DefaultContentType);
+            byte[] contentEncoding = Encoding.UTF8.GetBytes(string.Join(",", DefaultContentEncoding));
+            byte[] contentLanguage = Encoding.UTF8.GetBytes(string.Join(",", DefaultContentLanguage));
+            byte[] contentDisposition = Encoding.UTF8.GetBytes(DefaultContentDisposition);
+            byte[] cacheControl = Encoding.UTF8.GetBytes(DefaultCacheControl);
+            byte[] fileMetadata = Encoding.UTF8.GetBytes(DefaultFileMetadata.DictionaryToString());
+            byte[] directoryMetadata = Encoding.UTF8.GetBytes(DefaultDirectoryMetadata.DictionaryToString());
+
+            int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
+            writer.Write(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion_3);
+            writer.WritePreservablePropertyOffset(true, DataMovementConstants.IntSizeInBytes, ref currentVariableLengthIndex);
+            writer.Write(preserveFilePermission);
+            writer.WritePreservablePropertyOffset(true, fileCreatedOn.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, fileLastWrittenOn.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, fileChangedOn.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, contentType.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, contentEncoding.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, contentLanguage.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, contentDisposition.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, cacheControl.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, fileMetadata.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, directoryMetadata.Length, ref currentVariableLengthIndex);
+            writer.Write((byte)ShareProtocol.Nfs);
             writer.Write((int)DefaultFileAttributes);
             writer.Write(fileCreatedOn);
             writer.Write(fileLastWrittenOn);
@@ -341,6 +390,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.IsNull(data.FileMetadata);
             Assert.IsFalse(data.IsDirectoryMetadataSet);
             Assert.IsNull(data.DirectoryMetadata);
+            Assert.That(ShareProtocol.Smb, Is.EqualTo(data.ShareProtocol));
         }
 
         [Test]
@@ -372,6 +422,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.That(data.FileMetadata, Is.EqualTo(DefaultFileMetadata));
             Assert.IsTrue(data.IsDirectoryMetadataSet);
             Assert.That(data.DirectoryMetadata, Is.EqualTo(DefaultDirectoryMetadata));
+            Assert.That(data.ShareProtocol, Is.EqualTo(ShareProtocol.Nfs));
         }
 
         [Test]
@@ -403,12 +454,13 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.IsNull(data.FileMetadata);
             Assert.IsFalse(data.IsDirectoryMetadataSet);
             Assert.IsNull(data.DirectoryMetadata);
+            Assert.That(ShareProtocol.Smb, Is.EqualTo(data.ShareProtocol));
         }
 
         [Test]
-        public void Serialize()
+        public void Serialize_LatestVersion()
         {
-            byte[] expected = CreateSerializedSetValues();
+            byte[] expected = CreateSerializedSetValues_LatestVersion();
 
             ShareFileDestinationCheckpointDetails data = CreateSetSampleValues();
             byte[] actual;
@@ -422,9 +474,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [Test]
-        public void Deserialize()
+        public void Deserialize_LatestVersion()
         {
-            byte[] serialized = CreateSerializedSetValues();
+            byte[] serialized = CreateSerializedSetValues_LatestVersion();
             ShareFileDestinationCheckpointDetails deserialized;
 
             using (MemoryStream stream = new(serialized))
@@ -433,6 +485,27 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             }
 
             AssertEquals(deserialized, CreateSetSampleValues());
+        }
+
+        [Test]
+        public void Deserialize_Version3()
+        {
+            byte[] serialized = CreateSerializedSetValues_Version3();
+            ShareFileDestinationCheckpointDetails expected = CreateSetSampleValues();
+            expected.ShareProtocol = ShareProtocol.Smb;
+
+            ShareFileDestinationCheckpointDetails deserialized;
+            using (MemoryStream stream = new(serialized))
+            {
+                deserialized = ShareFileDestinationCheckpointDetails.Deserialize(stream);
+            }
+
+            // When deserializing, Version gets bumped to the latest version and ShareProtocol is set to default value (SMB)
+            AssertEquals(deserialized, expected);
+            // We are expecting that after deserialization, the version is bumped to latest version
+            Assert.That(deserialized.Version, Is.EqualTo(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion));
+            // We are expecting that after deserialization, the ShareProtocol is set to default value (SMB)
+            Assert.That(deserialized.ShareProtocol, Is.EqualTo(ShareProtocol.Smb));
         }
 
         [Test]
@@ -464,9 +537,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [Test]
-        public void Deserialize_IncorrectSchemaVersion()
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(5)]
+        [TestCase(9)]
+        public void Deserialize_IncorrectSchemaVersion(int incorrectSchemaVersion)
         {
-            int incorrectSchemaVersion = 1;
             ShareFileDestinationCheckpointDetails data = CreatePreserveValues();
             data.Version = incorrectSchemaVersion;
 
@@ -479,7 +555,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [Test]
-        public void RoundTrip()
+        public void RoundTrip_LatestVersion()
         {
             ShareFileDestinationCheckpointDetails original = CreateSetSampleValues();
             using MemoryStream serialized = new();
@@ -488,6 +564,47 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileDestinationCheckpointDetails deserialized = ShareFileDestinationCheckpointDetails.Deserialize(serialized);
 
             AssertEquals(original, deserialized);
+        }
+
+        [Test]
+        public void RoundTrip_Version3()
+        {
+            ShareFileDestinationCheckpointDetails original = CreateSetSampleValues();
+            original.Version = DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion_3;
+            using MemoryStream serialized = new();
+            original.SerializeInternal(serialized);
+            serialized.Position = 0;
+            ShareFileDestinationCheckpointDetails deserialized = ShareFileDestinationCheckpointDetails.Deserialize(serialized);
+
+            // During round trip when deserializing, Version gets bumped to the latest version
+            Assert.That(original.Version, Is.Not.EqualTo(deserialized.Version));
+            Assert.That(deserialized.Version, Is.EqualTo(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion_4));
+            Assert.That(original.IsFileAttributesSet, Is.EqualTo(deserialized.IsFileAttributesSet));
+            Assert.That(original.FileAttributes, Is.EqualTo(deserialized.FileAttributes));
+            Assert.That(original.FilePermission, Is.EqualTo(deserialized.FilePermission));
+            Assert.That(original.IsFileCreatedOnSet, Is.EqualTo(deserialized.IsFileCreatedOnSet));
+            Assert.That(original.FileCreatedOn.Value, Is.EqualTo(deserialized.FileCreatedOn.Value));
+            Assert.That(original.IsFileLastWrittenOnSet, Is.EqualTo(deserialized.IsFileLastWrittenOnSet));
+            Assert.That(original.FileLastWrittenOn.Value, Is.EqualTo(deserialized.FileLastWrittenOn.Value));
+            Assert.That(original.IsFileChangedOnSet, Is.EqualTo(deserialized.IsFileChangedOnSet));
+            Assert.That(original.FileChangedOn.Value, Is.EqualTo(deserialized.FileChangedOn.Value));
+            Assert.That(original.IsContentTypeSet, Is.EqualTo(deserialized.IsContentTypeSet));
+            Assert.That(original.ContentType, Is.EqualTo(deserialized.ContentType));
+            Assert.That(original.IsContentEncodingSet, Is.EqualTo(deserialized.IsContentEncodingSet));
+            Assert.That(original.ContentEncoding, Is.EqualTo(deserialized.ContentEncoding));
+            Assert.That(original.IsContentLanguageSet, Is.EqualTo(deserialized.IsContentLanguageSet));
+            Assert.That(original.ContentLanguage, Is.EqualTo(deserialized.ContentLanguage));
+            Assert.That(original.IsContentDispositionSet, Is.EqualTo(deserialized.IsContentDispositionSet));
+            Assert.That(original.ContentDisposition, Is.EqualTo(deserialized.ContentDisposition));
+            Assert.That(original.IsCacheControlSet, Is.EqualTo(deserialized.IsCacheControlSet));
+            Assert.That(original.CacheControl, Is.EqualTo(deserialized.CacheControl));
+            Assert.That(original.IsFileMetadataSet, Is.EqualTo(deserialized.IsFileMetadataSet));
+            Assert.That(original.FileMetadata, Is.EqualTo(deserialized.FileMetadata));
+            Assert.That(original.IsDirectoryMetadataSet, Is.EqualTo(deserialized.IsDirectoryMetadataSet));
+            Assert.That(original.DirectoryMetadata, Is.EqualTo(deserialized.DirectoryMetadata));
+            // From version 3, the ShareProtocol does not get copied over so it is set to default value of SMB.
+            Assert.That(original.ShareProtocol, Is.Not.EqualTo(deserialized.ShareProtocol));
+            Assert.That(deserialized.ShareProtocol, Is.EqualTo(ShareProtocol.Smb));
         }
     }
 }

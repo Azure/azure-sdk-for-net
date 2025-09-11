@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Chaos
 {
     public partial class ChaosTargetMetadataResource : IJsonModel<ChaosTargetMetadataData>
     {
+        private static ChaosTargetMetadataData s_dataDeserializationInstance;
+        private static ChaosTargetMetadataData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ChaosTargetMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ChaosTargetMetadataData>)Data).Write(writer, options);
 
-        ChaosTargetMetadataData IJsonModel<ChaosTargetMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ChaosTargetMetadataData>)Data).Create(ref reader, options);
+        ChaosTargetMetadataData IJsonModel<ChaosTargetMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ChaosTargetMetadataData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ChaosTargetMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ChaosTargetMetadataData>(Data, options, AzureResourceManagerChaosContext.Default);
 
         ChaosTargetMetadataData IPersistableModel<ChaosTargetMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ChaosTargetMetadataData>(data, options, AzureResourceManagerChaosContext.Default);
 
-        string IPersistableModel<ChaosTargetMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ChaosTargetMetadataData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ChaosTargetMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ChaosTargetMetadataData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

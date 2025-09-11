@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class AuthorizationAccessPolicyContractResource : IJsonModel<AuthorizationAccessPolicyContractData>
     {
+        private static AuthorizationAccessPolicyContractData s_dataDeserializationInstance;
+        private static AuthorizationAccessPolicyContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AuthorizationAccessPolicyContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationAccessPolicyContractData>)Data).Write(writer, options);
 
-        AuthorizationAccessPolicyContractData IJsonModel<AuthorizationAccessPolicyContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationAccessPolicyContractData>)Data).Create(ref reader, options);
+        AuthorizationAccessPolicyContractData IJsonModel<AuthorizationAccessPolicyContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationAccessPolicyContractData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AuthorizationAccessPolicyContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AuthorizationAccessPolicyContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         AuthorizationAccessPolicyContractData IPersistableModel<AuthorizationAccessPolicyContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AuthorizationAccessPolicyContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<AuthorizationAccessPolicyContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AuthorizationAccessPolicyContractData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AuthorizationAccessPolicyContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AuthorizationAccessPolicyContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

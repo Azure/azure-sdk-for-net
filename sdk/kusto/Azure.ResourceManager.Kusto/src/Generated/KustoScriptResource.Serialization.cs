@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Kusto
 {
     public partial class KustoScriptResource : IJsonModel<KustoScriptData>
     {
+        private static KustoScriptData s_dataDeserializationInstance;
+        private static KustoScriptData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<KustoScriptData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KustoScriptData>)Data).Write(writer, options);
 
-        KustoScriptData IJsonModel<KustoScriptData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoScriptData>)Data).Create(ref reader, options);
+        KustoScriptData IJsonModel<KustoScriptData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoScriptData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<KustoScriptData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoScriptData>(Data, options, AzureResourceManagerKustoContext.Default);
 
         KustoScriptData IPersistableModel<KustoScriptData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoScriptData>(data, options, AzureResourceManagerKustoContext.Default);
 
-        string IPersistableModel<KustoScriptData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoScriptData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<KustoScriptData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoScriptData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

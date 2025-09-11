@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceConnectionInfo"> Connection information for source MySQL server. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for MySQL server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> or <paramref name="targetConnectionInfo"/> is null. </exception>
-        public ConnectToTargetAzureDBForMySqlTaskInput(MySqlConnectionInfo sourceConnectionInfo, MySqlConnectionInfo targetConnectionInfo)
+        public ConnectToTargetAzureDBForMySqlTaskInput(DataMigrationMySqlConnectionInfo sourceConnectionInfo, DataMigrationMySqlConnectionInfo targetConnectionInfo)
         {
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for MySQL server. </param>
         /// <param name="isOfflineMigration"> Flag for whether or not the migration is offline. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectToTargetAzureDBForMySqlTaskInput(MySqlConnectionInfo sourceConnectionInfo, MySqlConnectionInfo targetConnectionInfo, bool? isOfflineMigration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectToTargetAzureDBForMySqlTaskInput(DataMigrationMySqlConnectionInfo sourceConnectionInfo, DataMigrationMySqlConnectionInfo targetConnectionInfo, bool? isOfflineMigration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Connection information for source MySQL server. </summary>
-        public MySqlConnectionInfo SourceConnectionInfo { get; set; }
+        public DataMigrationMySqlConnectionInfo SourceConnectionInfo { get; set; }
         /// <summary> Connection information for target Azure Database for MySQL server. </summary>
-        public MySqlConnectionInfo TargetConnectionInfo { get; set; }
+        public DataMigrationMySqlConnectionInfo TargetConnectionInfo { get; set; }
         /// <summary> Flag for whether or not the migration is offline. </summary>
         public bool? IsOfflineMigration { get; set; }
     }

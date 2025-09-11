@@ -35,7 +35,7 @@ namespace Azure.Search.Documents
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, <paramref name="agentName"/> or <paramref name="apiVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public KnowledgeRetrievalRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string agentName, Guid? xMsClientRequestId = null, string apiVersion = "2025-05-01-preview")
+        public KnowledgeRetrievalRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string agentName, Guid? xMsClientRequestId = null, string apiVersion = "2025-08-01-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -65,7 +65,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(retrievalRequest);
+            content.JsonWriter.WriteObjectValue(retrievalRequest, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }

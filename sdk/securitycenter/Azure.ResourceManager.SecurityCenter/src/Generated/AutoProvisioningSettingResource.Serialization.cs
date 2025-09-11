@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class AutoProvisioningSettingResource : IJsonModel<AutoProvisioningSettingData>
     {
+        private static AutoProvisioningSettingData s_dataDeserializationInstance;
+        private static AutoProvisioningSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AutoProvisioningSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutoProvisioningSettingData>)Data).Write(writer, options);
 
-        AutoProvisioningSettingData IJsonModel<AutoProvisioningSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutoProvisioningSettingData>)Data).Create(ref reader, options);
+        AutoProvisioningSettingData IJsonModel<AutoProvisioningSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutoProvisioningSettingData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AutoProvisioningSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutoProvisioningSettingData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         AutoProvisioningSettingData IPersistableModel<AutoProvisioningSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoProvisioningSettingData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<AutoProvisioningSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutoProvisioningSettingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AutoProvisioningSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutoProvisioningSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

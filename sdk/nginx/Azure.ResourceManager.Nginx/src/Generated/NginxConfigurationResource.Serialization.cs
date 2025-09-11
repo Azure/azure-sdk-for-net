@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Nginx
 {
     public partial class NginxConfigurationResource : IJsonModel<NginxConfigurationData>
     {
+        private static NginxConfigurationData s_dataDeserializationInstance;
+        private static NginxConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NginxConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NginxConfigurationData>)Data).Write(writer, options);
 
-        NginxConfigurationData IJsonModel<NginxConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NginxConfigurationData>)Data).Create(ref reader, options);
+        NginxConfigurationData IJsonModel<NginxConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NginxConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NginxConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NginxConfigurationData>(Data, options, AzureResourceManagerNginxContext.Default);
 
         NginxConfigurationData IPersistableModel<NginxConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NginxConfigurationData>(data, options, AzureResourceManagerNginxContext.Default);
 
-        string IPersistableModel<NginxConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NginxConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NginxConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NginxConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

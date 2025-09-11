@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     public partial class BackupResourceVaultConfigResource : IJsonModel<BackupResourceVaultConfigData>
     {
+        private static BackupResourceVaultConfigData s_dataDeserializationInstance;
+        private static BackupResourceVaultConfigData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BackupResourceVaultConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BackupResourceVaultConfigData>)Data).Write(writer, options);
 
-        BackupResourceVaultConfigData IJsonModel<BackupResourceVaultConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupResourceVaultConfigData>)Data).Create(ref reader, options);
+        BackupResourceVaultConfigData IJsonModel<BackupResourceVaultConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupResourceVaultConfigData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<BackupResourceVaultConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackupResourceVaultConfigData>(Data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
         BackupResourceVaultConfigData IPersistableModel<BackupResourceVaultConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupResourceVaultConfigData>(data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        string IPersistableModel<BackupResourceVaultConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupResourceVaultConfigData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BackupResourceVaultConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupResourceVaultConfigData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

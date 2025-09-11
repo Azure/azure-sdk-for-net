@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     public partial class PostgreSqlLtrServerBackupOperationResource : IJsonModel<PostgreSqlLtrServerBackupOperationData>
     {
+        private static PostgreSqlLtrServerBackupOperationData s_dataDeserializationInstance;
+        private static PostgreSqlLtrServerBackupOperationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PostgreSqlLtrServerBackupOperationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlLtrServerBackupOperationData>)Data).Write(writer, options);
 
-        PostgreSqlLtrServerBackupOperationData IJsonModel<PostgreSqlLtrServerBackupOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlLtrServerBackupOperationData>)Data).Create(ref reader, options);
+        PostgreSqlLtrServerBackupOperationData IJsonModel<PostgreSqlLtrServerBackupOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlLtrServerBackupOperationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PostgreSqlLtrServerBackupOperationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlLtrServerBackupOperationData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         PostgreSqlLtrServerBackupOperationData IPersistableModel<PostgreSqlLtrServerBackupOperationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlLtrServerBackupOperationData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        string IPersistableModel<PostgreSqlLtrServerBackupOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlLtrServerBackupOperationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PostgreSqlLtrServerBackupOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlLtrServerBackupOperationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

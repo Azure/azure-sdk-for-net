@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -25,11 +26,17 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="AzureMachineLearningVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="amlParameters"> Specifies the properties of the AML vectorizer. </param>
-        internal AzureMachineLearningVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, AzureMachineLearningParameters amlParameters) : base(vectorizerName, kind)
+        internal AzureMachineLearningVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureMachineLearningParameters amlParameters) : base(vectorizerName, kind, serializedAdditionalRawData)
         {
             AMLParameters = amlParameters;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningVectorizer"/> for deserialization. </summary>
+        internal AzureMachineLearningVectorizer()
+        {
         }
 
         /// <summary> Specifies the properties of the AML vectorizer. </summary>

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningComponentVersionResource : IJsonModel<MachineLearningComponentVersionData>
     {
+        private static MachineLearningComponentVersionData s_dataDeserializationInstance;
+        private static MachineLearningComponentVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MachineLearningComponentVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningComponentVersionData>)Data).Write(writer, options);
 
-        MachineLearningComponentVersionData IJsonModel<MachineLearningComponentVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningComponentVersionData>)Data).Create(ref reader, options);
+        MachineLearningComponentVersionData IJsonModel<MachineLearningComponentVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningComponentVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MachineLearningComponentVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningComponentVersionData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
         MachineLearningComponentVersionData IPersistableModel<MachineLearningComponentVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningComponentVersionData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningComponentVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningComponentVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MachineLearningComponentVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningComponentVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

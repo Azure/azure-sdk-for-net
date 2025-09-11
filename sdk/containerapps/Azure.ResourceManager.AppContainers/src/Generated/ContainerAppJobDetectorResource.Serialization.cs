@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppContainers
 {
     public partial class ContainerAppJobDetectorResource : IJsonModel<ContainerAppDiagnosticData>
     {
+        private static ContainerAppDiagnosticData s_dataDeserializationInstance;
+        private static ContainerAppDiagnosticData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ContainerAppDiagnosticData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppDiagnosticData>)Data).Write(writer, options);
 
-        ContainerAppDiagnosticData IJsonModel<ContainerAppDiagnosticData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppDiagnosticData>)Data).Create(ref reader, options);
+        ContainerAppDiagnosticData IJsonModel<ContainerAppDiagnosticData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppDiagnosticData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ContainerAppDiagnosticData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerAppDiagnosticData>(Data, options, AzureResourceManagerAppContainersContext.Default);
 
         ContainerAppDiagnosticData IPersistableModel<ContainerAppDiagnosticData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppDiagnosticData>(data, options, AzureResourceManagerAppContainersContext.Default);
 
-        string IPersistableModel<ContainerAppDiagnosticData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppDiagnosticData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ContainerAppDiagnosticData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppDiagnosticData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

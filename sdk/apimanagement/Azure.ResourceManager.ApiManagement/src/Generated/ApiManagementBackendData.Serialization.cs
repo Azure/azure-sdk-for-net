@@ -80,6 +80,16 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("circuitBreaker"u8);
                 writer.WriteObjectValue(CircuitBreaker, options);
             }
+            if (Optional.IsDefined(Pool))
+            {
+                writer.WritePropertyName("pool"u8);
+                writer.WriteObjectValue(Pool, options);
+            }
+            if (Optional.IsDefined(TypePropertiesType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(TypePropertiesType.Value.ToString());
+            }
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
@@ -125,6 +135,8 @@ namespace Azure.ResourceManager.ApiManagement
             BackendProxyContract proxy = default;
             BackendTlsProperties tls = default;
             BackendCircuitBreaker circuitBreaker = default;
+            BackendBaseParametersPool pool = default;
+            BackendType? type0 = default;
             Uri uri = default;
             BackendProtocol? protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -152,7 +164,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -228,6 +240,24 @@ namespace Azure.ResourceManager.ApiManagement
                             circuitBreaker = BackendCircuitBreaker.DeserializeBackendCircuitBreaker(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("pool"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            pool = BackendBaseParametersPool.DeserializeBackendBaseParametersPool(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("type"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            type0 = new BackendType(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("url"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -268,6 +298,8 @@ namespace Azure.ResourceManager.ApiManagement
                 proxy,
                 tls,
                 circuitBreaker,
+                pool,
+                type0,
                 uri,
                 protocol,
                 serializedAdditionalRawData);
@@ -482,6 +514,41 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     builder.Append("    circuitBreaker: ");
                     BicepSerializationHelpers.AppendChildObject(builder, CircuitBreaker, options, 4, false, "    circuitBreaker: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PoolServices", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    pool: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      pool: {");
+                builder.Append("        services: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Pool))
+                {
+                    builder.Append("    pool: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Pool, options, 4, false, "    pool: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TypePropertiesType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TypePropertiesType))
+                {
+                    builder.Append("    type: ");
+                    builder.AppendLine($"'{TypePropertiesType.Value.ToString()}'");
                 }
             }
 

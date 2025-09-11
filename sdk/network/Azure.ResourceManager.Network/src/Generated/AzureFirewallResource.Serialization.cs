@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class AzureFirewallResource : IJsonModel<AzureFirewallData>
     {
+        private static AzureFirewallData s_dataDeserializationInstance;
+        private static AzureFirewallData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AzureFirewallData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AzureFirewallData>)Data).Write(writer, options);
 
-        AzureFirewallData IJsonModel<AzureFirewallData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureFirewallData>)Data).Create(ref reader, options);
+        AzureFirewallData IJsonModel<AzureFirewallData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureFirewallData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AzureFirewallData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AzureFirewallData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         AzureFirewallData IPersistableModel<AzureFirewallData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureFirewallData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<AzureFirewallData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureFirewallData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AzureFirewallData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureFirewallData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

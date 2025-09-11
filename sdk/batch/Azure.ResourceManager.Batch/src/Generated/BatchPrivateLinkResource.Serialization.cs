@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Batch
 {
     public partial class BatchPrivateLinkResource : IJsonModel<BatchPrivateLinkResourceData>
     {
+        private static BatchPrivateLinkResourceData s_dataDeserializationInstance;
+        private static BatchPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BatchPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BatchPrivateLinkResourceData>)Data).Write(writer, options);
 
-        BatchPrivateLinkResourceData IJsonModel<BatchPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BatchPrivateLinkResourceData>)Data).Create(ref reader, options);
+        BatchPrivateLinkResourceData IJsonModel<BatchPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BatchPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<BatchPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BatchPrivateLinkResourceData>(Data, options, AzureResourceManagerBatchContext.Default);
 
         BatchPrivateLinkResourceData IPersistableModel<BatchPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BatchPrivateLinkResourceData>(data, options, AzureResourceManagerBatchContext.Default);
 
-        string IPersistableModel<BatchPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BatchPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BatchPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BatchPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

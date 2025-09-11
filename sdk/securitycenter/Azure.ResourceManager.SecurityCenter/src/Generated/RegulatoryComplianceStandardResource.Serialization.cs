@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class RegulatoryComplianceStandardResource : IJsonModel<RegulatoryComplianceStandardData>
     {
+        private static RegulatoryComplianceStandardData s_dataDeserializationInstance;
+        private static RegulatoryComplianceStandardData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RegulatoryComplianceStandardData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RegulatoryComplianceStandardData>)Data).Write(writer, options);
 
-        RegulatoryComplianceStandardData IJsonModel<RegulatoryComplianceStandardData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RegulatoryComplianceStandardData>)Data).Create(ref reader, options);
+        RegulatoryComplianceStandardData IJsonModel<RegulatoryComplianceStandardData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RegulatoryComplianceStandardData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<RegulatoryComplianceStandardData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RegulatoryComplianceStandardData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         RegulatoryComplianceStandardData IPersistableModel<RegulatoryComplianceStandardData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RegulatoryComplianceStandardData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<RegulatoryComplianceStandardData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RegulatoryComplianceStandardData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RegulatoryComplianceStandardData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RegulatoryComplianceStandardData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

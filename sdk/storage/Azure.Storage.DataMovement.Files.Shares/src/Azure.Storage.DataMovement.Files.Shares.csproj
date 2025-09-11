@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement.Files.Shares client library</AssemblyTitle>
-    <Version>12.2.0-beta.1</Version>
+    <Version>12.3.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>12.1.0</ApiCompatVersion>
+    <ApiCompatVersion>12.2.1</ApiCompatVersion>
     <DefineConstants>ShareDataMovementSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage DataMovement Files AzureStorage AzureFiles azureofficial</PackageTags>
     <Description>
@@ -22,8 +22,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <!-- <PackageReference Include="Azure.Storage.Files.Shares" /> -->
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\src\Azure.Storage.Files.Shares.csproj" />
+    <PackageReference Include="Azure.Storage.Files.Shares" />
+    <!-- <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\src\Azure.Storage.Files.Shares.csproj" /> -->
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
     <PackageReference Include="System.Threading.Channels" />
   </ItemGroup>
@@ -47,6 +47,7 @@
     <Compile Include="$(AzureStorageDataMovementSharedSources)StorageResourceCheckpointDetailsInternal.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)StorageResourceItemInternal.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)StorageResourceContainerInternal.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)DataMovementUserAgentPolicy.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\src\Shared\ShareModelExtensions.cs" />

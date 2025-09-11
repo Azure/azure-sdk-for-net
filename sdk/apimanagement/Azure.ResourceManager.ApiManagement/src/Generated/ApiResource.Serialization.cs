@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiResource : IJsonModel<ApiData>
     {
+        private static ApiData s_dataDeserializationInstance;
+        private static ApiData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiData>)Data).Write(writer, options);
 
-        ApiData IJsonModel<ApiData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiData>)Data).Create(ref reader, options);
+        ApiData IJsonModel<ApiData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ApiData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         ApiData IPersistableModel<ApiData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

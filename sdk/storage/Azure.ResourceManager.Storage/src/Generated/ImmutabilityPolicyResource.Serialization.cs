@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class ImmutabilityPolicyResource : IJsonModel<ImmutabilityPolicyData>
     {
+        private static ImmutabilityPolicyData s_dataDeserializationInstance;
+        private static ImmutabilityPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ImmutabilityPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ImmutabilityPolicyData>)Data).Write(writer, options);
 
-        ImmutabilityPolicyData IJsonModel<ImmutabilityPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ImmutabilityPolicyData>)Data).Create(ref reader, options);
+        ImmutabilityPolicyData IJsonModel<ImmutabilityPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ImmutabilityPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ImmutabilityPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ImmutabilityPolicyData>(Data, options, AzureResourceManagerStorageContext.Default);
 
         ImmutabilityPolicyData IPersistableModel<ImmutabilityPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ImmutabilityPolicyData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<ImmutabilityPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ImmutabilityPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ImmutabilityPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ImmutabilityPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppPlatform
 {
     public partial class AppPlatformConfigurationServiceResource : IJsonModel<AppPlatformConfigurationServiceData>
     {
+        private static AppPlatformConfigurationServiceData s_dataDeserializationInstance;
+        private static AppPlatformConfigurationServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppPlatformConfigurationServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformConfigurationServiceData>)Data).Write(writer, options);
 
-        AppPlatformConfigurationServiceData IJsonModel<AppPlatformConfigurationServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformConfigurationServiceData>)Data).Create(ref reader, options);
+        AppPlatformConfigurationServiceData IJsonModel<AppPlatformConfigurationServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformConfigurationServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AppPlatformConfigurationServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppPlatformConfigurationServiceData>(Data, options, AzureResourceManagerAppPlatformContext.Default);
 
         AppPlatformConfigurationServiceData IPersistableModel<AppPlatformConfigurationServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformConfigurationServiceData>(data, options, AzureResourceManagerAppPlatformContext.Default);
 
-        string IPersistableModel<AppPlatformConfigurationServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformConfigurationServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppPlatformConfigurationServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformConfigurationServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsIncidentCommentResource : IJsonModel<SecurityInsightsIncidentCommentData>
     {
+        private static SecurityInsightsIncidentCommentData s_dataDeserializationInstance;
+        private static SecurityInsightsIncidentCommentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityInsightsIncidentCommentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsIncidentCommentData>)Data).Write(writer, options);
 
-        SecurityInsightsIncidentCommentData IJsonModel<SecurityInsightsIncidentCommentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsIncidentCommentData>)Data).Create(ref reader, options);
+        SecurityInsightsIncidentCommentData IJsonModel<SecurityInsightsIncidentCommentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsIncidentCommentData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SecurityInsightsIncidentCommentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsIncidentCommentData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         SecurityInsightsIncidentCommentData IPersistableModel<SecurityInsightsIncidentCommentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsIncidentCommentData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsIncidentCommentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsIncidentCommentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsIncidentCommentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsIncidentCommentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

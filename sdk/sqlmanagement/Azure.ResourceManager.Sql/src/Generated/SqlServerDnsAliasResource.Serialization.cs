@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerDnsAliasResource : IJsonModel<SqlServerDnsAliasData>
     {
+        private static SqlServerDnsAliasData s_dataDeserializationInstance;
+        private static SqlServerDnsAliasData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlServerDnsAliasData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDnsAliasData>)Data).Write(writer, options);
 
-        SqlServerDnsAliasData IJsonModel<SqlServerDnsAliasData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDnsAliasData>)Data).Create(ref reader, options);
+        SqlServerDnsAliasData IJsonModel<SqlServerDnsAliasData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDnsAliasData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SqlServerDnsAliasData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerDnsAliasData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         SqlServerDnsAliasData IPersistableModel<SqlServerDnsAliasData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerDnsAliasData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerDnsAliasData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerDnsAliasData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlServerDnsAliasData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerDnsAliasData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

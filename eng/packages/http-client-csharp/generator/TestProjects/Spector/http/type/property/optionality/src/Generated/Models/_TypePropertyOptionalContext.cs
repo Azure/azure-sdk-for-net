@@ -9,6 +9,22 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Property.Optional
 {
+    [ModelReaderWriterBuildable(typeof(BooleanLiteralProperty))]
+    [ModelReaderWriterBuildable(typeof(BytesProperty))]
+    [ModelReaderWriterBuildable(typeof(CollectionsByteProperty))]
+    [ModelReaderWriterBuildable(typeof(CollectionsModelProperty))]
+    [ModelReaderWriterBuildable(typeof(DatetimeProperty))]
+    [ModelReaderWriterBuildable(typeof(DurationProperty))]
+    [ModelReaderWriterBuildable(typeof(FloatLiteralProperty))]
+    [ModelReaderWriterBuildable(typeof(IntLiteralProperty))]
+    [ModelReaderWriterBuildable(typeof(PlainDateProperty))]
+    [ModelReaderWriterBuildable(typeof(PlainTimeProperty))]
+    [ModelReaderWriterBuildable(typeof(RequiredAndOptionalProperty))]
+    [ModelReaderWriterBuildable(typeof(StringLiteralProperty))]
+    [ModelReaderWriterBuildable(typeof(StringProperty))]
+    [ModelReaderWriterBuildable(typeof(UnionFloatLiteralProperty))]
+    [ModelReaderWriterBuildable(typeof(UnionIntLiteralProperty))]
+    [ModelReaderWriterBuildable(typeof(UnionStringLiteralProperty))]
     public partial class _TypePropertyOptionalContext : ModelReaderWriterContext
     {
     }

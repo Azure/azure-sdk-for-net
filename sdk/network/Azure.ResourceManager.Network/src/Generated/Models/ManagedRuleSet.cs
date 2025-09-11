@@ -57,18 +57,21 @@ namespace Azure.ResourceManager.Network.Models
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
             RuleGroupOverrides = new ChangeTrackingList<ManagedRuleGroupOverride>();
+            ComputedDisabledRules = new ChangeTrackingList<ManagedRuleSetRuleGroup>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSet"/>. </summary>
         /// <param name="ruleSetType"> Defines the rule set type to use. </param>
         /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
         /// <param name="ruleGroupOverrides"> Defines the rule group overrides to apply to the rule set. </param>
+        /// <param name="computedDisabledRules"> Stores the final list of disabled rule groups. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleSet(string ruleSetType, string ruleSetVersion, IList<ManagedRuleGroupOverride> ruleGroupOverrides, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedRuleSet(string ruleSetType, string ruleSetVersion, IList<ManagedRuleGroupOverride> ruleGroupOverrides, IReadOnlyList<ManagedRuleSetRuleGroup> computedDisabledRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
             RuleGroupOverrides = ruleGroupOverrides;
+            ComputedDisabledRules = computedDisabledRules;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -78,10 +81,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Defines the rule set type to use. </summary>
+        [WirePath("ruleSetType")]
         public string RuleSetType { get; set; }
         /// <summary> Defines the version of the rule set to use. </summary>
+        [WirePath("ruleSetVersion")]
         public string RuleSetVersion { get; set; }
         /// <summary> Defines the rule group overrides to apply to the rule set. </summary>
+        [WirePath("ruleGroupOverrides")]
         public IList<ManagedRuleGroupOverride> RuleGroupOverrides { get; }
+        /// <summary> Stores the final list of disabled rule groups. </summary>
+        [WirePath("computedDisabledRules")]
+        public IReadOnlyList<ManagedRuleSetRuleGroup> ComputedDisabledRules { get; }
     }
 }

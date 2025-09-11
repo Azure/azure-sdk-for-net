@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ContainerService
 {
     public partial class ContainerServiceAgentPoolResource : IJsonModel<ContainerServiceAgentPoolData>
     {
+        private static ContainerServiceAgentPoolData s_dataDeserializationInstance;
+        private static ContainerServiceAgentPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ContainerServiceAgentPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceAgentPoolData>)Data).Write(writer, options);
 
-        ContainerServiceAgentPoolData IJsonModel<ContainerServiceAgentPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceAgentPoolData>)Data).Create(ref reader, options);
+        ContainerServiceAgentPoolData IJsonModel<ContainerServiceAgentPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceAgentPoolData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ContainerServiceAgentPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerServiceAgentPoolData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
         ContainerServiceAgentPoolData IPersistableModel<ContainerServiceAgentPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServiceAgentPoolData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        string IPersistableModel<ContainerServiceAgentPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServiceAgentPoolData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ContainerServiceAgentPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServiceAgentPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

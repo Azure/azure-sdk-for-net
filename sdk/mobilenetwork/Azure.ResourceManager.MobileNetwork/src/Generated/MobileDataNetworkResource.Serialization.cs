@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class MobileDataNetworkResource : IJsonModel<MobileDataNetworkData>
     {
+        private static MobileDataNetworkData s_dataDeserializationInstance;
+        private static MobileDataNetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MobileDataNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MobileDataNetworkData>)Data).Write(writer, options);
 
-        MobileDataNetworkData IJsonModel<MobileDataNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MobileDataNetworkData>)Data).Create(ref reader, options);
+        MobileDataNetworkData IJsonModel<MobileDataNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MobileDataNetworkData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MobileDataNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MobileDataNetworkData>(Data, options, AzureResourceManagerMobileNetworkContext.Default);
 
         MobileDataNetworkData IPersistableModel<MobileDataNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MobileDataNetworkData>(data, options, AzureResourceManagerMobileNetworkContext.Default);
 
-        string IPersistableModel<MobileDataNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MobileDataNetworkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MobileDataNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MobileDataNetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

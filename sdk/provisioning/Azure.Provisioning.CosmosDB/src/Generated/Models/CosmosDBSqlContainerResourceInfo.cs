@@ -141,6 +141,16 @@ public partial class CosmosDBSqlContainerResourceInfo : ProvisionableConstruct
     private BicepList<ComputedProperty>? _computedProperties;
 
     /// <summary>
+    /// List of vector embeddings.
+    /// </summary>
+    public BicepList<CosmosDBVectorEmbedding> VectorEmbeddings 
+    {
+        get { Initialize(); return _vectorEmbeddings!; }
+        set { Initialize(); _vectorEmbeddings!.Assign(value); }
+    }
+    private BicepList<CosmosDBVectorEmbedding>? _vectorEmbeddings;
+
+    /// <summary>
     /// Creates a new CosmosDBSqlContainerResourceInfo.
     /// </summary>
     public CosmosDBSqlContainerResourceInfo()
@@ -166,5 +176,6 @@ public partial class CosmosDBSqlContainerResourceInfo : ProvisionableConstruct
         _createMode = DefineProperty<CosmosDBAccountCreateMode>("CreateMode", ["createMode"]);
         _materializedViewDefinition = DefineModelProperty<MaterializedViewDefinition>("MaterializedViewDefinition", ["materializedViewDefinition"]);
         _computedProperties = DefineListProperty<ComputedProperty>("ComputedProperties", ["computedProperties"]);
+        _vectorEmbeddings = DefineListProperty<CosmosDBVectorEmbedding>("VectorEmbeddings", ["vectorEmbeddingPolicy", "vectorEmbeddings"]);
     }
 }

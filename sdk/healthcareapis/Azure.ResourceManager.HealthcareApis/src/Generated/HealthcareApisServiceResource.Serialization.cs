@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HealthcareApis
 {
     public partial class HealthcareApisServiceResource : IJsonModel<HealthcareApisServiceData>
     {
+        private static HealthcareApisServiceData s_dataDeserializationInstance;
+        private static HealthcareApisServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HealthcareApisServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisServiceData>)Data).Write(writer, options);
 
-        HealthcareApisServiceData IJsonModel<HealthcareApisServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisServiceData>)Data).Create(ref reader, options);
+        HealthcareApisServiceData IJsonModel<HealthcareApisServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<HealthcareApisServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthcareApisServiceData>(Data, options, AzureResourceManagerHealthcareApisContext.Default);
 
         HealthcareApisServiceData IPersistableModel<HealthcareApisServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisServiceData>(data, options, AzureResourceManagerHealthcareApisContext.Default);
 
-        string IPersistableModel<HealthcareApisServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthcareApisServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HealthcareApisServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthcareApisServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

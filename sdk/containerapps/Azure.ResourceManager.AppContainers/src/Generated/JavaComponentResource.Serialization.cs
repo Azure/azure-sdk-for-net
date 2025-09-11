@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppContainers
 {
     public partial class JavaComponentResource : IJsonModel<JavaComponentData>
     {
+        private static JavaComponentData s_dataDeserializationInstance;
+        private static JavaComponentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<JavaComponentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<JavaComponentData>)Data).Write(writer, options);
 
-        JavaComponentData IJsonModel<JavaComponentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<JavaComponentData>)Data).Create(ref reader, options);
+        JavaComponentData IJsonModel<JavaComponentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<JavaComponentData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<JavaComponentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<JavaComponentData>(Data, options, AzureResourceManagerAppContainersContext.Default);
 
         JavaComponentData IPersistableModel<JavaComponentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JavaComponentData>(data, options, AzureResourceManagerAppContainersContext.Default);
 
-        string IPersistableModel<JavaComponentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<JavaComponentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<JavaComponentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<JavaComponentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

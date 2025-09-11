@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.3 (2025-06-12)
+
+### Features Added
+ - Introduced Messaging Connect support in the .NET SDK.
+    - Added a new MessagingConnect field to the SmsSendOptions model.
+    - The MessagingConnect structure includes:
+        - apiKey: used for authenticating Messaging Connect requests.
+        - partner: identifies the Messaging Connect partner.
+    - Supports:
+        - Incoming and outgoing flows for long codes.
+        - Outgoing flow for Dynamic Alpha Sender IDs (DASID).
 
 ## 1.1.0-beta.2 (2024-12-10)
 

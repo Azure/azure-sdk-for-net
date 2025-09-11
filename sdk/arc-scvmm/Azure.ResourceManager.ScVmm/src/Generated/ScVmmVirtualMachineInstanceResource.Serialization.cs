@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ScVmm
 {
     public partial class ScVmmVirtualMachineInstanceResource : IJsonModel<ScVmmVirtualMachineInstanceData>
     {
+        private static ScVmmVirtualMachineInstanceData s_dataDeserializationInstance;
+        private static ScVmmVirtualMachineInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ScVmmVirtualMachineInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmVirtualMachineInstanceData>)Data).Write(writer, options);
 
-        ScVmmVirtualMachineInstanceData IJsonModel<ScVmmVirtualMachineInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmVirtualMachineInstanceData>)Data).Create(ref reader, options);
+        ScVmmVirtualMachineInstanceData IJsonModel<ScVmmVirtualMachineInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmVirtualMachineInstanceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ScVmmVirtualMachineInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScVmmVirtualMachineInstanceData>(Data, options, AzureResourceManagerScVmmContext.Default);
 
         ScVmmVirtualMachineInstanceData IPersistableModel<ScVmmVirtualMachineInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmVirtualMachineInstanceData>(data, options, AzureResourceManagerScVmmContext.Default);
 
-        string IPersistableModel<ScVmmVirtualMachineInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmVirtualMachineInstanceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ScVmmVirtualMachineInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmVirtualMachineInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Recommended sku for the migration. </summary>
+    /// <summary>
+    /// Recommended sku for the migration
+    /// Serialized Name: CanMigrateDefaultSku
+    /// </summary>
     public readonly partial struct CanMigrateDefaultSku : IEquatable<CanMigrateDefaultSku>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string StandardAzureFrontDoorValue = "Standard_AzureFrontDoor";
         private const string PremiumAzureFrontDoorValue = "Premium_AzureFrontDoor";
 
-        /// <summary> Standard_AzureFrontDoor. </summary>
+        /// <summary>
+        /// Standard_AzureFrontDoor
+        /// Serialized Name: CanMigrateDefaultSku.Standard_AzureFrontDoor
+        /// </summary>
         public static CanMigrateDefaultSku StandardAzureFrontDoor { get; } = new CanMigrateDefaultSku(StandardAzureFrontDoorValue);
-        /// <summary> Premium_AzureFrontDoor. </summary>
+        /// <summary>
+        /// Premium_AzureFrontDoor
+        /// Serialized Name: CanMigrateDefaultSku.Premium_AzureFrontDoor
+        /// </summary>
         public static CanMigrateDefaultSku PremiumAzureFrontDoor { get; } = new CanMigrateDefaultSku(PremiumAzureFrontDoorValue);
         /// <summary> Determines if two <see cref="CanMigrateDefaultSku"/> values are the same. </summary>
         public static bool operator ==(CanMigrateDefaultSku left, CanMigrateDefaultSku right) => left.Equals(right);

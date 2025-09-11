@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 {
     public partial class CloudHsmClusterPrivateEndpointConnectionResource : IJsonModel<CloudHsmClusterPrivateEndpointConnectionData>
     {
+        private static CloudHsmClusterPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static CloudHsmClusterPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CloudHsmClusterPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CloudHsmClusterPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        CloudHsmClusterPrivateEndpointConnectionData IJsonModel<CloudHsmClusterPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudHsmClusterPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        CloudHsmClusterPrivateEndpointConnectionData IJsonModel<CloudHsmClusterPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudHsmClusterPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudHsmClusterPrivateEndpointConnectionData>(Data, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
 
         CloudHsmClusterPrivateEndpointConnectionData IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudHsmClusterPrivateEndpointConnectionData>(data, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
 
-        string IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

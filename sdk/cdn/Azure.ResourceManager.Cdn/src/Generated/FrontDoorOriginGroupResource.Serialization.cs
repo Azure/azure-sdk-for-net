@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class FrontDoorOriginGroupResource : IJsonModel<FrontDoorOriginGroupData>
     {
+        private static FrontDoorOriginGroupData s_dataDeserializationInstance;
+        private static FrontDoorOriginGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FrontDoorOriginGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorOriginGroupData>)Data).Write(writer, options);
 
-        FrontDoorOriginGroupData IJsonModel<FrontDoorOriginGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorOriginGroupData>)Data).Create(ref reader, options);
+        FrontDoorOriginGroupData IJsonModel<FrontDoorOriginGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorOriginGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<FrontDoorOriginGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FrontDoorOriginGroupData>(Data, options, AzureResourceManagerCdnContext.Default);
 
         FrontDoorOriginGroupData IPersistableModel<FrontDoorOriginGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorOriginGroupData>(data, options, AzureResourceManagerCdnContext.Default);
 
-        string IPersistableModel<FrontDoorOriginGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorOriginGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FrontDoorOriginGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorOriginGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

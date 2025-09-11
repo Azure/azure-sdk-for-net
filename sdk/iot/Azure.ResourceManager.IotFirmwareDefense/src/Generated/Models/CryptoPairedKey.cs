@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// Details of a matching paired key or certificate.
-    /// Serialized Name: PairedKey
-    /// </summary>
+    /// <summary> Details of a matching paired key or certificate. </summary>
     public partial class CryptoPairedKey
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CryptoPairedKey"/>. </summary>
-        /// <param name="pairedKeyId">
-        /// ID of the paired key or certificate.
-        /// Serialized Name: PairedKey.pairedKeyId
-        /// </param>
-        /// <param name="pairedKeyType">
-        /// The type indicating whether the paired object is a key or certificate.
-        /// Serialized Name: PairedKey.type
-        /// </param>
+        /// <param name="pairedKeyId"> ID of the paired key or certificate. </param>
+        /// <param name="pairedKeyType"> The type indicating whether the paired object is a key or certificate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CryptoPairedKey(string pairedKeyId, string pairedKeyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// ID of the paired key or certificate.
-        /// Serialized Name: PairedKey.pairedKeyId
-        /// </summary>
+        /// <summary> ID of the paired key or certificate. </summary>
         public string PairedKeyId { get; set; }
-        /// <summary>
-        /// The type indicating whether the paired object is a key or certificate.
-        /// Serialized Name: PairedKey.type
-        /// </summary>
+        /// <summary> The type indicating whether the paired object is a key or certificate. </summary>
         public string PairedKeyType { get; set; }
     }
 }

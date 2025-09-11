@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkGroupResource : IJsonModel<NetworkGroupData>
     {
+        private static NetworkGroupData s_dataDeserializationInstance;
+        private static NetworkGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkGroupData>)Data).Write(writer, options);
 
-        NetworkGroupData IJsonModel<NetworkGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkGroupData>)Data).Create(ref reader, options);
+        NetworkGroupData IJsonModel<NetworkGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkGroupData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         NetworkGroupData IPersistableModel<NetworkGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkGroupData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

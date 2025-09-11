@@ -19,6 +19,15 @@ namespace Azure.Communication.CallAutomation
             SipHeaders = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="CustomCallingContextInternal"/>. </summary>
+        /// <param name="voipHeaders"> Custom calling context VoiP headers. </param>
+        /// <param name="sipHeaders"> Custom calling context SIP headers. </param>
+        internal CustomCallingContextInternal(IDictionary<string, string> voipHeaders, IDictionary<string, string> sipHeaders)
+        {
+            VoipHeaders = voipHeaders;
+            SipHeaders = sipHeaders;
+        }
+
         /// <summary> Custom calling context VoiP headers. </summary>
         public IDictionary<string, string> VoipHeaders { get; }
         /// <summary> Custom calling context SIP headers. </summary>

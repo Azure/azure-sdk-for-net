@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     public partial class OracleGIVersionResource : IJsonModel<OracleGIVersionData>
     {
+        private static OracleGIVersionData s_dataDeserializationInstance;
+        private static OracleGIVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<OracleGIVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OracleGIVersionData>)Data).Write(writer, options);
 
-        OracleGIVersionData IJsonModel<OracleGIVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OracleGIVersionData>)Data).Create(ref reader, options);
+        OracleGIVersionData IJsonModel<OracleGIVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OracleGIVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<OracleGIVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OracleGIVersionData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
         OracleGIVersionData IPersistableModel<OracleGIVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleGIVersionData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        string IPersistableModel<OracleGIVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OracleGIVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<OracleGIVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OracleGIVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

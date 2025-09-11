@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     public partial class SiteRecoveryReplicationProtectionClusterResource : IJsonModel<SiteRecoveryReplicationProtectionClusterData>
     {
+        private static SiteRecoveryReplicationProtectionClusterData s_dataDeserializationInstance;
+        private static SiteRecoveryReplicationProtectionClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SiteRecoveryReplicationProtectionClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryReplicationProtectionClusterData>)Data).Write(writer, options);
 
-        SiteRecoveryReplicationProtectionClusterData IJsonModel<SiteRecoveryReplicationProtectionClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryReplicationProtectionClusterData>)Data).Create(ref reader, options);
+        SiteRecoveryReplicationProtectionClusterData IJsonModel<SiteRecoveryReplicationProtectionClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryReplicationProtectionClusterData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SiteRecoveryReplicationProtectionClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteRecoveryReplicationProtectionClusterData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
         SiteRecoveryReplicationProtectionClusterData IPersistableModel<SiteRecoveryReplicationProtectionClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryReplicationProtectionClusterData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<SiteRecoveryReplicationProtectionClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryReplicationProtectionClusterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SiteRecoveryReplicationProtectionClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryReplicationProtectionClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

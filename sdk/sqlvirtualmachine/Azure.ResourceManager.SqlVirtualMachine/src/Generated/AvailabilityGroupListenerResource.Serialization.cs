@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 {
     public partial class AvailabilityGroupListenerResource : IJsonModel<AvailabilityGroupListenerData>
     {
+        private static AvailabilityGroupListenerData s_dataDeserializationInstance;
+        private static AvailabilityGroupListenerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AvailabilityGroupListenerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AvailabilityGroupListenerData>)Data).Write(writer, options);
 
-        AvailabilityGroupListenerData IJsonModel<AvailabilityGroupListenerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvailabilityGroupListenerData>)Data).Create(ref reader, options);
+        AvailabilityGroupListenerData IJsonModel<AvailabilityGroupListenerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvailabilityGroupListenerData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AvailabilityGroupListenerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvailabilityGroupListenerData>(Data, options, AzureResourceManagerSqlVirtualMachineContext.Default);
 
         AvailabilityGroupListenerData IPersistableModel<AvailabilityGroupListenerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvailabilityGroupListenerData>(data, options, AzureResourceManagerSqlVirtualMachineContext.Default);
 
-        string IPersistableModel<AvailabilityGroupListenerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvailabilityGroupListenerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AvailabilityGroupListenerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvailabilityGroupListenerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

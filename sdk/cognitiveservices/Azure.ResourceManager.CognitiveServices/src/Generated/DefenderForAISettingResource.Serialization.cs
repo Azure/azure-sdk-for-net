@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     public partial class DefenderForAISettingResource : IJsonModel<DefenderForAISettingData>
     {
+        private static DefenderForAISettingData s_dataDeserializationInstance;
+        private static DefenderForAISettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DefenderForAISettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DefenderForAISettingData>)Data).Write(writer, options);
 
-        DefenderForAISettingData IJsonModel<DefenderForAISettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DefenderForAISettingData>)Data).Create(ref reader, options);
+        DefenderForAISettingData IJsonModel<DefenderForAISettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DefenderForAISettingData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DefenderForAISettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DefenderForAISettingData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
         DefenderForAISettingData IPersistableModel<DefenderForAISettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DefenderForAISettingData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        string IPersistableModel<DefenderForAISettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DefenderForAISettingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DefenderForAISettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DefenderForAISettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

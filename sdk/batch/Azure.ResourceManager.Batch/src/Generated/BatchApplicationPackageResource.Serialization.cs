@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Batch
 {
     public partial class BatchApplicationPackageResource : IJsonModel<BatchApplicationPackageData>
     {
+        private static BatchApplicationPackageData s_dataDeserializationInstance;
+        private static BatchApplicationPackageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BatchApplicationPackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BatchApplicationPackageData>)Data).Write(writer, options);
 
-        BatchApplicationPackageData IJsonModel<BatchApplicationPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BatchApplicationPackageData>)Data).Create(ref reader, options);
+        BatchApplicationPackageData IJsonModel<BatchApplicationPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BatchApplicationPackageData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<BatchApplicationPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BatchApplicationPackageData>(Data, options, AzureResourceManagerBatchContext.Default);
 
         BatchApplicationPackageData IPersistableModel<BatchApplicationPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BatchApplicationPackageData>(data, options, AzureResourceManagerBatchContext.Default);
 
-        string IPersistableModel<BatchApplicationPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BatchApplicationPackageData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BatchApplicationPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BatchApplicationPackageData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

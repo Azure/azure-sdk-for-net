@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PowerBIDedicated
 {
     public partial class AutoScaleVCoreResource : IJsonModel<AutoScaleVCoreData>
     {
+        private static AutoScaleVCoreData s_dataDeserializationInstance;
+        private static AutoScaleVCoreData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AutoScaleVCoreData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutoScaleVCoreData>)Data).Write(writer, options);
 
-        AutoScaleVCoreData IJsonModel<AutoScaleVCoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutoScaleVCoreData>)Data).Create(ref reader, options);
+        AutoScaleVCoreData IJsonModel<AutoScaleVCoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutoScaleVCoreData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AutoScaleVCoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutoScaleVCoreData>(Data, options, AzureResourceManagerPowerBIDedicatedContext.Default);
 
         AutoScaleVCoreData IPersistableModel<AutoScaleVCoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoScaleVCoreData>(data, options, AzureResourceManagerPowerBIDedicatedContext.Default);
 
-        string IPersistableModel<AutoScaleVCoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutoScaleVCoreData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AutoScaleVCoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutoScaleVCoreData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> AFDOrigin group properties needed for origin group creation or update. </summary>
+    /// <summary>
+    /// AFDOrigin group properties needed for origin group creation or update.
+    /// Serialized Name: AFDOriginGroupUpdateParameters
+    /// </summary>
     public partial class FrontDoorOriginGroupPatch
     {
         /// <summary>
@@ -51,31 +54,71 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorOriginGroupPatch"/>. </summary>
-        /// <param name="profileName"> The name of the profile which holds the origin group. </param>
-        /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
-        /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
-        /// <param name="trafficRestorationTimeInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
-        /// <param name="sessionAffinityState"> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </param>
+        /// <param name="profileName">
+        /// The name of the profile which holds the origin group.
+        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.profileName
+        /// </param>
+        /// <param name="loadBalancingSettings">
+        /// Load balancing settings for a backend pool
+        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.loadBalancingSettings
+        /// </param>
+        /// <param name="healthProbeSettings">
+        /// Health probe settings to the origin that is used to determine the health of the origin.
+        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.healthProbeSettings
+        /// </param>
+        /// <param name="trafficRestorationTimeInMinutes">
+        /// Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
+        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes
+        /// </param>
+        /// <param name="sessionAffinityState">
+        /// Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'
+        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.sessionAffinityState
+        /// </param>
+        /// <param name="authentication">
+        /// Authentication settings for origin in origin group.
+        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.authentication
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorOriginGroupPatch(string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FrontDoorOriginGroupPatch(string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState, OriginAuthenticationProperties authentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProfileName = profileName;
             LoadBalancingSettings = loadBalancingSettings;
             HealthProbeSettings = healthProbeSettings;
             TrafficRestorationTimeInMinutes = trafficRestorationTimeInMinutes;
             SessionAffinityState = sessionAffinityState;
+            Authentication = authentication;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the profile which holds the origin group. </summary>
+        /// <summary>
+        /// The name of the profile which holds the origin group.
+        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.profileName
+        /// </summary>
         public string ProfileName { get; }
-        /// <summary> Load balancing settings for a backend pool. </summary>
+        /// <summary>
+        /// Load balancing settings for a backend pool
+        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.loadBalancingSettings
+        /// </summary>
         public LoadBalancingSettings LoadBalancingSettings { get; set; }
-        /// <summary> Health probe settings to the origin that is used to determine the health of the origin. </summary>
+        /// <summary>
+        /// Health probe settings to the origin that is used to determine the health of the origin.
+        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.healthProbeSettings
+        /// </summary>
         public HealthProbeSettings HealthProbeSettings { get; set; }
-        /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
+        /// <summary>
+        /// Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
+        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes
+        /// </summary>
         public int? TrafficRestorationTimeInMinutes { get; set; }
-        /// <summary> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </summary>
+        /// <summary>
+        /// Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'
+        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.sessionAffinityState
+        /// </summary>
         public EnabledState? SessionAffinityState { get; set; }
+        /// <summary>
+        /// Authentication settings for origin in origin group.
+        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.authentication
+        /// </summary>
+        public OriginAuthenticationProperties Authentication { get; set; }
     }
 }

@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// </summary>
     public partial class DeviceProvisioningServicesPrivateLinkResourceCollection : ArmCollection, IEnumerable<DeviceProvisioningServicesPrivateLinkResource>, IAsyncEnumerable<DeviceProvisioningServicesPrivateLinkResource>
     {
-        private readonly ClientDiagnostics _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics;
-        private readonly IotDpsResourceRestOperations _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient;
+        private readonly ClientDiagnostics _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics;
+        private readonly GroupIdInformationsRestOperations _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesPrivateLinkResourceCollection"/> class for mocking. </summary>
         protected DeviceProvisioningServicesPrivateLinkResourceCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DeviceProvisioningServicesPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServicesPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DeviceProvisioningServicesPrivateLinkResource.ResourceType, out string deviceProvisioningServicesPrivateLinkResourceIotDpsResourceApiVersion);
-            _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient = new IotDpsResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServicesPrivateLinkResourceIotDpsResourceApiVersion);
+            _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServicesPrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DeviceProvisioningServicesPrivateLinkResource.ResourceType, out string deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsApiVersion);
+            _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient = new GroupIdInformationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateLinkResources</description>
+        /// <description>GroupIdInformation_GetPrivateLinkResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.Get");
+            using var scope = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken).ConfigureAwait(false);
+                var response = await _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateLinkResources</description>
+        /// <description>GroupIdInformation_GetPrivateLinkResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.Get");
+            using var scope = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken);
+                var response = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_ListPrivateLinkResources</description>
+        /// <description>GroupIdInformation_ListPrivateLinkResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -166,8 +166,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An async collection of <see cref="DeviceProvisioningServicesPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServicesPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.CreateListPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DeviceProvisioningServicesPrivateLinkResource(Client, DeviceProvisioningServicesPrivateLinkResourceData.DeserializeDeviceProvisioningServicesPrivateLinkResourceData(e)), _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.CreateListPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DeviceProvisioningServicesPrivateLinkResource(Client, DeviceProvisioningServicesPrivateLinkResourceData.DeserializeDeviceProvisioningServicesPrivateLinkResourceData(e)), _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics, Pipeline, "DeviceProvisioningServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -179,11 +179,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_ListPrivateLinkResources</description>
+        /// <description>GroupIdInformation_ListPrivateLinkResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -195,8 +195,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> A collection of <see cref="DeviceProvisioningServicesPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServicesPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.CreateListPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new DeviceProvisioningServicesPrivateLinkResource(Client, DeviceProvisioningServicesPrivateLinkResourceData.DeserializeDeviceProvisioningServicesPrivateLinkResourceData(e)), _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.CreateListPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new DeviceProvisioningServicesPrivateLinkResource(Client, DeviceProvisioningServicesPrivateLinkResourceData.DeserializeDeviceProvisioningServicesPrivateLinkResourceData(e)), _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics, Pipeline, "DeviceProvisioningServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateLinkResources</description>
+        /// <description>GroupIdInformation_GetPrivateLinkResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.Exists");
+            using var scope = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -251,11 +251,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateLinkResources</description>
+        /// <description>GroupIdInformation_GetPrivateLinkResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -271,11 +271,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.Exists");
+            using var scope = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
+                var response = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -294,11 +294,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateLinkResources</description>
+        /// <description>GroupIdInformation_GetPrivateLinkResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -314,11 +314,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.GetIfExists");
+            using var scope = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<DeviceProvisioningServicesPrivateLinkResource>(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -339,11 +339,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateLinkResources</description>
+        /// <description>GroupIdInformation_GetPrivateLinkResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -359,11 +359,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.GetIfExists");
+            using var scope = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
+                var response = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<DeviceProvisioningServicesPrivateLinkResource>(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());

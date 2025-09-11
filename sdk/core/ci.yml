@@ -66,10 +66,15 @@ extends:
       safeName: AzureCoreAmqp
     - name: System.ClientModel
       safeName: SystemClientModel
+    - name: Microsoft.ClientModel.TestFramework
+      safeName: MicrosoftClientModelTestFramework
+      skipReleaseStage: true
     CheckAOTCompat: true
     AOTTestInputs:
     - ArtifactName: Azure.Core
       ExpectedWarningsFilepath: /Azure.Core/tests/compatibility/ExpectedAotWarnings.txt
+    - ArtifactName: Azure.Core.Expressions.DataFactory
+      ExpectedWarningsFilepath: /Azure.Core.Expressions.DataFactory/tests/compatibility/ExpectedAotWarnings.txt
     - ArtifactName: System.ClientModel
       ExpectedWarningsFilepath: None
 

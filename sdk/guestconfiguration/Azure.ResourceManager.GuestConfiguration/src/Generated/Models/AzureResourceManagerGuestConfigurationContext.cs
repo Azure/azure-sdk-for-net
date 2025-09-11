@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.GuestConfiguration.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
@@ -13,6 +15,29 @@ namespace Azure.ResourceManager.GuestConfiguration
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AssignmentReportResourceComplianceReason))]
+    [ModelReaderWriterBuildable(typeof(AssignmentReportResourceInfo))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationAssignmentData))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationAssignmentInfo))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationAssignmentList))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationAssignmentProperties))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationAssignmentReport))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationAssignmentReportDetails))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationAssignmentReportInfo))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationAssignmentReportList))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationAssignmentReportProperties))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationHcrpAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationInfo))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationNavigation))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationParameter))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationResourceData))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationVmAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationVmInfo))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationVmssAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationVmssVmInfo))]
+    [ModelReaderWriterBuildable(typeof(GuestConfigurationVMwarevSphereAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(LcmConfigurationSetting))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerGuestConfigurationContext : ModelReaderWriterContext
     {
     }

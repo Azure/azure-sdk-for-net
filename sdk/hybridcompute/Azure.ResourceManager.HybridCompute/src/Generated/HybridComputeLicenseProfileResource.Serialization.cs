@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridCompute
 {
     public partial class HybridComputeLicenseProfileResource : IJsonModel<HybridComputeLicenseProfileData>
     {
+        private static HybridComputeLicenseProfileData s_dataDeserializationInstance;
+        private static HybridComputeLicenseProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HybridComputeLicenseProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputeLicenseProfileData>)Data).Write(writer, options);
 
-        HybridComputeLicenseProfileData IJsonModel<HybridComputeLicenseProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputeLicenseProfileData>)Data).Create(ref reader, options);
+        HybridComputeLicenseProfileData IJsonModel<HybridComputeLicenseProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputeLicenseProfileData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<HybridComputeLicenseProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridComputeLicenseProfileData>(Data, options, AzureResourceManagerHybridComputeContext.Default);
 
         HybridComputeLicenseProfileData IPersistableModel<HybridComputeLicenseProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridComputeLicenseProfileData>(data, options, AzureResourceManagerHybridComputeContext.Default);
 
-        string IPersistableModel<HybridComputeLicenseProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridComputeLicenseProfileData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HybridComputeLicenseProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridComputeLicenseProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

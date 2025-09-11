@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     public partial class ServiceFabricManagedServiceResource : IJsonModel<ServiceFabricManagedServiceData>
     {
+        private static ServiceFabricManagedServiceData s_dataDeserializationInstance;
+        private static ServiceFabricManagedServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ServiceFabricManagedServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricManagedServiceData>)Data).Write(writer, options);
 
-        ServiceFabricManagedServiceData IJsonModel<ServiceFabricManagedServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricManagedServiceData>)Data).Create(ref reader, options);
+        ServiceFabricManagedServiceData IJsonModel<ServiceFabricManagedServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricManagedServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ServiceFabricManagedServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceFabricManagedServiceData>(Data, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
 
         ServiceFabricManagedServiceData IPersistableModel<ServiceFabricManagedServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceFabricManagedServiceData>(data, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
 
-        string IPersistableModel<ServiceFabricManagedServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceFabricManagedServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ServiceFabricManagedServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceFabricManagedServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

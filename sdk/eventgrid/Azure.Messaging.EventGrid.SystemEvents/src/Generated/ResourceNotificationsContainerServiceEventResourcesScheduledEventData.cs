@@ -10,32 +10,23 @@ using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an event grid event for a Microsoft.ResourceNotifications.ContainerServiceEventResources.ScheduledEventEmitted preview event. </summary>
+    /// <summary> Schema of the Data property of an event grid event for a Microsoft.ResourceNotifications.ContainerServiceEventResources.ScheduledEventEmitted preview event.Schema of the Data property of an event grid event for a Microsoft.ResourceNotifications.ContainerServiceEventResources.ScheduledEventEmitted preview event. </summary>
     public partial class ResourceNotificationsContainerServiceEventResourcesScheduledEventData : ResourceNotificationsResourceUpdatedEventData
     {
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsContainerServiceEventResourcesScheduledEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceDetails"/>, <paramref name="operationalDetails"/> or <paramref name="apiVersion"/> is null. </exception>
         internal ResourceNotificationsContainerServiceEventResourcesScheduledEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion) : base(resourceDetails, operationalDetails, apiVersion)
         {
-            Argument.AssertNotNull(resourceDetails, nameof(resourceDetails));
-            Argument.AssertNotNull(operationalDetails, nameof(operationalDetails));
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsContainerServiceEventResourcesScheduledEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceNotificationsContainerServiceEventResourcesScheduledEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceDetails, operationalDetails, apiVersion, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsContainerServiceEventResourcesScheduledEventData"/> for deserialization. </summary>
-        internal ResourceNotificationsContainerServiceEventResourcesScheduledEventData()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceNotificationsContainerServiceEventResourcesScheduledEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(resourceDetails, operationalDetails, apiVersion, additionalBinaryDataProperties)
         {
         }
     }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataMigration
 {
     public partial class SqlMigrationServiceResource : IJsonModel<SqlMigrationServiceData>
     {
+        private static SqlMigrationServiceData s_dataDeserializationInstance;
+        private static SqlMigrationServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlMigrationServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlMigrationServiceData>)Data).Write(writer, options);
 
-        SqlMigrationServiceData IJsonModel<SqlMigrationServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlMigrationServiceData>)Data).Create(ref reader, options);
+        SqlMigrationServiceData IJsonModel<SqlMigrationServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlMigrationServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SqlMigrationServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlMigrationServiceData>(Data, options, AzureResourceManagerDataMigrationContext.Default);
 
         SqlMigrationServiceData IPersistableModel<SqlMigrationServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlMigrationServiceData>(data, options, AzureResourceManagerDataMigrationContext.Default);
 
-        string IPersistableModel<SqlMigrationServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlMigrationServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlMigrationServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlMigrationServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

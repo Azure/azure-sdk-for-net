@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Orbital
 {
     public partial class OrbitalSpacecraftResource : IJsonModel<OrbitalSpacecraftData>
     {
+        private static OrbitalSpacecraftData s_dataDeserializationInstance;
+        private static OrbitalSpacecraftData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<OrbitalSpacecraftData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OrbitalSpacecraftData>)Data).Write(writer, options);
 
-        OrbitalSpacecraftData IJsonModel<OrbitalSpacecraftData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OrbitalSpacecraftData>)Data).Create(ref reader, options);
+        OrbitalSpacecraftData IJsonModel<OrbitalSpacecraftData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OrbitalSpacecraftData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<OrbitalSpacecraftData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OrbitalSpacecraftData>(Data, options, AzureResourceManagerOrbitalContext.Default);
 
         OrbitalSpacecraftData IPersistableModel<OrbitalSpacecraftData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OrbitalSpacecraftData>(data, options, AzureResourceManagerOrbitalContext.Default);
 
-        string IPersistableModel<OrbitalSpacecraftData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OrbitalSpacecraftData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<OrbitalSpacecraftData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OrbitalSpacecraftData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

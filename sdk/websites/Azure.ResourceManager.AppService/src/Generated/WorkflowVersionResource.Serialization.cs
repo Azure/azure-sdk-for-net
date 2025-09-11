@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class WorkflowVersionResource : IJsonModel<WorkflowVersionData>
     {
+        private static WorkflowVersionData s_dataDeserializationInstance;
+        private static WorkflowVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkflowVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowVersionData>)Data).Write(writer, options);
 
-        WorkflowVersionData IJsonModel<WorkflowVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowVersionData>)Data).Create(ref reader, options);
+        WorkflowVersionData IJsonModel<WorkflowVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<WorkflowVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowVersionData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         WorkflowVersionData IPersistableModel<WorkflowVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowVersionData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<WorkflowVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkflowVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

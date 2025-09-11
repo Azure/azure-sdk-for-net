@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkVerifierWorkspaceResource : IJsonModel<NetworkVerifierWorkspaceData>
     {
+        private static NetworkVerifierWorkspaceData s_dataDeserializationInstance;
+        private static NetworkVerifierWorkspaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkVerifierWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkVerifierWorkspaceData>)Data).Write(writer, options);
 
-        NetworkVerifierWorkspaceData IJsonModel<NetworkVerifierWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkVerifierWorkspaceData>)Data).Create(ref reader, options);
+        NetworkVerifierWorkspaceData IJsonModel<NetworkVerifierWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkVerifierWorkspaceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkVerifierWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkVerifierWorkspaceData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         NetworkVerifierWorkspaceData IPersistableModel<NetworkVerifierWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkVerifierWorkspaceData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkVerifierWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkVerifierWorkspaceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkVerifierWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkVerifierWorkspaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

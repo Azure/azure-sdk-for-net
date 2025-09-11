@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppConfiguration
 {
     public partial class AppConfigurationPrivateLinkResource : IJsonModel<AppConfigurationPrivateLinkResourceData>
     {
+        private static AppConfigurationPrivateLinkResourceData s_dataDeserializationInstance;
+        private static AppConfigurationPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppConfigurationPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationPrivateLinkResourceData>)Data).Write(writer, options);
 
-        AppConfigurationPrivateLinkResourceData IJsonModel<AppConfigurationPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationPrivateLinkResourceData>)Data).Create(ref reader, options);
+        AppConfigurationPrivateLinkResourceData IJsonModel<AppConfigurationPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AppConfigurationPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppConfigurationPrivateLinkResourceData>(Data, options, AzureResourceManagerAppConfigurationContext.Default);
 
         AppConfigurationPrivateLinkResourceData IPersistableModel<AppConfigurationPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppConfigurationPrivateLinkResourceData>(data, options, AzureResourceManagerAppConfigurationContext.Default);
 
-        string IPersistableModel<AppConfigurationPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppConfigurationPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppConfigurationPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppConfigurationPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

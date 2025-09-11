@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ApplicationGatewayResource : IJsonModel<ApplicationGatewayData>
     {
+        private static ApplicationGatewayData s_dataDeserializationInstance;
+        private static ApplicationGatewayData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApplicationGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationGatewayData>)Data).Write(writer, options);
 
-        ApplicationGatewayData IJsonModel<ApplicationGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationGatewayData>)Data).Create(ref reader, options);
+        ApplicationGatewayData IJsonModel<ApplicationGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationGatewayData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ApplicationGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApplicationGatewayData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         ApplicationGatewayData IPersistableModel<ApplicationGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationGatewayData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<ApplicationGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationGatewayData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApplicationGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationGatewayData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

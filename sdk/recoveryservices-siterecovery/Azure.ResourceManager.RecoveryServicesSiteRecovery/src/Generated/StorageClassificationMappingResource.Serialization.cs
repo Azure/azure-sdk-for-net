@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     public partial class StorageClassificationMappingResource : IJsonModel<StorageClassificationMappingData>
     {
+        private static StorageClassificationMappingData s_dataDeserializationInstance;
+        private static StorageClassificationMappingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StorageClassificationMappingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageClassificationMappingData>)Data).Write(writer, options);
 
-        StorageClassificationMappingData IJsonModel<StorageClassificationMappingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageClassificationMappingData>)Data).Create(ref reader, options);
+        StorageClassificationMappingData IJsonModel<StorageClassificationMappingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageClassificationMappingData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<StorageClassificationMappingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageClassificationMappingData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
         StorageClassificationMappingData IPersistableModel<StorageClassificationMappingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageClassificationMappingData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<StorageClassificationMappingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageClassificationMappingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StorageClassificationMappingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageClassificationMappingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

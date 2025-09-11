@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </summary>
+    /// <summary>
+    /// Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified.
+    /// Serialized Name: ManagedRuleEnabledState
+    /// </summary>
     public readonly partial struct ManagedRuleSetupState : IEquatable<ManagedRuleSetupState>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: ManagedRuleEnabledState.Disabled
+        /// </summary>
         public static ManagedRuleSetupState Disabled { get; } = new ManagedRuleSetupState(DisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: ManagedRuleEnabledState.Enabled
+        /// </summary>
         public static ManagedRuleSetupState Enabled { get; } = new ManagedRuleSetupState(EnabledValue);
         /// <summary> Determines if two <see cref="ManagedRuleSetupState"/> values are the same. </summary>
         public static bool operator ==(ManagedRuleSetupState left, ManagedRuleSetupState right) => left.Equals(right);

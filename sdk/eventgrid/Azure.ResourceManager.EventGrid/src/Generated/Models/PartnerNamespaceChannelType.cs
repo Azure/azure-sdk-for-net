@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         private const string PartnerTopicValue = "PartnerTopic";
+        private const string PartnerDestinationValue = "PartnerDestination";
 
         /// <summary> PartnerTopic. </summary>
         public static PartnerNamespaceChannelType PartnerTopic { get; } = new PartnerNamespaceChannelType(PartnerTopicValue);
+        /// <summary> PartnerDestination. </summary>
+        public static PartnerNamespaceChannelType PartnerDestination { get; } = new PartnerNamespaceChannelType(PartnerDestinationValue);
         /// <summary> Determines if two <see cref="PartnerNamespaceChannelType"/> values are the same. </summary>
         public static bool operator ==(PartnerNamespaceChannelType left, PartnerNamespaceChannelType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PartnerNamespaceChannelType"/> values are not the same. </summary>

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.InformaticaDataManagement
 {
     public partial class InformaticaOrganizationResource : IJsonModel<InformaticaOrganizationData>
     {
+        private static InformaticaOrganizationData s_dataDeserializationInstance;
+        private static InformaticaOrganizationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<InformaticaOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaOrganizationData>)Data).Write(writer, options);
 
-        InformaticaOrganizationData IJsonModel<InformaticaOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaOrganizationData>)Data).Create(ref reader, options);
+        InformaticaOrganizationData IJsonModel<InformaticaOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaOrganizationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<InformaticaOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<InformaticaOrganizationData>(Data, options, AzureResourceManagerInformaticaDataManagementContext.Default);
 
         InformaticaOrganizationData IPersistableModel<InformaticaOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InformaticaOrganizationData>(data, options, AzureResourceManagerInformaticaDataManagementContext.Default);
 
-        string IPersistableModel<InformaticaOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InformaticaOrganizationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<InformaticaOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InformaticaOrganizationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

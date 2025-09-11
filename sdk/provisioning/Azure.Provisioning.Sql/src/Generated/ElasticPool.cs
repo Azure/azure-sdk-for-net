@@ -40,6 +40,17 @@ public partial class ElasticPool : ProvisionableResource
     private BicepValue<AzureLocation>? _location;
 
     /// <summary>
+    /// Time in minutes after which elastic pool is automatically paused. A
+    /// value of -1 means that automatic pause is disabled.
+    /// </summary>
+    public BicepValue<int> AutoPauseDelay 
+    {
+        get { Initialize(); return _autoPauseDelay!; }
+        set { Initialize(); _autoPauseDelay!.Assign(value); }
+    }
+    private BicepValue<int>? _autoPauseDelay;
+
+    /// <summary>
     /// Specifies the availability zone the pool&apos;s primary replica is
     /// pinned to.
     /// </summary>
@@ -51,9 +62,9 @@ public partial class ElasticPool : ProvisionableResource
     private BicepValue<SqlAvailabilityZoneType>? _availabilityZone;
 
     /// <summary>
-    /// The number of secondary replicas associated with the elastic pool that
-    /// are used to provide high availability. Applicable only to Hyperscale
-    /// elastic pools.
+    /// The number of secondary replicas associated with the Business Critical,
+    /// Premium, or Hyperscale edition elastic pool that are used to provide
+    /// high availability. Applicable only to Hyperscale elastic pools.
     /// </summary>
     public BicepValue<int> HighAvailabilityReplicaCount 
     {
@@ -230,7 +241,7 @@ public partial class ElasticPool : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ElasticPool.</param>
     public ElasticPool(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/servers/elasticPools", resourceVersion ?? "2021-11-01")
+        : base(bicepIdentifier, "Microsoft.Sql/servers/elasticPools", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -241,6 +252,7 @@ public partial class ElasticPool : ProvisionableResource
     {
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _autoPauseDelay = DefineProperty<int>("AutoPauseDelay", ["properties", "autoPauseDelay"]);
         _availabilityZone = DefineProperty<SqlAvailabilityZoneType>("AvailabilityZone", ["properties", "availabilityZone"]);
         _highAvailabilityReplicaCount = DefineProperty<int>("HighAvailabilityReplicaCount", ["properties", "highAvailabilityReplicaCount"]);
         _isZoneRedundant = DefineProperty<bool>("IsZoneRedundant", ["properties", "zoneRedundant"]);
@@ -265,6 +277,11 @@ public partial class ElasticPool : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
         /// <summary>
         /// 2021-11-01.
         /// </summary>

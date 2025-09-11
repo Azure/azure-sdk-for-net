@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class NetAppVolumeResource : IJsonModel<NetAppVolumeData>
     {
+        private static NetAppVolumeData s_dataDeserializationInstance;
+        private static NetAppVolumeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetAppVolumeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeData>)Data).Write(writer, options);
 
-        NetAppVolumeData IJsonModel<NetAppVolumeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeData>)Data).Create(ref reader, options);
+        NetAppVolumeData IJsonModel<NetAppVolumeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetAppVolumeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppVolumeData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
         NetAppVolumeData IPersistableModel<NetAppVolumeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppVolumeData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<NetAppVolumeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppVolumeData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetAppVolumeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppVolumeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

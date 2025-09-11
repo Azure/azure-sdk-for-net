@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class MobileNetworkSimPolicyResource : IJsonModel<MobileNetworkSimPolicyData>
     {
+        private static MobileNetworkSimPolicyData s_dataDeserializationInstance;
+        private static MobileNetworkSimPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MobileNetworkSimPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MobileNetworkSimPolicyData>)Data).Write(writer, options);
 
-        MobileNetworkSimPolicyData IJsonModel<MobileNetworkSimPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MobileNetworkSimPolicyData>)Data).Create(ref reader, options);
+        MobileNetworkSimPolicyData IJsonModel<MobileNetworkSimPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MobileNetworkSimPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MobileNetworkSimPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MobileNetworkSimPolicyData>(Data, options, AzureResourceManagerMobileNetworkContext.Default);
 
         MobileNetworkSimPolicyData IPersistableModel<MobileNetworkSimPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MobileNetworkSimPolicyData>(data, options, AzureResourceManagerMobileNetworkContext.Default);
 
-        string IPersistableModel<MobileNetworkSimPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MobileNetworkSimPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MobileNetworkSimPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MobileNetworkSimPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VirtualNetworkGatewayNatRuleResource : IJsonModel<VirtualNetworkGatewayNatRuleData>
     {
+        private static VirtualNetworkGatewayNatRuleData s_dataDeserializationInstance;
+        private static VirtualNetworkGatewayNatRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VirtualNetworkGatewayNatRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkGatewayNatRuleData>)Data).Write(writer, options);
 
-        VirtualNetworkGatewayNatRuleData IJsonModel<VirtualNetworkGatewayNatRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkGatewayNatRuleData>)Data).Create(ref reader, options);
+        VirtualNetworkGatewayNatRuleData IJsonModel<VirtualNetworkGatewayNatRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkGatewayNatRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<VirtualNetworkGatewayNatRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualNetworkGatewayNatRuleData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         VirtualNetworkGatewayNatRuleData IPersistableModel<VirtualNetworkGatewayNatRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkGatewayNatRuleData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<VirtualNetworkGatewayNatRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkGatewayNatRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VirtualNetworkGatewayNatRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkGatewayNatRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

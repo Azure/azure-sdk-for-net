@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </summary>
+    /// <summary>
+    /// Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step.
+    /// Serialized Name: CustomHttpsProvisioningSubstate
+    /// </summary>
     public readonly partial struct CustomHttpsAvailabilityState : IEquatable<CustomHttpsAvailabilityState>
     {
         private readonly string _value;
@@ -33,25 +36,55 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string DeletingCertificateValue = "DeletingCertificate";
         private const string CertificateDeletedValue = "CertificateDeleted";
 
-        /// <summary> SubmittingDomainControlValidationRequest. </summary>
+        /// <summary>
+        /// SubmittingDomainControlValidationRequest
+        /// Serialized Name: CustomHttpsProvisioningSubstate.SubmittingDomainControlValidationRequest
+        /// </summary>
         public static CustomHttpsAvailabilityState SubmittingDomainControlValidationRequest { get; } = new CustomHttpsAvailabilityState(SubmittingDomainControlValidationRequestValue);
-        /// <summary> PendingDomainControlValidationREquestApproval. </summary>
+        /// <summary>
+        /// PendingDomainControlValidationREquestApproval
+        /// Serialized Name: CustomHttpsProvisioningSubstate.PendingDomainControlValidationREquestApproval
+        /// </summary>
         public static CustomHttpsAvailabilityState PendingDomainControlValidationREquestApproval { get; } = new CustomHttpsAvailabilityState(PendingDomainControlValidationREquestApprovalValue);
-        /// <summary> DomainControlValidationRequestApproved. </summary>
+        /// <summary>
+        /// DomainControlValidationRequestApproved
+        /// Serialized Name: CustomHttpsProvisioningSubstate.DomainControlValidationRequestApproved
+        /// </summary>
         public static CustomHttpsAvailabilityState DomainControlValidationRequestApproved { get; } = new CustomHttpsAvailabilityState(DomainControlValidationRequestApprovedValue);
-        /// <summary> DomainControlValidationRequestRejected. </summary>
+        /// <summary>
+        /// DomainControlValidationRequestRejected
+        /// Serialized Name: CustomHttpsProvisioningSubstate.DomainControlValidationRequestRejected
+        /// </summary>
         public static CustomHttpsAvailabilityState DomainControlValidationRequestRejected { get; } = new CustomHttpsAvailabilityState(DomainControlValidationRequestRejectedValue);
-        /// <summary> DomainControlValidationRequestTimedOut. </summary>
+        /// <summary>
+        /// DomainControlValidationRequestTimedOut
+        /// Serialized Name: CustomHttpsProvisioningSubstate.DomainControlValidationRequestTimedOut
+        /// </summary>
         public static CustomHttpsAvailabilityState DomainControlValidationRequestTimedOut { get; } = new CustomHttpsAvailabilityState(DomainControlValidationRequestTimedOutValue);
-        /// <summary> IssuingCertificate. </summary>
+        /// <summary>
+        /// IssuingCertificate
+        /// Serialized Name: CustomHttpsProvisioningSubstate.IssuingCertificate
+        /// </summary>
         public static CustomHttpsAvailabilityState IssuingCertificate { get; } = new CustomHttpsAvailabilityState(IssuingCertificateValue);
-        /// <summary> DeployingCertificate. </summary>
+        /// <summary>
+        /// DeployingCertificate
+        /// Serialized Name: CustomHttpsProvisioningSubstate.DeployingCertificate
+        /// </summary>
         public static CustomHttpsAvailabilityState DeployingCertificate { get; } = new CustomHttpsAvailabilityState(DeployingCertificateValue);
-        /// <summary> CertificateDeployed. </summary>
+        /// <summary>
+        /// CertificateDeployed
+        /// Serialized Name: CustomHttpsProvisioningSubstate.CertificateDeployed
+        /// </summary>
         public static CustomHttpsAvailabilityState CertificateDeployed { get; } = new CustomHttpsAvailabilityState(CertificateDeployedValue);
-        /// <summary> DeletingCertificate. </summary>
+        /// <summary>
+        /// DeletingCertificate
+        /// Serialized Name: CustomHttpsProvisioningSubstate.DeletingCertificate
+        /// </summary>
         public static CustomHttpsAvailabilityState DeletingCertificate { get; } = new CustomHttpsAvailabilityState(DeletingCertificateValue);
-        /// <summary> CertificateDeleted. </summary>
+        /// <summary>
+        /// CertificateDeleted
+        /// Serialized Name: CustomHttpsProvisioningSubstate.CertificateDeleted
+        /// </summary>
         public static CustomHttpsAvailabilityState CertificateDeleted { get; } = new CustomHttpsAvailabilityState(CertificateDeletedValue);
         /// <summary> Determines if two <see cref="CustomHttpsAvailabilityState"/> values are the same. </summary>
         public static bool operator ==(CustomHttpsAvailabilityState left, CustomHttpsAvailabilityState right) => left.Equals(right);

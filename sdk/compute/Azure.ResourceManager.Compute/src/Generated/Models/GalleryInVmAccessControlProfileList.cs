@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfileList"/>. </summary>
-        /// <param name="value"> A list of Gallery InVMAccessControlProfiles. </param>
+        /// <param name="value"> The GalleryInVMAccessControlProfile items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GalleryInVmAccessControlProfileList(IEnumerable<GalleryInVmAccessControlProfileData> value)
         {
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfileList"/>. </summary>
-        /// <param name="value"> A list of Gallery InVMAccessControlProfiles. </param>
-        /// <param name="nextLink"> The uri to fetch the next page of inVMAccessControlProfiles in the gallery. Call ListNext() with this to fetch the next page of gallery inVMAccessControlProfiles. </param>
+        /// <param name="value"> The GalleryInVMAccessControlProfile items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryInVmAccessControlProfileList(IReadOnlyList<GalleryInVmAccessControlProfileData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GalleryInVmAccessControlProfileList(IReadOnlyList<GalleryInVmAccessControlProfileData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        /// <summary> A list of Gallery InVMAccessControlProfiles. </summary>
+        /// <summary> The GalleryInVMAccessControlProfile items on this page. </summary>
         public IReadOnlyList<GalleryInVmAccessControlProfileData> Value { get; }
-        /// <summary> The uri to fetch the next page of inVMAccessControlProfiles in the gallery. Call ListNext() with this to fetch the next page of gallery inVMAccessControlProfiles. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkSecurityPerimeterAssociationResource : IJsonModel<NetworkSecurityPerimeterAssociationData>
     {
+        private static NetworkSecurityPerimeterAssociationData s_dataDeserializationInstance;
+        private static NetworkSecurityPerimeterAssociationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkSecurityPerimeterAssociationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityPerimeterAssociationData>)Data).Write(writer, options);
 
-        NetworkSecurityPerimeterAssociationData IJsonModel<NetworkSecurityPerimeterAssociationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityPerimeterAssociationData>)Data).Create(ref reader, options);
+        NetworkSecurityPerimeterAssociationData IJsonModel<NetworkSecurityPerimeterAssociationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityPerimeterAssociationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterAssociationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkSecurityPerimeterAssociationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         NetworkSecurityPerimeterAssociationData IPersistableModel<NetworkSecurityPerimeterAssociationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkSecurityPerimeterAssociationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkSecurityPerimeterAssociationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkSecurityPerimeterAssociationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkSecurityPerimeterAssociationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkSecurityPerimeterAssociationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

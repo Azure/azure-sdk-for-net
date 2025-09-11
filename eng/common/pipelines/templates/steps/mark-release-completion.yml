@@ -1,0 +1,17 @@
+parameters:
+  ConfigFileDir: ''
+  PackageArtifactName: ''
+  SourceRootPath: $(Build.SourcesDirectory)
+
+steps:
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: opensource-api-connection
+      scriptType: pscore
+      scriptLocation: scriptPath
+      scriptPath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Mark-ReleasePlanCompletion.ps1
+      arguments: -PackageInfoFilePath '${{ parameters.ConfigFileDir }}/${{ parameters.PackageArtifactName }}.json'
+      workingDirectory: $(Pipeline.Workspace)
+    displayName: Mark package as released
+    continueOnError: true
+    condition: and(succeeded(), ne(variables['Skip.MarkReleaseCompletion'], 'true'))

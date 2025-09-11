@@ -781,6 +781,45 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.That(completion, Is.Not.Null);
     }
 
+    [RecordedTest]
+    public async Task DefaultHeadersAndQueryParametersWork()
+    {
+        IConfiguration testConfig = TestConfig.GetConfig("chat")!;
+        Assert.That(testConfig, Is.Not.Null);
+
+        PipelineRequestHeaders? observedHeaders = null;
+        Uri? observedRequestUri = null;
+
+        TestPipelinePolicy captureRequestDetailsPolicy = new(
+            requestAction: (request) =>
+            {
+                observedHeaders = request.Headers;
+                observedRequestUri = request.Uri;
+            },
+            responseAction: null);
+
+        TestClientOptions options = new()
+        {
+            DefaultHeaders =
+            {
+                ["test_header_key"] = "test_header_value",
+            },
+            DefaultQueryParameters =
+            {
+                ["test_query_parameter_key"] = "test_query_parameter_value",
+            },
+            DisableClientWrapping = true,
+        };
+        options.AddPolicy(captureRequestDetailsPolicy, PipelinePosition.PerTry);
+
+        ChatClient client = GetTestClient(testConfig, options);
+
+        _ = await client.CompleteChatAsync("Hello, world!");
+
+        Assert.That(observedHeaders?.TryGetValue("test_header_key", out string? observedHeaderValue) == true && observedHeaderValue == "test_header_value");
+        Assert.That(observedRequestUri?.AbsoluteUri, Does.Contain("test_query_parameter_key=test_query_parameter_value"));
+    }
+
 #if NET
     [RecordedTest]
     public async Task PredictedOutputsWork()

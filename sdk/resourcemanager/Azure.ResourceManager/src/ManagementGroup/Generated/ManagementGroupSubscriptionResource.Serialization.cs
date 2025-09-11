@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagementGroups
 {
     public partial class ManagementGroupSubscriptionResource : IJsonModel<ManagementGroupSubscriptionData>
     {
+        private static ManagementGroupSubscriptionData s_dataDeserializationInstance;
+        private static ManagementGroupSubscriptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ManagementGroupSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagementGroupSubscriptionData>)Data).Write(writer, options);
 
-        ManagementGroupSubscriptionData IJsonModel<ManagementGroupSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagementGroupSubscriptionData>)Data).Create(ref reader, options);
+        ManagementGroupSubscriptionData IJsonModel<ManagementGroupSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagementGroupSubscriptionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagementGroupSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagementGroupSubscriptionData>(Data, options, AzureResourceManagerContext.Default);
+        BinaryData IPersistableModel<ManagementGroupSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options, AzureResourceManagerContext.Default);
 
         ManagementGroupSubscriptionData IPersistableModel<ManagementGroupSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagementGroupSubscriptionData>(data, options, AzureResourceManagerContext.Default);
 
-        string IPersistableModel<ManagementGroupSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagementGroupSubscriptionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ManagementGroupSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagementGroupSubscriptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

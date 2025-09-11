@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ServiceNetworking
 {
     public partial class TrafficControllerAssociationResource : IJsonModel<TrafficControllerAssociationData>
     {
+        private static TrafficControllerAssociationData s_dataDeserializationInstance;
+        private static TrafficControllerAssociationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<TrafficControllerAssociationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TrafficControllerAssociationData>)Data).Write(writer, options);
 
-        TrafficControllerAssociationData IJsonModel<TrafficControllerAssociationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficControllerAssociationData>)Data).Create(ref reader, options);
+        TrafficControllerAssociationData IJsonModel<TrafficControllerAssociationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficControllerAssociationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<TrafficControllerAssociationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrafficControllerAssociationData>(Data, options, AzureResourceManagerServiceNetworkingContext.Default);
 
         TrafficControllerAssociationData IPersistableModel<TrafficControllerAssociationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficControllerAssociationData>(data, options, AzureResourceManagerServiceNetworkingContext.Default);
 
-        string IPersistableModel<TrafficControllerAssociationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficControllerAssociationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<TrafficControllerAssociationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficControllerAssociationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

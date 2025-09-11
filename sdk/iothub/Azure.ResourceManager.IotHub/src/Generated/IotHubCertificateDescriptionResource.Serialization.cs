@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.IotHub
 {
     public partial class IotHubCertificateDescriptionResource : IJsonModel<IotHubCertificateDescriptionData>
     {
+        private static IotHubCertificateDescriptionData s_dataDeserializationInstance;
+        private static IotHubCertificateDescriptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<IotHubCertificateDescriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotHubCertificateDescriptionData>)Data).Write(writer, options);
 
-        IotHubCertificateDescriptionData IJsonModel<IotHubCertificateDescriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotHubCertificateDescriptionData>)Data).Create(ref reader, options);
+        IotHubCertificateDescriptionData IJsonModel<IotHubCertificateDescriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotHubCertificateDescriptionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<IotHubCertificateDescriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotHubCertificateDescriptionData>(Data, options, AzureResourceManagerIotHubContext.Default);
 
         IotHubCertificateDescriptionData IPersistableModel<IotHubCertificateDescriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotHubCertificateDescriptionData>(data, options, AzureResourceManagerIotHubContext.Default);
 
-        string IPersistableModel<IotHubCertificateDescriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotHubCertificateDescriptionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<IotHubCertificateDescriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotHubCertificateDescriptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

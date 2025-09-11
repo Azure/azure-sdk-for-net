@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.StreamAnalytics
 {
     public partial class StreamingJobInputResource : IJsonModel<StreamingJobInputData>
     {
+        private static StreamingJobInputData s_dataDeserializationInstance;
+        private static StreamingJobInputData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StreamingJobInputData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StreamingJobInputData>)Data).Write(writer, options);
 
-        StreamingJobInputData IJsonModel<StreamingJobInputData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StreamingJobInputData>)Data).Create(ref reader, options);
+        StreamingJobInputData IJsonModel<StreamingJobInputData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StreamingJobInputData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<StreamingJobInputData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StreamingJobInputData>(Data, options, AzureResourceManagerStreamAnalyticsContext.Default);
 
         StreamingJobInputData IPersistableModel<StreamingJobInputData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StreamingJobInputData>(data, options, AzureResourceManagerStreamAnalyticsContext.Default);
 
-        string IPersistableModel<StreamingJobInputData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StreamingJobInputData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StreamingJobInputData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StreamingJobInputData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

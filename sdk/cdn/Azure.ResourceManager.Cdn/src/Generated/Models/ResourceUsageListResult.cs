@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Output of check resource usage API. </summary>
+    /// <summary>
+    /// Output of check resource usage API.
+    /// Serialized Name: ResourceUsageListResult
+    /// </summary>
     internal partial class ResourceUsageListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceUsageListResult"/>. </summary>
-        /// <param name="value"> List of resource usages. </param>
-        /// <param name="nextLink"> URL to get the next set of custom domain objects if there are any. </param>
+        /// <param name="value">
+        /// List of resource usages.
+        /// Serialized Name: ResourceUsageListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of custom domain objects if there are any.
+        /// Serialized Name: ResourceUsageListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceUsageListResult(IReadOnlyList<CdnUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of resource usages. </summary>
+        /// <summary>
+        /// List of resource usages.
+        /// Serialized Name: ResourceUsageListResult.value
+        /// </summary>
         public IReadOnlyList<CdnUsage> Value { get; }
-        /// <summary> URL to get the next set of custom domain objects if there are any. </summary>
+        /// <summary>
+        /// URL to get the next set of custom domain objects if there are any.
+        /// Serialized Name: ResourceUsageListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

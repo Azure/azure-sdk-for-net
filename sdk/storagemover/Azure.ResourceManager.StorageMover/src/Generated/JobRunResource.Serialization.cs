@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.StorageMover
 {
     public partial class JobRunResource : IJsonModel<JobRunData>
     {
+        private static JobRunData s_dataDeserializationInstance;
+        private static JobRunData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<JobRunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<JobRunData>)Data).Write(writer, options);
 
-        JobRunData IJsonModel<JobRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<JobRunData>)Data).Create(ref reader, options);
+        JobRunData IJsonModel<JobRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<JobRunData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<JobRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<JobRunData>(Data, options, AzureResourceManagerStorageMoverContext.Default);
 
         JobRunData IPersistableModel<JobRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JobRunData>(data, options, AzureResourceManagerStorageMoverContext.Default);
 
-        string IPersistableModel<JobRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<JobRunData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<JobRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<JobRunData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

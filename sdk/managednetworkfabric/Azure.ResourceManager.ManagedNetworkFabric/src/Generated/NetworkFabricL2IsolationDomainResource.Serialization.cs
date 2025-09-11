@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkFabricL2IsolationDomainResource : IJsonModel<NetworkFabricL2IsolationDomainData>
     {
+        private static NetworkFabricL2IsolationDomainData s_dataDeserializationInstance;
+        private static NetworkFabricL2IsolationDomainData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkFabricL2IsolationDomainData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricL2IsolationDomainData>)Data).Write(writer, options);
 
-        NetworkFabricL2IsolationDomainData IJsonModel<NetworkFabricL2IsolationDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricL2IsolationDomainData>)Data).Create(ref reader, options);
+        NetworkFabricL2IsolationDomainData IJsonModel<NetworkFabricL2IsolationDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricL2IsolationDomainData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkFabricL2IsolationDomainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricL2IsolationDomainData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
         NetworkFabricL2IsolationDomainData IPersistableModel<NetworkFabricL2IsolationDomainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricL2IsolationDomainData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkFabricL2IsolationDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricL2IsolationDomainData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkFabricL2IsolationDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricL2IsolationDomainData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

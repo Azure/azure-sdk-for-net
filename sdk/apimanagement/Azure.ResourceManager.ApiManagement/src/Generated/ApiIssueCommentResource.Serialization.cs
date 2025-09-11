@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiIssueCommentResource : IJsonModel<ApiIssueCommentData>
     {
+        private static ApiIssueCommentData s_dataDeserializationInstance;
+        private static ApiIssueCommentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiIssueCommentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiIssueCommentData>)Data).Write(writer, options);
 
-        ApiIssueCommentData IJsonModel<ApiIssueCommentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiIssueCommentData>)Data).Create(ref reader, options);
+        ApiIssueCommentData IJsonModel<ApiIssueCommentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiIssueCommentData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ApiIssueCommentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiIssueCommentData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         ApiIssueCommentData IPersistableModel<ApiIssueCommentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiIssueCommentData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiIssueCommentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiIssueCommentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiIssueCommentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiIssueCommentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -14,14 +14,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ContainerServiceClusterSupportEndingEventData : ContainerServiceClusterSupportEventData
     {
         /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEndingEventData"/>. </summary>
-        internal ContainerServiceClusterSupportEndingEventData()
+        /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
+        internal ContainerServiceClusterSupportEndingEventData(string kubernetesVersion) : base(kubernetesVersion)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEndingEventData"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceClusterSupportEndingEventData(string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kubernetesVersion, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceClusterSupportEndingEventData(string kubernetesVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kubernetesVersion, additionalBinaryDataProperties)
         {
         }
     }

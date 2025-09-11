@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseManagedIdentitySqlControlSettingResource : IJsonModel<SynapseManagedIdentitySqlControlSettingData>
     {
+        private static SynapseManagedIdentitySqlControlSettingData s_dataDeserializationInstance;
+        private static SynapseManagedIdentitySqlControlSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseManagedIdentitySqlControlSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseManagedIdentitySqlControlSettingData>)Data).Write(writer, options);
 
-        SynapseManagedIdentitySqlControlSettingData IJsonModel<SynapseManagedIdentitySqlControlSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseManagedIdentitySqlControlSettingData>)Data).Create(ref reader, options);
+        SynapseManagedIdentitySqlControlSettingData IJsonModel<SynapseManagedIdentitySqlControlSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseManagedIdentitySqlControlSettingData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SynapseManagedIdentitySqlControlSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseManagedIdentitySqlControlSettingData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
         SynapseManagedIdentitySqlControlSettingData IPersistableModel<SynapseManagedIdentitySqlControlSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseManagedIdentitySqlControlSettingData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseManagedIdentitySqlControlSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseManagedIdentitySqlControlSettingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseManagedIdentitySqlControlSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseManagedIdentitySqlControlSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

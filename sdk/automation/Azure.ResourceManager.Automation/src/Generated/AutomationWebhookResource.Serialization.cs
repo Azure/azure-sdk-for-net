@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationWebhookResource : IJsonModel<AutomationWebhookData>
     {
+        private static AutomationWebhookData s_dataDeserializationInstance;
+        private static AutomationWebhookData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AutomationWebhookData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutomationWebhookData>)Data).Write(writer, options);
 
-        AutomationWebhookData IJsonModel<AutomationWebhookData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationWebhookData>)Data).Create(ref reader, options);
+        AutomationWebhookData IJsonModel<AutomationWebhookData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationWebhookData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AutomationWebhookData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationWebhookData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
         AutomationWebhookData IPersistableModel<AutomationWebhookData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationWebhookData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<AutomationWebhookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationWebhookData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AutomationWebhookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationWebhookData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

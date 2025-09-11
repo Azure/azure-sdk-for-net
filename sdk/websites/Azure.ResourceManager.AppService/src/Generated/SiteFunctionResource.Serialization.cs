@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class SiteFunctionResource : IJsonModel<FunctionEnvelopeData>
     {
+        private static FunctionEnvelopeData s_dataDeserializationInstance;
+        private static FunctionEnvelopeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FunctionEnvelopeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FunctionEnvelopeData>)Data).Write(writer, options);
 
-        FunctionEnvelopeData IJsonModel<FunctionEnvelopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FunctionEnvelopeData>)Data).Create(ref reader, options);
+        FunctionEnvelopeData IJsonModel<FunctionEnvelopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FunctionEnvelopeData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<FunctionEnvelopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FunctionEnvelopeData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         FunctionEnvelopeData IPersistableModel<FunctionEnvelopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FunctionEnvelopeData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<FunctionEnvelopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FunctionEnvelopeData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FunctionEnvelopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FunctionEnvelopeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

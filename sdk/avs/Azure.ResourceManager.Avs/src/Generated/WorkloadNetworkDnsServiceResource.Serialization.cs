@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class WorkloadNetworkDnsServiceResource : IJsonModel<WorkloadNetworkDnsServiceData>
     {
+        private static WorkloadNetworkDnsServiceData s_dataDeserializationInstance;
+        private static WorkloadNetworkDnsServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkloadNetworkDnsServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkDnsServiceData>)Data).Write(writer, options);
 
-        WorkloadNetworkDnsServiceData IJsonModel<WorkloadNetworkDnsServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkDnsServiceData>)Data).Create(ref reader, options);
+        WorkloadNetworkDnsServiceData IJsonModel<WorkloadNetworkDnsServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkDnsServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<WorkloadNetworkDnsServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkDnsServiceData>(Data, options, AzureResourceManagerAvsContext.Default);
 
         WorkloadNetworkDnsServiceData IPersistableModel<WorkloadNetworkDnsServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkDnsServiceData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<WorkloadNetworkDnsServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkDnsServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkloadNetworkDnsServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkDnsServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

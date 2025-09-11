@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Automanage.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automanage
 {
@@ -13,6 +15,32 @@ namespace Azure.ResourceManager.Automanage
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AutomanageBestPracticeData))]
+    [ModelReaderWriterBuildable(typeof(AutomanageBestPracticeResource))]
+    [ModelReaderWriterBuildable(typeof(AutomanageConfigurationProfileAssignmentData))]
+    [ModelReaderWriterBuildable(typeof(AutomanageConfigurationProfileAssignmentProperties))]
+    [ModelReaderWriterBuildable(typeof(AutomanageConfigurationProfileAssignmentReportData))]
+    [ModelReaderWriterBuildable(typeof(AutomanageConfigurationProfileData))]
+    [ModelReaderWriterBuildable(typeof(AutomanageConfigurationProfilePatch))]
+    [ModelReaderWriterBuildable(typeof(AutomanageConfigurationProfileResource))]
+    [ModelReaderWriterBuildable(typeof(AutomanageConfigurationProfileVersionResource))]
+    [ModelReaderWriterBuildable(typeof(AutomanageHciClusterConfigurationProfileAssignmentReportResource))]
+    [ModelReaderWriterBuildable(typeof(AutomanageHciClusterConfigurationProfileAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(AutomanageHcrpConfigurationProfileAssignmentReportResource))]
+    [ModelReaderWriterBuildable(typeof(AutomanageHcrpConfigurationProfileAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(AutomanageResourceUpdateDetails))]
+    [ModelReaderWriterBuildable(typeof(AutomanageServicePrincipalData))]
+    [ModelReaderWriterBuildable(typeof(AutomanageVmConfigurationProfileAssignmentReportResource))]
+    [ModelReaderWriterBuildable(typeof(AutomanageVmConfigurationProfileAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(BestPracticeList))]
+    [ModelReaderWriterBuildable(typeof(ConfigurationProfileAssignmentList))]
+    [ModelReaderWriterBuildable(typeof(ConfigurationProfileAssignmentReportResourceDetails))]
+    [ModelReaderWriterBuildable(typeof(ConfigurationProfileList))]
+    [ModelReaderWriterBuildable(typeof(ConfigurationProfileProperties))]
+    [ModelReaderWriterBuildable(typeof(ReportList))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(ServicePrincipalListResult))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerAutomanageContext : ModelReaderWriterContext
     {
     }

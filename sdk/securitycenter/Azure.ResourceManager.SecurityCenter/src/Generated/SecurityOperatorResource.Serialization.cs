@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityOperatorResource : IJsonModel<SecurityOperatorData>
     {
+        private static SecurityOperatorData s_dataDeserializationInstance;
+        private static SecurityOperatorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityOperatorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityOperatorData>)Data).Write(writer, options);
 
-        SecurityOperatorData IJsonModel<SecurityOperatorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityOperatorData>)Data).Create(ref reader, options);
+        SecurityOperatorData IJsonModel<SecurityOperatorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityOperatorData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SecurityOperatorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityOperatorData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         SecurityOperatorData IPersistableModel<SecurityOperatorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityOperatorData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<SecurityOperatorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityOperatorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityOperatorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityOperatorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

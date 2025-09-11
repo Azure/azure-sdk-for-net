@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MongoCluster
 {
     public partial class MongoClusterPrivateEndpointConnectionResource : IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>
     {
+        private static MongoClusterPrivateEndpointConnectionResourceData s_dataDeserializationInstance;
+        private static MongoClusterPrivateEndpointConnectionResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>)Data).Write(writer, options);
 
-        MongoClusterPrivateEndpointConnectionResourceData IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>)Data).Create(ref reader, options);
+        MongoClusterPrivateEndpointConnectionResourceData IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MongoClusterPrivateEndpointConnectionResourceData>(Data, options, AzureResourceManagerMongoClusterContext.Default);
 
         MongoClusterPrivateEndpointConnectionResourceData IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoClusterPrivateEndpointConnectionResourceData>(data, options, AzureResourceManagerMongoClusterContext.Default);
 
-        string IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

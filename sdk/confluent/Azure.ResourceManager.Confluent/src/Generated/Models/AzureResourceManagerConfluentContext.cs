@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Confluent.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Confluent
 {
@@ -13,6 +15,64 @@ namespace Azure.ResourceManager.Confluent
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AccessClusterListResult))]
+    [ModelReaderWriterBuildable(typeof(AccessClusterRecord))]
+    [ModelReaderWriterBuildable(typeof(AccessEnvironmentListResult))]
+    [ModelReaderWriterBuildable(typeof(AccessEnvironmentRecord))]
+    [ModelReaderWriterBuildable(typeof(AccessInvitationContent))]
+    [ModelReaderWriterBuildable(typeof(AccessInvitationListResult))]
+    [ModelReaderWriterBuildable(typeof(AccessInvitationRecord))]
+    [ModelReaderWriterBuildable(typeof(AccessInvitedUserDetails))]
+    [ModelReaderWriterBuildable(typeof(AccessListContent))]
+    [ModelReaderWriterBuildable(typeof(AccessRoleBindingCreateContent))]
+    [ModelReaderWriterBuildable(typeof(AccessRoleBindingListResult))]
+    [ModelReaderWriterBuildable(typeof(AccessRoleBindingNameListResult))]
+    [ModelReaderWriterBuildable(typeof(AccessRoleBindingRecord))]
+    [ModelReaderWriterBuildable(typeof(AccessServiceAccountListResult))]
+    [ModelReaderWriterBuildable(typeof(AccessServiceAccountRecord))]
+    [ModelReaderWriterBuildable(typeof(AccessUserListResult))]
+    [ModelReaderWriterBuildable(typeof(AccessUserRecord))]
+    [ModelReaderWriterBuildable(typeof(ApiKeyOwnerEntity))]
+    [ModelReaderWriterBuildable(typeof(ApiKeyResourceEntity))]
+    [ModelReaderWriterBuildable(typeof(ApiKeySpecEntity))]
+    [ModelReaderWriterBuildable(typeof(ClusterByokEntity))]
+    [ModelReaderWriterBuildable(typeof(ClusterConfigEntity))]
+    [ModelReaderWriterBuildable(typeof(ClusterEnvironmentEntity))]
+    [ModelReaderWriterBuildable(typeof(ClusterNetworkEntity))]
+    [ModelReaderWriterBuildable(typeof(ClusterSpecEntity))]
+    [ModelReaderWriterBuildable(typeof(ClusterStatusEntity))]
+    [ModelReaderWriterBuildable(typeof(ConfluentAgreement))]
+    [ModelReaderWriterBuildable(typeof(ConfluentAgreementListResult))]
+    [ModelReaderWriterBuildable(typeof(ConfluentApiKeyCreateContent))]
+    [ModelReaderWriterBuildable(typeof(ConfluentApiKeyRecord))]
+    [ModelReaderWriterBuildable(typeof(ConfluentListMetadata))]
+    [ModelReaderWriterBuildable(typeof(ConfluentOfferDetail))]
+    [ModelReaderWriterBuildable(typeof(ConfluentOrganizationData))]
+    [ModelReaderWriterBuildable(typeof(ConfluentOrganizationListResult))]
+    [ModelReaderWriterBuildable(typeof(ConfluentOrganizationPatch))]
+    [ModelReaderWriterBuildable(typeof(ConfluentOrganizationResource))]
+    [ModelReaderWriterBuildable(typeof(ConfluentOrganizationValidationResult))]
+    [ModelReaderWriterBuildable(typeof(ConfluentRegionListResult))]
+    [ModelReaderWriterBuildable(typeof(ConfluentRegionRecord))]
+    [ModelReaderWriterBuildable(typeof(ConfluentUserDetail))]
+    [ModelReaderWriterBuildable(typeof(GetEnvironmentsResponse))]
+    [ModelReaderWriterBuildable(typeof(LinkOrganization))]
+    [ModelReaderWriterBuildable(typeof(ListClustersSuccessResponse))]
+    [ModelReaderWriterBuildable(typeof(ListSchemaRegistryClustersResponse))]
+    [ModelReaderWriterBuildable(typeof(MetadataEntity))]
+    [ModelReaderWriterBuildable(typeof(RegionSpecEntity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SCClusterByokEntity))]
+    [ModelReaderWriterBuildable(typeof(SCClusterNetworkEnvironmentEntity))]
+    [ModelReaderWriterBuildable(typeof(SCClusterRecord))]
+    [ModelReaderWriterBuildable(typeof(SCClusterSpecEntity))]
+    [ModelReaderWriterBuildable(typeof(SCEnvironmentRecord))]
+    [ModelReaderWriterBuildable(typeof(SchemaRegistryClusterEnvironmentRegionEntity))]
+    [ModelReaderWriterBuildable(typeof(SchemaRegistryClusterRecord))]
+    [ModelReaderWriterBuildable(typeof(SchemaRegistryClusterSpecEntity))]
+    [ModelReaderWriterBuildable(typeof(SchemaRegistryClusterStatusEntity))]
+    [ModelReaderWriterBuildable(typeof(SCMetadataEntity))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerConfluentContext : ModelReaderWriterContext
     {
     }

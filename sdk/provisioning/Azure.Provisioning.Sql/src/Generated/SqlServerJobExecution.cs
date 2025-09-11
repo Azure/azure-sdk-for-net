@@ -182,7 +182,7 @@ public partial class SqlServerJobExecution : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServerJobExecution.</param>
     public SqlServerJobExecution(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents/jobs/executions", resourceVersion ?? "2021-11-01")
+        : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents/jobs/executions", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -215,6 +215,11 @@ public partial class SqlServerJobExecution : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
         /// <summary>
         /// 2021-11-01.
         /// </summary>

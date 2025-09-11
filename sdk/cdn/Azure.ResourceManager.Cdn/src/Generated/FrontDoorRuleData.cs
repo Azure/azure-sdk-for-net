@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Cdn
     /// <summary>
     /// A class representing the FrontDoorRule data model.
     /// Friendly Rules name mapping to the any Rules or secret related information.
+    /// Serialized Name: Rule
     /// </summary>
     public partial class FrontDoorRuleData : ResourceData
     {
@@ -63,21 +64,35 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="ruleSetName"> The name of the rule set containing the rule. </param>
-        /// <param name="order"> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </param>
+        /// <param name="ruleSetName">
+        /// The name of the rule set containing the rule.
+        /// Serialized Name: Rule.properties.ruleSetName
+        /// </param>
+        /// <param name="order">
+        /// The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied.
+        /// Serialized Name: Rule.properties.order
+        /// </param>
         /// <param name="conditions">
         /// A list of conditions that must be matched for the actions to be executed
+        /// Serialized Name: Rule.properties.conditions
         /// Please note <see cref="DeliveryRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeliveryRuleClientPortCondition"/>, <see cref="DeliveryRuleCookiesCondition"/>, <see cref="DeliveryRuleHostNameCondition"/>, <see cref="DeliveryRuleHttpVersionCondition"/>, <see cref="DeliveryRuleIsDeviceCondition"/>, <see cref="DeliveryRulePostArgsCondition"/>, <see cref="DeliveryRuleQueryStringCondition"/>, <see cref="DeliveryRuleRemoteAddressCondition"/>, <see cref="DeliveryRuleRequestBodyCondition"/>, <see cref="DeliveryRuleRequestHeaderCondition"/>, <see cref="DeliveryRuleRequestMethodCondition"/>, <see cref="DeliveryRuleRequestSchemeCondition"/>, <see cref="DeliveryRuleRequestUriCondition"/>, <see cref="DeliveryRuleServerPortCondition"/>, <see cref="DeliveryRuleSocketAddressCondition"/>, <see cref="DeliveryRuleSslProtocolCondition"/>, <see cref="DeliveryRuleUriFileExtensionCondition"/>, <see cref="DeliveryRuleUriFileNameCondition"/> and <see cref="DeliveryRuleUriPathCondition"/>.
         /// </param>
         /// <param name="actions">
         /// A list of actions that are executed when all the conditions of a rule are satisfied.
+        /// Serialized Name: Rule.properties.actions
         /// Please note <see cref="DeliveryRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriRewriteAction"/> and <see cref="UriSigningAction"/>.
         /// </param>
-        /// <param name="matchProcessingBehavior"> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </param>
-        /// <param name="provisioningState"> Provisioning status. </param>
-        /// <param name="deploymentStatus"></param>
+        /// <param name="matchProcessingBehavior">
+        /// If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue.
+        /// Serialized Name: Rule.properties.matchProcessingBehavior
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning status
+        /// Serialized Name: Rule.properties.provisioningState
+        /// </param>
+        /// <param name="deploymentStatus"> Serialized Name: Rule.properties.deploymentStatus. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ruleSetName, int? order, IList<DeliveryRuleCondition> conditions, IList<DeliveryRuleAction> actions, MatchProcessingBehavior? matchProcessingBehavior, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -91,27 +106,41 @@ namespace Azure.ResourceManager.Cdn
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the rule set containing the rule. </summary>
+        /// <summary>
+        /// The name of the rule set containing the rule.
+        /// Serialized Name: Rule.properties.ruleSetName
+        /// </summary>
         public string RuleSetName { get; }
-        /// <summary> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </summary>
+        /// <summary>
+        /// The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied.
+        /// Serialized Name: Rule.properties.order
+        /// </summary>
         public int? Order { get; set; }
         /// <summary>
         /// A list of conditions that must be matched for the actions to be executed
+        /// Serialized Name: Rule.properties.conditions
         /// Please note <see cref="DeliveryRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeliveryRuleClientPortCondition"/>, <see cref="DeliveryRuleCookiesCondition"/>, <see cref="DeliveryRuleHostNameCondition"/>, <see cref="DeliveryRuleHttpVersionCondition"/>, <see cref="DeliveryRuleIsDeviceCondition"/>, <see cref="DeliveryRulePostArgsCondition"/>, <see cref="DeliveryRuleQueryStringCondition"/>, <see cref="DeliveryRuleRemoteAddressCondition"/>, <see cref="DeliveryRuleRequestBodyCondition"/>, <see cref="DeliveryRuleRequestHeaderCondition"/>, <see cref="DeliveryRuleRequestMethodCondition"/>, <see cref="DeliveryRuleRequestSchemeCondition"/>, <see cref="DeliveryRuleRequestUriCondition"/>, <see cref="DeliveryRuleServerPortCondition"/>, <see cref="DeliveryRuleSocketAddressCondition"/>, <see cref="DeliveryRuleSslProtocolCondition"/>, <see cref="DeliveryRuleUriFileExtensionCondition"/>, <see cref="DeliveryRuleUriFileNameCondition"/> and <see cref="DeliveryRuleUriPathCondition"/>.
         /// </summary>
         public IList<DeliveryRuleCondition> Conditions { get; }
         /// <summary>
         /// A list of actions that are executed when all the conditions of a rule are satisfied.
+        /// Serialized Name: Rule.properties.actions
         /// Please note <see cref="DeliveryRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriRewriteAction"/> and <see cref="UriSigningAction"/>.
         /// </summary>
         public IList<DeliveryRuleAction> Actions { get; }
-        /// <summary> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </summary>
+        /// <summary>
+        /// If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue.
+        /// Serialized Name: Rule.properties.matchProcessingBehavior
+        /// </summary>
         public MatchProcessingBehavior? MatchProcessingBehavior { get; set; }
-        /// <summary> Provisioning status. </summary>
+        /// <summary>
+        /// Provisioning status
+        /// Serialized Name: Rule.properties.provisioningState
+        /// </summary>
         public FrontDoorProvisioningState? ProvisioningState { get; }
-        /// <summary> Gets the deployment status. </summary>
+        /// <summary> Serialized Name: Rule.properties.deploymentStatus. </summary>
         public FrontDoorDeploymentStatus? DeploymentStatus { get; }
     }
 }

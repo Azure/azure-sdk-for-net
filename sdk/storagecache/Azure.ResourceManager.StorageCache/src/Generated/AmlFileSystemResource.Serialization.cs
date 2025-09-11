@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.StorageCache
 {
     public partial class AmlFileSystemResource : IJsonModel<AmlFileSystemData>
     {
+        private static AmlFileSystemData s_dataDeserializationInstance;
+        private static AmlFileSystemData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AmlFileSystemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AmlFileSystemData>)Data).Write(writer, options);
 
-        AmlFileSystemData IJsonModel<AmlFileSystemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AmlFileSystemData>)Data).Create(ref reader, options);
+        AmlFileSystemData IJsonModel<AmlFileSystemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AmlFileSystemData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AmlFileSystemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AmlFileSystemData>(Data, options, AzureResourceManagerStorageCacheContext.Default);
 
         AmlFileSystemData IPersistableModel<AmlFileSystemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AmlFileSystemData>(data, options, AzureResourceManagerStorageCacheContext.Default);
 
-        string IPersistableModel<AmlFileSystemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AmlFileSystemData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AmlFileSystemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AmlFileSystemData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

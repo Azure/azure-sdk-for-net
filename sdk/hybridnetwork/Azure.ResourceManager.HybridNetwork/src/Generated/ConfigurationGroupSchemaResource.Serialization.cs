@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     public partial class ConfigurationGroupSchemaResource : IJsonModel<ConfigurationGroupSchemaData>
     {
+        private static ConfigurationGroupSchemaData s_dataDeserializationInstance;
+        private static ConfigurationGroupSchemaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ConfigurationGroupSchemaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConfigurationGroupSchemaData>)Data).Write(writer, options);
 
-        ConfigurationGroupSchemaData IJsonModel<ConfigurationGroupSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConfigurationGroupSchemaData>)Data).Create(ref reader, options);
+        ConfigurationGroupSchemaData IJsonModel<ConfigurationGroupSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConfigurationGroupSchemaData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ConfigurationGroupSchemaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConfigurationGroupSchemaData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
 
         ConfigurationGroupSchemaData IPersistableModel<ConfigurationGroupSchemaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConfigurationGroupSchemaData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        string IPersistableModel<ConfigurationGroupSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConfigurationGroupSchemaData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ConfigurationGroupSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConfigurationGroupSchemaData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

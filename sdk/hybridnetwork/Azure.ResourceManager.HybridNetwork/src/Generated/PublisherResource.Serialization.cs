@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     public partial class PublisherResource : IJsonModel<PublisherData>
     {
+        private static PublisherData s_dataDeserializationInstance;
+        private static PublisherData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PublisherData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PublisherData>)Data).Write(writer, options);
 
-        PublisherData IJsonModel<PublisherData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublisherData>)Data).Create(ref reader, options);
+        PublisherData IJsonModel<PublisherData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublisherData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PublisherData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PublisherData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
 
         PublisherData IPersistableModel<PublisherData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublisherData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        string IPersistableModel<PublisherData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublisherData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PublisherData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublisherData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

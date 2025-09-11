@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class ManagementLockResource : IJsonModel<ManagementLockData>
     {
+        private static ManagementLockData s_dataDeserializationInstance;
+        private static ManagementLockData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ManagementLockData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagementLockData>)Data).Write(writer, options);
 
-        ManagementLockData IJsonModel<ManagementLockData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagementLockData>)Data).Create(ref reader, options);
+        ManagementLockData IJsonModel<ManagementLockData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagementLockData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagementLockData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagementLockData>(Data, options, AzureResourceManagerContext.Default);
+        BinaryData IPersistableModel<ManagementLockData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options, AzureResourceManagerContext.Default);
 
         ManagementLockData IPersistableModel<ManagementLockData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagementLockData>(data, options, AzureResourceManagerContext.Default);
 
-        string IPersistableModel<ManagementLockData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagementLockData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ManagementLockData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagementLockData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

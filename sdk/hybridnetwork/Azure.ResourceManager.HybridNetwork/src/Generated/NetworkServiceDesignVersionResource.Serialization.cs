@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     public partial class NetworkServiceDesignVersionResource : IJsonModel<NetworkServiceDesignVersionData>
     {
+        private static NetworkServiceDesignVersionData s_dataDeserializationInstance;
+        private static NetworkServiceDesignVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkServiceDesignVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkServiceDesignVersionData>)Data).Write(writer, options);
 
-        NetworkServiceDesignVersionData IJsonModel<NetworkServiceDesignVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkServiceDesignVersionData>)Data).Create(ref reader, options);
+        NetworkServiceDesignVersionData IJsonModel<NetworkServiceDesignVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkServiceDesignVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkServiceDesignVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkServiceDesignVersionData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
 
         NetworkServiceDesignVersionData IPersistableModel<NetworkServiceDesignVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkServiceDesignVersionData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        string IPersistableModel<NetworkServiceDesignVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkServiceDesignVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkServiceDesignVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkServiceDesignVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     public partial class RaiPolicyResource : IJsonModel<RaiPolicyData>
     {
+        private static RaiPolicyData s_dataDeserializationInstance;
+        private static RaiPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RaiPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RaiPolicyData>)Data).Write(writer, options);
 
-        RaiPolicyData IJsonModel<RaiPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RaiPolicyData>)Data).Create(ref reader, options);
+        RaiPolicyData IJsonModel<RaiPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RaiPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<RaiPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RaiPolicyData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
         RaiPolicyData IPersistableModel<RaiPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RaiPolicyData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        string IPersistableModel<RaiPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RaiPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RaiPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RaiPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

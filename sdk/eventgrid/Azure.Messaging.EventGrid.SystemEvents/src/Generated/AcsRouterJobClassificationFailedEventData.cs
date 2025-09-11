@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -15,43 +14,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterJobClassificationFailedEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassificationFailedEventData"/>. </summary>
-        /// <param name="labels"> Router Job events Labels. </param>
-        /// <param name="tags"> Router Jobs events Tags. </param>
-        /// <param name="errors"> Router Job Classification Failed Errors. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labels"/>, <paramref name="tags"/> or <paramref name="errors"/> is null. </exception>
-        internal AcsRouterJobClassificationFailedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IEnumerable<AcsRouterCommunicationError> errors) : base(labels, tags)
+        internal AcsRouterJobClassificationFailedEventData()
         {
-            Argument.AssertNotNull(labels, nameof(labels));
-            Argument.AssertNotNull(tags, nameof(tags));
-            Argument.AssertNotNull(errors, nameof(errors));
-
-            Errors = errors.ToList();
+            ErrorsInternal = new ChangeTrackingList<AcsRouterCommunicationError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassificationFailedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="queueId"> Router Job events Queue Id. </param>
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="classificationPolicyId"> Router Job Classification Policy Id. </param>
-        /// <param name="errors"> Router Job Classification Failed Errors. </param>
-        internal AcsRouterJobClassificationFailedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string classificationPolicyId, IReadOnlyList<AcsRouterCommunicationError> errors) : base(jobId, channelReference, channelId, serializedAdditionalRawData, queueId, labels, tags)
+        /// <param name="errorsInternal"> List of Router Communication Errors. </param>
+        internal AcsRouterJobClassificationFailedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string classificationPolicyId, IReadOnlyList<AcsRouterCommunicationError> errorsInternal) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
         {
             ClassificationPolicyId = classificationPolicyId;
-            Errors = errors;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassificationFailedEventData"/> for deserialization. </summary>
-        internal AcsRouterJobClassificationFailedEventData()
-        {
+            ErrorsInternal = errorsInternal;
         }
 
         /// <summary> Router Job Classification Policy Id. </summary>
         public string ClassificationPolicyId { get; }
-        /// <summary> Router Job Classification Failed Errors. </summary>
-        public IReadOnlyList<AcsRouterCommunicationError> Errors { get; }
     }
 }

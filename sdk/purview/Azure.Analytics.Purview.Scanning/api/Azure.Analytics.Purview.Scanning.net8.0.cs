@@ -1,11 +1,5 @@
 namespace Azure.Analytics.Purview.Scanning
 {
-    public partial class AzureAnalyticsPurviewScanningContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureAnalyticsPurviewScanningContext() { }
-        public static Azure.Analytics.Purview.Scanning.AzureAnalyticsPurviewScanningContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class PurviewClassificationRuleClient
     {
         protected PurviewClassificationRuleClient() { }
@@ -121,12 +115,16 @@ namespace Microsoft.Extensions.Azure
     public static partial class AnalyticsPurviewScanningClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewClassificationRuleClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string classificationRuleName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewClassificationRuleClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewDataSourceClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewDataSourceClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string dataSourceName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewDataSourceClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewDataSourceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewScanClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewScanClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string dataSourceName, string scanName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewScanClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewScanClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewScanningServiceClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewScanningServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

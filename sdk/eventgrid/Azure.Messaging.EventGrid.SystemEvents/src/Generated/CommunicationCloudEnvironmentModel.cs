@@ -14,41 +14,62 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct CommunicationCloudEnvironmentModel : IEquatable<CommunicationCloudEnvironmentModel>
     {
         private readonly string _value;
+        /// <summary> Public. </summary>
+        private const string PublicValue = "public";
+        /// <summary> Dod. </summary>
+        private const string DodValue = "dod";
+        /// <summary> Gcch. </summary>
+        private const string GcchValue = "gcch";
 
         /// <summary> Initializes a new instance of <see cref="CommunicationCloudEnvironmentModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CommunicationCloudEnvironmentModel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PublicValue = "public";
-        private const string DodValue = "dod";
-        private const string GcchValue = "gcch";
+            _value = value;
+        }
 
         /// <summary> Public. </summary>
         public static CommunicationCloudEnvironmentModel Public { get; } = new CommunicationCloudEnvironmentModel(PublicValue);
+
         /// <summary> Dod. </summary>
         public static CommunicationCloudEnvironmentModel Dod { get; } = new CommunicationCloudEnvironmentModel(DodValue);
+
         /// <summary> Gcch. </summary>
         public static CommunicationCloudEnvironmentModel Gcch { get; } = new CommunicationCloudEnvironmentModel(GcchValue);
+
         /// <summary> Determines if two <see cref="CommunicationCloudEnvironmentModel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CommunicationCloudEnvironmentModel left, CommunicationCloudEnvironmentModel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CommunicationCloudEnvironmentModel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CommunicationCloudEnvironmentModel left, CommunicationCloudEnvironmentModel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CommunicationCloudEnvironmentModel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CommunicationCloudEnvironmentModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CommunicationCloudEnvironmentModel(string value) => new CommunicationCloudEnvironmentModel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CommunicationCloudEnvironmentModel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CommunicationCloudEnvironmentModel?(string value) => value == null ? null : new CommunicationCloudEnvironmentModel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CommunicationCloudEnvironmentModel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CommunicationCloudEnvironmentModel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

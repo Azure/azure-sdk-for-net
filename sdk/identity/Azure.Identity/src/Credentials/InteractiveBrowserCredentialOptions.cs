@@ -3,15 +3,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
-using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
     /// <summary>
     /// Options to configure the <see cref="InteractiveBrowserCredential"/>.
     /// </summary>
-    public class InteractiveBrowserCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
+    public class InteractiveBrowserCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTenantId
     {
         private string _tenantId;
 
@@ -71,5 +71,32 @@ namespace Azure.Identity
         /// The options for customizing the browser for interactive authentication.
         /// </summary>
         public BrowserCustomizationOptions BrowserCustomization { get; set; }
+
+        internal override T Clone<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
+        {
+            var clone = base.Clone<T>();
+            if (clone is InteractiveBrowserCredentialOptions ibcoClone)
+            {
+                ibcoClone.DisableAutomaticAuthentication = DisableAutomaticAuthentication;
+                ibcoClone.TenantId = _tenantId;
+                ibcoClone.AdditionallyAllowedTenants = AdditionallyAllowedTenants;
+                ibcoClone.ClientId = ClientId;
+                ibcoClone.TokenCachePersistenceOptions = TokenCachePersistenceOptions?.Clone();
+                ibcoClone.RedirectUri = RedirectUri;
+                ibcoClone.AuthenticationRecord = AuthenticationRecord;
+                ibcoClone.LoginHint = LoginHint;
+                ibcoClone.DisableInstanceDiscovery = DisableInstanceDiscovery;
+                if (BrowserCustomization != null)
+                {
+                    ibcoClone.BrowserCustomization = new BrowserCustomizationOptions
+                    {
+                        ErrorMessage = BrowserCustomization.ErrorMessage,
+                        SuccessMessage = BrowserCustomization.SuccessMessage,
+                        UseEmbeddedWebView = BrowserCustomization.UseEmbeddedWebView ?? false
+                    };
+                }
+            }
+            return clone;
+        }
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetworkAnalytics
 {
     public partial class DataProductsCatalogResource : IJsonModel<DataProductsCatalogData>
     {
+        private static DataProductsCatalogData s_dataDeserializationInstance;
+        private static DataProductsCatalogData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataProductsCatalogData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataProductsCatalogData>)Data).Write(writer, options);
 
-        DataProductsCatalogData IJsonModel<DataProductsCatalogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataProductsCatalogData>)Data).Create(ref reader, options);
+        DataProductsCatalogData IJsonModel<DataProductsCatalogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataProductsCatalogData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DataProductsCatalogData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataProductsCatalogData>(Data, options, AzureResourceManagerNetworkAnalyticsContext.Default);
 
         DataProductsCatalogData IPersistableModel<DataProductsCatalogData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataProductsCatalogData>(data, options, AzureResourceManagerNetworkAnalyticsContext.Default);
 
-        string IPersistableModel<DataProductsCatalogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataProductsCatalogData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataProductsCatalogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataProductsCatalogData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -7,7 +7,7 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -58,8 +58,10 @@ namespace Azure.ResourceManager.StorageCache
             {
                 return null;
             }
-            var lroDetails = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json, AzureResourceManagerStorageCacheContext.Default).ToObjectFromJson<Dictionary<string, string>>();
-            return lroDetails["id"];
+            var data = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json, AzureResourceManagerStorageCacheContext.Default);
+            using var document = JsonDocument.Parse(data);
+            var lroDetails = document.RootElement;
+            return lroDetails.GetProperty("id").GetString();
         }
         /// <inheritdoc />
         public override string Id => _operationId ?? NextLinkOperationImplementation.NotSet;

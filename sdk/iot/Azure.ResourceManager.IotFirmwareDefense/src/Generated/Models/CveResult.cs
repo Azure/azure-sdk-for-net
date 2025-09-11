@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// The object representing a firmware analysis CVE result resource
-    /// Serialized Name: CveResource
-    /// </summary>
+    /// <summary> The object representing a firmware analysis CVE result resource. </summary>
     public partial class CveResult : ResourceData
     {
         /// <summary>
@@ -62,56 +59,25 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="cveId">
-        /// ID of the CVE result.
-        /// Serialized Name: CveResource.properties.cveId
-        /// </param>
-        /// <param name="componentId">
-        /// ID of the affected SBOM component.
-        /// Serialized Name: CveResource.properties.componentId
-        /// </param>
-        /// <param name="componentName">
-        /// Name of the affected SBOM component.
-        /// Serialized Name: CveResource.properties.componentName
-        /// </param>
-        /// <param name="componentVersion">
-        /// Version of the affected SBOM component.
-        /// Serialized Name: CveResource.properties.componentVersion
-        /// </param>
-        /// <param name="severity">
-        /// Severity of the CVE.
-        /// Serialized Name: CveResource.properties.severity
-        /// </param>
-        /// <param name="cveName">
-        /// Name of the CVE.
-        /// Serialized Name: CveResource.properties.cveName
-        /// </param>
-        /// <param name="effectiveCvssScore">
-        /// The most recent CVSS score of the CVE.
-        /// Serialized Name: CveResource.properties.effectiveCvssScore
-        /// </param>
-        /// <param name="effectiveCvssVersion">
-        /// The version of the effectiveCvssScore property.
-        /// Serialized Name: CveResource.properties.effectiveCvssVersion
-        /// </param>
-        /// <param name="cvssScores">
-        /// All known CVSS scores for the CVE.
-        /// Serialized Name: CveResource.properties.cvssScores
-        /// </param>
-        /// <param name="links">
-        /// The list of reference links for the CVE.
-        /// Serialized Name: CveResource.properties.links
-        /// </param>
-        /// <param name="description">
-        /// The CVE description.
-        /// Serialized Name: CveResource.properties.description
-        /// </param>
-        /// <param name="provisioningState">
-        /// The status of the last operation.
-        /// Serialized Name: CveResource.properties.provisioningState
-        /// </param>
+        /// <param name="cveId"> ID of the CVE result. </param>
+        /// <param name="componentId"> ID of the affected SBOM component. </param>
+        /// <param name="componentName"> Name of the affected SBOM component. </param>
+        /// <param name="componentVersion"> Version of the affected SBOM component. </param>
+        /// <param name="severity"> Severity of the CVE. </param>
+        /// <param name="cveName"> Name of the CVE. </param>
+        /// <param name="component"> Legacy property for what is now componentName. </param>
+        /// <param name="cvssScore"> Legacy property for the effective CVE score. </param>
+        /// <param name="cvssV2Score"> Legacy property for the CVE CVSS version 2 score, if one existed. </param>
+        /// <param name="cvssV3Score"> Legacy property for the CVE CVSS version 3 score, if one existed. </param>
+        /// <param name="cvssVersion"> Legacy property for the what CVSS version score was stored in the cvssScore property. </param>
+        /// <param name="effectiveCvssScore"> The most recent CVSS score of the CVE. </param>
+        /// <param name="effectiveCvssVersion"> The version of the effectiveCvssScore property. </param>
+        /// <param name="cvssScores"> All known CVSS scores for the CVE. </param>
+        /// <param name="links"> The list of reference links for the CVE. </param>
+        /// <param name="description"> The CVE description. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CveResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cveId, string componentId, string componentName, string componentVersion, string severity, string cveName, float? effectiveCvssScore, int? effectiveCvssVersion, IList<CvssScore> cvssScores, IReadOnlyList<CveLink> links, string description, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CveResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cveId, string componentId, string componentName, string componentVersion, string severity, string cveName, CveComponent component, string cvssScore, string cvssV2Score, string cvssV3Score, string cvssVersion, float? effectiveCvssScore, int? effectiveCvssVersion, IList<CvssScore> cvssScores, IReadOnlyList<CveLink> links, string description, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CveId = cveId;
             ComponentId = componentId;
@@ -119,6 +85,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             ComponentVersion = componentVersion;
             Severity = severity;
             CveName = cveName;
+            Component = component;
+            CvssScore = cvssScore;
+            CvssV2Score = cvssV2Score;
+            CvssV3Score = cvssV3Score;
+            CvssVersion = cvssVersion;
             EffectiveCvssScore = effectiveCvssScore;
             EffectiveCvssVersion = effectiveCvssVersion;
             CvssScores = cvssScores;
@@ -128,65 +99,37 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// ID of the CVE result.
-        /// Serialized Name: CveResource.properties.cveId
-        /// </summary>
+        /// <summary> ID of the CVE result. </summary>
         public string CveId { get; set; }
-        /// <summary>
-        /// ID of the affected SBOM component.
-        /// Serialized Name: CveResource.properties.componentId
-        /// </summary>
+        /// <summary> ID of the affected SBOM component. </summary>
         public string ComponentId { get; set; }
-        /// <summary>
-        /// Name of the affected SBOM component.
-        /// Serialized Name: CveResource.properties.componentName
-        /// </summary>
+        /// <summary> Name of the affected SBOM component. </summary>
         public string ComponentName { get; set; }
-        /// <summary>
-        /// Version of the affected SBOM component.
-        /// Serialized Name: CveResource.properties.componentVersion
-        /// </summary>
+        /// <summary> Version of the affected SBOM component. </summary>
         public string ComponentVersion { get; set; }
-        /// <summary>
-        /// Severity of the CVE.
-        /// Serialized Name: CveResource.properties.severity
-        /// </summary>
+        /// <summary> Severity of the CVE. </summary>
         public string Severity { get; set; }
-        /// <summary>
-        /// Name of the CVE.
-        /// Serialized Name: CveResource.properties.cveName
-        /// </summary>
+        /// <summary> Name of the CVE. </summary>
         public string CveName { get; set; }
-        /// <summary>
-        /// The most recent CVSS score of the CVE.
-        /// Serialized Name: CveResource.properties.effectiveCvssScore
-        /// </summary>
+        /// <summary> Legacy property for the effective CVE score. </summary>
+        public string CvssScore { get; set; }
+        /// <summary> Legacy property for the CVE CVSS version 2 score, if one existed. </summary>
+        public string CvssV2Score { get; set; }
+        /// <summary> Legacy property for the CVE CVSS version 3 score, if one existed. </summary>
+        public string CvssV3Score { get; set; }
+        /// <summary> Legacy property for the what CVSS version score was stored in the cvssScore property. </summary>
+        public string CvssVersion { get; set; }
+        /// <summary> The most recent CVSS score of the CVE. </summary>
         public float? EffectiveCvssScore { get; set; }
-        /// <summary>
-        /// The version of the effectiveCvssScore property.
-        /// Serialized Name: CveResource.properties.effectiveCvssVersion
-        /// </summary>
+        /// <summary> The version of the effectiveCvssScore property. </summary>
         public int? EffectiveCvssVersion { get; set; }
-        /// <summary>
-        /// All known CVSS scores for the CVE.
-        /// Serialized Name: CveResource.properties.cvssScores
-        /// </summary>
+        /// <summary> All known CVSS scores for the CVE. </summary>
         public IList<CvssScore> CvssScores { get; }
-        /// <summary>
-        /// The list of reference links for the CVE.
-        /// Serialized Name: CveResource.properties.links
-        /// </summary>
+        /// <summary> The list of reference links for the CVE. </summary>
         public IReadOnlyList<CveLink> Links { get; }
-        /// <summary>
-        /// The CVE description.
-        /// Serialized Name: CveResource.properties.description
-        /// </summary>
+        /// <summary> The CVE description. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The status of the last operation.
-        /// Serialized Name: CveResource.properties.provisioningState
-        /// </summary>
+        /// <summary> The status of the last operation. </summary>
         public FirmwareProvisioningState? ProvisioningState { get; }
     }
 }

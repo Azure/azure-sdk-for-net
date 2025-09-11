@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSqlDBDatabaseMigrationWithTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlDbGetDatabaseMigrationExpanded.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlDbGetDatabaseMigrationExpanded.json
             // this example is just showing the usage of "DatabaseMigrationsSqlDb_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSqlDBDatabaseMigrationWithoutTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlDbGetDatabaseMigration.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlDbGetDatabaseMigration.json
             // this example is just showing the usage of "DatabaseMigrationsSqlDb_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteDatabaseMigrationResource()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlDbDeleteDatabaseMigration.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlDbDeleteDatabaseMigration.json
             // this example is just showing the usage of "DatabaseMigrationsSqlDb_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateDatabaseMigrationResourceWithMaximumParameters()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlDbCreateOrUpdateDatabaseMigrationMAX.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlDbCreateOrUpdateDatabaseMigrationMAX.json
             // this example is just showing the usage of "DatabaseMigrationsSqlDb_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,28 +132,28 @@ namespace Azure.ResourceManager.DataMigration.Samples
             {
                 Properties = new DatabaseMigrationSqlDBProperties
                 {
-                    TargetSqlConnection = new SqlConnectionInformation
+                    TargetSqlConnection = new DataMigrationSqlConnectionInformation
                     {
                         DataSource = "sqldbinstance",
                         Authentication = "SqlAuthentication",
                         UserName = "bbb",
                         Password = "placeholder",
-                        EncryptConnection = true,
-                        TrustServerCertificate = true,
+                        ShouldEncryptConnection = true,
+                        ShouldTrustServerCertificate = true,
                     },
                     TableList = { "[Schema1].[TableName1]", "[Schema2].[TableName2]" },
-                    Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.Sql/servers/sqldbinstance",
-                    SourceSqlConnection = new SqlConnectionInformation
+                    SourceSqlConnection = new DataMigrationSqlConnectionInformation
                     {
                         DataSource = "aaa",
                         Authentication = "WindowsAuthentication",
                         UserName = "bbb",
                         Password = "placeholder",
-                        EncryptConnection = true,
-                        TrustServerCertificate = true,
+                        ShouldEncryptConnection = true,
+                        ShouldTrustServerCertificate = true,
                     },
                     SourceDatabaseName = "aaa",
-                    MigrationService = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent",
+                    Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.Sql/servers/sqldbinstance",
+                    MigrationService = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent"),
                 },
             };
             ArmOperation<DatabaseMigrationSqlDBResource> lro = await databaseMigrationSqlDB.UpdateAsync(WaitUntil.Completed, data);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateDatabaseMigrationResourceWithMinimumParameters()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlDbCreateOrUpdateDatabaseMigrationMIN.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlDbCreateOrUpdateDatabaseMigrationMIN.json
             // this example is just showing the usage of "DatabaseMigrationsSqlDb_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -192,27 +192,27 @@ namespace Azure.ResourceManager.DataMigration.Samples
             {
                 Properties = new DatabaseMigrationSqlDBProperties
                 {
-                    TargetSqlConnection = new SqlConnectionInformation
+                    TargetSqlConnection = new DataMigrationSqlConnectionInformation
                     {
                         DataSource = "sqldbinstance",
                         Authentication = "SqlAuthentication",
                         UserName = "bbb",
                         Password = "placeholder",
-                        EncryptConnection = true,
-                        TrustServerCertificate = true,
+                        ShouldEncryptConnection = true,
+                        ShouldTrustServerCertificate = true,
                     },
-                    Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.Sql/servers/sqldbinstance",
-                    SourceSqlConnection = new SqlConnectionInformation
+                    SourceSqlConnection = new DataMigrationSqlConnectionInformation
                     {
                         DataSource = "aaa",
                         Authentication = "WindowsAuthentication",
                         UserName = "bbb",
                         Password = "placeholder",
-                        EncryptConnection = true,
-                        TrustServerCertificate = true,
+                        ShouldEncryptConnection = true,
+                        ShouldTrustServerCertificate = true,
                     },
                     SourceDatabaseName = "aaa",
-                    MigrationService = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent",
+                    Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.Sql/servers/sqldbinstance",
+                    MigrationService = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent"),
                 },
             };
             ArmOperation<DatabaseMigrationSqlDBResource> lro = await databaseMigrationSqlDB.UpdateAsync(WaitUntil.Completed, data);
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Cancel_StopOngoingMigrationForTheDatabase()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlDbCancelDatabaseMigration.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlDbCancelDatabaseMigration.json
             // this example is just showing the usage of "DatabaseMigrationsSqlDb_Cancel" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

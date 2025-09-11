@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagedNetwork
 {
     public partial class ScopeAssignmentResource : IJsonModel<ScopeAssignmentData>
     {
+        private static ScopeAssignmentData s_dataDeserializationInstance;
+        private static ScopeAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ScopeAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScopeAssignmentData>)Data).Write(writer, options);
 
-        ScopeAssignmentData IJsonModel<ScopeAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScopeAssignmentData>)Data).Create(ref reader, options);
+        ScopeAssignmentData IJsonModel<ScopeAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScopeAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ScopeAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScopeAssignmentData>(Data, options, AzureResourceManagerManagedNetworkContext.Default);
 
         ScopeAssignmentData IPersistableModel<ScopeAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScopeAssignmentData>(data, options, AzureResourceManagerManagedNetworkContext.Default);
 
-        string IPersistableModel<ScopeAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScopeAssignmentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ScopeAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScopeAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

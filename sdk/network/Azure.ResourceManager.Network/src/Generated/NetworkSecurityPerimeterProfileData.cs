@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the NetworkSecurityPerimeterProfile data model.
     /// The network security perimeter profile resource
     /// </summary>
-    public partial class NetworkSecurityPerimeterProfileData : TrackedResourceData
+    public partial class NetworkSecurityPerimeterProfileData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,8 +51,7 @@ namespace Azure.ResourceManager.Network
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProfileData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public NetworkSecurityPerimeterProfileData(AzureLocation location) : base(location)
+        public NetworkSecurityPerimeterProfileData()
         {
         }
 
@@ -61,26 +60,21 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="accessRulesVersion"> Version number that increases with every update to access rules within the profile. </param>
         /// <param name="diagnosticSettingsVersion"> Version number that increases with every update to diagnostic settings within the profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string accessRulesVersion, string diagnosticSettingsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkSecurityPerimeterProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string accessRulesVersion, string diagnosticSettingsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AccessRulesVersion = accessRulesVersion;
             DiagnosticSettingsVersion = diagnosticSettingsVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProfileData"/> for deserialization. </summary>
-        internal NetworkSecurityPerimeterProfileData()
-        {
-        }
-
         /// <summary> Version number that increases with every update to access rules within the profile. </summary>
+        [WirePath("properties.accessRulesVersion")]
         public string AccessRulesVersion { get; }
         /// <summary> Version number that increases with every update to diagnostic settings within the profile. </summary>
+        [WirePath("properties.diagnosticSettingsVersion")]
         public string DiagnosticSettingsVersion { get; }
     }
 }

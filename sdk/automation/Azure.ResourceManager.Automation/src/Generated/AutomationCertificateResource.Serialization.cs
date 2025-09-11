@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationCertificateResource : IJsonModel<AutomationCertificateData>
     {
+        private static AutomationCertificateData s_dataDeserializationInstance;
+        private static AutomationCertificateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AutomationCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutomationCertificateData>)Data).Write(writer, options);
 
-        AutomationCertificateData IJsonModel<AutomationCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationCertificateData>)Data).Create(ref reader, options);
+        AutomationCertificateData IJsonModel<AutomationCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationCertificateData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AutomationCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationCertificateData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
         AutomationCertificateData IPersistableModel<AutomationCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationCertificateData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<AutomationCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationCertificateData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AutomationCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationCertificateData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

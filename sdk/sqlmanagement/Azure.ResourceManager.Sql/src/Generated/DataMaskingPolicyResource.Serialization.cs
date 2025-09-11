@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class DataMaskingPolicyResource : IJsonModel<DataMaskingPolicyData>
     {
+        private static DataMaskingPolicyData s_dataDeserializationInstance;
+        private static DataMaskingPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataMaskingPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataMaskingPolicyData>)Data).Write(writer, options);
 
-        DataMaskingPolicyData IJsonModel<DataMaskingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataMaskingPolicyData>)Data).Create(ref reader, options);
+        DataMaskingPolicyData IJsonModel<DataMaskingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataMaskingPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DataMaskingPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataMaskingPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         DataMaskingPolicyData IPersistableModel<DataMaskingPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataMaskingPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<DataMaskingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataMaskingPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataMaskingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataMaskingPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

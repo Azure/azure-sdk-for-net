@@ -5,38 +5,28 @@
     <!-- We don't care about XML doc comments on test types and members -->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="SessionRecords\**" />
-    <EmbeddedResource Remove="SessionRecords\**" />
-    <None Remove="SessionRecords\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <!-- Adjust the relative path as necessary if your .png is in "samples/Agent/" -->
-    <None Include="Samples\Agent\image_file.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 
   <!-- Reference the Client Library -->
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.AI.Projects.csproj" />
-<!-- TODO: TEMP until SCM is released https://github.com/Azure/azure-sdk-for-net/issues/49730 -->
-    <ProjectReference Include="..\..\Azure.AI.Inference\src\Azure.AI.Inference.csproj" />
-    <ProjectReference Include="..\..\..\openai\Azure.AI.OpenAI\src\Azure.AI.OpenAI.csproj" />
-    <ProjectReference Include="..\..\..\search\Azure.Search.Documents\src\Azure.Search.Documents.csproj" />
-<!-- ==============================================================-->
   </ItemGroup>
   
   <ItemGroup>
+    <PackageReference Include="Azure.AI.Agents.Persistent" VersionOverride="1.0.0" />
+    <PackageReference Include="Azure.AI.OpenAI" VersionOverride="2.2.0-beta.4" />
+    <PackageReference Include="Azure.AI.Inference" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
     <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
+    <PackageReference Include="System.Linq.Async" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
+  </ItemGroup>
 </Project>

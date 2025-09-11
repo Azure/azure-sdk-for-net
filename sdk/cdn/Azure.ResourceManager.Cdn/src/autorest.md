@@ -7,11 +7,11 @@ azure-arm: true
 library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
 title: CdnManagementClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/2d973fccf9f28681a481e9760fa12b2334216e21/specification/cdn/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/9b87e611b5016ed5c8d0eea2ee4578be782e7feb/specification/cdn/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
   - LogAnalytics_GetLogAnalyticsMetrics
@@ -19,11 +19,12 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+mgmt-debug:
+  show-serialized-names: true
 
 operation-id-mappings:
   CdnEndpoint:
@@ -94,6 +95,9 @@ override-operation-name:
   FrontDoorEndpoints_ListResourceUsage: GetResourceUsages
   FrontDoorOriginGroups_ListResourceUsage: GetResourceUsages
   FrontDoorRuleSets_ListResourceUsage: GetResourceUsages
+  Profiles_CdnCanMigrateToAfd: CheckCdnMigrationCompatibility
+  Profiles_CdnMigrateToAfd: MigrateCdnToAfd
+  Profiles_MigrationAbort: AbortMigration
 
 rename-mapping:
   CacheType: CdnCacheLevel
@@ -347,6 +351,16 @@ rename-mapping:
   AFDDomainUpdateParameters.properties.preValidatedCustomDomainResourceId: PreValidatedCustomDomainResource
   UsageUnit: FrontDoorUsageUnit
   Status: ValidationStatus
+  DeliveryRuleActionParameters: DeliveryRuleActionProperties
+  DeliveryRuleConditionParameters: DeliveryRuleConditionProperties
+  CertificateSourceParameters: CertificateSourceProperties
+  CanMigrateResult.id: ResourceId
+  MigrateResult.id: ResourceId
+  IsDeviceMatchValue: IsDeviceMatchConditionMatchValue
+  KeyVaultSigningKeyParametersType: KeyVaultSigningKeyType
+  RequestMethodMatchValue: RequestMethodMatchConditionMatchValue
+  RequestSchemeMatchValue: RequestSchemeMatchConditionMatchValue
+  KeyVaultSigningKeyParametersType.KeyVaultSigningKeyParameters: KeyVaultSigningKey
 
 directive:
   - from: swagger-document

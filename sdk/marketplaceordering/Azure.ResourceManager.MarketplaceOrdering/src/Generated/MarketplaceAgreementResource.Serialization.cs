@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MarketplaceOrdering
 {
     public partial class MarketplaceAgreementResource : IJsonModel<MarketplaceAgreementTermData>
     {
+        private static MarketplaceAgreementTermData s_dataDeserializationInstance;
+        private static MarketplaceAgreementTermData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MarketplaceAgreementTermData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MarketplaceAgreementTermData>)Data).Write(writer, options);
 
-        MarketplaceAgreementTermData IJsonModel<MarketplaceAgreementTermData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MarketplaceAgreementTermData>)Data).Create(ref reader, options);
+        MarketplaceAgreementTermData IJsonModel<MarketplaceAgreementTermData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MarketplaceAgreementTermData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MarketplaceAgreementTermData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MarketplaceAgreementTermData>(Data, options, AzureResourceManagerMarketplaceOrderingContext.Default);
 
         MarketplaceAgreementTermData IPersistableModel<MarketplaceAgreementTermData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MarketplaceAgreementTermData>(data, options, AzureResourceManagerMarketplaceOrderingContext.Default);
 
-        string IPersistableModel<MarketplaceAgreementTermData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MarketplaceAgreementTermData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MarketplaceAgreementTermData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MarketplaceAgreementTermData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

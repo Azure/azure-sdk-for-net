@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectivityTopology"> Connectivity topology type. </param>
         /// <param name="hubs"> List of hubItems. </param>
         /// <param name="isGlobal"> Flag if global mesh is supported. </param>
+        /// <param name="connectivityCapabilities"> Collection of additional settings to enhance specific topology behaviors of the connectivity configuration resource. </param>
         /// <param name="appliesToGroups"> Groups for configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
@@ -33,15 +34,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="committedOn"> Deployment time string. </param>
         /// <param name="region"> Deployment region. </param>
-        internal ActiveConnectivityConfiguration(string id, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IReadOnlyList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IReadOnlyList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? committedOn, AzureLocation? region) : base(id, configurationGroups, description, connectivityTopology, hubs, isGlobal, appliesToGroups, provisioningState, deleteExistingPeering, resourceGuid, serializedAdditionalRawData)
+        internal ActiveConnectivityConfiguration(string id, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IReadOnlyList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities, IReadOnlyList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? committedOn, AzureLocation? region) : base(id, configurationGroups, description, connectivityTopology, hubs, isGlobal, connectivityCapabilities, appliesToGroups, provisioningState, deleteExistingPeering, resourceGuid, serializedAdditionalRawData)
         {
             CommittedOn = committedOn;
             Region = region;
         }
 
         /// <summary> Deployment time string. </summary>
+        [WirePath("commitTime")]
         public DateTimeOffset? CommittedOn { get; }
         /// <summary> Deployment region. </summary>
+        [WirePath("region")]
         public AzureLocation? Region { get; }
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.EventHubs
 {
     public partial class EventHubsConsumerGroupResource : IJsonModel<EventHubsConsumerGroupData>
     {
+        private static EventHubsConsumerGroupData s_dataDeserializationInstance;
+        private static EventHubsConsumerGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<EventHubsConsumerGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsConsumerGroupData>)Data).Write(writer, options);
 
-        EventHubsConsumerGroupData IJsonModel<EventHubsConsumerGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsConsumerGroupData>)Data).Create(ref reader, options);
+        EventHubsConsumerGroupData IJsonModel<EventHubsConsumerGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsConsumerGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<EventHubsConsumerGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventHubsConsumerGroupData>(Data, options, AzureResourceManagerEventHubsContext.Default);
 
         EventHubsConsumerGroupData IPersistableModel<EventHubsConsumerGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsConsumerGroupData>(data, options, AzureResourceManagerEventHubsContext.Default);
 
-        string IPersistableModel<EventHubsConsumerGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsConsumerGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<EventHubsConsumerGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsConsumerGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// Different types of cryptographic keys.
-    /// Serialized Name: CryptoKeyType
-    /// </summary>
+    /// <summary> Different types of cryptographic keys. </summary>
     public readonly partial struct CryptoKeyType : IEquatable<CryptoKeyType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         private const string PublicValue = "Public";
         private const string PrivateValue = "Private";
 
-        /// <summary>
-        /// The key is an asymmetric public key.
-        /// Serialized Name: CryptoKeyType.Public
-        /// </summary>
+        /// <summary> The key is an asymmetric public key. </summary>
         public static CryptoKeyType Public { get; } = new CryptoKeyType(PublicValue);
-        /// <summary>
-        /// The key is an asymmetric private key.
-        /// Serialized Name: CryptoKeyType.Private
-        /// </summary>
+        /// <summary> The key is an asymmetric private key. </summary>
         public static CryptoKeyType Private { get; } = new CryptoKeyType(PrivateValue);
         /// <summary> Determines if two <see cref="CryptoKeyType"/> values are the same. </summary>
         public static bool operator ==(CryptoKeyType left, CryptoKeyType right) => left.Equals(right);

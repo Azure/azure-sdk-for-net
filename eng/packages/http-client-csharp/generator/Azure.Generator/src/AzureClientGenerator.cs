@@ -19,7 +19,7 @@ namespace Azure.Generator;
 public class AzureClientGenerator : ScmCodeModelGenerator
 {
     private static AzureClientGenerator? _instance;
-    internal static AzureClientGenerator Instance => _instance ?? throw new InvalidOperationException("AzureClientGenerator is not loaded.");
+    internal static new AzureClientGenerator Instance => _instance ?? throw new InvalidOperationException("AzureClientGenerator is not loaded.");
 
     /// <inheritdoc/>
     public override AzureTypeFactory TypeFactory { get; }
@@ -45,12 +45,24 @@ public class AzureClientGenerator : ScmCodeModelGenerator
     protected override void Configure()
     {
         base.Configure();
+
         // Include Azure.Core
         AddMetadataReference(MetadataReference.CreateFromFile(typeof(Response).Assembly.Location));
+
         var sharedSourceDirectory = Path.Combine(Path.GetDirectoryName(typeof(AzureClientGenerator).Assembly.Location)!, "Shared", "Core");
         AddSharedSourceDirectory(sharedSourceDirectory);
+
+        // Visitors that do any renaming must be added first so that any visitors relying on custom code view will have the CustomCodeView set.
+        AddVisitor(new ModelFactoryRenamerVisitor());
+
+        // Rest of the visitors can be added in any order.
         AddVisitor(new NamespaceVisitor());
         AddVisitor(new DistributedTracingVisitor());
         AddVisitor(new PipelinePropertyVisitor());
+        AddVisitor(new LroVisitor());
+        AddVisitor(new SpecialHeadersVisitor());
+        AddVisitor(new MatchConditionsHeadersVisitor());
+        AddVisitor(new RequestClientIdHeaderVisitor());
+        AddVisitor(new SystemTextJsonConverterVisitor());
     }
 }

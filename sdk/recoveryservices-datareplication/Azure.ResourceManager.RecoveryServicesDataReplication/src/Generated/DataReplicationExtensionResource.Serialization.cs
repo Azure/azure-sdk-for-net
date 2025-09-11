@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     public partial class DataReplicationExtensionResource : IJsonModel<DataReplicationExtensionData>
     {
+        private static DataReplicationExtensionData s_dataDeserializationInstance;
+        private static DataReplicationExtensionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataReplicationExtensionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationExtensionData>)Data).Write(writer, options);
 
-        DataReplicationExtensionData IJsonModel<DataReplicationExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationExtensionData>)Data).Create(ref reader, options);
+        DataReplicationExtensionData IJsonModel<DataReplicationExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationExtensionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DataReplicationExtensionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataReplicationExtensionData>(Data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
         DataReplicationExtensionData IPersistableModel<DataReplicationExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataReplicationExtensionData>(data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
-        string IPersistableModel<DataReplicationExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataReplicationExtensionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataReplicationExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataReplicationExtensionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

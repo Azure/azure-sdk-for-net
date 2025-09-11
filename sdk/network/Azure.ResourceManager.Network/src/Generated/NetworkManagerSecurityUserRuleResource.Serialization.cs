@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkManagerSecurityUserRuleResource : IJsonModel<NetworkManagerSecurityUserRuleData>
     {
+        private static NetworkManagerSecurityUserRuleData s_dataDeserializationInstance;
+        private static NetworkManagerSecurityUserRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkManagerSecurityUserRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerSecurityUserRuleData>)Data).Write(writer, options);
 
-        NetworkManagerSecurityUserRuleData IJsonModel<NetworkManagerSecurityUserRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerSecurityUserRuleData>)Data).Create(ref reader, options);
+        NetworkManagerSecurityUserRuleData IJsonModel<NetworkManagerSecurityUserRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerSecurityUserRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkManagerSecurityUserRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkManagerSecurityUserRuleData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         NetworkManagerSecurityUserRuleData IPersistableModel<NetworkManagerSecurityUserRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkManagerSecurityUserRuleData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkManagerSecurityUserRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkManagerSecurityUserRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkManagerSecurityUserRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkManagerSecurityUserRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

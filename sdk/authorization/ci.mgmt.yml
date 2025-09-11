@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Authorization
       safeName: AzureResourceManagerAuthorization
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Authorization
+      ExpectedWarningsFilepath: None

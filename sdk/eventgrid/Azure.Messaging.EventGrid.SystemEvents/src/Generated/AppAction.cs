@@ -14,50 +14,77 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct AppAction : IEquatable<AppAction>
     {
         private readonly string _value;
+        /// <summary> Web app was restarted. </summary>
+        private const string RestartedValue = "Restarted";
+        /// <summary> Web app was stopped. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> There was an operation to change app setting on the web app. </summary>
+        private const string ChangedAppSettingsValue = "ChangedAppSettings";
+        /// <summary> The job has started. </summary>
+        private const string StartedValue = "Started";
+        /// <summary> The job has completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> The job has failed to complete. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="AppAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AppAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RestartedValue = "Restarted";
-        private const string StoppedValue = "Stopped";
-        private const string ChangedAppSettingsValue = "ChangedAppSettings";
-        private const string StartedValue = "Started";
-        private const string CompletedValue = "Completed";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Web app was restarted. </summary>
         public static AppAction Restarted { get; } = new AppAction(RestartedValue);
+
         /// <summary> Web app was stopped. </summary>
         public static AppAction Stopped { get; } = new AppAction(StoppedValue);
+
         /// <summary> There was an operation to change app setting on the web app. </summary>
         public static AppAction ChangedAppSettings { get; } = new AppAction(ChangedAppSettingsValue);
+
         /// <summary> The job has started. </summary>
         public static AppAction Started { get; } = new AppAction(StartedValue);
+
         /// <summary> The job has completed. </summary>
         public static AppAction Completed { get; } = new AppAction(CompletedValue);
+
         /// <summary> The job has failed to complete. </summary>
         public static AppAction Failed { get; } = new AppAction(FailedValue);
+
         /// <summary> Determines if two <see cref="AppAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppAction left, AppAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppAction left, AppAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppAction(string value) => new AppAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppAction?(string value) => value == null ? null : new AppAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

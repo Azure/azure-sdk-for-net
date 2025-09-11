@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Kusto
 {
     public partial class KustoDatabaseResource : IJsonModel<KustoDatabaseData>
     {
+        private static KustoDatabaseData s_dataDeserializationInstance;
+        private static KustoDatabaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<KustoDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KustoDatabaseData>)Data).Write(writer, options);
 
-        KustoDatabaseData IJsonModel<KustoDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoDatabaseData>)Data).Create(ref reader, options);
+        KustoDatabaseData IJsonModel<KustoDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoDatabaseData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<KustoDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoDatabaseData>(Data, options, AzureResourceManagerKustoContext.Default);
 
         KustoDatabaseData IPersistableModel<KustoDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoDatabaseData>(data, options, AzureResourceManagerKustoContext.Default);
 
-        string IPersistableModel<KustoDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoDatabaseData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<KustoDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoDatabaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ProviderHub
 {
     public partial class CustomRolloutResource : IJsonModel<CustomRolloutData>
     {
+        private static CustomRolloutData s_dataDeserializationInstance;
+        private static CustomRolloutData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CustomRolloutData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CustomRolloutData>)Data).Write(writer, options);
 
-        CustomRolloutData IJsonModel<CustomRolloutData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CustomRolloutData>)Data).Create(ref reader, options);
+        CustomRolloutData IJsonModel<CustomRolloutData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CustomRolloutData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<CustomRolloutData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CustomRolloutData>(Data, options, AzureResourceManagerProviderHubContext.Default);
 
         CustomRolloutData IPersistableModel<CustomRolloutData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomRolloutData>(data, options, AzureResourceManagerProviderHubContext.Default);
 
-        string IPersistableModel<CustomRolloutData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CustomRolloutData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CustomRolloutData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CustomRolloutData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

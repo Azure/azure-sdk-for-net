@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Advisor
 {
     public partial class MetadataEntityResource : IJsonModel<MetadataEntityData>
     {
+        private static MetadataEntityData s_dataDeserializationInstance;
+        private static MetadataEntityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MetadataEntityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MetadataEntityData>)Data).Write(writer, options);
 
-        MetadataEntityData IJsonModel<MetadataEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MetadataEntityData>)Data).Create(ref reader, options);
+        MetadataEntityData IJsonModel<MetadataEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MetadataEntityData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MetadataEntityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MetadataEntityData>(Data, options, AzureResourceManagerAdvisorContext.Default);
 
         MetadataEntityData IPersistableModel<MetadataEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MetadataEntityData>(data, options, AzureResourceManagerAdvisorContext.Default);
 
-        string IPersistableModel<MetadataEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MetadataEntityData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MetadataEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MetadataEntityData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 {
     public partial class UsageMetricResource : IJsonModel<UsageMetricData>
     {
+        private static UsageMetricData s_dataDeserializationInstance;
+        private static UsageMetricData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<UsageMetricData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<UsageMetricData>)Data).Write(writer, options);
 
-        UsageMetricData IJsonModel<UsageMetricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<UsageMetricData>)Data).Create(ref reader, options);
+        UsageMetricData IJsonModel<UsageMetricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<UsageMetricData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<UsageMetricData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<UsageMetricData>(Data, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
 
         UsageMetricData IPersistableModel<UsageMetricData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<UsageMetricData>(data, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
 
-        string IPersistableModel<UsageMetricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<UsageMetricData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<UsageMetricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<UsageMetricData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

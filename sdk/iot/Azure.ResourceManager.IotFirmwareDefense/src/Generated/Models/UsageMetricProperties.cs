@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// Properties of a workspaces usage metrics.
-    /// Serialized Name: UsageMetricProperties
-    /// </summary>
+    /// <summary> Properties of a workspaces usage metrics. </summary>
     public partial class UsageMetricProperties
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UsageMetricProperties"/>. </summary>
-        /// <param name="monthlyFirmwareUploadCount">
-        /// The number of firmware analysis jobs that have been submitted in the current month.
-        /// Serialized Name: UsageMetricProperties.monthlyFirmwareUploadCount
-        /// </param>
-        /// <param name="totalFirmwareCount">
-        /// The total number of firmwares that are in the workspace.
-        /// Serialized Name: UsageMetricProperties.totalFirmwareCount
-        /// </param>
+        /// <param name="monthlyFirmwareUploadCount"> The number of firmware analysis jobs that have been submitted in the current month. </param>
+        /// <param name="totalFirmwareCount"> The total number of firmwares that are in the workspace. </param>
         public UsageMetricProperties(long monthlyFirmwareUploadCount, long totalFirmwareCount)
         {
             MonthlyFirmwareUploadCount = monthlyFirmwareUploadCount;
@@ -64,18 +55,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UsageMetricProperties"/>. </summary>
-        /// <param name="monthlyFirmwareUploadCount">
-        /// The number of firmware analysis jobs that have been submitted in the current month.
-        /// Serialized Name: UsageMetricProperties.monthlyFirmwareUploadCount
-        /// </param>
-        /// <param name="totalFirmwareCount">
-        /// The total number of firmwares that are in the workspace.
-        /// Serialized Name: UsageMetricProperties.totalFirmwareCount
-        /// </param>
-        /// <param name="provisioningState">
-        /// The status of the last operation.
-        /// Serialized Name: UsageMetricProperties.provisioningState
-        /// </param>
+        /// <param name="monthlyFirmwareUploadCount"> The number of firmware analysis jobs that have been submitted in the current month. </param>
+        /// <param name="totalFirmwareCount"> The total number of firmwares that are in the workspace. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UsageMetricProperties(long monthlyFirmwareUploadCount, long totalFirmwareCount, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -90,20 +72,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
         }
 
-        /// <summary>
-        /// The number of firmware analysis jobs that have been submitted in the current month.
-        /// Serialized Name: UsageMetricProperties.monthlyFirmwareUploadCount
-        /// </summary>
+        /// <summary> The number of firmware analysis jobs that have been submitted in the current month. </summary>
         public long MonthlyFirmwareUploadCount { get; }
-        /// <summary>
-        /// The total number of firmwares that are in the workspace.
-        /// Serialized Name: UsageMetricProperties.totalFirmwareCount
-        /// </summary>
+        /// <summary> The total number of firmwares that are in the workspace. </summary>
         public long TotalFirmwareCount { get; }
-        /// <summary>
-        /// The status of the last operation.
-        /// Serialized Name: UsageMetricProperties.provisioningState
-        /// </summary>
+        /// <summary> The status of the last operation. </summary>
         public FirmwareProvisioningState? ProvisioningState { get; }
     }
 }

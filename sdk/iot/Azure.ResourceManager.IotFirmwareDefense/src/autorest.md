@@ -7,12 +7,12 @@ azure-arm: true
 csharp: true
 library-name: IotFirmwareDefense
 namespace: Azure.ResourceManager.IotFirmwareDefense
-require: https://github.com/Azure/azure-rest-api-specs/blob/9b3e29902644a7bb9317d68f249c7cb8b11d82cf/specification/fist/resource-manager/readme.md
-tag: package-2025-04-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/0490f6e57b3d0c8bd60d8bf237ddb6308e89ebd3/specification/fist/resource-manager/readme.md
+tag: package-2025-08-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -20,8 +20,8 @@ modelerfour:
   flatten-models: true
 use-model-reader-writer: true
 
-mgmt-debug:
-  show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -56,7 +56,6 @@ acronym-mapping:
 
 override-operation-name:
   BinaryHardening_ListByFirmware: GetBinaryHardeningResults
-  Cves_ListByFirmware: GetCommonVulnerabilitiesAndExposures
 
 rename-mapping:
   GenerateUploadUrlRequest: FirmwareUploadUrlRequest

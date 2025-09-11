@@ -29,7 +29,7 @@ namespace BasicTypeSpec
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <param name="requiredNullableList"> required nullable collection. </param>
         /// <returns> A new <see cref="BasicTypeSpec.ThingModel"/> instance for mocking. </returns>
-        public static ThingModel ThingModel(string name = default, BinaryData requiredUnion = default, ThingModelRequiredLiteralString requiredLiteralString = default, ThingModelRequiredLiteralInt requiredLiteralInt = default, ThingModelRequiredLiteralFloat requiredLiteralFloat = default, bool requiredLiteralBool = default, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, string requiredBadDescription = default, IEnumerable<int> optionalNullableList = default, IEnumerable<int> requiredNullableList = default)
+        public static ThingModel ThingModel(string name = default, BinaryData requiredUnion = default, string requiredLiteralString = default, int requiredLiteralInt = default, float requiredLiteralFloat = default, bool requiredLiteralBool = default, string optionalLiteralString = default, int? optionalLiteralInt = default, float? optionalLiteralFloat = default, bool? optionalLiteralBool = default, string requiredBadDescription = default, IEnumerable<int> optionalNullableList = default, IEnumerable<int> requiredNullableList = default)
         {
             optionalNullableList ??= new ChangeTrackingList<int>();
             requiredNullableList ??= new ChangeTrackingList<int>();
@@ -46,8 +46,8 @@ namespace BasicTypeSpec
                 optionalLiteralFloat,
                 optionalLiteralBool,
                 requiredBadDescription,
-                optionalNullableList?.ToList(),
-                requiredNullableList?.ToList(),
+                optionalNullableList.ToList(),
+                requiredNullableList.ToList(),
                 additionalBinaryDataProperties: null);
         }
 
@@ -93,19 +93,19 @@ namespace BasicTypeSpec
             return new RoundTripModel(
                 requiredString,
                 requiredInt,
-                requiredCollection?.ToList(),
+                requiredCollection.ToList(),
                 requiredDictionary,
                 requiredModel,
                 intExtensibleEnum,
-                intExtensibleEnumCollection?.ToList(),
+                intExtensibleEnumCollection.ToList(),
                 floatExtensibleEnum,
                 floatExtensibleEnumWithIntValue,
-                floatExtensibleEnumCollection?.ToList(),
+                floatExtensibleEnumCollection.ToList(),
                 floatFixedEnum,
                 floatFixedEnumWithIntValue,
-                floatFixedEnumCollection?.ToList(),
+                floatFixedEnumCollection.ToList(),
                 intFixedEnum,
-                intFixedEnumCollection?.ToList(),
+                intFixedEnumCollection.ToList(),
                 stringFixedEnum,
                 requiredUnknown,
                 optionalUnknown,
@@ -125,7 +125,6 @@ namespace BasicTypeSpec
         /// <returns> A new <see cref="BasicTypeSpec.ModelWithRequiredNullableProperties"/> instance for mocking. </returns>
         public static ModelWithRequiredNullableProperties ModelWithRequiredNullableProperties(int? requiredNullablePrimitive = default, StringExtensibleEnum? requiredExtensibleEnum = default, StringFixedEnum? requiredFixedEnum = default)
         {
-
             return new ModelWithRequiredNullableProperties(requiredNullablePrimitive, requiredExtensibleEnum, requiredFixedEnum, additionalBinaryDataProperties: null);
         }
 
@@ -134,7 +133,6 @@ namespace BasicTypeSpec
         /// <returns> A new <see cref="BasicTypeSpec.FriendModel"/> instance for mocking. </returns>
         public static FriendModel FriendModel(string name = default)
         {
-
             return new FriendModel(name, additionalBinaryDataProperties: null);
         }
 
@@ -143,7 +141,6 @@ namespace BasicTypeSpec
         /// <returns> A new <see cref="BasicTypeSpec.RenamedModel"/> instance for mocking. </returns>
         public static RenamedModel RenamedModel(string name = default)
         {
-
             return new RenamedModel(name, additionalBinaryDataProperties: null);
         }
 
@@ -151,7 +148,6 @@ namespace BasicTypeSpec
         /// <returns> A new <see cref="BasicTypeSpec.ReturnsAnonymousModelResponse"/> instance for mocking. </returns>
         public static ReturnsAnonymousModelResponse ReturnsAnonymousModelResponse()
         {
-
             return new ReturnsAnonymousModelResponse(additionalBinaryDataProperties: null);
         }
     }

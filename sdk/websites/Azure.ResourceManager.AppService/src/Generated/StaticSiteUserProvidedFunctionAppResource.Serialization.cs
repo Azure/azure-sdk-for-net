@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class StaticSiteUserProvidedFunctionAppResource : IJsonModel<StaticSiteUserProvidedFunctionAppData>
     {
+        private static StaticSiteUserProvidedFunctionAppData s_dataDeserializationInstance;
+        private static StaticSiteUserProvidedFunctionAppData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StaticSiteUserProvidedFunctionAppData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteUserProvidedFunctionAppData>)Data).Write(writer, options);
 
-        StaticSiteUserProvidedFunctionAppData IJsonModel<StaticSiteUserProvidedFunctionAppData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteUserProvidedFunctionAppData>)Data).Create(ref reader, options);
+        StaticSiteUserProvidedFunctionAppData IJsonModel<StaticSiteUserProvidedFunctionAppData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteUserProvidedFunctionAppData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<StaticSiteUserProvidedFunctionAppData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteUserProvidedFunctionAppData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         StaticSiteUserProvidedFunctionAppData IPersistableModel<StaticSiteUserProvidedFunctionAppData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteUserProvidedFunctionAppData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<StaticSiteUserProvidedFunctionAppData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteUserProvidedFunctionAppData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StaticSiteUserProvidedFunctionAppData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteUserProvidedFunctionAppData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

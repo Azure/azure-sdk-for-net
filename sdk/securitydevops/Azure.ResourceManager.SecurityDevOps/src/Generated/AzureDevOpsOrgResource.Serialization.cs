@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityDevOps
 {
     public partial class AzureDevOpsOrgResource : IJsonModel<AzureDevOpsOrgData>
     {
+        private static AzureDevOpsOrgData s_dataDeserializationInstance;
+        private static AzureDevOpsOrgData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AzureDevOpsOrgData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AzureDevOpsOrgData>)Data).Write(writer, options);
 
-        AzureDevOpsOrgData IJsonModel<AzureDevOpsOrgData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureDevOpsOrgData>)Data).Create(ref reader, options);
+        AzureDevOpsOrgData IJsonModel<AzureDevOpsOrgData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureDevOpsOrgData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AzureDevOpsOrgData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AzureDevOpsOrgData>(Data, options, AzureResourceManagerSecurityDevOpsContext.Default);
 
         AzureDevOpsOrgData IPersistableModel<AzureDevOpsOrgData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureDevOpsOrgData>(data, options, AzureResourceManagerSecurityDevOpsContext.Default);
 
-        string IPersistableModel<AzureDevOpsOrgData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureDevOpsOrgData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AzureDevOpsOrgData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureDevOpsOrgData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

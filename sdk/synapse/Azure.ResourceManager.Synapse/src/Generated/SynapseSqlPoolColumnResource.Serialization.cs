@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseSqlPoolColumnResource : IJsonModel<SynapseSqlPoolColumnData>
     {
+        private static SynapseSqlPoolColumnData s_dataDeserializationInstance;
+        private static SynapseSqlPoolColumnData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseSqlPoolColumnData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSqlPoolColumnData>)Data).Write(writer, options);
 
-        SynapseSqlPoolColumnData IJsonModel<SynapseSqlPoolColumnData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSqlPoolColumnData>)Data).Create(ref reader, options);
+        SynapseSqlPoolColumnData IJsonModel<SynapseSqlPoolColumnData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSqlPoolColumnData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SynapseSqlPoolColumnData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseSqlPoolColumnData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
         SynapseSqlPoolColumnData IPersistableModel<SynapseSqlPoolColumnData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseSqlPoolColumnData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseSqlPoolColumnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseSqlPoolColumnData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseSqlPoolColumnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseSqlPoolColumnData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

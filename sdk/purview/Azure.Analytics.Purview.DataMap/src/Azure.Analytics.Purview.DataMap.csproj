@@ -5,7 +5,7 @@
     <Version>1.0.0-beta.3</Version>
     <PackageTags>Azure.Analytics.Purview.DataMap</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);AZC0012;AZC0030</NoWarn>
+    <NoWarn>$(NoWarn);AZC0012;AZC0030;AZC0034</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 

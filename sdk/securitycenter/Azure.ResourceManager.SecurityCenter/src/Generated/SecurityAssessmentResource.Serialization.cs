@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityAssessmentResource : IJsonModel<SecurityAssessmentData>
     {
+        private static SecurityAssessmentData s_dataDeserializationInstance;
+        private static SecurityAssessmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityAssessmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityAssessmentData>)Data).Write(writer, options);
 
-        SecurityAssessmentData IJsonModel<SecurityAssessmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityAssessmentData>)Data).Create(ref reader, options);
+        SecurityAssessmentData IJsonModel<SecurityAssessmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityAssessmentData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SecurityAssessmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityAssessmentData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         SecurityAssessmentData IPersistableModel<SecurityAssessmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityAssessmentData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<SecurityAssessmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityAssessmentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityAssessmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityAssessmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

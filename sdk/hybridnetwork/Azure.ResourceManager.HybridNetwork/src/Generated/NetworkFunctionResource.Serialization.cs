@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     public partial class NetworkFunctionResource : IJsonModel<NetworkFunctionData>
     {
+        private static NetworkFunctionData s_dataDeserializationInstance;
+        private static NetworkFunctionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkFunctionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFunctionData>)Data).Write(writer, options);
 
-        NetworkFunctionData IJsonModel<NetworkFunctionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFunctionData>)Data).Create(ref reader, options);
+        NetworkFunctionData IJsonModel<NetworkFunctionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFunctionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkFunctionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFunctionData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
 
         NetworkFunctionData IPersistableModel<NetworkFunctionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFunctionData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        string IPersistableModel<NetworkFunctionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFunctionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkFunctionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFunctionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

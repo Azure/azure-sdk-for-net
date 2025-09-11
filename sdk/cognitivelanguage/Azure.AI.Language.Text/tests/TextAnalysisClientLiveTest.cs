@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Language.Text;
 using Azure.AI.Language.Text.Tests;
@@ -205,7 +207,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeText_RecognizePii()
         {
             string textA =
@@ -248,7 +250,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeText_RecognizeLinkedEntities()
         {
             string textA =
@@ -303,7 +305,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeText_HealthcareLROTask()
         {
             string textA = "Prescribed 100mg ibuprofen, taken twice daily.";
@@ -381,7 +383,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeText_CustomEntitiesLROTask()
         {
             string textA =
@@ -448,7 +450,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeText_CustomSingleLabelClassificationLROTask()
         {
             string textA =
@@ -509,7 +511,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeText_CustomMultiLabelClassificationLROTask()
         {
             string textA =
@@ -570,7 +572,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = TextAnalysisClientOptions.ServiceVersion.V2023_04_01)]
         public async Task AnalyzeText_ExtractiveSummarizationLROTaskAsync()
         {
@@ -663,7 +665,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = TextAnalysisClientOptions.ServiceVersion.V2023_04_01)]
         public async Task AnalyzeText_AbstractiveSummarizationLROTaskAsync()
         {
@@ -762,6 +764,162 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     }
                 }
             }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalysisClientOptions.ServiceVersion.V2025_05_15_Preview)]
+        public async Task AnalyzeText_RecognizePii_WithValueExclusion()
+        {
+            string text = "My SSN is 859-98-0987.";
+
+            AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput()
+            {
+                TextInput = new MultiLanguageTextInput()
+                {
+                    MultiLanguageInputs =
+                    {
+                        new MultiLanguageInput("3", text) { Language = "en" },
+                    }
+                },
+                ActionContent = new PiiActionContent()
+                {
+                    ModelVersion = "latest",
+                    ValueExclusionPolicy = new ValueExclusionPolicy(
+                        caseSensitive: false,
+                        excludedValues: new[] { "859-98-0987" }
+                    )
+                }
+            };
+
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
+            Assert.IsNotNull(response?.Value);
+
+            AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
+
+            foreach (PiiActionResult result in piiTaskResult.Results.Documents)
+            {
+                Assert.AreEqual("3", result.Id);
+                Assert.IsNotNull(result.Entities);
+                Assert.AreEqual(0, result.Entities.Count, "Expected no PII entities due to exclusion.");
+                Assert.AreEqual(text, result.RedactedText, "Expected redacted text to remain unchanged.");
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalysisClientOptions.ServiceVersion.V2025_05_15_Preview)]
+        public async Task AnalyzeText_RecognizePii_WithSynonyms()
+        {
+            PiiActionContent actionContent = new PiiActionContent();
+            actionContent.ExcludePiiCategories.Add(PiiCategoriesExclude.PhoneNumber);
+            actionContent.EntitySynonyms.Add(
+                new EntitySynonyms(
+                    new EntityCategory("USBankAccountNumber"),
+                    new List<EntitySynonym>
+                    {
+                        new EntitySynonym("FAN") { Language = "en" },
+                        new EntitySynonym("RAN") { Language = "en" }
+                    }
+                )
+            );
+
+            AnalyzeTextInput input = new TextPiiEntitiesRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs =
+                    {
+                        new MultiLanguageInput("1", "My FAN is 281314478878") { Language = "en" },
+                        new MultiLanguageInput("2", "My bank account number is 281314478873.") { Language = "en" },
+                        new MultiLanguageInput("3", "My FAN is 281314478878 and Tom's RAN is 281314478879.") { Language = "en" },
+                    }
+                },
+                ActionContent = actionContent
+            };
+
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(input);
+            Assert.IsNotNull(response);
+            Assert.IsNotNull(response.Value);
+
+            AnalyzeTextPiiResult piiResult = (AnalyzeTextPiiResult)response.Value;
+            Assert.AreEqual(3, piiResult.Results.Documents.Count);
+
+            PiiActionResult doc1 = piiResult.Results.Documents.First(d => d.Id == "1");
+            Assert.AreEqual("My FAN is ************", doc1.RedactedText);
+            // Print all entity details
+            Console.WriteLine("Entities for document 1:");
+            foreach (PiiEntity entity in doc1.Entities)
+            {
+                Console.WriteLine($"Text: {entity.Text}");
+                Console.WriteLine($"Category: {entity.Category}");
+                Console.WriteLine($"Type: {entity.Type}");
+                Console.WriteLine($"Offset: {entity.Offset}");
+                Console.WriteLine($"Length: {entity.Length}");
+                Console.WriteLine($"ConfidenceScore: {entity.ConfidenceScore}");
+
+                if (entity.Tags != null)
+                {
+                    Console.WriteLine("Tags:");
+                    foreach (EntityTag tag in entity.Tags)
+                    {
+                        Console.WriteLine($"  - Name: {tag.Name}, ConfidenceScore: {tag.ConfidenceScore}");
+                    }
+                }
+
+                Console.WriteLine();
+            }
+            Assert.IsTrue(doc1.Entities.Any(e => e.Text == "281314478878" && e.Category == "USBankAccountNumber"));
+
+            PiiActionResult doc2 = piiResult.Results.Documents.First(d => d.Id == "2");
+            Assert.AreEqual("My bank account number is ************.", doc2.RedactedText);
+            Assert.IsTrue(doc2.Entities.Any(e => e.Text == "281314478873" && e.Category == "USBankAccountNumber"));
+
+            PiiActionResult doc3 = piiResult.Results.Documents.First(d => d.Id == "3");
+            Assert.AreEqual("My FAN is ************ and ***'s RAN is ************.", doc3.RedactedText);
+            Assert.IsTrue(doc3.Entities.Any(e => e.Text == "281314478878" && e.Category == "USBankAccountNumber"));
+            Assert.IsTrue(doc3.Entities.Any(e => e.Text == "281314478879" && e.Category == "USBankAccountNumber"));
+            Assert.IsTrue(doc3.Entities.Any(e => e.Text == "Tom" && e.Category == "Person"));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalysisClientOptions.ServiceVersion.V2025_05_15_Preview)]
+        public async Task AnalyzeText_RecognizePii_WithNewEntityTypes()
+        {
+            AnalyzeTextInput input = new TextPiiEntitiesRecognitionInput()
+            {
+                TextInput = new MultiLanguageTextInput()
+                {
+                    MultiLanguageInputs =
+                    {
+                        new MultiLanguageInput("1", "The date of birth is May 15th, 2015") { Language = "en" },
+                        new MultiLanguageInput("2", "The phone number is (555) 123-4567") { Language = "en" }
+                    }
+                },
+                ActionContent = new PiiActionContent()
+                {
+                    ModelVersion = "2025-05-15-preview"
+                }
+            };
+
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(input);
+            Assert.IsNotNull(response?.Value);
+
+            AnalyzeTextPiiResult result = (AnalyzeTextPiiResult)response.Value;
+            Assert.AreEqual("2025-05-15-preview", result.Results.ModelVersion);
+            Assert.AreEqual(2, result.Results.Documents.Count);
+
+            PiiActionResult doc1 = result.Results.Documents.First(d => d.Id == "1");
+            Assert.AreEqual("The date of birth is **************", doc1.RedactedText);
+            Assert.IsTrue(doc1.Entities.Any(e =>
+                e.Text == "May 15th, 2015" &&
+                e.Category == "DateTime" &&
+                e.Type == "DateOfBirth"));
+
+            PiiActionResult doc2 = result.Results.Documents.First(d => d.Id == "2");
+            Assert.AreEqual("The phone number is **************", doc2.RedactedText);
+            Assert.IsTrue(doc2.Entities.Any(e =>
+                e.Text == "(555) 123-4567" &&
+                e.Category == "PhoneNumber" &&
+                e.Type == "PhoneNumber"));
         }
     }
 }

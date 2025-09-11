@@ -26,7 +26,11 @@ public partial class StorageAccountSasPolicy : ProvisionableConstruct
     private BicepValue<string>? _sasExpirationPeriod;
 
     /// <summary>
-    /// The SAS expiration action. Can only be Log.
+    /// The SAS Expiration Action defines the action to be performed when
+    /// sasPolicy.sasExpirationPeriod is violated. The &apos;Log&apos; action
+    /// can be used for audit purposes and the &apos;Block&apos; action can be
+    /// used to block and deny the usage of SAS tokens that do not adhere to
+    /// the sas policy expiration period.
     /// </summary>
     public BicepValue<ExpirationAction> ExpirationAction 
     {

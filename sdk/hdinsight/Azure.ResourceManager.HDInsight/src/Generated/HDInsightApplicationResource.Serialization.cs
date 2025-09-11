@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HDInsight
 {
     public partial class HDInsightApplicationResource : IJsonModel<HDInsightApplicationData>
     {
+        private static HDInsightApplicationData s_dataDeserializationInstance;
+        private static HDInsightApplicationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HDInsightApplicationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HDInsightApplicationData>)Data).Write(writer, options);
 
-        HDInsightApplicationData IJsonModel<HDInsightApplicationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HDInsightApplicationData>)Data).Create(ref reader, options);
+        HDInsightApplicationData IJsonModel<HDInsightApplicationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HDInsightApplicationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<HDInsightApplicationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HDInsightApplicationData>(Data, options, AzureResourceManagerHDInsightContext.Default);
 
         HDInsightApplicationData IPersistableModel<HDInsightApplicationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HDInsightApplicationData>(data, options, AzureResourceManagerHDInsightContext.Default);
 
-        string IPersistableModel<HDInsightApplicationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HDInsightApplicationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HDInsightApplicationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HDInsightApplicationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DatabaseWatcher
 {
     public partial class DatabaseWatcherHealthValidationResource : IJsonModel<DatabaseWatcherHealthValidationData>
     {
+        private static DatabaseWatcherHealthValidationData s_dataDeserializationInstance;
+        private static DatabaseWatcherHealthValidationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DatabaseWatcherHealthValidationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseWatcherHealthValidationData>)Data).Write(writer, options);
 
-        DatabaseWatcherHealthValidationData IJsonModel<DatabaseWatcherHealthValidationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseWatcherHealthValidationData>)Data).Create(ref reader, options);
+        DatabaseWatcherHealthValidationData IJsonModel<DatabaseWatcherHealthValidationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseWatcherHealthValidationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DatabaseWatcherHealthValidationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatabaseWatcherHealthValidationData>(Data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
         DatabaseWatcherHealthValidationData IPersistableModel<DatabaseWatcherHealthValidationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseWatcherHealthValidationData>(data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
-        string IPersistableModel<DatabaseWatcherHealthValidationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseWatcherHealthValidationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DatabaseWatcherHealthValidationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseWatcherHealthValidationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.StandbyPool
 {
     public partial class StandbyContainerGroupPoolRuntimeViewResource : IJsonModel<StandbyContainerGroupPoolRuntimeViewData>
     {
+        private static StandbyContainerGroupPoolRuntimeViewData s_dataDeserializationInstance;
+        private static StandbyContainerGroupPoolRuntimeViewData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StandbyContainerGroupPoolRuntimeViewData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StandbyContainerGroupPoolRuntimeViewData>)Data).Write(writer, options);
 
-        StandbyContainerGroupPoolRuntimeViewData IJsonModel<StandbyContainerGroupPoolRuntimeViewData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StandbyContainerGroupPoolRuntimeViewData>)Data).Create(ref reader, options);
+        StandbyContainerGroupPoolRuntimeViewData IJsonModel<StandbyContainerGroupPoolRuntimeViewData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StandbyContainerGroupPoolRuntimeViewData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<StandbyContainerGroupPoolRuntimeViewData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StandbyContainerGroupPoolRuntimeViewData>(Data, options, AzureResourceManagerStandbyPoolContext.Default);
 
         StandbyContainerGroupPoolRuntimeViewData IPersistableModel<StandbyContainerGroupPoolRuntimeViewData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StandbyContainerGroupPoolRuntimeViewData>(data, options, AzureResourceManagerStandbyPoolContext.Default);
 
-        string IPersistableModel<StandbyContainerGroupPoolRuntimeViewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StandbyContainerGroupPoolRuntimeViewData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StandbyContainerGroupPoolRuntimeViewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StandbyContainerGroupPoolRuntimeViewData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

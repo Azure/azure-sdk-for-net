@@ -2822,7 +2822,6 @@ namespace Azure.Analytics.Defender.Easm
             uri.AppendPath(dataConnectionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2912,7 +2911,6 @@ namespace Azure.Analytics.Defender.Easm
             uri.AppendPath(":run", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -3100,7 +3098,6 @@ namespace Azure.Analytics.Defender.Easm
             uri.AppendPath(filterName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

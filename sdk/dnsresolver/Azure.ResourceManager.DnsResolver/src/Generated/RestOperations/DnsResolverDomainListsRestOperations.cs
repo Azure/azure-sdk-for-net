@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-07-01-preview";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -603,6 +603,112 @@ namespace Azure.ResourceManager.DnsResolver
                         value = DnsResolverDomainListResult.DeserializeDnsResolverDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateBulkRequestUri(string subscriptionId, string resourceGroupName, string dnsResolverDomainListName, DnsResolverDomainListBulk dnsResolverDomainListBulk, string ifMatch, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsResolverDomainLists/", false);
+            uri.AppendPath(dnsResolverDomainListName, true);
+            uri.AppendPath("/bulk", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateBulkRequest(string subscriptionId, string resourceGroupName, string dnsResolverDomainListName, DnsResolverDomainListBulk dnsResolverDomainListBulk, string ifMatch, string ifNoneMatch)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsResolverDomainLists/", false);
+            uri.AppendPath(dnsResolverDomainListName, true);
+            uri.AppendPath("/bulk", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(dnsResolverDomainListBulk, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Uploads or downloads the list of domains for a DNS Resolver Domain List from a storage link. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="dnsResolverDomainListName"> The name of the DNS resolver domain list. </param>
+        /// <param name="dnsResolverDomainListBulk"> Parameters supplied to the bulk domain list operation. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsResolverDomainListName"/> or <paramref name="dnsResolverDomainListBulk"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsResolverDomainListName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> BulkAsync(string subscriptionId, string resourceGroupName, string dnsResolverDomainListName, DnsResolverDomainListBulk dnsResolverDomainListBulk, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dnsResolverDomainListName, nameof(dnsResolverDomainListName));
+            Argument.AssertNotNull(dnsResolverDomainListBulk, nameof(dnsResolverDomainListBulk));
+
+            using var message = CreateBulkRequest(subscriptionId, resourceGroupName, dnsResolverDomainListName, dnsResolverDomainListBulk, ifMatch, ifNoneMatch);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Uploads or downloads the list of domains for a DNS Resolver Domain List from a storage link. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="dnsResolverDomainListName"> The name of the DNS resolver domain list. </param>
+        /// <param name="dnsResolverDomainListBulk"> Parameters supplied to the bulk domain list operation. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsResolverDomainListName"/> or <paramref name="dnsResolverDomainListBulk"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsResolverDomainListName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Bulk(string subscriptionId, string resourceGroupName, string dnsResolverDomainListName, DnsResolverDomainListBulk dnsResolverDomainListBulk, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dnsResolverDomainListName, nameof(dnsResolverDomainListName));
+            Argument.AssertNotNull(dnsResolverDomainListBulk, nameof(dnsResolverDomainListBulk));
+
+            using var message = CreateBulkRequest(subscriptionId, resourceGroupName, dnsResolverDomainListName, dnsResolverDomainListBulk, ifMatch, ifNoneMatch);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }

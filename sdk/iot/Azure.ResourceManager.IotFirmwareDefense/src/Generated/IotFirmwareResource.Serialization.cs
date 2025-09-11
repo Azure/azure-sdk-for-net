@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 {
     public partial class IotFirmwareResource : IJsonModel<IotFirmwareData>
     {
+        private static IotFirmwareData s_dataDeserializationInstance;
+        private static IotFirmwareData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<IotFirmwareData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotFirmwareData>)Data).Write(writer, options);
 
-        IotFirmwareData IJsonModel<IotFirmwareData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotFirmwareData>)Data).Create(ref reader, options);
+        IotFirmwareData IJsonModel<IotFirmwareData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotFirmwareData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<IotFirmwareData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotFirmwareData>(Data, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
 
         IotFirmwareData IPersistableModel<IotFirmwareData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotFirmwareData>(data, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
 
-        string IPersistableModel<IotFirmwareData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotFirmwareData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<IotFirmwareData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotFirmwareData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

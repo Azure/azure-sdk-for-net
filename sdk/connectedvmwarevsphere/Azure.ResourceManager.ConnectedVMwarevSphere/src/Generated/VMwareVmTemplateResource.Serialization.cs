@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     public partial class VMwareVmTemplateResource : IJsonModel<VMwareVmTemplateData>
     {
+        private static VMwareVmTemplateData s_dataDeserializationInstance;
+        private static VMwareVmTemplateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VMwareVmTemplateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VMwareVmTemplateData>)Data).Write(writer, options);
 
-        VMwareVmTemplateData IJsonModel<VMwareVmTemplateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VMwareVmTemplateData>)Data).Create(ref reader, options);
+        VMwareVmTemplateData IJsonModel<VMwareVmTemplateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VMwareVmTemplateData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<VMwareVmTemplateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VMwareVmTemplateData>(Data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
         VMwareVmTemplateData IPersistableModel<VMwareVmTemplateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VMwareVmTemplateData>(data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
-        string IPersistableModel<VMwareVmTemplateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VMwareVmTemplateData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VMwareVmTemplateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VMwareVmTemplateData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

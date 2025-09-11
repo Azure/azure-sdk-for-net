@@ -31,6 +31,7 @@ namespace Azure.Core.Pipeline
                             xml.Root.Element(Constants.ErrorCodeLower)?.Value;
                         var message = xml.Root.Element(Constants.ErrorMessage)?.Value ??
                             xml.Root.Element(Constants.ErrorMessageLower)?.Value;
+                        var headerName = xml.Root!.Element(Constants.HeaderName)?.Value;
 
                         data = new Dictionary<string, string>();
                         foreach (XElement element in xml.Root.Elements())
@@ -46,7 +47,18 @@ namespace Azure.Core.Pipeline
                             }
                         }
 
-                        error = new ResponseError(errorCode, message);
+                        // Clarify exception message if customer has send an x-ms-vesion not enabled on their storage account.
+                        if (errorCode == Constants.ErrorCodes.InvalidHeaderValue
+                            && headerName != null
+                            && headerName == Constants.HeaderNames.Version)
+                        {
+                            error = new ResponseError(errorCode, Constants.Errors.InvalidVersionHeaderMessage);
+                        }
+                        else
+                        {
+                            error = new ResponseError(errorCode, message);
+                        }
+
                         return true;
                     }
 

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class IntegrationAccountBatchConfigurationResource : IJsonModel<IntegrationAccountBatchConfigurationData>
     {
+        private static IntegrationAccountBatchConfigurationData s_dataDeserializationInstance;
+        private static IntegrationAccountBatchConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<IntegrationAccountBatchConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationAccountBatchConfigurationData>)Data).Write(writer, options);
 
-        IntegrationAccountBatchConfigurationData IJsonModel<IntegrationAccountBatchConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationAccountBatchConfigurationData>)Data).Create(ref reader, options);
+        IntegrationAccountBatchConfigurationData IJsonModel<IntegrationAccountBatchConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationAccountBatchConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<IntegrationAccountBatchConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IntegrationAccountBatchConfigurationData>(Data, options, AzureResourceManagerLogicContext.Default);
 
         IntegrationAccountBatchConfigurationData IPersistableModel<IntegrationAccountBatchConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IntegrationAccountBatchConfigurationData>(data, options, AzureResourceManagerLogicContext.Default);
 
-        string IPersistableModel<IntegrationAccountBatchConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IntegrationAccountBatchConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<IntegrationAccountBatchConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IntegrationAccountBatchConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

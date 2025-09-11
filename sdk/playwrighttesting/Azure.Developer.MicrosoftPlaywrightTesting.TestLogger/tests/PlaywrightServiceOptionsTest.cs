@@ -73,7 +73,9 @@ public class PlaywrightServiceOptionsTest
     [TestCase("AzurePowerShellCredential", typeof(AzurePowerShellCredential))]
     [TestCase("AzureDeveloperCliCredential", typeof(AzureDeveloperCliCredential))]
     [TestCase("InteractiveBrowserCredential", typeof(InteractiveBrowserCredential))]
+#pragma warning disable CS0618 // Type or member is obsolete
     [TestCase("SharedTokenCacheCredential", typeof(SharedTokenCacheCredential))]
+#pragma warning restore CS0618 // Type or member is obsolete
     [TestCase("VisualStudioCredential", typeof(VisualStudioCredential))]
     [TestCase("DefaultAzureCredential", typeof(DefaultAzureCredential))]
     [TestCase("", typeof(DefaultAzureCredential))]

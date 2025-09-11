@@ -13,7 +13,7 @@ tag: package-preview-2024-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -72,7 +72,7 @@ prepend-rp-prefix:
   - ExecutionState
   - FirmwareProfile
 
-list-exception: 
+list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{baseProvider}/{baseResourceType}/{baseResourceName}/providers/Microsoft.HybridCompute/settings/{settingsResourceName}
 
 rename-mapping:
@@ -276,7 +276,7 @@ directive:
   # we don't want user to interact with them
   - remove-operation: Settings_Get
   - remove-operation: Settings_Patch
-  # adding it will remove HybridComputeLicenseData resource and create HybridComputeLicensePatch resouce and cause other ESU commands to fail  
+  # adding it will remove HybridComputeLicenseData resource and create HybridComputeLicensePatch resouce and cause other ESU commands to fail
   - remove-operation: Licenses_Update #PATCH
 
 ```

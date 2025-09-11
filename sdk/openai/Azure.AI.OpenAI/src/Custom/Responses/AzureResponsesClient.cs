@@ -3,8 +3,6 @@
 
 #if !AZURE_OPENAI_GA
 
-using Azure.Core;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 
 namespace Azure.AI.OpenAI.Responses;

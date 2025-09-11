@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationAccountPython2PackageResource : IJsonModel<AutomationModuleData>
     {
+        private static AutomationModuleData s_dataDeserializationInstance;
+        private static AutomationModuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AutomationModuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutomationModuleData>)Data).Write(writer, options);
 
-        AutomationModuleData IJsonModel<AutomationModuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationModuleData>)Data).Create(ref reader, options);
+        AutomationModuleData IJsonModel<AutomationModuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationModuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AutomationModuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationModuleData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
         AutomationModuleData IPersistableModel<AutomationModuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationModuleData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<AutomationModuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationModuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AutomationModuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationModuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

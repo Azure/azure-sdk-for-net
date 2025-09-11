@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     public partial class ServerThreatProtectionSettingsModelResource : IJsonModel<ServerThreatProtectionSettingsModelData>
     {
+        private static ServerThreatProtectionSettingsModelData s_dataDeserializationInstance;
+        private static ServerThreatProtectionSettingsModelData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ServerThreatProtectionSettingsModelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServerThreatProtectionSettingsModelData>)Data).Write(writer, options);
 
-        ServerThreatProtectionSettingsModelData IJsonModel<ServerThreatProtectionSettingsModelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServerThreatProtectionSettingsModelData>)Data).Create(ref reader, options);
+        ServerThreatProtectionSettingsModelData IJsonModel<ServerThreatProtectionSettingsModelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServerThreatProtectionSettingsModelData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ServerThreatProtectionSettingsModelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServerThreatProtectionSettingsModelData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         ServerThreatProtectionSettingsModelData IPersistableModel<ServerThreatProtectionSettingsModelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServerThreatProtectionSettingsModelData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        string IPersistableModel<ServerThreatProtectionSettingsModelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServerThreatProtectionSettingsModelData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ServerThreatProtectionSettingsModelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServerThreatProtectionSettingsModelData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

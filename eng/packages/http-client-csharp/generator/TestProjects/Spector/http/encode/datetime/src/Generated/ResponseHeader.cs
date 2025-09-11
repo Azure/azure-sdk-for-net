@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Encode.Datetime
+namespace Encode.Datetime._ResponseHeader
 {
     public partial class ResponseHeader
     {

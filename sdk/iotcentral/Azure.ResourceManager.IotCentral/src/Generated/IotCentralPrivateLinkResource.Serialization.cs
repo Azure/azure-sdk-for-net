@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.IotCentral
 {
     public partial class IotCentralPrivateLinkResource : IJsonModel<IotCentralPrivateLinkResourceData>
     {
+        private static IotCentralPrivateLinkResourceData s_dataDeserializationInstance;
+        private static IotCentralPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<IotCentralPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotCentralPrivateLinkResourceData>)Data).Write(writer, options);
 
-        IotCentralPrivateLinkResourceData IJsonModel<IotCentralPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotCentralPrivateLinkResourceData>)Data).Create(ref reader, options);
+        IotCentralPrivateLinkResourceData IJsonModel<IotCentralPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotCentralPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<IotCentralPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotCentralPrivateLinkResourceData>(Data, options, AzureResourceManagerIotCentralContext.Default);
 
         IotCentralPrivateLinkResourceData IPersistableModel<IotCentralPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotCentralPrivateLinkResourceData>(data, options, AzureResourceManagerIotCentralContext.Default);
 
-        string IPersistableModel<IotCentralPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotCentralPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<IotCentralPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotCentralPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

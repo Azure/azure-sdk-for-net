@@ -68,19 +68,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Specifies the network interfaces of the dedicated hsm. </summary>
-        [WirePath("networkProfile")]
         public DedicatedHsmNetworkProfile NetworkProfile { get; set; }
         /// <summary> Specifies the management network interfaces of the dedicated hsm. </summary>
-        [WirePath("managementNetworkProfile")]
         public DedicatedHsmNetworkProfile ManagementNetworkProfile { get; set; }
         /// <summary> This field will be used when RP does not support Availability zones. </summary>
-        [WirePath("stampId")]
         public string StampId { get; set; }
         /// <summary> Resource Status Message. </summary>
-        [WirePath("statusMessage")]
         public string StatusMessage { get; }
         /// <summary> Provisioning state. </summary>
-        [WirePath("provisioningState")]
         public DedicatedHsmJsonWebKeyType? ProvisioningState { get; }
     }
 }

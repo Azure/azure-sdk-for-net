@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -16,16 +17,14 @@ namespace Azure.Storage.DataMovement.Tests
            : base(async, null /* TestMode.Record /* to re-record */)
         { }
 
-        private string[] fileNames => new[]
-        {
-            "C:\\Users\\user1\\Documents\\directory",
-            "C:\\Users\\user1\\Documents\\directory1\\",
-            "/user1/Documents/directory",
-        };
-
         [Test]
         public void Ctor_string()
         {
+            string[] fileNames =
+            {
+                "C:\\Users\\user1\\Documents\\directory",
+                "/user1/Documents/directory",
+            };
             foreach (string path in fileNames)
             {
                 // Arrange
@@ -35,6 +34,36 @@ namespace Azure.Storage.DataMovement.Tests
                 Assert.AreEqual(path, storageResource.Uri.LocalPath);
                 Assert.AreEqual(Uri.UriSchemeFile, storageResource.Uri.Scheme);
             }
+        }
+
+        [Test]
+        [RunOnlyOnPlatforms(Windows = true)]
+        [TestCase("C:\\test\\path=true@&#%", "C:/test/path%3Dtrue%40%26%23%25")]
+        [TestCase("C:\\test\\path%3Dtest%26", "C:/test/path%253Dtest%2526")]
+        [TestCase("C:\\test\\folder with spaces", "C:/test/folder%20with%20spaces")]
+        [TestCase("X:\\testing\\test\\", "X:/testing/test")]
+        [TestCase("X:\\testing\\test\\\\", "X:/testing/test")]
+        public void Ctor_String_Encoding_Windows(string path, string absolutePath)
+        {
+            LocalDirectoryStorageResourceContainer storageResource = new(path);
+            Assert.That(storageResource.Uri.AbsolutePath, Is.EqualTo(absolutePath));
+            // LocalPath should equal original path (trimmed)
+            Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(path.TrimEnd('\\')));
+        }
+
+        [Test]
+        [RunOnlyOnPlatforms(Linux = true, OSX = true)]
+        [TestCase("/test/path=true@&#%", "/test/path%3Dtrue%40%26%23%25")]
+        [TestCase("/test/path%3Dtest%26", "/test/path%253Dtest%2526")]
+        [TestCase("/test/folder with spaces", "/test/folder%20with%20spaces")]
+        [TestCase("/testing/test/", "/testing/test")]
+        [TestCase("/testing/test//", "/testing/test")]
+        public void Ctor_String_Encoding_Unix(string path, string absolutePath)
+        {
+            LocalDirectoryStorageResourceContainer storageResource = new(path);
+            Assert.That(storageResource.Uri.AbsolutePath, Is.EqualTo(absolutePath));
+            // LocalPath should equal original path (trimmed)
+            Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(path.TrimEnd('/')));
         }
 
         [Test]
@@ -81,7 +110,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task GetChildStorageResourceAsync()
+        public async Task GetStorageResourceReference()
         {
             List<string> paths = new List<string>();
             List<string> fileNames = new List<string>();
@@ -105,7 +134,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task GetChildStorageResourceAsync_SubDir()
+        public async Task GetStorageResourceReference_SubDir()
         {
             List<string> paths = new List<string>();
             List<string> fileNames = new List<string>();
@@ -137,6 +166,42 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        public void GetStorageResourceReference_Encoding()
+        {
+            List<(string Start, string Append)> tests =
+            [
+                ("/home/user1/directory", "path=true@&#%"),
+                ("/home/user1/directory", "path%3Dtest%26"),
+                ("/home/user1/directory", "with space"),
+            ];
+            // Windows paths only supported on Windows
+            if (Azure.Core.TestFramework.TestEnvironment.IsWindows)
+            {
+                tests.AddRange([
+                    ("C:\\Users\\user1\\Documents\\directory", "path=true@&#%"),
+                    ("C:\\Users\\user1\\Documents\\directory", "path%3Dtest%26"),
+                    ("C:\\Users\\user1\\Documents\\directory", "with space"),
+                    ("C:\\Users\\user1\\Documents\\directory=true@%", "path=true@&#%"),
+                    ("C:\\Users\\user1\\Documents\\directory=true@%", "path%3Dtest%26"),
+                    ("C:\\Users\\user1\\Documents\\directory=true@%", "with space"),
+                    ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "path=true@&#%"),
+                    ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "path%3Dtest%26"),
+                    ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "with space"),
+                ]);
+            }
+
+            foreach ((string Start, string Append) test in tests)
+            {
+                StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(test.Start);
+                StorageResourceItem resource = containerResource.GetStorageResourceReference(test.Append, default);
+
+                char separator = test.Start[0] == '/' ? '/' : '\\';
+                string combined = test.Start + separator + test.Append;
+                Assert.That(resource.Uri.LocalPath, Is.EqualTo(combined));
+            }
+        }
+
+        [Test]
         public void GetChildStorageResourceContainer()
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
@@ -149,6 +214,42 @@ namespace Azure.Storage.DataMovement.Tests
 
             string fullPath = Path.Combine(folderPath, childPath);
             Assert.AreEqual(childContainer.Uri, new Uri(fullPath));
+        }
+
+        [Test]
+        public void GetChildStorageResourceContainer_Encoding()
+        {
+            List<(string Start, string Append)> tests =
+            [
+                ("/home/user1/directory", "path=true@&#%"),
+                ("/home/user1/directory", "path%3Dtest%26"),
+                ("/home/user1/directory", "with space"),
+            ];
+            // Windows paths only supported on Windows
+            if (Azure.Core.TestFramework.TestEnvironment.IsWindows)
+            {
+                tests.AddRange([
+                    ("C:\\Users\\user1\\Documents\\directory", "path=true@&#%"),
+                    ("C:\\Users\\user1\\Documents\\directory", "path%3Dtest%26"),
+                    ("C:\\Users\\user1\\Documents\\directory", "with space"),
+                    ("C:\\Users\\user1\\Documents\\directory=true@%", "path=true@&#%"),
+                    ("C:\\Users\\user1\\Documents\\directory=true@%", "path%3Dtest%26"),
+                    ("C:\\Users\\user1\\Documents\\directory=true@%", "with space"),
+                    ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "path=true@&#%"),
+                    ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "path%3Dtest%26"),
+                    ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "with space"),
+                ]);
+            }
+
+            foreach ((string Start, string Append) test in tests)
+            {
+                StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(test.Start);
+                StorageResourceContainer resource = containerResource.GetChildStorageResourceContainer(test.Append);
+
+                char seperator = test.Start[0] == '/' ? '/' : '\\';
+                string combined = test.Start + seperator + test.Append;
+                Assert.That(resource.Uri.LocalPath, Is.EqualTo(combined));
+            }
         }
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudVirtualMachineResource : IJsonModel<NetworkCloudVirtualMachineData>
     {
+        private static NetworkCloudVirtualMachineData s_dataDeserializationInstance;
+        private static NetworkCloudVirtualMachineData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkCloudVirtualMachineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudVirtualMachineData>)Data).Write(writer, options);
 
-        NetworkCloudVirtualMachineData IJsonModel<NetworkCloudVirtualMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudVirtualMachineData>)Data).Create(ref reader, options);
+        NetworkCloudVirtualMachineData IJsonModel<NetworkCloudVirtualMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudVirtualMachineData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkCloudVirtualMachineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudVirtualMachineData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
 
         NetworkCloudVirtualMachineData IPersistableModel<NetworkCloudVirtualMachineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudVirtualMachineData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        string IPersistableModel<NetworkCloudVirtualMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudVirtualMachineData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkCloudVirtualMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudVirtualMachineData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

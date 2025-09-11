@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,29 @@
 
 ### Other Changes
 
-## 1.5.0 (2025-05-06)
+## 1.6.1 (2025-06-23)
 
 ### Acknowledgments
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Mike Alhayek _([GitHub](https://github.com/MikeAlhayek))_
+
+### Bugs Fixed
+
+- Updated `ConfigureKeyManagementKeyVaultEncryptorClientOptions` to ensure that its dependencies were resolved in the correct scope to prevent issues due to lifetime drift.  Previously, a new scope was created to resolve `AzureKeyVaultXmlEncryptor`.  However, `AzureKeyVaultXmlEncryptor` is registered as a singleton and should be resolved from the same scope in which the options are being configured. Creating a new scope introduced unnecessary overhead and potential for unexpected behavior due to differences in service lifetime management.  _(A community contribution, courtesy of [danielmarbach](https://github.com/MikeAlhayek))_
+
+## 1.6.0 (2025-05-19)
+
+### Features Added
+
+- Overloads were added to accept a `Uri`-typed key identifier to all protection methods.  _(A community contribution, courtesy of [MattKotsenas](https://github.com/abatishchev))_
+
+## 1.5.0 (2025-05-06)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Data Protection libraries better with their contributions to this release:
 
 - Matt Kotsenas _([GitHub](https://github.com/MattKotsenas))_
 

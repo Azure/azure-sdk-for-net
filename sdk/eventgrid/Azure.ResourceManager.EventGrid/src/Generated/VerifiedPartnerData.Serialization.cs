@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("partnerTopicDetails"u8);
                 writer.WriteObjectValue(PartnerTopicDetails, options);
             }
+            if (Optional.IsDefined(PartnerDestinationDetails))
+            {
+                writer.WritePropertyName("partnerDestinationDetails"u8);
+                writer.WriteObjectValue(PartnerDestinationDetails, options);
+            }
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -96,6 +101,7 @@ namespace Azure.ResourceManager.EventGrid
             string organizationName = default;
             string partnerDisplayName = default;
             PartnerDetails partnerTopicDetails = default;
+            PartnerDetails partnerDestinationDetails = default;
             VerifiedPartnerProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +128,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerEventGridContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -162,6 +168,15 @@ namespace Azure.ResourceManager.EventGrid
                             partnerTopicDetails = PartnerDetails.DeserializePartnerDetails(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("partnerDestinationDetails"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            partnerDestinationDetails = PartnerDetails.DeserializePartnerDetails(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -189,6 +204,7 @@ namespace Azure.ResourceManager.EventGrid
                 organizationName,
                 partnerDisplayName,
                 partnerTopicDetails,
+                partnerDestinationDetails,
                 provisioningState,
                 serializedAdditionalRawData);
         }
@@ -332,6 +348,21 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     builder.Append("    partnerTopicDetails: ");
                     BicepSerializationHelpers.AppendChildObject(builder, PartnerTopicDetails, options, 4, false, "    partnerTopicDetails: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerDestinationDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    partnerDestinationDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartnerDestinationDetails))
+                {
+                    builder.Append("    partnerDestinationDetails: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PartnerDestinationDetails, options, 4, false, "    partnerDestinationDetails: ");
                 }
             }
 

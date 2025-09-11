@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class LoadBalancingRuleResource : IJsonModel<LoadBalancingRuleData>
     {
+        private static LoadBalancingRuleData s_dataDeserializationInstance;
+        private static LoadBalancingRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<LoadBalancingRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LoadBalancingRuleData>)Data).Write(writer, options);
 
-        LoadBalancingRuleData IJsonModel<LoadBalancingRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LoadBalancingRuleData>)Data).Create(ref reader, options);
+        LoadBalancingRuleData IJsonModel<LoadBalancingRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LoadBalancingRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<LoadBalancingRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LoadBalancingRuleData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         LoadBalancingRuleData IPersistableModel<LoadBalancingRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LoadBalancingRuleData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<LoadBalancingRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LoadBalancingRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<LoadBalancingRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LoadBalancingRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

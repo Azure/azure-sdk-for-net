@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ServiceFabric
 {
     public partial class ServiceFabricApplicationTypeResource : IJsonModel<ServiceFabricApplicationTypeData>
     {
+        private static ServiceFabricApplicationTypeData s_dataDeserializationInstance;
+        private static ServiceFabricApplicationTypeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ServiceFabricApplicationTypeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricApplicationTypeData>)Data).Write(writer, options);
 
-        ServiceFabricApplicationTypeData IJsonModel<ServiceFabricApplicationTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricApplicationTypeData>)Data).Create(ref reader, options);
+        ServiceFabricApplicationTypeData IJsonModel<ServiceFabricApplicationTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricApplicationTypeData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ServiceFabricApplicationTypeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceFabricApplicationTypeData>(Data, options, AzureResourceManagerServiceFabricContext.Default);
 
         ServiceFabricApplicationTypeData IPersistableModel<ServiceFabricApplicationTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceFabricApplicationTypeData>(data, options, AzureResourceManagerServiceFabricContext.Default);
 
-        string IPersistableModel<ServiceFabricApplicationTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceFabricApplicationTypeData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ServiceFabricApplicationTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceFabricApplicationTypeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

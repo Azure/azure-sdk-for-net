@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkInterfaceIPConfigurationResource : IJsonModel<NetworkInterfaceIPConfigurationData>
     {
+        private static NetworkInterfaceIPConfigurationData s_dataDeserializationInstance;
+        private static NetworkInterfaceIPConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkInterfaceIPConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkInterfaceIPConfigurationData>)Data).Write(writer, options);
 
-        NetworkInterfaceIPConfigurationData IJsonModel<NetworkInterfaceIPConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkInterfaceIPConfigurationData>)Data).Create(ref reader, options);
+        NetworkInterfaceIPConfigurationData IJsonModel<NetworkInterfaceIPConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkInterfaceIPConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkInterfaceIPConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkInterfaceIPConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         NetworkInterfaceIPConfigurationData IPersistableModel<NetworkInterfaceIPConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkInterfaceIPConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkInterfaceIPConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkInterfaceIPConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkInterfaceIPConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkInterfaceIPConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -66,7 +66,9 @@ namespace Azure.Storage.Blobs.Test
             var accountName = "accountName";
             var blobEndpoint = new Uri("https://127.0.0.1/" + accountName);
             BlobClient blob1 = InstrumentClient(new BlobClient(blobEndpoint));
+#pragma warning disable CS0618 // Type or member is obsolete
             BlobClient blob2 = InstrumentClient(new BlobClient(blobEndpoint, new SharedTokenCacheCredential()));
+#pragma warning restore CS0618 // Type or member is obsolete
 
             var builder1 = new BlobUriBuilder(blob1.Uri);
             var builder2 = new BlobUriBuilder(blob2.Uri);

@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     internal partial class UnknownSecretProperties : FrontDoorSecretProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSecretProperties"/>. </summary>
-        /// <param name="secretType"> The type of the secret resource. </param>
+        /// <param name="secretType">
+        /// The type of the secret resource.
+        /// Serialized Name: SecretParameters.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownSecretProperties(SecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(secretType, serializedAdditionalRawData)
         {

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class GlobalReachConnectionResource : IJsonModel<GlobalReachConnectionData>
     {
+        private static GlobalReachConnectionData s_dataDeserializationInstance;
+        private static GlobalReachConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GlobalReachConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GlobalReachConnectionData>)Data).Write(writer, options);
 
-        GlobalReachConnectionData IJsonModel<GlobalReachConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GlobalReachConnectionData>)Data).Create(ref reader, options);
+        GlobalReachConnectionData IJsonModel<GlobalReachConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GlobalReachConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<GlobalReachConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GlobalReachConnectionData>(Data, options, AzureResourceManagerAvsContext.Default);
 
         GlobalReachConnectionData IPersistableModel<GlobalReachConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GlobalReachConnectionData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<GlobalReachConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GlobalReachConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GlobalReachConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GlobalReachConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

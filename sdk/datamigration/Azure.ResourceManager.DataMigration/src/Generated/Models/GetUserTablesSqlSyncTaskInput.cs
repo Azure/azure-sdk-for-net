@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="selectedSourceDatabases"> List of source database names to collect tables for. </param>
         /// <param name="selectedTargetDatabases"> List of target database names to collect tables for. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/>, <paramref name="targetConnectionInfo"/>, <paramref name="selectedSourceDatabases"/> or <paramref name="selectedTargetDatabases"/> is null. </exception>
-        public GetUserTablesSqlSyncTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IEnumerable<string> selectedSourceDatabases, IEnumerable<string> selectedTargetDatabases)
+        public GetUserTablesSqlSyncTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IEnumerable<string> selectedSourceDatabases, IEnumerable<string> selectedTargetDatabases)
         {
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="selectedSourceDatabases"> List of source database names to collect tables for. </param>
         /// <param name="selectedTargetDatabases"> List of target database names to collect tables for. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetUserTablesSqlSyncTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<string> selectedSourceDatabases, IList<string> selectedTargetDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetUserTablesSqlSyncTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IList<string> selectedSourceDatabases, IList<string> selectedTargetDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Connection information for SQL Server. </summary>
-        public SqlConnectionInfo SourceConnectionInfo { get; set; }
+        public DataMigrationSqlConnectionInfo SourceConnectionInfo { get; set; }
         /// <summary> Connection information for SQL DB. </summary>
-        public SqlConnectionInfo TargetConnectionInfo { get; set; }
+        public DataMigrationSqlConnectionInfo TargetConnectionInfo { get; set; }
         /// <summary> List of source database names to collect tables for. </summary>
         public IList<string> SelectedSourceDatabases { get; }
         /// <summary> List of target database names to collect tables for. </summary>

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class WorkloadClassifierResource : IJsonModel<WorkloadClassifierData>
     {
+        private static WorkloadClassifierData s_dataDeserializationInstance;
+        private static WorkloadClassifierData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkloadClassifierData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadClassifierData>)Data).Write(writer, options);
 
-        WorkloadClassifierData IJsonModel<WorkloadClassifierData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadClassifierData>)Data).Create(ref reader, options);
+        WorkloadClassifierData IJsonModel<WorkloadClassifierData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadClassifierData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<WorkloadClassifierData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadClassifierData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         WorkloadClassifierData IPersistableModel<WorkloadClassifierData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadClassifierData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<WorkloadClassifierData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadClassifierData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkloadClassifierData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadClassifierData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

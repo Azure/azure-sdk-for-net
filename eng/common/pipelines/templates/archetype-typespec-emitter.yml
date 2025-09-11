@@ -164,63 +164,75 @@ extends:
         - Build
         - ${{ if and(parameters.PublishDependsOnTest, ne(length(parameters.TestMatrix), 0)) }}:
           - Test
+
         variables:
           buildArtifactsPath: $(Pipeline.Workspace)/build_artifacts
-        pool: ${{ parameters.Pool }}
+
         jobs:
-        - job: Publish
-          steps:
-          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+        - deployment: Publish
+          environment: none
 
-          - download: current
-            artifact: build_artifacts
-            displayName: Download build artifacts
+          pool:
+            name: azsdk-pool
+            image: windows-2022 # Nuget publish requires .NET framework on windows to handle the auth
+            os: windows
 
-          # Create authenticated .npmrc file for publishing to devops
-          - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
-            parameters:
-              npmrcPath: $(buildArtifactsPath)/packages/.npmrc
-              registryUrl: https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry/
+          templateContext:
+            type: releaseJob
+            isProduction: true
+            inputs:  # All input build artifacts must be declared here
+              - input: pipelineArtifact  # Required, type of the input artifact
+                artifactName: build_artifacts
+                targetPath: $(buildArtifactsPath)
 
-          # publish to devops feed
-          - pwsh: |
-              $packageFiles = Get-ChildItem -Path . -Filter '*.tgz'
-              foreach ($file in $packageFiles.Name) {
-                Write-Host "npm publish $file --verbose --access public"
-                npm publish $file --verbose --access public
-              }
-            displayName: Publish to DevOps feed
-            workingDirectory: $(buildArtifactsPath)/packages
-
-          # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
-          - ${{ if parameters.HasNugetPackages }}:
-            - task: 1ES.PublishNuget@1
-              displayName: Publish NuGet Packages to DevOps feed
-              inputs:
-                packagesToPush: $(buildArtifactsPath)/packages/*.nupkg;!$(buildArtifactsPath)/packages/*.symbols.nupkg
-                packageParentPath: $(buildArtifactsPath)/packages
-                publishVstsFeed: "29ec6040-b234-4e31-b139-33dc4287b756/fa8c16a3-dbe0-4de2-a297-03065ec1ba3f"
-                nuGetFeedType: internal
-
-          - ${{ if parameters.PublishPublic }}:
-            # publish to npmjs.org using ESRP
-            - task: EsrpRelease@9
-              inputs:
-                displayName: Publish to npmjs.org
-                ConnectedServiceName: Azure SDK PME Managed Identity
-                ClientId: 5f81938c-2544-4f1f-9251-dd9de5b8a81b
-                DomainTenantId: 975f013f-7f24-47e8-a7d3-abc4752bf346
-                UseManagedIdentity: true
-                KeyVaultName: kv-azuresdk-codesign
-                SignCertName: azure-sdk-esrp-release-certificate
-                Intent: PackageDistribution
-                ContentType: npm
-                FolderLocation: $(buildArtifactsPath)/packages
-                Owners: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
-                Approvers: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
-                ServiceEndpointUrl: https://api.esrp.microsoft.com
-                MainPublisher: ESRPRELPACMANTEST
-
+          strategy:
+            runOnce:
+              deploy:
+                steps:
+                # Create authenticated .npmrc file for publishing to devops
+                - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+                  parameters:
+                    npmrcPath: $(buildArtifactsPath)/packages/.npmrc
+                    registryUrl: https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry/
+        
+                # publish to devops feed
+                - pwsh: |
+                    $packageFiles = Get-ChildItem -Path . -Filter '*.tgz'
+                    foreach ($file in $packageFiles.Name) {
+                      Write-Host "npm publish $file --verbose --access public"
+                      npm publish $file --verbose --access public
+                    }
+                  displayName: Publish to DevOps feed
+                  workingDirectory: $(buildArtifactsPath)/packages
+        
+                # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
+                - ${{ if parameters.HasNugetPackages }}:
+                  - task: 1ES.PublishNuget@1
+                    displayName: Publish NuGet Packages to DevOps feed
+                    inputs:
+                      packagesToPush: $(buildArtifactsPath)/packages/*.nupkg;!$(buildArtifactsPath)/packages/*.symbols.nupkg
+                      packageParentPath: $(buildArtifactsPath)/packages
+                      publishVstsFeed: "public/azure-sdk-for-net"
+        
+                - ${{ if parameters.PublishPublic }}:
+                  # publish to npmjs.org using ESRP
+                  - task: EsrpRelease@9
+                    inputs:
+                      displayName: Publish to npmjs.org
+                      ConnectedServiceName: Azure SDK PME Managed Identity
+                      ClientId: 5f81938c-2544-4f1f-9251-dd9de5b8a81b
+                      DomainTenantId: 975f013f-7f24-47e8-a7d3-abc4752bf346
+                      UseManagedIdentity: true
+                      KeyVaultName: kv-azuresdk-codesign
+                      SignCertName: azure-sdk-esrp-release-certificate
+                      Intent: PackageDistribution
+                      ContentType: npm
+                      FolderLocation: $(buildArtifactsPath)/packages
+                      Owners: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+                      Approvers: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+                      ServiceEndpointUrl: https://api.esrp.microsoft.com
+                      MainPublisher: ESRPRELPACMANTEST
+        
     # Regenerate stage
     # Responsible for regenerating the SDK code using the emitter package and the generation matrix.
     - ${{ if and(parameters.ShouldPublish, parameters.ShouldRegenerate) }}:
@@ -236,11 +248,7 @@ extends:
         jobs:
         - job: Initialize
           steps:
-          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-            parameters:
-              Paths:
-              - "/*"
-              - "!SessionRecords"
+          - checkout: self
           
           - task: UseNode@1
             displayName: 'Install Node.js'
@@ -311,12 +319,14 @@ extends:
             matrix: $[dependencies.Initialize.outputs['generate_matrix.matrix']]
           variables:
             matrixArtifactsPath: $(Pipeline.Workspace)/matrix_artifacts
+            AzureSdkRepoName: $[format('azure-sdk/{0}', split(variables['Build.Repository.Name'], '/')[1])]
           steps:
-          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-            parameters:
-              Paths:
-              - "/*"
-              - "!SessionRecords"
+          - checkout: self
+          - pwsh: |
+              git remote add azure-sdk https://github.com/$(AzureSdkRepoName).git
+              git fetch azure-sdk $(branchName)
+              git switch $(branchName)
+            displayName: 'Checkout PR branch $(branchName)'  
 
           - task: UseNode@1
             displayName: 'Install Node.js'

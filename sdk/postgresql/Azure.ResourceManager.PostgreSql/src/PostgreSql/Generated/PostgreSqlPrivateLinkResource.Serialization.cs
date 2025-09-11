@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PostgreSql
 {
     public partial class PostgreSqlPrivateLinkResource : IJsonModel<PostgreSqlPrivateLinkResourceData>
     {
+        private static PostgreSqlPrivateLinkResourceData s_dataDeserializationInstance;
+        private static PostgreSqlPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PostgreSqlPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlPrivateLinkResourceData>)Data).Write(writer, options);
 
-        PostgreSqlPrivateLinkResourceData IJsonModel<PostgreSqlPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlPrivateLinkResourceData>)Data).Create(ref reader, options);
+        PostgreSqlPrivateLinkResourceData IJsonModel<PostgreSqlPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PostgreSqlPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlPrivateLinkResourceData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         PostgreSqlPrivateLinkResourceData IPersistableModel<PostgreSqlPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlPrivateLinkResourceData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        string IPersistableModel<PostgreSqlPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PostgreSqlPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

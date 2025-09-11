@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class CloudServiceOSVersionResource : IJsonModel<CloudServiceOSVersionData>
     {
+        private static CloudServiceOSVersionData s_dataDeserializationInstance;
+        private static CloudServiceOSVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CloudServiceOSVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceOSVersionData>)Data).Write(writer, options);
 
-        CloudServiceOSVersionData IJsonModel<CloudServiceOSVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceOSVersionData>)Data).Create(ref reader, options);
+        CloudServiceOSVersionData IJsonModel<CloudServiceOSVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceOSVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<CloudServiceOSVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudServiceOSVersionData>(Data, options, AzureResourceManagerComputeContext.Default);
 
         CloudServiceOSVersionData IPersistableModel<CloudServiceOSVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudServiceOSVersionData>(data, options, AzureResourceManagerComputeContext.Default);
 
-        string IPersistableModel<CloudServiceOSVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudServiceOSVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CloudServiceOSVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudServiceOSVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

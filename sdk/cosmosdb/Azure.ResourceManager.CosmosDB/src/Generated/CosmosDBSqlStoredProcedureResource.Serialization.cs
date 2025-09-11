@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CosmosDBSqlStoredProcedureResource : IJsonModel<CosmosDBSqlStoredProcedureData>
     {
+        private static CosmosDBSqlStoredProcedureData s_dataDeserializationInstance;
+        private static CosmosDBSqlStoredProcedureData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CosmosDBSqlStoredProcedureData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBSqlStoredProcedureData>)Data).Write(writer, options);
 
-        CosmosDBSqlStoredProcedureData IJsonModel<CosmosDBSqlStoredProcedureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBSqlStoredProcedureData>)Data).Create(ref reader, options);
+        CosmosDBSqlStoredProcedureData IJsonModel<CosmosDBSqlStoredProcedureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBSqlStoredProcedureData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<CosmosDBSqlStoredProcedureData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBSqlStoredProcedureData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
         CosmosDBSqlStoredProcedureData IPersistableModel<CosmosDBSqlStoredProcedureData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBSqlStoredProcedureData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CosmosDBSqlStoredProcedureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBSqlStoredProcedureData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CosmosDBSqlStoredProcedureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBSqlStoredProcedureData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

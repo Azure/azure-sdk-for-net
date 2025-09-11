@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class OperationalInsightsDataSourceResource : IJsonModel<OperationalInsightsDataSourceData>
     {
+        private static OperationalInsightsDataSourceData s_dataDeserializationInstance;
+        private static OperationalInsightsDataSourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<OperationalInsightsDataSourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsDataSourceData>)Data).Write(writer, options);
 
-        OperationalInsightsDataSourceData IJsonModel<OperationalInsightsDataSourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsDataSourceData>)Data).Create(ref reader, options);
+        OperationalInsightsDataSourceData IJsonModel<OperationalInsightsDataSourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsDataSourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<OperationalInsightsDataSourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OperationalInsightsDataSourceData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
         OperationalInsightsDataSourceData IPersistableModel<OperationalInsightsDataSourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalInsightsDataSourceData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        string IPersistableModel<OperationalInsightsDataSourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsDataSourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<OperationalInsightsDataSourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsDataSourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

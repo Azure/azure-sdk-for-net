@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Media
 {
     public partial class MediaServicesPrivateEndpointConnectionResource : IJsonModel<MediaServicesPrivateEndpointConnectionData>
     {
+        private static MediaServicesPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static MediaServicesPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MediaServicesPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MediaServicesPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        MediaServicesPrivateEndpointConnectionData IJsonModel<MediaServicesPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MediaServicesPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        MediaServicesPrivateEndpointConnectionData IJsonModel<MediaServicesPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MediaServicesPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MediaServicesPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MediaServicesPrivateEndpointConnectionData>(Data, options, AzureResourceManagerMediaContext.Default);
 
         MediaServicesPrivateEndpointConnectionData IPersistableModel<MediaServicesPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MediaServicesPrivateEndpointConnectionData>(data, options, AzureResourceManagerMediaContext.Default);
 
-        string IPersistableModel<MediaServicesPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MediaServicesPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MediaServicesPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MediaServicesPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

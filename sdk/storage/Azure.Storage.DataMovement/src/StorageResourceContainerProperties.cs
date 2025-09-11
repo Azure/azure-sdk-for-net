@@ -14,24 +14,18 @@ namespace Azure.Storage.DataMovement
     public class StorageResourceContainerProperties
     {
         /// <summary>
-        /// The Uri of the Storage Resource Container.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public Uri Uri { get; set; }
-
-        /// <summary>
         /// Dictionary of the properties associated with this resource container.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IDictionary<string, object> RawProperties { get; set; }
+        public IDictionary<string, object> RawProperties { get; }
 
         /// <summary>
-        /// Base constructor for mocking.
+        /// Base constructor.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public StorageResourceContainerProperties()
+        public StorageResourceContainerProperties(IDictionary<string, object> properties = default)
         {
-            RawProperties = new Dictionary<string, object>();
+            RawProperties = properties ?? new Dictionary<string, object>();
         }
     }
 }

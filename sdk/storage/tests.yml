@@ -13,10 +13,6 @@ extends:
       #PrivatePreview:
       #  SubscriptionConfiguration: $(sub-config-storage-test-resources)
     SupportedClouds: Public #, PrivatePreview
-    MatrixReplace:
-      # Use dedicated storage pool in canadacentral with higher memory capacity
-      - Pool=.*LINUXPOOL.*/azsdk-pool-mms-ubuntu-2004-storage
-      - Pool=.*WINDOWSPOOL.*/azsdk-pool-mms-win-2022-storage
     ${{ if contains(variables['Build.DefinitionName'], 'tests-weekly') }}:
       MatrixConfigs:
         - Name: Storage_all_versions

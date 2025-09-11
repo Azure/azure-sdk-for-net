@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class RouteResource : IJsonModel<RouteData>
     {
+        private static RouteData s_dataDeserializationInstance;
+        private static RouteData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RouteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RouteData>)Data).Write(writer, options);
 
-        RouteData IJsonModel<RouteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RouteData>)Data).Create(ref reader, options);
+        RouteData IJsonModel<RouteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RouteData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<RouteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RouteData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         RouteData IPersistableModel<RouteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RouteData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<RouteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RouteData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RouteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RouteData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

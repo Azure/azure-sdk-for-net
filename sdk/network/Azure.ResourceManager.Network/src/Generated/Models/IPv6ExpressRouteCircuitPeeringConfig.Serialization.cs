@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(RouteFilter))
             {
                 writer.WritePropertyName("routeFilter"u8);
-                JsonSerializer.Serialize(writer, RouteFilter);
+                ((IJsonModel<WritableSubResource>)RouteFilter).Write(writer, options);
             }
             if (Optional.IsDefined(State))
             {
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    routeFilter = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    routeFilter = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -158,6 +159,115 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryPeerAddressPrefix), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  primaryPeerAddressPrefix: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryPeerAddressPrefix))
+                {
+                    builder.Append("  primaryPeerAddressPrefix: ");
+                    if (PrimaryPeerAddressPrefix.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryPeerAddressPrefix}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryPeerAddressPrefix}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryPeerAddressPrefix), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  secondaryPeerAddressPrefix: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondaryPeerAddressPrefix))
+                {
+                    builder.Append("  secondaryPeerAddressPrefix: ");
+                    if (SecondaryPeerAddressPrefix.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecondaryPeerAddressPrefix}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecondaryPeerAddressPrefix}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftPeeringConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  microsoftPeeringConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MicrosoftPeeringConfig))
+                {
+                    builder.Append("  microsoftPeeringConfig: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, MicrosoftPeeringConfig, options, 2, false, "  microsoftPeeringConfig: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RouteFilterId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  routeFilter: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(RouteFilter))
+                {
+                    builder.Append("  routeFilter: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RouteFilter, options, 2, false, "  routeFilter: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("  state: ");
+                    builder.AppendLine($"'{State.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -166,6 +276,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support writing '{options.Format}' format.");
             }

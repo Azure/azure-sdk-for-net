@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class AlertRuleResource : IJsonModel<AlertRuleData>
     {
+        private static AlertRuleData s_dataDeserializationInstance;
+        private static AlertRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AlertRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AlertRuleData>)Data).Write(writer, options);
 
-        AlertRuleData IJsonModel<AlertRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AlertRuleData>)Data).Create(ref reader, options);
+        AlertRuleData IJsonModel<AlertRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AlertRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AlertRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AlertRuleData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
         AlertRuleData IPersistableModel<AlertRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AlertRuleData>(data, options, AzureResourceManagerMonitorContext.Default);
 
-        string IPersistableModel<AlertRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AlertRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AlertRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AlertRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

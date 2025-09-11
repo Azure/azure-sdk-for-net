@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.IotOperations
 {
     public partial class IotOperationsBrokerAuthenticationResource : IJsonModel<IotOperationsBrokerAuthenticationData>
     {
+        private static IotOperationsBrokerAuthenticationData s_dataDeserializationInstance;
+        private static IotOperationsBrokerAuthenticationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<IotOperationsBrokerAuthenticationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotOperationsBrokerAuthenticationData>)Data).Write(writer, options);
 
-        IotOperationsBrokerAuthenticationData IJsonModel<IotOperationsBrokerAuthenticationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotOperationsBrokerAuthenticationData>)Data).Create(ref reader, options);
+        IotOperationsBrokerAuthenticationData IJsonModel<IotOperationsBrokerAuthenticationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotOperationsBrokerAuthenticationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<IotOperationsBrokerAuthenticationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotOperationsBrokerAuthenticationData>(Data, options, AzureResourceManagerIotOperationsContext.Default);
 
         IotOperationsBrokerAuthenticationData IPersistableModel<IotOperationsBrokerAuthenticationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotOperationsBrokerAuthenticationData>(data, options, AzureResourceManagerIotOperationsContext.Default);
 
-        string IPersistableModel<IotOperationsBrokerAuthenticationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotOperationsBrokerAuthenticationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<IotOperationsBrokerAuthenticationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotOperationsBrokerAuthenticationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

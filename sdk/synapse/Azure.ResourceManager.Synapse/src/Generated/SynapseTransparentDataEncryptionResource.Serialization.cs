@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseTransparentDataEncryptionResource : IJsonModel<SynapseTransparentDataEncryptionData>
     {
+        private static SynapseTransparentDataEncryptionData s_dataDeserializationInstance;
+        private static SynapseTransparentDataEncryptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseTransparentDataEncryptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseTransparentDataEncryptionData>)Data).Write(writer, options);
 
-        SynapseTransparentDataEncryptionData IJsonModel<SynapseTransparentDataEncryptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseTransparentDataEncryptionData>)Data).Create(ref reader, options);
+        SynapseTransparentDataEncryptionData IJsonModel<SynapseTransparentDataEncryptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseTransparentDataEncryptionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SynapseTransparentDataEncryptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseTransparentDataEncryptionData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
         SynapseTransparentDataEncryptionData IPersistableModel<SynapseTransparentDataEncryptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseTransparentDataEncryptionData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseTransparentDataEncryptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseTransparentDataEncryptionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseTransparentDataEncryptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseTransparentDataEncryptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

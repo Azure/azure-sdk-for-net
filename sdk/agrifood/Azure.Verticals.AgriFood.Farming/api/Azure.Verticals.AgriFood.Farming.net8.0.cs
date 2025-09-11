@@ -34,12 +34,6 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Azure.Pageable<System.BinaryData> GetAttachmentsByPartyId(string partyId, System.Collections.Generic.IEnumerable<string> resourceIds, System.Collections.Generic.IEnumerable<string> resourceTypes, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetAttachmentsByPartyIdAsync(string partyId, System.Collections.Generic.IEnumerable<string> resourceIds, System.Collections.Generic.IEnumerable<string> resourceTypes, System.Collections.Generic.IEnumerable<string> ids, System.Collections.Generic.IEnumerable<string> names, System.Collections.Generic.IEnumerable<string> propertyFilters, System.Collections.Generic.IEnumerable<string> statuses, System.DateTimeOffset? minCreatedDateTime, System.DateTimeOffset? maxCreatedDateTime, System.DateTimeOffset? minLastModifiedDateTime, System.DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, Azure.RequestContext context) { throw null; }
     }
-    public partial class AzureVerticalsAgriFoodFarmingContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureVerticalsAgriFoodFarmingContext() { }
-        public static Azure.Verticals.AgriFood.Farming.AzureVerticalsAgriFoodFarmingContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class Boundaries
     {
         protected Boundaries() { }
@@ -643,6 +637,7 @@ namespace Microsoft.Extensions.Azure
     public static partial class VerticalsAgriFoodFarmingClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Verticals.AgriFood.Farming.FarmBeatsClient, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions> AddFarmBeatsClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Verticals.AgriFood.Farming.FarmBeatsClient, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions> AddFarmBeatsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }
