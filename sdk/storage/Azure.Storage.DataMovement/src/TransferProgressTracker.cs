@@ -57,7 +57,6 @@ namespace Azure.Storage.DataMovement
 
         public async ValueTask IncrementCompletedFilesAsync(CancellationToken cancellationToken)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             await QueueProgressEvent(new ProgressEventArgs()
             {
                 InProgressChange = -1,
@@ -68,7 +67,6 @@ namespace Azure.Storage.DataMovement
 
         public async ValueTask IncrementSkippedFilesAsync(CancellationToken cancellationToken)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             await QueueProgressEvent(new ProgressEventArgs()
             {
                 InProgressChange = -1,
@@ -79,7 +77,6 @@ namespace Azure.Storage.DataMovement
 
         public async ValueTask IncrementFailedFilesAsync(CancellationToken cancellationToken)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             await QueueProgressEvent(new ProgressEventArgs()
             {
                 InProgressChange = -1,
@@ -90,7 +87,6 @@ namespace Azure.Storage.DataMovement
 
         public async ValueTask IncrementInProgressFilesAsync(CancellationToken cancellationToken)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             await QueueProgressEvent(new ProgressEventArgs()
             {
                 QueuedChange = -1,
@@ -101,7 +97,6 @@ namespace Azure.Storage.DataMovement
 
         public async ValueTask IncrementQueuedFilesAsync(CancellationToken cancellationToken)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             await QueueProgressEvent(new ProgressEventArgs()
             {
                 QueuedChange = 1,
@@ -123,7 +118,6 @@ namespace Azure.Storage.DataMovement
 
         private async ValueTask QueueProgressEvent(ProgressEventArgs args, CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             try
             {
                 await _progressProcessor.QueueAsync(args).ConfigureAwait(false);
