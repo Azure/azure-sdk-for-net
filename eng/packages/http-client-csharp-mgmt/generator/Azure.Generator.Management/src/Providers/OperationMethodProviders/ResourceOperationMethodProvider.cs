@@ -5,7 +5,6 @@ using Azure.Core;
 using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
-using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
@@ -18,7 +17,6 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
@@ -181,21 +179,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 ResourceMethodSnippets.CreateRequestContext(cancellationTokenParameter, out var contextVariable)
             };
 
-            // Get contextual parameters from the request path pattern
+            // Populate arguments for the REST client method call
             var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType);
-
-            // // Get path field parameters if the enclosing type is ResourceCollectionClientProvider
-            // var pathFieldsParameters = new List<ValueExpression>();
-            // if (_enclosingType is ResourceCollectionClientProvider collectionProvider)
-            // {
-            //     foreach (var pathField in collectionProvider.PathParameterFields)
-            //     {
-            //         pathFieldsParameters.Add(pathField);
-            //     }
-            // }
-
-            // // Combine contextual parameters and path field parameters into final arguments
-            // var arguments = parameters.Concat(pathFieldsParameters).ToList();
 
             tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 

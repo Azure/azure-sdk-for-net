@@ -17,7 +17,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
-using Microsoft.TypeSpec.Generator.Expressions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -157,43 +156,6 @@ namespace Azure.Generator.Management.Providers
             return [.. properties];
         }
 
-        private CSharpType GetPathParameterType(string parameterName)
-        {
-            foreach (var resourceMethod in _resourceServiceMethods)
-            {
-                if (!resourceMethod.Kind.IsCrudKind())
-                {
-                    continue; // Skip non-CRUD operations
-                }
-                // iterate through all parameters in this method to find a matching parameter
-                foreach (var parameter in resourceMethod.InputMethod.Operation.Parameters)
-                {
-                    if (parameter is not InputPathParameter)
-                    {
-                        continue; // Skip parameters that are not in the path
-                    }
-                    if (parameter.Name == parameterName)
-                    {
-                        var csharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(parameter.Type) ?? typeof(string);
-                        return parameterName switch
-                        {
-                            "subscriptionId" when csharpType.Equals(typeof(Guid)) => typeof(string),
-                            // Cases will be added later
-                            _ => csharpType
-                        };
-                    }
-                }
-            }
-
-            // what if we did not find the parameter in any method?
-            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
-                "general-warning",
-                $"Cannot find parameter {parameterName} in any registered operations in resource {ResourceName}."
-                );
-
-            return typeof(string); // Default to string if not found
-        }
-
         private List<FieldProvider> BuildPathParameterFields()
         {
             var fields = new List<FieldProvider>();
@@ -208,7 +170,7 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var seg in variableSegments)
             {
-                var field = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, GetPathParameterType(seg.VariableName), $"_{seg.VariableName}", this, description: $"The {seg.VariableName}.");
+                var field = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, Resource.GetPathParameterType(seg.VariableName), $"_{seg.VariableName}", this, description: $"The {seg.VariableName}.");
                 fields.Add(field);
             }
 
@@ -380,7 +342,7 @@ namespace Azure.Generator.Management.Providers
             var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync);
             return getAll.InputMethod switch
             {
-                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, _pathParameterFields, isAsync, methodName),
+                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName),
                 _ => new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, getAll.InputMethod, isAsync, methodName: methodName)
             };
         }
@@ -441,12 +403,6 @@ namespace Azure.Generator.Management.Providers
             return result;
         }
 
-        /// <summary>
-        /// Tries to find a matching path parameter field for the given parameter.
-        /// </summary>
-        /// <param name="parameter">The parameter to find a matching field for.</param>
-        /// <param name="matchingField">The matching field if found.</param>
-        /// <returns>True if a matching field was found, false otherwise.</returns>
         public bool TryGetPrivateFieldParameter(ParameterProvider parameter, out FieldProvider? matchingField)
         {
             matchingField = PathParameterFields.FirstOrDefault(field =>

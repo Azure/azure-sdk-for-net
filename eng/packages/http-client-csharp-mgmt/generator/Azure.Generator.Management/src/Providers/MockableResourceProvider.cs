@@ -284,7 +284,7 @@ namespace Azure.Generator.Management.Providers
             List<FieldProvider> pathParameterFields = new List<FieldProvider>();
             return method switch
             {
-                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, pathParameterFields, isAsync, methodName),
+                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync, methodName),
                 _ => new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName: methodName)
             };
         }
