@@ -152,7 +152,7 @@ agentsClient.Administration.DeleteAgent(agentId: agent.Id);
 
 Your Azure AI Foundry project may have one or more OpenAI models deployed that support chat completions. Use the code below to get an authenticated ChatClient from the [Azure.AI.OpenAI](https://learn.microsoft.com/dotnet/api/overview/azure/ai.openai-readme?view=azure-dotnet) package, and execute a chat completions call.
 
-The code below assumes `ModelDeploymentName` (a string) is defined. It's the deployment name of an AI model in your Foundry Project, or a connected Azure OpenAI resource. As shown in the "Models + endpoints" tab, under the "Name" column.
+The code below assumes `modelDeploymentName` (a string) is defined. It's the deployment name of an AI model in your Foundry Project, or a connected Azure OpenAI resource. As shown in the "Models + endpoints" tab, under the "Name" column.
 
 You can update the `connectionName` with one of the connections in your Foundry project, and you can update the `apiVersion` value with one found in the "Data plane - inference" row [in this table](https://learn.microsoft.com/azure/ai-services/openai/reference#api-specs).
 
@@ -178,38 +178,6 @@ ChatClient chatClient = azureOpenAIClient.GetChatClient(deploymentName: modelDep
 Console.WriteLine("Complete a chat");
 ChatCompletion result = chatClient.CompleteChat("List all the rainbow colors");
 Console.WriteLine(result.Content[0].Text);
-```
-
-### Get an authenticated ChatCompletionsClient
-
-Your Azure AI Foundry project may have one or more AI models deployed that support chat completions. Use the code below to get an authenticated [ChatCompletionsClient](https://learn.microsoft.com/dotnet/api/azure.ai.inference.chatcompletionsclient?view=azure-dotnet-preview) from the `Azure.AI.Inference` package, and execute a chat completions call.
-
-The code below assumes `ModelDeploymentName` (a string) is defined. It's the deployment name of an AI model in your Foundry Project, or a connected Azure OpenAI resource. As shown in the "Models + endpoints" tab, under the "Name" column.
-
-```C# Snippet:AI_Projects_ChatClientSync
-var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
-
-AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
-
-var credential = new DefaultAzureCredential();
-BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
-clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
-
-ChatCompletionsClient chatClient = new ChatCompletionsClient(new Uri(inferenceEndpoint), credential, clientOptions);
-
-var requestOptions = new ChatCompletionsOptions()
-{
-    Messages =
-        {
-            new ChatRequestSystemMessage("You are a helpful assistant."),
-            new ChatRequestUserMessage("How many feet are in a mile?"),
-        },
-    Model = modelDeploymentName
-};
-Response<ChatCompletions> response = chatClient.Complete(requestOptions);
-Console.WriteLine(response.Value.Content);
 ```
 
 ### Deployments operations

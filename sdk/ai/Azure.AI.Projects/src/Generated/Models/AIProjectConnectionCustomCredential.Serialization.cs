@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
@@ -31,22 +32,6 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(AIProjectConnectionCustomCredential)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("keys"u8);
-                writer.WriteStartObject();
-                foreach (var item in Keys)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -76,7 +61,7 @@ namespace Azure.AI.Projects
             }
             CredentialType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IReadOnlyDictionary<string, string> keys = default;
+            ChangeTrackingDictionary<string, string> additionalProperties = new ChangeTrackingDictionary<string, string>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -84,29 +69,18 @@ namespace Azure.AI.Projects
                     @type = new CredentialType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("keys"u8))
+                switch (prop.Value.ValueKind)
                 {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    keys = dictionary;
-                    continue;
+                    case JsonValueKind.String:
+                        additionalProperties.Add(prop.Name, prop.Value.GetString());
+                        continue;
                 }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AIProjectConnectionCustomCredential(@type, additionalBinaryDataProperties, keys);
+            return new AIProjectConnectionCustomCredential(@type, additionalBinaryDataProperties, new ReadOnlyDictionary<string, string>(additionalProperties));
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
