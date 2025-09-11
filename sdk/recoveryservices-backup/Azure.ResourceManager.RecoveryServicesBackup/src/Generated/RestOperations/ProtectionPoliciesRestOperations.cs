@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Provides the details of the backup policies associated to Recovery Services Vault. This is an asynchronous
         /// operation. Status of the operation can be fetched using GetPolicyOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="policyName"> Backup policy information to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is null. </exception>
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Provides the details of the backup policies associated to Recovery Services Vault. This is an asynchronous
         /// operation. Status of the operation can be fetched using GetPolicyOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="policyName"> Backup policy information to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is null. </exception>
@@ -195,10 +195,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Creates or modifies a backup policy. This is an asynchronous operation. Status of the operation can be fetched
         /// using GetPolicyOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="policyName"> Backup policy to be created. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="policyName"> Backup policy information to be fetched. </param>
         /// <param name="data"> resource backup policy. </param>
         /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -234,10 +234,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Creates or modifies a backup policy. This is an asynchronous operation. Status of the operation can be fetched
         /// using GetPolicyOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="policyName"> Backup policy to be created. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="policyName"> Backup policy information to be fetched. </param>
         /// <param name="data"> resource backup policy. </param>
         /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -311,10 +311,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Deletes specified backup policy from your Recovery Services Vault. This is an asynchronous operation. Status of the
         /// operation can be fetched using GetProtectionPolicyOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="policyName"> Backup policy to be deleted. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="policyName"> Backup policy information to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -330,6 +330,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -341,10 +342,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Deletes specified backup policy from your Recovery Services Vault. This is an asynchronous operation. Status of the
         /// operation can be fetched using GetProtectionPolicyOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="policyName"> Backup policy to be deleted. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="policyName"> Backup policy information to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -360,6 +361,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The BackupHourlySchedule. </summary>
-    public partial class BackupHourlySchedule
+    /// <summary> Base for all lists of resources. </summary>
+    internal partial class ResourceList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,37 +43,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BackupHourlySchedule"/>. </summary>
-        public BackupHourlySchedule()
+        /// <summary> Initializes a new instance of <see cref="ResourceList"/>. </summary>
+        internal ResourceList()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupHourlySchedule"/>. </summary>
-        /// <param name="interval">
-        /// Interval at which backup needs to be triggered. For hourly the value
-        /// can be 4/6/8/12
-        /// </param>
-        /// <param name="scheduleWindowStartOn"> To specify start time of the backup window. </param>
-        /// <param name="scheduleWindowDuration"> To specify duration of the backup window. </param>
+        /// <summary> Initializes a new instance of <see cref="ResourceList"/>. </summary>
+        /// <param name="nextLink"> The URI to fetch the next page of resources, with each API call returning up to 200 resources per page. Use ListNext() to fetch the next page if the total number of resources exceeds 200. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupHourlySchedule(int? interval, DateTimeOffset? scheduleWindowStartOn, int? scheduleWindowDuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceList(string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Interval = interval;
-            ScheduleWindowStartOn = scheduleWindowStartOn;
-            ScheduleWindowDuration = scheduleWindowDuration;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Interval at which backup needs to be triggered. For hourly the value
-        /// can be 4/6/8/12
-        /// </summary>
-        public int? Interval { get; set; }
-        /// <summary> To specify start time of the backup window. </summary>
-        public DateTimeOffset? ScheduleWindowStartOn { get; set; }
-        /// <summary> To specify duration of the backup window. </summary>
-        public int? ScheduleWindowDuration { get; set; }
+        /// <summary> The URI to fetch the next page of resources, with each API call returning up to 200 resources per page. Use ListNext() to fetch the next page if the total number of resources exceeds 200. </summary>
+        public string NextLink { get; }
     }
 }
