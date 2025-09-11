@@ -220,7 +220,7 @@ namespace Azure.Generator.Management.Providers
                 // the first method is returning the collection
                 var collection = resource.ResourceCollection!;
                 var collectionMethodSignature = resource.FactoryMethodSignature;
-                var pathParameters = collection.GetPathParameterProviders();
+                var pathParameters = collection.PathParameters;
                 collectionMethodSignature = new MethodSignature(
                     collectionMethodSignature.Name,
                     collectionMethodSignature.Description,
@@ -242,13 +242,13 @@ namespace Azure.Generator.Management.Providers
                 if (getAsyncMethod is not null)
                 {
                     // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
-                    yield return BuildGetMethod(this, getAsyncMethod, collectionMethodSignature, pathParameters, $"Get{resource.ResourceName}Async");
+                    yield return BuildGetMethod(this, getAsyncMethod, collectionMethodSignature, pathParameters.ToList(), $"Get{resource.ResourceName}Async");
                 }
 
                 if (getMethod is not null)
                 {
                     // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
-                    yield return BuildGetMethod(this, getMethod, collectionMethodSignature, pathParameters, $"Get{resource.ResourceName}");
+                    yield return BuildGetMethod(this, getMethod, collectionMethodSignature, pathParameters.ToList(), $"Get{resource.ResourceName}");
                 }
 
                 static MethodProvider BuildGetMethod(TypeProvider enclosingType, MethodProvider resourceGetMethod, MethodSignature collectionGetSignature, List<ParameterProvider> pathParameters, string methodName)
