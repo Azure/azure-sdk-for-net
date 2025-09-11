@@ -8,7 +8,7 @@ TypeSpec library for emitting Azure libraries for C#.
 npm install @azure-typespec/http-client-csharp
 ```
 
-## Usage
+## Emitter usage
 
 1. Via the command line
 
