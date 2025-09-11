@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core.Pipeline;
+using Payload.MediaType._StringBody;
 
 namespace Payload.MediaType
 {

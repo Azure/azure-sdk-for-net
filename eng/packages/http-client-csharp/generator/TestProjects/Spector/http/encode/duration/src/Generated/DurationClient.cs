@@ -7,6 +7,9 @@
 
 using System;
 using Azure.Core.Pipeline;
+using Encode.Duration._Header;
+using Encode.Duration._Property;
+using Encode.Duration._Query;
 
 namespace Encode.Duration
 {

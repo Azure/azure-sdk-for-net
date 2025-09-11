@@ -56,11 +56,11 @@ namespace _Type.Property.ValueTypes
 
         public static UnknownArrayProperty UnknownArrayProperty(BinaryData @property = default) => throw null;
 
-        public static StringLiteralProperty StringLiteralProperty(StringLiteralPropertyProperty @property = default) => throw null;
+        public static StringLiteralProperty StringLiteralProperty(string @property = default) => throw null;
 
-        public static IntLiteralProperty IntLiteralProperty(IntLiteralPropertyProperty @property = default) => throw null;
+        public static IntLiteralProperty IntLiteralProperty(int @property = default) => throw null;
 
-        public static FloatLiteralProperty FloatLiteralProperty(FloatLiteralPropertyProperty @property = default) => throw null;
+        public static FloatLiteralProperty FloatLiteralProperty(float @property = default) => throw null;
 
         public static BooleanLiteralProperty BooleanLiteralProperty(bool @property = default) => throw null;
 

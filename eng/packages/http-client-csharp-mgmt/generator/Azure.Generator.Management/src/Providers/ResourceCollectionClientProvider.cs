@@ -1,77 +1,226 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Generator.Management.Extensions;
+using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers.OperationMethodProviders;
+using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Microsoft.TypeSpec.Generator.Expressions;
+using Humanizer;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
+using Microsoft.TypeSpec.Generator.Expressions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
+using System.IO;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
 {
-    internal class ResourceCollectionClientProvider : ResourceClientProvider
+    internal sealed class ResourceCollectionClientProvider : TypeProvider
     {
-        private ResourceClientProvider _resource;
-        private InputServiceMethod? _getAll;
-        private InputServiceMethod? _create;
-        private InputServiceMethod? _get;
+        private readonly ResourceMetadata _resourceMetadata;
 
-        public ResourceCollectionClientProvider(InputClient inputClient, ResourceClientProvider resource) : base(inputClient)
+        private readonly ResourceClientProvider _resource;
+        private readonly ResourceMethod? _getAll;
+        private readonly ResourceMethod? _create;
+        private readonly ResourceMethod? _get;
+
+        // Support for multiple rest clients
+        private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
+
+        // This is the resource type of the current resource. Not the resource type of my parent resource
+        private ScopedApi<ResourceType> _resourceTypeExpression;
+
+        private readonly RequestPathPattern _contextualPath;
+
+        internal ResourceCollectionClientProvider(ResourceClientProvider resource, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ResourceMetadata resourceMetadata)
         {
+            _resourceMetadata = resourceMetadata;
+            _contextualPath = GetContextualRequestPattern(resourceMetadata);
             _resource = resource;
 
-            foreach (var method in inputClient.Methods)
+            // Initialize client info dictionary using extension method
+            _clientInfos = resourceMetadata.CreateClientInfosMap(this);
+
+            _resourceTypeExpression = Static(_resource.Type).As<ArmResource>().ResourceType();
+
+            InitializeMethods(resourceMethods, ref _get, ref _create, ref _getAll);
+        }
+
+        /// <summary>
+        /// Get the contextual request path pattern for this collection client.
+        /// The contextual request path pattern for a collection should always be the request path pattern of the parent resource.
+        /// </summary>
+        /// <param name="resourceMetadata"></param>
+        /// <returns></returns>
+        /// <exception cref="NotSupportedException"></exception>
+        private static RequestPathPattern GetContextualRequestPattern(ResourceMetadata resourceMetadata)
+        {
+            if (resourceMetadata.ParentResourceId is not null)
             {
-                var operation = method.Operation;
-                if (operation.HttpMethod == HttpMethod.Get.ToString())
+                return new RequestPathPattern(resourceMetadata.ParentResourceId);
+            }
+
+            return RequestPathPattern.GetFromScope(resourceMetadata.ResourceScope);
+        }
+
+        private static void InitializeMethods(
+            IReadOnlyList<ResourceMethod> resourceMethods,
+            ref ResourceMethod? getMethod,
+            ref ResourceMethod? createMethod,
+            ref ResourceMethod? getAllMethod)
+        {
+            foreach (var method in resourceMethods)
+            {
+                if (getAllMethod is not null && createMethod is not null && getMethod is not null)
                 {
-                    if (operation.Name == "list")
-                    {
-                        _getAll = method;
-                    }
-                    else if (operation.Name == "get")
-                    {
-                        _get = method;
-                    }
+                    break; // we already have all methods we need
                 }
-                if (operation.HttpMethod == HttpMethod.Put.ToString() && operation.Name == "createOrUpdate")
+
+                switch (method.Kind)
                 {
-                    _create = method;
+                    case ResourceOperationKind.Get:
+                        getMethod = method;
+                        break;
+                    case ResourceOperationKind.List:
+                        getAllMethod = method;
+                        break;
+                    case ResourceOperationKind.Create:
+                        createMethod = method;
+                        break;
                 }
             }
         }
 
-        protected override string BuildName() => $"{SpecName}Collection";
+        public ResourceClientProvider Resource => _resource;
+
+        internal string ResourceName => _resource.ResourceName;
+        internal ResourceScope ResourceScope => _resource.ResourceScope;
+
+        protected override TypeProvider[] BuildSerializationProviders() => [];
+
+        protected override string BuildName() => $"{ResourceName}Collection";
+
+        // TODO: Add support for getting parent resource from a resource collection
+        protected override FormattableString BuildDescription() => $"A class representing a collection of {_resource.Type:C} and their operations.\nEach {_resource.Type:C} in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).\nTo get a {Type:C} instance call the Get{ResourceName.Pluralize()} method from an instance of the parent resource.";
+
+        protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
+
+        protected override CSharpType? BuildBaseType() => typeof(ArmCollection);
 
         protected override CSharpType[] BuildImplements() =>
             _getAll is null
-            ? [typeof(ArmCollection)]
-            : [typeof(ArmCollection), new CSharpType(typeof(IEnumerable<>), _resource.Type), new CSharpType(typeof(IAsyncEnumerable<>), _resource.Type)];
+            ? []
+            : [new CSharpType(typeof(IEnumerable<>), _resource.Type), new CSharpType(typeof(IAsyncEnumerable<>), _resource.Type)];
 
-        protected override PropertyProvider[] BuildProperties() => [];
+        protected override PropertyProvider[] BuildProperties()
+        {
+            var properties = new List<PropertyProvider>();
 
-        protected override FieldProvider[] BuildFields() => [_clientDiagonosticsField, _restClientField];
+            foreach (var clientInfo in _clientInfos.Values)
+            {
+                if (clientInfo.DiagnosticProperty is not null)
+                {
+                    properties.Add(clientInfo.DiagnosticProperty);
+                }
+                if (clientInfo.RestClientProperty is not null)
+                {
+                    properties.Add(clientInfo.RestClientProperty);
+                }
+            }
+
+            return [.. properties];
+        }
+
+        protected override FieldProvider[] BuildFields()
+        {
+            var fields = new List<FieldProvider>();
+            foreach (var clientInfo in _clientInfos.Values)
+            {
+                fields.Add(clientInfo.DiagnosticsField);
+                fields.Add(clientInfo.RestClientField);
+            }
+            return [.. fields];
+        }
 
         protected override ConstructorProvider[] BuildConstructors()
-            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildResourceIdentifierConstructor()];
+            => [ConstructorProviderHelpers.BuildMockingConstructor(this), BuildResourceIdentifierConstructor()];
 
-        protected override ValueExpression ExpectedResourceTypeForValidation => Static(typeof(ResourceGroupResource)).Property("ResourceType");
+        private ConstructorProvider BuildResourceIdentifierConstructor()
+        {
+            var idParameter = new ParameterProvider("id", $"The identifier of the resource that is the target of operations.", typeof(ResourceIdentifier));
+            var parameters = new List<ParameterProvider>
+            {
+                new("client", $"The client parameters to use in these operations.", typeof(ArmClient)),
+                idParameter
+            };
 
-        protected override ValueExpression ResourceTypeExpression => Static(_resource.Type).Property("ResourceType");
+            var initializer = new ConstructorInitializer(true, parameters);
+            var signature = new ConstructorSignature(
+                Type,
+                $"Initializes a new instance of {Type:C} class.",
+                MethodSignatureModifiers.Internal,
+                parameters,
+                null,
+                initializer);
 
-        protected override CSharpType ResourceClientCSharpType => _resource.Type;
+            var thisCollection = This.As<ArmCollection>();
 
-        protected override MethodProvider[] BuildMethods() => [BuildValidateResourceIdMethod(), .. BuildCreateOrUpdateMethods(), .. BuildGetMethods(), .. BuildGetAllMethods(), .. BuildExistsMethods(), .. BuildGetIfExistsMethods(), .. BuildEnumeratorMethods()];
+            var bodyStatements = new List<MethodBodyStatement>();
+
+            bodyStatements.Add(thisCollection.TryGetApiVersion(_resourceTypeExpression, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate());
+
+            // Initialize all client diagnostics and rest client fields
+            foreach (var (inputClient, clientInfo) in _clientInfos)
+            {
+                bodyStatements.Add(clientInfo.DiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeExpression.Namespace(), thisCollection.Diagnostics())).Terminate());
+                var effectiveApiVersion = apiVersion.NullCoalesce(Literal(ManagementClientGenerator.Instance.InputLibrary.DefaultApiVersion));
+                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisCollection.Pipeline(), thisCollection.Endpoint(), effectiveApiVersion)).Terminate());
+            }
+
+            bodyStatements.Add(Static(Type).As<ArmCollection>().ValidateResourceId(idParameter).Terminate());
+
+            return new ConstructorProvider(signature, bodyStatements, this);
+        }
+
+        // TODO -- this expression currently is incorrect. Maybe we need to leave an API in OutputLibrary for us to query the parent resource, because when construct the collection, we do not know it yet.
+        private static CSharpType GetParentResourceType(ResourceMetadata resourceMetadata, ResourceClientProvider resource)
+        {
+            // TODO -- implement this to be more accurate when we implement the parent of resources.
+            switch (resourceMetadata.ResourceScope)
+            {
+                case ResourceScope.ResourceGroup:
+                    return typeof(ResourceGroupResource);
+                case ResourceScope.Subscription:
+                    return typeof(SubscriptionResource);
+                case ResourceScope.Tenant:
+                    return typeof(TenantResource);
+                default:
+                    // TODO -- this is incorrect, but we put it here as a placeholder.
+                    return resource.Type;
+            }
+        }
+
+        protected override MethodProvider[] BuildMethods()
+            => [
+                ResourceMethodSnippets.BuildValidateResourceIdMethod(this, Static(GetParentResourceType(_resourceMetadata, _resource)).As<ArmResource>().ResourceType()),
+                .. BuildCreateOrUpdateMethods(),
+                .. BuildGetMethods(),
+                .. BuildGetAllMethods(),
+                .. BuildExistsMethods(),
+                .. BuildGetIfExistsMethods(),
+                .. BuildEnumeratorMethods()
+                ];
 
         private MethodProvider[] BuildGetAllMethods()
         {
@@ -81,8 +230,8 @@ namespace Azure.Generator.Management.Providers
             }
 
             // implement paging method GetAll
-            var getAll = BuildGetAllMethod(false);
-            var getAllAsync = BuildGetAllMethod(true);
+            var getAll = BuildGetAllMethod(_getAll, false);
+            var getAllAsync = BuildGetAllMethod(_getAll, true);
 
             return [getAllAsync, getAll];
         }
@@ -106,60 +255,54 @@ namespace Azure.Generator.Management.Providers
                 this);
             var getEnumeratorAsyncMethod = new MethodProvider(
                 new MethodSignature("GetAsyncEnumerator", null, MethodSignatureModifiers.None, new CSharpType(typeof(IAsyncEnumerator<>), _resource.Type), null, [KnownAzureParameters.CancellationTokenWithoutDefault], ExplicitInterface: new CSharpType(typeof(IAsyncEnumerable<>), _resource.Type)),
-                Return(This.Invoke("GetAllAsync", [KnownAzureParameters.CancellationTokenWithoutDefault]).Invoke("GetAsyncEnumerator", [KnownAzureParameters.CancellationTokenWithoutDefault])),
+                Return(This.Invoke("GetAllAsync", [KnownAzureParameters.CancellationTokenWithoutDefault.PositionalReference(KnownAzureParameters.CancellationTokenWithoutDefault)]).Invoke("GetAsyncEnumerator", [KnownAzureParameters.CancellationTokenWithoutDefault])),
                 this);
             return [getEnumeratorOfTMethod, getEnumeratorMethod, getEnumeratorAsyncMethod];
         }
 
         private List<MethodProvider> BuildCreateOrUpdateMethods()
         {
-            var result = new List<MethodProvider>();
             if (_create is null)
             {
-                return result;
+                return [];
             }
 
-            foreach (var isAsync in new List<bool> { true, false})
+            var result = new List<MethodProvider>();
+            var restClientInfo = _clientInfos[_create.InputClient];
+            foreach (var isAsync in new List<bool> { true, false })
             {
-                var convenienceMethod = GetCorrespondingConvenienceMethod(_create!.Operation, isAsync);
-                result.Add(BuildOperationMethod(_create, convenienceMethod, isAsync));
+                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_create.InputMethod.Operation, isAsync);
+                var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync);
+                result.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _create.InputMethod, isAsync, methodName: methodName, forceLro: true));
             }
 
             return result;
         }
-        private MethodProvider BuildGetAllMethod(bool isAsync)
-        {
-            var convenienceMethod = GetCorrespondingConvenienceMethod(_getAll!.Operation, isAsync);
-            var isLongRunning = _getAll is InputLongRunningPagingServiceMethod;
-            var signature = new MethodSignature(
-                isAsync ? "GetAllAsync" : "GetAll",
-                convenienceMethod.Signature.Description,
-                convenienceMethod.Signature.Modifiers,
-                isAsync ? new CSharpType(typeof(AsyncPageable<>), _resource.Type) : new CSharpType(typeof(Pageable<>), _resource.Type),
-                convenienceMethod.Signature.ReturnDescription,
-                GetOperationMethodParameters(convenienceMethod, isLongRunning),
-                convenienceMethod.Signature.Attributes,
-                convenienceMethod.Signature.GenericArguments,
-                convenienceMethod.Signature.GenericParameterConstraints,
-                convenienceMethod.Signature.ExplicitInterface,
-                convenienceMethod.Signature.NonDocumentComment);
 
-            // TODO: implement paging method properly
-            return new MethodProvider(signature, ThrowExpression(New.Instance(typeof(NotImplementedException))), this);
+        private MethodProvider BuildGetAllMethod(ResourceMethod getAll, bool isAsync)
+        {
+            var restClientInfo = _clientInfos[getAll.InputClient];
+            var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync);
+            return getAll.InputMethod switch
+            {
+                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName: methodName),
+                _ => new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, getAll.InputMethod, isAsync, methodName: methodName)
+            };
         }
 
         private List<MethodProvider> BuildGetMethods()
         {
-            var result = new List<MethodProvider>();
             if (_get is null)
             {
-                return result;
+                return [];
             }
 
-            foreach (var isAsync in new List<bool> { true, false})
+            var result = new List<MethodProvider>();
+            var restClientInfo = _clientInfos[_get.InputClient];
+            foreach (var isAsync in new List<bool> { true, false })
             {
-                var convenienceMethod = GetCorrespondingConvenienceMethod(_get!.Operation, isAsync);
-                result.Add(BuildOperationMethod(_get, convenienceMethod, isAsync));
+                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_get.InputMethod.Operation, isAsync);
+                result.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync));
             }
 
             return result;
@@ -167,28 +310,18 @@ namespace Azure.Generator.Management.Providers
 
         private List<MethodProvider> BuildExistsMethods()
         {
-            var result = new List<MethodProvider>();
             if (_get is null)
             {
-                return result;
+                return [];
             }
 
-            foreach (var isAsync in new List<bool> { true, false})
+            var result = new List<MethodProvider>();
+            var restClientInfo = _clientInfos[_get.InputClient];
+            foreach (var isAsync in new List<bool> { true, false })
             {
-                var convenienceMethod = GetCorrespondingConvenienceMethod(_get!.Operation, isAsync);
-                var signature = new MethodSignature(
-                isAsync ? "ExistsAsync" : "Exists",
-                $"Checks to see if the resource exists in azure.",
-                convenienceMethod.Signature.Modifiers,
-                isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(Response<>), typeof(bool))) : new CSharpType(typeof(Response<>), typeof(bool)),
-                convenienceMethod.Signature.ReturnDescription,
-                GetOperationMethodParameters(convenienceMethod, false),
-                convenienceMethod.Signature.Attributes,
-                convenienceMethod.Signature.GenericArguments,
-                convenienceMethod.Signature.GenericParameterConstraints,
-                convenienceMethod.Signature.ExplicitInterface,
-                convenienceMethod.Signature.NonDocumentComment);
-                result.Add(BuildOperationMethodCore(_get, convenienceMethod, signature, isAsync, IsReturnTypeGeneric(_get)));
+                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_get.InputMethod.Operation, isAsync);
+                var existsMethodProvider = new ExistsOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
+                result.Add(existsMethodProvider);
             }
 
             return result;
@@ -202,69 +335,15 @@ namespace Azure.Generator.Management.Providers
                 return result;
             }
 
-            foreach (var isAsync in new List<bool> { true, false})
+            var restClientInfo = _clientInfos[_get.InputClient];
+            foreach (var isAsync in new List<bool> { true, false })
             {
-                var convenienceMethod = GetCorrespondingConvenienceMethod(_get!.Operation, isAsync);
-                var signature = new MethodSignature(
-                isAsync ? "GetIfExistsAsync" : "GetIfExists",
-                $"Tries to get details for this resource from the service.",
-                convenienceMethod.Signature.Modifiers,
-                isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(NullableResponse<>), ResourceClientCSharpType)) : new CSharpType(typeof(NullableResponse<>), ResourceClientCSharpType),
-                convenienceMethod.Signature.ReturnDescription,
-                GetOperationMethodParameters(convenienceMethod, false),
-                convenienceMethod.Signature.Attributes,
-                convenienceMethod.Signature.GenericArguments,
-                convenienceMethod.Signature.GenericParameterConstraints,
-                convenienceMethod.Signature.ExplicitInterface,
-                convenienceMethod.Signature.NonDocumentComment);
-                result.Add(BuildOperationMethodCore(_get, convenienceMethod, signature, isAsync, IsReturnTypeGeneric(_get)));
+                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_get.InputMethod.Operation, isAsync);
+                var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
+                result.Add(getIfExistsMethodProvider);
             }
 
             return result;
-        }
-
-        protected override bool SkipMethodParameter(ParameterProvider parameter)
-        {
-            if (ContextualParameters == null)
-            {
-                return false;
-            }
-            return ContextualParameters.Take(ContextualParameters.Count - 1).Any(p => p == parameter.Name);
-        }
-
-        protected override MethodBodyStatement BuildReturnStatements(ValueExpression responseVariable, MethodSignature signature)
-        {
-            if (signature.Name == "GetIfExists" || signature.Name == "GetIfExistsAsync")
-            {
-                return BuildReturnStatementsForGetIfExists(responseVariable, signature);
-            }
-            if (signature.Name == "Exists" || signature.Name == "ExistsAsync")
-            {
-                return BuildReturnStatementsForExists(responseVariable);
-            }
-
-            return base.BuildReturnStatements(responseVariable, signature);
-        }
-
-        private MethodBodyStatement BuildReturnStatementsForGetIfExists(ValueExpression responseVariable, MethodSignature signature)
-        {
-            List<MethodBodyStatement> statements =
-            [
-                new IfStatement(responseVariable.Property("Value").Equal(Null))
-                        {
-                            Return(New.Instance(new CSharpType(typeof(NoValueResponse<>), _resource.Type), responseVariable.Invoke("GetRawResponse")))
-                        }
-            ];
-            var returnValueExpression =  New.Instance(ResourceClientCSharpType, This.Property("Client"), responseVariable.Property("Value"));
-            statements.Add(Return(Static(typeof(Response)).Invoke(nameof(Response.FromValue), returnValueExpression, responseVariable.Invoke("GetRawResponse"))));
-
-            return statements;
-        }
-
-        private MethodBodyStatement BuildReturnStatementsForExists(ValueExpression responseVariable)
-        {
-            var returnValueExpression = responseVariable.Property("Value").NotEqual(Null);
-            return Return(Static(typeof(Response)).Invoke(nameof(Response.FromValue), returnValueExpression, responseVariable.Invoke("GetRawResponse")));
         }
     }
 }

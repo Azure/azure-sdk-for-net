@@ -10,9 +10,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Usage
+namespace _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation
 {
     public partial class ModelInOperation
     {

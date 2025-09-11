@@ -16,17 +16,35 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   # Save-Package-Properties.ps1
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
   $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
-  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo ""$ServiceProj"" /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion -tl:off"
+  $outputFilePath = Join-Path ([System.IO.Path]::GetTempPath()) "package-info-$([System.Guid]::NewGuid()).txt"
+  
+  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo ""$ServiceProj"" /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion /p:OutputProjectInfoListFilePath=""$outputFilePath"" -tl:off"
 
-  $msbuildOutput = dotnet msbuild `
+  dotnet msbuild `
     /nologo `
     /t:GetPackageInfo `
     "$ServiceProj" `
     /p:ServiceDirectory=$serviceDirectory `
     /p:AddDevVersion=$shouldAddDevVersion `
-    -tl:off
+    /p:OutputProjectInfoListFilePath="$outputFilePath" `
+    -tl:off | Out-Host
 
-  foreach ($projectOutput in $msbuildOutput)
+  # Check if msbuild succeeded
+  if ($LASTEXITCODE -ne 0) {
+    # Clean up temp file before failing
+    if (Test-Path $outputFilePath) {
+      $null = Remove-Item $outputFilePath -Force -ErrorAction SilentlyContinue
+    }
+    throw "MSBuild failed with exit code $LASTEXITCODE"
+  }
+
+  $packageInfoLines = @()
+  if (Test-Path $outputFilePath) {
+    $packageInfoLines = Get-Content $outputFilePath | Where-Object { $_ -and $_.Trim() }
+    $null = Remove-Item $outputFilePath -Force -ErrorAction SilentlyContinue
+  }
+
+  foreach ($projectOutput in $packageInfoLines)
   {
     if (!$projectOutput) {
       Write-Verbose "Get-AllPackageInfoFromRepo::projectOutput was null or empty, skipping"
@@ -128,7 +146,8 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
       Write-Host "Failed calculating dependencies for '$TestDependsOnDependency'. Exit code $LASTEXITCODE."
       Write-Host "Dumping erroring build output."
       Write-Host (Get-Content -Raw $buildOutputPath)
-      continue
+
+      return @()
   }
 
   if (Test-Path $outputFilePath) {
