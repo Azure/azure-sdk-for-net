@@ -23,13 +23,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+using System.Linq;
 
 namespace Azure.Generator.Management.Providers
 {
     internal sealed class ResourceCollectionClientProvider : TypeProvider
     {
         private readonly ResourceMetadata _resourceMetadata;
-
+        private readonly IReadOnlyList<ResourceMethod> _resourceServiceMethods;
+        private readonly IReadOnlyList<FieldProvider> _pathParameterFields;
         private readonly ResourceClientProvider _resource;
         private readonly ResourceMethod? _getAll;
         private readonly ResourceMethod? _create;
@@ -48,6 +50,8 @@ namespace Azure.Generator.Management.Providers
             _resourceMetadata = resourceMetadata;
             _contextualPath = GetContextualRequestPattern(resourceMetadata);
             _resource = resource;
+            _resourceServiceMethods = resourceMethods;
+            _pathParameterFields = BuildPathParameterFields();
 
             // Initialize client info dictionary using extension method
             _clientInfos = resourceMetadata.CreateClientInfosMap(this);
@@ -112,6 +116,8 @@ namespace Azure.Generator.Management.Providers
         }
 
         public ResourceClientProvider Resource => _resource;
+        public IReadOnlyList<FieldProvider> PathParameterFields => _pathParameterFields;
+        public RequestPathPattern ContextualPath => _contextualPath;
 
         internal string ResourceName => _resource.ResourceName;
         internal ResourceScope ResourceScope => _resource.ResourceScope;
@@ -151,6 +157,64 @@ namespace Azure.Generator.Management.Providers
             return [.. properties];
         }
 
+        private CSharpType GetPathParameterType(string parameterName)
+        {
+            foreach (var resourceMethod in _resourceServiceMethods)
+            {
+                if (!resourceMethod.Kind.IsCrudKind())
+                {
+                    continue; // Skip non-CRUD operations
+                }
+                // iterate through all parameters in this method to find a matching parameter
+                foreach (var parameter in resourceMethod.InputMethod.Operation.Parameters)
+                {
+                    if (parameter is not InputPathParameter)
+                    {
+                        continue; // Skip parameters that are not in the path
+                    }
+                    if (parameter.Name == parameterName)
+                    {
+                        var csharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(parameter.Type) ?? typeof(string);
+                        return parameterName switch
+                        {
+                            "subscriptionId" when csharpType.Equals(typeof(Guid)) => typeof(string),
+                            // Cases will be added later
+                            _ => csharpType
+                        };
+                    }
+                }
+            }
+
+            // what if we did not find the parameter in any method?
+            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                "general-warning",
+                $"Cannot find parameter {parameterName} in any registered operations in resource {ResourceName}."
+                );
+
+            return typeof(string); // Default to string if not found
+        }
+
+        private List<FieldProvider> BuildPathParameterFields()
+        {
+            var fields = new List<FieldProvider>();
+            var diff = ContextualPath.TrimAncestorFrom(Resource.ContextualPath);
+
+            var variableSegments = diff.Where(seg => !seg.IsConstant).ToList();
+
+            if (variableSegments.Count > 0)
+            {
+                variableSegments.RemoveAt(variableSegments.Count - 1);
+            }
+
+            foreach (var seg in variableSegments)
+            {
+                var field = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, GetPathParameterType(seg.VariableName), $"_{seg.VariableName}", this, description: $"The {seg.VariableName}.");
+                fields.Add(field);
+            }
+
+            return fields;
+        }
+
         protected override FieldProvider[] BuildFields()
         {
             var fields = new List<FieldProvider>();
@@ -159,6 +223,7 @@ namespace Azure.Generator.Management.Providers
                 fields.Add(clientInfo.DiagnosticsField);
                 fields.Add(clientInfo.RestClientField);
             }
+            fields.AddRange(_pathParameterFields);
             return [.. fields];
         }
 
@@ -168,13 +233,23 @@ namespace Azure.Generator.Management.Providers
         private ConstructorProvider BuildResourceIdentifierConstructor()
         {
             var idParameter = new ParameterProvider("id", $"The identifier of the resource that is the target of operations.", typeof(ResourceIdentifier));
-            var parameters = new List<ParameterProvider>
+            var baseParameters = new List<ParameterProvider>
             {
                 new("client", $"The client parameters to use in these operations.", typeof(ArmClient)),
                 idParameter
             };
 
-            var initializer = new ConstructorInitializer(true, parameters);
+            var initializer = new ConstructorInitializer(true, baseParameters);
+            var parameters = new List<ParameterProvider>(baseParameters);
+            var pathParameters = new List<ParameterProvider>();
+
+            foreach (var pathField in _pathParameterFields)
+            {
+                var parameterName = pathField.Name.Substring(1); // Remove the underscore prefix
+                pathParameters.Add(new ParameterProvider(parameterName, $"The {parameterName} for the parent resource.", pathField.Type));
+            }
+            parameters.AddRange(pathParameters);
+
             var signature = new ConstructorSignature(
                 Type,
                 $"Initializes a new instance of {Type:C} class.",
@@ -188,6 +263,17 @@ namespace Azure.Generator.Management.Providers
             var bodyStatements = new List<MethodBodyStatement>();
 
             bodyStatements.Add(thisCollection.TryGetApiVersion(_resourceTypeExpression, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate());
+
+            // Assign all path parameter fields by assigning from the path parameters
+            foreach (var pathField in _pathParameterFields)
+            {
+                var parameterName = pathField.Name.Substring(1); // Remove the underscore prefix
+                var matchingParameter = pathParameters.FirstOrDefault(p => p.Name == parameterName);
+                if (matchingParameter != null)
+                {
+                    bodyStatements.Add(pathField.Assign(matchingParameter).Terminate());
+                }
+            }
 
             // Initialize all client diagnostics and rest client fields
             foreach (var (inputClient, clientInfo) in _clientInfos)
@@ -294,7 +380,7 @@ namespace Azure.Generator.Management.Providers
             var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync);
             return getAll.InputMethod switch
             {
-                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName: methodName),
+                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, _pathParameterFields, isAsync, methodName),
                 _ => new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, getAll.InputMethod, isAsync, methodName: methodName)
             };
         }
@@ -353,6 +439,23 @@ namespace Azure.Generator.Management.Providers
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Tries to find a matching path parameter field for the given parameter.
+        /// </summary>
+        /// <param name="parameter">The parameter to find a matching field for.</param>
+        /// <param name="matchingField">The matching field if found.</param>
+        /// <returns>True if a matching field was found, false otherwise.</returns>
+        public bool TryGetPrivateFieldParameter(ParameterProvider parameter, out FieldProvider? matchingField)
+        {
+            matchingField = PathParameterFields.FirstOrDefault(field =>
+            {
+                var fieldNameForMatch = field.Name.StartsWith("_") ? field.Name.Substring(1) : field.Name;
+                return fieldNameForMatch.Equals(parameter.WireInfo.SerializedName, StringComparison.OrdinalIgnoreCase);
+            });
+
+            return matchingField != null;
         }
     }
 }

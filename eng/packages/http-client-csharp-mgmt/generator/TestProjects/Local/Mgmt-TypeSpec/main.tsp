@@ -31,8 +31,8 @@ enum Versions {
   v2024_05_01: "2024-05-01",
 }
 
-// @@clientLocation(Bars.get, "Bar");
-// @@clientLocation(Bars.update, "Bar");
+@@clientLocation(Bars.get, "Bar");
+@@clientLocation(Bars.update, "Bar");
 
-// #suppress "deprecated"
-// @@flattenProperty(BarSettingsResource.flattenedNestedProperty);
+#suppress "deprecated"
+@@flattenProperty(BarSettingsResource.flattenedNestedProperty);

@@ -32,12 +32,14 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly string _methodName;
         private readonly MethodSignature _signature;
         private readonly MethodBodyStatement[] _bodyStatements;
+        private readonly IReadOnlyList<FieldProvider> _pathParameterFields;
 
         public PageableOperationMethodProvider(
             TypeProvider enclosingType,
             RequestPathPattern contextualPath,
             RestClientInfo restClientInfo,
             InputPagingServiceMethod method,
+            IReadOnlyList<FieldProvider> pathParameterFields,
             bool isAsync,
             string? methodName = null)
         {
@@ -45,6 +47,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _contextualPath = contextualPath;
             _restClientInfo = restClientInfo;
             _method = method;
+            _pathParameterFields = pathParameterFields;
             _convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_method.Operation, isAsync);
             _isAsync = isAsync;
             _itemType = _convenienceMethod.Signature.ReturnType!.Arguments[0]; // a paging method's return type should be `Pageable<T>` or `AsyncPageable<T>`, so we can safely access the first argument as the item type.
@@ -94,7 +97,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _contextualPath),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _contextualPath, _enclosingType),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,
@@ -119,7 +122,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             {
                 _restClientInfo.RestClient,
             };
-            arguments.AddRange(_contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
+
+            arguments.AddRange(_contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType));
 
             // Handle ResourceData type conversion if needed
             if (_itemResourceClient != null)

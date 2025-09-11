@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -22,7 +23,8 @@ namespace Azure.Generator.Management.Utilities
             ScopedApi<ResourceIdentifier> idProperty,
             IReadOnlyList<ParameterProvider> requestParameters,
             VariableExpression requestContext,
-            IReadOnlyList<ParameterProvider> methodParameters)
+            IReadOnlyList<ParameterProvider> methodParameters,
+            TypeProvider? enclosingType = null)
         {
             var arguments = new List<ValueExpression>();
             // here we always assume that the parameter name matches the parameter name in the request path.
@@ -50,12 +52,24 @@ namespace Azure.Generator.Management.Utilities
                 {
                     arguments.Add(requestContext);
                 }
-                else
+                else if (methodParameters.Any(p => p.WireInfo.SerializedName == parameter.WireInfo.SerializedName))
                 {
                     var methodParam = methodParameters.Single(p => p.WireInfo.SerializedName == parameter.WireInfo.SerializedName);
                     arguments.Add(Convert(methodParam, methodParam.Type, parameter.Type));
                 }
+                else
+                {
+                    // Find matching parameter from pathFieldsParameters if enclosing type is ResourceCollectionClientProvider
+                    if (enclosingType is ResourceCollectionClientProvider collectionProvider)
+                    {
+                        if (collectionProvider.TryGetPrivateFieldParameter(parameter, out var matchingField) && matchingField != null)
+                        {
+                            arguments.Add(matchingField);
+                        }
+                    }
+                }
             }
+
             return arguments;
 
             static ValueExpression Convert(ValueExpression expression, CSharpType fromType, CSharpType toType)

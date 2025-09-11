@@ -59,30 +59,31 @@ namespace MgmtTypeSpec.Mocking
         private MgmtTypeSpecClient MgmtTypeSpecClientRestClient => _mgmtTypeSpecClientRestClient ??= new MgmtTypeSpecClient(MgmtTypeSpecClientClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         /// <summary> Gets a collection of PlaywrightQuotas in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the parent resource. </param>
         /// <returns> An object representing collection of PlaywrightQuotas and their operations over a PlaywrightQuotaResource. </returns>
-        public virtual PlaywrightQuotaCollection GetPlaywrightQuotas()
+        public virtual PlaywrightQuotaCollection GetPlaywrightQuotas(AzureLocation location)
         {
-            return GetCachedClient(client => new PlaywrightQuotaCollection(client, Id));
+            return GetCachedClient(client => new PlaywrightQuotaCollection(client, Id, location));
         }
 
         /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the parent resource. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual async Task<Response<PlaywrightQuotaResource>> GetPlaywrightQuotaAsync(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
         {
-            return await GetPlaywrightQuotas().GetAsync(location, playwrightQuotaName, cancellationToken).ConfigureAwait(false);
+            return await GetPlaywrightQuotas(location).GetAsync(playwrightQuotaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the parent resource. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual Response<PlaywrightQuotaResource> GetPlaywrightQuota(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
         {
-            return GetPlaywrightQuotas().Get(location, playwrightQuotaName, cancellationToken);
+            return GetPlaywrightQuotas(location).Get(playwrightQuotaName, cancellationToken);
         }
 
         /// <summary> List Foo resources by subscription ID. </summary>

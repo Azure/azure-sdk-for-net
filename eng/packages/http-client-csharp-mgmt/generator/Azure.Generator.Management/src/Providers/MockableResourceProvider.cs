@@ -220,8 +220,18 @@ namespace Azure.Generator.Management.Providers
                 // the first method is returning the collection
                 var collection = resource.ResourceCollection!;
                 var collectionMethodSignature = resource.FactoryMethodSignature;
-
-                var bodyStatement = Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(collection.Type, client, This.As<ArmResource>().Id())));
+                var pathFields = collection.PathParameterFields;
+                var pathParameters = pathFields.Select(f => new ParameterProvider(f.Name.Substring(1), $"The {f.Name.Substring(1)} for the parent resource.", f.Type)).ToList();
+                collectionMethodSignature = new MethodSignature(
+                    collectionMethodSignature.Name,
+                    collectionMethodSignature.Description,
+                    collectionMethodSignature.Modifiers,
+                    collectionMethodSignature.ReturnType,
+                    collectionMethodSignature.ReturnDescription,
+                    [.. collectionMethodSignature.Parameters, .. pathParameters],
+                    collectionMethodSignature.Attributes);
+                var pathParameterArgs = pathParameters.Select(p => (ValueExpression)p).ToList();
+                var bodyStatement = Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(collection.Type, [client, This.As<ArmResource>().Id(), .. pathParameterArgs])));
                 yield return new MethodProvider(
                     collectionMethodSignature,
                     bodyStatement,
@@ -233,16 +243,16 @@ namespace Azure.Generator.Management.Providers
                 if (getAsyncMethod is not null)
                 {
                     // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
-                    yield return BuildGetMethod(this, getAsyncMethod, collectionMethodSignature, $"Get{resource.ResourceName}Async");
+                    yield return BuildGetMethod(this, getAsyncMethod, collectionMethodSignature, pathParameters, $"Get{resource.ResourceName}Async");
                 }
 
                 if (getMethod is not null)
                 {
                     // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
-                    yield return BuildGetMethod(this, getMethod, collectionMethodSignature, $"Get{resource.ResourceName}");
+                    yield return BuildGetMethod(this, getMethod, collectionMethodSignature, pathParameters, $"Get{resource.ResourceName}");
                 }
 
-                static MethodProvider BuildGetMethod(TypeProvider enclosingType, MethodProvider resourceGetMethod, MethodSignature collectionGetSignature, string methodName)
+                static MethodProvider BuildGetMethod(TypeProvider enclosingType, MethodProvider resourceGetMethod, MethodSignature collectionGetSignature, List<ParameterProvider> pathParameters, string methodName)
                 {
                     var signature = new MethodSignature(
                         methodName,
@@ -250,7 +260,7 @@ namespace Azure.Generator.Management.Providers
                         resourceGetMethod.Signature.Modifiers,
                         resourceGetMethod.Signature.ReturnType,
                         resourceGetMethod.Signature.ReturnDescription,
-                        resourceGetMethod.Signature.Parameters,
+                        [.. pathParameters, .. resourceGetMethod.Signature.Parameters],
                         Attributes: [new AttributeStatement(typeof(ForwardsClientCallsAttribute))]);
 
                     return new MethodProvider(
@@ -265,16 +275,16 @@ namespace Azure.Generator.Management.Providers
         private MethodProvider BuildResourceServiceMethod(ResourceClientProvider resource, ResourceMethod resourceMethod, bool isAsync)
         {
             var methodName = ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
-
             return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName);
         }
 
         private MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null)
         {
             var clientInfo = _clientInfos[inputClient];
+            List<FieldProvider> pathParameterFields = new List<FieldProvider>();
             return method switch
             {
-                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync, methodName: methodName),
+                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, pathParameterFields, isAsync, methodName),
                 _ => new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName: methodName)
             };
         }
