@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         {
             get
             {
-                return Else is null ? default : Else.Operations;
+                return Else.Operations;
             }
             set
             {
