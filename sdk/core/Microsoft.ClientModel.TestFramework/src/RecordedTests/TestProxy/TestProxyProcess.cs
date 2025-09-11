@@ -301,7 +301,7 @@ public class TestProxyProcess
         var envPath = Environment.GetEnvironmentVariable("TEST_PROXY_PATH");
         if (!string.IsNullOrEmpty(envPath))
         {
-           return envPath;
+            return envPath;
         }
 
         return null;
