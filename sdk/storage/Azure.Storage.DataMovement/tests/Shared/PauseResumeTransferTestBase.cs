@@ -368,7 +368,22 @@ namespace Azure.Storage.DataMovement.Tests
                 await VerifyTransferContent(childSourceResource, childDestinationResource, sourceContainer, destinationContainer, transferType);
             }
         }
+
+        private bool HasFileTransferReachedInProgressState(List<TransferProgress> progressUpdates)
+        {
+            return progressUpdates.Any(p => p.InProgressCount > 0);
+        }
         #endregion
+
+        private class TestProgressHandler : IProgress<TransferProgress>
+        {
+            public List<TransferProgress> Updates { get; private set; } = new List<TransferProgress>();
+
+            public void Report(TransferProgress progress)
+            {
+                Updates.Add(progress);
+            }
+        }
 
         #region Tests
         [Test]
@@ -392,7 +407,15 @@ namespace Azure.Storage.DataMovement.Tests
                 ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
             TransferManager transferManager = new TransferManager(options);
-            TransferOptions transferOptions = new TransferOptions();
+            TestProgressHandler progressHandler = new();
+            TransferOptions transferOptions = new TransferOptions
+            {
+                ProgressHandlerOptions = new TransferProgressHandlerOptions
+                {
+                    ProgressHandler = progressHandler,
+                    TrackBytesTransferred = true
+                }
+            };
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
 
             // Add long-running job to pause, if the job is not big enough
@@ -414,12 +437,17 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
-            // Check if Job Plan File exists in checkpointer path.
-            JobPartPlanFileName fileName = new JobPartPlanFileName(
-                checkpointerPath: checkpointerDirectory.DirectoryPath,
-                id: transfer.Id,
-                jobPartNumber: 0);
-            Assert.IsTrue(File.Exists(fileName.FullPath));
+            List<TransferProgress> progressUpdates = progressHandler.Updates;
+            // We need to check if the transfer has any files that has reached 'InProgress' state when the Job Part Plan File is created.
+            if (HasFileTransferReachedInProgressState(progressUpdates))
+            {
+                // Check if Job Plan File exists in checkpointer path.
+                JobPartPlanFileName fileName = new JobPartPlanFileName(
+                    checkpointerPath: checkpointerDirectory.DirectoryPath,
+                    id: transfer.Id,
+                    jobPartNumber: 0);
+                Assert.IsTrue(File.Exists(fileName.FullPath));
+            }
         }
 
         [Test]
@@ -442,7 +470,16 @@ namespace Azure.Storage.DataMovement.Tests
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
-            TransferOptions transferOptions = new TransferOptions();
+
+            TestProgressHandler progressHandler = new();
+            TransferOptions transferOptions = new TransferOptions
+            {
+                ProgressHandlerOptions = new TransferProgressHandlerOptions
+                {
+                    ProgressHandler = progressHandler,
+                    TrackBytesTransferred = true
+                }
+            };
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
             TransferManager transferManager = new TransferManager(options);
 
@@ -465,12 +502,17 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
-            // Check if Job Plan File exists in checkpointer path.
-            JobPartPlanFileName fileName = new JobPartPlanFileName(
-                checkpointerPath: checkpointerDirectory.DirectoryPath,
-                id: transfer.Id,
-                jobPartNumber: 0);
-            Assert.IsTrue(File.Exists(fileName.FullPath));
+            List<TransferProgress> progressUpdates = progressHandler.Updates;
+            // We need to check if the transfer has any files that has reached 'InProgress' state when the Job Part Plan File is created.
+            if (HasFileTransferReachedInProgressState(progressUpdates))
+            {
+                // Check if Job Plan File exists in checkpointer path.
+                JobPartPlanFileName fileName = new JobPartPlanFileName(
+                    checkpointerPath: checkpointerDirectory.DirectoryPath,
+                    id: transfer.Id,
+                    jobPartNumber: 0);
+                Assert.IsTrue(File.Exists(fileName.FullPath));
+            }
         }
 
         [RecordedTest]
@@ -509,7 +551,16 @@ namespace Azure.Storage.DataMovement.Tests
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
-            TransferOptions transferOptions = new TransferOptions();
+
+            TestProgressHandler progressHandler = new();
+            TransferOptions transferOptions = new TransferOptions
+            {
+                ProgressHandlerOptions = new TransferProgressHandlerOptions
+                {
+                    ProgressHandler = progressHandler,
+                    TrackBytesTransferred = true
+                }
+            };
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
             TransferManager transferManager = new TransferManager(options);
 
@@ -537,12 +588,17 @@ namespace Azure.Storage.DataMovement.Tests
 
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
-            // Check if Job Plan File exists in checkpointer path.
-            JobPartPlanFileName fileName = new JobPartPlanFileName(
-                checkpointerPath: checkpointerDirectory.DirectoryPath,
-                id: transfer.Id,
-                jobPartNumber: 0);
-            Assert.IsTrue(File.Exists(fileName.FullPath));
+            List<TransferProgress> progressUpdates = progressHandler.Updates;
+            // We need to check if the transfer has any files that has reached 'InProgress' state when the Job Part Plan File is created.
+            if (HasFileTransferReachedInProgressState(progressUpdates))
+            {
+                // Check if Job Plan File exists in checkpointer path.
+                JobPartPlanFileName fileName = new JobPartPlanFileName(
+                    checkpointerPath: checkpointerDirectory.DirectoryPath,
+                    id: transfer.Id,
+                    jobPartNumber: 0);
+                Assert.IsTrue(File.Exists(fileName.FullPath));
+            }
         }
 
         [Test]
