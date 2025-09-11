@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WriteObjectValue(ResourceConfigParameters, options);
             writer.WritePropertyName("executionParameters"u8);
             writer.WriteObjectValue(ExecutionParameters, options);
-            if (Optional.IsDefined(Correlationid))
+            if (Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationid"u8);
-                writer.WriteStringValue(Correlationid);
+                writer.WriteStringValue(CorrelationId);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

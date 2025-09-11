@@ -26,10 +26,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_SubmitVirtualMachineDeallocate</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
@@ -51,10 +47,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_SubmitVirtualMachineDeallocate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,10 +70,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_SubmitVirtualMachineStart</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
@@ -103,10 +91,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_SubmitVirtualMachineStart</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,10 +114,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_SubmitVirtualMachineHibernate</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
@@ -155,10 +135,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_SubmitVirtualMachineHibernate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,10 +158,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_ExecuteVirtualMachineStart</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
@@ -207,10 +179,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_ExecuteVirtualMachineStart</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,10 +202,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_ExecuteVirtualMachineHibernate</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
@@ -259,10 +223,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_ExecuteVirtualMachineHibernate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,10 +246,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetVirtualMachineOperationStatus</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
@@ -311,10 +267,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetVirtualMachineOperationStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,10 +290,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetVirtualMachineOperationErrors</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
@@ -363,10 +311,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetVirtualMachineOperationErrors</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -390,10 +334,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_ExecuteVirtualMachineDeallocate</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
@@ -415,10 +355,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_ExecuteVirtualMachineDeallocate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -442,10 +378,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_CancelVirtualMachineOperations</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationparameter"> The location name. </param>
@@ -467,10 +399,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_CancelVirtualMachineOperations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>

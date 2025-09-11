@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_VirtualMachinesExecuteCreate</description>
+        /// <description>ScheduledActions_ExecuteVirtualMachineCreateOperation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteCreateScheduledAction(AzureLocation,ExecuteCreateContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineCreateOperation(AzureLocation,ExecuteCreateContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -445,11 +445,11 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CreateResourceOperationResult>> VirtualMachinesExecuteCreateScheduledActionAsync(this SubscriptionResource subscriptionResource, AzureLocation locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CreateResourceOperationResult>> ExecuteVirtualMachineCreateOperationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableComputeScheduleSubscriptionResource(subscriptionResource).VirtualMachinesExecuteCreateScheduledActionAsync(locationparameter, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeScheduleSubscriptionResource(subscriptionResource).ExecuteVirtualMachineCreateOperationAsync(locationparameter, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_VirtualMachinesExecuteCreate</description>
+        /// <description>ScheduledActions_ExecuteVirtualMachineCreateOperation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteCreateScheduledAction(AzureLocation,ExecuteCreateContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineCreateOperation(AzureLocation,ExecuteCreateContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -478,11 +478,11 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<CreateResourceOperationResult> VirtualMachinesExecuteCreateScheduledAction(this SubscriptionResource subscriptionResource, AzureLocation locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
+        public static Response<CreateResourceOperationResult> ExecuteVirtualMachineCreateOperation(this SubscriptionResource subscriptionResource, AzureLocation locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeScheduleSubscriptionResource(subscriptionResource).VirtualMachinesExecuteCreateScheduledAction(locationparameter, content, cancellationToken);
+            return GetMockableComputeScheduleSubscriptionResource(subscriptionResource).ExecuteVirtualMachineCreateOperation(locationparameter, content, cancellationToken);
         }
 
         /// <summary>
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_VirtualMachinesExecuteDelete</description>
+        /// <description>ScheduledActions_ExecuteVirtualMachineDeleteOperation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteDeleteScheduledAction(AzureLocation,ExecuteDeleteContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineDeleteOperation(AzureLocation,ExecuteDeleteContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -511,11 +511,11 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<DeleteResourceOperationResult>> VirtualMachinesExecuteDeleteScheduledActionAsync(this SubscriptionResource subscriptionResource, AzureLocation locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeleteResourceOperationResult>> ExecuteVirtualMachineDeleteOperationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableComputeScheduleSubscriptionResource(subscriptionResource).VirtualMachinesExecuteDeleteScheduledActionAsync(locationparameter, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeScheduleSubscriptionResource(subscriptionResource).ExecuteVirtualMachineDeleteOperationAsync(locationparameter, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_VirtualMachinesExecuteDelete</description>
+        /// <description>ScheduledActions_ExecuteVirtualMachineDeleteOperation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteDeleteScheduledAction(AzureLocation,ExecuteDeleteContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineDeleteOperation(AzureLocation,ExecuteDeleteContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -544,11 +544,11 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<DeleteResourceOperationResult> VirtualMachinesExecuteDeleteScheduledAction(this SubscriptionResource subscriptionResource, AzureLocation locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
+        public static Response<DeleteResourceOperationResult> ExecuteVirtualMachineDeleteOperation(this SubscriptionResource subscriptionResource, AzureLocation locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeScheduleSubscriptionResource(subscriptionResource).VirtualMachinesExecuteDeleteScheduledAction(locationparameter, content, cancellationToken);
+            return GetMockableComputeScheduleSubscriptionResource(subscriptionResource).ExecuteVirtualMachineDeleteOperation(locationparameter, content, cancellationToken);
         }
 
         /// <summary>

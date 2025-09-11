@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateVirtualMachinesExecuteCreateRequestUri(string subscriptionId, AzureLocation locationparameter, ExecuteCreateContent content)
+        internal RequestUriBuilder CreateExecuteVirtualMachineCreateOperationRequestUri(string subscriptionId, AzureLocation locationparameter, ExecuteCreateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             return uri;
         }
 
-        internal HttpMessage CreateVirtualMachinesExecuteCreateRequest(string subscriptionId, AzureLocation locationparameter, ExecuteCreateContent content)
+        internal HttpMessage CreateExecuteVirtualMachineCreateOperationRequest(string subscriptionId, AzureLocation locationparameter, ExecuteCreateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -631,12 +631,12 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CreateResourceOperationResult>> VirtualMachinesExecuteCreateAsync(string subscriptionId, AzureLocation locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<CreateResourceOperationResult>> ExecuteVirtualMachineCreateOperationAsync(string subscriptionId, AzureLocation locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesExecuteCreateRequest(subscriptionId, locationparameter, content);
+            using var message = CreateExecuteVirtualMachineCreateOperationRequest(subscriptionId, locationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -659,12 +659,12 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CreateResourceOperationResult> VirtualMachinesExecuteCreate(string subscriptionId, AzureLocation locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
+        public Response<CreateResourceOperationResult> ExecuteVirtualMachineCreateOperation(string subscriptionId, AzureLocation locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesExecuteCreateRequest(subscriptionId, locationparameter, content);
+            using var message = CreateExecuteVirtualMachineCreateOperationRequest(subscriptionId, locationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateVirtualMachinesExecuteDeleteRequestUri(string subscriptionId, AzureLocation locationparameter, ExecuteDeleteContent content)
+        internal RequestUriBuilder CreateExecuteVirtualMachineDeleteOperationRequestUri(string subscriptionId, AzureLocation locationparameter, ExecuteDeleteContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             return uri;
         }
 
-        internal HttpMessage CreateVirtualMachinesExecuteDeleteRequest(string subscriptionId, AzureLocation locationparameter, ExecuteDeleteContent content)
+        internal HttpMessage CreateExecuteVirtualMachineDeleteOperationRequest(string subscriptionId, AzureLocation locationparameter, ExecuteDeleteContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -723,12 +723,12 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeleteResourceOperationResult>> VirtualMachinesExecuteDeleteAsync(string subscriptionId, AzureLocation locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DeleteResourceOperationResult>> ExecuteVirtualMachineDeleteOperationAsync(string subscriptionId, AzureLocation locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesExecuteDeleteRequest(subscriptionId, locationparameter, content);
+            using var message = CreateExecuteVirtualMachineDeleteOperationRequest(subscriptionId, locationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -751,12 +751,12 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeleteResourceOperationResult> VirtualMachinesExecuteDelete(string subscriptionId, AzureLocation locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
+        public Response<DeleteResourceOperationResult> ExecuteVirtualMachineDeleteOperation(string subscriptionId, AzureLocation locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesExecuteDeleteRequest(subscriptionId, locationparameter, content);
+            using var message = CreateExecuteVirtualMachineDeleteOperationRequest(subscriptionId, locationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

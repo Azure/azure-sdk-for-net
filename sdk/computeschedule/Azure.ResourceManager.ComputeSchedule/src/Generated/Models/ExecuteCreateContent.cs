@@ -61,13 +61,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="ExecuteCreateContent"/>. </summary>
         /// <param name="resourceConfigParameters"> resource creation payload. </param>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
-        /// <param name="correlationid"> CorrelationId item. </param>
+        /// <param name="correlationId"> CorrelationId item. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExecuteCreateContent(ResourceProvisionPayload resourceConfigParameters, ScheduledActionExecutionParameterDetail executionParameters, string correlationid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExecuteCreateContent(ResourceProvisionPayload resourceConfigParameters, ScheduledActionExecutionParameterDetail executionParameters, string correlationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceConfigParameters = resourceConfigParameters;
             ExecutionParameters = executionParameters;
-            Correlationid = correlationid;
+            CorrelationId = correlationId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> The execution parameters for the request. </summary>
         public ScheduledActionExecutionParameterDetail ExecutionParameters { get; }
         /// <summary> CorrelationId item. </summary>
-        public string Correlationid { get; set; }
+        public string CorrelationId { get; set; }
     }
 }

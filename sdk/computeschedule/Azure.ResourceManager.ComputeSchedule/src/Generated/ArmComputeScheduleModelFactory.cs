@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="Models.ExecuteCreateContent"/>. </summary>
         /// <param name="resourceConfigParameters"> resource creation payload. </param>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
-        /// <param name="correlationid"> CorrelationId item. </param>
+        /// <param name="correlationId"> CorrelationId item. </param>
         /// <returns> A new <see cref="Models.ExecuteCreateContent"/> instance for mocking. </returns>
-        public static ExecuteCreateContent ExecuteCreateContent(ResourceProvisionPayload resourceConfigParameters = null, ScheduledActionExecutionParameterDetail executionParameters = null, string correlationid = null)
+        public static ExecuteCreateContent ExecuteCreateContent(ResourceProvisionPayload resourceConfigParameters = null, ScheduledActionExecutionParameterDetail executionParameters = null, string correlationId = null)
         {
-            return new ExecuteCreateContent(resourceConfigParameters, executionParameters, correlationid, serializedAdditionalRawData: null);
+            return new ExecuteCreateContent(resourceConfigParameters, executionParameters, correlationId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceProvisionPayload"/>. </summary>

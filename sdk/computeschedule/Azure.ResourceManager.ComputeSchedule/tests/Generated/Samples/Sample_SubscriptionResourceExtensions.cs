@@ -398,10 +398,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task VirtualMachinesExecuteCreateScheduledAction_ScheduledActionsVirtualMachinesExecuteCreateMaximumSetGenGeneratedByMaximumSetRule()
+        public async Task ExecuteVirtualMachineCreateOperation_ScheduledActionsVirtualMachinesExecuteCreateMaximumSetGenGeneratedByMaximumSetRule()
         {
             // Generated from example definition: 2025-05-01/ScheduledActions_VirtualMachinesExecuteCreate_MaximumSet_Gen.json
-            // this example is just showing the usage of "ScheduledActions_VirtualMachinesExecuteCreate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ScheduledActions_ExecuteVirtualMachineCreateOperation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -541,19 +541,19 @@ priority = 0,
                 },
             })
             {
-                Correlationid = "dfe927c5-16a6-40b7-a0f7-8524975ed642",
+                CorrelationId = "dfe927c5-16a6-40b7-a0f7-8524975ed642",
             };
-            CreateResourceOperationResult result = await subscriptionResource.VirtualMachinesExecuteCreateScheduledActionAsync(locationparameter, content);
+            CreateResourceOperationResult result = await subscriptionResource.ExecuteVirtualMachineCreateOperationAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task VirtualMachinesExecuteCreateScheduledAction_ScheduledActionsVirtualMachinesExecuteCreateMinimumSetGenGeneratedByMinimumSetRule()
+        public async Task ExecuteVirtualMachineCreateOperation_ScheduledActionsVirtualMachinesExecuteCreateMinimumSetGenGeneratedByMinimumSetRule()
         {
             // Generated from example definition: 2025-05-01/ScheduledActions_VirtualMachinesExecuteCreate_MinimumSet_Gen.json
-            // this example is just showing the usage of "ScheduledActions_VirtualMachinesExecuteCreate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ScheduledActions_ExecuteVirtualMachineCreateOperation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -684,17 +684,17 @@ priority = 0,
 })
 }},
             }, new ScheduledActionExecutionParameterDetail());
-            CreateResourceOperationResult result = await subscriptionResource.VirtualMachinesExecuteCreateScheduledActionAsync(locationparameter, content);
+            CreateResourceOperationResult result = await subscriptionResource.ExecuteVirtualMachineCreateOperationAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task VirtualMachinesExecuteDeleteScheduledAction_ScheduledActionsVirtualMachinesExecuteDeleteMaximumSetGenGeneratedByMaximumSetRule()
+        public async Task ExecuteVirtualMachineDeleteOperation_ScheduledActionsVirtualMachinesExecuteDeleteMaximumSetGenGeneratedByMaximumSetRule()
         {
             // Generated from example definition: 2025-05-01/ScheduledActions_VirtualMachinesExecuteDelete_MaximumSet_Gen.json
-            // this example is just showing the usage of "ScheduledActions_VirtualMachinesExecuteDelete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ScheduledActions_ExecuteVirtualMachineDeleteOperation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -721,17 +721,17 @@ priority = 0,
                 CorrelationId = "dfe927c5-16a6-40b7-a0f7-8524975ed642",
                 IsForceDeletion = false,
             };
-            DeleteResourceOperationResult result = await subscriptionResource.VirtualMachinesExecuteDeleteScheduledActionAsync(locationparameter, content);
+            DeleteResourceOperationResult result = await subscriptionResource.ExecuteVirtualMachineDeleteOperationAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task VirtualMachinesExecuteDeleteScheduledAction_ScheduledActionsVirtualMachinesExecuteDeleteMinimumSetGenGeneratedByMinimumSetRule()
+        public async Task ExecuteVirtualMachineDeleteOperation_ScheduledActionsVirtualMachinesExecuteDeleteMinimumSetGenGeneratedByMinimumSetRule()
         {
             // Generated from example definition: 2025-05-01/ScheduledActions_VirtualMachinesExecuteDelete_MinimumSet_Gen.json
-            // this example is just showing the usage of "ScheduledActions_VirtualMachinesExecuteDelete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ScheduledActions_ExecuteVirtualMachineDeleteOperation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -747,7 +747,7 @@ priority = 0,
             // invoke the operation
             AzureLocation locationparameter = new AzureLocation("east");
             ExecuteDeleteContent content = new ExecuteDeleteContent(new ScheduledActionExecutionParameterDetail(), new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource3"), new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource4") }));
-            DeleteResourceOperationResult result = await subscriptionResource.VirtualMachinesExecuteDeleteScheduledActionAsync(locationparameter, content);
+            DeleteResourceOperationResult result = await subscriptionResource.ExecuteVirtualMachineDeleteOperationAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

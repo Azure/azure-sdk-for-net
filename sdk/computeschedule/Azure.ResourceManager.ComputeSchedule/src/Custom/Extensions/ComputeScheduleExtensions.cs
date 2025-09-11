@@ -7,6 +7,7 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.ResourceManager.ComputeSchedule.Mocking;
 using Azure.ResourceManager.ComputeSchedule.Models;
 using Azure.ResourceManager.Resources;
@@ -27,10 +28,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_SubmitVirtualMachineDeallocate</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -45,11 +42,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<DeallocateResourceOperationResult>> SubmitVirtualMachineDeallocateAsync(this SubscriptionResource subscriptionResource, string locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableComputeScheduleSubscriptionResource(subscriptionResource).SubmitVirtualMachineDeallocateAsync(locationparameter, content, cancellationToken).ConfigureAwait(false);
-        }
+            => await SubmitVirtualMachineDeallocateAsync(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// VirtualMachinesSubmitDeallocate: Schedule deallocate operation for a batch of virtual machines at datetime in future.
@@ -61,10 +54,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_SubmitVirtualMachineDeallocate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -80,11 +69,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<DeallocateResourceOperationResult> SubmitVirtualMachineDeallocate(this SubscriptionResource subscriptionResource, string locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeScheduleSubscriptionResource(subscriptionResource).SubmitVirtualMachineDeallocate(locationparameter, content, cancellationToken);
-        }
+            => SubmitVirtualMachineDeallocate(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken);
 
         /// <summary>
         /// VirtualMachinesSubmitStart: Schedule start operation for a batch of virtual machines at datetime in future.
@@ -96,10 +81,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_SubmitVirtualMachineStart</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -115,11 +96,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<StartResourceOperationResult>> SubmitVirtualMachineStartAsync(this SubscriptionResource subscriptionResource, string locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableComputeScheduleSubscriptionResource(subscriptionResource).SubmitVirtualMachineStartAsync(locationparameter, content, cancellationToken).ConfigureAwait(false);
-        }
+            => await SubmitVirtualMachineStartAsync(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// VirtualMachinesSubmitStart: Schedule start operation for a batch of virtual machines at datetime in future.
@@ -131,10 +108,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_SubmitVirtualMachineStart</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -150,11 +123,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<StartResourceOperationResult> SubmitVirtualMachineStart(this SubscriptionResource subscriptionResource, string locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeScheduleSubscriptionResource(subscriptionResource).SubmitVirtualMachineStart(locationparameter, content, cancellationToken);
-        }
+            => SubmitVirtualMachineStart(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken);
 
         /// <summary>
         /// VirtualMachinesSubmitHibernate: Schedule hibernate operation for a batch of virtual machines at datetime in future.
@@ -166,10 +135,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_SubmitVirtualMachineHibernate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -185,11 +150,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<HibernateResourceOperationResult>> SubmitVirtualMachineHibernateAsync(this SubscriptionResource subscriptionResource, string locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableComputeScheduleSubscriptionResource(subscriptionResource).SubmitVirtualMachineHibernateAsync(locationparameter, content, cancellationToken).ConfigureAwait(false);
-        }
+            => await SubmitVirtualMachineHibernateAsync(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// VirtualMachinesSubmitHibernate: Schedule hibernate operation for a batch of virtual machines at datetime in future.
@@ -201,10 +162,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_SubmitVirtualMachineHibernate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -220,11 +177,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<HibernateResourceOperationResult> SubmitVirtualMachineHibernate(this SubscriptionResource subscriptionResource, string locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeScheduleSubscriptionResource(subscriptionResource).SubmitVirtualMachineHibernate(locationparameter, content, cancellationToken);
-        }
+            => SubmitVirtualMachineHibernate(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken);
 
         /// <summary>
         /// VirtualMachinesExecuteStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
@@ -236,10 +189,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_ExecuteVirtualMachineStart</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -255,11 +204,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<StartResourceOperationResult>> ExecuteVirtualMachineStartAsync(this SubscriptionResource subscriptionResource, string locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableComputeScheduleSubscriptionResource(subscriptionResource).ExecuteVirtualMachineStartAsync(locationparameter, content, cancellationToken).ConfigureAwait(false);
-        }
+            => await ExecuteVirtualMachineStartAsync(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// VirtualMachinesExecuteStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
@@ -271,10 +216,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_ExecuteVirtualMachineStart</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -290,11 +231,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<StartResourceOperationResult> ExecuteVirtualMachineStart(this SubscriptionResource subscriptionResource, string locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeScheduleSubscriptionResource(subscriptionResource).ExecuteVirtualMachineStart(locationparameter, content, cancellationToken);
-        }
+            => ExecuteVirtualMachineStart(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken);
 
         /// <summary>
         /// VirtualMachinesExecuteHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
@@ -306,10 +243,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_ExecuteVirtualMachineHibernate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -325,11 +258,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<HibernateResourceOperationResult>> ExecuteVirtualMachineHibernateAsync(this SubscriptionResource subscriptionResource, string locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableComputeScheduleSubscriptionResource(subscriptionResource).ExecuteVirtualMachineHibernateAsync(locationparameter, content, cancellationToken).ConfigureAwait(false);
-        }
+            => await ExecuteVirtualMachineHibernateAsync(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// VirtualMachinesExecuteHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
@@ -341,10 +270,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_ExecuteVirtualMachineHibernate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -360,11 +285,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<HibernateResourceOperationResult> ExecuteVirtualMachineHibernate(this SubscriptionResource subscriptionResource, string locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeScheduleSubscriptionResource(subscriptionResource).ExecuteVirtualMachineHibernate(locationparameter, content, cancellationToken);
-        }
+            => ExecuteVirtualMachineHibernate(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken);
 
         /// <summary>
         /// VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed on virtual machines
@@ -376,10 +297,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetVirtualMachineOperationStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -395,11 +312,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<GetOperationStatusResult>> GetVirtualMachineOperationStatusAsync(this SubscriptionResource subscriptionResource, string locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableComputeScheduleSubscriptionResource(subscriptionResource).GetVirtualMachineOperationStatusAsync(locationparameter, content, cancellationToken).ConfigureAwait(false);
-        }
+            => await GetVirtualMachineOperationStatusAsync(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed on virtual machines
@@ -411,10 +324,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetVirtualMachineOperationStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -430,11 +339,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<GetOperationStatusResult> GetVirtualMachineOperationStatus(this SubscriptionResource subscriptionResource, string locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeScheduleSubscriptionResource(subscriptionResource).GetVirtualMachineOperationStatus(locationparameter, content, cancellationToken);
-        }
+            => GetVirtualMachineOperationStatus(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken);
 
         /// <summary>
         /// VirtualMachinesGetOperationErrors: Get error details on operation errors (like transient errors encountered, additional logs) if they exist.
@@ -446,10 +351,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetVirtualMachineOperationErrors</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -465,11 +366,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<GetOperationErrorsResult>> GetVirtualMachineOperationErrorsAsync(this SubscriptionResource subscriptionResource, string locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableComputeScheduleSubscriptionResource(subscriptionResource).GetVirtualMachineOperationErrorsAsync(locationparameter, content, cancellationToken).ConfigureAwait(false);
-        }
+            => await GetVirtualMachineOperationErrorsAsync(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// VirtualMachinesGetOperationErrors: Get error details on operation errors (like transient errors encountered, additional logs) if they exist.
@@ -481,10 +378,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetVirtualMachineOperationErrors</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -500,11 +393,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<GetOperationErrorsResult> GetVirtualMachineOperationErrors(this SubscriptionResource subscriptionResource, string locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeScheduleSubscriptionResource(subscriptionResource).GetVirtualMachineOperationErrors(locationparameter, content, cancellationToken);
-        }
+            => GetVirtualMachineOperationErrors(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken);
 
         /// <summary>
         /// VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
@@ -516,10 +405,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_ExecuteVirtualMachineDeallocate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -535,11 +420,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<DeallocateResourceOperationResult>> ExecuteVirtualMachineDeallocateAsync(this SubscriptionResource subscriptionResource, string locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableComputeScheduleSubscriptionResource(subscriptionResource).ExecuteVirtualMachineDeallocateAsync(locationparameter, content, cancellationToken).ConfigureAwait(false);
-        }
+            => await ExecuteVirtualMachineDeallocateAsync(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
@@ -551,10 +432,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_ExecuteVirtualMachineDeallocate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -570,11 +447,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<DeallocateResourceOperationResult> ExecuteVirtualMachineDeallocate(this SubscriptionResource subscriptionResource, string locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeScheduleSubscriptionResource(subscriptionResource).ExecuteVirtualMachineDeallocate(locationparameter, content, cancellationToken);
-        }
+            => ExecuteVirtualMachineDeallocate(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken);
 
         /// <summary>
         /// VirtualMachinesCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request
@@ -586,10 +459,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_CancelVirtualMachineOperations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -605,11 +474,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<CancelOperationsResult>> CancelVirtualMachineOperationsAsync(this SubscriptionResource subscriptionResource, string locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableComputeScheduleSubscriptionResource(subscriptionResource).CancelVirtualMachineOperationsAsync(locationparameter, content, cancellationToken).ConfigureAwait(false);
-        }
+            => await CancelVirtualMachineOperationsAsync(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// VirtualMachinesCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request
@@ -621,10 +486,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_CancelVirtualMachineOperations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -640,10 +501,6 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<CancelOperationsResult> CancelVirtualMachineOperations(this SubscriptionResource subscriptionResource, string locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeScheduleSubscriptionResource(subscriptionResource).CancelVirtualMachineOperations(locationparameter, content, cancellationToken);
-        }
+            => CancelVirtualMachineOperations(subscriptionResource, new AzureLocation(locationparameter), content, cancellationToken);
     }
 }

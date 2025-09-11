@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
 
             try
             {
-                result = await subscriptionResource.VirtualMachinesExecuteDeleteScheduledActionAsync(location, content);
+                result = await subscriptionResource.ExecuteVirtualMachineDeleteOperationAsync(location, content);
             }
             catch (RequestFailedException ex)
             {
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
 
             try
             {
-                result = await subscriptionResource.VirtualMachinesExecuteCreateScheduledActionAsync(location, content);
+                result = await subscriptionResource.ExecuteVirtualMachineCreateOperationAsync(location, content);
             }
             catch (RequestFailedException ex)
             {
