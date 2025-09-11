@@ -236,14 +236,13 @@ namespace Azure.Storage.DataMovement
         public int? MaximumConcurrency { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Storage.DataMovement.StorageResourceProvider> ProvidersForResuming { get { throw null; } set { } }
     }
-    public partial class TransferOperation : System.IDisposable
+    public partial class TransferOperation
     {
         internal TransferOperation() { }
         public bool HasCompleted { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.Storage.DataMovement.TransferStatus Status { get { throw null; } }
         public Azure.Storage.DataMovement.TransferManager TransferManager { get { throw null; } }
-        public void Dispose() { }
         public virtual System.Threading.Tasks.Task PauseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.Task WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

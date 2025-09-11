@@ -189,6 +189,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCopyDestinationCount: 1,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await downloadChunkHandler.TryCompleteAsync();
         }
 
         [Test]
@@ -242,6 +245,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCopyDestinationCount: 2,
                 expectedReportProgressCount: 2,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await downloadChunkHandler.TryCompleteAsync();
         }
 
         [Test]
@@ -294,6 +300,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCopyDestinationCount: 2,
                 expectedReportProgressCount: 2,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await downloadChunkHandler.TryCompleteAsync();
         }
 
         [Test]
@@ -345,6 +354,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCopyDestinationCount: taskSize,
                 expectedReportProgressCount: taskSize,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await downloadChunkHandler.TryCompleteAsync();
         }
 
         [Test]
@@ -383,6 +395,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCopyDestinationCount: 1,
                 expectedReportProgressCount: 0,
                 expectedCompleteFileCount: 0);
+
+            // Cleanup
+            await downloadChunkHandler.TryCompleteAsync();
         }
 
         [Test]
@@ -420,6 +435,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCopyDestinationCount: 1,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await downloadChunkHandler.TryCompleteAsync();
         }
 
         [Test]

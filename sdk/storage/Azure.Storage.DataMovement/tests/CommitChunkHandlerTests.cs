@@ -183,6 +183,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await commitBlockHandler.TryComplete();
         }
 
         [Test]
@@ -235,6 +238,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: 2,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await commitBlockHandler.TryComplete();
         }
 
         [Test]
@@ -273,6 +279,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 0);
+
+            // Cleanup
+            await commitBlockHandler.TryComplete();
         }
 
         [Test]
@@ -322,6 +331,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: taskSize,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await commitBlockHandler.TryComplete();
         }
 
         [Test]
@@ -374,6 +386,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 1,
                 expectedReportProgressCount: 2,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await commitBlockHandler.TryComplete();
         }
 
         [Test]
@@ -412,6 +427,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 0);
+
+            // Cleanup
+            await commitBlockHandler.TryComplete();
         }
 
         [Test]
@@ -450,6 +468,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 1,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 0);
+
+            // Cleanup
+            await commitBlockHandler.TryComplete();
         }
 
         [Test]
@@ -487,6 +508,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedPutBlockCount: 0,
                 expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 1);
+
+            // Cleanup
+            await commitBlockHandler.TryComplete();
         }
 
         [Test]
@@ -580,6 +604,9 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 1);
 
             mockCommitChunkBehaviors.QueueCommitBlockTask.Verify(b => b(properties));
+
+            // Cleanup
+            await commitBlockHandler.TryComplete();
         }
     }
 }
