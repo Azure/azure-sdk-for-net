@@ -5107,12 +5107,7 @@
           "readOnly": false,
           "discriminator": false,
           "flatten": true,
-          "decorators": [
-            {
-              "name": "Azure.ClientGenerator.Core.@flattenProperty",
-              "arguments": {}
-            }
-          ],
+          "decorators": [],
           "crossLanguageDefinitionId": "MgmtTypeSpec.BarSettingsResource.flattenedNestedProperty",
           "serializationOptions": {
             "json": {

@@ -3,6 +3,7 @@
 
 using Azure.Generator.Management.Models;
 using Microsoft.TypeSpec.Generator.Input;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Azure.Generator.Management
     {
         private const string ResourceMetadataDecoratorName = "Azure.ClientGenerator.Core.@resourceSchema";
         private const string NonResourceMethodMetadata = "Azure.ClientGenerator.Core.@nonResourceMethodSchema";
-        private const string FlattenPropertyDecoratorName = "Azure.ClientGenerator.Core.@flattenProperty";
+        private const string FlattenPropertyDecoratorName = "Azure.ResourceManager.@flattenProperty";
 
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
@@ -49,6 +50,7 @@ namespace Azure.Generator.Management
                     }
                 }
             }
+            Console.WriteLine($"Found {result.Count} models with flattened properties.");
             return result;
         }
 

@@ -9,6 +9,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -38,7 +39,12 @@ namespace Azure.Generator.Management.Visitors
             {
                 foreach (var internalProperty in value)
                 {
-                    var publicConstructor = model.Constructors.Single(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+                    var publicConstructor = model.Constructors.SingleOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+                    if (publicConstructor is null)
+                    {
+                        continue;
+                    }
+
                     var internalPropertyTypeConstructor = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[internalProperty.Type]!.Constructors.Single(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
                     var initializationParameters = PopulateInitializationParameters(publicConstructor, internalPropertyTypeConstructor);
                     var initialization = internalProperty.Assign(New.Instance(internalProperty.Type, initializationParameters)).Terminate();
@@ -275,6 +281,7 @@ namespace Azure.Generator.Management.Visitors
             {
                 foreach (var property in propertiesToFlatten)
                 {
+                    Console.WriteLine($"Flatten model {model.Name} with property {property.Name}");
                     var flattenedProperties = new List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)>();
                     if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(property.Type, out var typeProvider)
                         && typeProvider is ModelProvider modelProvider)
