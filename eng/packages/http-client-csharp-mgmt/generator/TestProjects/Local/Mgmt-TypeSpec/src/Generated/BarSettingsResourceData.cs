@@ -50,7 +50,8 @@ namespace MgmtTypeSpec
         /// <param name="property"></param>
         /// <param name="anotherProperty"></param>
         /// <param name="flattenedNestedProperty"></param>
-        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarNestedQuotaProperties flattenedNestedProperty) : base(id, name, resourceType, systemData)
+        /// <param name="optionalFlattenProperty"></param>
+        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarNestedQuotaProperties flattenedNestedProperty, OptionalFlattenPropertyType optionalFlattenProperty) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -58,6 +59,7 @@ namespace MgmtTypeSpec
             Property = @property;
             AnotherProperty = anotherProperty;
             FlattenedNestedProperty = flattenedNestedProperty;
+            OptionalFlattenProperty = optionalFlattenProperty;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -74,6 +76,9 @@ namespace MgmtTypeSpec
 
         /// <summary> Gets or sets the FlattenedNestedProperty. </summary>
         internal BarNestedQuotaProperties FlattenedNestedProperty { get; set; }
+
+        /// <summary> Gets or sets the OptionalFlattenProperty. </summary>
+        internal OptionalFlattenPropertyType OptionalFlattenProperty { get; set; }
 
         /// <summary> Gets or sets the InnerProp1. </summary>
         public int? InnerProp1
@@ -193,6 +198,15 @@ namespace MgmtTypeSpec
             set
             {
                 AnotherProperty = value.HasValue ? new BarQuotaProperties(value.Value) : default;
+            }
+        }
+
+        /// <summary> Gets the RandomCollectionProp. </summary>
+        public IList<string> OptionalFlattenPropertyRandomCollectionProp
+        {
+            get
+            {
+                return OptionalFlattenProperty is null ? default : OptionalFlattenProperty.RandomCollectionProp;
             }
         }
     }

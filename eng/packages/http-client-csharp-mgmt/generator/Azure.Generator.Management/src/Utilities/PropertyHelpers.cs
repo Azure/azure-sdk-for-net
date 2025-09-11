@@ -84,7 +84,7 @@ namespace Azure.Generator.Management.Utilities
         {
             var checkNullExpression = This.Property(internalProperty.Name).Is(Null);
             // For collection types, we do not do null check and initialization in getter, they have been initialized in constructor.
-            if (innerProperty.Type.IsCollection)
+            if (innerProperty.Type.IsCollection && internalProperty.WireInfo?.IsRequired == true)
             {
                 return new List<MethodBodyStatement>() { Return(new MemberExpression(internalProperty, innerProperty.Name)) };
             }
@@ -113,8 +113,13 @@ namespace Azure.Generator.Management.Utilities
             }
         }
 
-        public static MethodBodyStatement BuildSetterForPropertyFlatten(ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty)
+        public static MethodBodyStatement? BuildSetterForPropertyFlatten(ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty)
         {
+            if (innerProperty.Type.IsCollection)
+            {
+                return null;
+            }
+
             var isNullableValueType = innerProperty.Type.IsValueType && innerProperty.Type.IsNullable;
             var setter = new List<MethodBodyStatement>();
             var internalPropertyExpression = This.Property(internalProperty.Name);
@@ -128,8 +133,13 @@ namespace Azure.Generator.Management.Utilities
             return setter;
         }
 
-        public static MethodBodyStatement BuildSetterForSafeFlatten(bool includeSetterCheck, ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty)
+        public static MethodBodyStatement? BuildSetterForSafeFlatten(bool includeSetterCheck, ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty)
         {
+            if (innerProperty.Type.IsCollection)
+            {
+                return null;
+            }
+
             var isOverriddenValueType = IsOverriddenValueType(innerProperty);
             var setter = new List<MethodBodyStatement>();
             var internalPropertyExpression = This.Property(internalProperty.Name);

@@ -51,6 +51,7 @@ model BarSettingsResource is ProxyResource<BarSettingsProperties> {
   property: BarQuotaProperties;
   anotherProperty: BarQuotaProperties;
   flattenedNestedProperty: BarNestedQuotaProperties;
+  optionalFlattenProperty?: optionalFlattenPropertyType;
 }
 
 @parentResource(Bar)
@@ -66,6 +67,10 @@ model BarNestedQuotaProperties extends BarMiddleNestedQuotaProperties {
 model BarMiddleNestedQuotaProperties extends BarDeeplyNestedQuotaProperties {
   middleProp1: int32;
   middleProp2: Record<string>;
+}
+
+model optionalFlattenPropertyType {
+  randomCollectionProp: string[];
 }
 
 model BarDeeplyNestedQuotaProperties {

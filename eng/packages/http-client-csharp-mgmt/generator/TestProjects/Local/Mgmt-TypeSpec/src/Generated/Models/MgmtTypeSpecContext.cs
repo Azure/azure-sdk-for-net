@@ -49,6 +49,7 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(FooSettingsResource))]
     [ModelReaderWriterBuildable(typeof(FooSettingsUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(OptionalFlattenPropertyType))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
