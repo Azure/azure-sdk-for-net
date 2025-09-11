@@ -151,5 +151,161 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageTaskAssignmentPatchProperties StorageTaskAssignmentPatchProperties(string taskId, bool? isEnabled, string description, StorageTaskAssignmentUpdateExecutionContext executionContext, string reportPrefix, StorageProvisioningState? provisioningState, StorageTaskReportProperties runStatus)
             => StorageTaskAssignmentPatchProperties(taskId, isEnabled, description, executionContext, reportPrefix, provisioningState.ToString(), runStatus);
+
+        /// <summary> Initializes a new instance of <see cref="Storage.FileServiceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="sku"> Sku name and tier. </param>
+        /// <param name="corsRules"> Specifies CORS rules for the File service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the File service. </param>
+        /// <param name="shareDeleteRetentionPolicy"> The file service properties for share soft delete. </param>
+        /// <param name="protocolSmbSetting"> Protocol settings for file service. </param>
+        /// <returns> A new <see cref="Storage.FileServiceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FileServiceData FileServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageSku sku, IEnumerable<StorageCorsRule> corsRules, DeleteRetentionPolicy shareDeleteRetentionPolicy, SmbSetting protocolSmbSetting)
+            => FileServiceData(id, name, resourceType, systemData, sku, corsRules, shareDeleteRetentionPolicy, new ProtocolSettings(protocolSmbSetting, null, null));
+
+        /// <summary> Initializes a new instance of <see cref="Storage.ImmutabilityPolicyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
+        /// <param name="state"> The ImmutabilityPolicy state of a blob container, possible values include: Locked and Unlocked. </param>
+        /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
+        /// <param name="allowProtectedAppendWritesAll"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The 'allowProtectedAppendWrites' and 'allowProtectedAppendWritesAll' properties are mutually exclusive. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <returns> A new <see cref="Storage.ImmutabilityPolicyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ImmutabilityPolicyData ImmutabilityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? immutabilityPeriodSinceCreationInDays = null, ImmutabilityPolicyState? state = null, bool? allowProtectedAppendWrites = null, bool? allowProtectedAppendWritesAll = null, ETag? etag = null)
+            => ImmutabilityPolicyData(id, name, resourceType, systemData, etag, immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites, allowProtectedAppendWritesAll);
+
+        /// <summary> Initializes a new instance of <see cref="Storage.BlobContainerData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="version"> The version of the deleted blob container. </param>
+        /// <param name="isDeleted"> Indicates whether the blob container was deleted. </param>
+        /// <param name="deletedOn"> Blob container deletion time. </param>
+        /// <param name="remainingRetentionDays"> Remaining retention days for soft deleted blob container. </param>
+        /// <param name="defaultEncryptionScope"> Default the container to use specified encryption scope for all writes. </param>
+        /// <param name="preventEncryptionScopeOverride"> Block override of encryption scope from the container default. </param>
+        /// <param name="publicAccess"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
+        /// <param name="lastModifiedOn"> Returns the date and time the container was last modified. </param>
+        /// <param name="leaseStatus"> The lease status of the container. </param>
+        /// <param name="leaseState"> Lease state of the container. </param>
+        /// <param name="leaseDuration"> Specifies whether the lease on a container is of infinite or fixed duration, only when the container is leased. </param>
+        /// <param name="metadata"> A name-value pair to associate with the container as metadata. </param>
+        /// <param name="immutabilityPolicy"> The ImmutabilityPolicy property of the container. </param>
+        /// <param name="legalHold"> The LegalHold property of the container. </param>
+        /// <param name="hasLegalHold"> The hasLegalHold public property is set to true by SRP if there are at least one existing tag. The hasLegalHold public property is set to false by SRP if all existing legal hold tags are cleared out. There can be a maximum of 1000 blob containers with hasLegalHold=true for a given account. </param>
+        /// <param name="hasImmutabilityPolicy"> The hasImmutabilityPolicy public property is set to true by SRP if ImmutabilityPolicy has been created for this container. The hasImmutabilityPolicy public property is set to false by SRP if ImmutabilityPolicy has not been created for this container. </param>
+        /// <param name="immutableStorageWithVersioning"> The object level immutability property of the container. The property is immutable and can only be set to true at the container creation time. Existing containers must undergo a migration process. </param>
+        /// <param name="enableNfsV3RootSquash"> Enable NFSv3 root squash on blob container. </param>
+        /// <param name="enableNfsV3AllSquash"> Enable NFSv3 all squash on blob container. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <returns> A new <see cref="Storage.BlobContainerData"/> instance for mocking. </returns>
+        public static BlobContainerData BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version = null, bool? isDeleted = null, DateTimeOffset? deletedOn = null, int? remainingRetentionDays = null, string defaultEncryptionScope = null, bool? preventEncryptionScopeOverride = null, StoragePublicAccessType? publicAccess = null, DateTimeOffset? lastModifiedOn = null, StorageLeaseStatus? leaseStatus = null, StorageLeaseState? leaseState = null, StorageLeaseDurationType? leaseDuration = null, IDictionary<string, string> metadata = null, BlobContainerImmutabilityPolicy immutabilityPolicy = null, LegalHoldProperties legalHold = null, bool? hasLegalHold = null, bool? hasImmutabilityPolicy = null, ImmutableStorageWithVersioning immutableStorageWithVersioning = null, bool? enableNfsV3RootSquash = null, bool? enableNfsV3AllSquash = null, ETag? etag = null)
+            => BlobContainerData(id, name, resourceType, systemData, etag, version, isDeleted, deletedOn, remainingRetentionDays, defaultEncryptionScope, preventEncryptionScopeOverride, publicAccess, lastModifiedOn, leaseStatus, leaseState, leaseDuration, metadata, immutabilityPolicy, legalHold, enableNfsV3RootSquash, enableNfsV3AllSquash);
+
+        /// <summary> Initializes a new instance of <see cref="Storage.FileShareData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="lastModifiedOn"> Returns the date and time the share was last modified. </param>
+        /// <param name="metadata"> A name-value pair to associate with the share as metadata. </param>
+        /// <param name="shareQuota"> The provisioned size of the share, in gibibytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. For file shares created under Files Provisioned v2 account type, please refer to the GetFileServiceUsage API response for the minimum and maximum allowed provisioned storage size. </param>
+        /// <param name="provisionedIops"> The provisioned IOPS of the share. This property is only for file shares created under Files Provisioned v2 account type. Please refer to the GetFileServiceUsage API response for the minimum and maximum allowed value for provisioned IOPS. </param>
+        /// <param name="provisionedBandwidthMibps"> The provisioned bandwidth of the share, in mebibytes per second. This property is only for file shares created under Files Provisioned v2 account type. Please refer to the GetFileServiceUsage API response for the minimum and maximum allowed value for provisioned bandwidth. </param>
+        /// <param name="includedBurstIops"> The calculated burst IOPS of the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
+        /// <param name="maxBurstCreditsForIops"> The calculated maximum burst credits for the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
+        /// <param name="nextAllowedQuotaDowngradeOn"> Returns the next allowed provisioned storage size downgrade time for the share. This property is only for file shares created under Files Provisioned v1 SSD and Files Provisioned v2 account type. </param>
+        /// <param name="nextAllowedProvisionedIopsDowngradeOn"> Returns the next allowed provisioned IOPS downgrade time for the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
+        /// <param name="nextAllowedProvisionedBandwidthDowngradeOn"> Returns the next allowed provisioned bandwidth downgrade time for the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
+        /// <param name="enabledProtocol"> The authentication protocol that is used for the file share. Can only be specified when creating a share. </param>
+        /// <param name="rootSquash"> The property is for NFS share only. The default is NoRootSquash. </param>
+        /// <param name="version"> The version of the share. </param>
+        /// <param name="isDeleted"> Indicates whether the share was deleted. </param>
+        /// <param name="deletedOn"> The deleted time if the share was deleted. </param>
+        /// <param name="remainingRetentionDays"> Remaining retention days for share that was soft deleted. </param>
+        /// <param name="accessTier"> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. </param>
+        /// <param name="accessTierChangeOn"> Indicates the last modification time for share access tier. </param>
+        /// <param name="accessTierStatus"> Indicates if there is a pending transition for access tier. </param>
+        /// <param name="shareUsageBytes"> The approximate size of the data stored on the share. Note that this value may not include all recently created or recently resized files. </param>
+        /// <param name="leaseStatus"> The lease status of the share. </param>
+        /// <param name="leaseState"> Lease state of the share. </param>
+        /// <param name="leaseDuration"> Specifies whether the lease on a share is of infinite or fixed duration, only when the share is leased. </param>
+        /// <param name="signedIdentifiers"> List of stored access policies specified on the share. </param>
+        /// <param name="snapshotOn"> Creation time of share snapshot returned in the response of list shares with expand param "snapshots". </param>
+        /// <param name="fileSharePaidBursting"> File Share Paid Bursting properties. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <returns> A new <see cref="Storage.FileShareData"/> instance for mocking. </returns>
+        public static FileShareData FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn = null, IDictionary<string, string> metadata = null, int? shareQuota = null, int? provisionedIops = null, int? provisionedBandwidthMibps = null, int? includedBurstIops = null, long? maxBurstCreditsForIops = null, DateTimeOffset? nextAllowedQuotaDowngradeOn = null, DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn = null, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn = null, FileShareEnabledProtocol? enabledProtocol = null, RootSquashType? rootSquash = null, string version = null, bool? isDeleted = null, DateTimeOffset? deletedOn = null, int? remainingRetentionDays = null, FileShareAccessTier? accessTier = null, DateTimeOffset? accessTierChangeOn = null, string accessTierStatus = null, long? shareUsageBytes = null, StorageLeaseStatus? leaseStatus = null, StorageLeaseState? leaseState = null, StorageLeaseDurationType? leaseDuration = null, IEnumerable<StorageSignedIdentifier> signedIdentifiers = null, DateTimeOffset? snapshotOn = null, FileSharePropertiesFileSharePaidBursting fileSharePaidBursting = null, ETag? etag = null)
+            => FileShareData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                lastModifiedOn,
+                metadata,
+                shareQuota,
+                provisionedIops,
+                provisionedBandwidthMibps,
+                includedBurstIops,
+                maxBurstCreditsForIops,
+                nextAllowedQuotaDowngradeOn,
+                nextAllowedProvisionedIopsDowngradeOn,
+                nextAllowedProvisionedBandwidthDowngradeOn,
+                enabledProtocol,
+                rootSquash,
+                version,
+                isDeleted,
+                deletedOn,
+                remainingRetentionDays,
+                accessTier,
+                accessTierChangeOn,
+                accessTierStatus,
+                shareUsageBytes,
+                leaseStatus,
+                leaseState,
+                leaseDuration,
+                signedIdentifiers,
+                snapshotOn,
+                fileSharePaidBursting);
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Storage.FileShareData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="lastModifiedOn"> Returns the date and time the share was last modified. </param>
+        /// <param name="metadata"> A name-value pair to associate with the share as metadata. </param>
+        /// <param name="shareQuota"> The maximum size of the share, in gigabytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. </param>
+        /// <param name="enabledProtocol"> The authentication protocol that is used for the file share. Can only be specified when creating a share. </param>
+        /// <param name="rootSquash"> The property is for NFS share only. The default is NoRootSquash. </param>
+        /// <param name="version"> The version of the share. </param>
+        /// <param name="isDeleted"> Indicates whether the share was deleted. </param>
+        /// <param name="deletedOn"> The deleted time if the share was deleted. </param>
+        /// <param name="remainingRetentionDays"> Remaining retention days for share that was soft deleted. </param>
+        /// <param name="accessTier"> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. </param>
+        /// <param name="accessTierChangeOn"> Indicates the last modification time for share access tier. </param>
+        /// <param name="accessTierStatus"> Indicates if there is a pending transition for access tier. </param>
+        /// <param name="shareUsageBytes"> The approximate size of the data stored on the share. Note that this value may not include all recently created or recently resized files. </param>
+        /// <param name="leaseStatus"> The lease status of the share. </param>
+        /// <param name="leaseState"> Lease state of the share. </param>
+        /// <param name="leaseDuration"> Specifies whether the lease on a share is of infinite or fixed duration, only when the share is leased. </param>
+        /// <param name="signedIdentifiers"> List of stored access policies specified on the share. </param>
+        /// <param name="snapshotOn"> Creation time of share snapshot returned in the response of list shares with expand param "snapshots". </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Storage.FileShareData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FileShareData FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IEnumerable<StorageSignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, ETag? etag)
+        {
+            return FileShareData(id, name, resourceType, systemData, etag, lastModifiedOn, metadata, shareQuota, default, default, default, default, default, default, default, enabledProtocol, rootSquash, version, isDeleted, deletedOn, remainingRetentionDays, accessTier, accessTierChangeOn, accessTierStatus, shareUsageBytes, leaseStatus, leaseState, leaseDuration, signedIdentifiers, snapshotOn, default);
+        }
     }
 }

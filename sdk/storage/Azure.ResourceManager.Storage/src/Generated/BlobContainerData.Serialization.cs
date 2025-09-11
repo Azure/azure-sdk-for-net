@@ -422,6 +422,7 @@ namespace Azure.ResourceManager.Storage
                 name,
                 type,
                 systemData,
+                etag,
                 version,
                 deleted,
                 deletedTime,
@@ -441,7 +442,6 @@ namespace Azure.ResourceManager.Storage
                 immutableStorageWithVersioning,
                 enableNfsV3RootSquash,
                 enableNfsV3AllSquash,
-                etag,
                 serializedAdditionalRawData);
         }
 

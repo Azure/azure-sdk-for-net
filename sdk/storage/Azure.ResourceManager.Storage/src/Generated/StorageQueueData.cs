@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing the StorageQueue data model. </summary>
+    /// <summary>
+    /// A class representing the StorageQueue data model.
+    /// Concrete proxy resource types can be created by aliasing this type using a specific property type.
+    /// </summary>
     public partial class StorageQueueData : ResourceData
     {
         /// <summary>

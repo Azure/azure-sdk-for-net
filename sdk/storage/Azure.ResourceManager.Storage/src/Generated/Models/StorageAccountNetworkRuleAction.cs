@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> The action of virtual network rule. </summary>
+    /// <summary> The action of IP ACL rule. </summary>
     public readonly partial struct StorageAccountNetworkRuleAction : IEquatable<StorageAccountNetworkRuleAction>
     {
         private readonly string _value;

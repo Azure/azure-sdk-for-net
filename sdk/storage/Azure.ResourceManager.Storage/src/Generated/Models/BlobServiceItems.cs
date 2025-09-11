@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="BlobServiceItems"/>. </summary>
         /// <param name="value"> List of blob services returned. </param>
+        /// <param name="nextLink"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BlobServiceItems(IReadOnlyList<BlobServiceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BlobServiceItems(IReadOnlyList<BlobServiceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of blob services returned. </summary>
         public IReadOnlyList<BlobServiceData> Value { get; }
+        /// <summary> Gets the next link. </summary>
+        public string NextLink { get; }
     }
 }
