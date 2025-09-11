@@ -9,7 +9,7 @@ csharp: true
 library-name: RecoveryServicesBackup
 namespace: Azure.ResourceManager.RecoveryServicesBackup
 # tag: package-2025-02
-require: https://github.com/Azure/azure-rest-api-specs/blob/d42db6fd18ef2eb1987b4ea50ae648ecf3f76bad/specification/recoveryservicesbackup/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/8960d93f363955d7dc079a90248e6addd30afd31/specification/recoveryservicesbackup/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -515,13 +515,10 @@ directive:
     transform: >
       $["x-ms-format"] = 'azure-location';
       $['x-ms-client-name'] = 'location';
-  # Delete NewErrorResponse and NewErrorResponseError, as they are related references not used elsewhere and conflict with the definition of ErrorDetail.
-  # Rename ErrorDetail to BackupErrorDetail
+  # Rename ErrorDetail to BackupErrorDetail. (FYI: not working in rename-mapping section)
   - from: bms.json
     where: $.definitions
     transform: >
-      delete $.NewErrorResponse;
-      delete $.NewErrorResponseError;
       $.ErrorDetail['x-ms-client-name'] = 'BackupErrorDetail';
   # Add missing enum values
   - from: bms.json
