@@ -70,7 +70,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         else
                         {
                             _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
-                            HttpPipelineHelper.HandleFailures(httpMessage, blob, _blobProvider, _connectionVars, _isAadEnabled);
+                            HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled);
                             break;
                         }
                     }
