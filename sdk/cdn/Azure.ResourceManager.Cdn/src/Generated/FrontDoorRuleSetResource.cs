@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Cdn
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _frontDoorRuleSetClientDiagnostics;
-        private readonly FrontDoorRuleSetsRestOperations _frontDoorRuleSetRestClient;
+        private readonly ClientDiagnostics _frontDoorRuleSetRuleSetsClientDiagnostics;
+        private readonly RuleSetsRestOperations _frontDoorRuleSetRuleSetsRestClient;
         private readonly FrontDoorRuleSetData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FrontDoorRuleSetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorRuleSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string frontDoorRuleSetApiVersion);
-            _frontDoorRuleSetRestClient = new FrontDoorRuleSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorRuleSetApiVersion);
+            _frontDoorRuleSetRuleSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string frontDoorRuleSetRuleSetsApiVersion);
+            _frontDoorRuleSetRuleSetsRestClient = new RuleSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorRuleSetRuleSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRules_Get</description>
+        /// <description>Rules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRules_Get</description>
+        /// <description>Rules_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_Get</description>
+        /// <description>RuleSets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FrontDoorRuleSetResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetResource.Get");
+            using var scope = _frontDoorRuleSetRuleSetsClientDiagnostics.CreateScope("FrontDoorRuleSetResource.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorRuleSetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorRuleSetRuleSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorRuleSetResource(Client, response.Value), response.GetRawResponse());
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_Get</description>
+        /// <description>RuleSets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FrontDoorRuleSetResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetResource.Get");
+            using var scope = _frontDoorRuleSetRuleSetsClientDiagnostics.CreateScope("FrontDoorRuleSetResource.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorRuleSetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _frontDoorRuleSetRuleSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorRuleSetResource(Client, response.Value), response.GetRawResponse());
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_Delete</description>
+        /// <description>RuleSets_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetResource.Delete");
+            using var scope = _frontDoorRuleSetRuleSetsClientDiagnostics.CreateScope("FrontDoorRuleSetResource.Delete");
             scope.Start();
             try
             {
-                var response = await _frontDoorRuleSetRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_frontDoorRuleSetClientDiagnostics, Pipeline, _frontDoorRuleSetRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorRuleSetRuleSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_frontDoorRuleSetRuleSetsClientDiagnostics, Pipeline, _frontDoorRuleSetRuleSetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_Delete</description>
+        /// <description>RuleSets_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -306,12 +306,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetResource.Delete");
+            using var scope = _frontDoorRuleSetRuleSetsClientDiagnostics.CreateScope("FrontDoorRuleSetResource.Delete");
             scope.Start();
             try
             {
-                var response = _frontDoorRuleSetRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation(_frontDoorRuleSetClientDiagnostics, Pipeline, _frontDoorRuleSetRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorRuleSetRuleSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation(_frontDoorRuleSetRuleSetsClientDiagnostics, Pipeline, _frontDoorRuleSetRuleSetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_Create</description>
+        /// <description>RuleSets_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -348,12 +348,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<FrontDoorRuleSetResource>> UpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetResource.Update");
+            using var scope = _frontDoorRuleSetRuleSetsClientDiagnostics.CreateScope("FrontDoorRuleSetResource.Update");
             scope.Start();
             try
             {
-                var response = await _frontDoorRuleSetRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _frontDoorRuleSetRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _frontDoorRuleSetRuleSetsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _frontDoorRuleSetRuleSetsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new CdnArmOperation<FrontDoorRuleSetResource>(Response.FromValue(new FrontDoorRuleSetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_Create</description>
+        /// <description>RuleSets_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -392,12 +392,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<FrontDoorRuleSetResource> Update(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetResource.Update");
+            using var scope = _frontDoorRuleSetRuleSetsClientDiagnostics.CreateScope("FrontDoorRuleSetResource.Update");
             scope.Start();
             try
             {
-                var response = _frontDoorRuleSetRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _frontDoorRuleSetRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _frontDoorRuleSetRuleSetsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _frontDoorRuleSetRuleSetsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new CdnArmOperation<FrontDoorRuleSetResource>(Response.FromValue(new FrontDoorRuleSetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given Azure Front Door profile..
+        /// Checks the quota and actual usage of endpoints under the given Azure Front Door profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_ListResourceUsage</description>
+        /// <description>RuleSets_ListResourceUsage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -434,15 +434,15 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FrontDoorUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FrontDoorUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleSetRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRuleSetRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorRuleSetClientDiagnostics, Pipeline, "FrontDoorRuleSetResource.GetResourceUsages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleSetRuleSetsRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRuleSetRuleSetsRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorRuleSetRuleSetsClientDiagnostics, Pipeline, "FrontDoorRuleSetResource.GetResourceUsage", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given Azure Front Door profile..
+        /// Checks the quota and actual usage of endpoints under the given Azure Front Door profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_ListResourceUsage</description>
+        /// <description>RuleSets_ListResourceUsage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -464,11 +464,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FrontDoorUsage> GetResourceUsages(CancellationToken cancellationToken = default)
+        public virtual Pageable<FrontDoorUsage> GetResourceUsage(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleSetRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRuleSetRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorRuleSetClientDiagnostics, Pipeline, "FrontDoorRuleSetResource.GetResourceUsages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleSetRuleSetsRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRuleSetRuleSetsRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorRuleSetRuleSetsClientDiagnostics, Pipeline, "FrontDoorRuleSetResource.GetResourceUsage", "value", "nextLink", cancellationToken);
         }
     }
 }

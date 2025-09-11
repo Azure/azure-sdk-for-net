@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Input to check. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityAsync(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Input to check. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CdnNameAvailabilityResult> CheckCdnNameAvailability(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyList"/>. </summary>
-        internal CdnWebApplicationFirewallPolicyList()
+        /// <param name="value">
+        /// The CdnWebApplicationFirewallPolicy items on this page
+        /// Serialized Name: CdnWebApplicationFirewallPolicyList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal CdnWebApplicationFirewallPolicyList(IEnumerable<CdnWebApplicationFirewallPolicyData> value)
         {
-            Value = new ChangeTrackingList<CdnWebApplicationFirewallPolicyData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyList"/>. </summary>
         /// <param name="value">
-        /// List of Azure CDN WebApplicationFirewallPolicies within a resource group.
+        /// The CdnWebApplicationFirewallPolicy items on this page
         /// Serialized Name: CdnWebApplicationFirewallPolicyList.value
         /// </param>
         /// <param name="nextLink">
-        /// URL to get the next set of WebApplicationFirewallPolicy objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: CdnWebApplicationFirewallPolicyList.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CdnWebApplicationFirewallPolicyList(IReadOnlyList<CdnWebApplicationFirewallPolicyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CdnWebApplicationFirewallPolicyList(IReadOnlyList<CdnWebApplicationFirewallPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyList"/> for deserialization. </summary>
+        internal CdnWebApplicationFirewallPolicyList()
+        {
+        }
+
         /// <summary>
-        /// List of Azure CDN WebApplicationFirewallPolicies within a resource group.
+        /// The CdnWebApplicationFirewallPolicy items on this page
         /// Serialized Name: CdnWebApplicationFirewallPolicyList.value
         /// </summary>
         public IReadOnlyList<CdnWebApplicationFirewallPolicyData> Value { get; }
         /// <summary>
-        /// URL to get the next set of WebApplicationFirewallPolicy objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: CdnWebApplicationFirewallPolicyList.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

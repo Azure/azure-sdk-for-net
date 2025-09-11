@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
-    /// Result of the request to list origin groups. It contains a list of origin groups objects and a URL link to get the next set of results.
+    /// The response of a AFDOriginGroup list operation.
     /// Serialized Name: AFDOriginGroupListResult
     /// </summary>
     internal partial class FrontDoorOriginGroupListResult
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorOriginGroupListResult"/>. </summary>
-        internal FrontDoorOriginGroupListResult()
+        /// <param name="value">
+        /// The AFDOriginGroup items on this page
+        /// Serialized Name: AFDOriginGroupListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal FrontDoorOriginGroupListResult(IEnumerable<FrontDoorOriginGroupData> value)
         {
-            Value = new ChangeTrackingList<FrontDoorOriginGroupData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorOriginGroupListResult"/>. </summary>
         /// <param name="value">
-        /// List of Azure Front Door origin groups within an Azure Front Door endpoint
+        /// The AFDOriginGroup items on this page
         /// Serialized Name: AFDOriginGroupListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// URL to get the next set of origin objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: AFDOriginGroupListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorOriginGroupListResult(IReadOnlyList<FrontDoorOriginGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FrontDoorOriginGroupListResult(IReadOnlyList<FrontDoorOriginGroupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginGroupListResult"/> for deserialization. </summary>
+        internal FrontDoorOriginGroupListResult()
+        {
+        }
+
         /// <summary>
-        /// List of Azure Front Door origin groups within an Azure Front Door endpoint
+        /// The AFDOriginGroup items on this page
         /// Serialized Name: AFDOriginGroupListResult.value
         /// </summary>
         public IReadOnlyList<FrontDoorOriginGroupData> Value { get; }
         /// <summary>
-        /// URL to get the next set of origin objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: AFDOriginGroupListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

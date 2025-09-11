@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Describes operator to be matched
-    /// Serialized Name: RequestSchemeOperator
+    /// Serialized Name: RequestSchemeMatchConditionParametersOperator
     /// </summary>
     public readonly partial struct RequestSchemeOperator : IEquatable<RequestSchemeOperator>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Equal
-        /// Serialized Name: RequestSchemeOperator.Equal
+        /// Serialized Name: RequestSchemeMatchConditionParametersOperator.Equal
         /// </summary>
         public static RequestSchemeOperator Equal { get; } = new RequestSchemeOperator(EqualValue);
         /// <summary> Determines if two <see cref="RequestSchemeOperator"/> values are the same. </summary>

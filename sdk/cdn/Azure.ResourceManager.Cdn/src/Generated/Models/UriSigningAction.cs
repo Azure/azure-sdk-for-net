@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
-            Name = DeliveryRuleActionType.UriSigning;
+            Name = DeliveryRuleActionName.UriSigning;
         }
 
         /// <summary> Initializes a new instance of <see cref="UriSigningAction"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Defines the parameters for the action.
         /// Serialized Name: UrlSigningAction.parameters
         /// </param>
-        internal UriSigningAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, UriSigningActionProperties properties) : base(name, serializedAdditionalRawData)
+        internal UriSigningAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> serializedAdditionalRawData, UriSigningActionProperties properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
             Name = name;

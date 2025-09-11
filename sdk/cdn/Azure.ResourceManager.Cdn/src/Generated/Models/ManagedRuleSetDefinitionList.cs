@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinitionList"/>. </summary>
-        internal ManagedRuleSetDefinitionList()
+        /// <param name="value">
+        /// The ManagedRuleSetDefinition items on this page
+        /// Serialized Name: ManagedRuleSetDefinitionList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ManagedRuleSetDefinitionList(IEnumerable<ManagedRuleSetDefinition> value)
         {
-            Value = new ChangeTrackingList<ManagedRuleSetDefinition>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinitionList"/>. </summary>
         /// <param name="value">
-        /// List of managed rule set definitions.
+        /// The ManagedRuleSetDefinition items on this page
         /// Serialized Name: ManagedRuleSetDefinitionList.value
         /// </param>
         /// <param name="nextLink">
-        /// URL to retrieve next set of managed rule set definitions.
+        /// The link to the next page of items
         /// Serialized Name: ManagedRuleSetDefinitionList.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleSetDefinitionList(IReadOnlyList<ManagedRuleSetDefinition> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedRuleSetDefinitionList(IReadOnlyList<ManagedRuleSetDefinition> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinitionList"/> for deserialization. </summary>
+        internal ManagedRuleSetDefinitionList()
+        {
+        }
+
         /// <summary>
-        /// List of managed rule set definitions.
+        /// The ManagedRuleSetDefinition items on this page
         /// Serialized Name: ManagedRuleSetDefinitionList.value
         /// </summary>
         public IReadOnlyList<ManagedRuleSetDefinition> Value { get; }
         /// <summary>
-        /// URL to retrieve next set of managed rule set definitions.
+        /// The link to the next page of items
         /// Serialized Name: ManagedRuleSetDefinitionList.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

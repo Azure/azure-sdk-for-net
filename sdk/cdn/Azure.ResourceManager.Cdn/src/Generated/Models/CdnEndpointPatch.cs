@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// List of keys used to validate the signed URL hashes.
         /// Serialized Name: EndpointUpdateParameters.properties.urlSigningKeys
         /// </summary>
-        public IList<UriSigningKey> UriSigningKeys { get; set; }
+        public IList<UriSigningKey> UriSigningKeys { get; }
         /// <summary>
         /// A policy that specifies the delivery rules to be used for an endpoint.
         /// Serialized Name: EndpointUpdateParameters.properties.deliveryPolicy

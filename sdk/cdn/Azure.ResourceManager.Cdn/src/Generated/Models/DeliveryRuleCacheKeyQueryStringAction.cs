@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
-            Name = DeliveryRuleActionType.CacheKeyQueryString;
+            Name = DeliveryRuleActionName.CacheKeyQueryString;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleCacheKeyQueryStringAction"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Defines the parameters for the action.
         /// Serialized Name: DeliveryRuleCacheKeyQueryStringAction.parameters
         /// </param>
-        internal DeliveryRuleCacheKeyQueryStringAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, CacheKeyQueryStringActionProperties properties) : base(name, serializedAdditionalRawData)
+        internal DeliveryRuleCacheKeyQueryStringAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> serializedAdditionalRawData, CacheKeyQueryStringActionProperties properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
             Name = name;

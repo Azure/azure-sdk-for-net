@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
-    /// Result of the request to list security policies. It contains a list of security policy objects and a URL link to get the next set of results.
+    /// The response of a SecurityPolicy list operation.
     /// Serialized Name: SecurityPolicyListResult
     /// </summary>
     internal partial class SecurityPolicyListResult
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityPolicyListResult"/>. </summary>
-        internal SecurityPolicyListResult()
+        /// <param name="value">
+        /// The SecurityPolicy items on this page
+        /// Serialized Name: SecurityPolicyListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SecurityPolicyListResult(IEnumerable<FrontDoorSecurityPolicyData> value)
         {
-            Value = new ChangeTrackingList<FrontDoorSecurityPolicyData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityPolicyListResult"/>. </summary>
         /// <param name="value">
-        /// List of Security policies within a profile
+        /// The SecurityPolicy items on this page
         /// Serialized Name: SecurityPolicyListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// URL to get the next set of security policy objects if there is any.
+        /// The link to the next page of items
         /// Serialized Name: SecurityPolicyListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityPolicyListResult(IReadOnlyList<FrontDoorSecurityPolicyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecurityPolicyListResult(IReadOnlyList<FrontDoorSecurityPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyListResult"/> for deserialization. </summary>
+        internal SecurityPolicyListResult()
+        {
+        }
+
         /// <summary>
-        /// List of Security policies within a profile
+        /// The SecurityPolicy items on this page
         /// Serialized Name: SecurityPolicyListResult.value
         /// </summary>
         public IReadOnlyList<FrontDoorSecurityPolicyData> Value { get; }
         /// <summary>
-        /// URL to get the next set of security policy objects if there is any.
+        /// The link to the next page of items
         /// Serialized Name: SecurityPolicyListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

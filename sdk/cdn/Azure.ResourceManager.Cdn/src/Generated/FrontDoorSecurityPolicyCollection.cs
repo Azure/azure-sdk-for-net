@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class FrontDoorSecurityPolicyCollection : ArmCollection, IEnumerable<FrontDoorSecurityPolicyResource>, IAsyncEnumerable<FrontDoorSecurityPolicyResource>
     {
-        private readonly ClientDiagnostics _frontDoorSecurityPolicyClientDiagnostics;
-        private readonly FrontDoorSecurityPoliciesRestOperations _frontDoorSecurityPolicyRestClient;
+        private readonly ClientDiagnostics _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics;
+        private readonly SecurityPoliciesRestOperations _frontDoorSecurityPolicySecurityPoliciesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="FrontDoorSecurityPolicyCollection"/> class for mocking. </summary>
         protected FrontDoorSecurityPolicyCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal FrontDoorSecurityPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorSecurityPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorSecurityPolicyResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(FrontDoorSecurityPolicyResource.ResourceType, out string frontDoorSecurityPolicyApiVersion);
-            _frontDoorSecurityPolicyRestClient = new FrontDoorSecurityPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorSecurityPolicyApiVersion);
+            _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorSecurityPolicyResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(FrontDoorSecurityPolicyResource.ResourceType, out string frontDoorSecurityPolicySecurityPoliciesApiVersion);
+            _frontDoorSecurityPolicySecurityPoliciesRestClient = new SecurityPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorSecurityPolicySecurityPoliciesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_Create</description>
+        /// <description>SecurityPolicies_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.CreateOrUpdate");
+            using var scope = _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _frontDoorSecurityPolicyRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<FrontDoorSecurityPolicyResource>(new FrontDoorSecurityPolicyOperationSource(Client), _frontDoorSecurityPolicyClientDiagnostics, Pipeline, _frontDoorSecurityPolicyRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorSecurityPolicySecurityPoliciesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<FrontDoorSecurityPolicyResource>(new FrontDoorSecurityPolicyOperationSource(Client), _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics, Pipeline, _frontDoorSecurityPolicySecurityPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_Create</description>
+        /// <description>SecurityPolicies_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.CreateOrUpdate");
+            using var scope = _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _frontDoorSecurityPolicyRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data, cancellationToken);
-                var operation = new CdnArmOperation<FrontDoorSecurityPolicyResource>(new FrontDoorSecurityPolicyOperationSource(Client), _frontDoorSecurityPolicyClientDiagnostics, Pipeline, _frontDoorSecurityPolicyRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorSecurityPolicySecurityPoliciesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data, cancellationToken);
+                var operation = new CdnArmOperation<FrontDoorSecurityPolicyResource>(new FrontDoorSecurityPolicyOperationSource(Client), _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics, Pipeline, _frontDoorSecurityPolicySecurityPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_Get</description>
+        /// <description>SecurityPolicies_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Get");
+            using var scope = _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorSecurityPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorSecurityPolicySecurityPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_Get</description>
+        /// <description>SecurityPolicies_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Get");
+            using var scope = _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorSecurityPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken);
+                var response = _frontDoorSecurityPolicySecurityPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_ListByProfile</description>
+        /// <description>SecurityPolicies_ListByProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="FrontDoorSecurityPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorSecurityPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecurityPolicyRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorSecurityPolicyRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecurityPolicyResource(Client, FrontDoorSecurityPolicyData.DeserializeFrontDoorSecurityPolicyData(e)), _frontDoorSecurityPolicyClientDiagnostics, Pipeline, "FrontDoorSecurityPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecurityPolicySecurityPoliciesRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorSecurityPolicySecurityPoliciesRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecurityPolicyResource(Client, FrontDoorSecurityPolicyData.DeserializeFrontDoorSecurityPolicyData(e)), _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics, Pipeline, "FrontDoorSecurityPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_ListByProfile</description>
+        /// <description>SecurityPolicies_ListByProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="FrontDoorSecurityPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorSecurityPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecurityPolicyRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorSecurityPolicyRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecurityPolicyResource(Client, FrontDoorSecurityPolicyData.DeserializeFrontDoorSecurityPolicyData(e)), _frontDoorSecurityPolicyClientDiagnostics, Pipeline, "FrontDoorSecurityPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecurityPolicySecurityPoliciesRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorSecurityPolicySecurityPoliciesRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecurityPolicyResource(Client, FrontDoorSecurityPolicyData.DeserializeFrontDoorSecurityPolicyData(e)), _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics, Pipeline, "FrontDoorSecurityPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_Get</description>
+        /// <description>SecurityPolicies_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Exists");
+            using var scope = _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _frontDoorSecurityPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorSecurityPolicySecurityPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_Get</description>
+        /// <description>SecurityPolicies_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Exists");
+            using var scope = _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = _frontDoorSecurityPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
+                var response = _frontDoorSecurityPolicySecurityPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_Get</description>
+        /// <description>SecurityPolicies_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.GetIfExists");
+            using var scope = _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _frontDoorSecurityPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorSecurityPolicySecurityPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<FrontDoorSecurityPolicyResource>(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_Get</description>
+        /// <description>SecurityPolicies_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -459,11 +459,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.GetIfExists");
+            using var scope = _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _frontDoorSecurityPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
+                var response = _frontDoorSecurityPolicySecurityPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<FrontDoorSecurityPolicyResource>(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorSecurityPolicyResource(Client, response.Value), response.GetRawResponse());

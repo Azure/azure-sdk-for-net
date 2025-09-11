@@ -70,39 +70,18 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(Priority))
             {
-                if (Priority != null)
-                {
-                    writer.WritePropertyName("priority"u8);
-                    writer.WriteNumberValue(Priority.Value);
-                }
-                else
-                {
-                    writer.WriteNull("priority");
-                }
+                writer.WritePropertyName("priority"u8);
+                writer.WriteNumberValue(Priority.Value);
             }
             if (Optional.IsDefined(Weight))
             {
-                if (Weight != null)
-                {
-                    writer.WritePropertyName("weight"u8);
-                    writer.WriteNumberValue(Weight.Value);
-                }
-                else
-                {
-                    writer.WriteNull("weight");
-                }
+                writer.WritePropertyName("weight"u8);
+                writer.WriteNumberValue(Weight.Value);
             }
             if (Optional.IsDefined(SharedPrivateLinkResource))
             {
-                if (SharedPrivateLinkResource != null)
-                {
-                    writer.WritePropertyName("sharedPrivateLinkResource"u8);
-                    writer.WriteObjectValue(SharedPrivateLinkResource, options);
-                }
-                else
-                {
-                    writer.WriteNull("sharedPrivateLinkResource");
-                }
+                writer.WritePropertyName("sharedPrivateLinkResource"u8);
+                writer.WriteObjectValue(SharedPrivateLinkResource, options);
             }
             if (Optional.IsDefined(EnabledState))
             {
@@ -222,7 +201,6 @@ namespace Azure.ResourceManager.Cdn.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                priority = null;
                                 continue;
                             }
                             priority = property0.Value.GetInt32();
@@ -232,7 +210,6 @@ namespace Azure.ResourceManager.Cdn.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                weight = null;
                                 continue;
                             }
                             weight = property0.Value.GetInt32();
@@ -242,7 +219,6 @@ namespace Azure.ResourceManager.Cdn.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                sharedPrivateLinkResource = null;
                                 continue;
                             }
                             sharedPrivateLinkResource = SharedPrivateLinkResourceProperties.DeserializeSharedPrivateLinkResourceProperties(property0.Value, options);

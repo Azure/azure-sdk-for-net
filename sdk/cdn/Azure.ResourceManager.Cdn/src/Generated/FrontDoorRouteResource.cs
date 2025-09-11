@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Cdn
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _frontDoorRouteClientDiagnostics;
-        private readonly FrontDoorRoutesRestOperations _frontDoorRouteRestClient;
+        private readonly ClientDiagnostics _frontDoorRouteRoutesClientDiagnostics;
+        private readonly RoutesRestOperations _frontDoorRouteRoutesRestClient;
         private readonly FrontDoorRouteData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FrontDoorRouteResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorRouteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string frontDoorRouteApiVersion);
-            _frontDoorRouteRestClient = new FrontDoorRoutesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorRouteApiVersion);
+            _frontDoorRouteRoutesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string frontDoorRouteRoutesApiVersion);
+            _frontDoorRouteRoutesRestClient = new RoutesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorRouteRoutesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Get</description>
+        /// <description>Routes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FrontDoorRouteResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteResource.Get");
+            using var scope = _frontDoorRouteRoutesClientDiagnostics.CreateScope("FrontDoorRouteResource.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorRouteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorRouteRoutesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorRouteResource(Client, response.Value), response.GetRawResponse());
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Get</description>
+        /// <description>Routes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FrontDoorRouteResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteResource.Get");
+            using var scope = _frontDoorRouteRoutesClientDiagnostics.CreateScope("FrontDoorRouteResource.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorRouteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _frontDoorRouteRoutesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorRouteResource(Client, response.Value), response.GetRawResponse());
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Delete</description>
+        /// <description>Routes_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteResource.Delete");
+            using var scope = _frontDoorRouteRoutesClientDiagnostics.CreateScope("FrontDoorRouteResource.Delete");
             scope.Start();
             try
             {
-                var response = await _frontDoorRouteRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_frontDoorRouteClientDiagnostics, Pipeline, _frontDoorRouteRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorRouteRoutesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_frontDoorRouteRoutesClientDiagnostics, Pipeline, _frontDoorRouteRoutesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Delete</description>
+        /// <description>Routes_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteResource.Delete");
+            using var scope = _frontDoorRouteRoutesClientDiagnostics.CreateScope("FrontDoorRouteResource.Delete");
             scope.Start();
             try
             {
-                var response = _frontDoorRouteRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation(_frontDoorRouteClientDiagnostics, Pipeline, _frontDoorRouteRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorRouteRoutesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation(_frontDoorRouteRoutesClientDiagnostics, Pipeline, _frontDoorRouteRoutesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Update</description>
+        /// <description>Routes_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteResource.Update");
+            using var scope = _frontDoorRouteRoutesClientDiagnostics.CreateScope("FrontDoorRouteResource.Update");
             scope.Start();
             try
             {
-                var response = await _frontDoorRouteRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<FrontDoorRouteResource>(new FrontDoorRouteOperationSource(Client), _frontDoorRouteClientDiagnostics, Pipeline, _frontDoorRouteRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorRouteRoutesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<FrontDoorRouteResource>(new FrontDoorRouteOperationSource(Client), _frontDoorRouteRoutesClientDiagnostics, Pipeline, _frontDoorRouteRoutesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Update</description>
+        /// <description>Routes_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -329,12 +329,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteResource.Update");
+            using var scope = _frontDoorRouteRoutesClientDiagnostics.CreateScope("FrontDoorRouteResource.Update");
             scope.Start();
             try
             {
-                var response = _frontDoorRouteRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new CdnArmOperation<FrontDoorRouteResource>(new FrontDoorRouteOperationSource(Client), _frontDoorRouteClientDiagnostics, Pipeline, _frontDoorRouteRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorRouteRoutesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new CdnArmOperation<FrontDoorRouteResource>(new FrontDoorRouteOperationSource(Client), _frontDoorRouteRoutesClientDiagnostics, Pipeline, _frontDoorRouteRoutesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

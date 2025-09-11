@@ -15,20 +15,20 @@ using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal partial class FrontDoorRoutesRestOperations
+    internal partial class RoutesRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of FrontDoorRoutesRestOperations. </summary>
+        /// <summary> Initializes a new instance of RoutesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public FrontDoorRoutesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public RoutesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Lists all of the existing origins within a profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="endpointName"/> is null. </exception>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Lists all of the existing origins within a profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="endpointName"/> is null. </exception>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Gets an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Creates a new route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="data"> Route properties. </param>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Creates a new route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="data"> Route properties. </param>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Updates an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="patch"> Route update properties. </param>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Updates an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="patch"> Route update properties. </param>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Deletes an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Deletes an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="endpointName"/> is null. </exception>
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="endpointName"/> is null. </exception>

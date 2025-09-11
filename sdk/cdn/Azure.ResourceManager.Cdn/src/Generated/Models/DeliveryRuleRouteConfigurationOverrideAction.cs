@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
-            Name = DeliveryRuleActionType.RouteConfigurationOverride;
+            Name = DeliveryRuleActionName.RouteConfigurationOverride;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Defines the parameters for the action.
         /// Serialized Name: DeliveryRuleRouteConfigurationOverrideAction.parameters
         /// </param>
-        internal DeliveryRuleRouteConfigurationOverrideAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, RouteConfigurationOverrideActionProperties properties) : base(name, serializedAdditionalRawData)
+        internal DeliveryRuleRouteConfigurationOverrideAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> serializedAdditionalRawData, RouteConfigurationOverrideActionProperties properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
             Name = name;

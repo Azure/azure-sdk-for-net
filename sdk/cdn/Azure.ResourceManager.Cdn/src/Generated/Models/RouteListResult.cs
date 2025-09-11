@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
-    /// Result of the request to list routes. It contains a list of route objects and a URL link to get the next set of results.
+    /// The response of a Route list operation.
     /// Serialized Name: RouteListResult
     /// </summary>
     internal partial class RouteListResult
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RouteListResult"/>. </summary>
-        internal RouteListResult()
+        /// <param name="value">
+        /// The Route items on this page
+        /// Serialized Name: RouteListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal RouteListResult(IEnumerable<FrontDoorRouteData> value)
         {
-            Value = new ChangeTrackingList<FrontDoorRouteData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RouteListResult"/>. </summary>
         /// <param name="value">
-        /// List of AzureFrontDoor routes within a profile.
+        /// The Route items on this page
         /// Serialized Name: RouteListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// URL to get the next set of route objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: RouteListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RouteListResult(IReadOnlyList<FrontDoorRouteData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RouteListResult(IReadOnlyList<FrontDoorRouteData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RouteListResult"/> for deserialization. </summary>
+        internal RouteListResult()
+        {
+        }
+
         /// <summary>
-        /// List of AzureFrontDoor routes within a profile.
+        /// The Route items on this page
         /// Serialized Name: RouteListResult.value
         /// </summary>
         public IReadOnlyList<FrontDoorRouteData> Value { get; }
         /// <summary>
-        /// URL to get the next set of route objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: RouteListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
-            Name = DeliveryRuleActionType.OriginGroupOverride;
+            Name = DeliveryRuleActionName.OriginGroupOverride;
         }
 
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideAction"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Defines the parameters for the action.
         /// Serialized Name: OriginGroupOverrideAction.parameters
         /// </param>
-        internal OriginGroupOverrideAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, OriginGroupOverrideActionProperties properties) : base(name, serializedAdditionalRawData)
+        internal OriginGroupOverrideAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> serializedAdditionalRawData, OriginGroupOverrideActionProperties properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
             Name = name;

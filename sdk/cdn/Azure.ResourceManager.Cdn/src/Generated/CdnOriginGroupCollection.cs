@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class CdnOriginGroupCollection : ArmCollection, IEnumerable<CdnOriginGroupResource>, IAsyncEnumerable<CdnOriginGroupResource>
     {
-        private readonly ClientDiagnostics _cdnOriginGroupClientDiagnostics;
-        private readonly CdnOriginGroupsRestOperations _cdnOriginGroupRestClient;
+        private readonly ClientDiagnostics _cdnOriginGroupOriginGroupsClientDiagnostics;
+        private readonly OriginGroupsRestOperations _cdnOriginGroupOriginGroupsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CdnOriginGroupCollection"/> class for mocking. </summary>
         protected CdnOriginGroupCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CdnOriginGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cdnOriginGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnOriginGroupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CdnOriginGroupResource.ResourceType, out string cdnOriginGroupApiVersion);
-            _cdnOriginGroupRestClient = new CdnOriginGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cdnOriginGroupApiVersion);
+            _cdnOriginGroupOriginGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnOriginGroupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CdnOriginGroupResource.ResourceType, out string cdnOriginGroupOriginGroupsApiVersion);
+            _cdnOriginGroupOriginGroupsRestClient = new OriginGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cdnOriginGroupOriginGroupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnOriginGroups_Create</description>
+        /// <description>OriginGroups_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroupCollection.CreateOrUpdate");
+            using var scope = _cdnOriginGroupOriginGroupsClientDiagnostics.CreateScope("CdnOriginGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _cdnOriginGroupRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnOriginGroupResource>(new CdnOriginGroupOperationSource(Client), _cdnOriginGroupClientDiagnostics, Pipeline, _cdnOriginGroupRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnOriginGroupOriginGroupsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CdnOriginGroupResource>(new CdnOriginGroupOperationSource(Client), _cdnOriginGroupOriginGroupsClientDiagnostics, Pipeline, _cdnOriginGroupOriginGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnOriginGroups_Create</description>
+        /// <description>OriginGroups_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroupCollection.CreateOrUpdate");
+            using var scope = _cdnOriginGroupOriginGroupsClientDiagnostics.CreateScope("CdnOriginGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cdnOriginGroupRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, data, cancellationToken);
-                var operation = new CdnArmOperation<CdnOriginGroupResource>(new CdnOriginGroupOperationSource(Client), _cdnOriginGroupClientDiagnostics, Pipeline, _cdnOriginGroupRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnOriginGroupOriginGroupsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, data, cancellationToken);
+                var operation = new CdnArmOperation<CdnOriginGroupResource>(new CdnOriginGroupOperationSource(Client), _cdnOriginGroupOriginGroupsClientDiagnostics, Pipeline, _cdnOriginGroupOriginGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnOriginGroups_Get</description>
+        /// <description>OriginGroups_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
 
-            using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroupCollection.Get");
+            using var scope = _cdnOriginGroupOriginGroupsClientDiagnostics.CreateScope("CdnOriginGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cdnOriginGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _cdnOriginGroupOriginGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnOriginGroupResource(Client, response.Value), response.GetRawResponse());
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnOriginGroups_Get</description>
+        /// <description>OriginGroups_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
 
-            using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroupCollection.Get");
+            using var scope = _cdnOriginGroupOriginGroupsClientDiagnostics.CreateScope("CdnOriginGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _cdnOriginGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken);
+                var response = _cdnOriginGroupOriginGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnOriginGroupResource(Client, response.Value), response.GetRawResponse());
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnOriginGroups_ListByEndpoint</description>
+        /// <description>OriginGroups_ListByEndpoint</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="CdnOriginGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CdnOriginGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnOriginGroupRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnOriginGroupRestClient.CreateListByEndpointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CdnOriginGroupResource(Client, CdnOriginGroupData.DeserializeCdnOriginGroupData(e)), _cdnOriginGroupClientDiagnostics, Pipeline, "CdnOriginGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnOriginGroupOriginGroupsRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnOriginGroupOriginGroupsRestClient.CreateListByEndpointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CdnOriginGroupResource(Client, CdnOriginGroupData.DeserializeCdnOriginGroupData(e)), _cdnOriginGroupOriginGroupsClientDiagnostics, Pipeline, "CdnOriginGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnOriginGroups_ListByEndpoint</description>
+        /// <description>OriginGroups_ListByEndpoint</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="CdnOriginGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CdnOriginGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnOriginGroupRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnOriginGroupRestClient.CreateListByEndpointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CdnOriginGroupResource(Client, CdnOriginGroupData.DeserializeCdnOriginGroupData(e)), _cdnOriginGroupClientDiagnostics, Pipeline, "CdnOriginGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnOriginGroupOriginGroupsRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnOriginGroupOriginGroupsRestClient.CreateListByEndpointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CdnOriginGroupResource(Client, CdnOriginGroupData.DeserializeCdnOriginGroupData(e)), _cdnOriginGroupOriginGroupsClientDiagnostics, Pipeline, "CdnOriginGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnOriginGroups_Get</description>
+        /// <description>OriginGroups_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
 
-            using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroupCollection.Exists");
+            using var scope = _cdnOriginGroupOriginGroupsClientDiagnostics.CreateScope("CdnOriginGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _cdnOriginGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cdnOriginGroupOriginGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnOriginGroups_Get</description>
+        /// <description>OriginGroups_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
 
-            using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroupCollection.Exists");
+            using var scope = _cdnOriginGroupOriginGroupsClientDiagnostics.CreateScope("CdnOriginGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _cdnOriginGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken: cancellationToken);
+                var response = _cdnOriginGroupOriginGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnOriginGroups_Get</description>
+        /// <description>OriginGroups_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
 
-            using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroupCollection.GetIfExists");
+            using var scope = _cdnOriginGroupOriginGroupsClientDiagnostics.CreateScope("CdnOriginGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cdnOriginGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cdnOriginGroupOriginGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<CdnOriginGroupResource>(response.GetRawResponse());
                 return Response.FromValue(new CdnOriginGroupResource(Client, response.Value), response.GetRawResponse());
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnOriginGroups_Get</description>
+        /// <description>OriginGroups_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -459,11 +459,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
 
-            using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroupCollection.GetIfExists");
+            using var scope = _cdnOriginGroupOriginGroupsClientDiagnostics.CreateScope("CdnOriginGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cdnOriginGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken: cancellationToken);
+                var response = _cdnOriginGroupOriginGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<CdnOriginGroupResource>(response.GetRawResponse());
                 return Response.FromValue(new CdnOriginGroupResource(Client, response.Value), response.GetRawResponse());

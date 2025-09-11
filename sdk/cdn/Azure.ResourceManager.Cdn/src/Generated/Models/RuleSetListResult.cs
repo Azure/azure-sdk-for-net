@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
-    /// Result of the request to list rule sets. It contains a list of rule set objects and a URL link to get the next set of results.
+    /// The response of a RuleSet list operation.
     /// Serialized Name: RuleSetListResult
     /// </summary>
     internal partial class RuleSetListResult
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RuleSetListResult"/>. </summary>
-        internal RuleSetListResult()
+        /// <param name="value">
+        /// The RuleSet items on this page
+        /// Serialized Name: RuleSetListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal RuleSetListResult(IEnumerable<FrontDoorRuleSetData> value)
         {
-            Value = new ChangeTrackingList<FrontDoorRuleSetData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RuleSetListResult"/>. </summary>
         /// <param name="value">
-        /// List of AzureFrontDoor rule sets within a profile.
+        /// The RuleSet items on this page
         /// Serialized Name: RuleSetListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// URL to get the next set of rule set objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: RuleSetListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RuleSetListResult(IReadOnlyList<FrontDoorRuleSetData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RuleSetListResult(IReadOnlyList<FrontDoorRuleSetData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RuleSetListResult"/> for deserialization. </summary>
+        internal RuleSetListResult()
+        {
+        }
+
         /// <summary>
-        /// List of AzureFrontDoor rule sets within a profile.
+        /// The RuleSet items on this page
         /// Serialized Name: RuleSetListResult.value
         /// </summary>
         public IReadOnlyList<FrontDoorRuleSetData> Value { get; }
         /// <summary>
-        /// URL to get the next set of rule set objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: RuleSetListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

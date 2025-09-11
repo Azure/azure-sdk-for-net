@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Serialized Name: DeliveryRuleAction.name
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeliveryRuleAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeliveryRuleAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// The name of the action for the delivery rule.
         /// Serialized Name: DeliveryRuleAction.name
         /// </summary>
-        internal DeliveryRuleActionType Name { get; set; }
+        internal DeliveryRuleActionName Name { get; set; }
     }
 }

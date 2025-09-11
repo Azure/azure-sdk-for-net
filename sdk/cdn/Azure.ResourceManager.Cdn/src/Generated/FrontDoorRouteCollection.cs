@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class FrontDoorRouteCollection : ArmCollection, IEnumerable<FrontDoorRouteResource>, IAsyncEnumerable<FrontDoorRouteResource>
     {
-        private readonly ClientDiagnostics _frontDoorRouteClientDiagnostics;
-        private readonly FrontDoorRoutesRestOperations _frontDoorRouteRestClient;
+        private readonly ClientDiagnostics _frontDoorRouteRoutesClientDiagnostics;
+        private readonly RoutesRestOperations _frontDoorRouteRoutesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="FrontDoorRouteCollection"/> class for mocking. </summary>
         protected FrontDoorRouteCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal FrontDoorRouteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorRouteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorRouteResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(FrontDoorRouteResource.ResourceType, out string frontDoorRouteApiVersion);
-            _frontDoorRouteRestClient = new FrontDoorRoutesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorRouteApiVersion);
+            _frontDoorRouteRoutesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorRouteResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(FrontDoorRouteResource.ResourceType, out string frontDoorRouteRoutesApiVersion);
+            _frontDoorRouteRoutesRestClient = new RoutesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorRouteRoutesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Create</description>
+        /// <description>Routes_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.CreateOrUpdate");
+            using var scope = _frontDoorRouteRoutesClientDiagnostics.CreateScope("FrontDoorRouteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _frontDoorRouteRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<FrontDoorRouteResource>(new FrontDoorRouteOperationSource(Client), _frontDoorRouteClientDiagnostics, Pipeline, _frontDoorRouteRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorRouteRoutesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<FrontDoorRouteResource>(new FrontDoorRouteOperationSource(Client), _frontDoorRouteRoutesClientDiagnostics, Pipeline, _frontDoorRouteRoutesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Create</description>
+        /// <description>Routes_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.CreateOrUpdate");
+            using var scope = _frontDoorRouteRoutesClientDiagnostics.CreateScope("FrontDoorRouteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _frontDoorRouteRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, data, cancellationToken);
-                var operation = new CdnArmOperation<FrontDoorRouteResource>(new FrontDoorRouteOperationSource(Client), _frontDoorRouteClientDiagnostics, Pipeline, _frontDoorRouteRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorRouteRoutesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, data, cancellationToken);
+                var operation = new CdnArmOperation<FrontDoorRouteResource>(new FrontDoorRouteOperationSource(Client), _frontDoorRouteRoutesClientDiagnostics, Pipeline, _frontDoorRouteRoutesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Get</description>
+        /// <description>Routes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.Get");
+            using var scope = _frontDoorRouteRoutesClientDiagnostics.CreateScope("FrontDoorRouteCollection.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorRouteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorRouteRoutesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorRouteResource(Client, response.Value), response.GetRawResponse());
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Get</description>
+        /// <description>Routes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.Get");
+            using var scope = _frontDoorRouteRoutesClientDiagnostics.CreateScope("FrontDoorRouteCollection.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorRouteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken);
+                var response = _frontDoorRouteRoutesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorRouteResource(Client, response.Value), response.GetRawResponse());
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_ListByEndpoint</description>
+        /// <description>Routes_ListByEndpoint</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="FrontDoorRouteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorRouteResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRouteRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRouteRestClient.CreateListByEndpointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRouteResource(Client, FrontDoorRouteData.DeserializeFrontDoorRouteData(e)), _frontDoorRouteClientDiagnostics, Pipeline, "FrontDoorRouteCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRouteRoutesRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRouteRoutesRestClient.CreateListByEndpointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRouteResource(Client, FrontDoorRouteData.DeserializeFrontDoorRouteData(e)), _frontDoorRouteRoutesClientDiagnostics, Pipeline, "FrontDoorRouteCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_ListByEndpoint</description>
+        /// <description>Routes_ListByEndpoint</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="FrontDoorRouteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorRouteResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRouteRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRouteRestClient.CreateListByEndpointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRouteResource(Client, FrontDoorRouteData.DeserializeFrontDoorRouteData(e)), _frontDoorRouteClientDiagnostics, Pipeline, "FrontDoorRouteCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRouteRoutesRestClient.CreateListByEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRouteRoutesRestClient.CreateListByEndpointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRouteResource(Client, FrontDoorRouteData.DeserializeFrontDoorRouteData(e)), _frontDoorRouteRoutesClientDiagnostics, Pipeline, "FrontDoorRouteCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Get</description>
+        /// <description>Routes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.Exists");
+            using var scope = _frontDoorRouteRoutesClientDiagnostics.CreateScope("FrontDoorRouteCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _frontDoorRouteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorRouteRoutesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Get</description>
+        /// <description>Routes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.Exists");
+            using var scope = _frontDoorRouteRoutesClientDiagnostics.CreateScope("FrontDoorRouteCollection.Exists");
             scope.Start();
             try
             {
-                var response = _frontDoorRouteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken);
+                var response = _frontDoorRouteRoutesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Get</description>
+        /// <description>Routes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.GetIfExists");
+            using var scope = _frontDoorRouteRoutesClientDiagnostics.CreateScope("FrontDoorRouteCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _frontDoorRouteRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorRouteRoutesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<FrontDoorRouteResource>(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorRouteResource(Client, response.Value), response.GetRawResponse());
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Get</description>
+        /// <description>Routes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -459,11 +459,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
-            using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.GetIfExists");
+            using var scope = _frontDoorRouteRoutesClientDiagnostics.CreateScope("FrontDoorRouteCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _frontDoorRouteRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken);
+                var response = _frontDoorRouteRoutesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<FrontDoorRouteResource>(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorRouteResource(Client, response.Value), response.GetRawResponse());

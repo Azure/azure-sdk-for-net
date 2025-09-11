@@ -37,6 +37,100 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetLogAnalyticsLocationsRequestUri(string subscriptionId, string resourceGroupName, string profileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getLogAnalyticsLocations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetLogAnalyticsLocationsRequest(string subscriptionId, string resourceGroupName, string profileName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getLogAnalyticsLocations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get all available location names for AFD log analytics report. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ContinentsResponse>> GetLogAnalyticsLocationsAsync(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            using var message = CreateGetLogAnalyticsLocationsRequest(subscriptionId, resourceGroupName, profileName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ContinentsResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ContinentsResponse.DeserializeContinentsResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get all available location names for AFD log analytics report. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ContinentsResponse> GetLogAnalyticsLocations(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            using var message = CreateGetLogAnalyticsLocationsRequest(subscriptionId, resourceGroupName, profileName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ContinentsResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ContinentsResponse.DeserializeContinentsResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal RequestUriBuilder CreateGetLogAnalyticsMetricsRequestUri(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy, IEnumerable<string> continents, IEnumerable<string> countryOrRegions)
         {
             var uri = new RawRequestUriBuilder();
@@ -166,7 +260,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Get log report for AFD profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
         /// <param name="dateTimeEnd"> The <see cref="DateTimeOffset"/> to use. </param>
@@ -207,7 +301,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Get log report for AFD profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
         /// <param name="dateTimeEnd"> The <see cref="DateTimeOffset"/> to use. </param>
@@ -332,7 +426,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Get log analytics ranking report for AFD profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="rankings"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogRanking"/> to use. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogRankingMetric"/> to use. </param>
         /// <param name="maxRanking"> The <see cref="int"/> to use. </param>
@@ -369,7 +463,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Get log analytics ranking report for AFD profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="rankings"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogRanking"/> to use. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogRankingMetric"/> to use. </param>
         /// <param name="maxRanking"> The <see cref="int"/> to use. </param>
@@ -396,100 +490,6 @@ namespace Azure.ResourceManager.Cdn
                         RankingsResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RankingsResponse.DeserializeRankingsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetLogAnalyticsLocationsRequestUri(string subscriptionId, string resourceGroupName, string profileName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/getLogAnalyticsLocations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetLogAnalyticsLocationsRequest(string subscriptionId, string resourceGroupName, string profileName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/getLogAnalyticsLocations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get all available location names for AFD log analytics report. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContinentsResponse>> GetLogAnalyticsLocationsAsync(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-
-            using var message = CreateGetLogAnalyticsLocationsRequest(subscriptionId, resourceGroupName, profileName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ContinentsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ContinentsResponse.DeserializeContinentsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get all available location names for AFD log analytics report. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContinentsResponse> GetLogAnalyticsLocations(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-
-            using var message = CreateGetLogAnalyticsLocationsRequest(subscriptionId, resourceGroupName, profileName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ContinentsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ContinentsResponse.DeserializeContinentsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Get all endpoints and custom domains available for AFD log report. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Get all endpoints and custom domains available for AFD log report. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Get Waf related log analytics report for AFD profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
         /// <param name="dateTimeEnd"> The <see cref="DateTimeOffset"/> to use. </param>
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Get Waf related log analytics report for AFD profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
         /// <param name="dateTimeEnd"> The <see cref="DateTimeOffset"/> to use. </param>
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Get WAF log analytics charts for AFD profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
         /// <param name="dateTimeEnd"> The <see cref="DateTimeOffset"/> to use. </param>
@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Get WAF log analytics charts for AFD profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafMetric"/> to use. </param>
         /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
         /// <param name="dateTimeEnd"> The <see cref="DateTimeOffset"/> to use. </param>

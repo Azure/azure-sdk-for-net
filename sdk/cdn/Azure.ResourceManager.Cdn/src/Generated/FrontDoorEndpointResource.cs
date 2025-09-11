@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Cdn
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _frontDoorEndpointClientDiagnostics;
-        private readonly FrontDoorEndpointsRestOperations _frontDoorEndpointRestClient;
+        private readonly ClientDiagnostics _frontDoorEndpointFrontDoorEndpointsClientDiagnostics;
+        private readonly AFDEndpointsRestOperations _frontDoorEndpointFrontDoorEndpointsRestClient;
         private readonly FrontDoorEndpointData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FrontDoorEndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string frontDoorEndpointApiVersion);
-            _frontDoorEndpointRestClient = new FrontDoorEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorEndpointApiVersion);
+            _frontDoorEndpointFrontDoorEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string frontDoorEndpointFrontDoorEndpointsApiVersion);
+            _frontDoorEndpointFrontDoorEndpointsRestClient = new AFDEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorEndpointFrontDoorEndpointsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Get</description>
+        /// <description>Routes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRoutes_Get</description>
+        /// <description>Routes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_Get</description>
+        /// <description>AFDEndpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -184,11 +184,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FrontDoorEndpointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorEndpointClientDiagnostics.CreateScope("FrontDoorEndpointResource.Get");
+            using var scope = _frontDoorEndpointFrontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointResource.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorEndpointFrontDoorEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_Get</description>
+        /// <description>AFDEndpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FrontDoorEndpointResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorEndpointClientDiagnostics.CreateScope("FrontDoorEndpointResource.Get");
+            using var scope = _frontDoorEndpointFrontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointResource.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _frontDoorEndpointFrontDoorEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_Delete</description>
+        /// <description>AFDEndpoints_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -265,12 +265,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorEndpointClientDiagnostics.CreateScope("FrontDoorEndpointResource.Delete");
+            using var scope = _frontDoorEndpointFrontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointResource.Delete");
             scope.Start();
             try
             {
-                var response = await _frontDoorEndpointRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_frontDoorEndpointClientDiagnostics, Pipeline, _frontDoorEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorEndpointFrontDoorEndpointsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_frontDoorEndpointFrontDoorEndpointsClientDiagnostics, Pipeline, _frontDoorEndpointFrontDoorEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_Delete</description>
+        /// <description>AFDEndpoints_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -307,12 +307,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorEndpointClientDiagnostics.CreateScope("FrontDoorEndpointResource.Delete");
+            using var scope = _frontDoorEndpointFrontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointResource.Delete");
             scope.Start();
             try
             {
-                var response = _frontDoorEndpointRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation(_frontDoorEndpointClientDiagnostics, Pipeline, _frontDoorEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorEndpointFrontDoorEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation(_frontDoorEndpointFrontDoorEndpointsClientDiagnostics, Pipeline, _frontDoorEndpointFrontDoorEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_Update</description>
+        /// <description>AFDEndpoints_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -353,12 +353,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _frontDoorEndpointClientDiagnostics.CreateScope("FrontDoorEndpointResource.Update");
+            using var scope = _frontDoorEndpointFrontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointResource.Update");
             scope.Start();
             try
             {
-                var response = await _frontDoorEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<FrontDoorEndpointResource>(new FrontDoorEndpointOperationSource(Client), _frontDoorEndpointClientDiagnostics, Pipeline, _frontDoorEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorEndpointFrontDoorEndpointsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<FrontDoorEndpointResource>(new FrontDoorEndpointOperationSource(Client), _frontDoorEndpointFrontDoorEndpointsClientDiagnostics, Pipeline, _frontDoorEndpointFrontDoorEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_Update</description>
+        /// <description>AFDEndpoints_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -399,12 +399,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _frontDoorEndpointClientDiagnostics.CreateScope("FrontDoorEndpointResource.Update");
+            using var scope = _frontDoorEndpointFrontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointResource.Update");
             scope.Start();
             try
             {
-                var response = _frontDoorEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new CdnArmOperation<FrontDoorEndpointResource>(new FrontDoorEndpointOperationSource(Client), _frontDoorEndpointClientDiagnostics, Pipeline, _frontDoorEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorEndpointFrontDoorEndpointsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new CdnArmOperation<FrontDoorEndpointResource>(new FrontDoorEndpointOperationSource(Client), _frontDoorEndpointFrontDoorEndpointsClientDiagnostics, Pipeline, _frontDoorEndpointFrontDoorEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_PurgeContent</description>
+        /// <description>AFDEndpoints_PurgeContent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -445,12 +445,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorEndpointClientDiagnostics.CreateScope("FrontDoorEndpointResource.PurgeContent");
+            using var scope = _frontDoorEndpointFrontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointResource.PurgeContent");
             scope.Start();
             try
             {
-                var response = await _frontDoorEndpointRestClient.PurgeContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_frontDoorEndpointClientDiagnostics, Pipeline, _frontDoorEndpointRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorEndpointFrontDoorEndpointsRestClient.PurgeContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_frontDoorEndpointFrontDoorEndpointsClientDiagnostics, Pipeline, _frontDoorEndpointFrontDoorEndpointsRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_PurgeContent</description>
+        /// <description>AFDEndpoints_PurgeContent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -491,12 +491,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorEndpointClientDiagnostics.CreateScope("FrontDoorEndpointResource.PurgeContent");
+            using var scope = _frontDoorEndpointFrontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointResource.PurgeContent");
             scope.Start();
             try
             {
-                var response = _frontDoorEndpointRestClient.PurgeContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CdnArmOperation(_frontDoorEndpointClientDiagnostics, Pipeline, _frontDoorEndpointRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorEndpointFrontDoorEndpointsRestClient.PurgeContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new CdnArmOperation(_frontDoorEndpointFrontDoorEndpointsClientDiagnostics, Pipeline, _frontDoorEndpointFrontDoorEndpointsRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_ListResourceUsage</description>
+        /// <description>AFDEndpoints_ListResourceUsage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -531,11 +531,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FrontDoorUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FrontDoorUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorEndpointRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorEndpointRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorEndpointClientDiagnostics, Pipeline, "FrontDoorEndpointResource.GetResourceUsages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorEndpointFrontDoorEndpointsRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorEndpointFrontDoorEndpointsRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorEndpointFrontDoorEndpointsClientDiagnostics, Pipeline, "FrontDoorEndpointResource.GetResourceUsage", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_ListResourceUsage</description>
+        /// <description>AFDEndpoints_ListResourceUsage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -561,11 +561,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FrontDoorUsage> GetResourceUsages(CancellationToken cancellationToken = default)
+        public virtual Pageable<FrontDoorUsage> GetResourceUsage(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorEndpointRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorEndpointRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorEndpointClientDiagnostics, Pipeline, "FrontDoorEndpointResource.GetResourceUsages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorEndpointFrontDoorEndpointsRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorEndpointFrontDoorEndpointsRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorEndpointFrontDoorEndpointsClientDiagnostics, Pipeline, "FrontDoorEndpointResource.GetResourceUsage", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_ValidateCustomDomain</description>
+        /// <description>AFDEndpoints_ValidateCustomDomain</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -596,11 +596,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorEndpointClientDiagnostics.CreateScope("FrontDoorEndpointResource.ValidateCustomDomain");
+            using var scope = _frontDoorEndpointFrontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointResource.ValidateCustomDomain");
             scope.Start();
             try
             {
-                var response = await _frontDoorEndpointRestClient.ValidateCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorEndpointFrontDoorEndpointsRestClient.ValidateCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_ValidateCustomDomain</description>
+        /// <description>AFDEndpoints_ValidateCustomDomain</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -638,11 +638,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorEndpointClientDiagnostics.CreateScope("FrontDoorEndpointResource.ValidateCustomDomain");
+            using var scope = _frontDoorEndpointFrontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointResource.ValidateCustomDomain");
             scope.Start();
             try
             {
-                var response = _frontDoorEndpointRestClient.ValidateCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var response = _frontDoorEndpointFrontDoorEndpointsRestClient.ValidateCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_Get</description>
+        /// <description>AFDEndpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _frontDoorEndpointClientDiagnostics.CreateScope("FrontDoorEndpointResource.AddTag");
+            using var scope = _frontDoorEndpointFrontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointResource.AddTag");
             scope.Start();
             try
             {
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.Cdn
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _frontDoorEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _frontDoorEndpointFrontDoorEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new FrontDoorEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_Get</description>
+        /// <description>AFDEndpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _frontDoorEndpointClientDiagnostics.CreateScope("FrontDoorEndpointResource.AddTag");
+            using var scope = _frontDoorEndpointFrontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointResource.AddTag");
             scope.Start();
             try
             {
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.Cdn
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _frontDoorEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _frontDoorEndpointFrontDoorEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new FrontDoorEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_Get</description>
+        /// <description>AFDEndpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _frontDoorEndpointClientDiagnostics.CreateScope("FrontDoorEndpointResource.SetTags");
+            using var scope = _frontDoorEndpointFrontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointResource.SetTags");
             scope.Start();
             try
             {
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.Cdn
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _frontDoorEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _frontDoorEndpointFrontDoorEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new FrontDoorEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_Get</description>
+        /// <description>AFDEndpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _frontDoorEndpointClientDiagnostics.CreateScope("FrontDoorEndpointResource.SetTags");
+            using var scope = _frontDoorEndpointFrontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointResource.SetTags");
             scope.Start();
             try
             {
@@ -871,7 +871,7 @@ namespace Azure.ResourceManager.Cdn
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _frontDoorEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _frontDoorEndpointFrontDoorEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new FrontDoorEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_Get</description>
+        /// <description>AFDEndpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -918,7 +918,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _frontDoorEndpointClientDiagnostics.CreateScope("FrontDoorEndpointResource.RemoveTag");
+            using var scope = _frontDoorEndpointFrontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointResource.RemoveTag");
             scope.Start();
             try
             {
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.Cdn
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _frontDoorEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _frontDoorEndpointFrontDoorEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new FrontDoorEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_Get</description>
+        /// <description>AFDEndpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -978,7 +978,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _frontDoorEndpointClientDiagnostics.CreateScope("FrontDoorEndpointResource.RemoveTag");
+            using var scope = _frontDoorEndpointFrontDoorEndpointsClientDiagnostics.CreateScope("FrontDoorEndpointResource.RemoveTag");
             scope.Start();
             try
             {
@@ -987,7 +987,7 @@ namespace Azure.ResourceManager.Cdn
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _frontDoorEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _frontDoorEndpointFrontDoorEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new FrontDoorEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

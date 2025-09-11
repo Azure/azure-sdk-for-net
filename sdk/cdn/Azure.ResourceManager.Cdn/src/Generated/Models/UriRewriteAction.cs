@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
-            Name = DeliveryRuleActionType.UriRewrite;
+            Name = DeliveryRuleActionName.UriRewrite;
         }
 
         /// <summary> Initializes a new instance of <see cref="UriRewriteAction"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Defines the parameters for the action.
         /// Serialized Name: UrlRewriteAction.parameters
         /// </param>
-        internal UriRewriteAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, UriRewriteActionProperties properties) : base(name, serializedAdditionalRawData)
+        internal UriRewriteAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> serializedAdditionalRawData, UriRewriteActionProperties properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
             Name = name;

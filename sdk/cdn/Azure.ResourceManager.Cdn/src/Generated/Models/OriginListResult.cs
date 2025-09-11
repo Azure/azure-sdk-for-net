@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
-    /// Result of the request to list origins. It contains a list of origin objects and a URL link to get the next set of results.
+    /// The response of a Origin list operation.
     /// Serialized Name: OriginListResult
     /// </summary>
     internal partial class OriginListResult
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OriginListResult"/>. </summary>
-        internal OriginListResult()
+        /// <param name="value">
+        /// The Origin items on this page
+        /// Serialized Name: OriginListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal OriginListResult(IEnumerable<CdnOriginData> value)
         {
-            Value = new ChangeTrackingList<CdnOriginData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="OriginListResult"/>. </summary>
         /// <param name="value">
-        /// List of CDN origins within an endpoint
+        /// The Origin items on this page
         /// Serialized Name: OriginListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// URL to get the next set of origin objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: OriginListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OriginListResult(IReadOnlyList<CdnOriginData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OriginListResult(IReadOnlyList<CdnOriginData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="OriginListResult"/> for deserialization. </summary>
+        internal OriginListResult()
+        {
+        }
+
         /// <summary>
-        /// List of CDN origins within an endpoint
+        /// The Origin items on this page
         /// Serialized Name: OriginListResult.value
         /// </summary>
         public IReadOnlyList<CdnOriginData> Value { get; }
         /// <summary>
-        /// URL to get the next set of origin objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: OriginListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

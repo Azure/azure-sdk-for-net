@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
-            Name = DeliveryRuleActionType.CacheExpiration;
+            Name = DeliveryRuleActionName.CacheExpiration;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleCacheExpirationAction"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Defines the parameters for the action.
         /// Serialized Name: DeliveryRuleCacheExpirationAction.parameters
         /// </param>
-        internal DeliveryRuleCacheExpirationAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, CacheExpirationActionProperties properties) : base(name, serializedAdditionalRawData)
+        internal DeliveryRuleCacheExpirationAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> serializedAdditionalRawData, CacheExpirationActionProperties properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
             Name = name;

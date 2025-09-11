@@ -7,20 +7,23 @@
 
 using System;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Samples
 {
-    public partial class Sample_FrontDoorRuleSetCollection
+    public partial class Sample_EndpointCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_RuleSetsCreate()
+        public async Task CreateOrUpdate_EndpointsCreate()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/RuleSets_Create.json
-            // this example is just showing the usage of "RuleSets_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Endpoints_Create.json
+            // this example is just showing the usage of "Endpoints_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -35,27 +38,112 @@ namespace Azure.ResourceManager.Cdn.Samples
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
             ProfileResource profile = client.GetProfileResource(profileResourceId);
 
-            // get the collection of this FrontDoorRuleSetResource
-            FrontDoorRuleSetCollection collection = profile.GetFrontDoorRuleSets();
+            // get the collection of this EndpointResource
+            EndpointCollection collection = profile.GetEndpoints();
 
             // invoke the operation
-            string ruleSetName = "ruleSet1";
-            ArmOperation<FrontDoorRuleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleSetName);
-            FrontDoorRuleSetResource result = lro.Value;
+            string endpointName = "endpoint1";
+            EndpointData data = new EndpointData(new AzureLocation("WestUs"))
+            {
+                OriginPath = "/photos",
+                ContentTypesToCompress = { "text/html", "application/octet-stream" },
+                OriginHostHeader = "www.bing.com",
+                IsCompressionEnabled = true,
+                IsHttpAllowed = true,
+                IsHttpsAllowed = true,
+                QueryStringCachingBehavior = QueryStringCachingBehavior.BypassCaching,
+                DefaultOriginGroupId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/endpoints/endpoint1/originGroups/originGroup1"),
+                DeliveryPolicy = new EndpointDeliveryPolicy(new DeliveryRule[]
+            {
+new DeliveryRule(1, new DeliveryRuleAction[]
+{
+new DeliveryRuleCacheExpirationAction(new CacheExpirationActionProperties(CacheBehaviorSetting.Override, CdnCacheLevel.All)
+{
+CacheDuration = XmlConvert.ToTimeSpan("10:10:09"),
+}),
+new DeliveryRuleResponseHeaderAction(new HeaderActionProperties(HeaderAction.Overwrite, "Access-Control-Allow-Origin")
+{
+Value = "*",
+}),
+new DeliveryRuleRequestHeaderAction(new HeaderActionProperties(HeaderAction.Overwrite, "Accept-Encoding")
+{
+Value = "gzip",
+})
+})
+{
+Name = "rule1",
+Conditions = {new DeliveryRuleRemoteAddressCondition(new RemoteAddressMatchCondition(RemoteAddressOperator.IPMatch)
+{
+NegateCondition = true,
+MatchValues = {"192.168.1.0/24", "10.0.0.0/24"},
+})},
+}
+            })
+                {
+                    Description = "Test description for a policy.",
+                },
+                Origins = {new DeepCreatedOrigin("origin1")
+{
+HostName = "www.someDomain1.net",
+HttpPort = 80,
+HttpsPort = 443,
+OriginHostHeader = "www.someDomain1.net",
+Priority = 1,
+Weight = 50,
+Enabled = true,
+}, new DeepCreatedOrigin("origin2")
+{
+HostName = "www.someDomain2.net",
+HttpPort = 80,
+HttpsPort = 443,
+OriginHostHeader = "www.someDomain2.net",
+Priority = 2,
+Weight = 50,
+Enabled = true,
+}},
+                OriginGroups = {new DeepCreatedOriginGroup("originGroup1")
+{
+HealthProbeSettings = new HealthProbeSettings
+{
+ProbePath = "/health.aspx",
+ProbeRequestType = HealthProbeRequestType.Get,
+ProbeProtocol = HealthProbeProtocol.Http,
+ProbeIntervalInSeconds = 120,
+},
+Origins = {new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/endpoints/endpoint1/origins/origin1"),
+}, new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/endpoints/endpoint1/origins/origin2"),
+}},
+ResponseBasedOriginErrorDetectionSettings = new ResponseBasedOriginErrorDetectionSettings
+{
+ResponseBasedDetectedErrorType = ResponseBasedDetectedErrorType.TcpErrorsOnly,
+ResponseBasedFailoverThresholdPercentage = 10,
+},
+}},
+                Tags =
+{
+["key1"] = "value1"
+},
+            };
+            ArmOperation<EndpointResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, endpointName, data);
+            EndpointResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FrontDoorRuleSetData resourceData = result.Data;
+            EndpointData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_RuleSetsGet()
+        public async Task Get_EndpointsGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/RuleSets_Get.json
-            // this example is just showing the usage of "RuleSets_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Endpoints_Get.json
+            // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -70,26 +158,26 @@ namespace Azure.ResourceManager.Cdn.Samples
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
             ProfileResource profile = client.GetProfileResource(profileResourceId);
 
-            // get the collection of this FrontDoorRuleSetResource
-            FrontDoorRuleSetCollection collection = profile.GetFrontDoorRuleSets();
+            // get the collection of this EndpointResource
+            EndpointCollection collection = profile.GetEndpoints();
 
             // invoke the operation
-            string ruleSetName = "ruleSet1";
-            FrontDoorRuleSetResource result = await collection.GetAsync(ruleSetName);
+            string endpointName = "endpoint1";
+            EndpointResource result = await collection.GetAsync(endpointName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FrontDoorRuleSetData resourceData = result.Data;
+            EndpointData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_RuleSetsListByProfile()
+        public async Task GetAll_EndpointsListByProfile()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/RuleSets_ListByProfile.json
-            // this example is just showing the usage of "RuleSets_ListByProfile" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Endpoints_ListByProfile.json
+            // this example is just showing the usage of "Endpoints_ListByProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -104,15 +192,15 @@ namespace Azure.ResourceManager.Cdn.Samples
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
             ProfileResource profile = client.GetProfileResource(profileResourceId);
 
-            // get the collection of this FrontDoorRuleSetResource
-            FrontDoorRuleSetCollection collection = profile.GetFrontDoorRuleSets();
+            // get the collection of this EndpointResource
+            EndpointCollection collection = profile.GetEndpoints();
 
             // invoke the operation and iterate over the result
-            await foreach (FrontDoorRuleSetResource item in collection.GetAllAsync())
+            await foreach (EndpointResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                FrontDoorRuleSetData resourceData = item.Data;
+                EndpointData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -122,10 +210,10 @@ namespace Azure.ResourceManager.Cdn.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_RuleSetsGet()
+        public async Task Exists_EndpointsGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/RuleSets_Get.json
-            // this example is just showing the usage of "RuleSets_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Endpoints_Get.json
+            // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -140,22 +228,22 @@ namespace Azure.ResourceManager.Cdn.Samples
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
             ProfileResource profile = client.GetProfileResource(profileResourceId);
 
-            // get the collection of this FrontDoorRuleSetResource
-            FrontDoorRuleSetCollection collection = profile.GetFrontDoorRuleSets();
+            // get the collection of this EndpointResource
+            EndpointCollection collection = profile.GetEndpoints();
 
             // invoke the operation
-            string ruleSetName = "ruleSet1";
-            bool result = await collection.ExistsAsync(ruleSetName);
+            string endpointName = "endpoint1";
+            bool result = await collection.ExistsAsync(endpointName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_RuleSetsGet()
+        public async Task GetIfExists_EndpointsGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/RuleSets_Get.json
-            // this example is just showing the usage of "RuleSets_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Endpoints_Get.json
+            // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -170,13 +258,13 @@ namespace Azure.ResourceManager.Cdn.Samples
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
             ProfileResource profile = client.GetProfileResource(profileResourceId);
 
-            // get the collection of this FrontDoorRuleSetResource
-            FrontDoorRuleSetCollection collection = profile.GetFrontDoorRuleSets();
+            // get the collection of this EndpointResource
+            EndpointCollection collection = profile.GetEndpoints();
 
             // invoke the operation
-            string ruleSetName = "ruleSet1";
-            NullableResponse<FrontDoorRuleSetResource> response = await collection.GetIfExistsAsync(ruleSetName);
-            FrontDoorRuleSetResource result = response.HasValue ? response.Value : null;
+            string endpointName = "endpoint1";
+            NullableResponse<EndpointResource> response = await collection.GetIfExistsAsync(endpointName);
+            EndpointResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -186,7 +274,7 @@ namespace Azure.ResourceManager.Cdn.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                FrontDoorRuleSetData resourceData = result.Data;
+                EndpointData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

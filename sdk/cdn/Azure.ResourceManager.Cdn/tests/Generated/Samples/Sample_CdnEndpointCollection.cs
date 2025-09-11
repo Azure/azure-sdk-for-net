@@ -7,8 +7,11 @@
 
 using System;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Samples
@@ -20,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task CreateOrUpdate_EndpointsCreate()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Endpoints_Create.json
-            // this example is just showing the usage of "CdnEndpoints_Create" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Endpoints_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -40,7 +43,91 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // invoke the operation
             string endpointName = "endpoint1";
-            CdnEndpointData data = new CdnEndpointData(default);
+            CdnEndpointData data = new CdnEndpointData(new AzureLocation("WestUs"))
+            {
+                OriginPath = "/photos",
+                ContentTypesToCompress = { "text/html", "application/octet-stream" },
+                OriginHostHeader = "www.bing.com",
+                IsCompressionEnabled = true,
+                IsHttpAllowed = true,
+                IsHttpsAllowed = true,
+                QueryStringCachingBehavior = QueryStringCachingBehavior.BypassCaching,
+                DefaultOriginGroupId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/endpoints/endpoint1/originGroups/originGroup1"),
+                DeliveryPolicy = new EndpointDeliveryPolicy(new DeliveryRule[]
+            {
+new DeliveryRule(1, new DeliveryRuleAction[]
+{
+new DeliveryRuleCacheExpirationAction(new CacheExpirationActionProperties(CacheBehaviorSetting.Override, CdnCacheLevel.All)
+{
+CacheDuration = XmlConvert.ToTimeSpan("10:10:09"),
+}),
+new DeliveryRuleResponseHeaderAction(new HeaderActionProperties(HeaderAction.Overwrite, "Access-Control-Allow-Origin")
+{
+Value = "*",
+}),
+new DeliveryRuleRequestHeaderAction(new HeaderActionProperties(HeaderAction.Overwrite, "Accept-Encoding")
+{
+Value = "gzip",
+})
+})
+{
+Name = "rule1",
+Conditions = {new DeliveryRuleRemoteAddressCondition(new RemoteAddressMatchCondition(RemoteAddressOperator.IPMatch)
+{
+NegateCondition = true,
+MatchValues = {"192.168.1.0/24", "10.0.0.0/24"},
+})},
+}
+            })
+                {
+                    Description = "Test description for a policy.",
+                },
+                Origins = {new DeepCreatedOrigin("origin1")
+{
+HostName = "www.someDomain1.net",
+HttpPort = 80,
+HttpsPort = 443,
+OriginHostHeader = "www.someDomain1.net",
+Priority = 1,
+Weight = 50,
+Enabled = true,
+}, new DeepCreatedOrigin("origin2")
+{
+HostName = "www.someDomain2.net",
+HttpPort = 80,
+HttpsPort = 443,
+OriginHostHeader = "www.someDomain2.net",
+Priority = 2,
+Weight = 50,
+Enabled = true,
+}},
+                OriginGroups = {new DeepCreatedOriginGroup("originGroup1")
+{
+HealthProbeSettings = new HealthProbeSettings
+{
+ProbePath = "/health.aspx",
+ProbeRequestType = HealthProbeRequestType.Get,
+ProbeProtocol = HealthProbeProtocol.Http,
+ProbeIntervalInSeconds = 120,
+},
+Origins = {new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/endpoints/endpoint1/origins/origin1"),
+}, new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/endpoints/endpoint1/origins/origin2"),
+}},
+ResponseBasedOriginErrorDetectionSettings = new ResponseBasedOriginErrorDetectionSettings
+{
+ResponseBasedDetectedErrorType = ResponseBasedDetectedErrorType.TcpErrorsOnly,
+ResponseBasedFailoverThresholdPercentage = 10,
+},
+}},
+                Tags =
+{
+["key1"] = "value1"
+},
+            };
             ArmOperation<CdnEndpointResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, endpointName, data);
             CdnEndpointResource result = lro.Value;
 
@@ -56,7 +143,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task Get_EndpointsGet()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Endpoints_Get.json
-            // this example is just showing the usage of "CdnEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -90,7 +177,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task GetAll_EndpointsListByProfile()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Endpoints_ListByProfile.json
-            // this example is just showing the usage of "CdnEndpoints_ListByProfile" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Endpoints_ListByProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -126,7 +213,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task Exists_EndpointsGet()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Endpoints_Get.json
-            // this example is just showing the usage of "CdnEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -156,7 +243,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task GetIfExists_EndpointsGet()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Endpoints_Get.json
-            // this example is just showing the usage of "CdnEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

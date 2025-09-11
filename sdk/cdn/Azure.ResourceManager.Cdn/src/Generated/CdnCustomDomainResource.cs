@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Cdn
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _cdnCustomDomainClientDiagnostics;
-        private readonly CdnCustomDomainsRestOperations _cdnCustomDomainRestClient;
+        private readonly ClientDiagnostics _cdnCustomDomainCustomDomainsClientDiagnostics;
+        private readonly CustomDomainsRestOperations _cdnCustomDomainCustomDomainsRestClient;
         private readonly CdnCustomDomainData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CdnCustomDomainResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cdnCustomDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string cdnCustomDomainApiVersion);
-            _cdnCustomDomainRestClient = new CdnCustomDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cdnCustomDomainApiVersion);
+            _cdnCustomDomainCustomDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string cdnCustomDomainCustomDomainsApiVersion);
+            _cdnCustomDomainCustomDomainsRestClient = new CustomDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cdnCustomDomainCustomDomainsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnCustomDomains_Get</description>
+        /// <description>CustomDomains_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CdnCustomDomainResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainResource.Get");
+            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainResource.Get");
             scope.Start();
             try
             {
-                var response = await _cdnCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cdnCustomDomainCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnCustomDomainResource(Client, response.Value), response.GetRawResponse());
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnCustomDomains_Get</description>
+        /// <description>CustomDomains_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CdnCustomDomainResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainResource.Get");
+            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainResource.Get");
             scope.Start();
             try
             {
-                var response = _cdnCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _cdnCustomDomainCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnCustomDomainResource(Client, response.Value), response.GetRawResponse());
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnCustomDomains_Delete</description>
+        /// <description>CustomDomains_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainResource.Delete");
+            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainResource.Delete");
             scope.Start();
             try
             {
-                var response = await _cdnCustomDomainRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnCustomDomainCustomDomainsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_cdnCustomDomainCustomDomainsClientDiagnostics, Pipeline, _cdnCustomDomainCustomDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnCustomDomains_Delete</description>
+        /// <description>CustomDomains_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainResource.Delete");
+            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainResource.Delete");
             scope.Start();
             try
             {
-                var response = _cdnCustomDomainRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation(_cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnCustomDomainCustomDomainsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation(_cdnCustomDomainCustomDomainsClientDiagnostics, Pipeline, _cdnCustomDomainCustomDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnCustomDomains_Create</description>
+        /// <description>CustomDomains_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainResource.Update");
+            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainResource.Update");
             scope.Start();
             try
             {
-                var response = await _cdnCustomDomainRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnCustomDomainResource>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnCustomDomainCustomDomainsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CdnCustomDomainResource>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainCustomDomainsClientDiagnostics, Pipeline, _cdnCustomDomainCustomDomainsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnCustomDomains_Create</description>
+        /// <description>CustomDomains_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -329,12 +329,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainResource.Update");
+            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainResource.Update");
             scope.Start();
             try
             {
-                var response = _cdnCustomDomainRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CdnArmOperation<CdnCustomDomainResource>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnCustomDomainCustomDomainsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new CdnArmOperation<CdnCustomDomainResource>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainCustomDomainsClientDiagnostics, Pipeline, _cdnCustomDomainCustomDomainsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnCustomDomains_DisableCustomHttps</description>
+        /// <description>CustomDomains_DisableCustomHttps</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -371,12 +371,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<CdnCustomDomainResource>> DisableCustomHttpsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainResource.DisableCustomHttps");
+            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainResource.DisableCustomHttps");
             scope.Start();
             try
             {
-                var response = await _cdnCustomDomainRestClient.DisableCustomHttpsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnCustomDomainResource>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateDisableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnCustomDomainCustomDomainsRestClient.DisableCustomHttpsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CdnCustomDomainResource>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainCustomDomainsClientDiagnostics, Pipeline, _cdnCustomDomainCustomDomainsRestClient.CreateDisableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnCustomDomains_DisableCustomHttps</description>
+        /// <description>CustomDomains_DisableCustomHttps</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -413,12 +413,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<CdnCustomDomainResource> DisableCustomHttps(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainResource.DisableCustomHttps");
+            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainResource.DisableCustomHttps");
             scope.Start();
             try
             {
-                var response = _cdnCustomDomainRestClient.DisableCustomHttps(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation<CdnCustomDomainResource>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateDisableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnCustomDomainCustomDomainsRestClient.DisableCustomHttps(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation<CdnCustomDomainResource>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainCustomDomainsClientDiagnostics, Pipeline, _cdnCustomDomainCustomDomainsRestClient.CreateDisableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnCustomDomains_EnableCustomHttps</description>
+        /// <description>CustomDomains_EnableCustomHttps</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -456,12 +456,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<CdnCustomDomainResource>> EnableCustomHttpsAsync(WaitUntil waitUntil, CustomDomainHttpsContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainResource.EnableCustomHttps");
+            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainResource.EnableCustomHttps");
             scope.Start();
             try
             {
-                var response = await _cdnCustomDomainRestClient.EnableCustomHttpsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnCustomDomainResource>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateEnableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnCustomDomainCustomDomainsRestClient.EnableCustomHttpsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CdnCustomDomainResource>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainCustomDomainsClientDiagnostics, Pipeline, _cdnCustomDomainCustomDomainsRestClient.CreateEnableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnCustomDomains_EnableCustomHttps</description>
+        /// <description>CustomDomains_EnableCustomHttps</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -499,12 +499,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<CdnCustomDomainResource> EnableCustomHttps(WaitUntil waitUntil, CustomDomainHttpsContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainResource.EnableCustomHttps");
+            using var scope = _cdnCustomDomainCustomDomainsClientDiagnostics.CreateScope("CdnCustomDomainResource.EnableCustomHttps");
             scope.Start();
             try
             {
-                var response = _cdnCustomDomainRestClient.EnableCustomHttps(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CdnArmOperation<CdnCustomDomainResource>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainClientDiagnostics, Pipeline, _cdnCustomDomainRestClient.CreateEnableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnCustomDomainCustomDomainsRestClient.EnableCustomHttps(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new CdnArmOperation<CdnCustomDomainResource>(new CdnCustomDomainOperationSource(Client), _cdnCustomDomainCustomDomainsClientDiagnostics, Pipeline, _cdnCustomDomainCustomDomainsRestClient.CreateEnableCustomHttpsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

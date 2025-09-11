@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Cdn
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _frontDoorSecurityPolicyClientDiagnostics;
-        private readonly FrontDoorSecurityPoliciesRestOperations _frontDoorSecurityPolicyRestClient;
+        private readonly ClientDiagnostics _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics;
+        private readonly SecurityPoliciesRestOperations _frontDoorSecurityPolicySecurityPoliciesRestClient;
         private readonly FrontDoorSecurityPolicyData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FrontDoorSecurityPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorSecurityPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string frontDoorSecurityPolicyApiVersion);
-            _frontDoorSecurityPolicyRestClient = new FrontDoorSecurityPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorSecurityPolicyApiVersion);
+            _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string frontDoorSecurityPolicySecurityPoliciesApiVersion);
+            _frontDoorSecurityPolicySecurityPoliciesRestClient = new SecurityPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorSecurityPolicySecurityPoliciesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_Get</description>
+        /// <description>SecurityPolicies_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FrontDoorSecurityPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyResource.Get");
+            using var scope = _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyResource.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorSecurityPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorSecurityPolicySecurityPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_Get</description>
+        /// <description>SecurityPolicies_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FrontDoorSecurityPolicyResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyResource.Get");
+            using var scope = _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyResource.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorSecurityPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _frontDoorSecurityPolicySecurityPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_Delete</description>
+        /// <description>SecurityPolicies_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyResource.Delete");
+            using var scope = _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyResource.Delete");
             scope.Start();
             try
             {
-                var response = await _frontDoorSecurityPolicyRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_frontDoorSecurityPolicyClientDiagnostics, Pipeline, _frontDoorSecurityPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorSecurityPolicySecurityPoliciesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_frontDoorSecurityPolicySecurityPoliciesClientDiagnostics, Pipeline, _frontDoorSecurityPolicySecurityPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_Delete</description>
+        /// <description>SecurityPolicies_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -236,12 +236,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyResource.Delete");
+            using var scope = _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyResource.Delete");
             scope.Start();
             try
             {
-                var response = _frontDoorSecurityPolicyRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation(_frontDoorSecurityPolicyClientDiagnostics, Pipeline, _frontDoorSecurityPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorSecurityPolicySecurityPoliciesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation(_frontDoorSecurityPolicySecurityPoliciesClientDiagnostics, Pipeline, _frontDoorSecurityPolicySecurityPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_Patch</description>
+        /// <description>SecurityPolicies_Patch</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -282,12 +282,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyResource.Update");
+            using var scope = _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyResource.Update");
             scope.Start();
             try
             {
-                var response = await _frontDoorSecurityPolicyRestClient.PatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<FrontDoorSecurityPolicyResource>(new FrontDoorSecurityPolicyOperationSource(Client), _frontDoorSecurityPolicyClientDiagnostics, Pipeline, _frontDoorSecurityPolicyRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorSecurityPolicySecurityPoliciesRestClient.PatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<FrontDoorSecurityPolicyResource>(new FrontDoorSecurityPolicyOperationSource(Client), _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics, Pipeline, _frontDoorSecurityPolicySecurityPoliciesRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_Patch</description>
+        /// <description>SecurityPolicies_Patch</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -328,12 +328,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyResource.Update");
+            using var scope = _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyResource.Update");
             scope.Start();
             try
             {
-                var response = _frontDoorSecurityPolicyRestClient.Patch(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new CdnArmOperation<FrontDoorSecurityPolicyResource>(new FrontDoorSecurityPolicyOperationSource(Client), _frontDoorSecurityPolicyClientDiagnostics, Pipeline, _frontDoorSecurityPolicyRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorSecurityPolicySecurityPoliciesRestClient.Patch(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new CdnArmOperation<FrontDoorSecurityPolicyResource>(new FrontDoorSecurityPolicyOperationSource(Client), _frontDoorSecurityPolicySecurityPoliciesClientDiagnostics, Pipeline, _frontDoorSecurityPolicySecurityPoliciesRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

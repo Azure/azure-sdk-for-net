@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn
         private readonly ClientDiagnostics _profileClientDiagnostics;
         private readonly ProfilesRestOperations _profileRestClient;
         private readonly ClientDiagnostics _frontDoorProfilesClientDiagnostics;
-        private readonly FrontDoorProfilesRestOperations _frontDoorProfilesRestClient;
+        private readonly AFDProfilesRestOperations _frontDoorProfilesRestClient;
         private readonly ClientDiagnostics _logAnalyticsClientDiagnostics;
         private readonly LogAnalyticsRestOperations _logAnalyticsRestClient;
         private readonly ProfileData _data;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Cdn
             TryGetApiVersion(ResourceType, out string profileApiVersion);
             _profileRestClient = new ProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, profileApiVersion);
             _frontDoorProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _frontDoorProfilesRestClient = new FrontDoorProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _frontDoorProfilesRestClient = new AFDProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _logAnalyticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _logAnalyticsRestClient = new LogAnalyticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -99,75 +99,6 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of FrontDoorCustomDomainResources in the Profile. </summary>
-        /// <returns> An object representing collection of FrontDoorCustomDomainResources and their operations over a FrontDoorCustomDomainResource. </returns>
-        public virtual FrontDoorCustomDomainCollection GetFrontDoorCustomDomains()
-        {
-            return GetCachedClient(client => new FrontDoorCustomDomainCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorCustomDomainResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<FrontDoorCustomDomainResource>> GetFrontDoorCustomDomainAsync(string customDomainName, CancellationToken cancellationToken = default)
-        {
-            return await GetFrontDoorCustomDomains().GetAsync(customDomainName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorCustomDomainResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<FrontDoorCustomDomainResource> GetFrontDoorCustomDomain(string customDomainName, CancellationToken cancellationToken = default)
-        {
-            return GetFrontDoorCustomDomains().Get(customDomainName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of FrontDoorEndpointResources in the Profile. </summary>
         /// <returns> An object representing collection of FrontDoorEndpointResources and their operations over a FrontDoorEndpointResource. </returns>
         public virtual FrontDoorEndpointCollection GetFrontDoorEndpoints()
@@ -184,7 +115,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_Get</description>
+        /// <description>AFDEndpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -215,7 +146,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorEndpoints_Get</description>
+        /// <description>AFDEndpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -237,6 +168,144 @@ namespace Azure.ResourceManager.Cdn
             return GetFrontDoorEndpoints().Get(endpointName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of FrontDoorCustomDomainResources in the Profile. </summary>
+        /// <returns> An object representing collection of FrontDoorCustomDomainResources and their operations over a FrontDoorCustomDomainResource. </returns>
+        public virtual FrontDoorCustomDomainCollection GetFrontDoorCustomDomains()
+        {
+            return GetCachedClient(client => new FrontDoorCustomDomainCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AFDCustomDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorCustomDomainResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<FrontDoorCustomDomainResource>> GetFrontDoorCustomDomainAsync(string customDomainName, CancellationToken cancellationToken = default)
+        {
+            return await GetFrontDoorCustomDomains().GetAsync(customDomainName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AFDCustomDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorCustomDomainResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<FrontDoorCustomDomainResource> GetFrontDoorCustomDomain(string customDomainName, CancellationToken cancellationToken = default)
+        {
+            return GetFrontDoorCustomDomains().Get(customDomainName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CdnEndpointResources in the Profile. </summary>
+        /// <returns> An object representing collection of CdnEndpointResources and their operations over a CdnEndpointResource. </returns>
+        public virtual CdnEndpointCollection GetCdnEndpoints()
+        {
+            return GetCachedClient(client => new CdnEndpointCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CdnEndpointResource>> GetCdnEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
+        {
+            return await GetCdnEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CdnEndpointResource> GetCdnEndpoint(string endpointName, CancellationToken cancellationToken = default)
+        {
+            return GetCdnEndpoints().Get(endpointName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of FrontDoorOriginGroupResources in the Profile. </summary>
         /// <returns> An object representing collection of FrontDoorOriginGroupResources and their operations over a FrontDoorOriginGroupResource. </returns>
         public virtual FrontDoorOriginGroupCollection GetFrontDoorOriginGroups()
@@ -253,7 +322,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOriginGroups_Get</description>
+        /// <description>AFDOriginGroups_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -284,7 +353,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOriginGroups_Get</description>
+        /// <description>AFDOriginGroups_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -322,7 +391,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_Get</description>
+        /// <description>RuleSets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -353,7 +422,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_Get</description>
+        /// <description>RuleSets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -375,75 +444,6 @@ namespace Azure.ResourceManager.Cdn
             return GetFrontDoorRuleSets().Get(ruleSetName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FrontDoorSecurityPolicyResources in the Profile. </summary>
-        /// <returns> An object representing collection of FrontDoorSecurityPolicyResources and their operations over a FrontDoorSecurityPolicyResource. </returns>
-        public virtual FrontDoorSecurityPolicyCollection GetFrontDoorSecurityPolicies()
-        {
-            return GetCachedClient(client => new FrontDoorSecurityPolicyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an existing security policy within a profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorSecurityPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<FrontDoorSecurityPolicyResource>> GetFrontDoorSecurityPolicyAsync(string securityPolicyName, CancellationToken cancellationToken = default)
-        {
-            return await GetFrontDoorSecurityPolicies().GetAsync(securityPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an existing security policy within a profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorSecurityPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorSecurityPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<FrontDoorSecurityPolicyResource> GetFrontDoorSecurityPolicy(string securityPolicyName, CancellationToken cancellationToken = default)
-        {
-            return GetFrontDoorSecurityPolicies().Get(securityPolicyName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of FrontDoorSecretResources in the Profile. </summary>
         /// <returns> An object representing collection of FrontDoorSecretResources and their operations over a FrontDoorSecretResource. </returns>
         public virtual FrontDoorSecretCollection GetFrontDoorSecrets()
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Get</description>
+        /// <description>Secrets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorSecrets_Get</description>
+        /// <description>Secrets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -513,23 +513,23 @@ namespace Azure.ResourceManager.Cdn
             return GetFrontDoorSecrets().Get(secretName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CdnEndpointResources in the Profile. </summary>
-        /// <returns> An object representing collection of CdnEndpointResources and their operations over a CdnEndpointResource. </returns>
-        public virtual CdnEndpointCollection GetCdnEndpoints()
+        /// <summary> Gets a collection of FrontDoorSecurityPolicyResources in the Profile. </summary>
+        /// <returns> An object representing collection of FrontDoorSecurityPolicyResources and their operations over a FrontDoorSecurityPolicyResource. </returns>
+        public virtual FrontDoorSecurityPolicyCollection GetFrontDoorSecurityPolicies()
         {
-            return GetCachedClient(client => new CdnEndpointCollection(client, Id));
+            return GetCachedClient(client => new FrontDoorSecurityPolicyCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
+        /// Gets an existing security policy within a profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Get</description>
+        /// <description>SecurityPolicies_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -537,30 +537,30 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CdnEndpointResource"/></description>
+        /// <description><see cref="FrontDoorSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
+        /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CdnEndpointResource>> GetCdnEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FrontDoorSecurityPolicyResource>> GetFrontDoorSecurityPolicyAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            return await GetCdnEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+            return await GetFrontDoorSecurityPolicies().GetAsync(securityPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
+        /// Gets an existing security policy within a profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Get</description>
+        /// <description>SecurityPolicies_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -568,18 +568,18 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CdnEndpointResource"/></description>
+        /// <description><see cref="FrontDoorSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
+        /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CdnEndpointResource> GetCdnEndpoint(string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<FrontDoorSecurityPolicyResource> GetFrontDoorSecurityPolicy(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            return GetCdnEndpoints().Get(endpointName, cancellationToken);
+            return GetFrontDoorSecurityPolicies().Get(securityPolicyName, cancellationToken);
         }
 
         /// <summary>
@@ -839,6 +839,562 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
+        /// Checks if CDN profile can be migrated to Azure Frontdoor(Standard/Premium) profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/cdnCanMigrateToAfd</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_CdnCanMigrateToAfd</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<CanMigrateResult>> CheckCdnMigrationCompatibilityAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.CheckCdnMigrationCompatibility");
+            scope.Start();
+            try
+            {
+                var response = await _profileRestClient.CdnCanMigrateToAfdAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CanMigrateResult>(new CanMigrateResultOperationSource(), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateCdnCanMigrateToAfdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if CDN profile can be migrated to Azure Frontdoor(Standard/Premium) profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/cdnCanMigrateToAfd</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_CdnCanMigrateToAfd</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<CanMigrateResult> CheckCdnMigrationCompatibility(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.CheckCdnMigrationCompatibility");
+            scope.Start();
+            try
+            {
+                var response = _profileRestClient.CdnCanMigrateToAfd(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation<CanMigrateResult>(new CanMigrateResultOperationSource(), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateCdnCanMigrateToAfdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium) profile. This step prepares the profile for migration and will be followed by Commit to finalize the migration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/cdnMigrateToAfd</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_CdnMigrateToAfd</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Properties needed to migrate the profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<MigrateResult>> MigrateCdnToAfdAsync(WaitUntil waitUntil, CdnMigrationToAfdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.MigrateCdnToAfd");
+            scope.Start();
+            try
+            {
+                var response = await _profileRestClient.CdnMigrateToAfdAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<MigrateResult>(new MigrateResultOperationSource(), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateCdnMigrateToAfdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium) profile. This step prepares the profile for migration and will be followed by Commit to finalize the migration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/cdnMigrateToAfd</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_CdnMigrateToAfd</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Properties needed to migrate the profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<MigrateResult> MigrateCdnToAfd(WaitUntil waitUntil, CdnMigrationToAfdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.MigrateCdnToAfd");
+            scope.Start();
+            try
+            {
+                var response = _profileRestClient.CdnMigrateToAfd(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new CdnArmOperation<MigrateResult>(new MigrateResultOperationSource(), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateCdnMigrateToAfdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks the quota and actual usage of endpoints under the given Azure Front Door Standard or Azure Front Door Premium or CDN profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/checkResourceUsage</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_ListResourceUsage</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CdnUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CdnUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _profileRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _profileRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CdnUsage.DeserializeCdnUsage(e), _profileClientDiagnostics, Pipeline, "ProfileResource.GetResourceUsages", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Checks the quota and actual usage of endpoints under the given Azure Front Door Standard or Azure Front Door Premium or CDN profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/checkResourceUsage</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_ListResourceUsage</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CdnUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CdnUsage> GetResourceUsages(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _profileRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _profileRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CdnUsage.DeserializeCdnUsage(e), _profileClientDiagnostics, Pipeline, "ProfileResource.GetResourceUsages", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Generates a dynamic SSO URI used to sign in to the CDN supplemental portal. Supplemental portal is used to configure advanced feature capabilities that are not yet available in the Azure portal, such as core reports in a standard profile; rules engine, advanced HTTP reports, and real-time stats and alerts in a premium profile. The SSO URI changes approximately every 10 minutes.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/generateSsoUri</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_GenerateSsoUri</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SsoUri>> GenerateSsoUriAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GenerateSsoUri");
+            scope.Start();
+            try
+            {
+                var response = await _profileRestClient.GenerateSsoUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates a dynamic SSO URI used to sign in to the CDN supplemental portal. Supplemental portal is used to configure advanced feature capabilities that are not yet available in the Azure portal, such as core reports in a standard profile; rules engine, advanced HTTP reports, and real-time stats and alerts in a premium profile. The SSO URI changes approximately every 10 minutes.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/generateSsoUri</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_GenerateSsoUri</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SsoUri> GenerateSsoUri(CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GenerateSsoUri");
+            scope.Start();
+            try
+            {
+                var response = _profileRestClient.GenerateSsoUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the supported optimization types for the current profile. A user can create an endpoint with an optimization type from the listed values.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getSupportedOptimizationTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_ListSupportedOptimizationTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SupportedOptimizationTypesListResult>> GetSupportedOptimizationTypesAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetSupportedOptimizationTypes");
+            scope.Start();
+            try
+            {
+                var response = await _profileRestClient.ListSupportedOptimizationTypesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the supported optimization types for the current profile. A user can create an endpoint with an optimization type from the listed values.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getSupportedOptimizationTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_ListSupportedOptimizationTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SupportedOptimizationTypesListResult> GetSupportedOptimizationTypes(CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetSupportedOptimizationTypes");
+            scope.Start();
+            try
+            {
+                var response = _profileRestClient.ListSupportedOptimizationTypes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Abort the migration to Azure Frontdoor Premium/Standard.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/migrationAbort</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_MigrationAbort</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> AbortMigrationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.AbortMigration");
+            scope.Start();
+            try
+            {
+                var response = await _profileRestClient.MigrationAbortAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_profileClientDiagnostics, Pipeline, _profileRestClient.CreateMigrationAbortRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Abort the migration to Azure Frontdoor Premium/Standard.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/migrationAbort</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_MigrationAbort</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation AbortMigration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.AbortMigration");
+            scope.Start();
+            try
+            {
+                var response = _profileRestClient.MigrationAbort(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation(_profileClientDiagnostics, Pipeline, _profileRestClient.CreateMigrationAbortRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Commit the migrated Azure Frontdoor(Standard/Premium) profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/migrationCommit</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_MigrationCommit</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> MigrationCommitAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.MigrationCommit");
+            scope.Start();
+            try
+            {
+                var response = await _profileRestClient.MigrationCommitAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_profileClientDiagnostics, Pipeline, _profileRestClient.CreateMigrationCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Commit the migrated Azure Frontdoor(Standard/Premium) profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/migrationCommit</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_MigrationCommit</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation MigrationCommit(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.MigrationCommit");
+            scope.Start();
+            try
+            {
+                var response = _profileRestClient.MigrationCommit(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation(_profileClientDiagnostics, Pipeline, _profileRestClient.CreateMigrationCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Check the availability of an afdx endpoint name, and return the globally unique endpoint host name.
         /// <list type="bullet">
         /// <item>
@@ -847,7 +1403,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorProfiles_CheckEndpointNameAvailability</description>
+        /// <description>AFDProfiles_CheckEndpointNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -858,11 +1414,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityFrontDoorProfileAsync(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityAFDProfileAsync(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckEndpointNameAvailabilityFrontDoorProfile");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckEndpointNameAvailabilityAFDProfile");
             scope.Start();
             try
             {
@@ -885,7 +1441,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorProfiles_CheckEndpointNameAvailability</description>
+        /// <description>AFDProfiles_CheckEndpointNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -896,11 +1452,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<EndpointNameAvailabilityResult> CheckEndpointNameAvailabilityFrontDoorProfile(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<EndpointNameAvailabilityResult> CheckEndpointNameAvailabilityAFDProfile(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckEndpointNameAvailabilityFrontDoorProfile");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckEndpointNameAvailabilityAFDProfile");
             scope.Start();
             try
             {
@@ -915,58 +1471,6 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given Azure Front Door profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorProfiles_ListResourceUsage</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FrontDoorUsage> GetFrontDoorProfileResourceUsagesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorProfilesRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorProfilesRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorProfilesClientDiagnostics, Pipeline, "ProfileResource.GetFrontDoorProfileResourceUsages", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given Azure Front Door profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorProfiles_ListResourceUsage</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FrontDoorUsage> GetFrontDoorProfileResourceUsages(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorProfilesRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorProfilesRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorProfilesClientDiagnostics, Pipeline, "ProfileResource.GetFrontDoorProfileResourceUsages", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Validates the custom domain mapping to ensure it maps to the correct Azure Front Door endpoint in DNS.
         /// <list type="bullet">
         /// <item>
@@ -975,7 +1479,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorProfiles_CheckHostNameAvailability</description>
+        /// <description>AFDProfiles_CheckHostNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -986,11 +1490,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Custom domain to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CdnNameAvailabilityResult>> CheckFrontDoorProfileHostNameAvailabilityAsync(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnNameAvailabilityResult>> CheckHostNameAvailabilityAFDProfileAsync(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckFrontDoorProfileHostNameAvailability");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckHostNameAvailabilityAFDProfile");
             scope.Start();
             try
             {
@@ -1013,7 +1517,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorProfiles_CheckHostNameAvailability</description>
+        /// <description>AFDProfiles_CheckHostNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1024,91 +1528,15 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Custom domain to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CdnNameAvailabilityResult> CheckFrontDoorProfileHostNameAvailability(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CdnNameAvailabilityResult> CheckHostNameAvailabilityAFDProfile(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckFrontDoorProfileHostNameAvailability");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckHostNameAvailabilityAFDProfile");
             scope.Start();
             try
             {
                 var response = _frontDoorProfilesRestClient.CheckHostNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Validate a Secret in the profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/validateSecret</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorProfiles_ValidateSecret</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The Secret source. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ValidateSecretResult>> ValidateSecretFrontDoorProfileAsync(ValidateSecretContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.ValidateSecretFrontDoorProfile");
-            scope.Start();
-            try
-            {
-                var response = await _frontDoorProfilesRestClient.ValidateSecretAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Validate a Secret in the profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/validateSecret</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontDoorProfiles_ValidateSecret</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The Secret source. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ValidateSecretResult> ValidateSecretFrontDoorProfile(ValidateSecretContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.ValidateSecretFrontDoorProfile");
-            scope.Start();
-            try
-            {
-                var response = _frontDoorProfilesRestClient.ValidateSecret(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1127,7 +1555,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorProfiles_Upgrade</description>
+        /// <description>AFDProfiles_Upgrade</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1139,11 +1567,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Profile upgrade input parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProfileResource>> UpgradeFrontDoorProfileAsync(WaitUntil waitUntil, ProfileUpgradeContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ProfileResource>> UpgradeAFDProfileAsync(WaitUntil waitUntil, ProfileUpgradeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.UpgradeFrontDoorProfile");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.UpgradeAFDProfile");
             scope.Start();
             try
             {
@@ -1169,7 +1597,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorProfiles_Upgrade</description>
+        /// <description>AFDProfiles_Upgrade</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1181,11 +1609,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Profile upgrade input parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ProfileResource> UpgradeFrontDoorProfile(WaitUntil waitUntil, ProfileUpgradeContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ProfileResource> UpgradeAFDProfile(WaitUntil waitUntil, ProfileUpgradeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.UpgradeFrontDoorProfile");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.UpgradeAFDProfile");
             scope.Start();
             try
             {
@@ -1194,6 +1622,202 @@ namespace Azure.ResourceManager.Cdn
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks the quota and actual usage of endpoints under the given Azure Front Door profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AFDProfiles_ListResourceUsage</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FrontDoorUsage> GetResourceUsageAFDProfilesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorProfilesRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorProfilesRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorProfilesClientDiagnostics, Pipeline, "ProfileResource.GetResourceUsageAFDProfiles", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Checks the quota and actual usage of endpoints under the given Azure Front Door profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AFDProfiles_ListResourceUsage</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FrontDoorUsage> GetResourceUsageAFDProfiles(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorProfilesRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorProfilesRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorProfilesClientDiagnostics, Pipeline, "ProfileResource.GetResourceUsageAFDProfiles", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Validate a Secret in the profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/validateSecret</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AFDProfiles_ValidateSecret</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The Secret source. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ValidateSecretResult>> ValidateSecretAFDProfileAsync(ValidateSecretContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.ValidateSecretAFDProfile");
+            scope.Start();
+            try
+            {
+                var response = await _frontDoorProfilesRestClient.ValidateSecretAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validate a Secret in the profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/validateSecret</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AFDProfiles_ValidateSecret</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The Secret source. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ValidateSecretResult> ValidateSecretAFDProfile(ValidateSecretContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.ValidateSecretAFDProfile");
+            scope.Start();
+            try
+            {
+                var response = _frontDoorProfilesRestClient.ValidateSecret(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get all available location names for AFD log analytics report.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getLogAnalyticsLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LogAnalytics_GetLogAnalyticsLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ContinentsResponse>> GetLogAnalyticsLocationsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsLocations");
+            scope.Start();
+            try
+            {
+                var response = await _logAnalyticsRestClient.GetLogAnalyticsLocationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get all available location names for AFD log analytics report.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getLogAnalyticsLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LogAnalytics_GetLogAnalyticsLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ContinentsResponse> GetLogAnalyticsLocations(CancellationToken cancellationToken = default)
+        {
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsLocations");
+            scope.Start();
+            try
+            {
+                var response = _logAnalyticsRestClient.GetLogAnalyticsLocations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -1345,74 +1969,6 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _logAnalyticsRestClient.GetLogAnalyticsRankings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Rankings, options.Metrics, options.MaxRanking, options.DateTimeBegin, options.DateTimeEnd, options.CustomDomains, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get all available location names for AFD log analytics report.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getLogAnalyticsLocations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogAnalytics_GetLogAnalyticsLocations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContinentsResponse>> GetLogAnalyticsLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsLocations");
-            scope.Start();
-            try
-            {
-                var response = await _logAnalyticsRestClient.GetLogAnalyticsLocationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get all available location names for AFD log analytics report.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getLogAnalyticsLocations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogAnalytics_GetLogAnalyticsLocations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContinentsResponse> GetLogAnalyticsLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsLocations");
-            scope.Start();
-            try
-            {
-                var response = _logAnalyticsRestClient.GetLogAnalyticsLocations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1634,562 +2190,6 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _logAnalyticsRestClient.GetWafLogAnalyticsRankings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Metrics, options.DateTimeBegin, options.DateTimeEnd, options.MaxRanking, options.Rankings, options.Actions, options.RuleTypes, cancellationToken);
                 return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Commit the migrated Azure Frontdoor(Standard/Premium) profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/migrationCommit</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_MigrationCommit</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> MigrationCommitAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.MigrationCommit");
-            scope.Start();
-            try
-            {
-                var response = await _profileRestClient.MigrationCommitAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_profileClientDiagnostics, Pipeline, _profileRestClient.CreateMigrationCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Commit the migrated Azure Frontdoor(Standard/Premium) profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/migrationCommit</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_MigrationCommit</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation MigrationCommit(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.MigrationCommit");
-            scope.Start();
-            try
-            {
-                var response = _profileRestClient.MigrationCommit(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation(_profileClientDiagnostics, Pipeline, _profileRestClient.CreateMigrationCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Generates a dynamic SSO URI used to sign in to the CDN supplemental portal. Supplemental portal is used to configure advanced feature capabilities that are not yet available in the Azure portal, such as core reports in a standard profile; rules engine, advanced HTTP reports, and real-time stats and alerts in a premium profile. The SSO URI changes approximately every 10 minutes.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/generateSsoUri</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_GenerateSsoUri</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SsoUri>> GenerateSsoUriAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GenerateSsoUri");
-            scope.Start();
-            try
-            {
-                var response = await _profileRestClient.GenerateSsoUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Generates a dynamic SSO URI used to sign in to the CDN supplemental portal. Supplemental portal is used to configure advanced feature capabilities that are not yet available in the Azure portal, such as core reports in a standard profile; rules engine, advanced HTTP reports, and real-time stats and alerts in a premium profile. The SSO URI changes approximately every 10 minutes.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/generateSsoUri</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_GenerateSsoUri</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SsoUri> GenerateSsoUri(CancellationToken cancellationToken = default)
-        {
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GenerateSsoUri");
-            scope.Start();
-            try
-            {
-                var response = _profileRestClient.GenerateSsoUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the supported optimization types for the current profile. A user can create an endpoint with an optimization type from the listed values.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getSupportedOptimizationTypes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_ListSupportedOptimizationTypes</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SupportedOptimizationTypesListResult>> GetSupportedOptimizationTypesAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetSupportedOptimizationTypes");
-            scope.Start();
-            try
-            {
-                var response = await _profileRestClient.ListSupportedOptimizationTypesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the supported optimization types for the current profile. A user can create an endpoint with an optimization type from the listed values.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getSupportedOptimizationTypes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_ListSupportedOptimizationTypes</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SupportedOptimizationTypesListResult> GetSupportedOptimizationTypes(CancellationToken cancellationToken = default)
-        {
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetSupportedOptimizationTypes");
-            scope.Start();
-            try
-            {
-                var response = _profileRestClient.ListSupportedOptimizationTypes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given Azure Front Door Standard or Azure Front Door Premium or CDN profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/checkResourceUsage</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_ListResourceUsage</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CdnUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CdnUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _profileRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _profileRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CdnUsage.DeserializeCdnUsage(e), _profileClientDiagnostics, Pipeline, "ProfileResource.GetResourceUsages", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given Azure Front Door Standard or Azure Front Door Premium or CDN profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/checkResourceUsage</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_ListResourceUsage</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CdnUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CdnUsage> GetResourceUsages(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _profileRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _profileRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CdnUsage.DeserializeCdnUsage(e), _profileClientDiagnostics, Pipeline, "ProfileResource.GetResourceUsages", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks if CDN profile can be migrated to Azure Frontdoor(Standard/Premium) profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/cdnCanMigrateToAfd</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_CdnCanMigrateToAfd</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<CanMigrateResult>> CheckCdnMigrationCompatibilityAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.CheckCdnMigrationCompatibility");
-            scope.Start();
-            try
-            {
-                var response = await _profileRestClient.CdnCanMigrateToAfdAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CanMigrateResult>(new CanMigrateResultOperationSource(), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateCdnCanMigrateToAfdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks if CDN profile can be migrated to Azure Frontdoor(Standard/Premium) profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/cdnCanMigrateToAfd</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_CdnCanMigrateToAfd</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CanMigrateResult> CheckCdnMigrationCompatibility(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.CheckCdnMigrationCompatibility");
-            scope.Start();
-            try
-            {
-                var response = _profileRestClient.CdnCanMigrateToAfd(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation<CanMigrateResult>(new CanMigrateResultOperationSource(), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateCdnCanMigrateToAfdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium) profile. This step prepares the profile for migration and will be followed by Commit to finalize the migration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/cdnMigrateToAfd</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_CdnMigrateToAfd</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Properties needed to migrate the profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<MigrateResult>> MigrateCdnToAfdAsync(WaitUntil waitUntil, CdnMigrationToAfdContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.MigrateCdnToAfd");
-            scope.Start();
-            try
-            {
-                var response = await _profileRestClient.CdnMigrateToAfdAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<MigrateResult>(new MigrateResultOperationSource(), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateCdnMigrateToAfdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium) profile. This step prepares the profile for migration and will be followed by Commit to finalize the migration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/cdnMigrateToAfd</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_CdnMigrateToAfd</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Properties needed to migrate the profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<MigrateResult> MigrateCdnToAfd(WaitUntil waitUntil, CdnMigrationToAfdContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.MigrateCdnToAfd");
-            scope.Start();
-            try
-            {
-                var response = _profileRestClient.CdnMigrateToAfd(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new CdnArmOperation<MigrateResult>(new MigrateResultOperationSource(), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateCdnMigrateToAfdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Abort the migration to Azure Frontdoor Premium/Standard.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/migrationAbort</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_MigrationAbort</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> AbortMigrationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.AbortMigration");
-            scope.Start();
-            try
-            {
-                var response = await _profileRestClient.MigrationAbortAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_profileClientDiagnostics, Pipeline, _profileRestClient.CreateMigrationAbortRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Abort the migration to Azure Frontdoor Premium/Standard.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/migrationAbort</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_MigrationAbort</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation AbortMigration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.AbortMigration");
-            scope.Start();
-            try
-            {
-                var response = _profileRestClient.MigrationAbort(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation(_profileClientDiagnostics, Pipeline, _profileRestClient.CreateMigrationAbortRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {

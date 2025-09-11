@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class CdnEndpointCollection : ArmCollection, IEnumerable<CdnEndpointResource>, IAsyncEnumerable<CdnEndpointResource>
     {
-        private readonly ClientDiagnostics _cdnEndpointClientDiagnostics;
-        private readonly CdnEndpointsRestOperations _cdnEndpointRestClient;
+        private readonly ClientDiagnostics _cdnEndpointEndpointsClientDiagnostics;
+        private readonly EndpointsRestOperations _cdnEndpointEndpointsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CdnEndpointCollection"/> class for mocking. </summary>
         protected CdnEndpointCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CdnEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cdnEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnEndpointResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CdnEndpointResource.ResourceType, out string cdnEndpointApiVersion);
-            _cdnEndpointRestClient = new CdnEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cdnEndpointApiVersion);
+            _cdnEndpointEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnEndpointResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CdnEndpointResource.ResourceType, out string cdnEndpointEndpointsApiVersion);
+            _cdnEndpointEndpointsRestClient = new EndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cdnEndpointEndpointsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Create</description>
+        /// <description>Endpoints_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.CreateOrUpdate");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnEndpointEndpointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Create</description>
+        /// <description>Endpoints_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.CreateOrUpdate");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cdnEndpointRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken);
-                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnEndpointEndpointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken);
+                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Get</description>
+        /// <description>Endpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.Get");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken).ConfigureAwait(false);
+                var response = await _cdnEndpointEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Get</description>
+        /// <description>Endpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.Get");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.Get");
             scope.Start();
             try
             {
-                var response = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken);
+                var response = _cdnEndpointEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_ListByProfile</description>
+        /// <description>Endpoints_ListByProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="CdnEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CdnEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnEndpointRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnEndpointRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CdnEndpointResource(Client, CdnEndpointData.DeserializeCdnEndpointData(e)), _cdnEndpointClientDiagnostics, Pipeline, "CdnEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnEndpointEndpointsRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnEndpointEndpointsRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CdnEndpointResource(Client, CdnEndpointData.DeserializeCdnEndpointData(e)), _cdnEndpointEndpointsClientDiagnostics, Pipeline, "CdnEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_ListByProfile</description>
+        /// <description>Endpoints_ListByProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="CdnEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CdnEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnEndpointRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnEndpointRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CdnEndpointResource(Client, CdnEndpointData.DeserializeCdnEndpointData(e)), _cdnEndpointClientDiagnostics, Pipeline, "CdnEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnEndpointEndpointsRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnEndpointEndpointsRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CdnEndpointResource(Client, CdnEndpointData.DeserializeCdnEndpointData(e)), _cdnEndpointEndpointsClientDiagnostics, Pipeline, "CdnEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Get</description>
+        /// <description>Endpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.Exists");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cdnEndpointEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Get</description>
+        /// <description>Endpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.Exists");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.Exists");
             scope.Start();
             try
             {
-                var response = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
+                var response = _cdnEndpointEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Get</description>
+        /// <description>Endpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.GetIfExists");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cdnEndpointEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<CdnEndpointResource>(response.GetRawResponse());
                 return Response.FromValue(new CdnEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Get</description>
+        /// <description>Endpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -459,11 +459,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointCollection.GetIfExists");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
+                var response = _cdnEndpointEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<CdnEndpointResource>(response.GetRawResponse());
                 return Response.FromValue(new CdnEndpointResource(Client, response.Value), response.GetRawResponse());

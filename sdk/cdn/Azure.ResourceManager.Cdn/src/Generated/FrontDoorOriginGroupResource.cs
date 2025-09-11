@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Cdn
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _frontDoorOriginGroupClientDiagnostics;
-        private readonly FrontDoorOriginGroupsRestOperations _frontDoorOriginGroupRestClient;
+        private readonly ClientDiagnostics _frontDoorOriginGroupFrontDoorOriginGroupsClientDiagnostics;
+        private readonly AFDOriginGroupsRestOperations _frontDoorOriginGroupFrontDoorOriginGroupsRestClient;
         private readonly FrontDoorOriginGroupData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FrontDoorOriginGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorOriginGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string frontDoorOriginGroupApiVersion);
-            _frontDoorOriginGroupRestClient = new FrontDoorOriginGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorOriginGroupApiVersion);
+            _frontDoorOriginGroupFrontDoorOriginGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string frontDoorOriginGroupFrontDoorOriginGroupsApiVersion);
+            _frontDoorOriginGroupFrontDoorOriginGroupsRestClient = new AFDOriginGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorOriginGroupFrontDoorOriginGroupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOrigins_Get</description>
+        /// <description>AFDOrigins_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOrigins_Get</description>
+        /// <description>AFDOrigins_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOriginGroups_Get</description>
+        /// <description>AFDOriginGroups_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FrontDoorOriginGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorOriginGroupClientDiagnostics.CreateScope("FrontDoorOriginGroupResource.Get");
+            using var scope = _frontDoorOriginGroupFrontDoorOriginGroupsClientDiagnostics.CreateScope("FrontDoorOriginGroupResource.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorOriginGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorOriginGroupFrontDoorOriginGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorOriginGroupResource(Client, response.Value), response.GetRawResponse());
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOriginGroups_Get</description>
+        /// <description>AFDOriginGroups_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FrontDoorOriginGroupResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorOriginGroupClientDiagnostics.CreateScope("FrontDoorOriginGroupResource.Get");
+            using var scope = _frontDoorOriginGroupFrontDoorOriginGroupsClientDiagnostics.CreateScope("FrontDoorOriginGroupResource.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorOriginGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _frontDoorOriginGroupFrontDoorOriginGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorOriginGroupResource(Client, response.Value), response.GetRawResponse());
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOriginGroups_Delete</description>
+        /// <description>AFDOriginGroups_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorOriginGroupClientDiagnostics.CreateScope("FrontDoorOriginGroupResource.Delete");
+            using var scope = _frontDoorOriginGroupFrontDoorOriginGroupsClientDiagnostics.CreateScope("FrontDoorOriginGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = await _frontDoorOriginGroupRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_frontDoorOriginGroupClientDiagnostics, Pipeline, _frontDoorOriginGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorOriginGroupFrontDoorOriginGroupsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_frontDoorOriginGroupFrontDoorOriginGroupsClientDiagnostics, Pipeline, _frontDoorOriginGroupFrontDoorOriginGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOriginGroups_Delete</description>
+        /// <description>AFDOriginGroups_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -306,12 +306,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorOriginGroupClientDiagnostics.CreateScope("FrontDoorOriginGroupResource.Delete");
+            using var scope = _frontDoorOriginGroupFrontDoorOriginGroupsClientDiagnostics.CreateScope("FrontDoorOriginGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = _frontDoorOriginGroupRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation(_frontDoorOriginGroupClientDiagnostics, Pipeline, _frontDoorOriginGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorOriginGroupFrontDoorOriginGroupsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation(_frontDoorOriginGroupFrontDoorOriginGroupsClientDiagnostics, Pipeline, _frontDoorOriginGroupFrontDoorOriginGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOriginGroups_Update</description>
+        /// <description>AFDOriginGroups_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -352,12 +352,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _frontDoorOriginGroupClientDiagnostics.CreateScope("FrontDoorOriginGroupResource.Update");
+            using var scope = _frontDoorOriginGroupFrontDoorOriginGroupsClientDiagnostics.CreateScope("FrontDoorOriginGroupResource.Update");
             scope.Start();
             try
             {
-                var response = await _frontDoorOriginGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<FrontDoorOriginGroupResource>(new FrontDoorOriginGroupOperationSource(Client), _frontDoorOriginGroupClientDiagnostics, Pipeline, _frontDoorOriginGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorOriginGroupFrontDoorOriginGroupsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<FrontDoorOriginGroupResource>(new FrontDoorOriginGroupOperationSource(Client), _frontDoorOriginGroupFrontDoorOriginGroupsClientDiagnostics, Pipeline, _frontDoorOriginGroupFrontDoorOriginGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOriginGroups_Update</description>
+        /// <description>AFDOriginGroups_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -398,12 +398,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _frontDoorOriginGroupClientDiagnostics.CreateScope("FrontDoorOriginGroupResource.Update");
+            using var scope = _frontDoorOriginGroupFrontDoorOriginGroupsClientDiagnostics.CreateScope("FrontDoorOriginGroupResource.Update");
             scope.Start();
             try
             {
-                var response = _frontDoorOriginGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new CdnArmOperation<FrontDoorOriginGroupResource>(new FrontDoorOriginGroupOperationSource(Client), _frontDoorOriginGroupClientDiagnostics, Pipeline, _frontDoorOriginGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorOriginGroupFrontDoorOriginGroupsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new CdnArmOperation<FrontDoorOriginGroupResource>(new FrontDoorOriginGroupOperationSource(Client), _frontDoorOriginGroupFrontDoorOriginGroupsClientDiagnostics, Pipeline, _frontDoorOriginGroupFrontDoorOriginGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given Azure Front Door profile..
+        /// Checks the quota and actual usage of endpoints under the given Azure Front Door profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOriginGroups_ListResourceUsage</description>
+        /// <description>AFDOriginGroups_ListResourceUsage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -438,15 +438,15 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FrontDoorUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FrontDoorUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorOriginGroupRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorOriginGroupRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorOriginGroupClientDiagnostics, Pipeline, "FrontDoorOriginGroupResource.GetResourceUsages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorOriginGroupFrontDoorOriginGroupsRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorOriginGroupFrontDoorOriginGroupsRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorOriginGroupFrontDoorOriginGroupsClientDiagnostics, Pipeline, "FrontDoorOriginGroupResource.GetResourceUsage", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given Azure Front Door profile..
+        /// Checks the quota and actual usage of endpoints under the given Azure Front Door profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOriginGroups_ListResourceUsage</description>
+        /// <description>AFDOriginGroups_ListResourceUsage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -468,11 +468,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FrontDoorUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FrontDoorUsage> GetResourceUsages(CancellationToken cancellationToken = default)
+        public virtual Pageable<FrontDoorUsage> GetResourceUsage(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorOriginGroupRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorOriginGroupRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorOriginGroupClientDiagnostics, Pipeline, "FrontDoorOriginGroupResource.GetResourceUsages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorOriginGroupFrontDoorOriginGroupsRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorOriginGroupFrontDoorOriginGroupsRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FrontDoorUsage.DeserializeFrontDoorUsage(e), _frontDoorOriginGroupFrontDoorOriginGroupsClientDiagnostics, Pipeline, "FrontDoorOriginGroupResource.GetResourceUsage", "value", "nextLink", cancellationToken);
         }
     }
 }

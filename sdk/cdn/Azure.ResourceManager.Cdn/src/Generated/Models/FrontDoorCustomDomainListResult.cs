@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
-    /// Result of the request to list domains. It contains a list of domain objects and a URL link to get the next set of results.
+    /// The response of a AFDDomain list operation.
     /// Serialized Name: AFDDomainListResult
     /// </summary>
     internal partial class FrontDoorCustomDomainListResult
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainListResult"/>. </summary>
-        internal FrontDoorCustomDomainListResult()
+        /// <param name="value">
+        /// The AFDDomain items on this page
+        /// Serialized Name: AFDDomainListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal FrontDoorCustomDomainListResult(IEnumerable<FrontDoorCustomDomainData> value)
         {
-            Value = new ChangeTrackingList<FrontDoorCustomDomainData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainListResult"/>. </summary>
         /// <param name="value">
-        /// List of AzureFrontDoor domains within a profile.
+        /// The AFDDomain items on this page
         /// Serialized Name: AFDDomainListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// URL to get the next set of domain objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: AFDDomainListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorCustomDomainListResult(IReadOnlyList<FrontDoorCustomDomainData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FrontDoorCustomDomainListResult(IReadOnlyList<FrontDoorCustomDomainData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainListResult"/> for deserialization. </summary>
+        internal FrontDoorCustomDomainListResult()
+        {
+        }
+
         /// <summary>
-        /// List of AzureFrontDoor domains within a profile.
+        /// The AFDDomain items on this page
         /// Serialized Name: AFDDomainListResult.value
         /// </summary>
         public IReadOnlyList<FrontDoorCustomDomainData> Value { get; }
         /// <summary>
-        /// URL to get the next set of domain objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: AFDDomainListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

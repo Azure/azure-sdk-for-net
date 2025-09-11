@@ -62,15 +62,8 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(CustomDomainHttpsContent))
             {
-                if (CustomDomainHttpsContent != null)
-                {
-                    writer.WritePropertyName("customHttpsParameters"u8);
-                    writer.WriteObjectValue(CustomDomainHttpsContent, options);
-                }
-                else
-                {
-                    writer.WriteNull("customHttpsParameters");
-                }
+                writer.WritePropertyName("customHttpsParameters"u8);
+                writer.WriteObjectValue(CustomDomainHttpsContent, options);
             }
             if (Optional.IsDefined(ValidationData))
             {
@@ -189,7 +182,6 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                customHttpsParameters = null;
                                 continue;
                             }
                             customHttpsParameters = CustomDomainHttpsContent.DeserializeCustomDomainHttpsContent(property0.Value, options);

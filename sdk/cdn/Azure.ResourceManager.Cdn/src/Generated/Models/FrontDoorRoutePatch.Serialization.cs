@@ -95,15 +95,8 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(CacheConfiguration))
             {
-                if (CacheConfiguration != null)
-                {
-                    writer.WritePropertyName("cacheConfiguration"u8);
-                    writer.WriteObjectValue(CacheConfiguration, options);
-                }
-                else
-                {
-                    writer.WriteNull("cacheConfiguration");
-                }
+                writer.WritePropertyName("cacheConfiguration"u8);
+                writer.WriteObjectValue(CacheConfiguration, options);
             }
             if (Optional.IsDefined(ForwardingProtocol))
             {
@@ -267,7 +260,6 @@ namespace Azure.ResourceManager.Cdn.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                cacheConfiguration = null;
                                 continue;
                             }
                             cacheConfiguration = FrontDoorRouteCacheConfiguration.DeserializeFrontDoorRouteCacheConfiguration(property0.Value, options);

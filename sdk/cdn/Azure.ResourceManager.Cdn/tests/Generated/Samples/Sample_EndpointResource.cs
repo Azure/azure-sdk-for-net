@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Samples
 {
-    public partial class Sample_CdnEndpointResource
+    public partial class Sample_EndpointResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.Cdn.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CdnEndpointResource created on azure
-            // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
+            // this example assumes you already have this EndpointResource created on azure
+            // for more information of creating EndpointResource, please refer to the document of EndpointResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
-            ResourceIdentifier cdnEndpointResourceId = CdnEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
-            CdnEndpointResource cdnEndpoint = client.GetCdnEndpointResource(cdnEndpointResourceId);
+            ResourceIdentifier endpointResourceId = EndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
+            EndpointResource endpoint = client.GetEndpointResource(endpointResourceId);
 
             // invoke the operation
-            CdnEndpointResource result = await cdnEndpoint.GetAsync();
+            EndpointResource result = await endpoint.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CdnEndpointData resourceData = result.Data;
+            EndpointData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.Cdn.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CdnEndpointResource created on azure
-            // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
+            // this example assumes you already have this EndpointResource created on azure
+            // for more information of creating EndpointResource, please refer to the document of EndpointResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
-            ResourceIdentifier cdnEndpointResourceId = CdnEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
-            CdnEndpointResource cdnEndpoint = client.GetCdnEndpointResource(cdnEndpointResourceId);
+            ResourceIdentifier endpointResourceId = EndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
+            EndpointResource endpoint = client.GetEndpointResource(endpointResourceId);
 
             // invoke the operation
-            await cdnEndpoint.DeleteAsync(WaitUntil.Completed);
+            await endpoint.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -86,29 +86,29 @@ namespace Azure.ResourceManager.Cdn.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CdnEndpointResource created on azure
-            // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
+            // this example assumes you already have this EndpointResource created on azure
+            // for more information of creating EndpointResource, please refer to the document of EndpointResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
-            ResourceIdentifier cdnEndpointResourceId = CdnEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
-            CdnEndpointResource cdnEndpoint = client.GetCdnEndpointResource(cdnEndpointResourceId);
+            ResourceIdentifier endpointResourceId = EndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
+            EndpointResource endpoint = client.GetEndpointResource(endpointResourceId);
 
             // invoke the operation
-            CdnEndpointPatch patch = new CdnEndpointPatch
+            EndpointPatch patch = new EndpointPatch
             {
                 Tags =
 {
 ["additionalProperties"] = "Tag1"
 },
             };
-            ArmOperation<CdnEndpointResource> lro = await cdnEndpoint.UpdateAsync(WaitUntil.Completed, patch);
-            CdnEndpointResource result = lro.Value;
+            ArmOperation<EndpointResource> lro = await endpoint.UpdateAsync(WaitUntil.Completed, patch);
+            EndpointResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CdnEndpointData resourceData = result.Data;
+            EndpointData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -125,17 +125,17 @@ namespace Azure.ResourceManager.Cdn.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CdnEndpointResource created on azure
-            // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
+            // this example assumes you already have this EndpointResource created on azure
+            // for more information of creating EndpointResource, please refer to the document of EndpointResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
-            ResourceIdentifier cdnEndpointResourceId = CdnEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
-            CdnEndpointResource cdnEndpoint = client.GetCdnEndpointResource(cdnEndpointResourceId);
+            ResourceIdentifier endpointResourceId = EndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
+            EndpointResource endpoint = client.GetEndpointResource(endpointResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CdnUsage item in cdnEndpoint.GetResourceUsageAsync())
+            await foreach (CdnUsage item in endpoint.GetResourceUsageAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -155,18 +155,18 @@ namespace Azure.ResourceManager.Cdn.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CdnEndpointResource created on azure
-            // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
+            // this example assumes you already have this EndpointResource created on azure
+            // for more information of creating EndpointResource, please refer to the document of EndpointResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
-            ResourceIdentifier cdnEndpointResourceId = CdnEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
-            CdnEndpointResource cdnEndpoint = client.GetCdnEndpointResource(cdnEndpointResourceId);
+            ResourceIdentifier endpointResourceId = EndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
+            EndpointResource endpoint = client.GetEndpointResource(endpointResourceId);
 
             // invoke the operation
             LoadContent content = new LoadContent(new string[] { "/folder1" });
-            await cdnEndpoint.LoadContentAsync(WaitUntil.Completed, content);
+            await endpoint.LoadContentAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
         }
@@ -183,18 +183,18 @@ namespace Azure.ResourceManager.Cdn.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CdnEndpointResource created on azure
-            // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
+            // this example assumes you already have this EndpointResource created on azure
+            // for more information of creating EndpointResource, please refer to the document of EndpointResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
-            ResourceIdentifier cdnEndpointResourceId = CdnEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
-            CdnEndpointResource cdnEndpoint = client.GetCdnEndpointResource(cdnEndpointResourceId);
+            ResourceIdentifier endpointResourceId = EndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
+            EndpointResource endpoint = client.GetEndpointResource(endpointResourceId);
 
             // invoke the operation
             PurgeContent content = new PurgeContent(new string[] { "/folder1" });
-            await cdnEndpoint.PurgeContentAsync(WaitUntil.Completed, content);
+            await endpoint.PurgeContentAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
         }
@@ -211,22 +211,22 @@ namespace Azure.ResourceManager.Cdn.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CdnEndpointResource created on azure
-            // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
+            // this example assumes you already have this EndpointResource created on azure
+            // for more information of creating EndpointResource, please refer to the document of EndpointResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
-            ResourceIdentifier cdnEndpointResourceId = CdnEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
-            CdnEndpointResource cdnEndpoint = client.GetCdnEndpointResource(cdnEndpointResourceId);
+            ResourceIdentifier endpointResourceId = EndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
+            EndpointResource endpoint = client.GetEndpointResource(endpointResourceId);
 
             // invoke the operation
-            ArmOperation<CdnEndpointResource> lro = await cdnEndpoint.StartAsync(WaitUntil.Completed);
-            CdnEndpointResource result = lro.Value;
+            ArmOperation<EndpointResource> lro = await endpoint.StartAsync(WaitUntil.Completed);
+            EndpointResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CdnEndpointData resourceData = result.Data;
+            EndpointData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -243,22 +243,22 @@ namespace Azure.ResourceManager.Cdn.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CdnEndpointResource created on azure
-            // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
+            // this example assumes you already have this EndpointResource created on azure
+            // for more information of creating EndpointResource, please refer to the document of EndpointResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
-            ResourceIdentifier cdnEndpointResourceId = CdnEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
-            CdnEndpointResource cdnEndpoint = client.GetCdnEndpointResource(cdnEndpointResourceId);
+            ResourceIdentifier endpointResourceId = EndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
+            EndpointResource endpoint = client.GetEndpointResource(endpointResourceId);
 
             // invoke the operation
-            ArmOperation<CdnEndpointResource> lro = await cdnEndpoint.StopAsync(WaitUntil.Completed);
-            CdnEndpointResource result = lro.Value;
+            ArmOperation<EndpointResource> lro = await endpoint.StopAsync(WaitUntil.Completed);
+            EndpointResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CdnEndpointData resourceData = result.Data;
+            EndpointData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -275,18 +275,18 @@ namespace Azure.ResourceManager.Cdn.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CdnEndpointResource created on azure
-            // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
+            // this example assumes you already have this EndpointResource created on azure
+            // for more information of creating EndpointResource, please refer to the document of EndpointResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
-            ResourceIdentifier cdnEndpointResourceId = CdnEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
-            CdnEndpointResource cdnEndpoint = client.GetCdnEndpointResource(cdnEndpointResourceId);
+            ResourceIdentifier endpointResourceId = EndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
+            EndpointResource endpoint = client.GetEndpointResource(endpointResourceId);
 
             // invoke the operation
             ValidateCustomDomainContent content = new ValidateCustomDomainContent("www.someDomain.com");
-            ValidateCustomDomainResult result = await cdnEndpoint.ValidateCustomDomainAsync(content);
+            ValidateCustomDomainResult result = await endpoint.ValidateCustomDomainAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Cdn
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _cdnEndpointClientDiagnostics;
-        private readonly CdnEndpointsRestOperations _cdnEndpointRestClient;
+        private readonly ClientDiagnostics _cdnEndpointEndpointsClientDiagnostics;
+        private readonly EndpointsRestOperations _cdnEndpointEndpointsRestClient;
         private readonly CdnEndpointData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CdnEndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cdnEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string cdnEndpointApiVersion);
-            _cdnEndpointRestClient = new CdnEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cdnEndpointApiVersion);
+            _cdnEndpointEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string cdnEndpointEndpointsApiVersion);
+            _cdnEndpointEndpointsRestClient = new EndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cdnEndpointEndpointsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -91,144 +91,6 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of CdnOriginResources in the CdnEndpoint. </summary>
-        /// <returns> An object representing collection of CdnOriginResources and their operations over a CdnOriginResource. </returns>
-        public virtual CdnOriginCollection GetCdnOrigins()
-        {
-            return GetCachedClient(client => new CdnOriginCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an existing origin within an endpoint.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CdnOrigins_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CdnOriginResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="originName"> Name of the origin which is unique within the endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CdnOriginResource>> GetCdnOriginAsync(string originName, CancellationToken cancellationToken = default)
-        {
-            return await GetCdnOrigins().GetAsync(originName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an existing origin within an endpoint.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CdnOrigins_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CdnOriginResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="originName"> Name of the origin which is unique within the endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CdnOriginResource> GetCdnOrigin(string originName, CancellationToken cancellationToken = default)
-        {
-            return GetCdnOrigins().Get(originName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CdnOriginGroupResources in the CdnEndpoint. </summary>
-        /// <returns> An object representing collection of CdnOriginGroupResources and their operations over a CdnOriginGroupResource. </returns>
-        public virtual CdnOriginGroupCollection GetCdnOriginGroups()
-        {
-            return GetCachedClient(client => new CdnOriginGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an existing origin group within an endpoint.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/originGroups/{originGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CdnOriginGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CdnOriginGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CdnOriginGroupResource>> GetCdnOriginGroupAsync(string originGroupName, CancellationToken cancellationToken = default)
-        {
-            return await GetCdnOriginGroups().GetAsync(originGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an existing origin group within an endpoint.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/originGroups/{originGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CdnOriginGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CdnOriginGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CdnOriginGroupResource> GetCdnOriginGroup(string originGroupName, CancellationToken cancellationToken = default)
-        {
-            return GetCdnOriginGroups().Get(originGroupName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of CdnCustomDomainResources in the CdnEndpoint. </summary>
         /// <returns> An object representing collection of CdnCustomDomainResources and their operations over a CdnCustomDomainResource. </returns>
         public virtual CdnCustomDomainCollection GetCdnCustomDomains()
@@ -245,7 +107,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnCustomDomains_Get</description>
+        /// <description>CustomDomains_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -276,7 +138,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnCustomDomains_Get</description>
+        /// <description>CustomDomains_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -298,6 +160,144 @@ namespace Azure.ResourceManager.Cdn
             return GetCdnCustomDomains().Get(customDomainName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of CdnOriginGroupResources in the CdnEndpoint. </summary>
+        /// <returns> An object representing collection of CdnOriginGroupResources and their operations over a CdnOriginGroupResource. </returns>
+        public virtual CdnOriginGroupCollection GetCdnOriginGroups()
+        {
+            return GetCachedClient(client => new CdnOriginGroupCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets an existing origin group within an endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/originGroups/{originGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OriginGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnOriginGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CdnOriginGroupResource>> GetCdnOriginGroupAsync(string originGroupName, CancellationToken cancellationToken = default)
+        {
+            return await GetCdnOriginGroups().GetAsync(originGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an existing origin group within an endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/originGroups/{originGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OriginGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnOriginGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CdnOriginGroupResource> GetCdnOriginGroup(string originGroupName, CancellationToken cancellationToken = default)
+        {
+            return GetCdnOriginGroups().Get(originGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CdnOriginResources in the CdnEndpoint. </summary>
+        /// <returns> An object representing collection of CdnOriginResources and their operations over a CdnOriginResource. </returns>
+        public virtual CdnOriginCollection GetCdnOrigins()
+        {
+            return GetCachedClient(client => new CdnOriginCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets an existing origin within an endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Origins_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnOriginResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="originName"> Name of the origin which is unique within the endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CdnOriginResource>> GetCdnOriginAsync(string originName, CancellationToken cancellationToken = default)
+        {
+            return await GetCdnOrigins().GetAsync(originName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an existing origin within an endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Origins_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnOriginResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="originName"> Name of the origin which is unique within the endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CdnOriginResource> GetCdnOrigin(string originName, CancellationToken cancellationToken = default)
+        {
+            return GetCdnOrigins().Get(originName, cancellationToken);
+        }
+
         /// <summary>
         /// Gets an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
         /// <list type="bullet">
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Get</description>
+        /// <description>Endpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -322,11 +322,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CdnEndpointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Get");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.Get");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cdnEndpointEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Get</description>
+        /// <description>Endpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -362,11 +362,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CdnEndpointResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Get");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.Get");
             scope.Start();
             try
             {
-                var response = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _cdnEndpointEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CdnEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Delete</description>
+        /// <description>Endpoints_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -403,12 +403,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Delete");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.Delete");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnEndpointEndpointsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Delete</description>
+        /// <description>Endpoints_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -445,12 +445,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Delete");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.Delete");
             scope.Start();
             try
             {
-                var response = _cdnEndpointRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation(_cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnEndpointEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation(_cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Update</description>
+        /// <description>Endpoints_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -491,12 +491,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Update");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.Update");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnEndpointEndpointsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Update</description>
+        /// <description>Endpoints_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -537,12 +537,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Update");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.Update");
             scope.Start();
             try
             {
-                var response = _cdnEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnEndpointEndpointsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -555,15 +555,15 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Starts an existing CDN endpoint that is on a stopped state.
+        /// Checks the quota and usage of geo filters and custom domains under the given endpoint.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/start</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/checkResourceUsage</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Start</description>
+        /// <description>Endpoints_ListResourceUsage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -575,37 +575,25 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<CdnEndpointResource>> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CdnUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CdnUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Start");
-            scope.Start();
-            try
-            {
-                var response = await _cdnEndpointRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnEndpointEndpointsRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnEndpointEndpointsRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CdnUsage.DeserializeCdnUsage(e), _cdnEndpointEndpointsClientDiagnostics, Pipeline, "CdnEndpointResource.GetResourceUsage", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Starts an existing CDN endpoint that is on a stopped state.
+        /// Checks the quota and usage of geo filters and custom domains under the given endpoint.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/start</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/checkResourceUsage</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Start</description>
+        /// <description>Endpoints_ListResourceUsage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -617,201 +605,13 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CdnEndpointResource> Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CdnUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CdnUsage> GetResourceUsage(CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Start");
-            scope.Start();
-            try
-            {
-                var response = _cdnEndpointRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Stops an existing running CDN endpoint.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CdnEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<CdnEndpointResource>> StopAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Stop");
-            scope.Start();
-            try
-            {
-                var response = await _cdnEndpointRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Stops an existing running CDN endpoint.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CdnEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CdnEndpointResource> Stop(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Stop");
-            scope.Start();
-            try
-            {
-                var response = _cdnEndpointRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes a content from CDN.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/purge</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_PurgeContent</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CdnEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The path to the content to be purged. Path can be a full URL, e.g. '/pictures/city.png' which removes a single file, or a directory with a wildcard, e.g. '/pictures/*' which removes all folders and files in the directory. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> PurgeContentAsync(WaitUntil waitUntil, PurgeContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.PurgeContent");
-            scope.Start();
-            try
-            {
-                var response = await _cdnEndpointRestClient.PurgeContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes a content from CDN.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/purge</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_PurgeContent</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CdnEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The path to the content to be purged. Path can be a full URL, e.g. '/pictures/city.png' which removes a single file, or a directory with a wildcard, e.g. '/pictures/*' which removes all folders and files in the directory. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation PurgeContent(WaitUntil waitUntil, PurgeContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.PurgeContent");
-            scope.Start();
-            try
-            {
-                var response = _cdnEndpointRestClient.PurgeContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CdnArmOperation(_cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnEndpointEndpointsRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnEndpointEndpointsRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CdnUsage.DeserializeCdnUsage(e), _cdnEndpointEndpointsClientDiagnostics, Pipeline, "CdnEndpointResource.GetResourceUsage", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -823,7 +623,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_LoadContent</description>
+        /// <description>Endpoints_LoadContent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -843,12 +643,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.LoadContent");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.LoadContent");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointRestClient.LoadContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateLoadContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _cdnEndpointEndpointsRestClient.LoadContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateLoadContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -869,7 +669,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_LoadContent</description>
+        /// <description>Endpoints_LoadContent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -889,14 +689,274 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.LoadContent");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.LoadContent");
             scope.Start();
             try
             {
-                var response = _cdnEndpointRestClient.LoadContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CdnArmOperation(_cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateLoadContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _cdnEndpointEndpointsRestClient.LoadContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new CdnArmOperation(_cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateLoadContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes a content from CDN.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/purge</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_PurgeContent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The path to the content to be purged. Path can be a full URL, e.g. '/pictures/city.png' which removes a single file, or a directory with a wildcard, e.g. '/pictures/*' which removes all folders and files in the directory. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> PurgeContentAsync(WaitUntil waitUntil, PurgeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.PurgeContent");
+            scope.Start();
+            try
+            {
+                var response = await _cdnEndpointEndpointsRestClient.PurgeContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes a content from CDN.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/purge</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_PurgeContent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The path to the content to be purged. Path can be a full URL, e.g. '/pictures/city.png' which removes a single file, or a directory with a wildcard, e.g. '/pictures/*' which removes all folders and files in the directory. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation PurgeContent(WaitUntil waitUntil, PurgeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.PurgeContent");
+            scope.Start();
+            try
+            {
+                var response = _cdnEndpointEndpointsRestClient.PurgeContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new CdnArmOperation(_cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts an existing CDN endpoint that is on a stopped state.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/start</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_Start</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<CdnEndpointResource>> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.Start");
+            scope.Start();
+            try
+            {
+                var response = await _cdnEndpointEndpointsRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts an existing CDN endpoint that is on a stopped state.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/start</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_Start</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<CdnEndpointResource> Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.Start");
+            scope.Start();
+            try
+            {
+                var response = _cdnEndpointEndpointsRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops an existing running CDN endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_Stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<CdnEndpointResource>> StopAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.Stop");
+            scope.Start();
+            try
+            {
+                var response = await _cdnEndpointEndpointsRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops an existing running CDN endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_Stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<CdnEndpointResource> Stop(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.Stop");
+            scope.Start();
+            try
+            {
+                var response = _cdnEndpointEndpointsRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointEndpointsClientDiagnostics, Pipeline, _cdnEndpointEndpointsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -915,7 +975,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_ValidateCustomDomain</description>
+        /// <description>Endpoints_ValidateCustomDomain</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -934,11 +994,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.ValidateCustomDomain");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.ValidateCustomDomain");
             scope.Start();
             try
             {
-                var response = await _cdnEndpointRestClient.ValidateCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _cdnEndpointEndpointsRestClient.ValidateCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -957,7 +1017,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_ValidateCustomDomain</description>
+        /// <description>Endpoints_ValidateCustomDomain</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -976,11 +1036,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.ValidateCustomDomain");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.ValidateCustomDomain");
             scope.Start();
             try
             {
-                var response = _cdnEndpointRestClient.ValidateCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var response = _cdnEndpointEndpointsRestClient.ValidateCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -988,66 +1048,6 @@ namespace Azure.ResourceManager.Cdn
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Checks the quota and usage of geo filters and custom domains under the given endpoint.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/checkResourceUsage</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_ListResourceUsage</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CdnEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CdnUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CdnUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnEndpointRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnEndpointRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CdnUsage.DeserializeCdnUsage(e), _cdnEndpointClientDiagnostics, Pipeline, "CdnEndpointResource.GetResourceUsages", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks the quota and usage of geo filters and custom domains under the given endpoint.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/checkResourceUsage</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_ListResourceUsage</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CdnEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CdnUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CdnUsage> GetResourceUsages(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnEndpointRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnEndpointRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CdnUsage.DeserializeCdnUsage(e), _cdnEndpointClientDiagnostics, Pipeline, "CdnEndpointResource.GetResourceUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1059,7 +1059,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Get</description>
+        /// <description>Endpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.AddTag");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.AddTag");
             scope.Start();
             try
             {
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.Cdn
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _cdnEndpointEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new CdnEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -1121,7 +1121,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Get</description>
+        /// <description>Endpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1142,7 +1142,7 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.AddTag");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.AddTag");
             scope.Start();
             try
             {
@@ -1151,7 +1151,7 @@ namespace Azure.ResourceManager.Cdn
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _cdnEndpointEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new CdnEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -1183,7 +1183,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Get</description>
+        /// <description>Endpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1202,7 +1202,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.SetTags");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.SetTags");
             scope.Start();
             try
             {
@@ -1212,7 +1212,7 @@ namespace Azure.ResourceManager.Cdn
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _cdnEndpointEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new CdnEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -1240,7 +1240,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Get</description>
+        /// <description>Endpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1259,7 +1259,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.SetTags");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.SetTags");
             scope.Start();
             try
             {
@@ -1269,7 +1269,7 @@ namespace Azure.ResourceManager.Cdn
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _cdnEndpointEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new CdnEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -1297,7 +1297,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Get</description>
+        /// <description>Endpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1316,7 +1316,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.RemoveTag");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.RemoveTag");
             scope.Start();
             try
             {
@@ -1325,7 +1325,7 @@ namespace Azure.ResourceManager.Cdn
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _cdnEndpointEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new CdnEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -1357,7 +1357,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CdnEndpoints_Get</description>
+        /// <description>Endpoints_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1376,7 +1376,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.RemoveTag");
+            using var scope = _cdnEndpointEndpointsClientDiagnostics.CreateScope("CdnEndpointResource.RemoveTag");
             scope.Start();
             try
             {
@@ -1385,7 +1385,7 @@ namespace Azure.ResourceManager.Cdn
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _cdnEndpointEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new CdnEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

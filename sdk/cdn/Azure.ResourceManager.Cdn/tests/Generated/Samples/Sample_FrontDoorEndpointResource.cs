@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task Get_AFDEndpointsGet()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDEndpoints_Get.json
-            // this example is just showing the usage of "FrontDoorEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task Delete_AFDEndpointsDelete()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDEndpoints_Delete.json
-            // this example is just showing the usage of "FrontDoorEndpoints_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDEndpoints_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task Update_AFDEndpointsUpdate()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDEndpoints_Update.json
-            // this example is just showing the usage of "FrontDoorEndpoints_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDEndpoints_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task PurgeContent_AFDEndpointsPurgeContent()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDEndpoints_PurgeContent.json
-            // this example is just showing the usage of "FrontDoorEndpoints_PurgeContent" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDEndpoints_PurgeContent" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.Cdn.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetResourceUsages_AFDEndpointsListResourceUsage()
+        public async Task GetResourceUsage_AFDEndpointsListResourceUsage()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDEndpoints_ListResourceUsage.json
-            // this example is just showing the usage of "FrontDoorEndpoints_ListResourceUsage" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDEndpoints_ListResourceUsage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Cdn.Samples
             FrontDoorEndpointResource frontDoorEndpoint = client.GetFrontDoorEndpointResource(frontDoorEndpointResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FrontDoorUsage item in frontDoorEndpoint.GetResourceUsagesAsync())
+            await foreach (FrontDoorUsage item in frontDoorEndpoint.GetResourceUsageAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task ValidateCustomDomain_EndpointsValidateCustomDomain()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDEndpoints_ValidateCustomDomain.json
-            // this example is just showing the usage of "FrontDoorEndpoints_ValidateCustomDomain" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDEndpoints_ValidateCustomDomain" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

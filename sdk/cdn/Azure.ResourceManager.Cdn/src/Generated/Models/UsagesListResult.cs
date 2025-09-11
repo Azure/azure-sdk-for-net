@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UsagesListResult"/>. </summary>
-        internal UsagesListResult()
+        /// <param name="value">
+        /// The Usage items on this page
+        /// Serialized Name: UsagesListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal UsagesListResult(IEnumerable<FrontDoorUsage> value)
         {
-            Value = new ChangeTrackingList<FrontDoorUsage>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="UsagesListResult"/>. </summary>
         /// <param name="value">
-        /// The list of resource usages.
+        /// The Usage items on this page
         /// Serialized Name: UsagesListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// URL to get the next set of results.
+        /// The link to the next page of items
         /// Serialized Name: UsagesListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UsagesListResult(IReadOnlyList<FrontDoorUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UsagesListResult(IReadOnlyList<FrontDoorUsage> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="UsagesListResult"/> for deserialization. </summary>
+        internal UsagesListResult()
+        {
+        }
+
         /// <summary>
-        /// The list of resource usages.
+        /// The Usage items on this page
         /// Serialized Name: UsagesListResult.value
         /// </summary>
         public IReadOnlyList<FrontDoorUsage> Value { get; }
         /// <summary>
-        /// URL to get the next set of results.
+        /// The link to the next page of items
         /// Serialized Name: UsagesListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

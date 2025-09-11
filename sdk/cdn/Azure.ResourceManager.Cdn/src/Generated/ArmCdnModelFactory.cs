@@ -18,6 +18,369 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmCdnModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.CdnNameAvailabilityResult"/>. </summary>
+        /// <param name="nameAvailable">
+        /// Indicates whether the name is available.
+        /// Serialized Name: CheckNameAvailabilityOutput.nameAvailable
+        /// </param>
+        /// <param name="reason">
+        /// The reason why the name is not available.
+        /// Serialized Name: CheckNameAvailabilityOutput.reason
+        /// </param>
+        /// <param name="message">
+        /// The detailed error message describing why the name is not available.
+        /// Serialized Name: CheckNameAvailabilityOutput.message
+        /// </param>
+        /// <returns> A new <see cref="Models.CdnNameAvailabilityResult"/> instance for mocking. </returns>
+        public static CdnNameAvailabilityResult CdnNameAvailabilityResult(bool? nameAvailable = null, string reason = null, string message = null)
+        {
+            return new CdnNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeNode"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="ipAddressGroups">
+        /// List of ip address groups.
+        /// Serialized Name: EdgeNode.properties.ipAddressGroups
+        /// </param>
+        /// <returns> A new <see cref="Models.EdgeNode"/> instance for mocking. </returns>
+        public static EdgeNode EdgeNode(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<IPAddressGroup> ipAddressGroups = null)
+        {
+            ipAddressGroups ??= new List<IPAddressGroup>();
+
+            return new EdgeNode(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ipAddressGroups?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleSetDefinition"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="skuName">
+        /// The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy.
+        /// Serialized Name: ManagedRuleSetDefinition.sku
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the managed rule set.
+        /// Serialized Name: ManagedRuleSetDefinition.properties.provisioningState
+        /// </param>
+        /// <param name="ruleSetType">
+        /// Type of the managed rule set.
+        /// Serialized Name: ManagedRuleSetDefinition.properties.ruleSetType
+        /// </param>
+        /// <param name="ruleSetVersion">
+        /// Version of the managed rule set type.
+        /// Serialized Name: ManagedRuleSetDefinition.properties.ruleSetVersion
+        /// </param>
+        /// <param name="ruleGroups">
+        /// Rule groups of the managed rule set.
+        /// Serialized Name: ManagedRuleSetDefinition.properties.ruleGroups
+        /// </param>
+        /// <returns> A new <see cref="Models.ManagedRuleSetDefinition"/> instance for mocking. </returns>
+        public static ManagedRuleSetDefinition ManagedRuleSetDefinition(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CdnSkuName? skuName = null, string provisioningState = null, string ruleSetType = null, string ruleSetVersion = null, IEnumerable<ManagedRuleGroupDefinition> ruleGroups = null)
+        {
+            ruleGroups ??= new List<ManagedRuleGroupDefinition>();
+
+            return new ManagedRuleSetDefinition(
+                id,
+                name,
+                resourceType,
+                systemData,
+                skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null,
+                provisioningState,
+                ruleSetType,
+                ruleSetVersion,
+                ruleGroups?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleGroupDefinition"/>. </summary>
+        /// <param name="ruleGroupName">
+        /// Name of the managed rule group.
+        /// Serialized Name: ManagedRuleGroupDefinition.ruleGroupName
+        /// </param>
+        /// <param name="description">
+        /// Description of the managed rule group.
+        /// Serialized Name: ManagedRuleGroupDefinition.description
+        /// </param>
+        /// <param name="rules">
+        /// List of rules within the managed rule group.
+        /// Serialized Name: ManagedRuleGroupDefinition.rules
+        /// </param>
+        /// <returns> A new <see cref="Models.ManagedRuleGroupDefinition"/> instance for mocking. </returns>
+        public static ManagedRuleGroupDefinition ManagedRuleGroupDefinition(string ruleGroupName = null, string description = null, IEnumerable<ManagedRuleDefinition> rules = null)
+        {
+            rules ??= new List<ManagedRuleDefinition>();
+
+            return new ManagedRuleGroupDefinition(ruleGroupName, description, rules?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleDefinition"/>. </summary>
+        /// <param name="ruleId">
+        /// Identifier for the managed rule.
+        /// Serialized Name: ManagedRuleDefinition.ruleId
+        /// </param>
+        /// <param name="description">
+        /// Describes the functionality of the managed rule.
+        /// Serialized Name: ManagedRuleDefinition.description
+        /// </param>
+        /// <returns> A new <see cref="Models.ManagedRuleDefinition"/> instance for mocking. </returns>
+        public static ManagedRuleDefinition ManagedRuleDefinition(string ruleId = null, string description = null)
+        {
+            return new ManagedRuleDefinition(ruleId, description, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CdnUsage"/>. </summary>
+        /// <param name="resourceType">
+        /// Resource type for which the usage is provided.
+        /// Serialized Name: ResourceUsage.resourceType
+        /// </param>
+        /// <param name="unit">
+        /// Unit of the usage. e.g. count.
+        /// Serialized Name: ResourceUsage.unit
+        /// </param>
+        /// <param name="currentValue">
+        /// Actual value of usage on the specified resource type.
+        /// Serialized Name: ResourceUsage.currentValue
+        /// </param>
+        /// <param name="limit">
+        /// Quota of the specified resource type.
+        /// Serialized Name: ResourceUsage.limit
+        /// </param>
+        /// <returns> A new <see cref="Models.CdnUsage"/> instance for mocking. </returns>
+        public static CdnUsage CdnUsage(string resourceType = null, CdnUsageUnit? unit = null, int? currentValue = null, int? limit = null)
+        {
+            return new CdnUsage(resourceType, unit, currentValue, limit, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Cdn.ProfileData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="skuName">
+        /// The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile.
+        /// Serialized Name: Profile.sku
+        /// </param>
+        /// <param name="kind">
+        /// Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile.
+        /// Serialized Name: Profile.kind
+        /// </param>
+        /// <param name="identity">
+        /// The managed service identities assigned to this resource.
+        /// Serialized Name: Profile.identity
+        /// </param>
+        /// <param name="resourceState">
+        /// Resource status of the profile.
+        /// Serialized Name: Profile.properties.resourceState
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning status of the profile.
+        /// Serialized Name: Profile.properties.provisioningState
+        /// </param>
+        /// <param name="extendedProperties">
+        /// Key-Value pair representing additional properties for profiles.
+        /// Serialized Name: Profile.properties.extendedProperties
+        /// </param>
+        /// <param name="frontDoorId">
+        /// The Id of the frontdoor.
+        /// Serialized Name: Profile.properties.frontDoorId
+        /// </param>
+        /// <param name="originResponseTimeoutSeconds">
+        /// Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns.
+        /// Serialized Name: Profile.properties.originResponseTimeoutSeconds
+        /// </param>
+        /// <param name="logScrubbing">
+        /// Defines rules that scrub sensitive fields in the Azure Front Door profile logs.
+        /// Serialized Name: Profile.properties.logScrubbing
+        /// </param>
+        /// <returns> A new <see cref="Cdn.ProfileData"/> instance for mocking. </returns>
+        public static ProfileData ProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CdnSkuName? skuName = null, string kind = null, ManagedServiceIdentity identity = null, ProfileResourceState? resourceState = null, ProfileProvisioningState? provisioningState = null, IReadOnlyDictionary<string, string> extendedProperties = null, Guid? frontDoorId = null, int? originResponseTimeoutSeconds = null, ProfileLogScrubbing logScrubbing = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            extendedProperties ??= new Dictionary<string, string>();
+
+            return new ProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null,
+                kind,
+                identity,
+                resourceState,
+                provisioningState,
+                extendedProperties,
+                frontDoorId,
+                originResponseTimeoutSeconds,
+                logScrubbing,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ValidateProbeResult"/>. </summary>
+        /// <param name="isValid">
+        /// Indicates whether the probe URL is accepted or not.
+        /// Serialized Name: ValidateProbeOutput.isValid
+        /// </param>
+        /// <param name="errorCode">
+        /// Specifies the error code when the probe url is not accepted.
+        /// Serialized Name: ValidateProbeOutput.errorCode
+        /// </param>
+        /// <param name="message">
+        /// The detailed error message describing why the probe URL is not accepted.
+        /// Serialized Name: ValidateProbeOutput.message
+        /// </param>
+        /// <returns> A new <see cref="Models.ValidateProbeResult"/> instance for mocking. </returns>
+        public static ValidateProbeResult ValidateProbeResult(bool? isValid = null, string errorCode = null, string message = null)
+        {
+            return new ValidateProbeResult(isValid, errorCode, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CanMigrateResult"/>. </summary>
+        /// <param name="resourceId">
+        /// Resource ID.
+        /// Serialized Name: CanMigrateResult.id
+        /// </param>
+        /// <param name="canMigrateResultType">
+        /// Resource type.
+        /// Serialized Name: CanMigrateResult.type
+        /// </param>
+        /// <param name="canMigrate">
+        /// Flag that says if the profile can be migrated
+        /// Serialized Name: CanMigrateResult.properties.canMigrate
+        /// </param>
+        /// <param name="defaultSku">
+        /// Recommended sku for the migration
+        /// Serialized Name: CanMigrateResult.properties.defaultSku
+        /// </param>
+        /// <param name="errors"> Serialized Name: CanMigrateResult.properties.errors. </param>
+        /// <returns> A new <see cref="Models.CanMigrateResult"/> instance for mocking. </returns>
+        public static CanMigrateResult CanMigrateResult(ResourceIdentifier resourceId = null, string canMigrateResultType = null, bool? canMigrate = null, CanMigrateDefaultSku? defaultSku = null, IEnumerable<MigrationErrorType> errors = null)
+        {
+            errors ??= new List<MigrationErrorType>();
+
+            return new CanMigrateResult(
+                resourceId,
+                canMigrateResultType,
+                canMigrate,
+                defaultSku,
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MigrationErrorType"/>. </summary>
+        /// <param name="code">
+        /// Error code.
+        /// Serialized Name: MigrationErrorType.code
+        /// </param>
+        /// <param name="resourceName">
+        /// Resource which has the problem.
+        /// Serialized Name: MigrationErrorType.resourceName
+        /// </param>
+        /// <param name="errorMessage">
+        /// Error message indicating why the operation failed.
+        /// Serialized Name: MigrationErrorType.errorMessage
+        /// </param>
+        /// <param name="nextSteps">
+        /// Describes what needs to be done to fix the problem
+        /// Serialized Name: MigrationErrorType.nextSteps
+        /// </param>
+        /// <returns> A new <see cref="Models.MigrationErrorType"/> instance for mocking. </returns>
+        public static MigrationErrorType MigrationErrorType(string code = null, string resourceName = null, string errorMessage = null, string nextSteps = null)
+        {
+            return new MigrationErrorType(code, resourceName, errorMessage, nextSteps, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag">
+        /// Gets a unique read-only string that changes whenever the resource is updated.
+        /// Serialized Name: CdnWebApplicationFirewallPolicy.etag
+        /// </param>
+        /// <param name="skuName">
+        /// The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy.
+        /// Serialized Name: CdnWebApplicationFirewallPolicy.sku
+        /// </param>
+        /// <param name="policySettings">
+        /// Describes  policySettings for policy
+        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.policySettings
+        /// </param>
+        /// <param name="rateLimitRules">
+        /// Describes rate limit rules inside the policy.
+        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.rateLimitRules
+        /// </param>
+        /// <param name="customRules">
+        /// Describes custom rules inside the policy.
+        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.customRules
+        /// </param>
+        /// <param name="managedRuleSets">
+        /// Describes managed rules inside the policy.
+        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.managedRules
+        /// </param>
+        /// <param name="endpointLinks">
+        /// Describes Azure CDN endpoints associated with this Web Application Firewall policy.
+        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.endpointLinks
+        /// </param>
+        /// <param name="extendedProperties">
+        /// Key-Value pair representing additional properties for Web Application Firewall policy.
+        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.extendedProperties
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the WebApplicationFirewallPolicy.
+        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.provisioningState
+        /// </param>
+        /// <param name="resourceState">
+        /// Resource status of the policy.
+        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.resourceState
+        /// </param>
+        /// <returns> A new <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/> instance for mocking. </returns>
+        public static CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, CdnSkuName? skuName = null, WafPolicySettings policySettings = null, IEnumerable<RateLimitRule> rateLimitRules = null, IEnumerable<CustomRule> customRules = null, IEnumerable<WafPolicyManagedRuleSet> managedRuleSets = null, IEnumerable<SubResource> endpointLinks = null, IDictionary<string, string> extendedProperties = null, WebApplicationFirewallPolicyProvisioningState? provisioningState = null, PolicyResourceState? resourceState = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            rateLimitRules ??= new List<RateLimitRule>();
+            customRules ??= new List<CustomRule>();
+            managedRuleSets ??= new List<WafPolicyManagedRuleSet>();
+            endpointLinks ??= new List<SubResource>();
+            extendedProperties ??= new Dictionary<string, string>();
+
+            return new CdnWebApplicationFirewallPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null,
+                policySettings,
+                rateLimitRules != null ? new RateLimitRuleList(rateLimitRules?.ToList(), serializedAdditionalRawData: null) : null,
+                customRules != null ? new CustomRuleList(customRules?.ToList(), serializedAdditionalRawData: null) : null,
+                managedRuleSets != null ? new ManagedRuleSetList(managedRuleSets?.ToList(), serializedAdditionalRawData: null) : null,
+                endpointLinks?.ToList(),
+                extendedProperties,
+                provisioningState,
+                resourceState,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.EndpointNameAvailabilityContent"/>. </summary>
         /// <param name="name">
         /// The resource name to validate.
@@ -58,6 +421,296 @@ namespace Azure.ResourceManager.Cdn.Models
         public static EndpointNameAvailabilityResult EndpointNameAvailabilityResult(bool? nameAvailable = null, string availableHostname = null, string reason = null, string message = null)
         {
             return new EndpointNameAvailabilityResult(nameAvailable, availableHostname, reason, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MigrationContent"/>. </summary>
+        /// <param name="skuName">
+        /// Sku for the migration
+        /// Serialized Name: MigrationParameters.sku
+        /// </param>
+        /// <param name="classicResourceReferenceId">
+        /// Resource reference of the classic cdn profile or classic frontdoor that need to be migrated.
+        /// Serialized Name: MigrationParameters.classicResourceReference
+        /// </param>
+        /// <param name="profileName">
+        /// Name of the new profile that need to be created.
+        /// Serialized Name: MigrationParameters.profileName
+        /// </param>
+        /// <param name="migrationWebApplicationFirewallMappings">
+        /// Waf mapping for the migrated profile
+        /// Serialized Name: MigrationParameters.migrationWebApplicationFirewallMappings
+        /// </param>
+        /// <returns> A new <see cref="Models.MigrationContent"/> instance for mocking. </returns>
+        public static MigrationContent MigrationContent(CdnSkuName? skuName = null, ResourceIdentifier classicResourceReferenceId = null, string profileName = null, IEnumerable<MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings = null)
+        {
+            migrationWebApplicationFirewallMappings ??= new List<MigrationWebApplicationFirewallMapping>();
+
+            return new MigrationContent(skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null, classicResourceReferenceId != null ? ResourceManagerModelFactory.WritableSubResource(classicResourceReferenceId) : null, profileName, migrationWebApplicationFirewallMappings?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateResult"/>. </summary>
+        /// <param name="resourceId">
+        /// Resource ID.
+        /// Serialized Name: MigrateResult.id
+        /// </param>
+        /// <param name="migrateResultType">
+        /// Resource type.
+        /// Serialized Name: MigrateResult.type
+        /// </param>
+        /// <param name="migratedProfileResourceIdId">
+        /// Arm resource id of the migrated profile
+        /// Serialized Name: MigrateResult.properties.migratedProfileResourceId
+        /// </param>
+        /// <returns> A new <see cref="Models.MigrateResult"/> instance for mocking. </returns>
+        public static MigrateResult MigrateResult(ResourceIdentifier resourceId = null, string migrateResultType = null, ResourceIdentifier migratedProfileResourceIdId = null)
+        {
+            return new MigrateResult(resourceId, migrateResultType, migratedProfileResourceIdId != null ? ResourceManagerModelFactory.WritableSubResource(migratedProfileResourceIdId) : null, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorEndpointData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="profileName">
+        /// The name of the profile which holds the endpoint.
+        /// Serialized Name: AFDEndpoint.properties.profileName
+        /// </param>
+        /// <param name="enabledState">
+        /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
+        /// Serialized Name: AFDEndpoint.properties.enabledState
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning status
+        /// Serialized Name: AFDEndpoint.properties.provisioningState
+        /// </param>
+        /// <param name="deploymentStatus"> Serialized Name: AFDEndpoint.properties.deploymentStatus. </param>
+        /// <param name="hostName">
+        /// The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net
+        /// Serialized Name: AFDEndpoint.properties.hostName
+        /// </param>
+        /// <param name="autoGeneratedDomainNameLabelScope">
+        /// Indicates the endpoint name reuse scope. The default value is TenantReuse.
+        /// Serialized Name: AFDEndpoint.properties.autoGeneratedDomainNameLabelScope
+        /// </param>
+        /// <returns> A new <see cref="Cdn.FrontDoorEndpointData"/> instance for mocking. </returns>
+        public static FrontDoorEndpointData FrontDoorEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string profileName = null, EnabledState? enabledState = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null, string hostName = null, DomainNameLabelScope? autoGeneratedDomainNameLabelScope = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new FrontDoorEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                profileName,
+                enabledState,
+                provisioningState,
+                deploymentStatus,
+                hostName,
+                autoGeneratedDomainNameLabelScope,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorEndpointPatch"/>. </summary>
+        /// <param name="tags">
+        /// Endpoint tags.
+        /// Serialized Name: AFDEndpointUpdateParameters.tags
+        /// </param>
+        /// <param name="profileName">
+        /// The name of the profile which holds the endpoint.
+        /// Serialized Name: AFDEndpointUpdateParameters.properties.profileName
+        /// </param>
+        /// <param name="enabledState">
+        /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
+        /// Serialized Name: AFDEndpointUpdateParameters.properties.enabledState
+        /// </param>
+        /// <returns> A new <see cref="Models.FrontDoorEndpointPatch"/> instance for mocking. </returns>
+        public static FrontDoorEndpointPatch FrontDoorEndpointPatch(IDictionary<string, string> tags = null, string profileName = null, EnabledState? enabledState = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new FrontDoorEndpointPatch(tags, profileName, enabledState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorRouteData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="endpointName">
+        /// The name of the endpoint which holds the route.
+        /// Serialized Name: Route.properties.endpointName
+        /// </param>
+        /// <param name="customDomains">
+        /// Domains referenced by this endpoint.
+        /// Serialized Name: Route.properties.customDomains
+        /// </param>
+        /// <param name="originGroupId">
+        /// A reference to the origin group.
+        /// Serialized Name: Route.properties.originGroup
+        /// </param>
+        /// <param name="originPath">
+        /// A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
+        /// Serialized Name: Route.properties.originPath
+        /// </param>
+        /// <param name="ruleSets">
+        /// rule sets referenced by this endpoint.
+        /// Serialized Name: Route.properties.ruleSets
+        /// </param>
+        /// <param name="supportedProtocols">
+        /// List of supported protocols for this route.
+        /// Serialized Name: Route.properties.supportedProtocols
+        /// </param>
+        /// <param name="patternsToMatch">
+        /// The route patterns of the rule.
+        /// Serialized Name: Route.properties.patternsToMatch
+        /// </param>
+        /// <param name="cacheConfiguration">
+        /// The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object.
+        /// Serialized Name: Route.properties.cacheConfiguration
+        /// </param>
+        /// <param name="forwardingProtocol">
+        /// Protocol this rule will use when forwarding traffic to backends.
+        /// Serialized Name: Route.properties.forwardingProtocol
+        /// </param>
+        /// <param name="linkToDefaultDomain">
+        /// whether this route will be linked to the default endpoint domain.
+        /// Serialized Name: Route.properties.linkToDefaultDomain
+        /// </param>
+        /// <param name="httpsRedirect">
+        /// Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed.
+        /// Serialized Name: Route.properties.httpsRedirect
+        /// </param>
+        /// <param name="enabledState">
+        /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
+        /// Serialized Name: Route.properties.enabledState
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning status
+        /// Serialized Name: Route.properties.provisioningState
+        /// </param>
+        /// <param name="deploymentStatus"> Serialized Name: Route.properties.deploymentStatus. </param>
+        /// <returns> A new <see cref="Cdn.FrontDoorRouteData"/> instance for mocking. </returns>
+        public static FrontDoorRouteData FrontDoorRouteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string endpointName = null, IEnumerable<FrontDoorActivatedResourceInfo> customDomains = null, ResourceIdentifier originGroupId = null, string originPath = null, IEnumerable<WritableSubResource> ruleSets = null, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols = null, IEnumerable<string> patternsToMatch = null, FrontDoorRouteCacheConfiguration cacheConfiguration = null, ForwardingProtocol? forwardingProtocol = null, LinkToDefaultDomain? linkToDefaultDomain = null, HttpsRedirect? httpsRedirect = null, EnabledState? enabledState = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null)
+        {
+            customDomains ??= new List<FrontDoorActivatedResourceInfo>();
+            ruleSets ??= new List<WritableSubResource>();
+            supportedProtocols ??= new List<FrontDoorEndpointProtocol>();
+            patternsToMatch ??= new List<string>();
+
+            return new FrontDoorRouteData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                endpointName,
+                customDomains?.ToList(),
+                originGroupId != null ? ResourceManagerModelFactory.WritableSubResource(originGroupId) : null,
+                originPath,
+                ruleSets?.ToList(),
+                supportedProtocols?.ToList(),
+                patternsToMatch?.ToList(),
+                cacheConfiguration,
+                forwardingProtocol,
+                linkToDefaultDomain,
+                httpsRedirect,
+                enabledState,
+                provisioningState,
+                deploymentStatus,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorActivatedResourceInfo"/>. </summary>
+        /// <param name="id">
+        /// Resource ID.
+        /// Serialized Name: ActivatedResourceReference.id
+        /// </param>
+        /// <param name="isActive">
+        /// Whether the resource is active or inactive
+        /// Serialized Name: ActivatedResourceReference.isActive
+        /// </param>
+        /// <returns> A new <see cref="Models.FrontDoorActivatedResourceInfo"/> instance for mocking. </returns>
+        public static FrontDoorActivatedResourceInfo FrontDoorActivatedResourceInfo(ResourceIdentifier id = null, bool? isActive = null)
+        {
+            return new FrontDoorActivatedResourceInfo(id, isActive, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorRoutePatch"/>. </summary>
+        /// <param name="endpointName">
+        /// The name of the endpoint which holds the route.
+        /// Serialized Name: RouteUpdateParameters.properties.endpointName
+        /// </param>
+        /// <param name="customDomains">
+        /// Domains referenced by this endpoint.
+        /// Serialized Name: RouteUpdateParameters.properties.customDomains
+        /// </param>
+        /// <param name="originGroupId">
+        /// A reference to the origin group.
+        /// Serialized Name: RouteUpdateParameters.properties.originGroup
+        /// </param>
+        /// <param name="originPath">
+        /// A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
+        /// Serialized Name: RouteUpdateParameters.properties.originPath
+        /// </param>
+        /// <param name="ruleSets">
+        /// rule sets referenced by this endpoint.
+        /// Serialized Name: RouteUpdateParameters.properties.ruleSets
+        /// </param>
+        /// <param name="supportedProtocols">
+        /// List of supported protocols for this route.
+        /// Serialized Name: RouteUpdateParameters.properties.supportedProtocols
+        /// </param>
+        /// <param name="patternsToMatch">
+        /// The route patterns of the rule.
+        /// Serialized Name: RouteUpdateParameters.properties.patternsToMatch
+        /// </param>
+        /// <param name="cacheConfiguration">
+        /// The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object.
+        /// Serialized Name: RouteUpdateParameters.properties.cacheConfiguration
+        /// </param>
+        /// <param name="forwardingProtocol">
+        /// Protocol this rule will use when forwarding traffic to backends.
+        /// Serialized Name: RouteUpdateParameters.properties.forwardingProtocol
+        /// </param>
+        /// <param name="linkToDefaultDomain">
+        /// whether this route will be linked to the default endpoint domain.
+        /// Serialized Name: RouteUpdateParameters.properties.linkToDefaultDomain
+        /// </param>
+        /// <param name="httpsRedirect">
+        /// Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed.
+        /// Serialized Name: RouteUpdateParameters.properties.httpsRedirect
+        /// </param>
+        /// <param name="enabledState">
+        /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
+        /// Serialized Name: RouteUpdateParameters.properties.enabledState
+        /// </param>
+        /// <returns> A new <see cref="Models.FrontDoorRoutePatch"/> instance for mocking. </returns>
+        public static FrontDoorRoutePatch FrontDoorRoutePatch(string endpointName = null, IEnumerable<FrontDoorActivatedResourceInfo> customDomains = null, ResourceIdentifier originGroupId = null, string originPath = null, IEnumerable<WritableSubResource> ruleSets = null, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols = null, IEnumerable<string> patternsToMatch = null, FrontDoorRouteCacheConfiguration cacheConfiguration = null, ForwardingProtocol? forwardingProtocol = null, LinkToDefaultDomain? linkToDefaultDomain = null, HttpsRedirect? httpsRedirect = null, EnabledState? enabledState = null)
+        {
+            customDomains ??= new List<FrontDoorActivatedResourceInfo>();
+            ruleSets ??= new List<WritableSubResource>();
+            supportedProtocols ??= new List<FrontDoorEndpointProtocol>();
+            patternsToMatch ??= new List<string>();
+
+            return new FrontDoorRoutePatch(
+                endpointName,
+                customDomains?.ToList(),
+                originGroupId != null ? ResourceManagerModelFactory.WritableSubResource(originGroupId) : null,
+                originPath,
+                ruleSets?.ToList(),
+                supportedProtocols?.ToList(),
+                patternsToMatch?.ToList(),
+                cacheConfiguration,
+                forwardingProtocol,
+                linkToDefaultDomain,
+                httpsRedirect,
+                enabledState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorUsage"/>. </summary>
@@ -108,125 +761,40 @@ namespace Azure.ResourceManager.Cdn.Models
             return new FrontDoorUsageResourceName(value, localizedValue, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CdnNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable">
-        /// Indicates whether the name is available.
-        /// Serialized Name: CheckNameAvailabilityOutput.nameAvailable
+        /// <summary> Initializes a new instance of <see cref="Models.ValidateCustomDomainResult"/>. </summary>
+        /// <param name="isCustomDomainValid">
+        /// Indicates whether the custom domain is valid or not.
+        /// Serialized Name: ValidateCustomDomainOutput.customDomainValidated
         /// </param>
         /// <param name="reason">
-        /// The reason why the name is not available.
-        /// Serialized Name: CheckNameAvailabilityOutput.reason
+        /// The reason why the custom domain is not valid.
+        /// Serialized Name: ValidateCustomDomainOutput.reason
         /// </param>
         /// <param name="message">
-        /// The detailed error message describing why the name is not available.
-        /// Serialized Name: CheckNameAvailabilityOutput.message
+        /// Error message describing why the custom domain is not valid.
+        /// Serialized Name: ValidateCustomDomainOutput.message
         /// </param>
-        /// <returns> A new <see cref="Models.CdnNameAvailabilityResult"/> instance for mocking. </returns>
-        public static CdnNameAvailabilityResult CdnNameAvailabilityResult(bool? nameAvailable = null, string reason = null, string message = null)
+        /// <returns> A new <see cref="Models.ValidateCustomDomainResult"/> instance for mocking. </returns>
+        public static ValidateCustomDomainResult ValidateCustomDomainResult(bool? isCustomDomainValid = null, string reason = null, string message = null)
         {
-            return new CdnNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
+            return new ValidateCustomDomainResult(isCustomDomainValid, reason, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ValidateSecretContent"/>. </summary>
-        /// <param name="secretType">
-        /// The secret type.
-        /// Serialized Name: ValidateSecretInput.secretType
-        /// </param>
-        /// <param name="secretSourceId">
-        /// Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
-        /// Serialized Name: ValidateSecretInput.secretSource
-        /// </param>
-        /// <param name="secretVersion">
-        /// Secret version, if customer is using a specific version.
-        /// Serialized Name: ValidateSecretInput.secretVersion
-        /// </param>
-        /// <returns> A new <see cref="Models.ValidateSecretContent"/> instance for mocking. </returns>
-        public static ValidateSecretContent ValidateSecretContent(SecretType secretType = default, ResourceIdentifier secretSourceId = null, string secretVersion = null)
-        {
-            return new ValidateSecretContent(secretType, secretSourceId != null ? ResourceManagerModelFactory.WritableSubResource(secretSourceId) : null, secretVersion, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ValidateSecretResult"/>. </summary>
-        /// <param name="status">
-        /// The validation status.
-        /// Serialized Name: ValidateSecretOutput.status
-        /// </param>
-        /// <param name="message">
-        /// Detailed error message
-        /// Serialized Name: ValidateSecretOutput.message
-        /// </param>
-        /// <returns> A new <see cref="Models.ValidateSecretResult"/> instance for mocking. </returns>
-        public static ValidateSecretResult ValidateSecretResult(ValidationStatus? status = null, string message = null)
-        {
-            return new ValidateSecretResult(status, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Cdn.ProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.CdnMigrationToAfdContent"/>. </summary>
         /// <param name="skuName">
-        /// The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile.
-        /// Serialized Name: Profile.sku
+        /// Sku for the migration
+        /// Serialized Name: CdnMigrationToAfdParameters.sku
         /// </param>
-        /// <param name="kind">
-        /// Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile.
-        /// Serialized Name: Profile.kind
+        /// <param name="migrationEndpointMappings">
+        /// A name map between classic CDN endpoints and AFD Premium/Standard endpoints.
+        /// Serialized Name: CdnMigrationToAfdParameters.migrationEndpointMappings
         /// </param>
-        /// <param name="identity">
-        /// Managed service identity (system assigned and/or user assigned identities).
-        /// Serialized Name: Profile.identity
-        /// </param>
-        /// <param name="resourceState">
-        /// Resource status of the profile.
-        /// Serialized Name: Profile.properties.resourceState
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning status of the profile.
-        /// Serialized Name: Profile.properties.provisioningState
-        /// </param>
-        /// <param name="extendedProperties">
-        /// Key-Value pair representing additional properties for profiles.
-        /// Serialized Name: Profile.properties.extendedProperties
-        /// </param>
-        /// <param name="frontDoorId">
-        /// The Id of the frontdoor.
-        /// Serialized Name: Profile.properties.frontDoorId
-        /// </param>
-        /// <param name="originResponseTimeoutSeconds">
-        /// Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns.
-        /// Serialized Name: Profile.properties.originResponseTimeoutSeconds
-        /// </param>
-        /// <param name="logScrubbing">
-        /// Defines rules that scrub sensitive fields in the Azure Front Door profile logs.
-        /// Serialized Name: Profile.properties.logScrubbing
-        /// </param>
-        /// <returns> A new <see cref="Cdn.ProfileData"/> instance for mocking. </returns>
-        public static ProfileData ProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CdnSkuName? skuName = null, string kind = null, ManagedServiceIdentity identity = null, ProfileResourceState? resourceState = null, ProfileProvisioningState? provisioningState = null, IReadOnlyDictionary<string, string> extendedProperties = null, Guid? frontDoorId = null, int? originResponseTimeoutSeconds = null, ProfileLogScrubbing logScrubbing = null)
+        /// <returns> A new <see cref="Models.CdnMigrationToAfdContent"/> instance for mocking. </returns>
+        public static CdnMigrationToAfdContent CdnMigrationToAfdContent(CdnSkuName? skuName = null, IEnumerable<MigrationEndpointMapping> migrationEndpointMappings = null)
         {
-            tags ??= new Dictionary<string, string>();
-            extendedProperties ??= new Dictionary<string, string>();
+            migrationEndpointMappings ??= new List<MigrationEndpointMapping>();
 
-            return new ProfileData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null,
-                kind,
-                identity,
-                resourceState,
-                provisioningState,
-                extendedProperties,
-                frontDoorId,
-                originResponseTimeoutSeconds,
-                logScrubbing,
-                serializedAdditionalRawData: null);
+            return new CdnMigrationToAfdContent(skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null, migrationEndpointMappings?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorCustomDomainData"/>. </summary>
@@ -332,93 +900,681 @@ namespace Azure.ResourceManager.Cdn.Models
             return new FrontDoorCustomDomainPatch(profileName, tlsSettings, dnsZoneId != null ? ResourceManagerModelFactory.WritableSubResource(dnsZoneId) : null, preValidatedCustomDomainResourceId != null ? ResourceManagerModelFactory.WritableSubResource(preValidatedCustomDomainResourceId) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorEndpointData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Cdn.CdnEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="profileName">
-        /// The name of the profile which holds the endpoint.
-        /// Serialized Name: AFDEndpoint.properties.profileName
+        /// <param name="originPath">
+        /// A directory path on the origin that CDN can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
+        /// Serialized Name: Endpoint.properties.originPath
         /// </param>
-        /// <param name="enabledState">
-        /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
-        /// Serialized Name: AFDEndpoint.properties.enabledState
+        /// <param name="contentTypesToCompress">
+        /// List of content types on which compression applies. The value should be a valid MIME type.
+        /// Serialized Name: Endpoint.properties.contentTypesToCompress
         /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning status
-        /// Serialized Name: AFDEndpoint.properties.provisioningState
+        /// <param name="originHostHeader">
+        /// The host header value sent to the origin with each request. This property at Endpoint is only allowed when endpoint uses single origin and can be overridden by the same property specified at origin.If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
+        /// Serialized Name: Endpoint.properties.originHostHeader
         /// </param>
-        /// <param name="deploymentStatus"> Serialized Name: AFDEndpoint.properties.deploymentStatus. </param>
+        /// <param name="isCompressionEnabled">
+        /// Indicates whether content compression is enabled on CDN. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on CDN when requested content is smaller than 1 byte or larger than 1 MB.
+        /// Serialized Name: Endpoint.properties.isCompressionEnabled
+        /// </param>
+        /// <param name="isHttpAllowed">
+        /// Indicates whether HTTP traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed.
+        /// Serialized Name: Endpoint.properties.isHttpAllowed
+        /// </param>
+        /// <param name="isHttpsAllowed">
+        /// Indicates whether HTTPS traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed.
+        /// Serialized Name: Endpoint.properties.isHttpsAllowed
+        /// </param>
+        /// <param name="queryStringCachingBehavior">
+        /// Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
+        /// Serialized Name: Endpoint.properties.queryStringCachingBehavior
+        /// </param>
+        /// <param name="optimizationType">
+        /// Specifies what scenario the customer wants this CDN endpoint to optimize for, e.g. Download, Media services. With this information, CDN can apply scenario driven optimization.
+        /// Serialized Name: Endpoint.properties.optimizationType
+        /// </param>
+        /// <param name="probePath">
+        /// Path to a file hosted on the origin which helps accelerate delivery of the dynamic content and calculate the most optimal routes for the CDN. This is relative to the origin path. This property is only relevant when using a single origin.
+        /// Serialized Name: Endpoint.properties.probePath
+        /// </param>
+        /// <param name="geoFilters">
+        /// List of rules defining the user's geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/
+        /// Serialized Name: Endpoint.properties.geoFilters
+        /// </param>
+        /// <param name="defaultOriginGroupId">
+        /// A reference to the origin group.
+        /// Serialized Name: Endpoint.properties.defaultOriginGroup
+        /// </param>
+        /// <param name="uriSigningKeys">
+        /// List of keys used to validate the signed URL hashes.
+        /// Serialized Name: Endpoint.properties.urlSigningKeys
+        /// </param>
+        /// <param name="deliveryPolicy">
+        /// A policy that specifies the delivery rules to be used for an endpoint.
+        /// Serialized Name: Endpoint.properties.deliveryPolicy
+        /// </param>
+        /// <param name="webApplicationFirewallPolicyLinkId">
+        /// Defines the Web Application Firewall policy for the endpoint (if applicable)
+        /// Serialized Name: Endpoint.properties.webApplicationFirewallPolicyLink
+        /// </param>
         /// <param name="hostName">
         /// The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net
-        /// Serialized Name: AFDEndpoint.properties.hostName
+        /// Serialized Name: Endpoint.properties.hostName
         /// </param>
-        /// <param name="autoGeneratedDomainNameLabelScope">
-        /// Indicates the endpoint name reuse scope. The default value is TenantReuse.
-        /// Serialized Name: AFDEndpoint.properties.autoGeneratedDomainNameLabelScope
+        /// <param name="origins">
+        /// The source of the content being delivered via CDN.
+        /// Serialized Name: Endpoint.properties.origins
         /// </param>
-        /// <returns> A new <see cref="Cdn.FrontDoorEndpointData"/> instance for mocking. </returns>
-        public static FrontDoorEndpointData FrontDoorEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string profileName = null, EnabledState? enabledState = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null, string hostName = null, DomainNameLabelScope? autoGeneratedDomainNameLabelScope = null)
+        /// <param name="originGroups">
+        /// The origin groups comprising of origins that are used for load balancing the traffic based on availability.
+        /// Serialized Name: Endpoint.properties.originGroups
+        /// </param>
+        /// <param name="deepCreatedCustomDomains">
+        /// The custom domains under the endpoint.
+        /// Serialized Name: Endpoint.properties.customDomains
+        /// </param>
+        /// <param name="resourceState">
+        /// Resource status of the endpoint.
+        /// Serialized Name: Endpoint.properties.resourceState
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning status of the endpoint.
+        /// Serialized Name: Endpoint.properties.provisioningState
+        /// </param>
+        /// <returns> A new <see cref="Cdn.CdnEndpointData"/> instance for mocking. </returns>
+        public static CdnEndpointData CdnEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string originPath = null, IEnumerable<string> contentTypesToCompress = null, string originHostHeader = null, bool? isCompressionEnabled = null, bool? isHttpAllowed = null, bool? isHttpsAllowed = null, QueryStringCachingBehavior? queryStringCachingBehavior = null, OptimizationType? optimizationType = null, string probePath = null, IEnumerable<GeoFilter> geoFilters = null, ResourceIdentifier defaultOriginGroupId = null, IEnumerable<UriSigningKey> uriSigningKeys = null, EndpointDeliveryPolicy deliveryPolicy = null, ResourceIdentifier webApplicationFirewallPolicyLinkId = null, string hostName = null, IEnumerable<DeepCreatedOrigin> origins = null, IEnumerable<DeepCreatedOriginGroup> originGroups = null, IEnumerable<DeepCreatedCustomDomain> deepCreatedCustomDomains = null, EndpointResourceState? resourceState = null, CdnEndpointProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
+            contentTypesToCompress ??= new List<string>();
+            geoFilters ??= new List<GeoFilter>();
+            uriSigningKeys ??= new List<UriSigningKey>();
+            origins ??= new List<DeepCreatedOrigin>();
+            originGroups ??= new List<DeepCreatedOriginGroup>();
+            deepCreatedCustomDomains ??= new List<DeepCreatedCustomDomain>();
 
-            return new FrontDoorEndpointData(
+            return new CdnEndpointData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 tags,
                 location,
-                profileName,
-                enabledState,
-                provisioningState,
-                deploymentStatus,
+                originPath,
+                contentTypesToCompress?.ToList(),
+                originHostHeader,
+                isCompressionEnabled,
+                isHttpAllowed,
+                isHttpsAllowed,
+                queryStringCachingBehavior,
+                optimizationType,
+                probePath,
+                geoFilters?.ToList(),
+                defaultOriginGroupId != null ? ResourceManagerModelFactory.WritableSubResource(defaultOriginGroupId) : null,
+                uriSigningKeys?.ToList(),
+                deliveryPolicy,
+                webApplicationFirewallPolicyLinkId != null ? new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, serializedAdditionalRawData: null) : null,
                 hostName,
-                autoGeneratedDomainNameLabelScope,
+                origins?.ToList(),
+                originGroups?.ToList(),
+                deepCreatedCustomDomains?.ToList(),
+                resourceState,
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorEndpointPatch"/>. </summary>
-        /// <param name="tags">
-        /// Endpoint tags.
-        /// Serialized Name: AFDEndpointUpdateParameters.tags
+        /// <summary> Initializes a new instance of <see cref="Models.DeepCreatedOrigin"/>. </summary>
+        /// <param name="name">
+        /// Origin name which must be unique within the endpoint.
+        /// Serialized Name: DeepCreatedOrigin.name
         /// </param>
-        /// <param name="profileName">
-        /// The name of the profile which holds the endpoint.
-        /// Serialized Name: AFDEndpointUpdateParameters.properties.profileName
+        /// <param name="hostName">
+        /// The address of the origin. It can be a domain name, IPv4 address, or IPv6 address. This should be unique across all origins in an endpoint.
+        /// Serialized Name: DeepCreatedOrigin.properties.hostName
         /// </param>
-        /// <param name="enabledState">
-        /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
-        /// Serialized Name: AFDEndpointUpdateParameters.properties.enabledState
+        /// <param name="httpPort">
+        /// The value of the HTTP port. Must be between 1 and 65535.
+        /// Serialized Name: DeepCreatedOrigin.properties.httpPort
         /// </param>
-        /// <returns> A new <see cref="Models.FrontDoorEndpointPatch"/> instance for mocking. </returns>
-        public static FrontDoorEndpointPatch FrontDoorEndpointPatch(IDictionary<string, string> tags = null, string profileName = null, EnabledState? enabledState = null)
+        /// <param name="httpsPort">
+        /// The value of the HTTPS port. Must be between 1 and 65535.
+        /// Serialized Name: DeepCreatedOrigin.properties.httpsPort
+        /// </param>
+        /// <param name="originHostHeader">
+        /// The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
+        /// Serialized Name: DeepCreatedOrigin.properties.originHostHeader
+        /// </param>
+        /// <param name="priority">
+        /// Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5.
+        /// Serialized Name: DeepCreatedOrigin.properties.priority
+        /// </param>
+        /// <param name="weight">
+        /// Weight of the origin in given origin group for load balancing. Must be between 1 and 1000
+        /// Serialized Name: DeepCreatedOrigin.properties.weight
+        /// </param>
+        /// <param name="enabled">
+        /// Origin is enabled for load balancing or not. By default, origin is always enabled.
+        /// Serialized Name: DeepCreatedOrigin.properties.enabled
+        /// </param>
+        /// <param name="privateLinkAlias">
+        /// The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'
+        /// Serialized Name: DeepCreatedOrigin.properties.privateLinkAlias
+        /// </param>
+        /// <param name="privateLinkResourceId">
+        /// The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'
+        /// Serialized Name: DeepCreatedOrigin.properties.privateLinkResourceId
+        /// </param>
+        /// <param name="privateLinkLocation">
+        /// The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated
+        /// Serialized Name: DeepCreatedOrigin.properties.privateLinkLocation
+        /// </param>
+        /// <param name="privateLinkApprovalMessage">
+        /// A custom message to be included in the approval request to connect to the Private Link.
+        /// Serialized Name: DeepCreatedOrigin.properties.privateLinkApprovalMessage
+        /// </param>
+        /// <param name="privateEndpointStatus">
+        /// The approval status for the connection to the Private Link
+        /// Serialized Name: DeepCreatedOrigin.properties.privateEndpointStatus
+        /// </param>
+        /// <returns> A new <see cref="Models.DeepCreatedOrigin"/> instance for mocking. </returns>
+        public static DeepCreatedOrigin DeepCreatedOrigin(string name = null, string hostName = null, int? httpPort = null, int? httpsPort = null, string originHostHeader = null, int? priority = null, int? weight = null, bool? enabled = null, string privateLinkAlias = null, ResourceIdentifier privateLinkResourceId = null, string privateLinkLocation = null, string privateLinkApprovalMessage = null, PrivateEndpointStatus? privateEndpointStatus = null)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new FrontDoorEndpointPatch(tags, profileName, enabledState, serializedAdditionalRawData: null);
+            return new DeepCreatedOrigin(
+                name,
+                hostName,
+                httpPort,
+                httpsPort,
+                originHostHeader,
+                priority,
+                weight,
+                enabled,
+                privateLinkAlias,
+                privateLinkResourceId,
+                privateLinkLocation,
+                privateLinkApprovalMessage,
+                privateEndpointStatus,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ValidateCustomDomainResult"/>. </summary>
-        /// <param name="isCustomDomainValid">
-        /// Indicates whether the custom domain is valid or not.
-        /// Serialized Name: ValidateCustomDomainOutput.customDomainValidated
+        /// <summary> Initializes a new instance of <see cref="Models.DeepCreatedCustomDomain"/>. </summary>
+        /// <param name="name">
+        /// Custom domain name.
+        /// Serialized Name: DeepCreatedCustomDomain.name
         /// </param>
-        /// <param name="reason">
-        /// The reason why the custom domain is not valid.
-        /// Serialized Name: ValidateCustomDomainOutput.reason
+        /// <param name="hostName">
+        /// The host name of the custom domain. Must be a domain name.
+        /// Serialized Name: DeepCreatedCustomDomain.properties.hostName
         /// </param>
-        /// <param name="message">
-        /// Error message describing why the custom domain is not valid.
-        /// Serialized Name: ValidateCustomDomainOutput.message
+        /// <param name="validationData">
+        /// Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China.
+        /// Serialized Name: DeepCreatedCustomDomain.properties.validationData
         /// </param>
-        /// <returns> A new <see cref="Models.ValidateCustomDomainResult"/> instance for mocking. </returns>
-        public static ValidateCustomDomainResult ValidateCustomDomainResult(bool? isCustomDomainValid = null, string reason = null, string message = null)
+        /// <returns> A new <see cref="Models.DeepCreatedCustomDomain"/> instance for mocking. </returns>
+        public static DeepCreatedCustomDomain DeepCreatedCustomDomain(string name = null, string hostName = null, string validationData = null)
         {
-            return new ValidateCustomDomainResult(isCustomDomainValid, reason, message, serializedAdditionalRawData: null);
+            return new DeepCreatedCustomDomain(name, hostName, validationData, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Cdn.CdnCustomDomainData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="hostName">
+        /// The host name of the custom domain. Must be a domain name.
+        /// Serialized Name: CustomDomain.properties.hostName
+        /// </param>
+        /// <param name="resourceState">
+        /// Resource status of the custom domain.
+        /// Serialized Name: CustomDomain.properties.resourceState
+        /// </param>
+        /// <param name="customHttpsProvisioningState">
+        /// Provisioning status of the custom domain.
+        /// Serialized Name: CustomDomain.properties.customHttpsProvisioningState
+        /// </param>
+        /// <param name="customHttpsAvailabilityState">
+        /// Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step.
+        /// Serialized Name: CustomDomain.properties.customHttpsProvisioningSubstate
+        /// </param>
+        /// <param name="customDomainHttpsContent">
+        /// Certificate parameters for securing custom HTTPS
+        /// Serialized Name: CustomDomain.properties.customHttpsParameters
+        /// Please note <see cref="CustomDomainHttpsContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="UserManagedHttpsContent"/> and <see cref="CdnManagedHttpsContent"/>.
+        /// </param>
+        /// <param name="validationData">
+        /// Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China.
+        /// Serialized Name: CustomDomain.properties.validationData
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning status of Custom Https of the custom domain.
+        /// Serialized Name: CustomDomain.properties.provisioningState
+        /// </param>
+        /// <returns> A new <see cref="Cdn.CdnCustomDomainData"/> instance for mocking. </returns>
+        public static CdnCustomDomainData CdnCustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string hostName = null, CustomDomainResourceState? resourceState = null, CustomHttpsProvisioningState? customHttpsProvisioningState = null, CustomHttpsAvailabilityState? customHttpsAvailabilityState = null, CustomDomainHttpsContent customDomainHttpsContent = null, string validationData = null, CustomHttpsProvisioningState? provisioningState = null)
+        {
+            return new CdnCustomDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                hostName,
+                resourceState,
+                customHttpsProvisioningState,
+                customHttpsAvailabilityState,
+                customDomainHttpsContent,
+                validationData,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Cdn.CdnOriginGroupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="healthProbeSettings">
+        /// Health probe settings to the origin that is used to determine the health of the origin.
+        /// Serialized Name: OriginGroup.properties.healthProbeSettings
+        /// </param>
+        /// <param name="origins">
+        /// The source of the content being delivered via CDN within given origin group.
+        /// Serialized Name: OriginGroup.properties.origins
+        /// </param>
+        /// <param name="trafficRestorationTimeToHealedOrNewEndpointsInMinutes">
+        /// Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
+        /// Serialized Name: OriginGroup.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes
+        /// </param>
+        /// <param name="responseBasedOriginErrorDetectionSettings">
+        /// The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported.
+        /// Serialized Name: OriginGroup.properties.responseBasedOriginErrorDetectionSettings
+        /// </param>
+        /// <param name="resourceState">
+        /// Resource status of the origin group.
+        /// Serialized Name: OriginGroup.properties.resourceState
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning status of the origin group.
+        /// Serialized Name: OriginGroup.properties.provisioningState
+        /// </param>
+        /// <returns> A new <see cref="Cdn.CdnOriginGroupData"/> instance for mocking. </returns>
+        public static CdnOriginGroupData CdnOriginGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthProbeSettings healthProbeSettings = null, IEnumerable<WritableSubResource> origins = null, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = null, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings = null, OriginGroupResourceState? resourceState = null, OriginGroupProvisioningState? provisioningState = null)
+        {
+            origins ??= new List<WritableSubResource>();
+
+            return new CdnOriginGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                healthProbeSettings,
+                origins?.ToList(),
+                trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
+                responseBasedOriginErrorDetectionSettings,
+                resourceState,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Cdn.CdnOriginData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="hostName">
+        /// The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint.
+        /// Serialized Name: Origin.properties.hostName
+        /// </param>
+        /// <param name="httpPort">
+        /// The value of the HTTP port. Must be between 1 and 65535.
+        /// Serialized Name: Origin.properties.httpPort
+        /// </param>
+        /// <param name="httpsPort">
+        /// The value of the HTTPS port. Must be between 1 and 65535.
+        /// Serialized Name: Origin.properties.httpsPort
+        /// </param>
+        /// <param name="originHostHeader">
+        /// The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint
+        /// Serialized Name: Origin.properties.originHostHeader
+        /// </param>
+        /// <param name="priority">
+        /// Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5
+        /// Serialized Name: Origin.properties.priority
+        /// </param>
+        /// <param name="weight">
+        /// Weight of the origin in given origin group for load balancing. Must be between 1 and 1000
+        /// Serialized Name: Origin.properties.weight
+        /// </param>
+        /// <param name="enabled">
+        /// Origin is enabled for load balancing or not
+        /// Serialized Name: Origin.properties.enabled
+        /// </param>
+        /// <param name="privateLinkAlias">
+        /// The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'
+        /// Serialized Name: Origin.properties.privateLinkAlias
+        /// </param>
+        /// <param name="privateLinkResourceId">
+        /// The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'
+        /// Serialized Name: Origin.properties.privateLinkResourceId
+        /// </param>
+        /// <param name="privateLinkLocation">
+        /// The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated
+        /// Serialized Name: Origin.properties.privateLinkLocation
+        /// </param>
+        /// <param name="privateLinkApprovalMessage">
+        /// A custom message to be included in the approval request to connect to the Private Link.
+        /// Serialized Name: Origin.properties.privateLinkApprovalMessage
+        /// </param>
+        /// <param name="resourceState">
+        /// Resource status of the origin.
+        /// Serialized Name: Origin.properties.resourceState
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning status of the origin.
+        /// Serialized Name: Origin.properties.provisioningState
+        /// </param>
+        /// <param name="privateEndpointStatus">
+        /// The approval status for the connection to the Private Link
+        /// Serialized Name: Origin.properties.privateEndpointStatus
+        /// </param>
+        /// <returns> A new <see cref="Cdn.CdnOriginData"/> instance for mocking. </returns>
+        public static CdnOriginData CdnOriginData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string hostName = null, int? httpPort = null, int? httpsPort = null, string originHostHeader = null, int? priority = null, int? weight = null, bool? enabled = null, string privateLinkAlias = null, ResourceIdentifier privateLinkResourceId = null, string privateLinkLocation = null, string privateLinkApprovalMessage = null, OriginResourceState? resourceState = null, OriginProvisioningState? provisioningState = null, PrivateEndpointStatus? privateEndpointStatus = null)
+        {
+            return new CdnOriginData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                hostName,
+                httpPort,
+                httpsPort,
+                originHostHeader,
+                priority,
+                weight,
+                enabled,
+                privateLinkAlias,
+                privateLinkResourceId,
+                privateLinkLocation,
+                privateLinkApprovalMessage,
+                resourceState,
+                provisioningState,
+                privateEndpointStatus,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SsoUri"/>. </summary>
+        /// <param name="availableSsoUri">
+        /// The URI used to login to the supplemental portal.
+        /// Serialized Name: SsoUri.ssoUriValue
+        /// </param>
+        /// <returns> A new <see cref="Models.SsoUri"/> instance for mocking. </returns>
+        public static SsoUri SsoUri(Uri availableSsoUri = null)
+        {
+            return new SsoUri(availableSsoUri, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ContinentsResponse"/>. </summary>
+        /// <param name="continents"> Serialized Name: ContinentsResponse.continents. </param>
+        /// <param name="countryOrRegions"> Serialized Name: ContinentsResponse.countryOrRegions. </param>
+        /// <returns> A new <see cref="Models.ContinentsResponse"/> instance for mocking. </returns>
+        public static ContinentsResponse ContinentsResponse(IEnumerable<ContinentsResponseContinentsItem> continents = null, IEnumerable<ContinentsResponseCountryOrRegionsItem> countryOrRegions = null)
+        {
+            continents ??= new List<ContinentsResponseContinentsItem>();
+            countryOrRegions ??= new List<ContinentsResponseCountryOrRegionsItem>();
+
+            return new ContinentsResponse(continents?.ToList(), countryOrRegions?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ContinentsResponseContinentsItem"/>. </summary>
+        /// <param name="id"> Serialized Name: ContinentsResponseContinentsItem.id. </param>
+        /// <returns> A new <see cref="Models.ContinentsResponseContinentsItem"/> instance for mocking. </returns>
+        public static ContinentsResponseContinentsItem ContinentsResponseContinentsItem(string id = null)
+        {
+            return new ContinentsResponseContinentsItem(id, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ContinentsResponseCountryOrRegionsItem"/>. </summary>
+        /// <param name="id"> Serialized Name: ContinentsResponseCountryOrRegionsItem.id. </param>
+        /// <param name="continentId"> Serialized Name: ContinentsResponseCountryOrRegionsItem.continentId. </param>
+        /// <returns> A new <see cref="Models.ContinentsResponseCountryOrRegionsItem"/> instance for mocking. </returns>
+        public static ContinentsResponseCountryOrRegionsItem ContinentsResponseCountryOrRegionsItem(string id = null, string continentId = null)
+        {
+            return new ContinentsResponseCountryOrRegionsItem(id, continentId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MetricsResponse"/>. </summary>
+        /// <param name="dateTimeBegin"> Serialized Name: MetricsResponse.dateTimeBegin. </param>
+        /// <param name="dateTimeEnd"> Serialized Name: MetricsResponse.dateTimeEnd. </param>
+        /// <param name="granularity"> Serialized Name: MetricsResponse.granularity. </param>
+        /// <param name="series"> Serialized Name: MetricsResponse.series. </param>
+        /// <returns> A new <see cref="Models.MetricsResponse"/> instance for mocking. </returns>
+        public static MetricsResponse MetricsResponse(DateTimeOffset? dateTimeBegin = null, DateTimeOffset? dateTimeEnd = null, MetricsResponseGranularity? granularity = null, IEnumerable<MetricsResponseSeriesItem> series = null)
+        {
+            series ??= new List<MetricsResponseSeriesItem>();
+
+            return new MetricsResponse(dateTimeBegin, dateTimeEnd, granularity, series?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MetricsResponseSeriesItem"/>. </summary>
+        /// <param name="metric"> Serialized Name: MetricsResponseSeriesItem.metric. </param>
+        /// <param name="unit"> Serialized Name: MetricsResponseSeriesItem.unit. </param>
+        /// <param name="groups"> Serialized Name: MetricsResponseSeriesItem.groups. </param>
+        /// <param name="data"> Serialized Name: MetricsResponseSeriesItem.data. </param>
+        /// <returns> A new <see cref="Models.MetricsResponseSeriesItem"/> instance for mocking. </returns>
+        public static MetricsResponseSeriesItem MetricsResponseSeriesItem(string metric = null, MetricsResponseSeriesItemUnit? unit = null, IEnumerable<MetricsResponseSeriesPropertiesItemsItem> groups = null, IEnumerable<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems> data = null)
+        {
+            groups ??= new List<MetricsResponseSeriesPropertiesItemsItem>();
+            data ??= new List<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>();
+
+            return new MetricsResponseSeriesItem(metric, unit, groups?.ToList(), data?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MetricsResponseSeriesPropertiesItemsItem"/>. </summary>
+        /// <param name="name"> Serialized Name: MetricsResponseSeriesPropertiesItemsItem.name. </param>
+        /// <param name="value"> Serialized Name: MetricsResponseSeriesPropertiesItemsItem.value. </param>
+        /// <returns> A new <see cref="Models.MetricsResponseSeriesPropertiesItemsItem"/> instance for mocking. </returns>
+        public static MetricsResponseSeriesPropertiesItemsItem MetricsResponseSeriesPropertiesItemsItem(string name = null, string value = null)
+        {
+            return new MetricsResponseSeriesPropertiesItemsItem(name, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems"/>. </summary>
+        /// <param name="dateOn"> Serialized Name: Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems.dateTime. </param>
+        /// <param name="value"> Serialized Name: Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems.value. </param>
+        /// <returns> A new <see cref="Models.Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems"/> instance for mocking. </returns>
+        public static Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(DateTimeOffset? dateOn = null, float? value = null)
+        {
+            return new Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(dateOn, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RankingsResponse"/>. </summary>
+        /// <param name="dateTimeBegin"> Serialized Name: RankingsResponse.dateTimeBegin. </param>
+        /// <param name="dateTimeEnd"> Serialized Name: RankingsResponse.dateTimeEnd. </param>
+        /// <param name="tables"> Serialized Name: RankingsResponse.tables. </param>
+        /// <returns> A new <see cref="Models.RankingsResponse"/> instance for mocking. </returns>
+        public static RankingsResponse RankingsResponse(DateTimeOffset? dateTimeBegin = null, DateTimeOffset? dateTimeEnd = null, IEnumerable<RankingsResponseTablesItem> tables = null)
+        {
+            tables ??= new List<RankingsResponseTablesItem>();
+
+            return new RankingsResponse(dateTimeBegin, dateTimeEnd, tables?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RankingsResponseTablesItem"/>. </summary>
+        /// <param name="ranking"> Serialized Name: RankingsResponseTablesItem.ranking. </param>
+        /// <param name="data"> Serialized Name: RankingsResponseTablesItem.data. </param>
+        /// <returns> A new <see cref="Models.RankingsResponseTablesItem"/> instance for mocking. </returns>
+        public static RankingsResponseTablesItem RankingsResponseTablesItem(string ranking = null, IEnumerable<RankingsResponseTablesPropertiesItemsItem> data = null)
+        {
+            data ??= new List<RankingsResponseTablesPropertiesItemsItem>();
+
+            return new RankingsResponseTablesItem(ranking, data?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RankingsResponseTablesPropertiesItemsItem"/>. </summary>
+        /// <param name="name"> Serialized Name: RankingsResponseTablesPropertiesItemsItem.name. </param>
+        /// <param name="metrics"> Serialized Name: RankingsResponseTablesPropertiesItemsItem.metrics. </param>
+        /// <returns> A new <see cref="Models.RankingsResponseTablesPropertiesItemsItem"/> instance for mocking. </returns>
+        public static RankingsResponseTablesPropertiesItemsItem RankingsResponseTablesPropertiesItemsItem(string name = null, IEnumerable<RankingsResponseTablesPropertiesItemsMetricsItem> metrics = null)
+        {
+            metrics ??= new List<RankingsResponseTablesPropertiesItemsMetricsItem>();
+
+            return new RankingsResponseTablesPropertiesItemsItem(name, metrics?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RankingsResponseTablesPropertiesItemsMetricsItem"/>. </summary>
+        /// <param name="metric"> Serialized Name: RankingsResponseTablesPropertiesItemsMetricsItem.metric. </param>
+        /// <param name="value"> Serialized Name: RankingsResponseTablesPropertiesItemsMetricsItem.value. </param>
+        /// <param name="percentage"> Serialized Name: RankingsResponseTablesPropertiesItemsMetricsItem.percentage. </param>
+        /// <returns> A new <see cref="Models.RankingsResponseTablesPropertiesItemsMetricsItem"/> instance for mocking. </returns>
+        public static RankingsResponseTablesPropertiesItemsMetricsItem RankingsResponseTablesPropertiesItemsMetricsItem(string metric = null, long? value = null, float? percentage = null)
+        {
+            return new RankingsResponseTablesPropertiesItemsMetricsItem(metric, value, percentage, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourcesResponse"/>. </summary>
+        /// <param name="endpoints"> Serialized Name: ResourcesResponse.endpoints. </param>
+        /// <param name="customDomains"> Serialized Name: ResourcesResponse.customDomains. </param>
+        /// <returns> A new <see cref="Models.ResourcesResponse"/> instance for mocking. </returns>
+        public static ResourcesResponse ResourcesResponse(IEnumerable<ResourcesResponseEndpointsItem> endpoints = null, IEnumerable<ResourcesResponseCustomDomainsItem> customDomains = null)
+        {
+            endpoints ??= new List<ResourcesResponseEndpointsItem>();
+            customDomains ??= new List<ResourcesResponseCustomDomainsItem>();
+
+            return new ResourcesResponse(endpoints?.ToList(), customDomains?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourcesResponseEndpointsItem"/>. </summary>
+        /// <param name="id"> Serialized Name: ResourcesResponseEndpointsItem.id. </param>
+        /// <param name="name"> Serialized Name: ResourcesResponseEndpointsItem.name. </param>
+        /// <param name="history"> Serialized Name: ResourcesResponseEndpointsItem.history. </param>
+        /// <param name="customDomains"> Serialized Name: ResourcesResponseEndpointsItem.customDomains. </param>
+        /// <returns> A new <see cref="Models.ResourcesResponseEndpointsItem"/> instance for mocking. </returns>
+        public static ResourcesResponseEndpointsItem ResourcesResponseEndpointsItem(string id = null, string name = null, bool? history = null, IEnumerable<ResourcesResponseEndpointsPropertiesItemsItem> customDomains = null)
+        {
+            customDomains ??= new List<ResourcesResponseEndpointsPropertiesItemsItem>();
+
+            return new ResourcesResponseEndpointsItem(id, name, history, customDomains?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourcesResponseEndpointsPropertiesItemsItem"/>. </summary>
+        /// <param name="id"> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.id. </param>
+        /// <param name="name"> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.name. </param>
+        /// <param name="endpointId"> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.endpointId. </param>
+        /// <param name="history"> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.history. </param>
+        /// <returns> A new <see cref="Models.ResourcesResponseEndpointsPropertiesItemsItem"/> instance for mocking. </returns>
+        public static ResourcesResponseEndpointsPropertiesItemsItem ResourcesResponseEndpointsPropertiesItemsItem(string id = null, string name = null, string endpointId = null, bool? history = null)
+        {
+            return new ResourcesResponseEndpointsPropertiesItemsItem(id, name, endpointId, history, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourcesResponseCustomDomainsItem"/>. </summary>
+        /// <param name="id"> Serialized Name: ResourcesResponseCustomDomainsItem.id. </param>
+        /// <param name="name"> Serialized Name: ResourcesResponseCustomDomainsItem.name. </param>
+        /// <param name="endpointId"> Serialized Name: ResourcesResponseCustomDomainsItem.endpointId. </param>
+        /// <param name="history"> Serialized Name: ResourcesResponseCustomDomainsItem.history. </param>
+        /// <returns> A new <see cref="Models.ResourcesResponseCustomDomainsItem"/> instance for mocking. </returns>
+        public static ResourcesResponseCustomDomainsItem ResourcesResponseCustomDomainsItem(string id = null, string name = null, string endpointId = null, bool? history = null)
+        {
+            return new ResourcesResponseCustomDomainsItem(id, name, endpointId, history, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SupportedOptimizationTypesListResult"/>. </summary>
+        /// <param name="supportedOptimizationTypes">
+        /// Supported optimization types for a profile.
+        /// Serialized Name: SupportedOptimizationTypesListResult.supportedOptimizationTypes
+        /// </param>
+        /// <returns> A new <see cref="Models.SupportedOptimizationTypesListResult"/> instance for mocking. </returns>
+        public static SupportedOptimizationTypesListResult SupportedOptimizationTypesListResult(IEnumerable<OptimizationType> supportedOptimizationTypes = null)
+        {
+            supportedOptimizationTypes ??= new List<OptimizationType>();
+
+            return new SupportedOptimizationTypesListResult(supportedOptimizationTypes?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WafMetricsResponse"/>. </summary>
+        /// <param name="dateTimeBegin"> Serialized Name: WafMetricsResponse.dateTimeBegin. </param>
+        /// <param name="dateTimeEnd"> Serialized Name: WafMetricsResponse.dateTimeEnd. </param>
+        /// <param name="granularity"> Serialized Name: WafMetricsResponse.granularity. </param>
+        /// <param name="series"> Serialized Name: WafMetricsResponse.series. </param>
+        /// <returns> A new <see cref="Models.WafMetricsResponse"/> instance for mocking. </returns>
+        public static WafMetricsResponse WafMetricsResponse(DateTimeOffset? dateTimeBegin = null, DateTimeOffset? dateTimeEnd = null, WafMetricsResponseGranularity? granularity = null, IEnumerable<WafMetricsResponseSeriesItem> series = null)
+        {
+            series ??= new List<WafMetricsResponseSeriesItem>();
+
+            return new WafMetricsResponse(dateTimeBegin, dateTimeEnd, granularity, series?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WafMetricsResponseSeriesItem"/>. </summary>
+        /// <param name="metric"> Serialized Name: WafMetricsResponseSeriesItem.metric. </param>
+        /// <param name="unit"> Serialized Name: WafMetricsResponseSeriesItem.unit. </param>
+        /// <param name="groups"> Serialized Name: WafMetricsResponseSeriesItem.groups. </param>
+        /// <param name="data"> Serialized Name: WafMetricsResponseSeriesItem.data. </param>
+        /// <returns> A new <see cref="Models.WafMetricsResponseSeriesItem"/> instance for mocking. </returns>
+        public static WafMetricsResponseSeriesItem WafMetricsResponseSeriesItem(string metric = null, WafMetricsResponseSeriesItemUnit? unit = null, IEnumerable<WafMetricsResponseSeriesPropertiesItemsItem> groups = null, IEnumerable<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> data = null)
+        {
+            groups ??= new List<WafMetricsResponseSeriesPropertiesItemsItem>();
+            data ??= new List<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>();
+
+            return new WafMetricsResponseSeriesItem(metric, unit, groups?.ToList(), data?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WafMetricsResponseSeriesPropertiesItemsItem"/>. </summary>
+        /// <param name="name"> Serialized Name: WafMetricsResponseSeriesPropertiesItemsItem.name. </param>
+        /// <param name="value"> Serialized Name: WafMetricsResponseSeriesPropertiesItemsItem.value. </param>
+        /// <returns> A new <see cref="Models.WafMetricsResponseSeriesPropertiesItemsItem"/> instance for mocking. </returns>
+        public static WafMetricsResponseSeriesPropertiesItemsItem WafMetricsResponseSeriesPropertiesItemsItem(string name = null, string value = null)
+        {
+            return new WafMetricsResponseSeriesPropertiesItemsItem(name, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems"/>. </summary>
+        /// <param name="dateOn"> Serialized Name: Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems.dateTime. </param>
+        /// <param name="value"> Serialized Name: Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems.value. </param>
+        /// <returns> A new <see cref="Models.Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems"/> instance for mocking. </returns>
+        public static Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(DateTimeOffset? dateOn = null, float? value = null)
+        {
+            return new Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(dateOn, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WafRankingsResponse"/>. </summary>
+        /// <param name="dateTimeBegin"> Serialized Name: WafRankingsResponse.dateTimeBegin. </param>
+        /// <param name="dateTimeEnd"> Serialized Name: WafRankingsResponse.dateTimeEnd. </param>
+        /// <param name="groups"> Serialized Name: WafRankingsResponse.groups. </param>
+        /// <param name="data"> Serialized Name: WafRankingsResponse.data. </param>
+        /// <returns> A new <see cref="Models.WafRankingsResponse"/> instance for mocking. </returns>
+        public static WafRankingsResponse WafRankingsResponse(DateTimeOffset? dateTimeBegin = null, DateTimeOffset? dateTimeEnd = null, IEnumerable<string> groups = null, IEnumerable<WafRankingsResponseDataItem> data = null)
+        {
+            groups ??= new List<string>();
+            data ??= new List<WafRankingsResponseDataItem>();
+
+            return new WafRankingsResponse(dateTimeBegin, dateTimeEnd, groups?.ToList(), data?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WafRankingsResponseDataItem"/>. </summary>
+        /// <param name="groupValues"> Serialized Name: WafRankingsResponseDataItem.groupValues. </param>
+        /// <param name="metrics"> Serialized Name: WafRankingsResponseDataItem.metrics. </param>
+        /// <returns> A new <see cref="Models.WafRankingsResponseDataItem"/> instance for mocking. </returns>
+        public static WafRankingsResponseDataItem WafRankingsResponseDataItem(IEnumerable<string> groupValues = null, IEnumerable<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> metrics = null)
+        {
+            groupValues ??= new List<string>();
+            metrics ??= new List<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems>();
+
+            return new WafRankingsResponseDataItem(groupValues?.ToList(), metrics?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems"/>. </summary>
+        /// <param name="metric"> Serialized Name: ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems.metric. </param>
+        /// <param name="value"> Serialized Name: ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems.value. </param>
+        /// <param name="percentage"> Serialized Name: ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems.percentage. </param>
+        /// <returns> A new <see cref="Models.ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems"/> instance for mocking. </returns>
+        public static ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(string metric = null, long? value = null, double? percentage = null)
+        {
+            return new ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(metric, value, percentage, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorOriginGroupData"/>. </summary>
@@ -653,182 +1809,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorRouteData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="endpointName">
-        /// The name of the endpoint which holds the route.
-        /// Serialized Name: Route.properties.endpointName
-        /// </param>
-        /// <param name="customDomains">
-        /// Domains referenced by this endpoint.
-        /// Serialized Name: Route.properties.customDomains
-        /// </param>
-        /// <param name="originGroupId">
-        /// A reference to the origin group.
-        /// Serialized Name: Route.properties.originGroup
-        /// </param>
-        /// <param name="originPath">
-        /// A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
-        /// Serialized Name: Route.properties.originPath
-        /// </param>
-        /// <param name="ruleSets">
-        /// rule sets referenced by this endpoint.
-        /// Serialized Name: Route.properties.ruleSets
-        /// </param>
-        /// <param name="supportedProtocols">
-        /// List of supported protocols for this route.
-        /// Serialized Name: Route.properties.supportedProtocols
-        /// </param>
-        /// <param name="patternsToMatch">
-        /// The route patterns of the rule.
-        /// Serialized Name: Route.properties.patternsToMatch
-        /// </param>
-        /// <param name="cacheConfiguration">
-        /// The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object.
-        /// Serialized Name: Route.properties.cacheConfiguration
-        /// </param>
-        /// <param name="forwardingProtocol">
-        /// Protocol this rule will use when forwarding traffic to backends.
-        /// Serialized Name: Route.properties.forwardingProtocol
-        /// </param>
-        /// <param name="linkToDefaultDomain">
-        /// whether this route will be linked to the default endpoint domain.
-        /// Serialized Name: Route.properties.linkToDefaultDomain
-        /// </param>
-        /// <param name="httpsRedirect">
-        /// Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed.
-        /// Serialized Name: Route.properties.httpsRedirect
-        /// </param>
-        /// <param name="enabledState">
-        /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
-        /// Serialized Name: Route.properties.enabledState
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning status
-        /// Serialized Name: Route.properties.provisioningState
-        /// </param>
-        /// <param name="deploymentStatus"> Serialized Name: Route.properties.deploymentStatus. </param>
-        /// <returns> A new <see cref="Cdn.FrontDoorRouteData"/> instance for mocking. </returns>
-        public static FrontDoorRouteData FrontDoorRouteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string endpointName = null, IEnumerable<FrontDoorActivatedResourceInfo> customDomains = null, ResourceIdentifier originGroupId = null, string originPath = null, IEnumerable<WritableSubResource> ruleSets = null, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols = null, IEnumerable<string> patternsToMatch = null, FrontDoorRouteCacheConfiguration cacheConfiguration = null, ForwardingProtocol? forwardingProtocol = null, LinkToDefaultDomain? linkToDefaultDomain = null, HttpsRedirect? httpsRedirect = null, EnabledState? enabledState = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null)
-        {
-            customDomains ??= new List<FrontDoorActivatedResourceInfo>();
-            ruleSets ??= new List<WritableSubResource>();
-            supportedProtocols ??= new List<FrontDoorEndpointProtocol>();
-            patternsToMatch ??= new List<string>();
-
-            return new FrontDoorRouteData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                endpointName,
-                customDomains?.ToList(),
-                originGroupId != null ? ResourceManagerModelFactory.WritableSubResource(originGroupId) : null,
-                originPath,
-                ruleSets?.ToList(),
-                supportedProtocols?.ToList(),
-                patternsToMatch?.ToList(),
-                cacheConfiguration,
-                forwardingProtocol,
-                linkToDefaultDomain,
-                httpsRedirect,
-                enabledState,
-                provisioningState,
-                deploymentStatus,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorActivatedResourceInfo"/>. </summary>
-        /// <param name="id">
-        /// Resource ID.
-        /// Serialized Name: ActivatedResourceReference.id
-        /// </param>
-        /// <param name="isActive">
-        /// Whether the resource is active or inactive
-        /// Serialized Name: ActivatedResourceReference.isActive
-        /// </param>
-        /// <returns> A new <see cref="Models.FrontDoorActivatedResourceInfo"/> instance for mocking. </returns>
-        public static FrontDoorActivatedResourceInfo FrontDoorActivatedResourceInfo(ResourceIdentifier id = null, bool? isActive = null)
-        {
-            return new FrontDoorActivatedResourceInfo(id, isActive, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorRoutePatch"/>. </summary>
-        /// <param name="endpointName">
-        /// The name of the endpoint which holds the route.
-        /// Serialized Name: RouteUpdateParameters.properties.endpointName
-        /// </param>
-        /// <param name="customDomains">
-        /// Domains referenced by this endpoint.
-        /// Serialized Name: RouteUpdateParameters.properties.customDomains
-        /// </param>
-        /// <param name="originGroupId">
-        /// A reference to the origin group.
-        /// Serialized Name: RouteUpdateParameters.properties.originGroup
-        /// </param>
-        /// <param name="originPath">
-        /// A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
-        /// Serialized Name: RouteUpdateParameters.properties.originPath
-        /// </param>
-        /// <param name="ruleSets">
-        /// rule sets referenced by this endpoint.
-        /// Serialized Name: RouteUpdateParameters.properties.ruleSets
-        /// </param>
-        /// <param name="supportedProtocols">
-        /// List of supported protocols for this route.
-        /// Serialized Name: RouteUpdateParameters.properties.supportedProtocols
-        /// </param>
-        /// <param name="patternsToMatch">
-        /// The route patterns of the rule.
-        /// Serialized Name: RouteUpdateParameters.properties.patternsToMatch
-        /// </param>
-        /// <param name="cacheConfiguration">
-        /// The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object.
-        /// Serialized Name: RouteUpdateParameters.properties.cacheConfiguration
-        /// </param>
-        /// <param name="forwardingProtocol">
-        /// Protocol this rule will use when forwarding traffic to backends.
-        /// Serialized Name: RouteUpdateParameters.properties.forwardingProtocol
-        /// </param>
-        /// <param name="linkToDefaultDomain">
-        /// whether this route will be linked to the default endpoint domain.
-        /// Serialized Name: RouteUpdateParameters.properties.linkToDefaultDomain
-        /// </param>
-        /// <param name="httpsRedirect">
-        /// Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed.
-        /// Serialized Name: RouteUpdateParameters.properties.httpsRedirect
-        /// </param>
-        /// <param name="enabledState">
-        /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
-        /// Serialized Name: RouteUpdateParameters.properties.enabledState
-        /// </param>
-        /// <returns> A new <see cref="Models.FrontDoorRoutePatch"/> instance for mocking. </returns>
-        public static FrontDoorRoutePatch FrontDoorRoutePatch(string endpointName = null, IEnumerable<FrontDoorActivatedResourceInfo> customDomains = null, ResourceIdentifier originGroupId = null, string originPath = null, IEnumerable<WritableSubResource> ruleSets = null, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols = null, IEnumerable<string> patternsToMatch = null, FrontDoorRouteCacheConfiguration cacheConfiguration = null, ForwardingProtocol? forwardingProtocol = null, LinkToDefaultDomain? linkToDefaultDomain = null, HttpsRedirect? httpsRedirect = null, EnabledState? enabledState = null)
-        {
-            customDomains ??= new List<FrontDoorActivatedResourceInfo>();
-            ruleSets ??= new List<WritableSubResource>();
-            supportedProtocols ??= new List<FrontDoorEndpointProtocol>();
-            patternsToMatch ??= new List<string>();
-
-            return new FrontDoorRoutePatch(
-                endpointName,
-                customDomains?.ToList(),
-                originGroupId != null ? ResourceManagerModelFactory.WritableSubResource(originGroupId) : null,
-                originPath,
-                ruleSets?.ToList(),
-                supportedProtocols?.ToList(),
-                patternsToMatch?.ToList(),
-                cacheConfiguration,
-                forwardingProtocol,
-                linkToDefaultDomain,
-                httpsRedirect,
-                enabledState,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorRuleSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -952,41 +1932,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorSecurityPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState">
-        /// Provisioning status
-        /// Serialized Name: SecurityPolicy.properties.provisioningState
-        /// </param>
-        /// <param name="deploymentStatus"> Serialized Name: SecurityPolicy.properties.deploymentStatus. </param>
-        /// <param name="profileName">
-        /// The name of the profile which holds the security policy.
-        /// Serialized Name: SecurityPolicy.properties.profileName
-        /// </param>
-        /// <param name="properties">
-        /// object which contains security policy parameters
-        /// Serialized Name: SecurityPolicy.properties.parameters
-        /// Please note <see cref="SecurityPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityPolicyWebApplicationFirewall"/>.
-        /// </param>
-        /// <returns> A new <see cref="Cdn.FrontDoorSecurityPolicyData"/> instance for mocking. </returns>
-        public static FrontDoorSecurityPolicyData FrontDoorSecurityPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null, string profileName = null, SecurityPolicyProperties properties = null)
-        {
-            return new FrontDoorSecurityPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState,
-                deploymentStatus,
-                profileName,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorSecretData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1022,1033 +1967,114 @@ namespace Azure.ResourceManager.Cdn.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MetricsResponse"/>. </summary>
-        /// <param name="dateTimeBegin"> Serialized Name: MetricsResponse.dateTimeBegin. </param>
-        /// <param name="dateTimeEnd"> Serialized Name: MetricsResponse.dateTimeEnd. </param>
-        /// <param name="granularity"> Serialized Name: MetricsResponse.granularity. </param>
-        /// <param name="series"> Serialized Name: MetricsResponse.series. </param>
-        /// <returns> A new <see cref="Models.MetricsResponse"/> instance for mocking. </returns>
-        public static MetricsResponse MetricsResponse(DateTimeOffset? dateTimeBegin = null, DateTimeOffset? dateTimeEnd = null, MetricsResponseGranularity? granularity = null, IEnumerable<MetricsResponseSeriesItem> series = null)
-        {
-            series ??= new List<MetricsResponseSeriesItem>();
-
-            return new MetricsResponse(dateTimeBegin, dateTimeEnd, granularity, series?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MetricsResponseSeriesItem"/>. </summary>
-        /// <param name="metric"> Serialized Name: MetricsResponseSeriesItem.metric. </param>
-        /// <param name="unit"> Serialized Name: MetricsResponseSeriesItem.unit. </param>
-        /// <param name="groups"> Serialized Name: MetricsResponseSeriesItem.groups. </param>
-        /// <param name="data"> Serialized Name: MetricsResponseSeriesItem.data. </param>
-        /// <returns> A new <see cref="Models.MetricsResponseSeriesItem"/> instance for mocking. </returns>
-        public static MetricsResponseSeriesItem MetricsResponseSeriesItem(string metric = null, MetricsResponseSeriesItemUnit? unit = null, IEnumerable<MetricsResponseSeriesPropertiesItemsItem> groups = null, IEnumerable<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems> data = null)
-        {
-            groups ??= new List<MetricsResponseSeriesPropertiesItemsItem>();
-            data ??= new List<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>();
-
-            return new MetricsResponseSeriesItem(metric, unit, groups?.ToList(), data?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MetricsResponseSeriesPropertiesItemsItem"/>. </summary>
-        /// <param name="name"> Serialized Name: MetricsResponseSeriesPropertiesItemsItem.name. </param>
-        /// <param name="value"> Serialized Name: MetricsResponseSeriesPropertiesItemsItem.value. </param>
-        /// <returns> A new <see cref="Models.MetricsResponseSeriesPropertiesItemsItem"/> instance for mocking. </returns>
-        public static MetricsResponseSeriesPropertiesItemsItem MetricsResponseSeriesPropertiesItemsItem(string name = null, string value = null)
-        {
-            return new MetricsResponseSeriesPropertiesItemsItem(name, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems"/>. </summary>
-        /// <param name="dateOn"> Serialized Name: Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems.dateTime. </param>
-        /// <param name="value"> Serialized Name: Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems.value. </param>
-        /// <returns> A new <see cref="Models.Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems"/> instance for mocking. </returns>
-        public static Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(DateTimeOffset? dateOn = null, float? value = null)
-        {
-            return new Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(dateOn, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RankingsResponse"/>. </summary>
-        /// <param name="dateTimeBegin"> Serialized Name: RankingsResponse.dateTimeBegin. </param>
-        /// <param name="dateTimeEnd"> Serialized Name: RankingsResponse.dateTimeEnd. </param>
-        /// <param name="tables"> Serialized Name: RankingsResponse.tables. </param>
-        /// <returns> A new <see cref="Models.RankingsResponse"/> instance for mocking. </returns>
-        public static RankingsResponse RankingsResponse(DateTimeOffset? dateTimeBegin = null, DateTimeOffset? dateTimeEnd = null, IEnumerable<RankingsResponseTablesItem> tables = null)
-        {
-            tables ??= new List<RankingsResponseTablesItem>();
-
-            return new RankingsResponse(dateTimeBegin, dateTimeEnd, tables?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RankingsResponseTablesItem"/>. </summary>
-        /// <param name="ranking"> Serialized Name: RankingsResponseTablesItem.ranking. </param>
-        /// <param name="data"> Serialized Name: RankingsResponseTablesItem.data. </param>
-        /// <returns> A new <see cref="Models.RankingsResponseTablesItem"/> instance for mocking. </returns>
-        public static RankingsResponseTablesItem RankingsResponseTablesItem(string ranking = null, IEnumerable<RankingsResponseTablesPropertiesItemsItem> data = null)
-        {
-            data ??= new List<RankingsResponseTablesPropertiesItemsItem>();
-
-            return new RankingsResponseTablesItem(ranking, data?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RankingsResponseTablesPropertiesItemsItem"/>. </summary>
-        /// <param name="name"> Serialized Name: RankingsResponseTablesPropertiesItemsItem.name. </param>
-        /// <param name="metrics"> Serialized Name: RankingsResponseTablesPropertiesItemsItem.metrics. </param>
-        /// <returns> A new <see cref="Models.RankingsResponseTablesPropertiesItemsItem"/> instance for mocking. </returns>
-        public static RankingsResponseTablesPropertiesItemsItem RankingsResponseTablesPropertiesItemsItem(string name = null, IEnumerable<RankingsResponseTablesPropertiesItemsMetricsItem> metrics = null)
-        {
-            metrics ??= new List<RankingsResponseTablesPropertiesItemsMetricsItem>();
-
-            return new RankingsResponseTablesPropertiesItemsItem(name, metrics?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RankingsResponseTablesPropertiesItemsMetricsItem"/>. </summary>
-        /// <param name="metric"> Serialized Name: RankingsResponseTablesPropertiesItemsMetricsItem.metric. </param>
-        /// <param name="value"> Serialized Name: RankingsResponseTablesPropertiesItemsMetricsItem.value. </param>
-        /// <param name="percentage"> Serialized Name: RankingsResponseTablesPropertiesItemsMetricsItem.percentage. </param>
-        /// <returns> A new <see cref="Models.RankingsResponseTablesPropertiesItemsMetricsItem"/> instance for mocking. </returns>
-        public static RankingsResponseTablesPropertiesItemsMetricsItem RankingsResponseTablesPropertiesItemsMetricsItem(string metric = null, long? value = null, float? percentage = null)
-        {
-            return new RankingsResponseTablesPropertiesItemsMetricsItem(metric, value, percentage, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ContinentsResponse"/>. </summary>
-        /// <param name="continents"> Serialized Name: ContinentsResponse.continents. </param>
-        /// <param name="countryOrRegions"> Serialized Name: ContinentsResponse.countryOrRegions. </param>
-        /// <returns> A new <see cref="Models.ContinentsResponse"/> instance for mocking. </returns>
-        public static ContinentsResponse ContinentsResponse(IEnumerable<ContinentsResponseContinentsItem> continents = null, IEnumerable<ContinentsResponseCountryOrRegionsItem> countryOrRegions = null)
-        {
-            continents ??= new List<ContinentsResponseContinentsItem>();
-            countryOrRegions ??= new List<ContinentsResponseCountryOrRegionsItem>();
-
-            return new ContinentsResponse(continents?.ToList(), countryOrRegions?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ContinentsResponseContinentsItem"/>. </summary>
-        /// <param name="id"> Serialized Name: ContinentsResponseContinentsItem.id. </param>
-        /// <returns> A new <see cref="Models.ContinentsResponseContinentsItem"/> instance for mocking. </returns>
-        public static ContinentsResponseContinentsItem ContinentsResponseContinentsItem(string id = null)
-        {
-            return new ContinentsResponseContinentsItem(id, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ContinentsResponseCountryOrRegionsItem"/>. </summary>
-        /// <param name="id"> Serialized Name: ContinentsResponseCountryOrRegionsItem.id. </param>
-        /// <param name="continentId"> Serialized Name: ContinentsResponseCountryOrRegionsItem.continentId. </param>
-        /// <returns> A new <see cref="Models.ContinentsResponseCountryOrRegionsItem"/> instance for mocking. </returns>
-        public static ContinentsResponseCountryOrRegionsItem ContinentsResponseCountryOrRegionsItem(string id = null, string continentId = null)
-        {
-            return new ContinentsResponseCountryOrRegionsItem(id, continentId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ResourcesResponse"/>. </summary>
-        /// <param name="endpoints"> Serialized Name: ResourcesResponse.endpoints. </param>
-        /// <param name="customDomains"> Serialized Name: ResourcesResponse.customDomains. </param>
-        /// <returns> A new <see cref="Models.ResourcesResponse"/> instance for mocking. </returns>
-        public static ResourcesResponse ResourcesResponse(IEnumerable<ResourcesResponseEndpointsItem> endpoints = null, IEnumerable<ResourcesResponseCustomDomainsItem> customDomains = null)
-        {
-            endpoints ??= new List<ResourcesResponseEndpointsItem>();
-            customDomains ??= new List<ResourcesResponseCustomDomainsItem>();
-
-            return new ResourcesResponse(endpoints?.ToList(), customDomains?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ResourcesResponseEndpointsItem"/>. </summary>
-        /// <param name="id"> Serialized Name: ResourcesResponseEndpointsItem.id. </param>
-        /// <param name="name"> Serialized Name: ResourcesResponseEndpointsItem.name. </param>
-        /// <param name="history"> Serialized Name: ResourcesResponseEndpointsItem.history. </param>
-        /// <param name="customDomains"> Serialized Name: ResourcesResponseEndpointsItem.customDomains. </param>
-        /// <returns> A new <see cref="Models.ResourcesResponseEndpointsItem"/> instance for mocking. </returns>
-        public static ResourcesResponseEndpointsItem ResourcesResponseEndpointsItem(string id = null, string name = null, bool? history = null, IEnumerable<ResourcesResponseEndpointsPropertiesItemsItem> customDomains = null)
-        {
-            customDomains ??= new List<ResourcesResponseEndpointsPropertiesItemsItem>();
-
-            return new ResourcesResponseEndpointsItem(id, name, history, customDomains?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ResourcesResponseEndpointsPropertiesItemsItem"/>. </summary>
-        /// <param name="id"> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.id. </param>
-        /// <param name="name"> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.name. </param>
-        /// <param name="endpointId"> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.endpointId. </param>
-        /// <param name="history"> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.history. </param>
-        /// <returns> A new <see cref="Models.ResourcesResponseEndpointsPropertiesItemsItem"/> instance for mocking. </returns>
-        public static ResourcesResponseEndpointsPropertiesItemsItem ResourcesResponseEndpointsPropertiesItemsItem(string id = null, string name = null, string endpointId = null, bool? history = null)
-        {
-            return new ResourcesResponseEndpointsPropertiesItemsItem(id, name, endpointId, history, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ResourcesResponseCustomDomainsItem"/>. </summary>
-        /// <param name="id"> Serialized Name: ResourcesResponseCustomDomainsItem.id. </param>
-        /// <param name="name"> Serialized Name: ResourcesResponseCustomDomainsItem.name. </param>
-        /// <param name="endpointId"> Serialized Name: ResourcesResponseCustomDomainsItem.endpointId. </param>
-        /// <param name="history"> Serialized Name: ResourcesResponseCustomDomainsItem.history. </param>
-        /// <returns> A new <see cref="Models.ResourcesResponseCustomDomainsItem"/> instance for mocking. </returns>
-        public static ResourcesResponseCustomDomainsItem ResourcesResponseCustomDomainsItem(string id = null, string name = null, string endpointId = null, bool? history = null)
-        {
-            return new ResourcesResponseCustomDomainsItem(id, name, endpointId, history, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WafMetricsResponse"/>. </summary>
-        /// <param name="dateTimeBegin"> Serialized Name: WafMetricsResponse.dateTimeBegin. </param>
-        /// <param name="dateTimeEnd"> Serialized Name: WafMetricsResponse.dateTimeEnd. </param>
-        /// <param name="granularity"> Serialized Name: WafMetricsResponse.granularity. </param>
-        /// <param name="series"> Serialized Name: WafMetricsResponse.series. </param>
-        /// <returns> A new <see cref="Models.WafMetricsResponse"/> instance for mocking. </returns>
-        public static WafMetricsResponse WafMetricsResponse(DateTimeOffset? dateTimeBegin = null, DateTimeOffset? dateTimeEnd = null, WafMetricsResponseGranularity? granularity = null, IEnumerable<WafMetricsResponseSeriesItem> series = null)
-        {
-            series ??= new List<WafMetricsResponseSeriesItem>();
-
-            return new WafMetricsResponse(dateTimeBegin, dateTimeEnd, granularity, series?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WafMetricsResponseSeriesItem"/>. </summary>
-        /// <param name="metric"> Serialized Name: WafMetricsResponseSeriesItem.metric. </param>
-        /// <param name="unit"> Serialized Name: WafMetricsResponseSeriesItem.unit. </param>
-        /// <param name="groups"> Serialized Name: WafMetricsResponseSeriesItem.groups. </param>
-        /// <param name="data"> Serialized Name: WafMetricsResponseSeriesItem.data. </param>
-        /// <returns> A new <see cref="Models.WafMetricsResponseSeriesItem"/> instance for mocking. </returns>
-        public static WafMetricsResponseSeriesItem WafMetricsResponseSeriesItem(string metric = null, WafMetricsResponseSeriesItemUnit? unit = null, IEnumerable<WafMetricsResponseSeriesPropertiesItemsItem> groups = null, IEnumerable<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> data = null)
-        {
-            groups ??= new List<WafMetricsResponseSeriesPropertiesItemsItem>();
-            data ??= new List<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>();
-
-            return new WafMetricsResponseSeriesItem(metric, unit, groups?.ToList(), data?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WafMetricsResponseSeriesPropertiesItemsItem"/>. </summary>
-        /// <param name="name"> Serialized Name: WafMetricsResponseSeriesPropertiesItemsItem.name. </param>
-        /// <param name="value"> Serialized Name: WafMetricsResponseSeriesPropertiesItemsItem.value. </param>
-        /// <returns> A new <see cref="Models.WafMetricsResponseSeriesPropertiesItemsItem"/> instance for mocking. </returns>
-        public static WafMetricsResponseSeriesPropertiesItemsItem WafMetricsResponseSeriesPropertiesItemsItem(string name = null, string value = null)
-        {
-            return new WafMetricsResponseSeriesPropertiesItemsItem(name, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems"/>. </summary>
-        /// <param name="dateOn"> Serialized Name: Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems.dateTime. </param>
-        /// <param name="value"> Serialized Name: Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems.value. </param>
-        /// <returns> A new <see cref="Models.Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems"/> instance for mocking. </returns>
-        public static Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(DateTimeOffset? dateOn = null, float? value = null)
-        {
-            return new Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(dateOn, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WafRankingsResponse"/>. </summary>
-        /// <param name="dateTimeBegin"> Serialized Name: WafRankingsResponse.dateTimeBegin. </param>
-        /// <param name="dateTimeEnd"> Serialized Name: WafRankingsResponse.dateTimeEnd. </param>
-        /// <param name="groups"> Serialized Name: WafRankingsResponse.groups. </param>
-        /// <param name="data"> Serialized Name: WafRankingsResponse.data. </param>
-        /// <returns> A new <see cref="Models.WafRankingsResponse"/> instance for mocking. </returns>
-        public static WafRankingsResponse WafRankingsResponse(DateTimeOffset? dateTimeBegin = null, DateTimeOffset? dateTimeEnd = null, IEnumerable<string> groups = null, IEnumerable<WafRankingsResponseDataItem> data = null)
-        {
-            groups ??= new List<string>();
-            data ??= new List<WafRankingsResponseDataItem>();
-
-            return new WafRankingsResponse(dateTimeBegin, dateTimeEnd, groups?.ToList(), data?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WafRankingsResponseDataItem"/>. </summary>
-        /// <param name="groupValues"> Serialized Name: WafRankingsResponseDataItem.groupValues. </param>
-        /// <param name="metrics"> Serialized Name: WafRankingsResponseDataItem.metrics. </param>
-        /// <returns> A new <see cref="Models.WafRankingsResponseDataItem"/> instance for mocking. </returns>
-        public static WafRankingsResponseDataItem WafRankingsResponseDataItem(IEnumerable<string> groupValues = null, IEnumerable<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> metrics = null)
-        {
-            groupValues ??= new List<string>();
-            metrics ??= new List<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems>();
-
-            return new WafRankingsResponseDataItem(groupValues?.ToList(), metrics?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems"/>. </summary>
-        /// <param name="metric"> Serialized Name: ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems.metric. </param>
-        /// <param name="value"> Serialized Name: ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems.value. </param>
-        /// <param name="percentage"> Serialized Name: ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems.percentage. </param>
-        /// <returns> A new <see cref="Models.ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems"/> instance for mocking. </returns>
-        public static ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(string metric = null, long? value = null, double? percentage = null)
-        {
-            return new ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(metric, value, percentage, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CanMigrateResult"/>. </summary>
-        /// <param name="resourceId">
-        /// Resource ID.
-        /// Serialized Name: CanMigrateResult.id
+        /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorSecurityPolicyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState">
+        /// Provisioning status
+        /// Serialized Name: SecurityPolicy.properties.provisioningState
         /// </param>
-        /// <param name="canMigrateResultType">
-        /// Resource type.
-        /// Serialized Name: CanMigrateResult.type
-        /// </param>
-        /// <param name="canMigrate">
-        /// Flag that says if the profile can be migrated
-        /// Serialized Name: CanMigrateResult.properties.canMigrate
-        /// </param>
-        /// <param name="defaultSku">
-        /// Recommended sku for the migration
-        /// Serialized Name: CanMigrateResult.properties.defaultSku
-        /// </param>
-        /// <param name="errors"> Serialized Name: CanMigrateResult.properties.errors. </param>
-        /// <returns> A new <see cref="Models.CanMigrateResult"/> instance for mocking. </returns>
-        public static CanMigrateResult CanMigrateResult(ResourceIdentifier resourceId = null, string canMigrateResultType = null, bool? canMigrate = null, CanMigrateDefaultSku? defaultSku = null, IEnumerable<MigrationErrorType> errors = null)
-        {
-            errors ??= new List<MigrationErrorType>();
-
-            return new CanMigrateResult(
-                resourceId,
-                canMigrateResultType,
-                canMigrate,
-                defaultSku,
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MigrationErrorType"/>. </summary>
-        /// <param name="code">
-        /// Error code.
-        /// Serialized Name: MigrationErrorType.code
-        /// </param>
-        /// <param name="resourceName">
-        /// Resource which has the problem.
-        /// Serialized Name: MigrationErrorType.resourceName
-        /// </param>
-        /// <param name="errorMessage">
-        /// Error message indicating why the operation failed.
-        /// Serialized Name: MigrationErrorType.errorMessage
-        /// </param>
-        /// <param name="nextSteps">
-        /// Describes what needs to be done to fix the problem
-        /// Serialized Name: MigrationErrorType.nextSteps
-        /// </param>
-        /// <returns> A new <see cref="Models.MigrationErrorType"/> instance for mocking. </returns>
-        public static MigrationErrorType MigrationErrorType(string code = null, string resourceName = null, string errorMessage = null, string nextSteps = null)
-        {
-            return new MigrationErrorType(code, resourceName, errorMessage, nextSteps, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MigrationContent"/>. </summary>
-        /// <param name="skuName">
-        /// Sku for the migration
-        /// Serialized Name: MigrationParameters.sku
-        /// </param>
-        /// <param name="classicResourceReferenceId">
-        /// Resource reference of the classic cdn profile or classic frontdoor that need to be migrated.
-        /// Serialized Name: MigrationParameters.classicResourceReference
-        /// </param>
+        /// <param name="deploymentStatus"> Serialized Name: SecurityPolicy.properties.deploymentStatus. </param>
         /// <param name="profileName">
-        /// Name of the new profile that need to be created.
-        /// Serialized Name: MigrationParameters.profileName
+        /// The name of the profile which holds the security policy.
+        /// Serialized Name: SecurityPolicy.properties.profileName
         /// </param>
-        /// <param name="migrationWebApplicationFirewallMappings">
-        /// Waf mapping for the migrated profile
-        /// Serialized Name: MigrationParameters.migrationWebApplicationFirewallMappings
+        /// <param name="properties">
+        /// object which contains security policy parameters
+        /// Serialized Name: SecurityPolicy.properties.parameters
+        /// Please note <see cref="SecurityPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecurityPolicyWebApplicationFirewall"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.MigrationContent"/> instance for mocking. </returns>
-        public static MigrationContent MigrationContent(CdnSkuName? skuName = null, ResourceIdentifier classicResourceReferenceId = null, string profileName = null, IEnumerable<MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings = null)
+        /// <returns> A new <see cref="Cdn.FrontDoorSecurityPolicyData"/> instance for mocking. </returns>
+        public static FrontDoorSecurityPolicyData FrontDoorSecurityPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null, string profileName = null, SecurityPolicyProperties properties = null)
         {
-            migrationWebApplicationFirewallMappings ??= new List<MigrationWebApplicationFirewallMapping>();
-
-            return new MigrationContent(skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null, classicResourceReferenceId != null ? ResourceManagerModelFactory.WritableSubResource(classicResourceReferenceId) : null, profileName, migrationWebApplicationFirewallMappings?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MigrateResult"/>. </summary>
-        /// <param name="resourceId">
-        /// Resource ID.
-        /// Serialized Name: MigrateResult.id
-        /// </param>
-        /// <param name="migrateResultType">
-        /// Resource type.
-        /// Serialized Name: MigrateResult.type
-        /// </param>
-        /// <param name="migratedProfileResourceIdId">
-        /// Arm resource id of the migrated profile
-        /// Serialized Name: MigrateResult.properties.migratedProfileResourceId
-        /// </param>
-        /// <returns> A new <see cref="Models.MigrateResult"/> instance for mocking. </returns>
-        public static MigrateResult MigrateResult(ResourceIdentifier resourceId = null, string migrateResultType = null, ResourceIdentifier migratedProfileResourceIdId = null)
-        {
-            return new MigrateResult(resourceId, migrateResultType, migratedProfileResourceIdId != null ? ResourceManagerModelFactory.WritableSubResource(migratedProfileResourceIdId) : null, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SsoUri"/>. </summary>
-        /// <param name="availableSsoUri">
-        /// The URI used to login to the supplemental portal.
-        /// Serialized Name: SsoUri.ssoUriValue
-        /// </param>
-        /// <returns> A new <see cref="Models.SsoUri"/> instance for mocking. </returns>
-        public static SsoUri SsoUri(Uri availableSsoUri = null)
-        {
-            return new SsoUri(availableSsoUri, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SupportedOptimizationTypesListResult"/>. </summary>
-        /// <param name="supportedOptimizationTypes">
-        /// Supported optimization types for a profile.
-        /// Serialized Name: SupportedOptimizationTypesListResult.supportedOptimizationTypes
-        /// </param>
-        /// <returns> A new <see cref="Models.SupportedOptimizationTypesListResult"/> instance for mocking. </returns>
-        public static SupportedOptimizationTypesListResult SupportedOptimizationTypesListResult(IEnumerable<OptimizationType> supportedOptimizationTypes = null)
-        {
-            supportedOptimizationTypes ??= new List<OptimizationType>();
-
-            return new SupportedOptimizationTypesListResult(supportedOptimizationTypes?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CdnUsage"/>. </summary>
-        /// <param name="resourceType">
-        /// Resource type for which the usage is provided.
-        /// Serialized Name: ResourceUsage.resourceType
-        /// </param>
-        /// <param name="unit">
-        /// Unit of the usage. e.g. count.
-        /// Serialized Name: ResourceUsage.unit
-        /// </param>
-        /// <param name="currentValue">
-        /// Actual value of usage on the specified resource type.
-        /// Serialized Name: ResourceUsage.currentValue
-        /// </param>
-        /// <param name="limit">
-        /// Quota of the specified resource type.
-        /// Serialized Name: ResourceUsage.limit
-        /// </param>
-        /// <returns> A new <see cref="Models.CdnUsage"/> instance for mocking. </returns>
-        public static CdnUsage CdnUsage(string resourceType = null, CdnUsageUnit? unit = null, int? currentValue = null, int? limit = null)
-        {
-            return new CdnUsage(resourceType, unit, currentValue, limit, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Cdn.CdnEndpointData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="originPath">
-        /// A directory path on the origin that CDN can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
-        /// Serialized Name: Endpoint.properties.originPath
-        /// </param>
-        /// <param name="contentTypesToCompress">
-        /// List of content types on which compression applies. The value should be a valid MIME type.
-        /// Serialized Name: Endpoint.properties.contentTypesToCompress
-        /// </param>
-        /// <param name="originHostHeader">
-        /// The host header value sent to the origin with each request. This property at Endpoint is only allowed when endpoint uses single origin and can be overridden by the same property specified at origin.If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
-        /// Serialized Name: Endpoint.properties.originHostHeader
-        /// </param>
-        /// <param name="isCompressionEnabled">
-        /// Indicates whether content compression is enabled on CDN. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on CDN when requested content is smaller than 1 byte or larger than 1 MB.
-        /// Serialized Name: Endpoint.properties.isCompressionEnabled
-        /// </param>
-        /// <param name="isHttpAllowed">
-        /// Indicates whether HTTP traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed.
-        /// Serialized Name: Endpoint.properties.isHttpAllowed
-        /// </param>
-        /// <param name="isHttpsAllowed">
-        /// Indicates whether HTTPS traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed.
-        /// Serialized Name: Endpoint.properties.isHttpsAllowed
-        /// </param>
-        /// <param name="queryStringCachingBehavior">
-        /// Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
-        /// Serialized Name: Endpoint.properties.queryStringCachingBehavior
-        /// </param>
-        /// <param name="optimizationType">
-        /// Specifies what scenario the customer wants this CDN endpoint to optimize for, e.g. Download, Media services. With this information, CDN can apply scenario driven optimization.
-        /// Serialized Name: Endpoint.properties.optimizationType
-        /// </param>
-        /// <param name="probePath">
-        /// Path to a file hosted on the origin which helps accelerate delivery of the dynamic content and calculate the most optimal routes for the CDN. This is relative to the origin path. This property is only relevant when using a single origin.
-        /// Serialized Name: Endpoint.properties.probePath
-        /// </param>
-        /// <param name="geoFilters">
-        /// List of rules defining the user's geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/
-        /// Serialized Name: Endpoint.properties.geoFilters
-        /// </param>
-        /// <param name="defaultOriginGroupId">
-        /// A reference to the origin group.
-        /// Serialized Name: Endpoint.properties.defaultOriginGroup
-        /// </param>
-        /// <param name="uriSigningKeys">
-        /// List of keys used to validate the signed URL hashes.
-        /// Serialized Name: Endpoint.properties.urlSigningKeys
-        /// </param>
-        /// <param name="deliveryPolicy">
-        /// A policy that specifies the delivery rules to be used for an endpoint.
-        /// Serialized Name: Endpoint.properties.deliveryPolicy
-        /// </param>
-        /// <param name="webApplicationFirewallPolicyLinkId">
-        /// Defines the Web Application Firewall policy for the endpoint (if applicable)
-        /// Serialized Name: Endpoint.properties.webApplicationFirewallPolicyLink
-        /// </param>
-        /// <param name="hostName">
-        /// The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net
-        /// Serialized Name: Endpoint.properties.hostName
-        /// </param>
-        /// <param name="origins">
-        /// The source of the content being delivered via CDN.
-        /// Serialized Name: Endpoint.properties.origins
-        /// </param>
-        /// <param name="originGroups">
-        /// The origin groups comprising of origins that are used for load balancing the traffic based on availability.
-        /// Serialized Name: Endpoint.properties.originGroups
-        /// </param>
-        /// <param name="deepCreatedCustomDomains">
-        /// The custom domains under the endpoint.
-        /// Serialized Name: Endpoint.properties.customDomains
-        /// </param>
-        /// <param name="resourceState">
-        /// Resource status of the endpoint.
-        /// Serialized Name: Endpoint.properties.resourceState
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning status of the endpoint.
-        /// Serialized Name: Endpoint.properties.provisioningState
-        /// </param>
-        /// <returns> A new <see cref="Cdn.CdnEndpointData"/> instance for mocking. </returns>
-        public static CdnEndpointData CdnEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string originPath = null, IEnumerable<string> contentTypesToCompress = null, string originHostHeader = null, bool? isCompressionEnabled = null, bool? isHttpAllowed = null, bool? isHttpsAllowed = null, QueryStringCachingBehavior? queryStringCachingBehavior = null, OptimizationType? optimizationType = null, string probePath = null, IEnumerable<GeoFilter> geoFilters = null, ResourceIdentifier defaultOriginGroupId = null, IEnumerable<UriSigningKey> uriSigningKeys = null, EndpointDeliveryPolicy deliveryPolicy = null, ResourceIdentifier webApplicationFirewallPolicyLinkId = null, string hostName = null, IEnumerable<DeepCreatedOrigin> origins = null, IEnumerable<DeepCreatedOriginGroup> originGroups = null, IEnumerable<DeepCreatedCustomDomain> deepCreatedCustomDomains = null, EndpointResourceState? resourceState = null, CdnEndpointProvisioningState? provisioningState = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            contentTypesToCompress ??= new List<string>();
-            geoFilters ??= new List<GeoFilter>();
-            uriSigningKeys ??= new List<UriSigningKey>();
-            origins ??= new List<DeepCreatedOrigin>();
-            originGroups ??= new List<DeepCreatedOriginGroup>();
-            deepCreatedCustomDomains ??= new List<DeepCreatedCustomDomain>();
-
-            return new CdnEndpointData(
+            return new FrontDoorSecurityPolicyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
-                location,
-                originPath,
-                contentTypesToCompress?.ToList(),
-                originHostHeader,
-                isCompressionEnabled,
-                isHttpAllowed,
-                isHttpsAllowed,
-                queryStringCachingBehavior,
-                optimizationType,
-                probePath,
-                geoFilters?.ToList(),
-                defaultOriginGroupId != null ? ResourceManagerModelFactory.WritableSubResource(defaultOriginGroupId) : null,
-                uriSigningKeys?.ToList(),
-                deliveryPolicy,
-                webApplicationFirewallPolicyLinkId != null ? new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, serializedAdditionalRawData: null) : null,
-                hostName,
-                origins?.ToList(),
-                originGroups?.ToList(),
-                deepCreatedCustomDomains?.ToList(),
-                resourceState,
                 provisioningState,
+                deploymentStatus,
+                profileName,
+                properties,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeepCreatedOrigin"/>. </summary>
-        /// <param name="name">
-        /// Origin name which must be unique within the endpoint.
-        /// Serialized Name: DeepCreatedOrigin.name
+        /// <summary> Initializes a new instance of <see cref="Models.ValidateSecretContent"/>. </summary>
+        /// <param name="secretType">
+        /// The secret type.
+        /// Serialized Name: ValidateSecretInput.secretType
         /// </param>
-        /// <param name="hostName">
-        /// The address of the origin. It can be a domain name, IPv4 address, or IPv6 address. This should be unique across all origins in an endpoint.
-        /// Serialized Name: DeepCreatedOrigin.properties.hostName
+        /// <param name="secretSourceId">
+        /// Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}
+        /// Serialized Name: ValidateSecretInput.secretSource
         /// </param>
-        /// <param name="httpPort">
-        /// The value of the HTTP port. Must be between 1 and 65535.
-        /// Serialized Name: DeepCreatedOrigin.properties.httpPort
+        /// <param name="secretVersion">
+        /// Secret version, if customer is using a specific version.
+        /// Serialized Name: ValidateSecretInput.secretVersion
         /// </param>
-        /// <param name="httpsPort">
-        /// The value of the HTTPS port. Must be between 1 and 65535.
-        /// Serialized Name: DeepCreatedOrigin.properties.httpsPort
-        /// </param>
-        /// <param name="originHostHeader">
-        /// The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
-        /// Serialized Name: DeepCreatedOrigin.properties.originHostHeader
-        /// </param>
-        /// <param name="priority">
-        /// Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5.
-        /// Serialized Name: DeepCreatedOrigin.properties.priority
-        /// </param>
-        /// <param name="weight">
-        /// Weight of the origin in given origin group for load balancing. Must be between 1 and 1000
-        /// Serialized Name: DeepCreatedOrigin.properties.weight
-        /// </param>
-        /// <param name="enabled">
-        /// Origin is enabled for load balancing or not. By default, origin is always enabled.
-        /// Serialized Name: DeepCreatedOrigin.properties.enabled
-        /// </param>
-        /// <param name="privateLinkAlias">
-        /// The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'
-        /// Serialized Name: DeepCreatedOrigin.properties.privateLinkAlias
-        /// </param>
-        /// <param name="privateLinkResourceId">
-        /// The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'
-        /// Serialized Name: DeepCreatedOrigin.properties.privateLinkResourceId
-        /// </param>
-        /// <param name="privateLinkLocation">
-        /// The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated
-        /// Serialized Name: DeepCreatedOrigin.properties.privateLinkLocation
-        /// </param>
-        /// <param name="privateLinkApprovalMessage">
-        /// A custom message to be included in the approval request to connect to the Private Link.
-        /// Serialized Name: DeepCreatedOrigin.properties.privateLinkApprovalMessage
-        /// </param>
-        /// <param name="privateEndpointStatus">
-        /// The approval status for the connection to the Private Link
-        /// Serialized Name: DeepCreatedOrigin.properties.privateEndpointStatus
-        /// </param>
-        /// <returns> A new <see cref="Models.DeepCreatedOrigin"/> instance for mocking. </returns>
-        public static DeepCreatedOrigin DeepCreatedOrigin(string name = null, string hostName = null, int? httpPort = null, int? httpsPort = null, string originHostHeader = null, int? priority = null, int? weight = null, bool? enabled = null, string privateLinkAlias = null, ResourceIdentifier privateLinkResourceId = null, string privateLinkLocation = null, string privateLinkApprovalMessage = null, PrivateEndpointStatus? privateEndpointStatus = null)
+        /// <returns> A new <see cref="Models.ValidateSecretContent"/> instance for mocking. </returns>
+        public static ValidateSecretContent ValidateSecretContent(SecretType secretType = default, ResourceIdentifier secretSourceId = null, string secretVersion = null)
         {
-            return new DeepCreatedOrigin(
-                name,
-                hostName,
-                httpPort,
-                httpsPort,
-                originHostHeader,
-                priority,
-                weight,
-                enabled,
-                privateLinkAlias,
-                privateLinkResourceId,
-                privateLinkLocation,
-                privateLinkApprovalMessage,
-                privateEndpointStatus,
-                serializedAdditionalRawData: null);
+            return new ValidateSecretContent(secretType, secretSourceId != null ? ResourceManagerModelFactory.WritableSubResource(secretSourceId) : null, secretVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeepCreatedCustomDomain"/>. </summary>
-        /// <param name="name">
-        /// Custom domain name.
-        /// Serialized Name: DeepCreatedCustomDomain.name
-        /// </param>
-        /// <param name="hostName">
-        /// The host name of the custom domain. Must be a domain name.
-        /// Serialized Name: DeepCreatedCustomDomain.properties.hostName
-        /// </param>
-        /// <param name="validationData">
-        /// Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China.
-        /// Serialized Name: DeepCreatedCustomDomain.properties.validationData
-        /// </param>
-        /// <returns> A new <see cref="Models.DeepCreatedCustomDomain"/> instance for mocking. </returns>
-        public static DeepCreatedCustomDomain DeepCreatedCustomDomain(string name = null, string hostName = null, string validationData = null)
-        {
-            return new DeepCreatedCustomDomain(name, hostName, validationData, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Cdn.CdnOriginData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="hostName">
-        /// The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint.
-        /// Serialized Name: Origin.properties.hostName
-        /// </param>
-        /// <param name="httpPort">
-        /// The value of the HTTP port. Must be between 1 and 65535.
-        /// Serialized Name: Origin.properties.httpPort
-        /// </param>
-        /// <param name="httpsPort">
-        /// The value of the HTTPS port. Must be between 1 and 65535.
-        /// Serialized Name: Origin.properties.httpsPort
-        /// </param>
-        /// <param name="originHostHeader">
-        /// The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint
-        /// Serialized Name: Origin.properties.originHostHeader
-        /// </param>
-        /// <param name="priority">
-        /// Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5
-        /// Serialized Name: Origin.properties.priority
-        /// </param>
-        /// <param name="weight">
-        /// Weight of the origin in given origin group for load balancing. Must be between 1 and 1000
-        /// Serialized Name: Origin.properties.weight
-        /// </param>
-        /// <param name="enabled">
-        /// Origin is enabled for load balancing or not
-        /// Serialized Name: Origin.properties.enabled
-        /// </param>
-        /// <param name="privateLinkAlias">
-        /// The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'
-        /// Serialized Name: Origin.properties.privateLinkAlias
-        /// </param>
-        /// <param name="privateLinkResourceId">
-        /// The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'
-        /// Serialized Name: Origin.properties.privateLinkResourceId
-        /// </param>
-        /// <param name="privateLinkLocation">
-        /// The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated
-        /// Serialized Name: Origin.properties.privateLinkLocation
-        /// </param>
-        /// <param name="privateLinkApprovalMessage">
-        /// A custom message to be included in the approval request to connect to the Private Link.
-        /// Serialized Name: Origin.properties.privateLinkApprovalMessage
-        /// </param>
-        /// <param name="resourceState">
-        /// Resource status of the origin.
-        /// Serialized Name: Origin.properties.resourceState
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning status of the origin.
-        /// Serialized Name: Origin.properties.provisioningState
-        /// </param>
-        /// <param name="privateEndpointStatus">
-        /// The approval status for the connection to the Private Link
-        /// Serialized Name: Origin.properties.privateEndpointStatus
-        /// </param>
-        /// <returns> A new <see cref="Cdn.CdnOriginData"/> instance for mocking. </returns>
-        public static CdnOriginData CdnOriginData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string hostName = null, int? httpPort = null, int? httpsPort = null, string originHostHeader = null, int? priority = null, int? weight = null, bool? enabled = null, string privateLinkAlias = null, ResourceIdentifier privateLinkResourceId = null, string privateLinkLocation = null, string privateLinkApprovalMessage = null, OriginResourceState? resourceState = null, OriginProvisioningState? provisioningState = null, PrivateEndpointStatus? privateEndpointStatus = null)
-        {
-            return new CdnOriginData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                hostName,
-                httpPort,
-                httpsPort,
-                originHostHeader,
-                priority,
-                weight,
-                enabled,
-                privateLinkAlias,
-                privateLinkResourceId,
-                privateLinkLocation,
-                privateLinkApprovalMessage,
-                resourceState,
-                provisioningState,
-                privateEndpointStatus,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Cdn.CdnOriginGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="healthProbeSettings">
-        /// Health probe settings to the origin that is used to determine the health of the origin.
-        /// Serialized Name: OriginGroup.properties.healthProbeSettings
-        /// </param>
-        /// <param name="origins">
-        /// The source of the content being delivered via CDN within given origin group.
-        /// Serialized Name: OriginGroup.properties.origins
-        /// </param>
-        /// <param name="trafficRestorationTimeToHealedOrNewEndpointsInMinutes">
-        /// Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
-        /// Serialized Name: OriginGroup.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes
-        /// </param>
-        /// <param name="responseBasedOriginErrorDetectionSettings">
-        /// The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported.
-        /// Serialized Name: OriginGroup.properties.responseBasedOriginErrorDetectionSettings
-        /// </param>
-        /// <param name="resourceState">
-        /// Resource status of the origin group.
-        /// Serialized Name: OriginGroup.properties.resourceState
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning status of the origin group.
-        /// Serialized Name: OriginGroup.properties.provisioningState
-        /// </param>
-        /// <returns> A new <see cref="Cdn.CdnOriginGroupData"/> instance for mocking. </returns>
-        public static CdnOriginGroupData CdnOriginGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthProbeSettings healthProbeSettings = null, IEnumerable<WritableSubResource> origins = null, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = null, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings = null, OriginGroupResourceState? resourceState = null, OriginGroupProvisioningState? provisioningState = null)
-        {
-            origins ??= new List<WritableSubResource>();
-
-            return new CdnOriginGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                healthProbeSettings,
-                origins?.ToList(),
-                trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
-                responseBasedOriginErrorDetectionSettings,
-                resourceState,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Cdn.CdnCustomDomainData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="hostName">
-        /// The host name of the custom domain. Must be a domain name.
-        /// Serialized Name: CustomDomain.properties.hostName
-        /// </param>
-        /// <param name="resourceState">
-        /// Resource status of the custom domain.
-        /// Serialized Name: CustomDomain.properties.resourceState
-        /// </param>
-        /// <param name="customHttpsProvisioningState">
-        /// Provisioning status of the custom domain.
-        /// Serialized Name: CustomDomain.properties.customHttpsProvisioningState
-        /// </param>
-        /// <param name="customHttpsAvailabilityState">
-        /// Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step.
-        /// Serialized Name: CustomDomain.properties.customHttpsProvisioningSubstate
-        /// </param>
-        /// <param name="customDomainHttpsContent">
-        /// Certificate parameters for securing custom HTTPS
-        /// Serialized Name: CustomDomain.properties.customHttpsParameters
-        /// Please note <see cref="CustomDomainHttpsContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="UserManagedHttpsContent"/> and <see cref="CdnManagedHttpsContent"/>.
-        /// </param>
-        /// <param name="validationData">
-        /// Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China.
-        /// Serialized Name: CustomDomain.properties.validationData
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning status of Custom Https of the custom domain.
-        /// Serialized Name: CustomDomain.properties.provisioningState
-        /// </param>
-        /// <returns> A new <see cref="Cdn.CdnCustomDomainData"/> instance for mocking. </returns>
-        public static CdnCustomDomainData CdnCustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string hostName = null, CustomDomainResourceState? resourceState = null, CustomHttpsProvisioningState? customHttpsProvisioningState = null, CustomHttpsAvailabilityState? customHttpsAvailabilityState = null, CustomDomainHttpsContent customDomainHttpsContent = null, string validationData = null, CustomHttpsProvisioningState? provisioningState = null)
-        {
-            return new CdnCustomDomainData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                hostName,
-                resourceState,
-                customHttpsProvisioningState,
-                customHttpsAvailabilityState,
-                customDomainHttpsContent,
-                validationData,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ValidateProbeResult"/>. </summary>
-        /// <param name="isValid">
-        /// Indicates whether the probe URL is accepted or not.
-        /// Serialized Name: ValidateProbeOutput.isValid
-        /// </param>
-        /// <param name="errorCode">
-        /// Specifies the error code when the probe url is not accepted.
-        /// Serialized Name: ValidateProbeOutput.errorCode
+        /// <summary> Initializes a new instance of <see cref="Models.ValidateSecretResult"/>. </summary>
+        /// <param name="status">
+        /// The validation status.
+        /// Serialized Name: ValidateSecretOutput.status
         /// </param>
         /// <param name="message">
-        /// The detailed error message describing why the probe URL is not accepted.
-        /// Serialized Name: ValidateProbeOutput.message
+        /// Detailed error message
+        /// Serialized Name: ValidateSecretOutput.message
         /// </param>
-        /// <returns> A new <see cref="Models.ValidateProbeResult"/> instance for mocking. </returns>
-        public static ValidateProbeResult ValidateProbeResult(bool? isValid = null, string errorCode = null, string message = null)
+        /// <returns> A new <see cref="Models.ValidateSecretResult"/> instance for mocking. </returns>
+        public static ValidateSecretResult ValidateSecretResult(ValidationStatus? status = null, string message = null)
         {
-            return new ValidateProbeResult(isValid, errorCode, message, serializedAdditionalRawData: null);
+            return new ValidateSecretResult(status, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EdgeNode"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="ipAddressGroups">
-        /// List of ip address groups.
-        /// Serialized Name: EdgeNode.properties.ipAddressGroups
+        /// <summary> Initializes a new instance of <see cref="Models.AzureFirstPartyManagedCertificateProperties"/>. </summary>
+        /// <param name="secretSourceId">
+        /// Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{certificateName}
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.secretSource
         /// </param>
-        /// <returns> A new <see cref="Models.EdgeNode"/> instance for mocking. </returns>
-        public static EdgeNode EdgeNode(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<IPAddressGroup> ipAddressGroups = null)
-        {
-            ipAddressGroups ??= new List<IPAddressGroup>();
-
-            return new EdgeNode(
-                id,
-                name,
-                resourceType,
-                systemData,
-                ipAddressGroups?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CdnMigrationToAfdContent"/>. </summary>
-        /// <param name="skuName">
-        /// Sku for the migration
-        /// Serialized Name: CdnMigrationToAfdParameters.sku
-        /// </param>
-        /// <param name="migrationEndpointMappings">
-        /// A name map between classic CDN endpoints and AFD Premium/Standard endpoints.
-        /// Serialized Name: CdnMigrationToAfdParameters.migrationEndpointMappings
-        /// </param>
-        /// <returns> A new <see cref="Models.CdnMigrationToAfdContent"/> instance for mocking. </returns>
-        public static CdnMigrationToAfdContent CdnMigrationToAfdContent(CdnSkuName? skuName = null, IEnumerable<MigrationEndpointMapping> migrationEndpointMappings = null)
-        {
-            migrationEndpointMappings ??= new List<MigrationEndpointMapping>();
-
-            return new CdnMigrationToAfdContent(skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null, migrationEndpointMappings?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// Gets a unique read-only string that changes whenever the resource is updated.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.etag
-        /// </param>
-        /// <param name="skuName">
-        /// The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.sku
-        /// </param>
-        /// <param name="policySettings">
-        /// Describes  policySettings for policy
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.policySettings
-        /// </param>
-        /// <param name="rateLimitRules">
-        /// Describes rate limit rules inside the policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.rateLimitRules
-        /// </param>
-        /// <param name="customRules">
-        /// Describes custom rules inside the policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.customRules
-        /// </param>
-        /// <param name="managedRuleSets">
-        /// Describes managed rules inside the policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.managedRules
-        /// </param>
-        /// <param name="endpointLinks">
-        /// Describes Azure CDN endpoints associated with this Web Application Firewall policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.endpointLinks
-        /// </param>
-        /// <param name="extendedProperties">
-        /// Key-Value pair representing additional properties for Web Application Firewall policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.extendedProperties
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state of the WebApplicationFirewallPolicy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.provisioningState
-        /// </param>
-        /// <param name="resourceState">
-        /// Resource status of the policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.resourceState
-        /// </param>
-        /// <returns> A new <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/> instance for mocking. </returns>
-        public static CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, CdnSkuName? skuName = null, WafPolicySettings policySettings = null, IEnumerable<RateLimitRule> rateLimitRules = null, IEnumerable<CustomRule> customRules = null, IEnumerable<WafPolicyManagedRuleSet> managedRuleSets = null, IEnumerable<SubResource> endpointLinks = null, IDictionary<string, string> extendedProperties = null, WebApplicationFirewallPolicyProvisioningState? provisioningState = null, PolicyResourceState? resourceState = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            rateLimitRules ??= new List<RateLimitRule>();
-            customRules ??= new List<CustomRule>();
-            managedRuleSets ??= new List<WafPolicyManagedRuleSet>();
-            endpointLinks ??= new List<SubResource>();
-            extendedProperties ??= new Dictionary<string, string>();
-
-            return new CdnWebApplicationFirewallPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                etag,
-                skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null,
-                policySettings,
-                rateLimitRules != null ? new RateLimitRuleList(rateLimitRules?.ToList(), serializedAdditionalRawData: null) : null,
-                customRules != null ? new CustomRuleList(customRules?.ToList(), serializedAdditionalRawData: null) : null,
-                managedRuleSets != null ? new ManagedRuleSetList(managedRuleSets?.ToList(), serializedAdditionalRawData: null) : null,
-                endpointLinks?.ToList(),
-                extendedProperties,
-                provisioningState,
-                resourceState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleSetDefinition"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="skuName">
-        /// The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy.
-        /// Serialized Name: ManagedRuleSetDefinition.sku
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state of the managed rule set.
-        /// Serialized Name: ManagedRuleSetDefinition.properties.provisioningState
-        /// </param>
-        /// <param name="ruleSetType">
-        /// Type of the managed rule set.
-        /// Serialized Name: ManagedRuleSetDefinition.properties.ruleSetType
-        /// </param>
-        /// <param name="ruleSetVersion">
-        /// Version of the managed rule set type.
-        /// Serialized Name: ManagedRuleSetDefinition.properties.ruleSetVersion
-        /// </param>
-        /// <param name="ruleGroups">
-        /// Rule groups of the managed rule set.
-        /// Serialized Name: ManagedRuleSetDefinition.properties.ruleGroups
-        /// </param>
-        /// <returns> A new <see cref="Models.ManagedRuleSetDefinition"/> instance for mocking. </returns>
-        public static ManagedRuleSetDefinition ManagedRuleSetDefinition(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CdnSkuName? skuName = null, string provisioningState = null, string ruleSetType = null, string ruleSetVersion = null, IEnumerable<ManagedRuleGroupDefinition> ruleGroups = null)
-        {
-            ruleGroups ??= new List<ManagedRuleGroupDefinition>();
-
-            return new ManagedRuleSetDefinition(
-                id,
-                name,
-                resourceType,
-                systemData,
-                skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null,
-                provisioningState,
-                ruleSetType,
-                ruleSetVersion,
-                ruleGroups?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleGroupDefinition"/>. </summary>
-        /// <param name="ruleGroupName">
-        /// Name of the managed rule group.
-        /// Serialized Name: ManagedRuleGroupDefinition.ruleGroupName
-        /// </param>
-        /// <param name="description">
-        /// Description of the managed rule group.
-        /// Serialized Name: ManagedRuleGroupDefinition.description
-        /// </param>
-        /// <param name="rules">
-        /// List of rules within the managed rule group.
-        /// Serialized Name: ManagedRuleGroupDefinition.rules
-        /// </param>
-        /// <returns> A new <see cref="Models.ManagedRuleGroupDefinition"/> instance for mocking. </returns>
-        public static ManagedRuleGroupDefinition ManagedRuleGroupDefinition(string ruleGroupName = null, string description = null, IEnumerable<ManagedRuleDefinition> rules = null)
-        {
-            rules ??= new List<ManagedRuleDefinition>();
-
-            return new ManagedRuleGroupDefinition(ruleGroupName, description, rules?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleDefinition"/>. </summary>
-        /// <param name="ruleId">
-        /// Identifier for the managed rule.
-        /// Serialized Name: ManagedRuleDefinition.ruleId
-        /// </param>
-        /// <param name="description">
-        /// Describes the functionality of the managed rule.
-        /// Serialized Name: ManagedRuleDefinition.description
-        /// </param>
-        /// <returns> A new <see cref="Models.ManagedRuleDefinition"/> instance for mocking. </returns>
-        public static ManagedRuleDefinition ManagedRuleDefinition(string ruleId = null, string description = null)
-        {
-            return new ManagedRuleDefinition(ruleId, description, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedCertificateProperties"/>. </summary>
         /// <param name="subject">
         /// Subject name in the certificate.
-        /// Serialized Name: ManagedCertificateParameters.subject
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.subject
         /// </param>
-        /// <param name="expiresOn">
+        /// <param name="expirationDate">
         /// Certificate expiration date.
-        /// Serialized Name: ManagedCertificateParameters.expirationDate
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.expirationDate
         /// </param>
-        /// <returns> A new <see cref="Models.ManagedCertificateProperties"/> instance for mocking. </returns>
-        public static ManagedCertificateProperties ManagedCertificateProperties(string subject = null, DateTimeOffset? expiresOn = null)
+        /// <param name="certificateAuthority">
+        /// Certificate issuing authority.
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.certificateAuthority
+        /// </param>
+        /// <param name="subjectAlternativeNames">
+        /// The list of SANs.
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.subjectAlternativeNames
+        /// </param>
+        /// <param name="thumbprint">
+        /// Certificate thumbprint.
+        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.thumbprint
+        /// </param>
+        /// <returns> A new <see cref="Models.AzureFirstPartyManagedCertificateProperties"/> instance for mocking. </returns>
+        public static AzureFirstPartyManagedCertificateProperties AzureFirstPartyManagedCertificateProperties(ResourceIdentifier secretSourceId = null, string subject = null, string expirationDate = null, string certificateAuthority = null, IEnumerable<string> subjectAlternativeNames = null, string thumbprint = null)
         {
-            return new ManagedCertificateProperties(SecretType.ManagedCertificate, serializedAdditionalRawData: null, subject, expiresOn);
+            subjectAlternativeNames ??= new List<string>();
+
+            return new AzureFirstPartyManagedCertificateProperties(
+                SecretType.AzureFirstPartyManagedCertificate,
+                serializedAdditionalRawData: null,
+                secretSourceId != null ? ResourceManagerModelFactory.WritableSubResource(secretSourceId) : null,
+                subject,
+                expirationDate,
+                certificateAuthority,
+                subjectAlternativeNames?.ToList(),
+                thumbprint);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomerCertificateProperties"/>. </summary>
@@ -2102,45 +2128,19 @@ namespace Azure.ResourceManager.Cdn.Models
                 thumbprint);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AzureFirstPartyManagedCertificateProperties"/>. </summary>
-        /// <param name="secretSourceId">
-        /// Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
-        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.secretSource
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedCertificateProperties"/>. </summary>
         /// <param name="subject">
         /// Subject name in the certificate.
-        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.subject
+        /// Serialized Name: ManagedCertificateParameters.subject
         /// </param>
-        /// <param name="expirationDate">
+        /// <param name="expiresOn">
         /// Certificate expiration date.
-        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.expirationDate
+        /// Serialized Name: ManagedCertificateParameters.expirationDate
         /// </param>
-        /// <param name="certificateAuthority">
-        /// Certificate issuing authority.
-        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.certificateAuthority
-        /// </param>
-        /// <param name="subjectAlternativeNames">
-        /// The list of SANs.
-        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.subjectAlternativeNames
-        /// </param>
-        /// <param name="thumbprint">
-        /// Certificate thumbprint.
-        /// Serialized Name: AzureFirstPartyManagedCertificateParameters.thumbprint
-        /// </param>
-        /// <returns> A new <see cref="Models.AzureFirstPartyManagedCertificateProperties"/> instance for mocking. </returns>
-        public static AzureFirstPartyManagedCertificateProperties AzureFirstPartyManagedCertificateProperties(ResourceIdentifier secretSourceId = null, string subject = null, string expirationDate = null, string certificateAuthority = null, IEnumerable<string> subjectAlternativeNames = null, string thumbprint = null)
+        /// <returns> A new <see cref="Models.ManagedCertificateProperties"/> instance for mocking. </returns>
+        public static ManagedCertificateProperties ManagedCertificateProperties(string subject = null, DateTimeOffset? expiresOn = null)
         {
-            subjectAlternativeNames ??= new List<string>();
-
-            return new AzureFirstPartyManagedCertificateProperties(
-                SecretType.AzureFirstPartyManagedCertificate,
-                serializedAdditionalRawData: null,
-                secretSourceId != null ? ResourceManagerModelFactory.WritableSubResource(secretSourceId) : null,
-                subject,
-                expirationDate,
-                certificateAuthority,
-                subjectAlternativeNames?.ToList(),
-                thumbprint);
+            return new ManagedCertificateProperties(SecretType.ManagedCertificate, serializedAdditionalRawData: null, subject, expiresOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Cdn.FrontDoorOriginGroupData" />. </summary>

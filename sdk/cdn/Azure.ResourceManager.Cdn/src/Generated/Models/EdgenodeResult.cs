@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EdgenodeResult"/>. </summary>
-        internal EdgenodeResult()
+        /// <param name="value">
+        /// The EdgeNode items on this page
+        /// Serialized Name: EdgenodeResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal EdgenodeResult(IEnumerable<EdgeNode> value)
         {
-            Value = new ChangeTrackingList<EdgeNode>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgenodeResult"/>. </summary>
         /// <param name="value">
-        /// Edge node of CDN service.
+        /// The EdgeNode items on this page
         /// Serialized Name: EdgenodeResult.value
         /// </param>
         /// <param name="nextLink">
-        /// URL to get the next set of edgenode list results if there are any.
+        /// The link to the next page of items
         /// Serialized Name: EdgenodeResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgenodeResult(IReadOnlyList<EdgeNode> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgenodeResult(IReadOnlyList<EdgeNode> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="EdgenodeResult"/> for deserialization. </summary>
+        internal EdgenodeResult()
+        {
+        }
+
         /// <summary>
-        /// Edge node of CDN service.
+        /// The EdgeNode items on this page
         /// Serialized Name: EdgenodeResult.value
         /// </summary>
         public IReadOnlyList<EdgeNode> Value { get; }
         /// <summary>
-        /// URL to get the next set of edgenode list results if there are any.
+        /// The link to the next page of items
         /// Serialized Name: EdgenodeResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
-    /// Result of the request to list profiles. It contains a list of profile objects and a URL link to get the next set of results.
+    /// The response of a Profile list operation.
     /// Serialized Name: ProfileListResult
     /// </summary>
     internal partial class ProfileListResult
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProfileListResult"/>. </summary>
-        internal ProfileListResult()
+        /// <param name="value">
+        /// The Profile items on this page
+        /// Serialized Name: ProfileListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ProfileListResult(IEnumerable<ProfileData> value)
         {
-            Value = new ChangeTrackingList<ProfileData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProfileListResult"/>. </summary>
         /// <param name="value">
-        /// List of CDN profiles within a resource group.
+        /// The Profile items on this page
         /// Serialized Name: ProfileListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// URL to get the next set of profile objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: ProfileListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProfileListResult(IReadOnlyList<ProfileData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProfileListResult(IReadOnlyList<ProfileData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ProfileListResult"/> for deserialization. </summary>
+        internal ProfileListResult()
+        {
+        }
+
         /// <summary>
-        /// List of CDN profiles within a resource group.
+        /// The Profile items on this page
         /// Serialized Name: ProfileListResult.value
         /// </summary>
         public IReadOnlyList<ProfileData> Value { get; }
         /// <summary>
-        /// URL to get the next set of profile objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: ProfileListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("certificateAuthority"u8);
                 writer.WriteStringValue(CertificateAuthority);
             }
-            if (Optional.IsCollectionDefined(SubjectAlternativeNames))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SubjectAlternativeNames))
             {
                 writer.WritePropertyName("subjectAlternativeNames"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Cdn.Models
             string subject = default;
             DateTimeOffset? expirationDate = default;
             string certificateAuthority = default;
-            IList<string> subjectAlternativeNames = default;
+            IReadOnlyList<string> subjectAlternativeNames = default;
             string thumbprint = default;
             SecretType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;

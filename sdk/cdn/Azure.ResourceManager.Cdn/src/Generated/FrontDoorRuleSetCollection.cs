@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class FrontDoorRuleSetCollection : ArmCollection, IEnumerable<FrontDoorRuleSetResource>, IAsyncEnumerable<FrontDoorRuleSetResource>
     {
-        private readonly ClientDiagnostics _frontDoorRuleSetClientDiagnostics;
-        private readonly FrontDoorRuleSetsRestOperations _frontDoorRuleSetRestClient;
+        private readonly ClientDiagnostics _frontDoorRuleSetRuleSetsClientDiagnostics;
+        private readonly RuleSetsRestOperations _frontDoorRuleSetRuleSetsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="FrontDoorRuleSetCollection"/> class for mocking. </summary>
         protected FrontDoorRuleSetCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal FrontDoorRuleSetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorRuleSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorRuleSetResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(FrontDoorRuleSetResource.ResourceType, out string frontDoorRuleSetApiVersion);
-            _frontDoorRuleSetRestClient = new FrontDoorRuleSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorRuleSetApiVersion);
+            _frontDoorRuleSetRuleSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorRuleSetResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(FrontDoorRuleSetResource.ResourceType, out string frontDoorRuleSetRuleSetsApiVersion);
+            _frontDoorRuleSetRuleSetsRestClient = new RuleSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorRuleSetRuleSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_Create</description>
+        /// <description>RuleSets_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.CreateOrUpdate");
+            using var scope = _frontDoorRuleSetRuleSetsClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _frontDoorRuleSetRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken).ConfigureAwait(false);
-                var uri = _frontDoorRuleSetRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName);
+                var response = await _frontDoorRuleSetRuleSetsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken).ConfigureAwait(false);
+                var uri = _frontDoorRuleSetRuleSetsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new CdnArmOperation<FrontDoorRuleSetResource>(Response.FromValue(new FrontDoorRuleSetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_Create</description>
+        /// <description>RuleSets_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.CreateOrUpdate");
+            using var scope = _frontDoorRuleSetRuleSetsClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _frontDoorRuleSetRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken);
-                var uri = _frontDoorRuleSetRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName);
+                var response = _frontDoorRuleSetRuleSetsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken);
+                var uri = _frontDoorRuleSetRuleSetsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new CdnArmOperation<FrontDoorRuleSetResource>(Response.FromValue(new FrontDoorRuleSetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_Get</description>
+        /// <description>RuleSets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.Get");
+            using var scope = _frontDoorRuleSetRuleSetsClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorRuleSetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorRuleSetRuleSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorRuleSetResource(Client, response.Value), response.GetRawResponse());
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_Get</description>
+        /// <description>RuleSets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.Get");
+            using var scope = _frontDoorRuleSetRuleSetsClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorRuleSetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken);
+                var response = _frontDoorRuleSetRuleSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorRuleSetResource(Client, response.Value), response.GetRawResponse());
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_ListByProfile</description>
+        /// <description>RuleSets_ListByProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="FrontDoorRuleSetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorRuleSetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleSetRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRuleSetRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRuleSetResource(Client, FrontDoorRuleSetData.DeserializeFrontDoorRuleSetData(e)), _frontDoorRuleSetClientDiagnostics, Pipeline, "FrontDoorRuleSetCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleSetRuleSetsRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRuleSetRuleSetsRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRuleSetResource(Client, FrontDoorRuleSetData.DeserializeFrontDoorRuleSetData(e)), _frontDoorRuleSetRuleSetsClientDiagnostics, Pipeline, "FrontDoorRuleSetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_ListByProfile</description>
+        /// <description>RuleSets_ListByProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="FrontDoorRuleSetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorRuleSetResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleSetRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRuleSetRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRuleSetResource(Client, FrontDoorRuleSetData.DeserializeFrontDoorRuleSetData(e)), _frontDoorRuleSetClientDiagnostics, Pipeline, "FrontDoorRuleSetCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRuleSetRuleSetsRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRuleSetRuleSetsRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRuleSetResource(Client, FrontDoorRuleSetData.DeserializeFrontDoorRuleSetData(e)), _frontDoorRuleSetRuleSetsClientDiagnostics, Pipeline, "FrontDoorRuleSetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_Get</description>
+        /// <description>RuleSets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.Exists");
+            using var scope = _frontDoorRuleSetRuleSetsClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _frontDoorRuleSetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorRuleSetRuleSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_Get</description>
+        /// <description>RuleSets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.Exists");
+            using var scope = _frontDoorRuleSetRuleSetsClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.Exists");
             scope.Start();
             try
             {
-                var response = _frontDoorRuleSetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken);
+                var response = _frontDoorRuleSetRuleSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_Get</description>
+        /// <description>RuleSets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.GetIfExists");
+            using var scope = _frontDoorRuleSetRuleSetsClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _frontDoorRuleSetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorRuleSetRuleSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<FrontDoorRuleSetResource>(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorRuleSetResource(Client, response.Value), response.GetRawResponse());
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorRuleSets_Get</description>
+        /// <description>RuleSets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -459,11 +459,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.GetIfExists");
+            using var scope = _frontDoorRuleSetRuleSetsClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _frontDoorRuleSetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken);
+                var response = _frontDoorRuleSetRuleSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<FrontDoorRuleSetResource>(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorRuleSetResource(Client, response.Value), response.GetRawResponse());

@@ -51,34 +51,20 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(DefaultCustomBlockResponseStatusCode))
             {
-                if (DefaultCustomBlockResponseStatusCode != null)
-                {
-                    writer.WritePropertyName("defaultCustomBlockResponseStatusCode"u8);
-                    writer.WriteNumberValue(DefaultCustomBlockResponseStatusCode.Value.ToSerialInt32());
-                }
-                else
-                {
-                    writer.WriteNull("defaultCustomBlockResponseStatusCode");
-                }
+                writer.WritePropertyName("defaultCustomBlockResponseStatusCode"u8);
+                writer.WriteNumberValue(DefaultCustomBlockResponseStatusCode.Value.ToSerialSingle());
             }
             if (Optional.IsDefined(DefaultCustomBlockResponseBody))
             {
-                if (DefaultCustomBlockResponseBody != null)
-                {
-                    writer.WritePropertyName("defaultCustomBlockResponseBody"u8);
+                writer.WritePropertyName("defaultCustomBlockResponseBody"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DefaultCustomBlockResponseBody);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(DefaultCustomBlockResponseBody, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                else
+                using (JsonDocument document = JsonDocument.Parse(DefaultCustomBlockResponseBody, ModelSerializationExtensions.JsonDocumentOptions))
                 {
-                    writer.WriteNull("defaultCustomBlockResponseBody");
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -157,17 +143,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        defaultCustomBlockResponseStatusCode = null;
                         continue;
                     }
-                    defaultCustomBlockResponseStatusCode = new PolicySettingsDefaultCustomBlockResponseStatusCode(property.Value.GetInt32());
+                    defaultCustomBlockResponseStatusCode = new PolicySettingsDefaultCustomBlockResponseStatusCode(property.Value.GetSingle());
                     continue;
                 }
                 if (property.NameEquals("defaultCustomBlockResponseBody"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        defaultCustomBlockResponseBody = null;
                         continue;
                     }
                     defaultCustomBlockResponseBody = BinaryData.FromString(property.Value.GetRawText());

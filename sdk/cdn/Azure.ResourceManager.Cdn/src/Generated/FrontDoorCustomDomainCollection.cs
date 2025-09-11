@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class FrontDoorCustomDomainCollection : ArmCollection, IEnumerable<FrontDoorCustomDomainResource>, IAsyncEnumerable<FrontDoorCustomDomainResource>
     {
-        private readonly ClientDiagnostics _frontDoorCustomDomainClientDiagnostics;
-        private readonly FrontDoorCustomDomainsRestOperations _frontDoorCustomDomainRestClient;
+        private readonly ClientDiagnostics _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics;
+        private readonly AFDCustomDomainsRestOperations _frontDoorCustomDomainFrontDoorCustomDomainsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="FrontDoorCustomDomainCollection"/> class for mocking. </summary>
         protected FrontDoorCustomDomainCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal FrontDoorCustomDomainCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorCustomDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorCustomDomainResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(FrontDoorCustomDomainResource.ResourceType, out string frontDoorCustomDomainApiVersion);
-            _frontDoorCustomDomainRestClient = new FrontDoorCustomDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorCustomDomainApiVersion);
+            _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorCustomDomainResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(FrontDoorCustomDomainResource.ResourceType, out string frontDoorCustomDomainFrontDoorCustomDomainsApiVersion);
+            _frontDoorCustomDomainFrontDoorCustomDomainsRestClient = new AFDCustomDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorCustomDomainFrontDoorCustomDomainsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_Create</description>
+        /// <description>AFDCustomDomains_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.CreateOrUpdate");
+            using var scope = _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _frontDoorCustomDomainRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<FrontDoorCustomDomainResource>(new FrontDoorCustomDomainOperationSource(Client), _frontDoorCustomDomainClientDiagnostics, Pipeline, _frontDoorCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<FrontDoorCustomDomainResource>(new FrontDoorCustomDomainOperationSource(Client), _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics, Pipeline, _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_Create</description>
+        /// <description>AFDCustomDomains_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.CreateOrUpdate");
+            using var scope = _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _frontDoorCustomDomainRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, data, cancellationToken);
-                var operation = new CdnArmOperation<FrontDoorCustomDomainResource>(new FrontDoorCustomDomainOperationSource(Client), _frontDoorCustomDomainClientDiagnostics, Pipeline, _frontDoorCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, data, cancellationToken);
+                var operation = new CdnArmOperation<FrontDoorCustomDomainResource>(new FrontDoorCustomDomainOperationSource(Client), _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics, Pipeline, _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_Get</description>
+        /// <description>AFDCustomDomains_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Get");
+            using var scope = _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorCustomDomainResource(Client, response.Value), response.GetRawResponse());
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_Get</description>
+        /// <description>AFDCustomDomains_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Get");
+            using var scope = _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken);
+                var response = _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorCustomDomainResource(Client, response.Value), response.GetRawResponse());
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_ListByProfile</description>
+        /// <description>AFDCustomDomains_ListByProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="FrontDoorCustomDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorCustomDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorCustomDomainRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorCustomDomainRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorCustomDomainResource(Client, FrontDoorCustomDomainData.DeserializeFrontDoorCustomDomainData(e)), _frontDoorCustomDomainClientDiagnostics, Pipeline, "FrontDoorCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorCustomDomainResource(Client, FrontDoorCustomDomainData.DeserializeFrontDoorCustomDomainData(e)), _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics, Pipeline, "FrontDoorCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_ListByProfile</description>
+        /// <description>AFDCustomDomains_ListByProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="FrontDoorCustomDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorCustomDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorCustomDomainRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorCustomDomainRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorCustomDomainResource(Client, FrontDoorCustomDomainData.DeserializeFrontDoorCustomDomainData(e)), _frontDoorCustomDomainClientDiagnostics, Pipeline, "FrontDoorCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorCustomDomainResource(Client, FrontDoorCustomDomainData.DeserializeFrontDoorCustomDomainData(e)), _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics, Pipeline, "FrontDoorCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_Get</description>
+        /// <description>AFDCustomDomains_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Exists");
+            using var scope = _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _frontDoorCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_Get</description>
+        /// <description>AFDCustomDomains_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Exists");
+            using var scope = _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Exists");
             scope.Start();
             try
             {
-                var response = _frontDoorCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken);
+                var response = _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_Get</description>
+        /// <description>AFDCustomDomains_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.GetIfExists");
+            using var scope = _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _frontDoorCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<FrontDoorCustomDomainResource>(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorCustomDomainResource(Client, response.Value), response.GetRawResponse());
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorCustomDomains_Get</description>
+        /// <description>AFDCustomDomains_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -459,11 +459,11 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.GetIfExists");
+            using var scope = _frontDoorCustomDomainFrontDoorCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _frontDoorCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken);
+                var response = _frontDoorCustomDomainFrontDoorCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<FrontDoorCustomDomainResource>(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorCustomDomainResource(Client, response.Value), response.GetRawResponse());

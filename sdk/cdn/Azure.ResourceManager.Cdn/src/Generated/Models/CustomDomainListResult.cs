@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
-    /// Result of the request to list custom domains. It contains a list of custom domain objects and a URL link to get the next set of results.
+    /// The response of a CustomDomain list operation.
     /// Serialized Name: CustomDomainListResult
     /// </summary>
     internal partial class CustomDomainListResult
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CustomDomainListResult"/>. </summary>
-        internal CustomDomainListResult()
+        /// <param name="value">
+        /// The CustomDomain items on this page
+        /// Serialized Name: CustomDomainListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal CustomDomainListResult(IEnumerable<CdnCustomDomainData> value)
         {
-            Value = new ChangeTrackingList<CdnCustomDomainData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomDomainListResult"/>. </summary>
         /// <param name="value">
-        /// List of CDN CustomDomains within an endpoint.
+        /// The CustomDomain items on this page
         /// Serialized Name: CustomDomainListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// URL to get the next set of custom domain objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: CustomDomainListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomDomainListResult(IReadOnlyList<CdnCustomDomainData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomDomainListResult(IReadOnlyList<CdnCustomDomainData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CustomDomainListResult"/> for deserialization. </summary>
+        internal CustomDomainListResult()
+        {
+        }
+
         /// <summary>
-        /// List of CDN CustomDomains within an endpoint.
+        /// The CustomDomain items on this page
         /// Serialized Name: CustomDomainListResult.value
         /// </summary>
         public IReadOnlyList<CdnCustomDomainData> Value { get; }
         /// <summary>
-        /// URL to get the next set of custom domain objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: CustomDomainListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

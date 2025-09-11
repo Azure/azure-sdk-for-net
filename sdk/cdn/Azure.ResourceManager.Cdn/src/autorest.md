@@ -7,7 +7,7 @@ azure-arm: true
 library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
 title: CdnManagementClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/9b87e611b5016ed5c8d0eea2ee4578be782e7feb/specification/cdn/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/04175372773a5ed1eaf25f82e510b836a8e49309/specification/cdn/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -172,6 +172,7 @@ rename-mapping:
   ManagedRuleOverride: ManagedRuleOverrideSetting
   MatchCondition.operator: matchOperator
   CdnWebApplicationFirewallPolicy.properties.customRules: CustomSettings
+  CdnEndpoint: WebApplicationFirewallPolicyCdnEndpoint
   Endpoint: CdnEndpoint
   SocketAddrOperator: SocketAddressOperator
   CacheExpirationActionParameters: CacheExpirationActionProperties
@@ -252,6 +253,7 @@ rename-mapping:
   RequestSchemeMatchConditionParametersTypeName: RequestSchemeMatchConditionType
   RequestSchemeMatchConditionParametersTypeName.DeliveryRuleRequestSchemeConditionParameters: RequestSchemeCondition
   RequestSchemeMatchConditionParameters.operator: RequestSchemeOperator
+  RequestSchemeMatchConditionParametersOperator: RequestSchemeOperator
   RequestMethodMatchConditionParameters: RequestMethodMatchCondition
   RequestMethodMatchConditionParameters.typeName: ConditionType
   RequestMethodMatchConditionParametersTypeName: RequestMethodMatchConditionType
@@ -451,4 +453,9 @@ directive:
       $.policySettings.properties.defaultCustomBlockResponseStatusCode['x-nullable'] = true;
       $.policySettings.properties.defaultCustomBlockResponseBody['x-nullable'] = true;
   - remove-operation: Validate_Secret
+#   Add for reslove TypeSpec validation issue
+  - from: swagger-document
+    where: $.definitions.PolicySettingsDefaultCustomBlockResponseStatusCode
+    transform: >
+      $['format'] = 'int32'
 ```

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Certificate thumbprint.
         /// Serialized Name: CustomerCertificateParameters.thumbprint
         /// </param>
-        internal CustomerCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource secretSource, string secretVersion, bool? useLatestVersion, string subject, DateTimeOffset? expiresOn, string certificateAuthority, IList<string> subjectAlternativeNames, string thumbprint) : base(secretType, serializedAdditionalRawData)
+        internal CustomerCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource secretSource, string secretVersion, bool? useLatestVersion, string subject, DateTimeOffset? expiresOn, string certificateAuthority, IReadOnlyList<string> subjectAlternativeNames, string thumbprint) : base(secretType, serializedAdditionalRawData)
         {
             SecretSource = secretSource;
             SecretVersion = secretVersion;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// The list of SANs.
         /// Serialized Name: CustomerCertificateParameters.subjectAlternativeNames
         /// </summary>
-        public IList<string> SubjectAlternativeNames { get; }
+        public IReadOnlyList<string> SubjectAlternativeNames { get; }
         /// <summary>
         /// Certificate thumbprint.
         /// Serialized Name: CustomerCertificateParameters.thumbprint

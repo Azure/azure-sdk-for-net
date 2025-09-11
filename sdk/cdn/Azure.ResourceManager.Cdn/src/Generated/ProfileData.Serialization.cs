@@ -80,15 +80,8 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(OriginResponseTimeoutSeconds))
             {
-                if (OriginResponseTimeoutSeconds != null)
-                {
-                    writer.WritePropertyName("originResponseTimeoutSeconds"u8);
-                    writer.WriteNumberValue(OriginResponseTimeoutSeconds.Value);
-                }
-                else
-                {
-                    writer.WriteNull("originResponseTimeoutSeconds");
-                }
+                writer.WritePropertyName("originResponseTimeoutSeconds"u8);
+                writer.WriteNumberValue(OriginResponseTimeoutSeconds.Value);
             }
             if (Optional.IsDefined(LogScrubbing))
             {
@@ -253,7 +246,6 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                originResponseTimeoutSeconds = null;
                                 continue;
                             }
                             originResponseTimeoutSeconds = property0.Value.GetInt32();

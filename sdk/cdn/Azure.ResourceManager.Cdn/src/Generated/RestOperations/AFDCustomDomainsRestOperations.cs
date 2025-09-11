@@ -15,20 +15,20 @@ using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal partial class FrontDoorOriginGroupsRestOperations
+    internal partial class AFDCustomDomainsRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of FrontDoorOriginGroupsRestOperations. </summary>
+        /// <summary> Initializes a new instance of AFDCustomDomainsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public FrontDoorOriginGroupsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public AFDCustomDomainsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendPath("/originGroups", false);
+            uri.AppendPath("/customDomains", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendPath("/originGroups", false);
+            uri.AppendPath("/customDomains", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        /// <summary> Lists all of the existing origin groups within a profile. </summary>
+        /// <summary> Lists existing AzureFrontDoor domains. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FrontDoorOriginGroupListResult>> ListByProfileAsync(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public async Task<Response<FrontDoorCustomDomainListResult>> ListByProfileAsync(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        FrontDoorOriginGroupListResult value = default;
+                        FrontDoorCustomDomainListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = FrontDoorOriginGroupListResult.DeserializeFrontDoorOriginGroupListResult(document.RootElement);
+                        value = FrontDoorCustomDomainListResult.DeserializeFrontDoorCustomDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Lists all of the existing origin groups within a profile. </summary>
+        /// <summary> Lists existing AzureFrontDoor domains. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FrontDoorOriginGroupListResult> ListByProfile(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public Response<FrontDoorCustomDomainListResult> ListByProfile(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        FrontDoorOriginGroupListResult value = default;
+                        FrontDoorCustomDomainListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = FrontDoorOriginGroupListResult.DeserializeFrontDoorOriginGroupListResult(document.RootElement);
+                        value = FrontDoorCustomDomainListResult.DeserializeFrontDoorCustomDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string profileName, string originGroupName)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string profileName, string customDomainName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -140,13 +140,13 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendPath("/originGroups/", false);
-            uri.AppendPath(originGroupName, true);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(customDomainName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string profileName, string originGroupName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string profileName, string customDomainName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendPath("/originGroups/", false);
-            uri.AppendPath(originGroupName, true);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(customDomainName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -168,73 +168,73 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        /// <summary> Gets an existing origin group within a profile. </summary>
+        /// <summary> Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
-        /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
+        /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FrontDoorOriginGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<FrontDoorCustomDomainData>> GetAsync(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, profileName, originGroupName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, profileName, customDomainName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        FrontDoorOriginGroupData value = default;
+                        FrontDoorCustomDomainData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = FrontDoorOriginGroupData.DeserializeFrontDoorOriginGroupData(document.RootElement);
+                        value = FrontDoorCustomDomainData.DeserializeFrontDoorCustomDomainData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FrontDoorOriginGroupData)null, message.Response);
+                    return Response.FromValue((FrontDoorCustomDomainData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets an existing origin group within a profile. </summary>
+        /// <summary> Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
-        /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
+        /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FrontDoorOriginGroupData> Get(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<FrontDoorCustomDomainData> Get(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, profileName, originGroupName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, profileName, customDomainName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        FrontDoorOriginGroupData value = default;
+                        FrontDoorCustomDomainData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = FrontDoorOriginGroupData.DeserializeFrontDoorOriginGroupData(document.RootElement);
+                        value = FrontDoorCustomDomainData.DeserializeFrontDoorCustomDomainData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FrontDoorOriginGroupData)null, message.Response);
+                    return Response.FromValue((FrontDoorCustomDomainData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, FrontDoorOriginGroupData data)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, FrontDoorCustomDomainData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -244,13 +244,13 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendPath("/originGroups/", false);
-            uri.AppendPath(originGroupName, true);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(customDomainName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, FrontDoorOriginGroupData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, FrontDoorCustomDomainData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -263,8 +263,8 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendPath("/originGroups/", false);
-            uri.AppendPath(originGroupName, true);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(customDomainName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -276,24 +276,24 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        /// <summary> Creates a new origin group within the specified profile. </summary>
+        /// <summary> Creates a new domain within the specified profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
-        /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
-        /// <param name="data"> Origin group properties. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
+        /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
+        /// <param name="data"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, FrontDoorOriginGroupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="customDomainName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, FrontDoorCustomDomainData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, profileName, originGroupName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, profileName, customDomainName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -306,24 +306,24 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Creates a new origin group within the specified profile. </summary>
+        /// <summary> Creates a new domain within the specified profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
-        /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
-        /// <param name="data"> Origin group properties. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
+        /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
+        /// <param name="data"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, FrontDoorOriginGroupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="customDomainName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Create(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, FrontDoorCustomDomainData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, profileName, originGroupName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, profileName, customDomainName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, FrontDoorOriginGroupPatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, FrontDoorCustomDomainPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -346,13 +346,13 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendPath("/originGroups/", false);
-            uri.AppendPath(originGroupName, true);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(customDomainName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, FrontDoorOriginGroupPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, FrontDoorCustomDomainPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -365,8 +365,8 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendPath("/originGroups/", false);
-            uri.AppendPath(originGroupName, true);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(customDomainName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -378,24 +378,24 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        /// <summary> Updates an existing origin group within a profile. </summary>
+        /// <summary> Updates an existing domain within a profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
-        /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
-        /// <param name="patch"> Origin group properties. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
+        /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
+        /// <param name="patch"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, FrontDoorOriginGroupPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="customDomainName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, FrontDoorCustomDomainPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, originGroupName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, customDomainName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -407,24 +407,24 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Updates an existing origin group within a profile. </summary>
+        /// <summary> Updates an existing domain within a profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
-        /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
-        /// <param name="patch"> Origin group properties. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
+        /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
+        /// <param name="patch"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="originGroupName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, FrontDoorOriginGroupPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="customDomainName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, FrontDoorCustomDomainPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, originGroupName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, profileName, customDomainName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string profileName, string originGroupName)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string profileName, string customDomainName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -446,13 +446,13 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendPath("/originGroups/", false);
-            uri.AppendPath(originGroupName, true);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(customDomainName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string profileName, string originGroupName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string profileName, string customDomainName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -465,8 +465,8 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendPath("/originGroups/", false);
-            uri.AppendPath(originGroupName, true);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(customDomainName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -474,22 +474,22 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        /// <summary> Deletes an existing origin group within a profile. </summary>
+        /// <summary> Deletes an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
-        /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
+        /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, profileName, originGroupName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, profileName, customDomainName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -502,22 +502,22 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Deletes an existing origin group within a profile. </summary>
+        /// <summary> Deletes an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
-        /// <param name="originGroupName"> Name of the origin group which is unique within the profile. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
+        /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, profileName, originGroupName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, profileName, customDomainName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal RequestUriBuilder CreateListResourceUsageRequestUri(string subscriptionId, string resourceGroupName, string profileName, string originGroupName)
+        internal RequestUriBuilder CreateRefreshValidationTokenRequestUri(string subscriptionId, string resourceGroupName, string profileName, string customDomainName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -540,14 +540,14 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendPath("/originGroups/", false);
-            uri.AppendPath(originGroupName, true);
-            uri.AppendPath("/usages", false);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(customDomainName, true);
+            uri.AppendPath("/refreshValidationToken", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListResourceUsageRequest(string subscriptionId, string resourceGroupName, string profileName, string originGroupName)
+        internal HttpMessage CreateRefreshValidationTokenRequest(string subscriptionId, string resourceGroupName, string profileName, string customDomainName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -560,9 +560,9 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendPath("/originGroups/", false);
-            uri.AppendPath(originGroupName, true);
-            uri.AppendPath("/usages", false);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(customDomainName, true);
+            uri.AppendPath("/refreshValidationToken", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -570,63 +570,55 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        /// <summary> Checks the quota and actual usage of endpoints under the given Azure Front Door profile.. </summary>
+        /// <summary> Updates the domain validation token. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
-        /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
+        /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UsagesListResult>> ListResourceUsageAsync(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> RefreshValidationTokenAsync(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var message = CreateListResourceUsageRequest(subscriptionId, resourceGroupName, profileName, originGroupName);
+            using var message = CreateRefreshValidationTokenRequest(subscriptionId, resourceGroupName, profileName, customDomainName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        UsagesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = UsagesListResult.DeserializeUsagesListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Checks the quota and actual usage of endpoints under the given Azure Front Door profile.. </summary>
+        /// <summary> Updates the domain validation token. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
-        /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
+        /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UsagesListResult> ListResourceUsage(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response RefreshValidationToken(string subscriptionId, string resourceGroupName, string profileName, string customDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var message = CreateListResourceUsageRequest(subscriptionId, resourceGroupName, profileName, originGroupName);
+            using var message = CreateRefreshValidationTokenRequest(subscriptionId, resourceGroupName, profileName, customDomainName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        UsagesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = UsagesListResult.DeserializeUsagesListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -654,15 +646,15 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        /// <summary> Lists all of the existing origin groups within a profile. </summary>
+        /// <summary> Lists existing AzureFrontDoor domains. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FrontDoorOriginGroupListResult>> ListByProfileNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public async Task<Response<FrontDoorCustomDomainListResult>> ListByProfileNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -675,9 +667,9 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        FrontDoorOriginGroupListResult value = default;
+                        FrontDoorCustomDomainListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = FrontDoorOriginGroupListResult.DeserializeFrontDoorOriginGroupListResult(document.RootElement);
+                        value = FrontDoorCustomDomainListResult.DeserializeFrontDoorCustomDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -685,15 +677,15 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Lists all of the existing origin groups within a profile. </summary>
+        /// <summary> Lists existing AzureFrontDoor domains. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FrontDoorOriginGroupListResult> ListByProfileNextPage(string nextLink, string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public Response<FrontDoorCustomDomainListResult> ListByProfileNextPage(string nextLink, string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -706,97 +698,9 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        FrontDoorOriginGroupListResult value = default;
+                        FrontDoorCustomDomainListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = FrontDoorOriginGroupListResult.DeserializeFrontDoorOriginGroupListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListResourceUsageNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string originGroupName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListResourceUsageNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string originGroupName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Checks the quota and actual usage of endpoints under the given Azure Front Door profile.. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
-        /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UsagesListResult>> ListResourceUsageNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
-
-            using var message = CreateListResourceUsageNextPageRequest(nextLink, subscriptionId, resourceGroupName, profileName, originGroupName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UsagesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = UsagesListResult.DeserializeUsagesListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Checks the quota and actual usage of endpoints under the given Azure Front Door profile.. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group. </param>
-        /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UsagesListResult> ListResourceUsageNextPage(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string originGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
-
-            using var message = CreateListResourceUsageNextPageRequest(nextLink, subscriptionId, resourceGroupName, profileName, originGroupName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UsagesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = UsagesListResult.DeserializeUsagesListResult(document.RootElement);
+                        value = FrontDoorCustomDomainListResult.DeserializeFrontDoorCustomDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
