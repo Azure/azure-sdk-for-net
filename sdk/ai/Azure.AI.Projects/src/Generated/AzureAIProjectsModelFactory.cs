@@ -64,13 +64,13 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Custom credential definition. </summary>
-        /// <param name="keys"> The credential type. </param>
+        /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Projects.AIProjectConnectionCustomCredential"/> instance for mocking. </returns>
-        public static AIProjectConnectionCustomCredential AIProjectConnectionCustomCredential(IReadOnlyDictionary<string, string> keys = default)
+        public static AIProjectConnectionCustomCredential AIProjectConnectionCustomCredential(IReadOnlyDictionary<string, string> additionalProperties = default)
         {
-            keys ??= new ChangeTrackingDictionary<string, string>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AIProjectConnectionCustomCredential(CredentialType.Custom, additionalBinaryDataProperties: null, keys);
+            return new AIProjectConnectionCustomCredential(CredentialType.Custom, additionalBinaryDataProperties: null, additionalProperties);
         }
 
         /// <summary> Shared Access Signature (SAS) credential definition. </summary>
