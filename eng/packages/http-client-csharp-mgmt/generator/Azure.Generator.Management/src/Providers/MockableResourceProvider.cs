@@ -220,8 +220,7 @@ namespace Azure.Generator.Management.Providers
                 // the first method is returning the collection
                 var collection = resource.ResourceCollection!;
                 var collectionMethodSignature = resource.FactoryMethodSignature;
-                var pathFields = collection.PathParameterFields;
-                var pathParameters = pathFields.Select(f => new ParameterProvider(f.Name.Substring(1), $"The {f.Name.Substring(1)} for the parent resource.", f.Type)).ToList();
+                var pathParameters = collection.GetPathParameterProviders();
                 collectionMethodSignature = new MethodSignature(
                     collectionMethodSignature.Name,
                     collectionMethodSignature.Description,

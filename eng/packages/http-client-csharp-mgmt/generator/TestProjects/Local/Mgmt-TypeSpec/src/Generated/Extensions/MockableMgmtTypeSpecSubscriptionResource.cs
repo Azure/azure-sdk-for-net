@@ -59,7 +59,7 @@ namespace MgmtTypeSpec.Mocking
         private MgmtTypeSpecClient MgmtTypeSpecClientRestClient => _mgmtTypeSpecClientRestClient ??= new MgmtTypeSpecClient(MgmtTypeSpecClientClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         /// <summary> Gets a collection of PlaywrightQuotas in the <see cref="SubscriptionResource"/>. </summary>
-        /// <param name="location"> The location for the parent resource. </param>
+        /// <param name="location"> The location. </param>
         /// <returns> An object representing collection of PlaywrightQuotas and their operations over a PlaywrightQuotaResource. </returns>
         public virtual PlaywrightQuotaCollection GetPlaywrightQuotas(AzureLocation location)
         {
@@ -67,7 +67,7 @@ namespace MgmtTypeSpec.Mocking
         }
 
         /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
-        /// <param name="location"> The location for the parent resource. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
@@ -77,7 +77,7 @@ namespace MgmtTypeSpec.Mocking
         }
 
         /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
-        /// <param name="location"> The location for the parent resource. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
