@@ -36,7 +36,7 @@ namespace MgmtTypeSpec
             InnerProp2 = innerProp2;
             MiddleProp1 = middleProp1;
             Prop2 = prop2;
-            InitializeBarNestedQuotaProperties();
+            FlattenedNestedProperty = new BarNestedQuotaProperties(innerProp2, middleProp1, new ChangeTrackingDictionary<string, string>(), new ChangeTrackingList<string>(), prop2);
         }
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
@@ -50,7 +50,8 @@ namespace MgmtTypeSpec
         /// <param name="property"></param>
         /// <param name="anotherProperty"></param>
         /// <param name="flattenedNestedProperty"></param>
-        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarNestedQuotaProperties flattenedNestedProperty) : base(id, name, resourceType, systemData)
+        /// <param name="optionalFlattenProperty"></param>
+        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarNestedQuotaProperties flattenedNestedProperty, OptionalFlattenPropertyType optionalFlattenProperty) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -58,6 +59,7 @@ namespace MgmtTypeSpec
             Property = @property;
             AnotherProperty = anotherProperty;
             FlattenedNestedProperty = flattenedNestedProperty;
+            OptionalFlattenProperty = optionalFlattenProperty;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -74,6 +76,9 @@ namespace MgmtTypeSpec
 
         /// <summary> Gets or sets the FlattenedNestedProperty. </summary>
         internal BarNestedQuotaProperties FlattenedNestedProperty { get; set; }
+
+        /// <summary> Gets or sets the OptionalFlattenProperty. </summary>
+        internal OptionalFlattenPropertyType OptionalFlattenProperty { get; set; }
 
         /// <summary> Gets or sets the InnerProp1. </summary>
         public int? InnerProp1
@@ -131,7 +136,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.MiddleProp2;
+                return FlattenedNestedProperty.MiddleProp2;
             }
         }
 
@@ -140,7 +145,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.Prop1;
+                return FlattenedNestedProperty.Prop1;
             }
         }
 
@@ -196,15 +201,12 @@ namespace MgmtTypeSpec
             }
         }
 
-        private void InitializeBarNestedQuotaProperties()
+        /// <summary> Gets the RandomCollectionProp. </summary>
+        public IList<string> OptionalFlattenPropertyRandomCollectionProp
         {
-            if (FlattenedNestedProperty is null)
+            get
             {
-                FlattenedNestedProperty = new BarNestedQuotaProperties
-                {
-                    MiddleProp2 = new ChangeTrackingDictionary<string, string>(),
-                    Prop1 = new ChangeTrackingList<string>()
-                };
+                return OptionalFlattenProperty is null ? default : OptionalFlattenProperty.RandomCollectionProp;
             }
         }
     }

@@ -43,7 +43,7 @@ namespace MgmtTypeSpec.Models
         /// <summary> Gets or sets the MiddleProp1. </summary>
         public int MiddleProp1 { get; set; }
 
-        /// <summary> Gets or sets the MiddleProp2. </summary>
-        public IDictionary<string, string> MiddleProp2 { get; internal set; }
+        /// <summary> Gets the MiddleProp2. </summary>
+        public IDictionary<string, string> MiddleProp2 { get; }
     }
 }
