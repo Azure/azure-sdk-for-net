@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// A voicelive server event.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionUpdateSessionAvatarConnecting"/>, <see cref="SessionUpdateSessionCreated"/>, <see cref="SessionUpdateSessionUpdated"/>, <see cref="SessionUpdateError"/>, <see cref="SessionUpdateResponseTextDelta"/>, <see cref="SessionUpdateResponseAudioDelta"/>, <see cref="SessionUpdateConversationItemCreated"/>, <see cref="SessionUpdateConversationItemDeleted"/>, <see cref="SessionUpdateConversationItemRetrieved"/>, <see cref="SessionUpdateConversationItemTruncated"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="SessionUpdateInputAudioBufferCommitted"/>, <see cref="SessionUpdateInputAudioBufferCleared"/>, <see cref="SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="SessionUpdateResponseCreated"/>, <see cref="SessionUpdateResponseDone"/>, <see cref="SessionUpdateResponseOutputItemAdded"/>, <see cref="SessionUpdateResponseOutputItemDone"/>, <see cref="SessionUpdateResponseContentPartAdded"/>, <see cref="SessionUpdateResponseContentPartDone"/>, <see cref="SessionUpdateResponseTextDone"/>, <see cref="SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="SessionUpdateResponseAudioTranscriptDone"/>, <see cref="SessionUpdateResponseAudioDone"/>, <see cref="SessionUpdateResponseFunctionCallArgumentsDelta"/>, <see cref="SessionUpdateResponseFunctionCallArgumentsDone"/>, <see cref="SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="SessionUpdateResponseEmotionHypothesis"/>, <see cref="SessionUpdateResponseAudioTimestampDelta"/>, <see cref="SessionUpdateResponseAudioTimestampDone"/>, <see cref="SessionUpdateResponseAnimationVisemeDelta"/>, and <see cref="SessionUpdateResponseAnimationVisemeDone"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionUpdateError"/>, <see cref="SessionUpdateSessionCreated"/>, <see cref="SessionUpdateSessionUpdated"/>, <see cref="SessionUpdateSessionAvatarConnecting"/>, <see cref="SessionUpdateInputAudioBufferCommitted"/>, <see cref="SessionUpdateInputAudioBufferCleared"/>, <see cref="SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="SessionUpdateConversationItemCreated"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="SessionUpdateConversationItemTruncated"/>, <see cref="SessionUpdateConversationItemDeleted"/>, <see cref="SessionUpdateResponseCreated"/>, <see cref="SessionUpdateResponseDone"/>, <see cref="SessionUpdateResponseOutputItemAdded"/>, <see cref="SessionUpdateResponseOutputItemDone"/>, <see cref="SessionUpdateResponseContentPartAdded"/>, <see cref="SessionUpdateResponseContentPartDone"/>, <see cref="SessionUpdateResponseTextDelta"/>, <see cref="SessionUpdateResponseTextDone"/>, <see cref="SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="SessionUpdateResponseAudioTranscriptDone"/>, <see cref="SessionUpdateResponseAudioDelta"/>, <see cref="SessionUpdateResponseAudioDone"/>, <see cref="SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="SessionUpdateResponseEmotionHypothesis"/>, <see cref="SessionUpdateResponseAudioTimestampDelta"/>, <see cref="SessionUpdateResponseAudioTimestampDone"/>, <see cref="SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="SessionUpdateResponseAnimationVisemeDone"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="SessionUpdateConversationItemRetrieved"/>, <see cref="SessionUpdateResponseFunctionCallArgumentsDelta"/>, and <see cref="SessionUpdateResponseFunctionCallArgumentsDone"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSessionUpdate))]
     public abstract partial class SessionUpdate : IJsonModel<SessionUpdate>
@@ -94,32 +94,14 @@ namespace Azure.AI.VoiceLive
             {
                 switch (discriminator.GetString())
                 {
-                    case "session.avatar.connecting":
-                        return SessionUpdateSessionAvatarConnecting.DeserializeSessionUpdateSessionAvatarConnecting(element, options);
+                    case "error":
+                        return SessionUpdateError.DeserializeSessionUpdateError(element, options);
                     case "session.created":
                         return SessionUpdateSessionCreated.DeserializeSessionUpdateSessionCreated(element, options);
                     case "session.updated":
                         return SessionUpdateSessionUpdated.DeserializeSessionUpdateSessionUpdated(element, options);
-                    case "error":
-                        return SessionUpdateError.DeserializeSessionUpdateError(element, options);
-                    case "response.text.delta":
-                        return SessionUpdateResponseTextDelta.DeserializeSessionUpdateResponseTextDelta(element, options);
-                    case "response.audio.delta":
-                        return SessionUpdateResponseAudioDelta.DeserializeSessionUpdateResponseAudioDelta(element, options);
-                    case "conversation.item.created":
-                        return SessionUpdateConversationItemCreated.DeserializeSessionUpdateConversationItemCreated(element, options);
-                    case "conversation.item.deleted":
-                        return SessionUpdateConversationItemDeleted.DeserializeSessionUpdateConversationItemDeleted(element, options);
-                    case "conversation.item.retrieved":
-                        return SessionUpdateConversationItemRetrieved.DeserializeSessionUpdateConversationItemRetrieved(element, options);
-                    case "conversation.item.truncated":
-                        return SessionUpdateConversationItemTruncated.DeserializeSessionUpdateConversationItemTruncated(element, options);
-                    case "conversation.item.input_audio_transcription.completed":
-                        return SessionUpdateConversationItemInputAudioTranscriptionCompleted.DeserializeSessionUpdateConversationItemInputAudioTranscriptionCompleted(element, options);
-                    case "conversation.item.input_audio_transcription.delta":
-                        return SessionUpdateConversationItemInputAudioTranscriptionDelta.DeserializeSessionUpdateConversationItemInputAudioTranscriptionDelta(element, options);
-                    case "conversation.item.input_audio_transcription.failed":
-                        return SessionUpdateConversationItemInputAudioTranscriptionFailed.DeserializeSessionUpdateConversationItemInputAudioTranscriptionFailed(element, options);
+                    case "session.avatar.connecting":
+                        return SessionUpdateSessionAvatarConnecting.DeserializeSessionUpdateSessionAvatarConnecting(element, options);
                     case "input_audio_buffer.committed":
                         return SessionUpdateInputAudioBufferCommitted.DeserializeSessionUpdateInputAudioBufferCommitted(element, options);
                     case "input_audio_buffer.cleared":
@@ -128,6 +110,16 @@ namespace Azure.AI.VoiceLive
                         return SessionUpdateInputAudioBufferSpeechStarted.DeserializeSessionUpdateInputAudioBufferSpeechStarted(element, options);
                     case "input_audio_buffer.speech_stopped":
                         return SessionUpdateInputAudioBufferSpeechStopped.DeserializeSessionUpdateInputAudioBufferSpeechStopped(element, options);
+                    case "conversation.item.created":
+                        return SessionUpdateConversationItemCreated.DeserializeSessionUpdateConversationItemCreated(element, options);
+                    case "conversation.item.input_audio_transcription.completed":
+                        return SessionUpdateConversationItemInputAudioTranscriptionCompleted.DeserializeSessionUpdateConversationItemInputAudioTranscriptionCompleted(element, options);
+                    case "conversation.item.input_audio_transcription.failed":
+                        return SessionUpdateConversationItemInputAudioTranscriptionFailed.DeserializeSessionUpdateConversationItemInputAudioTranscriptionFailed(element, options);
+                    case "conversation.item.truncated":
+                        return SessionUpdateConversationItemTruncated.DeserializeSessionUpdateConversationItemTruncated(element, options);
+                    case "conversation.item.deleted":
+                        return SessionUpdateConversationItemDeleted.DeserializeSessionUpdateConversationItemDeleted(element, options);
                     case "response.created":
                         return SessionUpdateResponseCreated.DeserializeSessionUpdateResponseCreated(element, options);
                     case "response.done":
@@ -140,18 +132,18 @@ namespace Azure.AI.VoiceLive
                         return SessionUpdateResponseContentPartAdded.DeserializeSessionUpdateResponseContentPartAdded(element, options);
                     case "response.content_part.done":
                         return SessionUpdateResponseContentPartDone.DeserializeSessionUpdateResponseContentPartDone(element, options);
+                    case "response.text.delta":
+                        return SessionUpdateResponseTextDelta.DeserializeSessionUpdateResponseTextDelta(element, options);
                     case "response.text.done":
                         return SessionUpdateResponseTextDone.DeserializeSessionUpdateResponseTextDone(element, options);
                     case "response.audio_transcript.delta":
                         return SessionUpdateResponseAudioTranscriptDelta.DeserializeSessionUpdateResponseAudioTranscriptDelta(element, options);
                     case "response.audio_transcript.done":
                         return SessionUpdateResponseAudioTranscriptDone.DeserializeSessionUpdateResponseAudioTranscriptDone(element, options);
+                    case "response.audio.delta":
+                        return SessionUpdateResponseAudioDelta.DeserializeSessionUpdateResponseAudioDelta(element, options);
                     case "response.audio.done":
                         return SessionUpdateResponseAudioDone.DeserializeSessionUpdateResponseAudioDone(element, options);
-                    case "response.function_call_arguments.delta":
-                        return SessionUpdateResponseFunctionCallArgumentsDelta.DeserializeSessionUpdateResponseFunctionCallArgumentsDelta(element, options);
-                    case "response.function_call_arguments.done":
-                        return SessionUpdateResponseFunctionCallArgumentsDone.DeserializeSessionUpdateResponseFunctionCallArgumentsDone(element, options);
                     case "response.animation_blendshapes.delta":
                         return SessionUpdateResponseAnimationBlendshapeDelta.DeserializeSessionUpdateResponseAnimationBlendshapeDelta(element, options);
                     case "response.animation_blendshapes.done":
@@ -166,6 +158,14 @@ namespace Azure.AI.VoiceLive
                         return SessionUpdateResponseAnimationVisemeDelta.DeserializeSessionUpdateResponseAnimationVisemeDelta(element, options);
                     case "response.animation_viseme.done":
                         return SessionUpdateResponseAnimationVisemeDone.DeserializeSessionUpdateResponseAnimationVisemeDone(element, options);
+                    case "conversation.item.input_audio_transcription.delta":
+                        return SessionUpdateConversationItemInputAudioTranscriptionDelta.DeserializeSessionUpdateConversationItemInputAudioTranscriptionDelta(element, options);
+                    case "conversation.item.retrieved":
+                        return SessionUpdateConversationItemRetrieved.DeserializeSessionUpdateConversationItemRetrieved(element, options);
+                    case "response.function_call_arguments.delta":
+                        return SessionUpdateResponseFunctionCallArgumentsDelta.DeserializeSessionUpdateResponseFunctionCallArgumentsDelta(element, options);
+                    case "response.function_call_arguments.done":
+                        return SessionUpdateResponseFunctionCallArgumentsDone.DeserializeSessionUpdateResponseFunctionCallArgumentsDone(element, options);
                 }
             }
             return UnknownSessionUpdate.DeserializeUnknownSessionUpdate(element, options);
