@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Timers;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using OpenTelemetry;
 using OpenTelemetry.PersistentStorage.Abstractions;
@@ -77,6 +78,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     catch (Exception ex)
                     {
                         AzureMonitorExporterEventSource.Log.FailedToTransmitFromStorage(_isAadEnabled, _connectionVars.InstrumentationKey, ex);
+                        CustomerSdkStatsHelper.TrackDropped(null, (int)DropCode.ClientException, CustomerSdkStatsHelper.GetDropReason(ex));
                     }
                 }
                 else

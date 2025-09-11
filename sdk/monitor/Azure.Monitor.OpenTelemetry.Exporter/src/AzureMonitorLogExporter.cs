@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
@@ -47,10 +49,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey);
+                (var telemetryItems, var telemetryCounter) = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey);
                 if (telemetryItems.Count > 0)
                 {
-                    exportResult = _transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.AzureMonitorLogExporter, false, CancellationToken.None).EnsureCompleted();
+                    exportResult = _transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.AzureMonitorLogExporter, false, CancellationToken.None, telemetryCounter).EnsureCompleted();
                 }
             }
             catch (Exception ex)

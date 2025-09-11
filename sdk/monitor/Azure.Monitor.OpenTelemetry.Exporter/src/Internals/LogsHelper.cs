@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -49,9 +50,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         };
 
-        internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, string instrumentationKey)
+        internal static (List<TelemetryItem> TelemetryItems, TelemetryCounter TelemetryCounter) OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
+            var telemetryCounter = new TelemetryCounter();
             TelemetryItem telemetryItem;
 
             foreach (var logRecord in batchLogRecord)
@@ -71,6 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 BaseData = new TelemetryExceptionData(Version, logRecord, message, properties),
                             }
                         };
+                        telemetryCounter._exceptionCount++;
                     }
                     else if (eventName is not null)
                     {
@@ -82,6 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 BaseData = new TelemetryEventData(Version, eventName, properties, message, logRecord),
                             }
                         };
+                        telemetryCounter._eventCount++;
                     }
                     else
                     {
@@ -93,6 +97,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 BaseData = new MessageData(Version, logRecord, message, properties),
                             }
                         };
+                        telemetryCounter._traceCount++;
                     }
 
                     telemetryItems.Add(telemetryItem);
@@ -103,7 +108,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
-            return telemetryItems;
+            return (telemetryItems, telemetryCounter);
         }
 
         internal static void ProcessLogRecordProperties(LogRecord logRecord, IDictionary<string, string> properties, out string? message, out string? eventName, out string? microsoftClientIp)

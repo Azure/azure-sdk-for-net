@@ -10,11 +10,13 @@ using System.Text.Json;
 using System.Threading;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
 using OpenTelemetry.PersistentStorage.Abstractions;
+using OpenTelemetry.PersistentStorage.FileSystem;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -189,10 +191,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 : Encoding.UTF8.GetBytes(partialContent);
         }
 
-        internal static ExportResult IsSuccess(HttpMessage httpMessage)
+        internal static ExportResult IsSuccess(HttpMessage httpMessage, TelemetryCounter? telemetryCounter = null)
         {
             if (httpMessage.HasResponse && httpMessage.Response.Status == ResponseStatusCodes.Success)
             {
+                CustomerSdkStatsHelper.TrackSuccess(telemetryCounter);
+                // TODO: We need to decrypt the request content stream to find the info for transmission from storage.
                 return ExportResult.Success;
             }
 
@@ -209,8 +213,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <param name="connectionVars">Connection vars for logging.</param>
         /// <param name="origin">Origin of telemetry (Exporter vs Storage).</param>
         /// <param name="isAadEnabled">If AAD auth is enabled.</param>
+        /// <param name="telemetryCounter">Telemetry counter for tracking metrics.</param>
         /// <returns>TransmissionResult describing actions taken.</returns>
-        internal static TransmissionResult ProcessTransmissionResult(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, PersistentBlob? blob, ConnectionVars connectionVars, TelemetryItemOrigin origin, bool isAadEnabled)
+        internal static TransmissionResult ProcessTransmissionResult(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, PersistentBlob? blob, ConnectionVars connectionVars, TelemetryItemOrigin origin, bool isAadEnabled, TelemetryCounter? telemetryCounter = null)
         {
             var result = CreateTransmissionResult();
 
@@ -219,6 +224,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (origin != TelemetryItemOrigin.Storage)
                 {
                     HandleNetworkFailure(httpMessage, blobProvider, origin, ref result);
+
+                    if (result.ExportResult == ExportResult.Success)
+                    {
+                        CustomerSdkStatsHelper.TrackRetry(telemetryCounter, (int)DropCode.ClientException, null);
+                    }
+                    else
+                    {
+                        CustomerSdkStatsHelper.TrackDropped(telemetryCounter, blobProvider != null);
+                    }
                 }
 
                 AzureMonitorExporterEventSource.Log.TransmissionFailed(
@@ -242,10 +256,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             else if (IsRetriableStatus(result.StatusCode))
             {
                 HandleRetriableFailure(httpMessage, blobProvider, origin, ref result);
+
+                if (result.ExportResult == ExportResult.Success)
+                {
+                    CustomerSdkStatsHelper.TrackRetry(telemetryCounter, result.StatusCode, CustomerSdkStatsHelper.CategorizeStatusCode(result.StatusCode));
+                }
+                else
+                {
+                    CustomerSdkStatsHelper.TrackDropped(telemetryCounter, blobProvider != null);
+                }
             }
             else
             {
                 HandleNonRetriableFailure(blob, origin, ref result);
+                CustomerSdkStatsHelper.TrackDropped(telemetryCounter, result.StatusCode, CustomerSdkStatsHelper.CategorizeStatusCode(result.StatusCode));
             }
 
             AzureMonitorExporterEventSource.Log.TransmissionFailed(
