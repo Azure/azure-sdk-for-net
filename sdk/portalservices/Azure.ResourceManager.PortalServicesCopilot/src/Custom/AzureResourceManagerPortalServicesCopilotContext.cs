@@ -7,7 +7,6 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.PortalServicesCopilot
 {
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerPortalServicesCopilotContext
     {
     }
