@@ -35,6 +35,11 @@ namespace Azure.Generator.Management.Utilities
                 {
                     arguments.Add(Convert(contextualParameter.BuildValueExpression(idProperty), typeof(string), parameter.Type));
                 }
+                //Find matching parameter from pathFieldsParameters if enclosing type is ResourceCollectionClientProvider
+                else if (enclosingType is ResourceCollectionClientProvider collectionProvider && collectionProvider.TryGetPrivateFieldParameter(parameter, out var matchingField) && matchingField != null)
+                {
+                    arguments.Add(matchingField);
+                }
                 else if (parameter.Type.Equals(typeof(RequestContent)))
                 {
                     // find the body parameter
@@ -52,21 +57,10 @@ namespace Azure.Generator.Management.Utilities
                 {
                     arguments.Add(requestContext);
                 }
-                else if (methodParameters.Any(p => p.WireInfo.SerializedName == parameter.WireInfo.SerializedName))
+                else
                 {
                     var methodParam = methodParameters.Single(p => p.WireInfo.SerializedName == parameter.WireInfo.SerializedName);
                     arguments.Add(Convert(methodParam, methodParam.Type, parameter.Type));
-                }
-                else
-                {
-                    // Find matching parameter from pathFieldsParameters if enclosing type is ResourceCollectionClientProvider
-                    if (enclosingType is ResourceCollectionClientProvider collectionProvider)
-                    {
-                        if (collectionProvider.TryGetPrivateFieldParameter(parameter, out var matchingField) && matchingField != null)
-                        {
-                            arguments.Add(matchingField);
-                        }
-                    }
                 }
             }
 
