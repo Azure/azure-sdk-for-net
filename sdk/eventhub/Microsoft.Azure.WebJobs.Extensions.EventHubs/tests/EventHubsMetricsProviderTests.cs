@@ -338,7 +338,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // First partition triggers token cancellation
             _mockCheckpointStore
                 .Setup(s => s.GetCheckpointAsync(_namespace, _eventHubName, _consumerGroup, "0", It.IsAny<CancellationToken>()))
-                .ThrowsAsync(new Exception(_errorMessage));
+                .Returns(async (string ns, string hub, string cg, string partitionId, CancellationToken ct) =>
+                {
+                    await Task.Delay(500);
+                    throw new Exception(_errorMessage);
+                });
 
             // Other partitions wait till cancellation is requested
             _mockCheckpointStore
