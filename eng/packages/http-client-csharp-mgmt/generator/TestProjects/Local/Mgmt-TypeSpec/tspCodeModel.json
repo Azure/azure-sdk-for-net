@@ -5109,7 +5109,7 @@
           "flatten": true,
           "decorators": [
             {
-              "name": "Azure.ClientGenerator.Core.@flattenProperty",
+              "name": "Azure.ResourceManager.@flattenProperty",
               "arguments": {}
             }
           ],

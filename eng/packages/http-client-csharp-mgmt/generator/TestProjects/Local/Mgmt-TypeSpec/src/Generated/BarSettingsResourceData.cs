@@ -36,7 +36,7 @@ namespace MgmtTypeSpec
             InnerProp2 = innerProp2;
             MiddleProp1 = middleProp1;
             Prop2 = prop2;
-            InitializeBarNestedQuotaProperties();
+            FlattenedNestedProperty = new BarNestedQuotaProperties(innerProp2, middleProp1, new ChangeTrackingDictionary<string, string>(), new ChangeTrackingList<string>(), prop2);
         }
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
@@ -131,7 +131,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.MiddleProp2;
+                return FlattenedNestedProperty.MiddleProp2;
             }
         }
 
@@ -140,7 +140,7 @@ namespace MgmtTypeSpec
         {
             get
             {
-                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.Prop1;
+                return FlattenedNestedProperty.Prop1;
             }
         }
 
@@ -193,18 +193,6 @@ namespace MgmtTypeSpec
             set
             {
                 AnotherProperty = value.HasValue ? new BarQuotaProperties(value.Value) : default;
-            }
-        }
-
-        private void InitializeBarNestedQuotaProperties()
-        {
-            if (FlattenedNestedProperty is null)
-            {
-                FlattenedNestedProperty = new BarNestedQuotaProperties
-                {
-                    MiddleProp2 = new ChangeTrackingDictionary<string, string>(),
-                    Prop1 = new ChangeTrackingList<string>()
-                };
             }
         }
     }
