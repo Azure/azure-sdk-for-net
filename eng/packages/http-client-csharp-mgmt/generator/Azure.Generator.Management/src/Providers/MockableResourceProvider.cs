@@ -280,11 +280,10 @@ namespace Azure.Generator.Management.Providers
         private MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null)
         {
             var clientInfo = _clientInfos[inputClient];
-            List<FieldProvider> pathParameterFields = new List<FieldProvider>();
             return method switch
             {
                 InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync, methodName),
-                _ => new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName: methodName)
+                _ => new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName)
             };
         }
 

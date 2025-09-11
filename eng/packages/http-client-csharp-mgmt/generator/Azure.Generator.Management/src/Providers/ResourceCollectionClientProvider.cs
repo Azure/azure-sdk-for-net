@@ -23,7 +23,6 @@ using System.Collections.Generic;
 using System.IO;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 using System.Linq;
-using System.Reflection.Metadata;
 
 namespace Azure.Generator.Management.Providers
 {
@@ -336,7 +335,7 @@ namespace Azure.Generator.Management.Providers
             return getAll.InputMethod switch
             {
                 InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName),
-                _ => new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, getAll.InputMethod, isAsync, methodName: methodName)
+                _ => new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, getAll.InputMethod, isAsync, methodName)
             };
         }
 
