@@ -1,8 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.NeonPostgres.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+   <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 </Project>
