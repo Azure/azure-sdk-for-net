@@ -23,14 +23,15 @@ using System.Collections.Generic;
 using System.IO;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 using System.Linq;
+using System.Reflection.Metadata;
 
 namespace Azure.Generator.Management.Providers
 {
     internal sealed class ResourceCollectionClientProvider : TypeProvider
     {
         private readonly ResourceMetadata _resourceMetadata;
-        private readonly IReadOnlyList<ResourceMethod> _resourceServiceMethods;
         private readonly IReadOnlyList<FieldProvider> _pathParameterFields;
+        private readonly IReadOnlyList<ParameterProvider> _pathParameters;
         private readonly ResourceClientProvider _resource;
         private readonly ResourceMethod? _getAll;
         private readonly ResourceMethod? _create;
@@ -49,8 +50,8 @@ namespace Azure.Generator.Management.Providers
             _resourceMetadata = resourceMetadata;
             _contextualPath = GetContextualRequestPattern(resourceMetadata);
             _resource = resource;
-            _resourceServiceMethods = resourceMethods;
             _pathParameterFields = BuildPathParameterFields();
+            _pathParameters = BuildPathParameters();
 
             // Initialize client info dictionary using extension method
             _clientInfos = resourceMetadata.CreateClientInfosMap(this);
@@ -116,17 +117,8 @@ namespace Azure.Generator.Management.Providers
 
         public ResourceClientProvider Resource => _resource;
         public IReadOnlyList<FieldProvider> PathParameterFields => _pathParameterFields;
+        public IReadOnlyList<ParameterProvider> PathParameters => _pathParameters;
         public RequestPathPattern ContextualPath => _contextualPath;
-
-        public List<ParameterProvider> GetPathParameterProviders()
-        {
-            return PathParameterFields
-                .Select(f => new ParameterProvider(
-                    f.Name.Substring(1), // Remove the underscore prefix
-                    f.Description ?? $"The {f.Name.Substring(1)} for the parent resource.",
-                    f.Type))
-                .ToList();
-        }
 
         internal string ResourceName => _resource.ResourceName;
         internal ResourceScope ResourceScope => _resource.ResourceScope;
@@ -187,6 +179,16 @@ namespace Azure.Generator.Management.Providers
             return fields;
         }
 
+        private List<ParameterProvider> BuildPathParameters()
+        {
+            return PathParameterFields
+                .Select(f => new ParameterProvider(
+                    f.Name.Substring(1), // Remove the underscore prefix
+                    f.Description ?? $"The {f.Name.Substring(1)} for the resource.",
+                    f.Type))
+                .ToList();
+        }
+
         protected override FieldProvider[] BuildFields()
         {
             var fields = new List<FieldProvider>();
@@ -213,9 +215,8 @@ namespace Azure.Generator.Management.Providers
 
             var initializer = new ConstructorInitializer(true, baseParameters);
             var parameters = new List<ParameterProvider>(baseParameters);
-            var pathParameters = GetPathParameterProviders();
 
-            parameters.AddRange(pathParameters);
+            parameters.AddRange(_pathParameters);
 
             var signature = new ConstructorSignature(
                 Type,
@@ -234,7 +235,7 @@ namespace Azure.Generator.Management.Providers
             // Assign all path parameter fields by assigning from the path parameters
             foreach (var pathField in _pathParameterFields)
             {
-                var matchingParameter = pathParameters.Single(p => p.Name == pathField.Name.Substring(1));
+                var matchingParameter = _pathParameters.Single(p => p.Name == pathField.Name.Substring(1));
                 bodyStatements.Add(pathField.Assign(matchingParameter).Terminate());
             }
 
